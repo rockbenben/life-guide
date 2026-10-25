@@ -12,11 +12,11 @@
     "build": "electron-builder --publish never"
   },
   "dependencies": {
-    "electron-updater": "^6.8.9"
+    "electron-updater": "^6.8.11"
   },
   "devDependencies": {
     "electron": "45.0.0",
-    "electron-builder": "^26.15.3"
+    "electron-builder": "^26.18.0"
   },
   "build": {
     "appId": "top.045.life-guide",
@@ -55,15 +55,28 @@
     },
     "mac": {
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ],
-      "category": "public.app-category.healthcare-fitness"
+      "category": "public.app-category.healthcare-fitness",
+      "artifactName": "LifeGuide-${version}-${arch}.${ext}"
     },
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "deb",
+        "rpm"
       ],
-      "category": "Health"
+      "category": "Utility",
+      "executableName": "life-guide",
+      "maintainer": "rockbenben <rockbenben@users.noreply.github.com>",
+      "artifactName": "LifeGuide-${version}-${arch}.${ext}"
+    },
+    "deb": {
+      "packageName": "life-guide"
+    },
+    "rpm": {
+      "packageName": "life-guide"
     },
     "nsis": {
       "oneClick": false,
@@ -72,7 +85,8 @@
       "artifactName": "LifeGuide-Setup-${version}.${ext}"
     },
     "portable": {
-      "artifactName": "LifeGuide-Portable-${version}.${ext}"
+      "buildUniversalInstaller": false,
+      "artifactName": "LifeGuide-Portable-${version}-${arch}.${ext}"
     }
   }
 }

@@ -128,10 +128,10 @@ R11、R13、R15、R16 都已实现：R11 在 `app/test/ui/card.test.tsx`，R13 �
 | UI | Preact + Vite | 交互只有列表 / 展开 / 勾选 |
 | 样式 | Tailwind CSS v4 + daisyUI 5（只用它的主题令牌机制）+ 自写组件层 | 组件与主题都是**构建期**产物（daisyUI 是纯 CSS 插件，不注 JS、不装 Provider）—— 产物里没有运行时，PWA / Electron / Capacitor 三处跑同一份 CSS。界面不再用 daisyUI 的组件类：形状语言是「一页手帖」（细横线分栏 + 用法用量表），而那套组件给的是「一叠带阴影的圆角卡 + 粉色提示块」。响应式靠断点，桌面与手机不是两套界面 |
 | PWA | vite-plugin-pwa（Workbox） | 浏览器形态：可装可离线 |
-| 桌面端 | Electron（`desktop/`） | 自定义 `app://` 协议伺服 `app/dist`。**不能用 `file://`** —— 渲染层要 `fetch("cards.json")`，file:// 下会被拦；协议注册成 standard + secure 之后 origin 稳定，IndexedDB 里的记录才留得住。主进程只管生命周期，协议 / 提醒 / 菜单在 `desktop/lib/` 下各一块 |
+| 桌面端 | Electron（`desktop/`） | 自定义 `app://` 协议伺服 `app/dist`。**不能用 `file://`** —— 渲染层要 `fetch("cards.json")`，file:// 下会被拦；协议注册成 standard + secure 之后 origin 稳定，IndexedDB 里的记录才留得住。构建目标为 Windows / macOS / Linux 各 x64 + arm64；渲染层带 CSP、导航守卫与 IPC sender 校验。**只有 Windows 接自动更新**（macOS 未签名、Linux 没接客户端更新）。主进程只管生命周期；协议 / 提醒 / 菜单 / 导航 / IPC 信任在 `desktop/lib/` 各一块 |
 | 手机端 | Capacitor（`mobile/`） | 同一份 `app/dist` 装进原生 WebView，生成 Android / iOS 工程。界面不重写 |
 | 存储 | IndexedDB（idb 薄封装） | 事件日志不适合 localStorage |
-| 测试 | Vitest + Playwright | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright |
+| 测试 | Vitest + Playwright + node:test | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright；主进程 / 导航 / 协议的纯逻辑用 `node --test` |
 | 部署 | 任意静态托管 | 无后端 |
 
 不引入：状态管理库、路由库（hash 路由即可）、后端。
@@ -145,6 +145,9 @@ R11、R13、R15、R16 都已实现：R11 在 `app/test/ui/card.test.tsx`，R13 �
 **三种形态的关系**：界面只写一遍（`app/src`），构建产物 `app/dist` 三处复用 ——
 浏览器里是 PWA，桌面上是 Electron 壳，手机上是 Capacitor 壳。
 **各自的数据是分开的**（IndexedDB 按 origin / 应用 id 存），要合并用设置页的导出 / 导入。
+
+桌面壳的发布目标覆盖 Windows / macOS / Linux 各 x64 + arm64，同一份 `app/dist` 在三个系统上跑；
+差异只在安装包格式与更新通道：Windows 接 electron-updater，macOS / Linux 目前手动换包。
 
 ## 3. 关键接口
 

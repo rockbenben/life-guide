@@ -20,9 +20,10 @@ import { advance, delayUntil, nextSpec, normalizeSpecs } from "./reminder-timing
  * 装上提醒这条链。
  *
  * @param {(id: string) => void} onDue 到点了：主进程问渲染层要下一次
+ * @param {(event: object) => boolean} isTrusted IPC 是不是来自我们自己的页面
  * @returns {{ dispose: () => void }}
  */
-export function installReminderBridge({ onDue }) {
+export function installReminderBridge({ onDue, isTrusted = () => false }) {
   /** 待响的提醒（渲染层算好的时刻） */
   let specs = [];
   let timer = null;
@@ -75,17 +76,19 @@ export function installReminderBridge({ onDue }) {
     onDue(spec.id);
   }
 
-  const onSet = (_e, list) => {
+  const onSet = (e, list) => {
+    if (!isTrusted(e)) return;
     specs = normalizeSpecs(list);
     arm();
   };
 
-  const onNotifyNow = (_e, title, body) => {
+  const onNotifyNow = (e, title, body) => {
+    if (!isTrusted(e)) return;
     showNotification(String(title ?? ""), String(body ?? ""));
   };
 
   const onSupport = (e) => {
-    e.returnValue = Notification.isSupported();
+    e.returnValue = isTrusted(e) && Notification.isSupported();
   };
 
   ipcMain.on("life-guide:set-reminders", onSet);

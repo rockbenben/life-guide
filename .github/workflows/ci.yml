@@ -42,6 +42,9 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      - name: Desktop logic tests
+        run: npm run test:desktop
+
       - name: Content check
         run: npm run content:check
 

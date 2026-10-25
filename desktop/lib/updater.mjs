@@ -43,7 +43,12 @@ export function updateSupport() {
   if (process.env.PORTABLE_EXECUTABLE_DIR) {
     return { ok: false, note: "免安装版不能自动更新，用安装版才有" };
   }
-  if (process.platform !== "win32" && process.platform !== "darwin") {
+  // macOS 的 Squirrel.Mac 只接受签过名的应用；现在还没有 Developer ID，
+  // 所以构建出来的 macOS 版只能手动换新包。签名接上后再放开这里。
+  if (process.platform === "darwin") {
+    return { ok: false, note: "macOS 版还没签名，不能自动更新；请手动下载新版" };
+  }
+  if (process.platform !== "win32") {
     return { ok: false, note: "这个平台暂时不能自动更新" };
   }
   return { ok: true };
@@ -53,9 +58,13 @@ export function updateSupport() {
  * 装上更新这条链。
  *
  * @param {(status: {state:string, version?:string, progress?:number, error?:string, note?:string}) => void} onStatus 状态变了
+ * @param {(event: object) => boolean} isTrusted IPC 是不是来自我们自己的页面
  * @returns {{ status: () => object, dispose: () => void }}
  */
-export function installUpdateBridge({ onStatus }) {
+export function installUpdateBridge({ onStatus, isTrusted = () => false }) {
+  const requireTrusted = (event) => {
+    if (!isTrusted(event)) throw new Error("untrusted sender");
+  };
   const support = updateSupport();
   let status = support.ok
     ? { state: "idle" }
@@ -103,9 +112,13 @@ export function installUpdateBridge({ onStatus }) {
     );
   }
 
-  ipcMain.handle("life-guide:update-status", () => status);
+  ipcMain.handle("life-guide:update-status", (event) => {
+    requireTrusted(event);
+    return status;
+  });
 
-  ipcMain.handle("life-guide:update-check", async () => {
+  ipcMain.handle("life-guide:update-check", async (event) => {
+    requireTrusted(event);
     if (!support.ok) return status;
     push({ type: "checking" });
     try {
@@ -116,7 +129,8 @@ export function installUpdateBridge({ onStatus }) {
     return status;
   });
 
-  ipcMain.handle("life-guide:update-download", async () => {
+  ipcMain.handle("life-guide:update-download", async (event) => {
+    requireTrusted(event);
     if (!support.ok) return status;
     push({ type: "checking" });
     try {
@@ -127,7 +141,8 @@ export function installUpdateBridge({ onStatus }) {
     return status;
   });
 
-  ipcMain.handle("life-guide:update-install", async () => {
+  ipcMain.handle("life-guide:update-install", async (event) => {
+    requireTrusted(event);
     if (!support.ok) return status;
     push({ type: "updating" });
     // isSilent=false：让安装器按正常样子跑（用户看得见它在做什么）

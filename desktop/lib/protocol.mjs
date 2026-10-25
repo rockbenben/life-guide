@@ -12,23 +12,7 @@ import { protocol } from "electron";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-/** 按扩展名给 MIME —— 自己读文件自己给类型，不依赖 net.fetch 对 file:// 的支持。 */
-const MIME = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".mjs": "text/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".webmanifest": "application/manifest; charset=utf-8",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".webp": "image/webp",
-  ".svg": "image/svg+xml",
-  ".ico": "image/x-icon",
-  ".woff2": "font/woff2",
-  ".txt": "text/plain; charset=utf-8",
-};
+import { responseHeaders } from "./protocol-headers.mjs";
 
 /**
  * 声明 app:// 的特权。
@@ -80,8 +64,8 @@ export function serveBundle(bundleDir) {
 
     try {
       const data = await fs.readFile(resolved);
-      const type = MIME[path.extname(resolved).toLowerCase()] ?? "application/octet-stream";
-      return new Response(data, { headers: { "content-type": type } });
+      const headers = responseHeaders(path.extname(resolved).toLowerCase());
+      return new Response(data, { headers });
     } catch {
       return new Response("not found", { status: 404 });
     }

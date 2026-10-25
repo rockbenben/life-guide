@@ -944,7 +944,7 @@ export async function checkImportRefreshesRoutine({ browser, baseURL }) {
     }
 
     // 再动一下清单：应该接在导入的那份后面，而不是回到导入前的默认清单
-    await page.getByRole("button", { name: "加我自己的" }).first().click();
+    await page.getByRole("button", { name: "加自己的习惯" }).first().click();
     await page.locator(".lg-habitform input[type=text]").first().fill("验收用习惯");
     await page.getByRole("button", { name: "保存" }).first().click();
     await page.waitForTimeout(800);

@@ -19,6 +19,7 @@ import { fileURLToPath } from "node:url";
 import { registerAppScheme, serveBundle } from "./lib/protocol.mjs";
 import { installReminderBridge } from "./lib/reminders.mjs";
 import { installUpdateBridge } from "./lib/updater.mjs";
+import { navigationDecision, isTrustedSender } from "./lib/navigation.mjs";
 import { setupTray } from "./lib/tray.mjs";
 import { buildMenu } from "./lib/menu.mjs";
 import { createStore } from "./lib/store.mjs";
@@ -109,9 +110,20 @@ function createWindow() {
 
   // 站外链接交给系统浏览器，别在应用窗口里打开
   w.webContents.setWindowOpenHandler(({ url }) => {
-    if (/^https?:/.test(url)) shell.openExternal(url);
+    if (navigationDecision(url, devServer) === "external") shell.openExternal(url);
     return { action: "deny" };
   });
+
+  // 同窗口导航也守着：内容里的相对链接已经由应用自己处理，
+  // 剩下能走到这里的只该是站外地址 —— 交系统浏览器，窗口本身不许离开 app://。
+  const guardNavigation = (event, url) => {
+    const decision = navigationDecision(url, devServer);
+    if (decision === "allow") return;
+    event.preventDefault();
+    if (decision === "external") void shell.openExternal(url);
+  };
+  w.webContents.on("will-navigate", guardNavigation);
+  w.webContents.on("will-redirect", guardNavigation);
 
   // 关窗口 = 藏到托盘 —— 除非真的要退出、托盘没起来、或在开发
   w.on("close", (e) => {
@@ -140,6 +152,7 @@ const reminders = installReminderBridge({
       w.webContents.send("life-guide:reminder-due", id);
     }
   },
+  isTrusted: (event) => isTrustedSender(event, devServer),
 });
 
 /**
@@ -155,6 +168,7 @@ const updater = installUpdateBridge({
       w.webContents.send("life-guide:update-changed", status);
     }
   },
+  isTrusted: (event) => isTrustedSender(event, devServer),
 });
 
 app.whenReady().then(() => {

@@ -29,7 +29,7 @@
     "acceptance": "node scripts/acceptance/run.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:desktop": "node --test desktop/lib/reminder-timing.test.mjs desktop/lib/window-state.test.mjs desktop/lib/menu-template.test.mjs desktop/lib/update-events.test.mjs",
+    "test:desktop": "node --test desktop/lib/reminder-timing.test.mjs desktop/lib/window-state.test.mjs desktop/lib/menu-template.test.mjs desktop/lib/update-events.test.mjs desktop/lib/navigation.test.mjs desktop/lib/protocol-headers.test.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "markdownlint \"**/*.md\"",
     "lint:workflows": "node scripts/check-workflows.mjs",

@@ -18,7 +18,7 @@
 
 ## 2. 现状
 
-已经是独立仓库并跑起来了：内容管线 + PWA 都在，440 个单元测试、内容校验、类型检查、CI 全绿。
+已经是独立仓库并跑起来了：内容管线 + PWA 都在，440 个单元测试 + 31 个桌面逻辑测试、内容校验、类型检查、CI 全绿。
 
 ```
 life-guide/
@@ -39,10 +39,11 @@ life-guide/
 │   ├── src/                  index.tsx（渲染入口）· domain/ · data/ · ui/
 │   └── test/                 domain/ 单元测试 · ui/ 组件渲染测试
 ├── desktop/                  桌面端：Electron 壳（跑同一份 app/dist）
-│   ├── main.mjs              只管生命周期：单实例、窗口、托盘，把几块 lib 接起来
-│   ├── preload.cjs           页面与 Node 之间那条极窄的缝（只暴露提醒）
-│   ├── lib/                  protocol（app:// 伺服）· reminders（主进程定时器）· tray
-│   │                         · menu · reminder-timing / window-state / store（纯逻辑，可单测）
+│   ├── main.mjs              生命周期：单实例、窗口、托盘、导航守卫，把几块 lib 接起来
+│   ├── preload.cjs           页面与 Node 之间那条极窄的缝（只暴露提醒与更新）
+│   ├── lib/                  protocol / protocol-headers（app:// 与 CSP）· navigation（导航与 IPC 信任）
+│   │                         · reminders（主进程定时器）· updater · tray · menu
+│   │                         · reminder-timing / window-state / store（纯逻辑，可单测）
 │   ├── lib/*.test.mjs        纯逻辑的 node --test（npm run test:desktop）
 │   └── build/                打包与托盘用的图标（brand/ 那张标记的 ico/icns/png）
 ├── mobile/                   手机端：Capacitor 壳（跑同一份 app/dist）
@@ -220,18 +221,29 @@ content/
 - 「一天」以凌晨 04:00 为界。页首日期、印章与默认时段也用同一口径：
   00:00–03:59 仍显示前一天 · 晚间，04:00 才翻到新一天 · 早晨。
 
-### 4.5 发版 → tag 是唯一版本源；桌面端能自己更新
+### 4.5 发版 → tag 是唯一版本源；Windows 桌面端能自己更新
 
-**（2026-10-24 改）** 原来发版是手工的：本地打包 → `gh release create` → 手工传附件。
+**（2026-10-24 改，2026-10-25 补平台）** 原来发版是手工的：本地打包 → `gh release create` → 手工传附件。
 现在走 tag 驱动的流水线（`.github/workflows/release.yml`）：
 
 ```
 push tag vX.Y.Z
-  └─ validate       tag 与 5 个 package.json 的版本对得上 + 内容校验 + 类型检查 + lint + 单测
-      ├─ build-desktop   Windows：NSIS 安装包 + 免安装版 + latest.yml
-      └─ build-android   Linux：APK
-          └─ publish   单一草稿 → 校验更新清单 → SHA256SUMS → 上传 → 人工审批 → 发布 → 核验
+  └─ validate       tag 与 5 个 package.json 的版本对得上 + 内容校验 + 类型检查 + lint + 单测 + 桌面逻辑测试
+      ├─ build-desktop-win     Windows x64+arm64：NSIS 合一安装包 + 双架构免安装版 + latest.yml
+      ├─ build-desktop-mac     macOS x64+arm64：dmg + zip（zip 是更新载体）+ latest-mac.yml
+      ├─ build-desktop-linux   Linux x64+arm64：AppImage + deb + rpm + latest-linux*.yml
+      └─ build-android         Linux：APK
+          └─ publish   单一草稿 → 校验四条 latest*.yml 与全部资产 → SHA256SUMS → 上传 → 人工审批 → 发布 → 核验
 ```
+
+- **平台覆盖**：桌面三平台各 x64 + arm64；每个 OS 一个 job，同一 OS 的多架构必须在**同一次**
+  electron-builder 调用里打 —— 分 job 打会各写同名 `latest*.yml`，谁后跑谁赢。
+  没有原生模块，Linux arm64 可以在 x64 runner 上交叉打。
+- **macOS / Linux 暂不接自动更新**：macOS 的 Squirrel.Mac 只认签过名的应用，现在没有 Developer ID；
+  Linux 也只发 AppImage / deb / rpm，没有接客户端更新。两边的界面都如实写「请手动下载新版」，
+  不把「有新版本」伪装成能一键装。Windows 的自动更新照旧。
+- **`latest*.yml` 是四份，不是一份**：`latest.yml`（Windows）、`latest-mac.yml`（macOS，含两个架构的 zip）、
+  `latest-linux.yml` / `latest-linux-arm64.yml`（Linux 两个架构）。publish 会逐份核对版本与它指向的文件。
 
 - **tag 是唯一版本源**：发版提交先改版本再打 tag，`validate` 断言一致，不一致即失败。
   一条命令改到位：`node scripts/set-version.mjs 0.1.1`
@@ -242,21 +254,25 @@ push tag vX.Y.Z
 - **`SHA256SUMS` 必须在 Linux 上用 `sha256sum` 生成**（行尾 LF）：
   PowerShell 的 `Set-Content` 写 CRLF，应用自己读没事，但用户那条 `sha256sum -c` 会逐行失败。
 - **附件名只能是 ASCII**：GitHub 的附件名只吃 ASCII，中文会被换成 `default.exe`；
-  而 `latest.yml` 里记的就是附件名 —— 对不上就更新不了。
-  所以 `desktop/package.json` 把产物名钉成 `LifeGuide-Setup-${version}.${ext}` /
-  `LifeGuide-Portable-${version}.${ext}`；**装完仍是「生活指南」**（开始菜单、窗口标题、快捷方式都没变）。
+  而 `latest*.yml` 里记的就是附件名 —— 对不上就更新不了。
+  所以 `desktop/package.json` 把产物名钉成 ASCII：Windows 是
+  `LifeGuide-Setup-${version}.${ext}`（双架构合一）与 `LifeGuide-Portable-${version}-${arch}.${ext}`；
+  macOS / Linux 是 `LifeGuide-${version}-${arch}.${ext}`（Linux 的 `${arch}` 会按格式展开成
+  `x86_64` / `amd64` / `aarch64`，不是统一的 `x64`）。
+  **装完仍是「生活指南」**（开始菜单、窗口标题、快捷方式都没变）。
 
-**桌面端的自动更新**（electron-updater，`desktop/lib/updater.mjs`）：
+**桌面端的自动更新**（electron-updater，`desktop/lib/updater.mjs`）——**只开 Windows**：
 
-- **不自动下载**：安装包 110 MB，用户没说要更新就先下 110 MB 是不礼貌的。
+- **不自动下载**：双架构合一的安装包两百多兆，用户没说要更新就先下两百多兆是不礼貌的。
   启动时只**查**，查到新版本弹一条系统通知；下载与安装由用户点（设置页 → 更新）。
 - **免安装版不参与**：portable 没有安装目录，而安装动作依赖安装布局 ——
   硬跑会把应用装到别处。免安装版的 SFX 会设 `PORTABLE_EXECUTABLE_DIR`，靠它认出来。
-- **没签名也能更新**：`app-update.yml` 里没有 `publisherName` 时，
+- **没签名也能更新（仅 Windows）**：`app-update.yml` 里没有 `publisherName` 时，
   electron-updater **跳过**签名校验（未签名应用的正常路径）；
   完整性靠 `latest.yml` 里的 sha512 核对下载到的文件。
-- **前提是仓库公开**：更新清单从 `releases/latest/download/latest.yml` 取，
-  私有仓库匿名取不到 → 自动更新要等仓库转公开才真正可用。
+  macOS 的 Squirrel.Mac 没有这个退路 —— 未签名就不接更新，界面写「请手动下载新版」。
+- **前提是仓库公开**：更新清单从 `releases/latest/download/latest*.yml` 取，
+  私有仓库匿名取不到 → Windows 自动更新要等仓库转公开才真正可用。
 - **界面上不出现内部词**：状态到人话的翻译在 `app/src/domain/update.ts`，
   状态机在 `desktop/lib/update-events.mjs`（纯逻辑，`node --test` 守着）。
 
@@ -268,7 +284,7 @@ push tag vX.Y.Z
 | Capacitor 8 要 JDK 21 | runner 默认 JDK 17 → `invalid source release: 21` | 流水线里显式 `actions/setup-java@v6` |
 | `gh release upload <tag>` | 草稿在 `GET /releases/tags/<tag>` 里查不到，gh 会把草稿的标签改成 `untagged-xxx`，再往那儿传 → 404 | 走 API，按 **release id** 传（`scripts/release-draft.mjs`） |
 | PATCH 草稿只带 `body` | 草稿的标签被打回 `untagged-xxx`，后面按 tag 找全落空 | 每次 PATCH 都显式带 `tag_name`，发布那一步用 release id |
-| 私有仓库的下载链接 | `releases/latest/download/latest.yml` 匿名取不到（它认浏览器会话） | 核验走 API；仓库公开后自动切回匿名下载（用户那条路径） |
+| 私有仓库的下载链接 | `releases/latest/download/latest*.yml` 匿名取不到（它认浏览器会话） | 四份清单逐一走 API 核验；仓库公开后自动切回匿名下载（用户那条路径） |
 
 ---
 
@@ -644,7 +660,7 @@ acknowledged:
 │       用户自己加的习惯：页脚写「你自己加的」，那两颗键换成「改」「删掉」
 ├── 调顺序：条件那一行下面那颗「调顺序」→ 全部日常里的卡按次序排开，每条有 ↑ ↓ 移出
 │       次序就存在 myRoutine 数组里（`moveInRoutine`），「今天」按它摆，不按 cards.json 的顺序
-├── 加我自己的：条件那一行下面第三颗键 → 侧栏里展开一张表单（叫什么 / 做什么 / 什么时候做）
+├── 加自己的习惯：条件那一行下面第三颗键 → 侧栏里展开一张表单（叫什么 / 做什么 / 什么时候做）
 │       自定义习惯在数据层就是一张卡，所以盖章、累计天数、提醒、次序全都白得
 ├── 本周期已完成：每周 / 每月做完的卡收在这里，可撤销
 └── 发现：今天轮到的一张（可加入我的日常 / 换一个）＋「手册里还有 N 个动作没进日常」
@@ -729,7 +745,7 @@ daisyUI 仍装着做主题令牌机制，但界面上**不再用它的组件类*
 - **移出 = 删掉**：自定义习惯只有一处存在（用户的日常里），移出它就等于不要它了 ——
   所以那颗键写「删掉」，是真的删（连库里的那条）。
 - **备份要带走它**：不然「搬家」搬了一半，日常清单里那几条会变成空引用（`Backup` 的 v2）。
-- 入口在今天页侧栏：**「加我自己的」** → 表单就地展开（触发的地方和表单挨着，
+- 入口在今天页侧栏：**「加自己的习惯」** → 表单就地展开（触发的地方和表单挨着，
   窄屏时侧栏在上方，展开就在眼前）；卡片展开态里那颗「改」能改回来。
 
 ## 6.2 性能：先量再改
@@ -905,7 +921,7 @@ Android Studio 自带的 JBR（它就是 21）。
 | --- | --- | --- | --- |
 | **P0 仓库** | `git init`；npm workspaces 骨架；`content import` 导入快照；一条 CI 空跑通过 | `npm test` 与 `content:check` 在 CI 上为绿 | **已完成** |
 | **P1 内容层** | schema 定稿；校验器 R1–R10；手工抽 12 张卡；生成 `cards.json` 与校验报告 | 12 张卡 0 error；R7 已有确认记录 | **已完成**（R1–R16 都有实现，见 §5.2） |
-| **P2 PWA MVP** | 今天视图、时段、模式、事件日志、`.ics`、离线、导出；原型校验迁移为测试 | 技术清单全过：iOS / Android 安装成功；断网可完整使用一天；`.ics` 在 iOS 日历与 Google 日历导入后按时提醒；导出 → 清空 → 导入后事件日志逐条一致；R11 组件级测试通过 | **代码完成，浏览器能验的都已自动化**：离线预缓存、`.ics` 定时事件（早/晚 + 卡片提醒）与闹钟、导出→清空→导入逐条一致、卡上设的提醒存得住也删得掉，由 `npm run acceptance` 在真浏览器里验（7 项全过：离线可完整使用一天、断网也能翻手册、`.ics`、导出→清空→导入、卡上提醒、提醒生命周期与周期撤销、导航；生命周期检查含取消/只移卡/一起删、放回默认、周期撤销、批量撤销）。**三种形态已就位**：浏览器 PWA、桌面 Electron（`node scripts/desktop-check.mjs` 会真启动一次并截图）、手机 Capacitor（Android 的 debug APK 已构建出来；iOS 需 macOS）。**真机安装与两个日历 App 的实际提醒仍需人工**，清单见 §7.1 |
+| **P2 PWA MVP** | 今天视图、时段、模式、事件日志、`.ics`、离线、导出；原型校验迁移为测试 | 技术清单全过：iOS / Android 安装成功；断网可完整使用一天；`.ics` 在 iOS 日历与 Google 日历导入后按时提醒；导出 → 清空 → 导入后事件日志逐条一致；R11 组件级测试通过 | **代码完成，浏览器能验的都已自动化**：离线预缓存、`.ics` 定时事件（早/晚 + 卡片提醒）与闹钟、导出→清空→导入逐条一致、卡上设的提醒存得住也删得掉，由 `npm run acceptance` 在真浏览器里验（7 项全过：离线可完整使用一天、断网也能翻手册、`.ics`、导出→清空→导入、卡上提醒、提醒生命周期与周期撤销、导航；生命周期检查含取消/只移卡/一起删、放回默认、周期撤销、批量撤销）。**三种形态已就位**：浏览器 PWA、桌面 Electron（构建目标覆盖 Windows / macOS / Linux 各 x64 + arm64；只有 Windows 做过真启动与更新链验证）、手机 Capacitor（Android 的 debug APK 已构建出来；iOS 需 macOS）。**真机安装与两个日历 App 的实际提醒仍需人工**，清单见 §7.1 |
 | **决策门** | 作者本人连续使用 14 天后，看事件日志 | 第 2 周打开 ≥ 4 天，且早晚两个时段都有记录，才进 P3；否则先改交互。试用者反馈只作定性参考，不作门槛 | **未开始**：P3 的工具链已经建好（不占着门），但 `reviewed` 数量与「作者自己会不会用」仍要等这 14 天的数据 |
 | **P3 批量抽取** | LLM 起草流水线；审阅工具；手册浏览；今日一篇；疾病类分级 | ≥ 60 篇 `reviewed`；人工审阅 ≤ 10 分钟 / 篇（目标值，按 P1 实测校准） | **工具链完成，审阅基本收工**：`content draft` 流水线已用真实 LLM 跑通（自检不过就不写盘）；`content audit` 审阅辅助已跑通全量 94 篇；手册浏览 / 今日一篇 / 疾病类分级已实现；**104 篇卡文件、553 张卡已产出，全部通过校验**；其中 **518 张已签字**（机器没挑出毛病的 289 张于 2026-10-21 批量签字，之后逐篇补签；2026-10-22 又给 135 张改过名字/合并过的卡重签）；剩下 **35 张 draft**（23 张保健 + 12 张疾病类）—— 逐张看过：多数是「表格/自测/清单」型（记分卡对照、钾卡、31 分自测、危险度检查表），手册原文里本来就有，做成卡只是重复；**那几张「一个动作一张卡」的才值得签**。**签字与审阅是人的活**（唯一例外见 §4.3 第 8 条：2026-10-24 的纯改名由作者授权代签） |
 | **P4 增强** | Web Push（可选）、趋势回看、季节性卡片 | 按需 | 未开始 |
@@ -923,8 +939,10 @@ Android Studio 自带的 JBR（它就是 21）。
 四种模式的排程形状都对。过程中查出并修掉两个 bug：通知 id 互相顶掉、秒数被带偏
 （详见 §4.2 末尾）。
 
-**下面这几条没有真机就验不了**，需要人拿手机跑一遍，逐条打勾：
+**下面这几条没有真机就验不了**，需要人在对应设备上跑一遍，逐条打勾：
 
+- [ ] **macOS 安装**：dmg 打开（未签名需右键 →「打开」）→ Intel / Apple Silicon 各一次 → 窗口、托盘、提醒正常，设置页写「请手动下载新版」
+- [ ] **Linux 安装**：AppImage / deb / rpm 各装一次（x64 / arm64）→ 窗口、托盘、提醒正常，设置页写「请手动下载新版」
 - [ ] **iOS 安装（原生 App）**：macOS 上 `cd mobile/ios && pod install && open App.xcworkspace` → 装到 iPhone → 图标是「生活指南」、点开全屏无地址栏
 - [ ] **Android 安装（原生 App）**：`mobile/android/app/build/outputs/apk/debug/app-debug.apk` 传到手机安装 → 图标与启动图正常
 - [ ] **Android 精确闹钟**：手机装好后 → 设置 → 提醒 → 若出现「去允许精确提醒」，点它并在系统里打开「闹钟和提醒」→ 否则提醒会晚一点（模拟器实测：不授权晚约 5 秒～1 分钟，授权后准点）
