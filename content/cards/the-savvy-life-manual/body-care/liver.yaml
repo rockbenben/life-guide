@@ -1,0 +1,232 @@
+article: the-savvy-life-manual/body-care/liver.md
+kind: condition
+coverage: partial
+ignore:
+  sections:
+    - anchor: 脂肪肝为什么在猛增
+      reason: 本节以脂肪肝流行率变化和吃太多、极端节食、喝太多三条背景原因为主；本轮六张卡优先保留就医线、机制、徒手动作、减重方法与就诊路径。
+  images: []
+cards:
+  - id: alt-thirty-care-line
+    status: reviewed
+    name: "ALT 超过 30 就该看医生"
+    source:
+      anchor: 'ALT 超过 30 就该看医生：改订版肝脏说明书'
+    remind:
+      text: '把 ALT 超过 30 作为新的就医线，咨询家庭医生'
+      quote: 'ALT 超过 30 就该去找家庭医生，而不是等到 50。'
+    steps:
+      - id: know-nara-declaration
+        text: '日本肝脏学会 2023 年 6 月发布的「奈良宣言」把这条线整个往下挪了——ALT 超过 30 就该去找家庭医生，而不是等到 50。'
+        quote: '日本肝脏学会 2023 年 6 月发布的「奈良宣言」把这条线整个往下挪了——ALT 超过 30 就该去找家庭医生，而不是等到 50。'
+    notices:
+      - level: seek-care
+        text: 'ALT 超过 30 就该去找家庭医生，而不是等到 50。'
+        quote: 'ALT 超过 30 就该去找家庭医生，而不是等到 50。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ef2720af7a455e50
+
+  - id: alt-cause-differential
+    status: reviewed
+    source:
+      anchor: 'ALT 30 是一条新的就医线'
+    remind:
+      text: 'ALT 超过 30 可能对应脂肪肝、多种肝炎或已经进展下去的肝病'
+      quote: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
+    steps:
+      - id: inspect-liver-ultrasound
+        text: '脂肪肝在超声图像上的特征是，肝脏看上去比肾脏更白。'
+        quote: '脂肪肝在超声图像上的特征是，肝脏看上去比肾脏更白。'
+      - id: distinguish-liver-causes
+        text: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
+        quote: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
+    notices:
+      - level: info
+        text: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
+        quote: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 8967ca91aeff412e
+
+  - id: alt-cell-injury
+    status: reviewed
+    source:
+      anchor: '那个数字，是死掉的肝细胞'
+    remind:
+      text: '所以体检单上的 ALT，反映的是肝细胞死了多少。'
+      quote: '所以体检单上的 ALT，反映的是肝细胞死了多少。'
+    steps:
+      - id: understand-alt-enzyme
+        text: 'ALT 是肝细胞里的一种酶。'
+        quote: 'ALT 是肝细胞里的一种酶。'
+      - id: understand-cell-fragments
+        text: '破裂释放出来的碎片正是 ALT。'
+        quote: '破裂释放出来的碎片正是 ALT。'
+      - id: understand-liver-progression
+        text: '放著不管，被掏空的肝脏会分泌胶原蛋白线维来加固，结果是把肝脏勒紧变硬，发展成肝硬化、肝癌，这时候就很难回到原状。'
+        quote: '放著不管，被掏空的肝脏会分泌胶原蛋白线维来加固，结果是把肝脏勒紧变硬，发展成肝硬化、肝癌，这时候就很难回到原状。'
+    notices:
+      - level: info
+        text: '脂肪肝的影响也不止肝脏：心肌梗死、脑梗死的风险会变成 1.6 倍，乳癌、大肠癌的风险约有 2 倍。'
+        quote: '脂肪肝的影响也不止肝脏：心肌梗死、脑梗死的风险会变成 1.6 倍，乳癌、大肠癌的风险约有 2 倍。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 14b43d1ead9610fb
+    name: ALT 反映肝细胞死亡
+
+  - id: liver-friendly-hand-exercises
+    status: reviewed
+    name: "大肌群训练护肝"
+    source:
+      anchor: 六个徒手动作
+    remind:
+      text: '用大肌群训练促进肝细胞把脂肪转成能量并减少中性脂肪'
+      quote: '机制是肌因（マイオカイン）：运动时肌肉会分泌这种激素，它到达肝脏后能促进肝细胞工作，把脂肪转成能量、减少中性脂肪。所以重点是练大肌群——背、大腿、臀部。'
+    dose:
+      - value: 20
+        unit: '次'
+        what: '原地踏步目标次数'
+        quote: '热身：原地踏步，目标 20 次。'
+      - value: 10
+        unit: '次'
+        what: '毛巾后拉目标次数'
+        quote: '练背：毛巾后拉，目标 10 次。'
+      - value: 10
+        unit: '次'
+        what: '每侧坐姿伸膝目标次数'
+        quote: '练大腿：坐姿伸膝，目标左右各 10 次。'
+      - value: 10
+        unit: '次'
+        what: '提踵目标次数'
+        quote: '练小腿：提踵，目标 10 次。'
+      - value: 10
+        unit: '次'
+        what: '毛巾深蹲目标次数'
+        quote: '练大腿臀：毛巾深蹲，目标 10 次。'
+      - value: 10
+        valueMax: 20
+        unit: '秒'
+        what: '每侧小腿拉伸保持时间'
+        quote: '放松：小腿拉伸，左右各 10～20 秒。'
+    steps:
+      - id: warm-up-marching
+        text: '热身：原地踏步，目标 20 次。摆臂原地踏，熟练后逐步加大动作幅度；手臂不只往前，也要往后摆。'
+        quote: '热身：原地踏步，目标 20 次。摆臂原地踏，熟练后逐步加大动作幅度；手臂不只往前，也要往后摆。'
+      - id: towel-back-pull
+        text: '练背：毛巾后拉，目标 10 次。坐在椅子上双手握毛巾两端，慢慢往脖子后方拉；保持毛巾绷紧、左右拉开的同时把手肘往后带，背阔肌更容易发力。'
+        quote: '练背：毛巾后拉，目标 10 次。坐在椅子上双手握毛巾两端，慢慢往脖子后方拉；保持毛巾绷紧、左右拉开的同时把手肘往后带，背阔肌更容易发力。'
+      - id: seated-knee-extension
+        text: '练大腿：坐姿伸膝，目标左右各 10 次。坐姿抬起要练的那条腿，把另一条腿压在上面，两脚踝互相对抗，反复屈伸膝盖；伸到与地面平行效果最好，左右交替进行。'
+        quote: '练大腿：坐姿伸膝，目标左右各 10 次。坐姿抬起要练的那条腿，把另一条腿压在上面，两脚踝互相对抗，反复屈伸膝盖；伸到与地面平行效果最好，左右交替进行。'
+      - id: heel-raise
+        text: '练小腿：提踵，目标 10 次。椅子浅坐、双脚稍向内收，双手压住膝盖制造阻力，提起两侧脚跟；上下都要慢，尤其放下时更慢。'
+        quote: '练小腿：提踵，目标 10 次。椅子浅坐、双脚稍向内收，双手压住膝盖制造阻力，提起两侧脚跟；上下都要慢，尤其放下时更慢。'
+      - id: towel-squat
+        text: '练大腿臀：毛巾深蹲，目标 10 次。举起手臂把毛巾左右拉开，同时把腰往下沉，背部挺直、臀部往后推。'
+        quote: '练大腿臀：毛巾深蹲，目标 10 次。举起手臂把毛巾左右拉开，同时把腰往下沉，背部挺直、臀部往后推。'
+      - id: calf-stretch
+        text: '放松：小腿拉伸，左右各 10～20 秒。后脚伸直、脚跟踩地，前腿膝盖微弯，保持 10～20 秒，左右交替。'
+        quote: '放松：小腿拉伸，左右各 10～20 秒。后脚伸直、脚跟踩地，前腿膝盖微弯，保持 10～20 秒，左右交替。'
+    cautions:
+      - level: info
+        text: '肩膀疼就不要拉到脖子后面，改成在胸前拉。'
+        quote: '肩膀疼就不要拉到脖子后面，改成在胸前拉。'
+      - level: info
+        text: '膝盖不要内扣，要朝脚尖同一方向弯曲。'
+        quote: '膝盖不要内扣，要朝脚尖同一方向弯曲。'
+    notices:
+      - level: info
+        text: '这套动作会给膝盖和腰带来负担，不放心的就不要勉强做。'
+        quote: '这套动作会给膝盖和腰带来负担，不放心的就不要勉强做。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ac1f2616dd7ee27c
+
+  - id: fatty-liver-weight-plan
+    status: reviewed
+    source:
+      anchor: '减重 3%，不用更快'
+    remind:
+      text: '肥胖的人减重 3% 就能改善脂肪肝，不必追求更快'
+      quote: '体重目标：肥胖的人减重 3% 就能改善脂肪肝，不必着急，每月减 1～2 公斤的目标设定就够。'
+    dose:
+      - value: 3
+        unit: '%'
+        what: '改善脂肪肝所需减重比例'
+        quote: '体重目标：肥胖的人减重 3% 就能改善脂肪肝，不必着急，每月减 1～2 公斤的目标设定就够。'
+      - value: 1
+        valueMax: 2
+        unit: '公斤'
+        what: '每月减重目标'
+        quote: '体重目标：肥胖的人减重 3% 就能改善脂肪肝，不必着急，每月减 1～2 公斤的目标设定就够。'
+    steps:
+      - id: choose-sustainable-method
+        text: '有实绩的两家医院有共同点：由自己挑选能坚持的方式，以及定期用体重测定和影像诊断确认方向对不对。'
+        quote: '有实绩的两家医院有共同点：由自己挑选能坚持的方式，以及定期用体重测定和影像诊断确认方向对不对。'
+      - id: add-aerobic-strength
+        text: '有氧运动（快走、慢跑）配合肌力训练，慢慢把时间加上去。'
+        quote: '有氧运动（快走、慢跑）配合肌力训练，慢慢把时间加上去。'
+      - id: reduce-rice-and-snacks
+        text: '碳水吃太多的人：米饭从大碗换成普通碗，零食慢慢减量。'
+        quote: '碳水吃太多的人：米饭从大碗换成普通碗，零食慢慢减量。'
+      - id: limit-fruit-sugar
+        text: '水果里的糖吸收快，吃多要当心。'
+        quote: '水果里的糖吸收快，吃多要当心。'
+      - id: move-meal-earlier
+        text: '别在睡前吃；即使吃同样的量，把时间提前也能减轻肝脏负担。'
+        quote: '别在睡前吃；即使吃同样的量，把时间提前也能减轻肝脏负担。'
+    cautions:
+      - level: info
+        text: '极端节食会掉肌肉，反而给肝脏添负担。'
+        quote: '极端节食会掉肌肉，反而给肝脏添负担。'
+      - level: info
+        text: '特别瘦的人更要靠均衡饮食加运动，避免肌肉流失。'
+        quote: '特别瘦的人更要靠均衡饮食加运动，避免肌肉流失。'
+    notices:
+      - level: info
+        text: '目前没有能改善脂肪肝的药，推荐的是饮食加运动疗法。'
+        quote: '目前没有能改善脂肪肝的药，推荐的是饮食加运动疗法。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 91631b540a5330de
+
+  - id: alt-care-pathway
+    status: reviewed
+    source:
+      anchor: ALT 升高该去哪看
+    remind:
+      text: '按体检复查、就近内科和其他情况选择就诊地点'
+      quote:
+        - '体检被叫去复查的：借医生讲解结果的机会咨询。'
+        - '因为别的病在附近内科看的：直接问那位医生。'
+        - '以上都不是：去附近的消化器内科，最好是有超音波检查的诊所。'
+    steps:
+      - id: if-screening-follow-up
+        text: '体检被叫去复查的：借医生讲解结果的机会咨询。'
+        quote: '体检被叫去复查的：借医生讲解结果的机会咨询。'
+      - id: if-other-internal-medicine
+        text: '因为别的病在附近内科看的：直接问那位医生。'
+        quote: '因为别的病在附近内科看的：直接问那位医生。'
+      - id: if-neither
+        text: '以上都不是：去附近的消化器内科，最好是有超音波检查的诊所。'
+        quote: '以上都不是：去附近的消化器内科，最好是有超音波检查的诊所。'
+      - id: hospital-workup
+        text: '去了以后，先做查肝炎病毒的血液检查、问饮酒量是否合适，有超音波检查的地方会看是不是脂肪肝；需要的话再转给专科医生做详细检查和治疗。'
+        quote: '去了以后，先做查肝炎病毒的血液检查、问饮酒量是否合适，有超音波检查的地方会看是不是脂肪肝；需要的话再转给专科医生做详细检查和治疗。'
+    notices:
+      - level: with-doctor
+        text: '需要的话再转给专科医生做详细检查和治疗。'
+        quote: '需要的话再转给专科医生做详细检查和治疗。'
+      - level: info
+        text: '即使现在 ALT 不超过 30，过去长期超过 30 的人依然要注意。'
+        quote: '即使现在 ALT 不超过 30，过去长期超过 30 的人依然要注意。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 75bfbe0f5f8ff8eb

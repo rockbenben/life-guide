@@ -1,0 +1,275 @@
+article: "the-savvy-life-manual/body-care/muscle.md"
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: "40 岁后腿脚没劲、肌肉流失？每周 60 分钟稍快走"
+      reason: "导语主要是肌肉流失、疾病风险等背景概述；其中重复的稍快走处方已由稍快走训练卡和动作要领卡覆盖。"
+    - anchor: "40 岁，是肌肉的分水岭"
+      reason: "说明年龄相关肌肉量下降及疾病风险，没有可独立执行的动作，按背景知识不抽卡。"
+    - anchor: "流失的偏偏是最该保住的「速肌」"
+      reason: "解释慢肌、速肌及年龄衰减机制；其需要增加负荷的可执行结论已并入稍快走卡。"
+    - anchor: "为什么走得快，负荷就更大"
+      reason: "用可视化实验解释快走负荷更大的原因；速度与自检要求已在稍快走动作要领卡中表达，无需单列原理卡。"
+  images: []
+cards:
+  - id: brisk-walk-weekly-sixty-minutes
+    status: reviewed
+    name: "每周 60 分钟稍快走"
+    source:
+      anchor: "稍快走：每周 60 分钟，胜过每天 8,000 步"
+    slot: anytime
+    remind:
+      text: "每周累计 60 分钟有点吃力的稍快走，速走 3 分加普通走 3 分为 1 组。"
+      quote:
+        - "每周累计 60 分钟"
+        - "走路感觉「有点吃力」的速步"
+        - "速走 3 分 + 普通走 3 分 = 1 组"
+    dose:
+      - value: 60
+        unit: "分钟"
+        what: "每周累计稍快走时长"
+        quote: "每周累计 60 分钟"
+      - value: 3
+        unit: "分钟"
+        what: "每组速走时长"
+        quote: "速走 3 分 + 普通走 3 分 = 1 组"
+      - value: 3
+        unit: "分钟"
+        what: "每组普通步行时长"
+        quote: "速走 3 分 + 普通走 3 分 = 1 组"
+    steps:
+      - id: brisk-walk-three-plus-three
+        text: "走路感觉「有点吃力」的速步速走 3 分 + 普通走 3 分 = 1 组"
+        quote:
+          - "走路感觉「有点吃力」的速步"
+          - "速走 3 分 + 普通走 3 分 = 1 组"
+      - id: brisk-walk-daily-life
+        text: "短时间、快速度地走在日常生活里就能练到下半身和速肌"
+        quote:
+          - "短时间、快速度地走"
+          - "在日常生活里就能练到下半身和速肌"
+    cautions:
+      - level: info
+        text: "如果目的是提升肌力，比起走了多少，步速更重要。"
+        quote: "如果目的是提升肌力，比起走了多少，步速更重要。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4ac5392d87eae6f5
+
+  - id: brisk-walking-technique
+    status: reviewed
+    name: "保持稍快走姿势"
+    source:
+      anchor: "怎么走才算「稍快走」"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065630590.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "保持背部与视线笔直、目视前方，用脚跟先着地并迈大步；速度以呼吸加快、感觉「有点吃力」为准，走后小腿应有绷紧感。"
+      quote:
+        - "背部和视线保持笔直"
+        - "目视前方。"
+        - "用脚跟先着地"
+        - "迈大步"
+        - "呼吸开始加快、感觉到「有点吃力」的速度"
+        - "走完之后，小腿有绷紧的感觉，就说明你的姿势和速度都是对的。"
+    dose:
+      - value: 1
+        unit: "分钟"
+        what: "每组最短时长"
+        quote: "每一组至少 1 分钟"
+      - value: 60
+        unit: "分钟"
+        what: "每周累计时长"
+        quote: "目标是每周累计 60 分钟"
+    steps:
+      - id: upright-posture
+        text: "背部和视线保持笔直目视前方。"
+        quote:
+          - "背部和视线保持笔直"
+          - "目视前方。"
+      - id: heel-strike-and-long-stride
+        text: "用脚跟先着地迈大步"
+        quote:
+          - "用脚跟先着地"
+          - "迈大步"
+      - id: elbow-swing
+        text: "诀窍：把手肘弯成直角、向身后摆会更容易迈开步子。"
+        quote:
+          - "诀窍：把手肘弯成直角、"
+          - "向身后摆"
+          - "会更容易迈开步子。"
+      - id: effort-speed
+        text: "呼吸开始加快、感觉到「有点吃力」的速度"
+        quote: "呼吸开始加快、感觉到「有点吃力」的速度"
+      - id: calf-check
+        text: "走完之后，小腿有绷紧的感觉，就说明你的姿势和速度都是对的。"
+        quote: "走完之后，小腿有绷紧的感觉，就说明你的姿势和速度都是对的。"
+      - id: weekly-time
+        text: "每一组至少 1 分钟目标是每周累计 60 分钟"
+        quote:
+          - "每一组至少 1 分钟"
+          - "目标是每周累计 60 分钟"
+    cautions:
+      - level: info
+        text: "合适的速度因人而异，请按自己的节奏来"
+        quote:
+          - "合适的速度因人而异，"
+          - "请按自己的节奏来"
+      - level: info
+        text: "对体力没信心的人，从很短的时间开始"
+        quote:
+          - "对体力没信心的人，"
+          - "从很短的时间开始"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 0c1702e7d5339a7a
+
+  - id: brisk-walking-visual-tracker
+    status: reviewed
+    source:
+      anchor: "把坚持变成看得见的东西"
+    slot: anytime
+    remind:
+      text: "开始稍快走后记录周次；每速走 2 分钟涂满 1 格，速走 1 分钟涂半格。"
+      quote:
+        - "开始速走后，先填上现在是第几周（第 1 周就写 Week 1）。"
+        - "每速走 2 分钟，就涂满 1 格。"
+        - "速走 1 分钟 = 半格，速走 2 分钟 = 1 格。"
+    dose:
+      - value: 2
+        unit: "分钟"
+        what: "涂满一格所需时长"
+        quote: "每速走 2 分钟，就涂满 1 格"
+      - value: 1
+        unit: "分钟"
+        what: "涂半格所需时长"
+        quote: "速走 1 分钟 = 半格"
+    steps:
+      - id: record-week
+        text: "开始速走后，先填上现在是第几周（第 1 周就写 Week 1）。"
+        quote:
+          - "开始速走后，"
+          - "先填上现在是第几周"
+          - "（第 1 周就写 Week 1）。"
+      - id: fill-grid
+        text: "每速走 2 分钟，就涂满 1 格"
+        quote: "每速走 2 分钟，就涂满 1 格"
+      - id: half-grid
+        text: "速走 1 分钟 = 半格速走 2 分钟 = 1 格"
+        quote:
+          - "速走 1 分钟 = 半格"
+          - "速走 2 分钟 = 1 格"
+      - id: finish-week
+        text: "涂到最后一格，就完成一周了。"
+        quote: "涂到最后一格，就完成一周了。"
+      - id: color-grid
+        text: "每天换一种颜色去涂格子当月的努力会变成一整片看得见的图案，坚持这件事本身就变得有动力了。"
+        quote:
+          - "每天换一种颜色去涂格子"
+          - "当月的努力会变成一整片看得见的图案，坚持这件事本身就变得有动力了。"
+    cautions:
+      - level: info
+        text: "按这个规则涂满 60 格是每周 120 分钟速走正好是上面「每周累计 60 分钟」目标的两倍卡片是鼓励你往上填的进度表，别把涂满当达标线。"
+        quote:
+          - "按这个规则涂满 60 格是"
+          - "每周 120 分钟速走"
+          - "正好是上面「每周累计 60 分钟」目标的"
+          - "两倍"
+          - "卡片是鼓励你往上填的进度表，别把涂满当达标线。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 55148e1cb9b3c6b1
+    name: 用格子记录每周快走
+
+  - id: brisk-walking-commute-route
+    status: reviewed
+    source:
+      anchor: "把坚持变成看得见的东西"
+    slot: anytime
+    remind:
+      text: "在通勤路线上设定几个固定路段，走完路段就算数，不必每次掐表。"
+      quote:
+        - "每次速走都要掐表很麻烦。"
+        - "在通勤路线上设定几个固定路段"
+        - "这样只要走完路段就算数，通勤时顺手就能把一周的量填满。"
+    steps:
+      - id: set-fixed-route
+        text: "在通勤路线上设定几个固定路段"
+        quote: "在通勤路线上设定几个固定路段"
+      - id: complete-route-segment
+        text: "这样只要走完路段就算数，通勤时顺手就能把一周的量填满。"
+        quote:
+          - 这样只要走完路段就算数，通勤时顺手就能把一周的量填满。
+          - 对策不涉及杠铃和热量计算，只说走路：每周累计 60 分钟、走路感觉「有点吃力」的速步，每组至少 1 分钟（速走 3 分 + 普通走 3 分 = 1 组）。同样练 5 个月，每天走 8,000 步组的大腿前侧 +2%、后侧 +6%，速步组是前侧 +13%、后侧 +17%——以增肌为目标时，步速比步数更重要。姿势、速度、打卡法和下不了雨时的替补动作都在下面，可以直接照做。^[「“衰えない”筋肉」のトリセツ]
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: bfd6653f822a78eb
+    name: 通勤路上快走固定路段
+
+  - id: chair-squat-rainy-day
+    status: reviewed
+    source:
+      anchor: "下不了雨的备选方案：椅子静蹲"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065631044.jpeg?imageMogr2/format/webp"
+      - "https://img.newzone.top/20261016065631427.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "用椅子做静蹲：数 4 秒坐下、双手向前伸、膝盖不往前顶，再数 4 秒站起；10 次为 1 组，每天做 3 组。"
+      quote:
+        - "数 4 秒，坐下"
+        - "双手向前伸出再坐，膝盖就不容易前突，姿势会自然落到理想位置。"
+        - "坐下时不要让膝盖往前顶"
+        - "数 4 秒，站起来"
+        - "10 次为 1 组，每天做 3 组"
+    dose:
+      - value: 10
+        unit: "次"
+        what: "每组动作次数"
+        quote: "10 次为 1 组，每天做 3 组"
+      - value: 3
+        unit: "组"
+        what: "每天组数"
+        quote: "10 次为 1 组，每天做 3 组"
+      - value: 4
+        unit: "秒"
+        what: "坐下用时"
+        quote: "数 4 秒，坐下"
+      - value: 4
+        unit: "秒"
+        what: "站起用时"
+        quote: "数 4 秒，站起来"
+    steps:
+      - id: chair-squat-setup
+        text: "一把椅子、一条毛巾。双手握住毛巾站在椅子前双脚打开到与肩同宽"
+        quote:
+          - "一把椅子、一条毛巾。"
+          - "双手握住毛巾"
+          - "站在椅子前"
+          - "双脚打开到与肩同宽"
+      - id: chair-squat-sit
+        text: "数 4 秒，坐下双手向前伸出再坐，膝盖就不容易前突，姿势会自然落到理想位置。坐下时不要让膝盖往前顶"
+        quote:
+          - "数 4 秒，坐下"
+          - "双手向前伸出再坐，膝盖就不容易前突，姿势会自然落到理想位置。"
+          - "坐下时不要让膝盖往前顶"
+      - id: chair-squat-stand
+        text: "数 4 秒，站起来"
+        quote: "数 4 秒，站起来"
+    cautions:
+      - level: stop
+        text: "身体一旦出现疼痛，请立即停止"
+        quote:
+          - "身体一旦出现疼痛，请"
+          - "立即停止"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ce89bcb4f4d3b694
+    name: 雨天椅子静蹲 3 组

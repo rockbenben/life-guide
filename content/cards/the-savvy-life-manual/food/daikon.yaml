@@ -1,0 +1,221 @@
+article: the-savvy-life-manual/food/daikon.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '六道萝卜食谱'
+      reason: '本节含六道食谱；受全文最多六张卡限制，只抽取甘根火腿蛋、辛根炸脆片和微微晾干萝卜纳姆鲁。未另抽卡的是辛根韩国煎饼、给煎饼加三种配料及「微微晾干」萝卜烧卖。'
+  images: []
+cards:
+  - id: split-sweet-and-spicy-roots
+    status: reviewed
+    name: "萝卜甜根辛根分开"
+    source:
+      anchor: '白萝卜水塌塌？削 5mm 分两半，晾 2 小时更甜'
+    slot: anytime
+    remind:
+      text: '沿形成层把甘根和辛根分开'
+      quote: '沿形成层把甘根和辛根分开'
+    dose:
+      - value: 5
+        unit: 'mm'
+        what: '形成层连皮削切厚度'
+        quote: '厚厚削掉约 5mm'
+    steps:
+      - id: trim-formation-layer
+        text: '轮切好的萝卜连形成层一起厚厚削掉约 5mm'
+        quote: '轮切好的萝卜连形成层一起厚厚削掉约 5mm'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 68085c61ad9c2584
+
+  - id: lightly-dry-radish
+    status: reviewed
+    name: "把切好的萝卜晾干"
+    source:
+      anchor: '「水塌塌」的解法：把水分拿掉'
+    slot: anytime
+    remind:
+      text: '把切好的萝卜稍微晾干。'
+      quote: '水分充足的萝卜，稍微晾一下，甜味和鲜味就会上升'
+    effect:
+      text: '水分充足的萝卜，稍微晾一下，甜味和鲜味就会上升'
+      quote: '水分充足的萝卜，稍微晾一下，甜味和鲜味就会上升'
+    dose:
+      - value: 2
+        valueMax: 3
+        unit: '小时'
+        what: '晾晒时长'
+        quote: '晾 2～3 小时'
+      - value: 110
+        unit: '℃'
+        what: '烤箱温度'
+        quote: '110℃ 加热 45 分钟～1 小时'
+      - value: 45
+        unit: '分钟'
+        what: '烤箱加热时长'
+        quote: '110℃ 加热 45 分钟～1 小时'
+      - value: 1
+        unit: '小时'
+        what: '烤箱加热时长'
+        quote: '110℃ 加热 45 分钟～1 小时'
+    steps:
+      - id: arrange-radish
+        text: '切好的萝卜在筛子或盘子上摆开'
+        quote: '切好的萝卜在筛子或盘子上摆开'
+      - id: air-dry-radish
+        text: '晾 2～3 小时'
+        quote: '晾 2～3 小时'
+      - id: dry-in-sunlit-indoors
+        text: '晾晒在室内日照好的地方同样可以'
+        quote: '晾晒在室内日照好的地方同样可以'
+      - id: oven-dry-radish
+        text: '换烤箱也可以：110℃ 加热 45 分钟～1 小时'
+        quote: '换烤箱也可以：110℃ 加热 45 分钟～1 小时'
+    cautions:
+      - level: info
+        text: '时间和加热时长要按季节和天气适当调整'
+        quote: '时间和加热时长要按季节和天气适当调整'
+      - level: info
+        text: '切「微微晾干」专用的萝卜前，记得把手好好洗干净'
+        quote: '切「微微晾干」专用的萝卜前，记得把手好好洗干净'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 5c74d73d37dde1e4
+
+  - id: microwave-sweet-root-ham-egg
+    status: reviewed
+    source:
+      anchor: '六道萝卜食谱'
+    slot: anytime
+    remind:
+      text: '用微波炉加热甘根，做成火腿蛋。'
+      quote:
+        - 甘根用保鲜膜包好，放进耐热盘，微波炉 600W 加热 6～7 分钟
+        - 火腿（小）适量
+    steps:
+      - id: prepare-ingredients
+        text: '大根 2 块（切成 4cm 宽的圆片）鸡蛋 2 个蛋黄酱 2 大勺、牛奶 1 又 1/2 大勺'
+        quote:
+          - '大根 2 块（切成 4cm 宽的圆片）'
+          - '鸡蛋 2 个'
+          - '蛋黄酱 2 大勺、牛奶 1 又 1/2 大勺'
+      - id: trim-sweet-root
+        text: '把大根的皮连形成层一起厚厚削掉，分成甘根和辛根'
+        quote: '把大根的皮连形成层一起厚厚削掉，分成甘根和辛根'
+      - id: microwave-sweet-root
+        text: '甘根用保鲜膜包好，放进耐热盘，微波炉 600W 加热 6～7 分钟'
+        quote: '甘根用保鲜膜包好，放进耐热盘，微波炉 600W 加热 6～7 分钟'
+      - id: rest-after-heating
+        text: '加热后先静置去掉余热'
+        quote: '加热后先静置去掉余热'
+      - id: add-ham-and-egg
+        text: '甘根淋上盐和橄榄油，放上火腿和半熟蛋，淋酱汁'
+        quote: '甘根淋上盐和橄榄油，放上火腿和半熟蛋，淋酱汁'
+      - id: heat-soft-boiled-egg
+        text: '半熟蛋：用沸腾的热水加热 6 分钟'
+        quote: '半熟蛋：用沸腾的热水加热 6 分钟'
+      - id: use-cheese-instead
+        text: '盖上一片可融化的芝士，微波炉 600W 加热 30 秒，再放火腿、淋酱汁'
+        quote:
+          - 盖上一片可融化的芝士，微波炉 600W 加热 30 秒，再放火腿、淋酱汁
+          - 换烤箱也可以：110℃ 加热 45 分钟～1 小时。
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: eb5de4df295096fc
+
+  - id: fried-spicy-root-chips
+    status: reviewed
+    source:
+      anchor: '六道萝卜食谱'
+    slot: anytime
+    remind:
+      text: '切好的皮裹上面衣'
+      quote: '切好的皮裹上面衣'
+    steps:
+      - id: prepare-spicy-skin
+        text: '大根的皮（辛根）2 块（把大根切成 4cm 宽圆片后取下的皮）'
+        quote: '大根的皮（辛根）2 块（把大根切成 4cm 宽圆片后取下的皮）'
+      - id: cut-skin
+        text: '厚厚削下来的大根皮切成 2cm 宽'
+        quote: '厚厚削下来的大根皮切成 2cm 宽'
+      - id: mix-batter
+        text: '葛粉 1 大勺、低筋粉 1 大勺、水 2 大勺面衣材料用筷子之类随意拌匀'
+        quote:
+          - '葛粉 1 大勺、低筋粉 1 大勺、水 2 大勺'
+          - '面衣材料用筷子之类随意拌匀'
+      - id: fry-chips
+        text: '用 160℃ 的油炸 3～4 分钟'
+        quote:
+          - 用 160℃ 的油炸 3～4 分钟
+          - 把大根的皮连形成层一起厚厚削掉，分成甘根和辛根。
+      - id: pan-roast-chips
+        text: '切好的大根皮直接放在烧热的平底锅里烤，再按喜好调味'
+        quote:
+          - 切好的大根皮直接放在烧热的平底锅里烤，再按喜好调味
+          - 更简单的版本：切好的大根皮直接放在烧热的平底锅里烤，再按喜好调味，同样能吃到萝卜皮的美味。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 0616f842bd90b94a
+    name: 做辣根脆片
+
+  - id: dried-radish-namuru
+    status: reviewed
+    source:
+      anchor: '六道萝卜食谱'
+    slot: anytime
+    remind:
+      text: '把晾干的萝卜加盐、芝麻油和白芝麻拌匀。'
+      quote: '晾干的萝卜加盐、芝麻油和白芝麻，整体拌匀即可'
+    steps:
+      - id: measure-dried-radish
+        text: '微微晾干的白萝卜 100g'
+        quote: '微微晾干的白萝卜 100g'
+      - id: add-seasonings
+        text: '盐 2 小撮（1g）芝麻油 1 小勺白芝麻 1/2 小勺'
+        quote:
+          - '盐 2 小撮（1g）'
+          - '芝麻油 1 小勺'
+          - '白芝麻 1/2 小勺'
+      - id: mix-namuru
+        text: '晾干的萝卜加盐、芝麻油和白芝麻，整体拌匀即可'
+        quote: '晾干的萝卜加盐、芝麻油和白芝麻，整体拌匀即可'
+    cautions:
+      - level: info
+        text: '放久了萝卜会出水，做好后请尽快吃完'
+        quote: '放久了萝卜会出水，做好后请尽快吃完'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 14a210455e1ec900
+    name: 做萝卜干拌菜
+
+  - id: heat-spicy-root
+    status: reviewed
+    source:
+      anchor: '一条萝卜，其实是两种菜'
+    slot: anytime
+    remind:
+      text: '把辛根加热到 100℃ 以上，让甜味和鲜味显出来。'
+      quote: '把辛根加热到 100℃ 以上，产生辣味的酵素活性就会减弱，于是原本被辣味压住的甜味和鲜味就显出来了'
+    effect:
+      text: '产生辣味的酵素活性就会减弱，于是原本被辣味压住的甜味和鲜味就显出来了'
+      quote: '产生辣味的酵素活性就会减弱，于是原本被辣味压住的甜味和鲜味就显出来了'
+    dose:
+      - value: 100
+        unit: '℃'
+        what: '辛根最低加热温度'
+        quote: '把辛根加热到 100℃ 以上'
+    steps:
+      - id: heat-above-boiling-point
+        text: '把辛根加热到 100℃ 以上'
+        quote: '把辛根加热到 100℃ 以上'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: dda5a4ed0bc65538
+    name: 把辛根加热到 100℃

@@ -1,0 +1,520 @@
+article: "the-savvy-life-manual/body-care/back-pain.md"
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "另一条路：慢性腰痛的认知行为疗法"
+      reason: "本节介绍认知行为疗法、疼痛机制与就诊方向，属于疾病知识而不是可执行动作；为避免把条件性知识放入可勾选练习，未抽成卡。"
+    - anchor: "什么是运动控制训练"
+      reason: "本节解释运动控制训练的原理、核心规则与适用人群，属于概念性知识；核心规则已并入训练计划与动作卡，其余内容未制作成独立练习卡。"
+    - anchor: "慢性腰痛的成因：受力集中与大脑的指令"
+      reason: "本节解释慢性腰痛的成因与大脑指令，属于病因知识而非保健动作，因此未抽成可执行卡。"
+  images: []
+cards:
+  - id: daily-movement-control-plan
+    status: reviewed
+    name: "按指导做运动控制训练"
+    source:
+      anchor: "慢性腰痛怎么办：7 个动作练 4 周"
+    slot: anytime
+    remind:
+      text: "按专业指导完成整套运动控制训练，腰不动，只让胸部和髋关节动起来；做不完时可分次完成。"
+      quote:
+        - "在专业指导下练习适合自己的一种。"
+        - "腰不动，只让胸部和髋关节实实在在动起来。"
+        - "一次做不完可以分次做，例如早上做前 4 个、晚上做后 3 个。"
+    effect:
+      text: "持续约 4 周可期待改善。"
+      quote: "持续约 4 周可期待改善。"
+    dose:
+      - value: 7
+        unit: 个
+        what: 整套训练动作总数
+        quote: "这套运动控制训练共 7 个动作"
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 每种动作次数
+        quote: "每种动作 5 次"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    duration:
+      basis: derived
+      sec: 1209600
+      quote: "持续约 4 周可期待改善。"
+      formula: "4 周 × 7 天/周 × 24 小时/天 × 60 分/小时 × 60 秒/分 = 1209600 秒"
+    steps:
+      - id: plan-professional-practice
+        text: "在专业指导下练习适合自己的一种。"
+        quote: "在专业指导下练习适合自己的一种。"
+      - id: plan-core-rule
+        text: "腰不动，只让胸部和髋关节实实在在动起来。"
+        quote: "腰不动，只让胸部和髋关节实实在在动起来。"
+      - id: plan-split-schedule
+        text: "一次做不完可以分次做，例如早上做前 4 个、晚上做后 3 个。"
+        quote: "一次做不完可以分次做，例如早上做前 4 个、晚上做后 3 个。"
+    cautions:
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: eea8806895e7b190
+
+  - id: get-professional-guidance
+    status: reviewed
+    source:
+      anchor: "开始之前：怎么找到正确的指导"
+    slot: anytime
+    remind:
+      text: "先确认腰痛类型和运动控制训练的适用性，再由专业人员教具体做法。"
+      quote:
+        - "先咨询自己的腰痛到底属于哪一类。"
+        - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+    steps:
+      - id: guidance-find-clinic
+        text: "找一家由理疗师做康复治疗的骨科门诊。"
+        quote: "找一家由理疗师做康复治疗的骨科门诊。"
+      - id: guidance-classify-pain
+        text: "先咨询自己的腰痛到底属于哪一类。"
+        quote: "先咨询自己的腰痛到底属于哪一类。"
+      - id: guidance-learn-method
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+        quote: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+    cautions:
+      - level: stop
+        text: "做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote: "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: info
+        text: "腰痛的运动疗法不止一种，还有肌力训练、拉伸、有氧运动等。"
+        quote: "腰痛的运动疗法不止一种，还有肌力训练、拉伸、有氧运动等。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9102108ae03b6bcf
+    name: 练前先找专业指导
+
+  - id: hip-leg-raise
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065234277.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "屈膝仰卧，以髋关节为轴抬起双脚，再缓慢放下，保持腰不动。"
+      quote:
+        - 吸气，以髋关节为轴缓慢抬起双脚，大腿与床面垂直，小腿与之平行。
+        - 呼气，缓慢放下。
+        - 腰不动，只让胸部和髋关节实实在在动起来。
+        - 屈膝仰卧，双脚分开约一个拳头宽。
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作左右交替次数
+        quote: "左右交替 5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: leg-raise-setup
+        text: "屈膝仰卧，双脚分开约一个拳头宽。"
+        quote: "屈膝仰卧，双脚分开约一个拳头宽。"
+      - id: leg-raise-hand-support
+        text: "两侧手掌插入腰背下方。"
+        quote: "两侧手掌插入腰背下方。"
+      - id: leg-raise-lift
+        text: "吸气，以髋关节为轴缓慢抬起双脚，大腿与床面垂直，小腿与之平行。"
+        quote: "吸气，以髋关节为轴缓慢抬起双脚，大腿与床面垂直，小腿与之平行。"
+      - id: leg-raise-lower
+        text: "呼气，缓慢放下。"
+        quote: "呼气，缓慢放下。"
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: info
+        text: "注意腰后手掌承受的受力不能发生变化；抬髋时如果腰跟着一起弯曲或后仰，动作就错了。"
+        quote: "注意腰后手掌承受的受力不能发生变化；抬髋时如果腰跟着一起弯曲或后仰，动作就错了。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cc476e26e20ba5c4
+    name: 仰卧抬双腿练腰
+
+  - id: hip-rotation
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065234726.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "在手掌受力不变的范围内，把双脚向外侧打开后回到原位。"
+      quote:
+        - "呼气，在手掌受力不变的范围内，把双脚向外侧打开。"
+        - "吸气，回到原位。"
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作左右交替次数
+        quote: "左右交替 5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: hip-rotation-setup
+        text: "起始姿势同 。"
+        quote: "起始姿势同 ①。"
+      - id: hip-rotation-open
+        text: "呼气，在手掌受力不变的范围内，把双脚向外侧打开。"
+        quote: "呼气，在手掌受力不变的范围内，把双脚向外侧打开。"
+      - id: hip-rotation-return
+        text: "吸气，回到原位。"
+        quote: "吸气，回到原位。"
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: info
+        text: "没在动的那条腿，膝盖位置不能跟着移动。"
+        quote: "没在动的那条腿，膝盖位置不能跟着移动。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e78e27ddadd73071
+    name: 仰卧开合双腿
+
+  - id: side-lying-leg-lift
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065235104.jpeg?imageMogr2/format/webp"
+      - "https://img.newzone.top/20261016065235518.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "背靠墙屈膝侧卧，把大腿抬到与墙面垂直后回到原位。"
+      quote:
+        - "背靠墙，屈膝侧卧。"
+        - "吸气，抬起大腿直到与墙面垂直。"
+        - "呼气，回到原位。"
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作每侧次数
+        quote: "左右各 5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: side-leg-setup
+        text: "背靠墙，屈膝侧卧。"
+        quote: "背靠墙，屈膝侧卧。"
+      - id: side-leg-abdomen
+        text: "腹部收紧（像吸肚子一样用力），让一只手掌的厚度的空隙留在身体与床之间。"
+        quote: "腹部收紧（像吸肚子一样用力），让一只手掌的厚度的空隙留在身体与床之间。"
+      - id: side-leg-head
+        text: "下侧手臂像枕头一样托住头，让头位于脊柱延长线上。"
+        quote: "下侧手臂像枕头一样托住头，让头位于脊柱延长线上。"
+      - id: side-leg-foot
+        text: "整只脚抬离地面一个拳头宽。"
+        quote: "整只脚抬离地面一个拳头宽。"
+      - id: side-leg-lift
+        text: "吸气，抬起大腿直到与墙面垂直。"
+        quote: "吸气，抬起大腿直到与墙面垂直。"
+      - id: side-leg-lower
+        text: "呼气，回到原位。"
+        quote: "呼气，回到原位。"
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: stop
+        text: "抬起的那只脚始终与地面平行；抬腿时不要让腰弯曲或后仰。"
+        quote: "抬起的那只脚始终与地面平行；抬腿时不要让腰弯曲或后仰。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 27a00a2487bb9860
+    name: 侧卧靠墙抬腿
+
+  - id: standing-leg-swing
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065235959.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "四点贴墙站好，以髋关节为轴把脚向前摆再向后摆，腰部保持不动。"
+      quote:
+        - "站在墙角或门边，让头、胸、臀、支撑脚脚跟四点贴住。"
+        - "吸气，以髋关节为轴，把脚向前摆。"
+        - "呼气，把脚向后摆。"
+        - "腰不动，只让胸部和髋关节实实在在动起来。"
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作每侧次数
+        quote: "左右各 5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: standing-swing-setup
+        text: "站在墙角或门边，让头、胸、臀、支撑脚脚跟四点贴住。"
+        quote: "站在墙角或门边，让头、胸、臀、支撑脚脚跟四点贴住。"
+      - id: standing-swing-hand
+        text: "靠墙一侧的手插在腰后。"
+        quote: "靠墙一侧的手插在腰后。"
+      - id: standing-swing-forward
+        text: "吸气，以髋关节为轴，把脚向前摆。"
+        quote: "吸气，以髋关节为轴，把脚向前摆。"
+      - id: standing-swing-back
+        text: "呼气，把脚向后摆。"
+        quote: "呼气，把脚向后摆。"
+      - id: standing-swing-check
+        text: "一边做一边用插在腰后的手检查腰部有没有跟着动。"
+        quote: "一边做一边用插在腰后的手检查腰部有没有跟着动。"
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 05973d713a3889d0
+    name: 扶墙前后摆腿
+
+  - id: trunk-rotation
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065236329.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "浅坐挺直，肚脐朝前，只让胸部向一侧转动，再向反方向重复。"
+      quote:
+        - "在椅子或床边浅坐，让背部挺直绷紧。"
+        - "肚脐保持朝向正前方，只让胸部转过去，眼睛看向转动方向一侧的指尖。"
+        - "反方向重复。"
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作左右交替次数
+        quote: "左右交替 5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: trunk-rotation-setup
+        text: "在椅子或床边浅坐，让背部挺直绷紧。"
+        quote: "在椅子或床边浅坐，让背部挺直绷紧。"
+      - id: trunk-rotation-arms
+        text: "双手抬起，与地面平行。"
+        quote: "双手抬起，与地面平行。"
+      - id: trunk-rotation-turn
+        text: "肚脐保持朝向正前方，只让胸部转过去，眼睛看向转动方向一侧的指尖。"
+        quote: "肚脐保持朝向正前方，只让胸部转过去，眼睛看向转动方向一侧的指尖。"
+      - id: trunk-rotation-reverse
+        text: "反方向重复。"
+        quote: "反方向重复。"
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: stop
+        text: "两侧膝盖位置一旦偏移，就说明动的是腰而不是胸。"
+        quote: "两侧膝盖位置一旦偏移，就说明动的是腰而不是胸。"
+      - level: info
+        text: "可以在两膝之间夹一个矿泉水瓶或毛巾来自检。"
+        quote: "可以在两膝之间夹一个矿泉水瓶或毛巾来自检。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 53f5dea072b77dca
+    name: 坐着只转上身
+
+  - id: mermaid
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065630578.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "浅坐挺直，一臂上举后用指尖画大弧线，把胸向侧面倒下再回位。"
+      quote:
+        - 吸气，一只手臂笔直向上伸展。
+        - 呼气，用指尖划一道大弧线，把胸向侧面倒下去。
+        - 深吸一次，再呼气回到原位。
+        - 在椅子或床边浅坐，让背部挺直绷紧。
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作左右交替次数
+        quote: "左右交替 5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: mermaid-setup
+        text: "在椅子或床边浅坐，背部挺直绷紧。"
+        quote: "在椅子或床边浅坐，背部挺直绷紧。"
+      - id: mermaid-reach
+        text: "吸气，一只手臂笔直向上伸展。"
+        quote: "吸气，一只手臂笔直向上伸展。"
+      - id: mermaid-arc
+        text: "呼气，用指尖划一道大弧线，把胸向侧面倒下去。"
+        quote: "呼气，用指尖划一道大弧线，把胸向侧面倒下去。"
+      - id: mermaid-return
+        text: "深吸一次，再呼气回到原位。"
+        quote: "深吸一次，再呼气回到原位。"
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: info
+        text: "倒下侧的侧腹不要塌陷，注意保持侧腰的间距。"
+        quote: "倒下侧的侧腹不要塌陷，注意保持侧腰的间距。"
+      - level: info
+        text: "全身不要整体歪向一侧，注意臀部受力是否偏在一侧。"
+        quote: "全身不要整体歪向一侧，注意臀部受力是否偏在一侧。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: be0a810ff03fd86b
+    name: 坐着画臂侧弯
+
+  - id: swan
+    status: reviewed
+    source:
+      anchor: "7 个动作全解"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065236737.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "俯卧用手轻压地板，把胸部向前推出并上抬，再呼气回到原位。"
+      quote:
+        - 呼气，用手轻轻下压地板，把胸向前推出、上抬离地；肋骨以下的部分不离开床面，只在离地的范围内伸展。
+        - 深吸一次，呼气回到原位。
+        - 在专业指导下练习适合自己的一种。由医生或理疗师判断是否适合运动控制训练后，再教具体做法。
+    dose:
+      - value: 1
+        unit: 组
+        what: 整套训练每日组数
+        quote: "1 天 1 组"
+      - value: 5
+        unit: 次
+        what: 该动作次数
+        quote: "5 次 × 1 组。"
+      - value: 3
+        unit: 天
+        what: 整套训练每周最少练习天数
+        quote: "每周练 3 天以上"
+    steps:
+      - id: swan-setup
+        text: "俯卧，手掌撑在地板上，手肘朝天花板方向。"
+        quote: "俯卧，手掌撑在地板上，手肘朝天花板方向。"
+      - id: swan-extend
+        text: "呼气，用手轻轻下压地板，把胸向前推出、上抬离地；肋骨以下的部分不离开床面，只在离地的范围内伸展。"
+        quote: "呼气，用手轻轻下压地板，把胸向前推出、上抬离地；肋骨以下的部分不离开床面，只在离地的范围内伸展。"
+      - id: swan-return
+        text: "深吸一次，呼气回到原位。"
+        quote: "深吸一次，呼气回到原位。"
+      - id: swan-gaze
+        text: '视线要配合胸部伸展，从手前方的远处"拉出去"。'
+        quote: '视线要配合胸部伸展，从手前方的远处"拉出去"。'
+    cautions:
+      - level: stop
+        text: "训练中一旦感觉身体疼痛，立即中止并就医。"
+        quote: "训练中一旦感觉身体疼痛，立即中止并就医。"
+      - level: stop
+        text: "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。做错动作有可能反过来伤腰，请不要照着图自己来。"
+        quote:
+          - "由医生或理疗师判断是否适合运动控制训练后，再教具体做法。"
+          - "做错动作有可能反过来伤腰，请不要照着图自己来。"
+      - level: stop
+        text: "不要仰头。"
+        quote: "不要仰头。"
+      - level: info
+        text: "肋骨以下的部分不离开床面，只在离地的范围内伸展。"
+        quote: "肋骨以下的部分不离开床面，只在离地的范围内伸展。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 80532b29edabb428
+    name: 俯卧撑起上身

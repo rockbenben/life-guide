@@ -1,0 +1,439 @@
+article: the-savvy-life-manual/body-care/pancreatic-cancer.md
+kind: condition
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: pancreatic-cancer-survival-contrast
+    status: reviewed
+    name: "早发现 1cm 的生存差别"
+    source:
+      anchor: "胰腺癌 11% → 80%：差别只在早期发现"
+    remind:
+      text: "对照胰腺癌整体的 5 年生存率与 1cm 以内发现时的 5 年生存率。"
+      quote: "胰腺癌整体的 5 年生存率约 11%；而在 1cm 以内发现，5 年生存率会跳到 80%。"
+    steps:
+      - id: confirm-source-date
+        text: "这份 2026 年 7 月 16 日播放的说明书（品番 YKMY-153）"
+        quote: "这份 2026 年 7 月 16 日播放的说明书（品番 YKMY-153）"
+      - id: confirm-manual-scope
+        text: "说明书全部讲的是怎么提前发现和该去哪里查。它没有讲治疗，也没有给出任何用药内容。"
+        quote:
+          - "说明书全部讲的是怎么提前发现和该去哪里查。"
+          - "它没有讲治疗，也没有给出任何用药内容。"
+      - id: compare-survival-figures
+        text: "胰腺癌整体的 5 年生存率约 11%；而在 1cm 以内发现，5 年生存率会跳到 80%。"
+        quote: "胰腺癌整体的 5 年生存率约 11%；而在 1cm 以内发现，5 年生存率会跳到 80%。"
+    notices:
+      - level: info
+        text: "这份说明书讲的是早期发现的路径，不是诊断，也不是治疗建议。"
+        quote: "这份说明书讲的是早期发现的路径，不是诊断，也不是治疗建议。"
+      - level: info
+        text: "不要用「有没有症状」来判断要不要检查"
+        quote: "不要用「有没有症状」来判断要不要检查"
+      - level: with-doctor
+        text: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+        quote: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 18272a8e97a37d26
+
+  - id: pancreatic-anatomy-and-functions
+    status: reviewed
+    name: "胰腺的位置与作用"
+    source:
+      anchor: "为什么偏偏是胰腺"
+    remind:
+      text: "了解胰腺的位置、大小、转移特点与主要作用。"
+      quote:
+        - "第一，胰腺在身体的深处。"
+        - "胰腺位于肝脏和胃的背后，是身体最深处的地方；大小大约只有 15 厘米。"
+        - "因为位置深、体积小，在 X 线等检查里很难成像，早期发现因此困难"
+        - "胰腺很小，所以癌只是稍微变大一点就容易发生转移"
+        - "分泌分解脂肪、糖类和脂质的液体，送往胃之后的十二指肠"
+        - "「胰岛素是唯一下降血糖值的激素」"
+    steps:
+      - id: pancreatic-location
+        text: "第一，胰腺在身体的深处。胰腺位于肝脏和胃的背后，是身体最深处的地方；大小大约只有 15 厘米。"
+        quote:
+          - "第一，胰腺在身体的深处。"
+          - "胰腺位于肝脏和胃的背后，是身体最深处的地方；大小大约只有 15 厘米。"
+      - id: difficult-early-imaging
+        text: "因为位置深、体积小，在 X 线等检查里很难成像，早期发现因此困难"
+        quote: "因为位置深、体积小，在 X 线等检查里很难成像，早期发现因此困难"
+      - id: metastatic-tendency
+        text: "第二，它太小，所以癌稍微一大就转移。胰腺很小，所以癌只是稍微变大一点就容易发生转移"
+        quote:
+          - "第二，它太小，所以癌稍微一大就转移。"
+          - "胰腺很小，所以癌只是稍微变大一点就容易发生转移"
+      - id: digestive-function
+        text: "分泌分解脂肪、糖类和脂质的液体，送往胃之后的十二指肠吃下的食物先被胃酸泡成粥状，再由来自胰腺的消化液分解到能被吸收的程度。"
+        quote:
+          - "分泌分解脂肪、糖类和脂质的液体，送往胃之后的十二指肠"
+          - "吃下的食物先被胃酸泡成粥状，再由来自胰腺的消化液分解到能被吸收的程度。"
+      - id: insulin-function
+        text: "「胰岛素是唯一下降血糖值的激素」一进食，胰腺就分泌胰岛素，从而把血糖降下来。"
+        quote:
+          - "「胰岛素是唯一下降血糖值的激素」"
+          - "一进食，胰腺就分泌胰岛素，从而把血糖降下来。"
+    notices:
+      - level: info
+        text: "但如果癌还处在小的早期，多半还留在胰腺内部，因此可以用手术整个切除"
+        quote: "但如果癌还处在小的早期，多半还留在胰腺内部，因此可以用手术整个切除"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5649cf6c5389dd33
+
+  - id: pancreatic-cancer-mortality-and-sources
+    status: reviewed
+    name: "死亡数与生存率的出处"
+    source:
+      anchor: "死亡数与生存率：说明书照录的两个出处"
+    remind:
+      text: "了解胰腺癌死亡人数排名、生存率数据及其出处。"
+      quote:
+        - 胰腺癌因老龄化等原因，死亡人数正在急增；在最新数据里，已经超过胃癌，排到第 3 位。
+        - 第 1 位 肺癌、第 2 位 大肠癌、第 3 位 胰腺癌、第 4 位 胃癌
+        - Japan Pancreatic Cancer Registry
+        - Egawa et al. Pancreas 2012;41:985-992
+        - 这份 2026 年 7 月 16 日播放的说明书（品番 YKMY-153）把整件事压缩成了一组对照：胰腺癌整体的 5 年生存率约 11%；而在 1cm 以内发现，5 年生存率会跳到 80%。^[「すい臓がん対策」の取扱説明書（品番 YKMY-153）]
+    steps:
+      - id: mortality-trend
+        text: "胰腺癌因老龄化等原因，死亡人数正在急增；在最新数据里，已经超过胃癌，排到第 3 位。"
+        quote: "胰腺癌因老龄化等原因，死亡人数正在急增；在最新数据里，已经超过胃癌，排到第 3 位。"
+      - id: mortality-ranking
+        text: "第 1 位 肺癌、第 2 位 大肠癌、第 3 位 胰腺癌、第 4 位 胃癌死亡人数一年超过 4 万人"
+        quote:
+          - "第 1 位 肺癌、第 2 位 大肠癌、第 3 位 胰腺癌、第 4 位 胃癌"
+          - "死亡人数一年超过 4 万人"
+      - id: mortality-source
+        text: "国立癌症研究中心癌症信息服务「癌症统计」"
+        quote: "国立癌症研究中心癌症信息服务「癌症统计」"
+      - id: survival-chart-sources
+        text: "正文页那张 11% 与 80% 的对照图，图下注明的出处是 Japan Pancreatic Cancer Registry。背面那张 5 年生存率图，图下注明的出处是 Egawa et al. Pancreas 2012;41:985-992。"
+        quote:
+          - "正文页那张 11% 与 80% 的对照图，图下注明的出处是 Japan Pancreatic Cancer Registry。"
+          - "背面那张 5 年生存率图，图下注明的出处是 Egawa et al. Pancreas 2012;41:985-992。"
+      - id: survival-assumptions
+        text: "「5 年生存率（诊断之后经过 5 年的生存率），在所有癌症中最低，约为 11%」癌在 1cm 以下被发现时，完全切除的可能性很高，所以 5 年生存率会跳升到 80%"
+        quote:
+          - "「5 年生存率（诊断之后经过 5 年的生存率），在所有癌症中最低，约为 11%」"
+          - "癌在 1cm 以下被发现时，完全切除的可能性很高，所以 5 年生存率会跳升到 80%"
+      - id: unexplained-source-relationship
+        text: "同一份说明书的两个页面给出了不同出处，这里如实并列说明书没有解释这两个出处的关系"
+        quote:
+          - "同一份说明书的两个页面给出了不同出处，这里如实并列"
+          - "说明书没有解释这两个出处的关系"
+    notices:
+      - level: info
+        text: "同一份说明书的两个页面给出了不同出处，这里如实并列"
+        quote: "同一份说明书的两个页面给出了不同出处，这里如实并列"
+      - level: info
+        text: "说明书没有解释这两个出处的关系。"
+        quote: "说明书没有解释这两个出处的关系。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c0951e80b670ce23
+
+  - id: pancreatic-cancer-early-tests
+    status: reviewed
+    name: "胰腺癌的三种早期检查"
+    source:
+      anchor: "三种检查，各自能看到什么"
+    remind:
+      text: "了解早期检查各自能够看到什么。"
+      quote:
+        - "用造影剂这种药让影像更容易看清，有机会发现 7 毫米这样的小癌。"
+        - "能发现更小的癌。"
+        - "这是更早期、在癌还结成块之前就能发现的办法。"
+    steps:
+      - id: ct-detection
+        text: "用造影剂这种药让影像更容易看清，有机会发现 7 毫米这样的小癌。"
+        quote:
+          - 用造影剂这种药让影像更容易看清，有机会发现 7 毫米这样的小癌。
+          - CT：用造影剂这种药让影像更容易看清，有机会发现 7 毫米这样的小癌。
+      - id: endoscopic-ultrasound
+        text: "能发现更小的癌。内镜进不去胰腺，但可以把它放到紧挨着的胃或十二指肠里，照着超声高精细地观察胰腺。"
+        quote:
+          - "能发现更小的癌。"
+          - "内镜进不去胰腺，但可以把它放到紧挨着的胃或十二指肠里，照着超声高精细地观察胰腺。"
+      - id: cytology-examination
+        text: "细胞学检查（細胞診）这是更早期、在癌还结成块之前就能发现的办法。先把一根细管插到胰腺，采集分泌液；如果有癌，脱落的东西就在这层分泌液里，于是用显微镜去找「癌细胞」。"
+        quote:
+          - "细胞学检查（細胞診）"
+          - "这是更早期、在癌还结成块之前就能发现的办法。"
+          - "先把一根细管插到胰腺，采集分泌液；如果有癌，脱落的东西就在这层分泌液里，于是用显微镜去找「癌细胞」。"
+    notices:
+      - level: info
+        text: "CT 和超声内镜都是非常重要的检查"
+        quote: "CT 和超声内镜都是非常重要的检查"
+      - level: with-doctor
+        text: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+        quote: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a39fbfa2f9b4b5a0
+
+  - id: abdominal-ultrasound-precancer-signs
+    status: reviewed
+    name: "超声看到的癌前征象"
+    source:
+      anchor: "腹部超声：看的不是癌，是「癌前的征象」"
+    remind:
+      text: "了解腹部超声观察到的癌前征象与随访提示。"
+      quote:
+        - "超声看到的是「癌」吗——不是，是「得癌之前的征象」。"
+        - "但请务必每半年到一年，定期、认真地接受检查。"
+    steps:
+      - id: ultrasound-procedure
+        text: "仰面躺下，在肚子上涂凝胶，用超声观察体内"
+        quote: "仰面躺下，在肚子上涂凝胶，用超声观察体内"
+      - id: identify-signs
+        text: "说明书指出这样的征象有两个：让消化液通过的胰管变粗胰腺囊肿（すいのう胞）这种积着液的囊"
+        quote:
+          - "说明书指出这样的征象有两个："
+          - "让消化液通过的胰管变粗"
+          - "胰腺囊肿（すいのう胞）这种积着液的囊"
+      - id: risk-after-signs
+        text: "出现两个征象的人，两年内罹患胰腺癌的可能性约 1～2%因此不必过度担心"
+        quote:
+          - "出现两个征象的人，两年内罹患胰腺癌的可能性约 1～2%"
+          - "因此不必过度担心"
+      - id: regular-follow-up
+        text: "但请务必每半年到一年，定期、认真地接受检查。"
+        quote: "但请务必每半年到一年，定期、认真地接受检查。"
+      - id: early-detection-through-follow-up
+        text: "发现征象的话，通过定期检查，即使真的得了癌也能超早期发现。"
+        quote: "发现征象的话，通过定期检查，即使真的得了癌也能超早期发现。"
+      - id: ultrasound-access
+        text: "腹部超声检查机，附近的消化器内科或内科诊所大多都有"
+        quote: "腹部超声检查机，附近的消化器内科或内科诊所大多都有"
+    notices:
+      - level: info
+        text: "出现两个征象的人，两年内罹患胰腺癌的可能性约 1～2%因此不必过度担心"
+        quote:
+          - "出现两个征象的人，两年内罹患胰腺癌的可能性约 1～2%"
+          - "因此不必过度担心"
+      - level: info
+        text: "即使发现了这两个征象，多数人也不会得胰腺癌"
+        quote: "即使发现了这两个征象，多数人也不会得胰腺癌"
+      - level: with-doctor
+        text: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+        quote: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5ebcc6cf548b0243
+
+  - id: pancreatic-cancer-referral-and-risk-factors
+    status: reviewed
+    name: "谁该做检查"
+    source:
+      anchor: "谁该做？「开业医生知道风险」"
+    remind:
+      text: "了解胰腺癌危险因子、早期诊断项目与转介机制。"
+      quote:
+        - "如今日本 30 个以上地区正在实施这类尽早发现胰腺癌、把它接到治疗上去的尝试。"
+        - "因为胰腺癌「容易罹患的危险因子（风险）」是清楚的"
+        - "这套转介系统通称「尾道方式」，如今已经推广到全国。"
+    steps:
+      - id: community-screening-projects
+        text: "如今日本 30 个以上地区正在实施这类尽早发现胰腺癌、把它接到治疗上去的尝试。"
+        quote: "如今日本 30 个以上地区正在实施这类尽早发现胰腺癌、把它接到治疗上去的尝试。"
+      - id: onomichi-result
+        text: "最早开始做这件事的尾道市，取得了「早期发现率与全国平均相比高达 7 倍以上」的成果。"
+        quote: "最早开始做这件事的尾道市，取得了「早期发现率与全国平均相比高达 7 倍以上」的成果。"
+      - id: example-risk-factors
+        text: "例如家族里有胰腺癌病史、饮酒量很大等"
+        quote: "例如家族里有胰腺癌病史、饮酒量很大等"
+      - id: risk-factor-categories
+        text: "生活习惯病糖尿病、肥胖胰腺疾病・胰腺影像所见慢性胰腺炎、IPMN、胰腺囊肿、胰管扩张其他胆结石・胆囊摘除术、血痰型、感染症"
+        quote:
+          - "生活习惯病"
+          - "糖尿病、肥胖"
+          - "胰腺疾病・胰腺影像所见"
+          - "慢性胰腺炎、IPMN、胰腺囊肿、胰管扩张"
+          - "其他"
+          - "胆结石・胆囊摘除术、血痰型、感染症"
+      - id: referral-system
+        text: "把这些胰腺癌危险因子的学习会召集开业医生来开参加对象也包括不以胰腺为专业的医生一旦发现符合的患者，就立刻介绍到能做精密检查的医院这套转介系统通称「尾道方式」，如今已经推广到全国。"
+        quote:
+          - "把这些胰腺癌危险因子的学习会召集开业医生来开"
+          - "参加对象也包括不以胰腺为专业的医生"
+          - "一旦发现符合的患者，就立刻介绍到能做精密检查的医院"
+          - "这套转介系统通称「尾道方式」，如今已经推广到全国。"
+    notices:
+      - level: with-doctor
+        text: "一旦发现符合的患者，就立刻介绍到能做精密检查的医院"
+        quote: "一旦发现符合的患者，就立刻介绍到能做精密检查的医院"
+      - level: info
+        text: "「血痰型」一项照说明书原样录入这一项与胰腺癌的关联，说明书未作任何说明。"
+        quote:
+          - "「血痰型」一项照说明书原样录入"
+          - "这一项与胰腺癌的关联，说明书未作任何说明。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 2151ad693c9cae43
+
+  - id: pancreatic-cancer-risk-checklist
+    status: draft
+    source:
+      anchor: "危险度检查表：11 项加总"
+    remind:
+      text: "逐项核对危险因子并把分数加起来。"
+      quote: "把符合项目的分数加起来，检查一下胰腺癌的风险。"
+    steps:
+      - id: use-checklist
+        text: "用起来简单，可以自己检查自己胰腺癌的危险程度"
+        quote: "用起来简单，可以自己检查自己胰腺癌的危险程度"
+      - id: download-checklist
+        text: "可以从节目官网下载"
+        quote: "可以从节目官网下载"
+      - id: symptom-limitation
+        text: "胰腺癌没有能立刻分辨出来的特有症状；患者自己察觉不到不要用「有没有症状」来判断要不要检查"
+        quote:
+          - "胰腺癌没有能立刻分辨出来的特有症状；患者自己察觉不到"
+          - "不要用「有没有症状」来判断要不要检查"
+      - id: family-history-one
+        text: "父母、子女、兄弟姐妹中有 1 人患过胰腺癌1 分"
+        quote:
+          - "父母、子女、兄弟姐妹中有 1 人患过胰腺癌"
+          - "1 分"
+      - id: family-history-two
+        text: "父母、子女、兄弟姐妹中有 2 人以上患过胰腺癌2 分"
+        quote:
+          - "父母、子女、兄弟姐妹中有 2 人以上患过胰腺癌"
+          - "2 分"
+      - id: unexplained-abdominal-pain
+        text: "有原因不明的腹痛2 分"
+        quote:
+          - "有原因不明的腹痛"
+          - "2 分"
+      - id: unexplained-back-pain
+        text: "有原因不明的背痛2 分"
+        quote:
+          - "有原因不明的背痛"
+          - "2 分"
+      - id: unexplained-weight-loss
+        text: "没有在减肥，体重却减少了2 分"
+        quote:
+          - "没有在减肥，体重却减少了"
+          - "2 分"
+      - id: yellow-eyes
+        text: "眼白变黄了3 分"
+        quote:
+          - "眼白变黄了"
+          - "3 分"
+      - id: diabetes-change
+        text: "生活方式没有改变，却患上或恶化了糖尿病3 分"
+        quote:
+          - "生活方式没有改变，却患上或恶化了糖尿病"
+          - "3 分"
+      - id: smoking
+        text: "吸烟1 分"
+        quote:
+          - "吸烟"
+          - "1 分"
+      - id: alcohol
+        text: "饮酒日每天喝 3 合以上1 分"
+        quote:
+          - "饮酒日每天喝 3 合以上"
+          - "1 分"
+      - id: obesity
+        text: "肥胖（BMI 30 以上）1 分"
+        quote:
+          - "肥胖（BMI 30 以上）"
+          - "1 分"
+      - id: pancreatic-abnormality
+        text: "曾在体检或医院被指出胰腺有异常3 分"
+        quote:
+          - "曾在体检或医院被指出胰腺有异常"
+          - "3 分"
+      - id: checklist-collaboration
+        text: "〈由以胰腺为专业的医生协作制作〉"
+        quote: "〈由以胰腺为专业的医生协作制作〉"
+    notices:
+      - level: seek-care
+        text: "3 分以上的人，建议到内科（最好是消化器内科）就诊。"
+        quote: "3 分以上的人，建议到内科（最好是消化器内科）就诊。"
+      - level: info
+        text: "说明书没有提到它的验证情况，也没有给出 3 分以外的分数分级"
+        quote: "说明书没有提到它的验证情况，也没有给出 3 分以外的分数分级"
+
+  - id: pancreatic-cancer-visit-path
+    status: reviewed
+    source:
+      anchor: "去看病时该怎么说、该查什么"
+    remind:
+      text: "就诊时把「危险度检查中符合的项目」和「担心胰腺癌」告诉医生。"
+      quote: "把「危险度检查中符合的项目」和「担心胰腺癌」这两件事告诉医生"
+    steps:
+      - id: prepare-memo
+        text: "把符合的项目先记在备忘录上，就能准确地传达。"
+        quote: "把符合的项目先记在备忘录上，就能准确地传达。"
+      - id: visit-internal-medicine
+        text: "到附近的内科（最好是消化器内科）就诊"
+        quote: "到附近的内科（最好是消化器内科）就诊"
+      - id: initial-examinations
+        text: "通过问诊、血液检查、腹部超声检查等，由医生判断有没有问题。"
+        quote: "通过问诊、血液检查、腹部超声检查等，由医生判断有没有问题。"
+    notices:
+      - level: with-doctor
+        text: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+        quote: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 0a9d7618dfa7858b
+
+  - id: abdominal-ultrasound-safety
+    status: reviewed
+    name: "腹部超声的安全性"
+    source:
+      anchor: "腹部超声：安全、不痛、没有辐射"
+    remind:
+      text: "了解腹部超声的安全性、时长、费用与检查目的。"
+      quote:
+        - "腹部超声，是把超声照在肚子上、观察体内状况的检查。"
+        - "不痛，也没有 X 线的辐射。"
+        - "检查时间约 10 分钟；三成负担的费用约从 1,500 日元起（诊察费等另计）。"
+    steps:
+      - id: ultrasound-examination
+        text: "腹部超声，是把超声照在肚子上、观察体内状况的检查。"
+        quote: "腹部超声，是把超声照在肚子上、观察体内状况的检查。"
+      - id: painless-no-radiation
+        text: "不痛，也没有 X 线的辐射。"
+        quote: "不痛，也没有 X 线的辐射。"
+      - id: examination-time-and-cost
+        text: "检查时间约 10 分钟；三成负担的费用约从 1,500 日元起（诊察费等另计）。"
+        quote: "检查时间约 10 分钟；三成负担的费用约从 1,500 日元起（诊察费等另计）。"
+      - id: related-signs
+        text: "超声有时能发现与胰腺癌早期发现相关的征象。"
+        quote: "超声有时能发现与胰腺癌早期发现相关的征象。"
+      - id: majority-reassurance
+        text: "但即使发现了这样的征象，多数人也不会得胰腺癌。"
+        quote: "但即使发现了这样的征象，多数人也不会得胰腺癌。"
+      - id: doctor-directed-follow-up
+        text: "请不要过度担心，按照医生的指示定期接受检查，这很重要。"
+        quote: "请不要过度担心，按照医生的指示定期接受检查，这很重要。"
+    duration:
+      basis: derived
+      sec: 600
+      formula: "10 分钟 × 60 秒/分钟 = 600 秒"
+    notices:
+      - level: info
+        text: "不痛，也没有 X 线的辐射。"
+        quote: "不痛，也没有 X 线的辐射。"
+      - level: with-doctor
+        text: "费用与可否检查请以所在医疗机构的说明为准；是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+        quote: "费用与可否检查请以所在医疗机构的说明为准；是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: fb3037642a64171a

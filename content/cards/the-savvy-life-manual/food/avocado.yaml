@@ -1,0 +1,464 @@
+article: the-savvy-life-manual/food/avocado.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: milk-boil-ripening
+    status: reviewed
+    name: "牛奶煮牛油果催熟"
+    source:
+      anchor: '牛油果怎么催熟？牛奶中火煮 10 分钟就变软'
+    slot: anytime
+    remind:
+      text: '牛油果果肉切块放入沸腾的牛奶中，中火煮 10 分钟'
+      quote:
+        - 牛油果果肉切块放入沸腾的牛奶中，中火煮 10 分钟
+        - 这篇给煮牛奶催熟这一招，外加它延伸出来的三道热菜、两道混进肉馅的主菜、「稍微加一点」的配角用法，和发褐后打成果昔的救场法。具体做法是：牛油果果肉切块放入沸腾的牛奶中，中火煮 10 分钟——此过程中细胞间的果胶会被破坏，使果实进入说明书所说的「反式消除」状态，甚至坚硬的牛油果也会迅速变软，口感更加奶油滑腻；若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用。
+    effect:
+      text: '甚至坚硬的牛油果也会迅速变软，口感更加奶油滑腻'
+      quote: '甚至坚硬的牛油果也会迅速变软，口感更加奶油滑腻'
+    dose:
+      - value: 10
+        unit: '分钟'
+        what: '牛奶加热时长'
+        quote: '中火煮 10 分钟'
+      - value: 20
+        unit: '分钟'
+        what: '果肉冷藏时长'
+        quote: '若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '中火煮 10 分钟'
+    steps:
+      - id: add-avocado-to-milk
+        text: '牛油果果肉切块放入沸腾的牛奶中'
+        quote: '牛油果果肉切块放入沸腾的牛奶中'
+      - id: simmer-in-milk
+        text: '中火煮 10 分钟'
+        quote: '中火煮 10 分钟'
+      - id: soften-avocado
+        text: '细胞间的果胶会被破坏甚至坚硬的牛油果也会迅速变软，口感更加奶油滑腻'
+        quote:
+          - '细胞间的果胶会被破坏'
+          - '甚至坚硬的牛油果也会迅速变软，口感更加奶油滑腻'
+      - id: chill-flesh
+        text: '若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用'
+        quote: '若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 9d78a0c9ebe21a56
+
+  - id: avocado-versatile-seasoning
+    status: reviewed
+    name: "牛油果当配角增鲜"
+    source:
+      anchor: '「稍微加一点」：牛油果是万能配角'
+    slot: anytime
+    remind:
+      text: '把牛油果用作配角，增加菜肴的醇厚感和鲜味。'
+      quote: '哪怕只加一点点，菜的醇厚感和鲜味都会明显上一个台阶。'
+    steps:
+      - id: mix-into-meat
+        text: '把牛油果混进肉馅，口感更润。'
+        quote: '把牛油果混进肉馅，口感更润。'
+      - id: add-to-fried-chicken
+        text: '黏稠的果肉能让容易发柴的炸物做出来更润。'
+        quote: '黏稠的果肉能让容易发柴的炸物做出来更润。'
+      - id: use-as-garnish
+        text: '味噌汤、关东煮、乌冬面、炒青菜：做点睛式的一小块即可。'
+        quote: '味噌汤、关东煮、乌冬面、炒青菜：做点睛式的一小块即可。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: d6fe37e82a55a289
+
+  - id: milk-boiled-avocado-salad
+    status: reviewed
+    source:
+      anchor: '牛奶煮的延伸：三道热菜'
+    slot: anytime
+    remind:
+      text: '做牛油果沙拉时，把牛油果放入沸腾牛奶，中火煮约 10 分钟，再冷藏约 20 分钟。'
+      quote:
+        - '锅中倒牛奶加热，沸腾后放入牛油果，中火煮约 10 分钟'
+        - '放入冰箱冷藏 约 20 分钟'
+    dose:
+      - value: 1
+        unit: '个'
+        what: '牛油果用量'
+        quote: '1 个'
+      - value: 500
+        unit: 'mL'
+        what: '牛奶用量'
+        quote: '500mL'
+    duration:
+      basis: derived
+      sec: 1800
+      formula: '约 10 分钟 + 约 20 分钟 = 约 30 分钟；30 分钟 × 60 秒/分钟 = 1800 秒'
+      quote:
+        - '中火煮约 10 分钟'
+        - '放入冰箱冷藏 约 20 分钟'
+    steps:
+      - id: boil-avocado
+        text: '锅中倒牛奶加热，沸腾后放入牛油果，中火煮约 10 分钟，期间不时搅拌并注意别溢锅。'
+        quote: '锅中倒牛奶加热，沸腾后放入牛油果，中火煮约 10 分钟，期间不时搅拌并注意别溢锅。'
+      - id: drain-and-plate
+        text: '捞出牛油果，沥掉牛奶，摆入餐盘。'
+        quote: '捞出牛油果，沥掉牛奶，摆入餐盘。'
+      - id: chill-avocado
+        text: '放入冰箱冷藏 约 20 分钟。'
+        quote: '放入冰箱冷藏 约 20 分钟。'
+      - id: season-salad
+        text: '淋橄榄油、撒盐和柠檬汁，最后刨上柠檬皮屑；喜欢的话加点香草。'
+        quote: '淋橄榄油、撒盐和柠檬汁，最后刨上柠檬皮屑；喜欢的话加点香草。'
+    cautions:
+      - level: stop
+        text: '牛油果一煮过头就会发苦'
+        quote: '牛油果一煮过头就会发苦'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d560680ccfa6ec8c
+    name: 做牛油果牛奶沙拉
+
+  - id: avocado-cream-soup
+    status: draft
+    source:
+      anchor: '牛奶煮的延伸：三道热菜'
+    slot: anytime
+    remind:
+      text: '做牛油果浓汤时，先炒洋葱和低筋面粉，再加入牛奶、牛油果和通心粉煮。'
+      quote:
+        - '平底锅中放橄榄油、洋葱和低筋面粉，中火炒 2 分钟。'
+        - '加牛奶，煮沸后放入牛油果和通心粉'
+    dose:
+      - value: 1
+        unit: '个'
+        what: '牛油果用量'
+        quote: '1 个'
+      - value: 0.5
+        unit: '个'
+        what: '洋葱用量'
+        derived:
+          formula: 1/2 个 = 0.5 个
+        quote: '1/2 个（切瓣）'
+      - value: 50
+        unit: 'g'
+        what: '通心粉用量'
+        quote: '50g'
+      - value: 600
+        unit: 'mL'
+        what: '牛奶用量'
+        quote: '600mL'
+      - value: 1
+        unit: '大勺'
+        what: '低筋面粉用量'
+        quote: '大勺 1'
+      - value: 1
+        unit: '大勺'
+        what: '橄榄油用量'
+        quote: '大勺 1'
+      - value: 1
+        unit: '个'
+        what: '市售浓汤块用量'
+        quote: '1 个'
+    duration:
+      basis: derived
+      sec: 1020
+      formula: '2 分钟 + 约 15 分钟 = 约 17 分钟；17 分钟 × 60 秒/分钟 = 约 1020 秒'
+      quote:
+        - '中火炒 2 分钟'
+        - '不时搅拌煮 约 15 分钟'
+    steps:
+      - id: saute-onion-and-flour
+        text: '平底锅中放橄榄油、洋葱和低筋面粉，中火炒 2 分钟。'
+        quote: '平底锅中放橄榄油、洋葱和低筋面粉，中火炒 2 分钟。'
+      - id: simmer-soup
+        text: '加牛奶，煮沸后放入牛油果和通心粉；重新沸腾后加入浓汤块转小火，不时搅拌煮 约 15 分钟。'
+        quote: '加牛奶，煮沸后放入牛油果和通心粉；重新沸腾后加入浓汤块转小火，不时搅拌煮 约 15 分钟。'
+      - id: season-soup
+        text: '最后用盐和胡椒调味。'
+        quote: '最后用盐和胡椒调味。'
+    cautions:
+      - level: stop
+        text: '牛油果一煮过头就会发苦'
+        quote: '牛油果一煮过头就会发苦'
+    name: 做牛油果浓汤
+
+  - id: avocado-dandan-noodles
+    status: reviewed
+    source:
+      anchor: '牛奶煮的延伸：三道热菜'
+    slot: anytime
+    remind:
+      text: '做牛油果担担面时，先用牛奶把牛油果煮软，再炒香豆瓣酱并煮面入味。'
+      quote:
+        - '锅中倒牛奶，沸腾后放入牛油果，中火煮约 10 分钟至变软。'
+        - '平底锅放芝麻油、蒜末、姜末，中火炒出香味后加豆瓣酱继续炒。'
+        - '放入煮得偏硬的中華麺和白芝麻，中火轻煮入味。'
+    dose:
+      - value: 2
+        unit: '个'
+        what: '牛油果用量'
+        quote: '2 个'
+      - value: 600
+        unit: 'mL'
+        what: '牛奶用量'
+        quote: '600mL'
+      - value: 200
+        unit: 'mL'
+        what: '水用量'
+        quote: '200mL'
+      - value: 2
+        unit: '小勺'
+        what: '豆瓣酱用量'
+        quote: '小勺 2'
+      - value: 2
+        unit: '小勺'
+        what: '芝麻油用量'
+        quote: '小勺 2'
+      - value: 2
+        unit: '小勺'
+        what: '蒜末用量'
+        quote: '小勺 2'
+      - value: 2
+        unit: '小勺'
+        what: '姜末用量'
+        quote: '小勺 2'
+      - value: 2
+        unit: '大勺'
+        what: '鸡精用量'
+        quote: '大勺 2'
+      - value: 2
+        unit: '小勺'
+        what: '酱油用量'
+        quote: '小勺 2'
+      - value: 2
+        unit: '小勺'
+        what: '白芝麻用量'
+        quote: '小勺 2'
+      - value: 2
+        unit: '袋'
+        what: '中華麺用量'
+        quote: '2 袋'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '中火煮约 10 分钟至变软'
+    steps:
+      - id: slice-avocado
+        text: '牛油果去皮去核，切 1cm 厚片。'
+        quote: '牛油果去皮去核，切 1cm 厚片。'
+      - id: soften-in-milk
+        text: '锅中倒牛奶，沸腾后放入牛油果，中火煮约 10 分钟至变软。'
+        quote: '锅中倒牛奶，沸腾后放入牛油果，中火煮约 10 分钟至变软。'
+      - id: saute-seasonings
+        text: '平底锅放芝麻油、蒜末、姜末，中火炒出香味后加豆瓣酱继续炒。'
+        quote: '平底锅放芝麻油、蒜末、姜末，中火炒出香味后加豆瓣酱继续炒。'
+      - id: cook-noodles
+        text: '把第 3 步倒入第 2 步，加鸡精、水和酱油；放入煮得偏硬的中華麺和白芝麻，中火轻煮入味。'
+        quote: '把第 3 步倒入第 2 步，加鸡精、水和酱油；放入煮得偏硬的中華麺和白芝麻，中火轻煮入味。'
+    cautions:
+      - level: stop
+        text: '牛油果一煮过头就会发苦'
+        quote: '牛油果一煮过头就会发苦'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9800ad7c7ee46625
+    name: 做牛油果担担面
+
+  - id: avocado-hamburger-patty
+    status: reviewed
+    source:
+      anchor: '混进肉馅的两道主菜'
+    slot: anytime
+    remind:
+      text: '做牛油果汉堡饼时，把牛油果压碎拌入肉馅，再分份整形成小饼状煎熟。'
+      quote:
+        - 牛油果去皮去核，用叉子压碎，加入葛粉拌匀备用。
+        - 加入第 1 步的牛油果、洋葱末和面包糠，混合均匀，分成两份，排气后整形成小饼状。
+        - 平底锅倒油，摆入肉饼，中火煎约 3 分钟。
+        - 汉堡饼、肉饼：把牛油果混进肉馅，口感更润。
+    dose:
+      - value: 100
+        unit: 'g'
+        what: '熟牛油果用量'
+        quote: '100g'
+      - value: 200
+        unit: 'g'
+        what: '猪牛混绞肉用量'
+        quote: '200g'
+      - value: 30
+        unit: 'g'
+        what: '洋葱末用量'
+        quote: '30g'
+      - value: 1.5
+        unit: 'g'
+        what: '盐用量'
+        quote: '1.5g'
+      - value: 2
+        unit: '小勺'
+        what: '葛粉用量'
+        quote: '小勺 2'
+      - value: 3
+        unit: '大勺'
+        what: '面包糠用量'
+        quote: '大勺 3'
+      - value: 1
+        unit: '大勺'
+        what: '油用量'
+        quote: '大勺 1'
+    duration:
+      basis: quote
+      sec: 180
+      quote: '中火煎约 3 分钟'
+    steps:
+      - id: mash-avocado
+        text: '牛油果去皮去核，用叉子压碎，加入葛粉拌匀备用。'
+        quote: '牛油果去皮去核，用叉子压碎，加入葛粉拌匀备用。'
+      - id: mix-meat
+        text: '碗中放绞肉和盐，搅打至出黏性。'
+        quote: '碗中放绞肉和盐，搅打至出黏性。'
+      - id: form-patties
+        text: '加入第 1 步的牛油果、洋葱末和面包糠，混合均匀，分成两份，排气后整形成小饼状。'
+        quote: '加入第 1 步的牛油果、洋葱末和面包糠，混合均匀，分成两份，排气后整形成小饼状。'
+      - id: sear-patties
+        text: '平底锅倒油，摆入肉饼，中火煎约 3 分钟。'
+        quote: '平底锅倒油，摆入肉饼，中火煎约 3 分钟。'
+      - id: finish-patties
+        text: '煎出焦色后翻面，盖盖小火再煎 5～6 分钟。'
+        quote: '煎出焦色后翻面，盖盖小火再煎 5～6 分钟。'
+    cautions:
+      - level: info
+        text: '肉饼很软，翻面时动作要轻。'
+        quote: '肉饼很软，翻面时动作要轻。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 498555d5563eb562
+    name: 做牛油果汉堡饼
+
+  - id: avocado-meat-roll
+    status: reviewed
+    source:
+      anchor: '混进肉馅的两道主菜'
+    slot: anytime
+    remind:
+      text: '做牛油果肉饼卷时，用肉馅包住水煮蛋，裹上烘焙纸和铝箔后烤制，出炉后等其定形。'
+      quote:
+        - 牛油果去皮去核压碎；绞肉加盐搅打至出黏性后，与牛油果、洋葱末、面包糠混合均匀。
+        - 在烘焙纸上把肉馅摊成厚薄均匀的片，放上横放的水煮蛋包裹；整体整理成椭圆，上下翻转一次让两端口合拢，外面再裹一层铝箔，整形。
+        - 取出后重新封上，晾到不烫手——成品很软，容易散，切的时候要等它彻底定形。
+        - 防破裂要点：包蛋时不要留空气；包好后把合口朝下压实，再用烘焙纸和铝箔包住，就不容易爆开。
+    dose:
+      - value: 1
+        unit: '个'
+        what: '熟牛油果用量'
+        quote: '1 个'
+      - value: 200
+        unit: 'g'
+        what: '猪牛混绞肉用量'
+        quote: '200g'
+      - value: 2
+        unit: '个'
+        what: '水煮蛋用量'
+        quote: '2 个'
+      - value: 30
+        unit: 'g'
+        what: '洋葱末用量'
+        quote: '30g'
+      - value: 1.5
+        unit: 'g'
+        what: '盐用量'
+        quote: '1.5g'
+      - value: 3
+        unit: '大勺'
+        what: '面包糠用量'
+        quote: '大勺 3'
+    duration:
+      basis: derived
+      sec: 2400
+      formula: '30 分钟 + 10 分钟 = 40 分钟；40 分钟 × 60 秒/分钟 = 2400 秒'
+      quote:
+        - '带余温的 180℃ 烤箱下层烤 30 分钟'
+        - '再在 210℃ 烤 10 分钟'
+    steps:
+      - id: make-avocado-meat
+        text: '牛油果去皮去核压碎；绞肉加盐搅打至出黏性后，与牛油果、洋葱末、面包糠混合均匀。'
+        quote: '牛油果去皮去核压碎；绞肉加盐搅打至出黏性后，与牛油果、洋葱末、面包糠混合均匀。'
+      - id: coat-eggs
+        text: '水煮蛋整体薄薄拍一层面粉。'
+        quote: '水煮蛋整体薄薄拍一层面粉。'
+      - id: wrap-eggs
+        text: '在烘焙纸上把肉馅摊成厚薄均匀的片，放上横放的水煮蛋包裹；整体整理成椭圆，上下翻转一次让两端口合拢，外面再裹一层铝箔，整形。'
+        quote: '在烘焙纸上把肉馅摊成厚薄均匀的片，放上横放的水煮蛋包裹；整体整理成椭圆，上下翻转一次让两端口合拢，外面再裹一层铝箔，整形。'
+      - id: bake-roll
+        text: '放入带余温的 180℃ 烤箱下层烤 30 分钟。'
+        quote: '放入带余温的 180℃ 烤箱下层烤 30 分钟。'
+      - id: brown-roll
+        text: '为上色，先打开铝箔和烘焙纸的上部，再在 210℃ 烤 10 分钟。'
+        quote: '为上色，先打开铝箔和烘焙纸的上部，再在 210℃ 烤 10 分钟。'
+      - id: let-roll-set
+        text: '取出后重新封上，晾到不烫手——成品很软，容易散，切的时候要等它彻底定形。'
+        quote: '取出后重新封上，晾到不烫手——成品很软，容易散，切的时候要等它彻底定形。'
+    cautions:
+      - level: info
+        text: '包蛋时不要留空气；包好后把合口朝下压实，再用烘焙纸和铝箔包住，就不容易爆开。'
+        quote: '包蛋时不要留空气；包好后把合口朝下压实，再用烘焙纸和铝箔包住，就不容易爆开。'
+      - level: info
+        text: '成品很软，容易散，切的时候要等它彻底定形。'
+        quote: '成品很软，容易散，切的时候要等它彻底定形。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 548eb965e7359cf7
+    name: 做牛油果肉饼卷
+
+  - id: avocado-brown-smoothie
+    status: reviewed
+    source:
+      anchor: '已经变色的牛油果：打成果昔'
+    slot: anytime
+    remind:
+      text: '把发褐但没有霉斑或腐败气味的牛油果打成果昔。'
+      quote:
+        - 发褐不等于坏。
+        - 说明书给的处置办法是做成果昔，颜色问题就消失了
+        - 注意：有霉斑或腐败气味的牛油果不要吃。
+    dose:
+      - value: 1
+        unit: '个'
+        what: '牛油果用量'
+        quote: '1 个'
+      - value: 300
+        unit: 'mL'
+        what: '牛奶用量'
+        quote: '300mL'
+      - value: 60
+        unit: 'g'
+        what: '酸奶用量'
+        quote: '60g'
+      - value: 50
+        unit: 'g'
+        what: '蜂蜜用量'
+        quote: '50g'
+    steps:
+      - id: blend-smoothie
+        text: '除巧克力糖浆外的材料放进搅拌机，打到顺滑。'
+        quote: '除巧克力糖浆外的材料放进搅拌机，打到顺滑。'
+      - id: decorate-glass
+        text: '杯壁上淋一层巧克力糖浆做装饰，再倒入第 1 步。'
+        quote: '杯壁上淋一层巧克力糖浆做装饰，再倒入第 1 步。'
+    cautions:
+      - level: stop
+        text: '有霉斑或腐败气味的牛油果不要吃。'
+        quote: '有霉斑或腐败气味的牛油果不要吃。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 42957515317a29d6

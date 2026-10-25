@@ -1,0 +1,344 @@
+article: the-savvy-life-manual/body-care/protein.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: daily-protein-target
+    status: reviewed
+    name: "每餐 20g 蛋白质"
+    source:
+      anchor: "早餐缺蛋白质？每餐 20g 以上的三步吃法"
+    slot: anytime
+    remind:
+      text: 每餐 20g 以上的蛋白质，三餐都要吃够早餐尤其别落下
+      quote:
+        - 每餐 20g 以上的蛋白质，三餐都要吃够
+        - 早餐尤其别落下
+    dose:
+      - value: 20
+        unit: g
+        what: 每餐蛋白质目标
+        quote: 每餐 20g 以上的蛋白质，三餐都要吃够
+    steps:
+      - id: pair-protein-sources
+        text: 每餐让动物性和植物性蛋白质同桌上桌
+        quote: 每餐让动物性和植物性蛋白质同桌上桌
+      - id: convert-foods-to-points
+        text: 用「かん・たん卡」把常见食物换算成点数
+        quote: 用「かん・たん卡」把常见食物换算成点数
+      - id: complete-three-colors
+        text: 一餐凑齐黄、红、绿三色，数出哪一餐最薄，再把最薄的那一餐补上
+        quote: 一餐凑齐黄、红、绿三色，数出哪一餐最薄，再把最薄的那一餐补上
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 8639492d86449483
+
+  - id: pair-animal-plant-protein
+    status: reviewed
+    source:
+      anchor: "双蛋白：动物性 + 植物性同桌吃"
+    slot: anytime
+    remind:
+      text: 每餐把动物性和植物性蛋白质一起安排
+      quote:
+        - 肉的动物性蛋白质
+        - 大豆的植物性蛋白质
+        - 同一餐里一起上桌
+    steps:
+      - id: serve-both-together
+        text: '肉的动物性蛋白质大豆的植物性蛋白质同一餐里一起上桌'
+        quote:
+          - 肉的动物性蛋白质
+          - 大豆的植物性蛋白质
+          - 同一餐里一起上桌
+      - id: include-three-colors
+        text: 黄（主食）、红（动物性）、绿（植物性）三色都出现在一餐里
+        quote: 黄（主食）、红（动物性）、绿（植物性）三色都出现在一餐里
+      - id: pair-for-fiber-and-vitamins
+        text: 两者同吃，还能顺带摄入维生素和膳食纤维
+        quote: 两者同吃，还能顺带摄入维生素和膳食纤维
+    cautions:
+      - level: with-doctor
+        text: '肾脏疾病人如果吃多了蛋白质，可能让病情进展请先咨询医生'
+        quote:
+          - 肾脏疾病
+          - 人如果吃多了蛋白质，可能让病情进展
+          - 请先咨询医生
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ba6f10cc01572756
+    name: 每餐动植物蛋白一起吃
+
+  - id: protein-point-card
+    status: reviewed
+    name: "把食物换成蛋白点数"
+    source:
+      anchor: "「かん・たん卡」：把食物换算成点数"
+    slot: anytime
+    remind:
+      text: 一餐用黄、红、绿三色卡片搭配着点，大致判断这餐的蛋白质够不够
+      quote:
+        - 一餐用三种颜色的卡片搭配着点，尽量凑齐黄、红、绿
+        - 就能大致看出这餐的蛋白质够不够
+    dose:
+      - value: 3
+        unit: 点
+        what: 黄卡主食：白米饭，份量 1 碗 150g
+        quote: [ "白米饭", "1 碗 150g", "3" ]
+      - value: 4
+        unit: 点
+        what: 黄卡主食：糙米饭，份量 1 碗 150g
+        quote: [ "糙米饭", "1 碗 150g", "4" ]
+      - value: 3
+        unit: 点
+        what: 黄卡主食：无糖玉米片，份量 1 份 50g
+        quote: [ "无糖玉米片", "1 份 50g", "3" ]
+      - value: 4
+        unit: 点
+        what: 黄卡主食：燕麦片（干），份量 1 份 30g
+        quote: [ "燕麦片（干）", "1 份 30g", "4" ]
+      - value: 4
+        unit: 点
+        what: 黄卡主食：食面包，份量 1 片（6 连切片）60g
+        quote: [ "食面包", "1 片（6 连切片）60g", "4" ]
+      - value: 3
+        unit: 点
+        what: 黄卡主食：可颂面包，份量 1 个 45g
+        quote: [ "可颂面包", "1 个 45g", "3" ]
+      - value: 5
+        unit: 点
+        what: 黄卡主食：葡萄干面包，份量 1 片 75g
+        quote: [ "葡萄干面包", "1 片 75g", "5" ]
+      - value: 5
+        unit: 点
+        what: 黄卡主食：乌冬面，份量 1 份 200g
+        quote: [ "乌冬面", "1 份 200g", "5" ]
+      - value: 6
+        unit: 点
+        what: 黄卡主食：哈密瓜面包，份量 1 个 90g
+        quote: [ "哈密瓜面包", "1 个 90g", "6" ]
+      - value: 7
+        unit: 点
+        what: 黄卡主食：豆沙面包，份量 1 个 120g
+        quote: [ "豆沙面包", "1 个 120g", "7" ]
+      - value: 10
+        unit: 点
+        what: 黄卡主食：荞麦面，份量 1 份（生）120g
+        quote: [ "荞麦面", "1 份（生）120g", "10" ]
+      - value: 10
+        unit: 点
+        what: 黄卡主食：中华面，份量 1 份（生）120g
+        quote: [ "中华面", "1 份（生）120g", "10" ]
+      - value: 2
+        unit: 点
+        what: 红卡动物性：培根，份量 1 片 20g
+        quote: [ "培根", "1 片 20g", "2" ]
+      - value: 2
+        unit: 点
+        what: 红卡动物性：香肠，份量 1 根 20g
+        quote: [ "香肠", "1 根 20g", "2" ]
+      - value: 3
+        unit: 点
+        what: 红卡动物性：迷你汉堡肉，份量 1 个 25g
+        quote: [ "迷你汉堡肉", "1 个 25g", "3" ]
+      - value: 3
+        unit: 点
+        what: 红卡动物性：火腿，份量 2 片 20g
+        quote: [ "火腿", "2 片 20g", "3" ]
+      - value: 3
+        unit: 点
+        what: 红卡动物性：无糖酸奶，份量 1 杯 100g
+        quote: [ "无糖酸奶", "1 杯 100g", "3" ]
+      - value: 4
+        unit: 点
+        what: 红卡动物性：奶酪片，份量 1 片 18g
+        quote: [ "奶酪片", "1 片 18g", "4" ]
+      - value: 4
+        unit: 点
+        what: 红卡动物性：金枪鱼罐头，份量 1 汤匙 25g
+        quote: [ "金枪鱼罐头", "1 汤匙 25g", "4" ]
+      - value: 4
+        unit: 点
+        what: 红卡动物性：鲭鱼，份量 1 块 20g
+        quote: [ "鲭鱼", "1 块 20g", "4" ]
+      - value: 5
+        unit: 点
+        what: 红卡动物性：牛奶，份量 1 杯 150g
+        quote: [ "牛奶", "1 杯 150g", "5" ]
+      - value: 5
+        unit: 点
+        what: 红卡动物性：布丁，份量 1 个 90g
+        quote: [ "布丁", "1 个 90g", "5" ]
+      - value: 5
+        unit: 点
+        what: 红卡动物性：三文鱼，份量 1 块 20g
+        quote: [ "三文鱼", "1 块 20g", "5" ]
+      - value: 5
+        unit: 点
+        what: 红卡动物性：鸡胸肉，份量 1/10 块 25g
+        quote: [ "鸡胸肉", "1/10 块 25g", "5" ]
+      - value: 6
+        unit: 点
+        what: 红卡动物性：鸡蛋，份量 1 个 50g
+        quote: [ "鸡蛋", "1 个 50g", "6" ]
+      - value: 6
+        unit: 点
+        what: 红卡动物性：鲑鱼碎（三文鱼碎），份量 1 汤匙 25g
+        quote: [ "鲑鱼碎（三文鱼碎）", "1 汤匙 25g", "6" ]
+      - value: 7
+        unit: 点
+        what: 红卡动物性：鱼肉香肠，份量 1 根 70g
+        quote: [ "鱼肉香肠", "1 根 70g", "7" ]
+      - value: 1
+        unit: 点
+        what: 绿卡植物性：带皮马铃薯，份量 1 个 100g
+        quote: [ "带皮马铃薯", "1 个 100g", "1" ]
+      - value: 1
+        unit: 点
+        what: 绿卡植物性：带皮红薯，份量 100g
+        quote: [ "带皮红薯", "100g", "1" ]
+      - value: 1
+        unit: 点
+        what: 绿卡植物性：山药，份量 50g
+        quote: [ "山药", "50g", "1" ]
+      - value: 1
+        unit: 点
+        what: 绿卡植物性：核桃仁，份量 5 颗 10g
+        quote: [ "核桃仁", "5 颗 10g", "1" ]
+      - value: 2
+        unit: 点
+        what: 绿卡植物性：花生，份量 1 大勺 10g
+        quote: [ "花生", "1 大勺 10g", "2" ]
+      - value: 3
+        unit: 点
+        what: 绿卡植物性：豆腐，份量 1/6 块 50g
+        quote: [ "豆腐", "1/6 块 50g", "3" ]
+      - value: 3
+        unit: 点
+        what: 绿卡植物性：炒黄豆，份量 1 杯 20g
+        quote: [ "炒黄豆", "1 杯 20g", "3" ]
+      - value: 4
+        unit: 点
+        what: 绿卡植物性：纳豆，份量 1 小盒 30g
+        quote: [ "纳豆", "1 小盒 30g", "4" ]
+      - value: 5
+        unit: 点
+        what: 绿卡植物性：毛豆（煮），份量 100g
+        quote: [ "毛豆（煮）", "100g", "5" ]
+      - value: 5
+        unit: 点
+        what: 绿卡植物性：豆浆，份量 1 杯 150g
+        quote: [ "豆浆", "1 杯 150g", "5" ]
+    steps:
+      - id: combine-card-colors
+        text: '一餐用三种颜色的卡片搭配着点，尽量凑齐黄、红、绿就能大致看出这餐的蛋白质够不够'
+        quote:
+          - 一餐用三种颜色的卡片搭配着点，尽量凑齐黄、红、绿
+          - 就能大致看出这餐的蛋白质够不够
+      - id: compare-staple-points
+        text: 荞麦面、中华面是 10 点，糙米饭是 4 点，白米饭只有 3 点
+        quote: 荞麦面、中华面是 10 点，糙米饭是 4 点，白米饭只有 3 点
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: f446401f54139e5d
+
+  - id: use-protein-point-card
+    status: reviewed
+    source:
+      anchor: 怎么把这张表用起来
+    slot: anytime
+    remind:
+      text: 先看黄卡定主食，再从红卡、绿卡各挑一样，对照每餐 20g 以上的目标数点数，再把最薄的那一餐补上
+      quote:
+        - 先看黄卡定主食
+        - 再从红卡、绿卡各挑一样
+        - 对着每餐 20g 以上的目标数一数点数
+        - 看看哪一餐最薄
+        - 把最薄的那一餐补上
+    dose:
+      - value: 20
+        unit: g
+        what: 每餐蛋白质目标
+        quote: 对着每餐 20g 以上的目标数一数点数
+    steps:
+      - id: choose-staple
+        text: '先看黄卡定主食主食也带蛋白，选对面比选贵的更重要'
+        quote:
+          - 先看黄卡定主食
+          - 主食也带蛋白，选对面比选贵的更重要
+      - id: choose-red-and-green
+        text: '再从红卡、绿卡各挑一样凑齐动物性＋植物性，这就是「双蛋白」'
+        quote:
+          - 再从红卡、绿卡各挑一样
+          - 凑齐动物性＋植物性，这就是「双蛋白」
+      - id: count-meal-points
+        text: '对着每餐 20g 以上的目标数一数点数看看哪一餐最薄'
+        quote:
+          - 对着每餐 20g 以上的目标数一数点数
+          - 看看哪一餐最薄
+      - id: fill-thinnest-meal
+        text: '把最薄的那一餐补上多数人最薄的一餐正是早餐，这正是说明书开篇指出的缺口'
+        quote:
+          - 把最薄的那一餐补上
+          - 多数人最薄的一餐正是早餐，这正是说明书开篇指出的缺口
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 98506cf5fb47a86d
+    name: 用三色卡配够蛋白质
+
+  - id: breakfast-protein-timing
+    status: reviewed
+    name: "早餐吃够 20g 蛋白质"
+    source:
+      anchor: 睡眠期间，身体在拆你的肌肉
+    slot: morning
+    remind:
+      text: 早餐吃够蛋白质，让每一餐都吃够、吃得均匀
+      quote:
+        - 如果早餐再不吃蛋白质
+        - 这个分解过程会一直持续到中午
+        - 所以目标不是越多越好，而是
+        - 每一餐都要吃够、吃得均匀
+    effect:
+      text: '如果早餐再不吃蛋白质这个分解过程会一直持续到中午'
+      quote:
+        - 如果早餐再不吃蛋白质
+        - 这个分解过程会一直持续到中午
+    dose:
+      - value: 20
+        unit: g
+        what: 每餐蛋白质目标
+        quote:
+          - 量化目标就是
+          - 每餐 20g 以上
+    steps:
+      - id: compare-three-meals
+        text: '对照三餐的蛋白质摄入量就能看出问题所在日本人的早餐，是三餐中蛋白质最少的一餐'
+        quote:
+          - 对照三餐的蛋白质摄入量就能看出问题所在
+          - 日本人的早餐，是三餐中蛋白质最少的一餐
+      - id: avoid-excess
+        text: '吃得再多，多余的部分也不会被吸收，会直接排出体外所以目标不是越多越好'
+        quote:
+          - 吃得再多，多余的部分也不会被吸收，会直接排出体外
+          - 所以目标不是越多越好
+      - id: spread-protein-evenly
+        text: '所以目标不是越多越好，而是每一餐都要吃够、吃得均匀'
+        quote:
+          - 所以目标不是越多越好，而是
+          - 每一餐都要吃够、吃得均匀
+      - id: eat-breakfast-protein
+        text: '如果早餐再不吃蛋白质这个分解过程会一直持续到中午'
+        quote:
+          - 如果早餐再不吃蛋白质
+          - 这个分解过程会一直持续到中午
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: de6d7e9b1a4e5d8a

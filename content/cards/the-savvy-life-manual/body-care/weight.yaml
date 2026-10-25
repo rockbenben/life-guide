@@ -1,0 +1,175 @@
+article: the-savvy-life-manual/body-care/weight.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "体重不是越低越好：J 形曲线的两端都在涨"
+      reason: "低体重与偏胖的死亡风险背景属于阅读性知识，已将低体重风险提炼为 BMI 卡的禁忌，不另制卡。"
+    - anchor: "BMI 是一条 J 形曲线"
+      reason: "J 形曲线、分档风险值及高龄者虚弱和肌少症风险属于风险知识，没有对应的可执行动作。"
+    - anchor: "瘦得快的代价：两周掉一块牛排的肌肉"
+      reason: "步行不足导致肌肉流失的实验结果与机制属于风险背景，已将减少进食的警告提炼为蛋白质卡的禁忌。"
+  images: []
+cards:
+  - id: calculate-bmi-and-compare-body-type
+    status: reviewed
+    name: "算出自己的 BMI"
+    source:
+      anchor: "先算出自己的 BMI，再对体型"
+    slot: anytime
+    remind:
+      text: "按身高和体重算出自己的 BMI"
+      quote: "BMI 的算法——体重[kg] ÷ 身長[m] ÷ 身長[m]"
+    steps:
+      - id: calculate-bmi
+        text: "体重[kg] ÷ 身長[m] ÷ 身長[m]"
+        quote: "体重[kg] ÷ 身長[m] ÷ 身長[m]"
+      - id: check-calculation-example
+        text: "例如身高 150cm、体重 50kg：50 ÷ 1.5 ÷ 1.5 = 22.2。"
+        quote: "例如身高 150cm、体重 50kg：50 ÷ 1.5 ÷ 1.5 = 22.2。"
+      - id: compare-adult-standard
+        text: "BMI 22 为标准体重、18.5 未满为低体重、25 以上为肥胖"
+        quote:
+          - BMI 22 为标准体重、18.5 未满为低体重、25 以上为肥胖
+          - 体态问卷——说明书提供了一套10 个人体插图的量表，插图按实际 BMI 制作（女性 1～10 号对应 BMI 16.2 到 30.2）。做法是选出「最接近现在的自己」和「自己理想中的体型」两个答案。
+      - id: choose-body-types
+        text: "做法是选出「最接近现在的自己」和「自己理想中的体型」两个答案。"
+        quote: "做法是选出「最接近现在的自己」和「自己理想中的体型」两个答案。"
+    cautions:
+      - level: stop
+        text: "图中的 BMI 数值与低体重、肥胖的划分是成人标准，未成年人不能套用。"
+        quote: "图中的 BMI 数值与低体重、肥胖的划分是成人标准，未成年人不能套用。"
+      - level: stop
+        text: "不是「再瘦一点」，而是偏瘦本身就是风险。"
+        quote: "不是「再瘦一点」，而是偏瘦本身就是风险。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: a98174c263c19217
+
+  - id: calculate-daily-protein-intake
+    status: reviewed
+    name: "按体重算蛋白质"
+    source:
+      anchor: "蛋白质按体重算：体重 × 1.0～1.2g"
+    slot: anytime
+    remind:
+      text: "按体重计算每日蛋白质摄入量目安"
+      quote: "每天的摄入量目安：体重 × 1.0～1.2（g）"
+    dose:
+      - value: 1.0
+        valueMax: 1.2
+        unit: g/kg体重/天
+        what: 每日蛋白质摄入量目安
+        quote: "每天的摄入量目安：体重 × 1.0～1.2（g）"
+    steps:
+      - id: calculate-protein-target
+        text: "每天的摄入量目安：体重 × 1.0～1.2（g）"
+        quote: "每天的摄入量目安：体重 × 1.0～1.2（g）"
+      - id: convert-weight-to-grams
+        text: "体重 50kg，则每天 50～60g"
+        quote: "体重 50kg，则每天 50～60g"
+      - id: check-food-reference
+        text: "说明书给的直观参照是约 1 块鸡腿肉。"
+        quote: "说明书给的直观参照是约 1 块鸡腿肉。"
+      - id: eat-balanced-meals
+        text: "一天三餐、每餐主食加配菜，吃够"
+        quote: "一天三餐、每餐主食加配菜，吃够"
+    cautions:
+      - level: stop
+        text: "靠减少进食来减重，很可能连肌肉一起减掉"
+        quote: "靠减少进食来减重，很可能连肌肉一起减掉"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: bbb346a66ac0e2d8
+
+  - id: one-month-strength-and-walking-challenge
+    status: reviewed
+    name: "一个月饮食走路挑战"
+    source:
+      anchor: "1 个月挑战：吃饭、每周 3 次 5 分钟、每天 8,000 步"
+    slot: anytime
+    remind:
+      text: "按挑战安排吃饭、训练和走路"
+      quote:
+        - "吃：一天三餐（主食 + 配菜）认真吃，蛋白质按上面的体重公式算。"
+        - "练：每周 3 次、每次只做 5 分钟，做自己喜欢的肌力训练。"
+        - "走：每天 8,000 步；用楼梯代替平路，强度更高。"
+    dose:
+      - value: 3
+        unit: 次/周
+        what: 肌力训练频次
+        quote: "每周 3 次、每次只做 5 分钟，做自己喜欢的肌力训练。"
+      - value: 5
+        unit: 分钟/次
+        what: 每次肌力训练时长
+        quote: "每周 3 次、每次只做 5 分钟，做自己喜欢的肌力训练。"
+      - value: 8000
+        unit: 步/天
+        what: 每日步数
+        quote: "每天 8,000 步"
+    duration:
+      basis: derived
+      sec: 300
+      formula: "每次 5 分钟 × 60 秒 = 300 秒"
+    steps:
+      - id: eat-balanced-meals
+        text: "一天三餐（主食 + 配菜）认真吃，蛋白质按上面的体重公式算。"
+        quote: "一天三餐（主食 + 配菜）认真吃，蛋白质按上面的体重公式算。"
+      - id: do-strength-training
+        text: "每周 3 次、每次只做 5 分钟，做自己喜欢的肌力训练。"
+        quote: "每周 3 次、每次只做 5 分钟，做自己喜欢的肌力训练。"
+      - id: perform-lunge
+        text: "腰要充分沉下去，注意跌倒"
+        quote: "腰要充分沉下去，注意跌倒"
+      - id: perform-abdominal
+        text: "手放在大腿上滑向膝盖，以「碰到膝盖」为感觉；起不来的人，先做到肩膀离开地面就够了"
+        quote: "手放在大腿上滑向膝盖，以「碰到膝盖」为感觉；起不来的人，先做到肩膀离开地面就够了"
+      - id: perform-push-up
+        text: "从肩到脚跟成一条直线；不习惯的人可以跪姿，或改做墙壁俯卧撑"
+        quote: "从肩到脚跟成一条直线；不习惯的人可以跪姿，或改做墙壁俯卧撑"
+      - id: reach-step-goal
+        text: "每天 8,000 步"
+        quote: "每天 8,000 步"
+      - id: use-stairs
+        text: "用楼梯代替平路，强度更高"
+        quote: "用楼梯代替平路，强度更高"
+    cautions:
+      - level: stop
+        text: "膝盖内扣或超过脚尖都会伤到，不要那样做"
+        quote: "膝盖内扣或超过脚尖都会伤到，不要那样做"
+      - level: with-doctor
+        text: "有基础疾病、对身体状况有不安的人，请先咨询医生，不要勉强。"
+        quote: "有基础疾病、对身体状况有不安的人，请先咨询医生，不要勉强。"
+      - level: with-doctor
+        text: "如果你长期体重偏低、又在减重，先和主治医生确认方向，比自行调整更稳妥。"
+        quote: "如果你长期体重偏低、又在减重，先和主治医生确认方向，比自行调整更稳妥。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 515e8832d1c69372
+
+  - id: consult-doctor-before-adjusting-weight
+    status: reviewed
+    name: "先咨询医生再行动"
+    source:
+      anchor: "什么时候该看医生"
+    slot: anytime
+    remind:
+      text: "有健康疑虑时先咨询医生再行动"
+      quote: "有基础疾病、对身体状况有不安的人，请先咨询医生，不要勉强。"
+    steps:
+      - id: consult-before-forcing
+        text: "有基础疾病、对身体状况有不安的人，请先咨询医生，不要勉强。"
+        quote: "有基础疾病、对身体状况有不安的人，请先咨询医生，不要勉强。"
+      - id: confirm-weight-management-direction
+        text: "如果你长期体重偏低、又在减重，先和主治医生确认方向，比自行调整更稳妥。"
+        quote: "如果你长期体重偏低、又在减重，先和主治医生确认方向，比自行调整更稳妥。"
+      - id: confirm-weight-gain-guidance
+        text: "「增加体重的指导」本身可能来自医生"
+        quote: "「增加体重的指导」本身可能来自医生"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 73d1b3f1069c9067

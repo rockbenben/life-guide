@@ -1,0 +1,504 @@
+article: 'the-savvy-life-manual/food/chicken.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '一天吃多少：两个数字'
+      reason: '该节给出按疲劳缓解、认知功能区分的研究性日摄取量，并非本次六张卡的核心操作；在卡片上限内未另设摄取量卡。'
+    - anchor: '为什么有效：脂肪球和酪蛋白'
+      reason: '该节是作用机制背景，不形成独立操作；其中多汁结果已并入牛奶浸泡法卡片的 effect，其余机制细节未展开。'
+  images: []
+cards:
+  - id: milk-soak-chicken
+    status: reviewed
+    source:
+      anchor: '牛奶浸泡法：1 分钟'
+    slot: anytime
+    remind:
+      text: '用牛奶和盐抓揉鸡胸肉，直至牛奶被肉完全吸干'
+      quote:
+        - 用牛奶代替水、用手代替机器
+        - 双手抓揉 1 分钟
+        - 肉把牛奶完全吸干、碗底的液体消失——这就是完成的信号
+        - 这个手法来自鸡肉厂商：由于工厂里要做出多汁的鸡胸肉，离不开「加水」和「摔打（把肉揉进揉出）」两道工序。说明书教的做法，是用牛奶代替水、用手代替机器。
+    effect:
+      text: '肉因此蓄住了比平时更多的水，变得多汁。'
+      quote: '肉因此蓄住了比平时更多的水，变得多汁。'
+    dose:
+      - value: 300
+        unit: g
+        what: '去皮鸡胸肉用量'
+        quote: [ '去皮鸡胸肉', '300g' ]
+      - value: 3
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: [ '牛奶', '3 大勺' ]
+      - value: 15
+        unit: '%'
+        what: '牛奶占肉量比例'
+        quote: [ '约肉量的', '15%' ]
+      - value: 1.5
+        valueMax: 3
+        unit: g
+        what: '盐用量'
+        quote: [ '盐', '1.5～3g' ]
+    duration:
+      basis: quote
+      sec: 60
+      quote: '双手抓揉 1 分钟'
+    steps:
+      - id: combine-materials
+        text: '三样材料放进碗里。'
+        quote:
+          - 三样材料放进碗里。
+          - 鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟。
+      - id: knead-chicken
+        text: '双手抓揉 1 分钟'
+        quote: '双手抓揉 1 分钟'
+      - id: confirm-completion
+        text: '牛奶开始「唰」地渗进肉里肉把牛奶完全吸干、碗底的液体消失——这就是完成的信号'
+        quote:
+          - '牛奶开始「唰」地渗进肉里'
+          - '肉把牛奶完全吸干、碗底的液体消失——这就是完成的信号'
+      - id: use-soy-milk
+        text: '豆奶同样有效配比不变，仍是每盒约 300g 鸡胸肉配 3 大勺。'
+        quote:
+          - '豆奶同样有效'
+          - '配比不变，仍是每盒约 300g 鸡胸肉配 3 大勺。'
+    cautions:
+      - level: stop
+        text: '牛奶过敏者请不要使用'
+        quote: '牛奶过敏者请不要使用'
+      - level: info
+        text: '告诉要吃这道菜的人'
+        quote: '告诉要吃这道菜的人'
+      - level: info
+        text: '在意钠摄入的话请自行调整。'
+        quote: '在意钠摄入的话请自行调整。'
+      - level: info
+        text: '处理生肉时与其他食材和器具分开，注意防范食中毒。'
+        quote:
+          - '处理生肉时'
+          - '与其他食材和器具分开，注意防范食中毒。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 1fea8cde44911189
+
+  - id: juicy-fried-chicken
+    status: reviewed
+    source:
+      anchor: '五道菜'
+    slot: anytime
+    remind:
+      text: '按牛奶抓揉、裹淀粉和油炸的顺序制作炸鸡'
+      quote:
+        - '鸡胸肉、牛奶、盐放入碗中，'
+        - '双手抓揉 1 分钟'
+        - '裹上玉米淀粉，'
+        - '180℃ 的油温炸约 4 分钟'
+    dose:
+      - value: 300
+        unit: g
+        what: '去皮鸡胸肉用量'
+        quote: [ '去皮鸡胸肉', '300g' ]
+      - value: 3
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: [ '牛奶', '3 大勺' ]
+      - value: 1.5
+        valueMax: 3
+        unit: g
+        what: '盐用量'
+        quote: [ '盐', '1.5～3g' ]
+      - value: 3
+        valueMax: 4
+        unit: '大勺'
+        what: '玉米淀粉用量'
+        quote: [ '玉米淀粉', '3～4 大勺' ]
+    duration:
+      basis: derived
+      sec: 300
+      formula: '计时工序合计：1 分钟抓揉 + 4 分钟油炸 = 5 分钟（300 秒）'
+    steps:
+      - id: cut-fried-chicken
+        text: '鸡胸肉切成约3cm的块。'
+        quote: [ '鸡胸肉切成约', '3cm', '的块。' ]
+      - id: knead-fried-chicken
+        text: '鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟'
+        quote:
+          - '鸡胸肉、牛奶、盐放入碗中，'
+          - '双手抓揉 1 分钟'
+      - id: coat-and-fry
+        text: '裹上玉米淀粉，180℃ 的油温炸约 4 分钟'
+        quote:
+          - '裹上玉米淀粉，'
+          - '180℃ 的油温炸约 4 分钟'
+      - id: drain-and-serve
+        text: '充分沥油，最后配上生菜。'
+        quote: '充分沥油，最后配上生菜。'
+    cautions:
+      - level: stop
+        text: '牛奶过敏者请不要使用'
+        quote: '牛奶过敏者请不要使用'
+      - level: info
+        text: '处理生肉时与其他食材和器具分开，注意防范食中毒。'
+        quote:
+          - '处理生肉时'
+          - '与其他食材和器具分开，注意防范食中毒。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 06c484aa23b7c95a
+    name: 做牛奶炸鸡
+
+  - id: microwave-chicken-salad
+    status: reviewed
+    source:
+      anchor: '五道菜'
+    slot: anytime
+    remind:
+      text: '用牛奶抓揉整块鸡胸肉，微波加热后撕丝配蔬菜'
+      quote:
+        - 整块
+        - 双手抓揉 1 分钟
+        - 微波炉 500W 加热 4 分钟
+        - 再撕成细丝，配蔬菜和酱汁
+        - 这个手法来自鸡肉厂商：由于工厂里要做出多汁的鸡胸肉，离不开「加水」和「摔打（把肉揉进揉出）」两道工序。说明书教的做法，是用牛奶代替水、用手代替机器。
+    dose:
+      - value: 300
+        unit: g
+        what: '去皮鸡胸肉用量'
+        quote: [ '去皮鸡胸肉', '300g' ]
+      - value: 3
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: [ '牛奶', '3 大勺' ]
+      - value: 1.5
+        valueMax: 3
+        unit: g
+        what: '盐用量'
+        quote: [ '盐', '1.5～3g' ]
+    duration:
+      basis: derived
+      sec: 1050
+      formula: '计时工序合计：1 分钟抓揉 + 4 分钟首次加热 + 2 分半～3 分钟再次加热 + 10 分钟放置 = 17.5～18 分钟；取最短 1050 秒'
+    steps:
+      - id: knead-salad-chicken
+        text: '整块鸡胸肉放入碗中，加牛奶和盐，双手抓揉 1 分钟'
+        quote:
+          - '整块'
+          - '鸡胸肉放入碗中，加牛奶和盐，'
+          - '双手抓揉 1 分钟'
+      - id: heat-salad-chicken-first
+        text: '盖保鲜膜，微波炉 500W 加热 4 分钟'
+        quote:
+          - '盖保鲜膜，'
+          - '微波炉 500W 加热 4 分钟'
+      - id: heat-salad-chicken-again
+        text: '取出翻面，再加热 2 分半～3 分钟确保彻底熟透。'
+        quote:
+          - '取出翻面，'
+          - '再加热 2 分半～3 分钟'
+          - '确保彻底熟透。'
+      - id: rest-and-shred
+        text: '从微波炉取出后放置约 10 分钟再撕成细丝，配蔬菜和酱汁。'
+        quote:
+          - '从微波炉取出后'
+          - '放置约 10 分钟'
+          - '再撕成细丝，配蔬菜和酱汁。'
+    cautions:
+      - level: stop
+        text: '牛奶过敏者请不要使用'
+        quote: '牛奶过敏者请不要使用'
+      - level: info
+        text: '处理生肉时与其他食材和器具分开，注意防范食中毒。'
+        quote:
+          - '处理生肉时'
+          - '与其他食材和器具分开，注意防范食中毒。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6d065b935f0cdddf
+    name: 做微波鸡胸沙拉
+
+  - id: grilled-chicken-skewers
+    status: reviewed
+    source:
+      anchor: '五道菜'
+    slot: anytime
+    remind:
+      text: '用牛奶抓揉整块鸡胸肉，煎制后用烤串酱汁微波收味'
+      quote:
+        - 整块
+        - 双手抓揉 1 分钟
+        - 皮朝下煎 3 分钟
+        - 淋上混好的
+        - 微波炉 500W 加热 3 分钟
+        - 这个手法来自鸡肉厂商：由于工厂里要做出多汁的鸡胸肉，离不开「加水」和「摔打（把肉揉进揉出）」两道工序。说明书教的做法，是用牛奶代替水、用手代替机器。
+    dose:
+      - value: 300
+        unit: g
+        what: '带皮鸡胸肉用量'
+        quote: [ '带皮鸡胸肉', '300g' ]
+      - value: 3
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: [ '牛奶', '3 大勺' ]
+      - value: 1.5
+        valueMax: 3
+        unit: g
+        what: '盐用量'
+        quote: [ '盐', '1.5～3g' ]
+    duration:
+      basis: derived
+      sec: 660
+      formula: '计时工序合计：1 分钟抓揉 + 3 分钟煎 + 2 分钟翻面煎 + 3 分钟微波 + 2 分钟复热 = 11 分钟（660 秒）'
+    steps:
+      - id: mix-skewer-sauce
+        text: 'A水2 大勺酱油1.5 大勺味醂1 大勺砂糖1 小勺玉米淀粉1/2 小勺'
+        quote:
+          - 'A'
+          - '水'
+          - '2 大勺'
+          - '酱油'
+          - '1.5 大勺'
+          - '味醂'
+          - '1 大勺'
+          - '砂糖'
+          - '1 小勺'
+          - '玉米淀粉'
+          - '1/2 小勺'
+      - id: knead-skewer-chicken
+        text: '整块鸡胸肉加牛奶和盐，双手抓揉 1 分钟'
+        quote:
+          - '整块'
+          - '鸡胸肉加牛奶和盐，'
+          - '双手抓揉 1 分钟'
+      - id: thread-skewers
+        text: '串上 6 根竹签如果肉厚薄不均，把厚的地方稍微修掉，让厚薄一致'
+        quote:
+          - '串上 6 根竹签'
+          - '如果肉厚薄不均，把厚的地方稍微修掉，让厚薄一致'
+      - id: pan-sear-skewers
+        text: '皮朝下煎 3 分钟上色后翻面再煎 2 分钟'
+        quote:
+          - '皮朝下煎 3 分钟'
+          - '上色后翻面'
+          - '再煎 2 分钟'
+      - id: microwave-skewer-sauce
+        text: '放入耐热盘，淋上混好的A盖保鲜膜，微波炉 500W 加热 3 分钟'
+        quote:
+          - '放入耐热盘，淋上混好的'
+          - 'A'
+          - '盖保鲜膜，'
+          - '微波炉 500W 加热 3 分钟'
+      - id: reheat-skewers
+        text: '取出翻面，盘底积的酱汁也再浇一遍，再微波 2 分钟确保熟透。'
+        quote:
+          - '取出翻面，盘底积的酱汁也再浇一遍，'
+          - '再微波 2 分钟'
+          - '确保熟透。'
+      - id: cut-skewers
+        text: '顺着竹签切块。'
+        quote: '顺着竹签切块。'
+    cautions:
+      - level: stop
+        text: '牛奶过敏者请不要使用'
+        quote: '牛奶过敏者请不要使用'
+      - level: info
+        text: '处理生肉时与其他食材和器具分开，注意防范食中毒。'
+        quote:
+          - '处理生肉时'
+          - '与其他食材和器具分开，注意防范食中毒。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 428037738b78c3af
+    name: 做烤鸡肉串
+
+  - id: korean-grilled-chicken
+    status: reviewed
+    source:
+      anchor: '五道菜'
+    slot: anytime
+    remind:
+      text: '用牛奶抓揉鸡胸肉，拌腌料后煎制并收浓酱汁'
+      quote:
+        - '鸡胸肉、牛奶、盐放入碗中，'
+        - '双手抓揉 1 分钟'
+        - '拌匀，再揉匀'
+        - '皮朝下中小火煎 3 分钟'
+        - '翻面盖盖'
+        - '中小火边搅边加热 1～2 分钟'
+        - '收浓'
+    dose:
+      - value: 300
+        unit: g
+        what: '带皮鸡胸肉用量'
+        quote: [ '带皮鸡胸肉', '300g' ]
+      - value: 3
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: [ '牛奶', '3 大勺' ]
+      - value: 1.5
+        valueMax: 3
+        unit: g
+        what: '盐用量'
+        quote: [ '盐', '1.5～3g' ]
+    duration:
+      basis: derived
+      sec: 480
+      formula: '计时工序合计：1 分钟抓揉 + 3 分钟煎 + 3 分钟翻面煎 + 1～2 分钟收浓 = 8～9 分钟；取最短 480 秒'
+    steps:
+      - id: cut-korean-chicken
+        text: '切成三等份'
+        quote: '切成三等份'
+      - id: knead-korean-chicken
+        text: '鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟'
+        quote:
+          - '鸡胸肉、牛奶、盐放入碗中，'
+          - '双手抓揉 1 分钟'
+      - id: mix-korean-marinade
+        text: 'A番茄酱1 大勺中浓酱油1 大勺砂糖2 小勺咖喱粉2 小勺蒜蓉1 小勺橄榄油适量水2 大勺加入拌匀，再揉匀'
+        quote:
+          - A
+          - 番茄酱
+          - 1 大勺
+          - 中浓酱油
+          - 1 大勺
+          - 砂糖
+          - 2 小勺
+          - 咖喱粉
+          - 2 小勺
+          - 蒜蓉
+          - 1 小勺
+          - 橄榄油
+          - 适量
+          - 水
+          - 2 大勺
+          - 加入
+          - 拌匀，再揉匀
+          - 鸡胸肉「一煮就柴」的解法只有一个动作：去皮鸡胸肉 300g 配牛奶 3 大勺（约肉量的 15%）和盐 1.5～3g，双手抓揉 1 分钟。每天吃多少说明书给了两个数：疲劳缓解约 70g，认知功能约 100g。下面是配比与手法、每日量和五道菜。^[「鶏肉」のトリセツ]
+      - id: pan-cook-korean-chicken
+        text: '皮朝下中小火煎 3 分钟翻面盖盖再煎 3 分钟'
+        quote:
+          - '皮朝下中小火煎 3 分钟'
+          - '翻面盖盖'
+          - '再煎 3 分钟'
+      - id: reduce-korean-sauce
+        text: '碗里剩下的腌料倒进锅里太稠就补一点水中小火边搅边加热 1～2 分钟收浓'
+        quote:
+          - '碗里剩下的腌料倒进锅里'
+          - '太稠就补一点水'
+          - '中小火边搅边加热 1～2 分钟'
+          - '收浓'
+      - id: plate-korean-chicken
+        text: '煎好后切成适口大小，配蔬菜装盘。'
+        quote: '煎好后切成适口大小，配蔬菜装盘。'
+    cautions:
+      - level: stop
+        text: '牛奶过敏者请不要使用'
+        quote: '牛奶过敏者请不要使用'
+      - level: info
+        text: '处理生肉时与其他食材和器具分开，注意防范食中毒。'
+        quote:
+          - '处理生肉时'
+          - '与其他食材和器具分开，注意防范食中毒。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 76138b309548bac4
+    name: 做韩式煎鸡
+
+  - id: chicken-broth-soup
+    status: reviewed
+    source:
+      anchor: '五道菜'
+    slot: anytime
+    remind:
+      text: '用牛奶抓揉鸡胸肉块，与秀珍菇和高汤煮熟后调味食用'
+      quote:
+        - 加牛奶和盐，
+        - 双手抓揉 1 分钟
+        - 加入秀珍菇煮约 2 分钟
+        - 煮约 3 分钟
+        - 盛入碗中，撒葱、三叶芹和柚子。
+        - 鸡胸肉「一煮就柴」的解法只有一个动作：去皮鸡胸肉 300g 配牛奶 3 大勺（约肉量的 15%）和盐 1.5～3g，双手抓揉 1 分钟。每天吃多少说明书给了两个数：疲劳缓解约 70g，认知功能约 100g。下面是配比与手法、每日量和五道菜。^[「鶏肉」のトリセツ]
+    dose:
+      - value: 150
+        unit: g
+        what: '带皮鸡胸肉用量'
+        quote: [ '带皮鸡胸肉', '150g' ]
+      - value: 1
+        valueMax: 2
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: [ '牛奶', '1～2 大勺' ]
+      - value: 1.5
+        unit: g
+        what: '盐用量'
+        quote: [ '盐', '1.5g' ]
+      - value: 2
+        unit: '小勺'
+        what: '玉米淀粉用量'
+        quote: [ '玉米淀粉', '2 小勺' ]
+      - value: 500
+        unit: ml
+        what: '高汤用量'
+        quote: [ '高汤', '500ml' ]
+      - value: 60
+        unit: g
+        what: '秀珍菇用量'
+        quote: [ '秀珍菇', '60g' ]
+      - value: 2
+        unit: '小勺'
+        what: '酱油用量'
+        quote: [ '酱油', '2 小勺' ]
+      - value: 2
+        unit: '小勺'
+        what: '味醂用量'
+        quote: [ '味醂', '2 小勺' ]
+    duration:
+      basis: derived
+      sec: 360
+      formula: '计时工序合计：1 分钟抓揉 + 2 分钟煮秀珍菇 + 3 分钟煮鸡胸肉 = 6 分钟（360 秒）'
+    steps:
+      - id: cut-soup-chicken
+        text: '鸡胸肉切成约2cm的块。'
+        quote: [ '鸡胸肉切成约', '2cm', '的块。' ]
+      - id: knead-soup-chicken
+        text: '加牛奶和盐，双手抓揉 1 分钟'
+        quote:
+          - '加牛奶和盐，'
+          - '双手抓揉 1 分钟'
+      - id: boil-mushrooms
+        text: '高汤煮开，加入秀珍菇煮约 2 分钟'
+        quote:
+          - '高汤煮开，'
+          - '加入秀珍菇煮约 2 分钟'
+      - id: cook-soup-chicken
+        text: '裹上玉米淀粉的鸡胸肉逐个下锅，煮约 3 分钟至熟。'
+        quote:
+          - '裹上玉米淀粉的鸡胸肉'
+          - '逐个'
+          - '下锅，'
+          - '煮约 3 分钟'
+          - '至熟。'
+      - id: season-soup
+        text: '用酱油、味醂和盐调味，盛入碗中，撒葱、三叶芹和柚子。'
+        quote: '用酱油、味醂和盐调味，盛入碗中，撒葱、三叶芹和柚子。'
+    cautions:
+      - level: stop
+        text: '牛奶过敏者请不要使用'
+        quote: '牛奶过敏者请不要使用'
+      - level: info
+        text: '处理生肉时与其他食材和器具分开，注意防范食中毒。'
+        quote:
+          - '处理生肉时'
+          - '与其他食材和器具分开，注意防范食中毒。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9f332ed229145996
+    name: 做鸡胸汤

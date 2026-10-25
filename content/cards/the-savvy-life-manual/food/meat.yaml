@@ -1,0 +1,359 @@
+article: 'the-savvy-life-manual/food/meat.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '牛排没肉汁？弱火煎 15 分钟 + 静置 15 分钟锁金龙汁'
+      reason: '开头导语与牛排、绞肉高汤两节的具体操作重复，未另抽重复卡片。'
+    - anchor: '黄金肉汁：藏在肌肉细胞里'
+      reason: '本节解释金龙汁的成分与肌肉细胞受热原理，没有可独立执行的动作，未抽成卡。'
+  images: []
+cards:
+  - id: steak-golden-juice
+    status: reviewed
+    name: "弱火煎牛排锁肉汁"
+    source:
+      anchor: '在家煎出金龙汁：厚 3cm 牛排的 15 分钟静置法'
+    slot: anytime
+    remind:
+      text: '弱火煎牛排，出锅后用铝箔包住静置，随后强火逼香'
+      quote:
+        - '转弱火下肉，每 2 分钟翻一次面、总共烤 15 分钟。'
+        - '取出肉，用铝箔包住静置 15 分钟（1cm 厚静置 4 分钟，2cm 厚静置 8 分钟）。'
+        - '加 1 大勺油，最后强火把两面各烤 30 秒～1 分钟，烤出你想要的香气，完成。'
+    dose:
+      - value: 3
+        unit: 'cm'
+        what: '牛排厚度'
+        quote: '牛排肉（厚 3cm）1 枚'
+      - value: 2
+        unit: '分钟'
+        what: '翻面间隔'
+        quote: '每 2 分钟翻一次面'
+      - value: 15
+        unit: '分钟'
+        what: '总煎烤时间'
+        quote: '总共烤 15 分钟'
+      - value: 15
+        unit: '分钟'
+        what: '静置时间'
+        quote: '用铝箔包住静置 15 分钟'
+      - value: 1
+        unit: '大勺'
+        what: '最后煎制加油量'
+        quote: '加 1 大勺油'
+    duration:
+      basis: derived
+      sec: 1800
+      formula: '15 分钟煎烤 + 15 分钟静置 = 30 分钟 = 1800 秒（仅计煎烤与静置）'
+    steps:
+      - id: steak-preheat
+        text: '锅里放 2 大勺油，中火预热 1 分钟。肉要在烹饪前 20～30 分钟从冷藏取出回温。'
+        quote: '锅里放 2 大勺油，中火预热 1 分钟。肉要在烹饪前 20～30 分钟从冷藏取出回温。'
+      - id: steak-adjust-heat
+        text: '转弱火下肉，每 2 分钟翻一次面、总共烤 15 分钟。厚度不同时间不同：1cm 厚 → 每 1 分钟翻面，烤 4 分钟；2cm 厚 → 每半分钟翻面，烤 8 分钟。'
+        quote: '转弱火下肉，每 2 分钟翻一次面、总共烤 15 分钟。厚度不同时间不同：1cm 厚 → 每 1 分钟翻面，烤 4 分钟；2cm 厚 → 每半分钟翻面，烤 8 分钟。'
+      - id: steak-rest
+        text: '取出肉，用铝箔包住静置 15 分钟（1cm 厚静置 4 分钟，2cm 厚静置 8 分钟）。'
+        quote: '取出肉，用铝箔包住静置 15 分钟（1cm 厚静置 4 分钟，2cm 厚静置 8 分钟）。'
+      - id: steak-sear
+        text: '加 1 大勺油，最后强火把两面各烤 30 秒～1 分钟，烤出你想要的香气，完成。'
+        quote: '加 1 大勺油，最后强火把两面各烤 30 秒～1 分钟，烤出你想要的香气，完成。'
+      - id: steak-dip
+        text: '蘸酱油时用碟子接着吃，可以防止油花四溅。'
+        quote: '蘸酱油时用碟子接着吃，可以防止油花四溅。'
+    cautions:
+      - level: info
+        text: '问题出在加热过度。说明书直言：日本料理里常用薄切肉，是为了快；但一加热就短时间内冲破 70℃，细胞全体被破坏，汁液全部漏出来蒸发掉——金龙汁就这样白白流失。'
+        quote: '问题出在加热过度。说明书直言：日本料理里常用薄切肉，是为了快；但一加热就短时间内冲破 70℃，细胞全体被破坏，汁液全部漏出来蒸发掉——金龙汁就这样白白流失。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e8e382ac5f2a563e
+
+  - id: minced-meat-stock
+    status: reviewed
+    source:
+      anchor: '绞肉高汤：10 分钟出一锅鲜味'
+    slot: anytime
+    remind:
+      text: '利用绞肉易出汁的特点，快速做出高汤和万能肉末'
+      quote:
+        - '既然绞肉细胞早就被破坏、特别容易出金龙汁，那就反过来利用它。'
+        - '高汤先生成：肉先在约 50℃ 的温水里泡到变白、捞出沥干，再下进沸腾的汤汁，随即转小火、不让它沸腾约 5 分钟——不沸腾，就不会把肉煮散，也不会让汤起浑浊。'
+        - '捞出的绞肉趁还是温热的时候，和 1 大勺蚝油拌匀，就是可以直接下饭的「超万能肉末（そぼろ）」。剩下的汤就是一份现成高汤。'
+    dose:
+      - value: 100
+        unit: 'g'
+        what: '鸡腿绞肉用量'
+        quote: '鸡腿绞肉 100g'
+      - value: 100
+        unit: 'g'
+        what: '猪绞肉用量'
+        quote: '猪绞肉 100g'
+      - value: 1.2
+        unit: 'L'
+        what: '汤汁用水量'
+        quote: '水 1.2L'
+      - value: 50
+        unit: '℃'
+        what: '浸肉温水温度'
+        quote: '肉先在约 50℃ 的温水里泡到变白、捞出沥干'
+      - value: 5
+        unit: '分钟'
+        what: '转小火后的烹煮时间'
+        quote: '再次沸腾前转小火，约 5 分钟'
+      - value: 5
+        unit: '分钟'
+        what: '捞出后的续煮时间'
+        quote: '到时间后捞出绞肉，再煮约 5 分钟完成。'
+      - value: 1
+        unit: '大勺'
+        what: '万能肉末拌蚝油用量'
+        quote: '和 1 大勺蚝油拌匀'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '10 分钟煮出一锅绞肉高汤'
+    steps:
+      - id: broth-soak
+        text: '把两种绞肉一起放进约 50℃ 的热水（用量不计）泡过，泡到变白，捞出沥干。'
+        quote: '把两种绞肉一起放进约 50℃ 的热水（用量不计）泡过，泡到变白，捞出沥干。'
+      - id: broth-add
+        text: '倒入沸腾的 1.2L 汤汁中，用笊篱捞一遍（防止肉末飞散）。'
+        quote: '倒入沸腾的 1.2L 汤汁中，用笊篱捞一遍（防止肉末飞散）。'
+      - id: broth-simmer
+        text: '再次沸腾前转小火，约 5 分钟；到时间后捞出绞肉，再煮约 5 分钟完成。'
+        quote: '再次沸腾前转小火，约 5 分钟；到时间后捞出绞肉，再煮约 5 分钟完成。'
+      - id: broth-mix
+        text: '捞出的绞肉趁还是温热的时候，和 1 大勺蚝油拌匀，就是可以直接下饭的「超万能肉末（そぼろ）」。剩下的汤就是一份现成高汤。'
+        quote: '捞出的绞肉趁还是温热的时候，和 1 大勺蚝油拌匀，就是可以直接下饭的「超万能肉末（そぼろ）」。剩下的汤就是一份现成高汤。'
+    cautions:
+      - level: info
+        text: '不沸腾，就不会把肉煮散，也不会让汤起浑浊。'
+        quote: '不沸腾，就不会把肉煮散，也不会让汤起浑浊。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 34d197af25e5e628
+
+  - id: lemon-ramen
+    status: reviewed
+    source:
+      anchor: '8 道 5～25 分钟的快手菜'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '做柠檬拉面：用绞肉高汤煮面，以柠檬和肉末提味'
+      quote:
+        - '锅里放入 A，加热。'
+        - '面煮熟后盛出，铺上薄切柠檬、肉末、小松菜。'
+    dose:
+      - value: 800
+        unit: 'mL'
+        what: '绞肉高汤用量'
+        quote: '绞肉高汤 800mL'
+      - value: 2
+        unit: '小勺'
+        what: '酱油用量'
+        quote: '酱油 2 小勺'
+      - value: 2
+        unit: '团'
+        what: '面条用量'
+        quote: '中華麺 2 团'
+      - value: 4
+        unit: '大勺'
+        what: '超万能肉末用量'
+        quote: '超万能肉末 4 大勺'
+    steps:
+      - id: ramen-heat-broth
+        text: '锅里放入 A，加热。'
+        quote: '锅里放入 A，加热。'
+      - id: ramen-blanch
+        text: '小松菜和面一起汆熟。'
+        quote: '小松菜和面一起汆熟。'
+      - id: ramen-assemble
+        text: '面煮熟后盛出，铺上薄切柠檬、肉末、小松菜。'
+        quote: '面煮熟后盛出，铺上薄切柠檬、肉末、小松菜。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 8bd421ffa5ce6eeb
+    name: 做柠檬拉面
+
+  - id: tomato-rice
+    status: reviewed
+    source:
+      anchor: '8 道 5～25 分钟的快手菜'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '做番茄饭：把绞肉高汤和番茄放进电饭煲'
+      quote:
+        - '电饭煲放入 A，在锅底划十字放入番茄，放入第 1 步。'
+        - '按正常程序煮饭；跳闸后压烂番茄、拌匀。'
+    dose:
+      - value: 2
+        unit: '杯'
+        what: '生米用量'
+        quote: '米 2 杯（约 300g，生米）'
+      - value: 330
+        unit: 'mL'
+        what: '绞肉高汤用量'
+        quote: '绞肉高汤 330mL'
+      - value: 1
+        unit: '小勺'
+        what: '盐用量'
+        quote: '盐 1 小勺'
+      - value: 2
+        unit: '个'
+        what: '番茄用量'
+        quote: '番茄（中）2 个'
+      - value: 100
+        unit: 'g'
+        what: '超万能肉末用量'
+        quote: '超万能肉末 100g'
+    steps:
+      - id: tomato-rice-sear
+        text: '平底锅放入 B，强火加热约 1 分钟，盛出备用。'
+        quote: '平底锅放入 B，强火加热约 1 分钟，盛出备用。'
+      - id: tomato-rice-cook
+        text: '电饭煲放入 A，在锅底划十字放入番茄，放入第 1 步。'
+        quote: '电饭煲放入 A，在锅底划十字放入番茄，放入第 1 步。'
+      - id: tomato-rice-finish
+        text: '按正常程序煮饭；跳闸后压烂番茄、拌匀。'
+        quote: '按正常程序煮饭；跳闸后压烂番茄、拌匀。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 5231b3c43670f56a
+    name: 做番茄饭
+
+  - id: mapo-tofu
+    status: reviewed
+    source:
+      anchor: '8 道 5～25 分钟的快手菜'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '做麻婆豆腐：用绞肉高汤和豆腐煮制，收汁时避免弄碎豆腐'
+      quote:
+        - '第 1 步加入绞肉高汤、A 和豆腐，加热约 3 分钟。'
+        - '转小火，一边用锅铲小心不让豆腐碎掉一边搅拌，分次加入 B 的水溶淀粉收汁。'
+    dose:
+      - value: 80
+        unit: 'g'
+        what: '超万能肉末用量'
+        quote: '超万能肉末 80g'
+      - value: 300
+        unit: 'mL'
+        what: '绞肉高汤用量'
+        quote: '绞肉高汤 300mL'
+      - value: 300
+        unit: 'g'
+        what: '豆腐用量'
+        quote: '豆腐（切 1cm 见方）1 板（300g）'
+      - value: 1
+        unit: '小勺'
+        what: '蒜末用量'
+        quote: '蒜末 1 小勺'
+      - value: 1
+        unit: '小勺'
+        what: '姜末用量'
+        quote: '姜末 1 小勺'
+      - value: 1
+        unit: '大勺'
+        what: '葱花用量'
+        quote: '葱花 1 大勺'
+      - value: 2
+        unit: '小勺'
+        what: '炒制用油量'
+        quote: '油 2 小勺'
+    steps:
+      - id: mapo-tofu-fry
+        text: '平底锅下油，放蒜末和姜，强火炒到出香，加入豆瓣酱和甜面酱，整体轻炒，加入肉末再炒约 1 分钟。'
+        quote: '平底锅下油，放蒜末和姜，强火炒到出香，加入豆瓣酱和甜面酱，整体轻炒，加入肉末再炒约 1 分钟。'
+      - id: mapo-tofu-simmer
+        text: '第 1 步加入绞肉高汤、A 和豆腐，加热约 3 分钟。'
+        quote: '第 1 步加入绞肉高汤、A 和豆腐，加热约 3 分钟。'
+      - id: mapo-tofu-thicken
+        text: '转小火，一边用锅铲小心不让豆腐碎掉一边搅拌，分次加入 B 的水溶淀粉收汁。'
+        quote: '转小火，一边用锅铲小心不让豆腐碎掉一边搅拌，分次加入 B 的水溶淀粉收汁。'
+      - id: mapo-tofu-finish
+        text: '再转强火，加葱花和芝麻油，快速拌匀，按口味加山椒。'
+        quote: '再转强火，加葱花和芝麻油，快速拌匀，按口味加山椒。'
+    cautions:
+      - level: info
+        text: '一边用锅铲小心不让豆腐碎掉一边搅拌'
+        quote: '一边用锅铲小心不让豆腐碎掉一边搅拌'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a11864d0382c6ea5
+    name: 做麻婆豆腐
+
+  - id: soy-meat-burger
+    status: reviewed
+    source:
+      anchor: '大豆肉：唯一超过肉的肉'
+    slot: anytime
+    remind:
+      text: '用大豆肉吸收绞肉汁，冷藏静置后煎成多汁汉堡肉饼'
+      quote:
+        - '更进一步：大豆肉受热后结构变化很小，所以即使菜凉透了，金龙汁还锁在原处——这就能做出冷藏后依然多汁的汉堡肉饼，装便当也完全没问题。'
+        - '合绞肉加盐，用手轻轻揉匀，加入 A，整体轻轻拌匀，冷藏静置 10 分钟。'
+    dose:
+      - value: 200
+        unit: 'g'
+        what: '绞肉用量'
+        quote: '合绞肉 200g'
+      - value: 30
+        unit: 'g'
+        what: '半生大豆肉用量'
+        quote: '大豆肉（半生）30g'
+      - value: 2
+        unit: '份'
+        what: '肉饼分份数'
+        quote: '把第 1 步分成 2 份'
+      - value: 10
+        unit: '分钟'
+        what: '冷藏静置时间'
+        quote: '整体轻轻拌匀，冷藏静置 10 分钟'
+      - value: 75
+        unit: '℃'
+        what: '肉饼中心温度'
+        quote: '中心 75℃ 保持 1 分钟'
+      - value: 1
+        unit: '分钟'
+        what: '中心保持时间'
+        quote: '中心 75℃ 保持 1 分钟'
+      - value: 2
+        unit: '分钟'
+        what: '强火煎制时间'
+        quote: '强火烧约 2 分钟'
+      - value: 1
+        unit: '大勺'
+        what: '焖制加水量'
+        quote: '加 1 大勺水'
+    steps:
+      - id: soy-burger-mix
+        text: '合绞肉加盐，用手轻轻揉匀，加入 A，整体轻轻拌匀，冷藏静置 10 分钟。'
+        quote: '合绞肉加盐，用手轻轻揉匀，加入 A，整体轻轻拌匀，冷藏静置 10 分钟。'
+      - id: soy-burger-portion
+        text: '平底锅下油，把第 1 步分成 2 份，做成圆饼排入，一定要充分加热：中心 75℃ 保持 1 分钟。'
+        quote: '平底锅下油，把第 1 步分成 2 份，做成圆饼排入，一定要充分加热：中心 75℃ 保持 1 分钟。'
+      - id: soy-burger-sear
+        text: '强火烧约 2 分钟，翻面，加 1 大勺水，盖盖转中火，中途再翻一次，总共烧 7～8 分钟。'
+        quote: '强火烧约 2 分钟，翻面，加 1 大勺水，盖盖转中火，中途再翻一次，总共烧 7～8 分钟。'
+      - id: soy-burger-dry-soy
+        text: '用干制大豆肉的话，泡水发好后再精确取 30g。'
+        quote: '用干制大豆肉的话，泡水发好后再精确取 30g。'
+    cautions:
+      - level: info
+        text: '一定要充分加热：中心 75℃ 保持 1 分钟。'
+        quote: '一定要充分加热：中心 75℃ 保持 1 分钟。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9346025b23bdaeb8
+    name: 用大豆肉做汉堡饼

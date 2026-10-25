@@ -1,0 +1,259 @@
+# 发版流水线：tag 是唯一的版本源。
+#
+# 流程：validate（tag⇄版本 + 测试）→ build（桌面端 + Android）→ publish（单一草稿 → 校验 →
+# SHA256SUMS → 上传 → 人工审批 → 发布 → 核验）。
+#
+# 为什么这么排：
+#
+#   · **tag 是唯一版本源**。发版提交先把各 package.json 的版本改成 x.y.z，再打 tag；
+#     validate 这一步断言 tag 与版本一致，不一致直接失败 —— 免得出现
+#     「tag 是 v0.1.2、包里却写着 0.1.1」这种半年后才发现的怪事。
+#   · **红树不发布**：build 与 publish 都 needs: validate，测试不过就没人发版。
+#   · **先草稿、后审批、再发布**：publish 走 `release` environment（人工审批），
+#     草稿里能改发布说明、改完再放行 —— 半成品不会被人下载到。
+#   · **一个 job 打一个平台**：latest.yml 这类更新清单同名，
+#     分 job 打会互相覆盖（谁后跑谁赢）。
+#   · **打包一律 --publish never**：发布由唯一的 publish job 做，
+#     否则每个 job 各自抢着发，会发出半成品。
+#
+# 只维护在默认分支。tag 触发时跑的是**被打 tag 那个提交里的这份文件**，
+# 所以修了工作流要用包含修复的提交重新打 tag。
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要发的 tag（如 v0.1.1）'
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
+  NODE: '26'
+
+jobs:
+  validate:
+    name: 校验版本并跑测试
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: '${{ env.TAG }}'
+          fetch-depth: 0
+
+      - id: version
+        name: tag 与各 package.json 的版本要对得上
+        shell: bash
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::$TAG 不是 vX.Y.Z"; exit 1; }
+          v="${TAG#v}"
+          for f in package.json app/package.json content/package.json desktop/package.json mobile/package.json; do
+            pkg=$(node -p "require('./$f').version")
+            [ "$pkg" = "$v" ] || { echo "::error::$f 是 $pkg，与 tag $v 对不上"; exit 1; }
+          done
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE }}
+          cache: npm
+      - run: npm ci
+      # Electron ≥ 42 不再靠 postinstall 下载二进制了，得显式装
+      - run: npx install-electron
+      - run: npm run content:check
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+
+  build-desktop:
+    name: 打包桌面端
+    needs: validate
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: '${{ env.TAG }}'
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE }}
+          cache: npm
+      - run: npm ci
+      - run: npx install-electron
+      - run: npm run app:build
+      - name: 打包（安装包 + 免安装版）
+        # 产物名在 desktop/package.json 里定死了（ASCII）：
+        # GitHub 的附件名只吃 ASCII，中文会被换成 default.exe ——
+        # 而且更新清单 latest.yml 里记的就是这个文件名，对不上就更新不了。
+        run: npx electron-builder --projectDir desktop --win nsis portable --x64 --publish never
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist-desktop
+          if-no-files-found: error
+          path: |
+            desktop/release/*.exe
+            desktop/release/*.blockmap
+            desktop/release/latest.yml
+
+  build-android:
+    name: 打包 Android
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: '${{ env.TAG }}'
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE }}
+          cache: npm
+      - run: npm ci
+      - run: npm run app:build
+      - run: npm run sync --workspace @life-guide/mobile
+      # Capacitor 8 的 Android 端要 JDK 21（source/target 21）。
+      # runner 上的默认 JDK 是 17，不显式装的话会报 "invalid source release: 21"。
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Android 的版本跟着 tag
+        run: node scripts/sync-android-version.mjs "${TAG#v}"
+      - name: 编译 APK
+        working-directory: mobile/android
+        run: |
+          # gradlew 在仓库里没有可执行位（Windows 上提交出来的）
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist-android
+          if-no-files-found: error
+          path: mobile/android/app/build/outputs/apk/debug/*.apk
+
+  publish:
+    name: 发布
+    needs: [validate, build-desktop, build-android]
+    runs-on: ubuntu-latest
+    environment: release # 人工审批闸门：草稿改好了再放行
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      VERSION: ${{ needs.validate.outputs.version }}
+    steps:
+      # 建草稿与传附件要跑仓库里的脚本（scripts/release-draft.mjs）
+      - uses: actions/checkout@v7
+        with:
+          ref: '${{ env.TAG }}'
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: 'dist-*'
+          merge-multiple: true
+          path: dist
+
+      - name: 附件名改成 ASCII
+        shell: bash
+        run: |
+          cd dist
+          # Gradle 出来的是 app-debug.apk；GitHub 的附件名只吃 ASCII
+          [ -f app-debug.apk ] && mv app-debug.apk "LifeGuide-$VERSION.apk"
+          ls -l
+
+      - name: 校验更新清单与它指向的文件
+        shell: bash
+        run: |
+          cd dist
+          m=latest.yml
+          [ -f "$m" ] || { echo "::error::缺少 $m（打包时没产出？）"; exit 1; }
+          grep -q "^version: $VERSION$" "$m" || { echo "::error::$m 不是版本 $VERSION"; exit 1; }
+          while read -r u; do
+            [ -f "$u" ] || { echo "::error::$m 指向了不存在的 $u"; exit 1; }
+          done < <(grep -E '^\s*-?\s*url:' "$m" | awk '{print $NF}')
+          # 清单里的文件必须都在（少了就更新不了）
+          for f in "LifeGuide-Setup-$VERSION.exe" "LifeGuide-Setup-$VERSION.exe.blockmap"; do
+            [ -f "$f" ] || { echo "::error::缺少 $f"; exit 1; }
+          done
+
+      - name: SHA256SUMS（Linux 上生成，行尾是 LF）
+        shell: bash
+        # 必须用 Linux 的 sha256sum 生成：PowerShell 的 Set-Content 写 CRLF，
+        # 用户的 sha256sum -c 会逐行失败（应用自己读没问题，用户那条命令炸）。
+        run: cd dist && sha256sum -- * > SHA256SUMS && cat SHA256SUMS
+
+      - id: plan
+        name: 要不要做来源证明
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          # artifact attestation：私有仓库在普通套餐下不支持
+          # （要 GitHub Enterprise Cloud）。仓库转公开后这一步自动生效。
+          if [ "$(gh api "repos/$REPO" --jq .private)" = "false" ]; then
+            echo "attest=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "attest=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::仓库还是私有的，这一步跳过来源证明（公开后自动生效）"
+          fi
+
+      - name: 来源证明（attestation）
+        if: steps.plan.outputs.attest == 'true'
+        uses: actions/attest@v4
+        with:
+          subject-checksums: dist/SHA256SUMS
+
+      - name: 建草稿并上传全部附件
+        id: draft
+        shell: bash
+        run: node scripts/release-draft.mjs dist
+
+      - name: 发布并设为 latest
+        shell: bash
+        env:
+          RELEASE_ID: ${{ steps.draft.outputs.release_id }}
+        run: |
+          # 用上一步给的 release id，不按 tag 找：
+          # 草稿的标签名在 GitHub 侧会变成 "untagged-xxx"，按 tag 找会落空。
+          [ -n "$RELEASE_ID" ] || { echo "::error::没有拿到 release id"; exit 1; }
+          gh api -X PATCH "repos/$REPO/releases/$RELEASE_ID" -F draft=false -f make_latest=true >/dev/null
+
+      - name: 发布后核验（像用户那样去取）
+        shell: bash
+        run: |
+          # API 是准的；下载重定向会慢几分钟
+          [ "$(gh api "repos/$REPO/releases/latest" --jq .tag_name)" = "$TAG" ] \
+            || { echo "::error::releases/latest 不是 $TAG"; exit 1; }
+          private=$(gh api "repos/$REPO" --jq .private)
+          if [ "$private" = "true" ]; then
+            # 私有仓库：releases/latest/download 那个链接匿名取不到
+            # （它认的是浏览器会话，不是 API 令牌）→ 走 API 取附件。
+            aid=$(gh api "repos/$REPO/releases/latest" --jq '.assets[] | select(.name=="latest.yml") | .id')
+            [ -n "$aid" ] || { echo "::error::release 上没有 latest.yml"; exit 1; }
+            gh api "repos/$REPO/releases/assets/$aid" -H "Accept: application/octet-stream" \
+              | grep -q "^version: $VERSION$" \
+              || { echo "::error::latest.yml 的版本不对"; exit 1; }
+          else
+            ok=
+            for _ in $(seq 1 10); do
+              curl -fsSL "https://github.com/$REPO/releases/latest/download/latest.yml" | grep -q "^version: $VERSION$" && { ok=1; break; }
+              sleep 60
+            done
+            [ -n "$ok" ] || { echo "::error::公开的 latest.yml 十分钟后还是旧的"; exit 1; }
+          fi

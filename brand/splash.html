@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>生活指南 · 启动画面</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        width: 2732px;
+        height: 2732px;
+        background: #fbf6ec;
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+      /* 纸上的横格：跟 App 里的手帖一样 */
+      .ruled {
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          to bottom,
+          transparent 0 119px,
+          rgba(168, 42, 36, 0.05) 119px 120px
+        );
+      }
+      .plate {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 84px;
+      }
+      .mark {
+        width: 620px;
+        height: 620px;
+        border-radius: 136px;
+        background: #a82a24;
+        position: relative;
+        box-shadow: 0 30px 70px rgba(36, 31, 26, 0.16);
+      }
+      .mark .card {
+        position: absolute;
+        left: 22%; top: 28%; width: 56%; height: 44%;
+        background: #fbf6ec;
+        border-radius: 5%;
+      }
+      .mark .ln {
+        position: absolute;
+        left: 30%; height: 3.6%;
+        background: #a82a24;
+        border-radius: 999px;
+      }
+      .mark .ln1 { top: 35%; width: 36%; }
+      .mark .ln2 { top: 45%; width: 26%; }
+      .mark .ln3 { top: 55%; width: 18%; }
+      .mark .stamp {
+        position: absolute;
+        left: 56%; top: 50%; width: 20%; height: 20%;
+        background: #a82a24;
+        border-radius: 20%;
+        box-shadow: 0 0 0 1.6% #fbf6ec;
+      }
+      .name {
+        font-family: "Songti SC", SimSun, "Noto Serif CJK SC", serif;
+        font-size: 132px;
+        letter-spacing: 26px;
+        color: #241f1a;
+        font-weight: 700;
+        margin-left: 26px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ruled"></div>
+    <div class="plate">
+      <div class="mark">
+        <div class="card"></div>
+        <div class="ln ln1"></div>
+        <div class="ln ln2"></div>
+        <div class="ln ln3"></div>
+        <div class="stamp"></div>
+      </div>
+      <div class="name">生活指南</div>
+    </div>
+  </body>
+</html>

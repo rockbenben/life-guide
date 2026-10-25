@@ -1,0 +1,160 @@
+article: "the-savvy-life-manual/body-care/oral-flora.md"
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "47.9% 的人牙周袋超 4mm：牙周病几乎无痛"
+      reason: "疾病流行率与几乎无痛的症状特征属于背景信息；相关检查提示已并入专业检查卡，不另立卡。"
+    - anchor: "嘴里到底住着什么"
+      reason: "口腔菌群的种类、数量与菌种说明属于知识性内容，没有形成可独立执行的保健动作。"
+    - anchor: "这些菌是怎么到全身去的"
+      reason: "菌斑形成及全身疾病关联属于机制背景；其中去除菌斑的可执行部分已在刷牙、牙线和专业检查卡中抽取。"
+  images: []
+cards:
+  - id: gentle-fine-brushing
+    status: reviewed
+    name: "轻握牙刷小幅颤动"
+    source:
+      anchor: "三条做法：把菌斑打掉"
+    slot: anytime
+    remind:
+      text: "轻握牙刷，对准牙缝和牙周袋小幅颤动"
+      quote:
+        - "像握铅笔那样捏着"
+        - "把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动"
+    steps:
+      - id: pencil-grip
+        text: "不是使劲攥像握铅笔那样捏着"
+        quote:
+          - "不是使劲攥"
+          - "像握铅笔那样捏着"
+      - id: guide-brush-in
+        text: "把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动"
+        quote: "把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动"
+      - id: target-plaque-sites
+        text: "瞄准容易积菌斑的位置"
+        quote: "瞄准容易积菌斑的位置"
+    cautions:
+      - level: info
+        text: "不是用力来回刷"
+        quote: "不是用力来回刷"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5ab399a9b94c26da
+
+  - id: floss-before-brushing
+    status: reviewed
+    name: "先用牙线和牙间刷"
+    source:
+      anchor: "三条做法：把菌斑打掉"
+    slot: anytime
+    remind:
+      text: "先用牙线牙缝明显张大的人局部并用牙间刷"
+      quote:
+        - "先用牙线"
+        - "牙缝明显张大的人"
+        - "局部并用牙间刷"
+    steps:
+      - id: floss-first
+        text: "先用牙线"
+        quote: "先用牙线"
+      - id: add-interdental-brush
+        text: "牙缝明显张大的人在牙线之外局部并用牙间刷"
+        quote:
+          - "牙缝明显张大的人"
+          - "在牙线之外"
+          - "局部并用牙间刷"
+      - id: angle-and-move
+        text: "斜着送进去前后移动"
+        quote:
+          - "斜着送进去"
+          - "前后移动"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ff33bb1ad2362b3d
+
+  - id: regular-professional-periodontal-check
+    status: reviewed
+    name: "定期请人检查牙周"
+    source:
+      anchor: "三条做法：把菌斑打掉"
+    slot: anytime
+    remind:
+      text: "定期让专业的人用眼睛检查"
+      quote: "定期让专业的人用眼睛检查"
+    steps:
+      - id: professional-eye-check
+        text: "定期让专业的人用眼睛检查"
+        quote: "定期让专业的人用眼睛检查"
+      - id: check-frequency
+        text: "每 3 个月 1 次，至少每半年 1 次"
+        quote: "每 3 个月 1 次，至少每半年 1 次"
+      - id: confirm-insurance
+        text: "是否适用保险请直接问医疗机构"
+        quote: "是否适用保险请直接问医疗机构"
+    cautions:
+      - level: info
+        text: "保险适用下约 3000～5000 日元"
+        quote: "保险适用下约 3000～5000 日元"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c1bfc08766db5dba
+
+  - id: check-gums-without-pain
+    status: reviewed
+    source:
+      anchor: "做了以后的变化"
+    slot: anytime
+    remind:
+      text: "按这套做法护理，即使没有疼痛或肿也请诊所检查牙周袋"
+      quote:
+        - "这套做法"
+        - "即使没有疼痛或肿"
+        - "牙周袋的口袋深度是要用专用器具"
+        - "探进去量"
+    steps:
+      - id: mild-periodontal-care
+        text: "轻度牙周病的话，光靠这套护理本身就能改善"
+        quote:
+          - "轻度"
+          - "牙周病的话，光靠这套护理本身就能改善"
+      - id: do-not-wait-for-pain
+        text: "别等疼了才处理"
+        quote: "别等疼了才处理"
+      - id: measure-pocket-depth
+        text: "牙周袋的口袋深度是要用专用器具探进去量才知道的"
+        quote:
+          - "牙周袋的口袋深度是要用专用器具"
+          - "探进去量"
+          - "才知道的"
+      - id: ask-clinic-to-check
+        text: "即使没有疼痛或肿，也可以直接对诊所说「担心牙龈健康，请帮我检查」"
+        quote: "即使没有疼痛或肿，也可以直接对诊所说「担心牙龈健康，请帮我检查」"
+    effect:
+      text: "5 位受试者试这套做法约 1 个月期间另外做了一次洗牙4mm 以上牙周袋的数量大幅减少牙龈出血处也大幅减少"
+      quote:
+        - "5 位受试者试这套做法"
+        - "约 1 个月"
+        - "期间另外做了一次洗牙"
+        - "4mm 以上牙周袋的数量大幅减少"
+        - "牙龈出血处也大幅减少"
+    cautions:
+      - level: info
+        text: "这次试验额外做了一次洗牙"
+        quote:
+          - "这次试验"
+          - "额外做了一次洗牙"
+      - level: info
+        text: "光靠照镜子看不出来"
+        quote: "光靠照镜子看不出来"
+      - level: info
+        text: "费用和保险是否适用，请以医疗机构的说明为准"
+        quote: "费用和保险是否适用，请以医疗机构的说明为准"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 2971f278d2b61cb1
+    name: 没疼痛也要查牙周袋

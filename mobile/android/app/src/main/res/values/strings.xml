@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">生活指南</string>
+    <string name="title_activity_main">生活指南</string>
+    <string name="package_name">top.newzone.lifeguide</string>
+    <string name="custom_url_scheme">top.newzone.lifeguide</string>
+</resources>

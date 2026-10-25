@@ -1,0 +1,277 @@
+article: the-savvy-life-manual/body-care/glaucoma.md
+kind: condition
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: glaucoma-silent-progression
+    status: reviewed
+    name: "青光眼悄悄进展"
+    source:
+      anchor: '青光眼不是老花眼：九成人察觉不到视野缺损'
+    remind:
+      text: 青光眼早期可能没有自觉症状，不要只靠视力表判断。
+      quote:
+        - '没有自觉症状'
+        - '视力表上分数正常，不等于眼睛没问题。'
+    steps:
+      - id: central-vision-misconception
+        text: 青光眼最反直觉的地方不是它有多常见，而是它坏掉的不是视力。
+        quote: '青光眼最反直觉的地方不是它有多常见，而是它坏掉的不是视力。'
+      - id: early-detection-difficulty
+        text: 早期发现极其困难。
+        quote: '早期发现极其困难。'
+      - id: prevalence-and-awareness
+        text: 日本估计全国患者约 490 万人，40 岁以上每 20 人中有 1 人，70 岁以上每 10 人中有 1 人以上；患者中约 9 成还没察觉到自己有病。
+        quote: '日本估计全国患者约 490 万人，40 岁以上每 20 人中有 1 人，70 岁以上每 10 人中有 1 人以上；患者中约 9 成还没察觉到自己有病。'
+      - id: blindness-risk
+        text: 最坏会失明
+        quote: '最坏会失明'
+    notices:
+      - level: info
+        text: 视力表上分数正常，不等于眼睛没问题。
+        quote: '视力表上分数正常，不等于眼睛没问题。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 593f6232bf9b855d
+
+  - id: glaucoma-visual-field-loss
+    status: reviewed
+    source:
+      anchor: '它拿走的是视野，不是视力'
+    remind:
+      text: 青光眼造成的是视野缺损。
+      quote: '神经坏掉，视野就出现缺损。'
+    steps:
+      - id: retinal-nerve-fibers
+        text: 眼球深处有视网膜，视网膜里有像丝线一样的视网膜神经纤维，绕了整整 100 万条，负责把进入眼睛的光线信息传给大脑。
+        quote: '眼球深处有视网膜，视网膜里有像丝线一样的视网膜神经纤维，绕了整整 100 万条，负责把进入眼睛的光线信息传给大脑。'
+      - id: eye-pressure-concentration
+        text: 当房水过多等原因让眼压升高，压力就会集中在眼球里唯一敞开的那个出口——视网膜神经纤维穿过的洞。
+        quote: '当房水过多等原因让眼压升高，压力就会集中在眼球里唯一敞开的那个出口——视网膜神经纤维穿过的洞。'
+      - id: optic-nerve-damage
+        text: 压力持续压在那里，筛状板就会变形；变形的筛状板反过来挤压神经纤维，输送能量的通路被堵住，神经随之坏死。
+        quote: '压力持续压在那里，筛状板就会变形；变形的筛状板反过来挤压神经纤维，输送能量的通路被堵住，神经随之坏死。'
+      - id: delayed-symptoms
+        text: 有报告指出，青光眼到了中期，眼里的神经已经消失接近一半，而自觉症状要过了中期才出现。
+        quote: '有报告指出，青光眼到了中期，眼里的神经已经消失接近一半，而自觉症状要过了中期才出现。'
+    notices:
+      - level: info
+        text: 这就是它难被发现的原因。
+        quote: '这就是它难被发现的原因。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 514728afd4a87347
+
+  - id: glaucoma-brain-completion
+    status: reviewed
+    name: "青光眼为何察觉不到"
+    source:
+      anchor: '为什么会察觉不到'
+    remind:
+      text: 视野缺损可能被双眼和大脑补全。
+      quote: '不转头、双眼一起看，能互相补上缺的部分；更关键的是，大脑会把那部分"当作好像存在"一样补完。'
+    steps:
+      - id: continuous-brain-completion
+        text: 大脑其实一直在做这种补全，与生病无关。
+        quote: '大脑其实一直在做这种补全，与生病无关。'
+      - id: street-scene-experiment
+        text: 'A（未经任何加工的原图）占 26%C 占 4%而 B 和 D 这两张视野缺得很明显的，各占 0%'
+        quote:
+          - 'A（未经任何加工的原图）占 26%'
+          - 'C 占 4%'
+          - '而 B 和 D 这两张视野缺得很明显的，'
+          - '各占 0%'
+      - id: mildly-blurred-choice
+        text: E（有一处轻微模糊）的最多，占 54%
+        quote: 'E（有一处轻微模糊）的最多，占 54%'
+      - id: natural-blind-spot
+        text: 每个人眼睛里本来就有称作"盲点"的视野缺失区，只是被大脑用周围的信息补上了。
+        quote: '每个人眼睛里本来就有称作"盲点"的视野缺失区，只是被大脑用周围的信息补上了。'
+      - id: unnoticed-visual-field-loss
+        text: 这是活下去所必需的机制，代价就是青光眼开始发作后，缺损照样被填平，人就发现不了。
+        quote: '这是活下去所必需的机制，代价就是青光眼开始发作后，缺损照样被填平，人就发现不了。'
+    notices:
+      - level: info
+        text: 大脑其实一直在做这种补全，与生病无关。
+        quote: '大脑其实一直在做这种补全，与生病无关。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 4ada66d397fec49a
+
+  - id: glaucoma-blind-spot-experience
+    status: reviewed
+    source:
+      anchor: '亲手体会一次大脑的补全'
+    remind:
+      text: 遮住右眼，用左眼注视瓢虫并前后移动图，找到盲点。
+      quote:
+        - 先用手遮住右眼
+        - 左眼看图中的红色瓢虫
+        - 保持注视，慢慢把图靠近或移远
+        - 某一刻四瓣草会突然消失，那个位置就是你的盲点。注意：草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。这就是视野的缺失被大脑当成"看得见"补上的样子。
+    steps:
+      - id: cover-right-eye
+        text: 先用手遮住右眼
+        quote: '先用手遮住右眼'
+      - id: fixate-on-ladybug
+        text: 左眼看图中的红色瓢虫
+        quote: '左眼看图中的红色瓢虫'
+      - id: move-image-near-far
+        text: 保持注视，慢慢把图靠近或移远
+        quote: '保持注视，慢慢把图靠近或移远'
+      - id: locate-blind-spot
+        text: 某一刻四瓣草会突然消失，那个位置就是你的盲点。
+        quote: '某一刻四瓣草会突然消失，那个位置就是你的盲点。'
+      - id: observe-visual-completion
+        text: 草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。
+        quote: '草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。'
+      - id: use-larger-image
+        text: 说明书提示，如果小图上做不出来，可以用卷末附的大尺寸图再试一次。
+        quote: '说明书提示，如果小图上做不出来，可以用卷末附的大尺寸图再试一次。'
+    notices:
+      - level: info
+        text: 草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。
+        quote: '草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: e652f52ca52deba6
+
+  - id: glaucoma-risk-factors
+    status: draft
+    source:
+      anchor: '两项高危因素：眼压与家族史'
+    remind:
+      text: 被告知过眼压高或家族里有人患青光眼，应考虑眼科就诊。
+      quote:
+        - '被告知过眼压高'
+        - '家族里有人患青光眼'
+        - '这一条直接建议考虑去眼科就诊。'
+    steps:
+      - id: elevated-eye-pressure
+        text: 被告知过眼压高
+        quote: '被告知过眼压高'
+      - id: family-history-risk
+        text: '家族里有人患青光眼高度近视（视力检查里最大的那个标记都看不见的状态）远视，且为 70 岁以上的女性。'
+        quote:
+          - '家族里有人患青光眼'
+          - '高度近视（视力检查里最大的那个标记都看不见的状态）'
+          - '远视，且为 70 岁以上的女性。'
+      - id: normal-pressure-glaucoma
+        text: 眼压没有超过基准值、却因为视网膜神经纤维本身脆弱而受损的类型，称为正常眼压青光眼，日本人的青光眼有 7 成属于这一型。
+        quote: '眼压没有超过基准值、却因为视网膜神经纤维本身脆弱而受损的类型，称为正常眼压青光眼，日本人的青光眼有 7 成属于这一型。'
+      - id: high-pressure-glaucoma
+        text: 剩下 3 成是眼压高的类型——而这 3 成进展更快，早期发现格外重要。
+        quote: '剩下 3 成是眼压高的类型——而这 3 成进展更快，早期发现格外重要。'
+    notices:
+      - level: seek-care
+        text: '被告知过眼压高这一条直接建议考虑去眼科就诊。'
+        quote:
+          - '被告知过眼压高'
+          - '这一条直接建议考虑去眼科就诊。'
+      - level: seek-care
+        text: 如果上面 12 条里有任何一条命中，或者家族里有人患青光眼、你自己有高度近视，请到眼科就诊。
+        quote: '如果上面 12 条里有任何一条命中，或者家族里有人患青光眼、你自己有高度近视，请到眼科就诊。'
+
+  - id: glaucoma-warning-signs
+    status: draft
+    source:
+      anchor: '十二个"最近好像有点不对劲"的信号'
+    remind:
+      text: 命中任意一条就建议考虑眼科就诊
+      quote:
+        - '命中任意一条'
+        - '就建议考虑眼科就诊'
+    steps:
+      - id: unequal-eye-range
+        text: 左右眼看到的范围或明亮程度不一样
+        quote: '左右眼看到的范围或明亮程度不一样'
+      - id: blurred-during-eye-movement
+        text: 视线快速转动的那一瞬间看不清
+        quote: '视线快速转动的那一瞬间看不清'
+      - id: missing-mouse-pointer
+        text: 用电脑时找不到鼠标指针
+        quote: '用电脑时找不到鼠标指针'
+      - id: unnoticed-small-saucer
+        text: 桌上的小碟子没注意到，剩在原处
+        quote: '桌上的小碟子没注意到，剩在原处'
+      - id: frequent-pouring-mistakes
+        text: 从茶壶往杯子里倒茶老是倒不好
+        quote: '从茶壶往杯子里倒茶老是倒不好'
+      - id: reverse-parking-deterioration
+        text: 倒车入库变差，经常剐蹭
+        quote: '倒车入库变差，经常剐蹭'
+      - id: repeated-glasses-purchases
+        text: 眼镜不合了，一副接一副地买
+        quote: '眼镜不合了，一副接一副地买'
+      - id: glasses-seem-dirty
+        text: 总觉得眼镜脏
+        quote: '总觉得眼镜脏'
+      - id: collision-in-crowds
+        text: 在人多的地方撞到人
+        quote: '在人多的地方撞到人'
+      - id: missing-stairs
+        text: 踩空楼梯或车站台阶
+        quote: '踩空楼梯或车站台阶'
+      - id: collision-with-foot-level-objects
+        text: 撞到垃圾桶之类脚边的东西
+        quote: '撞到垃圾桶之类脚边的东西'
+      - id: reading-line-skipping
+        text: 读书跳行，读下来话都接不上
+        quote: '读书跳行，读下来话都接不上'
+      - id: daily-reading-screen-signals
+        text: 其中第 2、3 条和第 12 条尤其值得留意：它们和阅读、看屏幕这类日常动作直接绑在一起，最容易被当成"最近太累了"。
+        quote: '其中第 2、3 条和第 12 条尤其值得留意：它们和阅读、看屏幕这类日常动作直接绑在一起，最容易被当成"最近太累了"。'
+    notices:
+      - level: seek-care
+        text: 如果上面 12 条里有任何一条命中，或者家族里有人患青光眼、你自己有高度近视，请到眼科就诊。
+        quote: '如果上面 12 条里有任何一条命中，或者家族里有人患青光眼、你自己有高度近视，请到眼科就诊。'
+
+  - id: glaucoma-diagnosis-treatment
+    status: reviewed
+    source:
+      anchor: '检查、治疗与就诊'
+    remind:
+      text: 即使一张自查表都没命中，只要年满 40 岁，说明书仍建议考虑做眼科检查，这些检查保持一年一次左右的定期节奏很重要。
+      quote: '即使一张自查表都没命中，只要年满 40 岁，说明书仍建议考虑做眼科检查，这些检查保持一年一次左右的定期节奏很重要。'
+    steps:
+      - id: comprehensive-diagnosis
+        text: 诊断青光眼可以做的不止眼压检查：还有查视野缺损的视野检查、看视网膜与神经层断面的光干涉断层计检查（OCT），能精密测量神经层的厚度。
+        quote: '诊断青光眼可以做的不止眼压检查：还有查视野缺损的视野检查、看视网膜与神经层断面的光干涉断层计检查（OCT），能精密测量神经层的厚度。'
+      - id: fundus-examination
+        text: '说明书特别推荐记住眼底检查拍摄眼球深处的图像，绝大多数眼科都能做，而且能相对较早地看出神经是否已经受损。'
+        quote:
+          - '说明书特别推荐记住'
+          - '眼底检查'
+          - '拍摄眼球深处的图像，绝大多数眼科都能做，而且能相对较早地看出神经是否已经受损。'
+      - id: pressure-lowering-treatment
+        text: 治疗上，青光眼唯一的治疗是降眼压（正常眼压青光眼同样如此），主要手段是眼药，基本上要终身持续，并定期检查确认没有进展。
+        quote: '治疗上，青光眼唯一的治疗是降眼压（正常眼压青光眼同样如此），主要手段是眼药，基本上要终身持续，并定期检查确认没有进展。'
+      - id: combined-medication-surgery
+        text: '眼压降得不好时，会把2 到 4 种眼药组合使用；眼药控制不住进展，还有手术降眼压的办法。'
+        quote:
+          - '眼压降得不好时，会把'
+          - '2 到 4 种'
+          - '眼药组合使用；眼药控制不住进展，还有手术降眼压的办法。'
+      - id: treatment-slows-progression
+        text: 持续规范地治疗，可以把病情进展放慢。
+        quote: '持续规范地治疗，可以把病情进展放慢。'
+      - id: specialist-consultation
+        text: 想详细诊察的话，眼科专科医生是推荐选择，可从日本眼科学会网站查询。
+        quote: '想详细诊察的话，眼科专科医生是推荐选择，可从日本眼科学会网站查询。'
+    notices:
+      - level: with-doctor
+        text: 想详细诊察的话，眼科专科医生是推荐选择，可从日本眼科学会网站查询。
+        quote: '想详细诊察的话，眼科专科医生是推荐选择，可从日本眼科学会网站查询。'
+      - level: seek-care
+        text: 等到自己觉得"看不清"，常常已经过了中期。
+        quote: '等到自己觉得"看不清"，常常已经过了中期。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4af4dd88360f596b

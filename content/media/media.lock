@@ -1,0 +1,638 @@
+{
+  "https://img.newzone.top/20261016065234726.jpeg?imageMogr2/format/webp": {
+    "file": "7693f0c282d7b667fcf5b260d7c7d401a68c88eb564c582ac043047ba3ad3789.jpeg",
+    "sha256": "7693f0c282d7b667fcf5b260d7c7d401a68c88eb564c582ac043047ba3ad3789",
+    "bytes": 7710,
+    "fetchedAt": "2026-10-19T11:21:31.506Z"
+  },
+  "https://img.newzone.top/20261016065236329.jpeg?imageMogr2/format/webp": {
+    "file": "44dfdc625683a99a156be1f7390c7a9d42f88bdf83f12be209674639ca5f92cb.jpeg",
+    "sha256": "44dfdc625683a99a156be1f7390c7a9d42f88bdf83f12be209674639ca5f92cb",
+    "bytes": 4388,
+    "fetchedAt": "2026-10-19T11:21:31.509Z"
+  },
+  "https://img.newzone.top/20261016065235104.jpeg?imageMogr2/format/webp": {
+    "file": "2cf56caf8aecd0e6ff8b116fb777006be9defb8d8ed43d9446da5676491aa2a6.jpeg",
+    "sha256": "2cf56caf8aecd0e6ff8b116fb777006be9defb8d8ed43d9446da5676491aa2a6",
+    "bytes": 7194,
+    "fetchedAt": "2026-10-19T11:21:31.510Z"
+  },
+  "https://img.newzone.top/20261016065630578.jpeg?imageMogr2/format/webp": {
+    "file": "246679f66b302031d968ea5aa55baf4c01cab522c8f6ffa59604f14cf6ba9928.jpeg",
+    "sha256": "246679f66b302031d968ea5aa55baf4c01cab522c8f6ffa59604f14cf6ba9928",
+    "bytes": 3206,
+    "fetchedAt": "2026-10-19T11:21:31.582Z"
+  },
+  "https://img.newzone.top/20261016065234277.jpeg?imageMogr2/format/webp": {
+    "file": "565497a1fe862d5cf51e5df07c1cafa0fb37de8fffe7532edf1105cdde39fd4a.jpeg",
+    "sha256": "565497a1fe862d5cf51e5df07c1cafa0fb37de8fffe7532edf1105cdde39fd4a",
+    "bytes": 6496,
+    "fetchedAt": "2026-10-19T11:21:31.599Z"
+  },
+  "https://img.newzone.top/20261016065235959.jpeg?imageMogr2/format/webp": {
+    "file": "eca54575017f0f34df1f803f5b3f64d69744559fdb886be38000f134ae0a98ee.jpeg",
+    "sha256": "eca54575017f0f34df1f803f5b3f64d69744559fdb886be38000f134ae0a98ee",
+    "bytes": 5092,
+    "fetchedAt": "2026-10-19T11:21:31.606Z"
+  },
+  "https://img.newzone.top/20261016065235518.jpeg?imageMogr2/format/webp": {
+    "file": "aad24b9e515ab04db689ea2361748a1ee5ba10b1a11ec34e03cee2329b8cdcbb.jpeg",
+    "sha256": "aad24b9e515ab04db689ea2361748a1ee5ba10b1a11ec34e03cee2329b8cdcbb",
+    "bytes": 7148,
+    "fetchedAt": "2026-10-19T11:21:31.612Z"
+  },
+  "https://img.newzone.top/20261016065744508.png?imageMogr2/format/webp": {
+    "file": "09dd6f2af48862f826291898a29777233cfef2c0d2adeed8ff608cab66664246.png",
+    "sha256": "09dd6f2af48862f826291898a29777233cfef2c0d2adeed8ff608cab66664246",
+    "bytes": 20216,
+    "fetchedAt": "2026-10-19T11:21:31.643Z"
+  },
+  "https://img.newzone.top/20261016065236737.jpeg?imageMogr2/format/webp": {
+    "file": "906c0415127081317ca80653c5dd87068ff1cabd9765947d3bf24796f9a4eef8.jpeg",
+    "sha256": "906c0415127081317ca80653c5dd87068ff1cabd9765947d3bf24796f9a4eef8",
+    "bytes": 7258,
+    "fetchedAt": "2026-10-19T11:21:31.644Z"
+  },
+  "https://img.newzone.top/20261016065756638.png?imageMogr2/format/webp": {
+    "file": "35d655ade3a161757d4a4f0973cd3a236e9fb3f859ac29885b0af42450569d8a.png",
+    "sha256": "35d655ade3a161757d4a4f0973cd3a236e9fb3f859ac29885b0af42450569d8a",
+    "bytes": 24158,
+    "fetchedAt": "2026-10-19T11:21:31.645Z"
+  },
+  "https://img.newzone.top/20261016065757673.png?imageMogr2/format/webp": {
+    "file": "55325db2d01cb0519b73ec9e45318189eaee6d6ac32df191de1e72b1c4ae6de7.png",
+    "sha256": "55325db2d01cb0519b73ec9e45318189eaee6d6ac32df191de1e72b1c4ae6de7",
+    "bytes": 17932,
+    "fetchedAt": "2026-10-19T11:21:31.670Z"
+  },
+  "https://img.newzone.top/20261016065800436.png?imageMogr2/format/webp": {
+    "file": "fd2d21fd18101c82663351169c89c842c992edadb3561a9f7b7bd84d768061f6.png",
+    "sha256": "fd2d21fd18101c82663351169c89c842c992edadb3561a9f7b7bd84d768061f6",
+    "bytes": 28558,
+    "fetchedAt": "2026-10-19T11:21:31.693Z"
+  },
+  "https://img.newzone.top/20261016070622360.png?imageMogr2/format/webp": {
+    "file": "3d22b0b618f90b79456e3d1efe77e3a022b96601431f946fb060aeb7d2640748.png",
+    "sha256": "3d22b0b618f90b79456e3d1efe77e3a022b96601431f946fb060aeb7d2640748",
+    "bytes": 3422,
+    "fetchedAt": "2026-10-19T11:21:31.741Z"
+  },
+  "https://img.newzone.top/20261016070621079.png?imageMogr2/format/webp": {
+    "file": "86615d130fa486fea428a7d28726406d3f96572af5599e6e5e8d81b630926d95.png",
+    "sha256": "86615d130fa486fea428a7d28726406d3f96572af5599e6e5e8d81b630926d95",
+    "bytes": 3218,
+    "fetchedAt": "2026-10-19T11:21:31.781Z"
+  },
+  "https://img.newzone.top/20261016070621720.png?imageMogr2/format/webp": {
+    "file": "e8872d5bc7220723ed7de0fa8a3e07cebdf6cc6b8aded3914bb18ddfad8671ce.png",
+    "sha256": "e8872d5bc7220723ed7de0fa8a3e07cebdf6cc6b8aded3914bb18ddfad8671ce",
+    "bytes": 2728,
+    "fetchedAt": "2026-10-19T11:21:31.809Z"
+  },
+  "https://img.newzone.top/20261016065755381.png?imageMogr2/format/webp": {
+    "file": "95bef76a9f54244af41ac758d3a1a2413c9046383f20463c3a241ac7c0b97bd7.png",
+    "sha256": "95bef76a9f54244af41ac758d3a1a2413c9046383f20463c3a241ac7c0b97bd7",
+    "bytes": 14980,
+    "fetchedAt": "2026-10-19T11:21:31.879Z"
+  },
+  "https://img.newzone.top/20261016070622992.png?imageMogr2/format/webp": {
+    "file": "a034a81a56b0de1b9b18bdae8ed1deee28a484db87adb190694947ab0b7544ab.png",
+    "sha256": "a034a81a56b0de1b9b18bdae8ed1deee28a484db87adb190694947ab0b7544ab",
+    "bytes": 4740,
+    "fetchedAt": "2026-10-19T11:21:31.884Z"
+  },
+  "https://img.newzone.top/2024-10-18-07-17-13.png?imageMogr2/format/webp": {
+    "file": "c9b336caf86b868a0f19e22c03dfcfc2226f89b779219a6c725109b61bb69814.png",
+    "sha256": "c9b336caf86b868a0f19e22c03dfcfc2226f89b779219a6c725109b61bb69814",
+    "bytes": 47218,
+    "fetchedAt": "2026-10-19T11:21:31.925Z"
+  },
+  "https://img.newzone.top/20261016065629451.jpeg?imageMogr2/format/webp": {
+    "file": "7e73ae4cf55ff5f1759a353511ddb88025c0860cf7e9eeafb75ef62d7cb978f8.jpeg",
+    "sha256": "7e73ae4cf55ff5f1759a353511ddb88025c0860cf7e9eeafb75ef62d7cb978f8",
+    "bytes": 6980,
+    "fetchedAt": "2026-10-19T11:21:31.949Z"
+  },
+  "https://img.newzone.top/2024-10-18-07-18-46.png?imageMogr2/format/webp": {
+    "file": "accfd5c37b6cdfcd64940e463e10f5507de4a482802340e66bbd9deea978a2d9.png",
+    "sha256": "accfd5c37b6cdfcd64940e463e10f5507de4a482802340e66bbd9deea978a2d9",
+    "bytes": 14282,
+    "fetchedAt": "2026-10-19T11:21:31.957Z"
+  },
+  "https://img.newzone.top/20261016065629012.jpeg?imageMogr2/format/webp": {
+    "file": "c23009e03ea80ebacb35570fefa92b6a515eb2864f01e742cc875784ac963b0b.jpeg",
+    "sha256": "c23009e03ea80ebacb35570fefa92b6a515eb2864f01e742cc875784ac963b0b",
+    "bytes": 9512,
+    "fetchedAt": "2026-10-19T11:21:31.963Z"
+  },
+  "https://img.newzone.top/20261016065754335.png?imageMogr2/format/webp": {
+    "file": "d88c0d88381530e9c282d0618f22d9d14c0d5834d0ea0459c782ffed87307865.png",
+    "sha256": "d88c0d88381530e9c282d0618f22d9d14c0d5834d0ea0459c782ffed87307865",
+    "bytes": 55130,
+    "fetchedAt": "2026-10-19T11:21:31.966Z"
+  },
+  "https://img.newzone.top/2024-10-18-07-32-22.png?imageMogr2/format/webp": {
+    "file": "02c04e0956c4547305784f2b6850c89e86f8d7f3934920791bd6b0f57924fdaf.png",
+    "sha256": "02c04e0956c4547305784f2b6850c89e86f8d7f3934920791bd6b0f57924fdaf",
+    "bytes": 17890,
+    "fetchedAt": "2026-10-19T11:21:31.970Z"
+  },
+  "https://img.newzone.top/2024-10-29-17-12-01.png?imageMogr2/format/webp": {
+    "file": "336861b4b9ed27235f1628fd4a2909454fee91197d2a9c402a145f2be6b8b1b6.png",
+    "sha256": "336861b4b9ed27235f1628fd4a2909454fee91197d2a9c402a145f2be6b8b1b6",
+    "bytes": 21360,
+    "fetchedAt": "2026-10-19T11:21:31.987Z"
+  },
+  "https://img.newzone.top/2024-10-29-17-12-29.png?imageMogr2/format/webp": {
+    "file": "74e0e009075c47b11df4288498128ed97aa8d96adf145f96b8931ffe59d00aa6.png",
+    "sha256": "74e0e009075c47b11df4288498128ed97aa8d96adf145f96b8931ffe59d00aa6",
+    "bytes": 23612,
+    "fetchedAt": "2026-10-19T11:21:31.991Z"
+  },
+  "https://img.newzone.top/2024-10-29-17-13-45.png?imageMogr2/format/webp": {
+    "file": "042c263f7d73916f72e1f1de622e0c9ad2c541182128427a6727e57cffe78e38.png",
+    "sha256": "042c263f7d73916f72e1f1de622e0c9ad2c541182128427a6727e57cffe78e38",
+    "bytes": 13822,
+    "fetchedAt": "2026-10-19T11:21:31.992Z"
+  },
+  "https://img.newzone.top/2024-10-29-17-14-51.png?imageMogr2/format/webp": {
+    "file": "191284892bdb013de30168117f06945fa9007cce2ac0b7227ccc21b573a9a42e.png",
+    "sha256": "191284892bdb013de30168117f06945fa9007cce2ac0b7227ccc21b573a9a42e",
+    "bytes": 13718,
+    "fetchedAt": "2026-10-19T11:21:32.009Z"
+  },
+  "https://img.newzone.top/2024-10-29-17-14-06.png?imageMogr2/format/webp": {
+    "file": "95c9e3cb0ce36efdfc81a7fa4404c9f10629000aced9788b59043ad26378296e.png",
+    "sha256": "95c9e3cb0ce36efdfc81a7fa4404c9f10629000aced9788b59043ad26378296e",
+    "bytes": 24156,
+    "fetchedAt": "2026-10-19T11:21:32.015Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-47-06.png?imageMogr2/format/webp": {
+    "file": "a43b45290cfc7f5ed6c429b083000f6903165a6f529b1bf8368c0ae84abc9b2d.png",
+    "sha256": "a43b45290cfc7f5ed6c429b083000f6903165a6f529b1bf8368c0ae84abc9b2d",
+    "bytes": 11922,
+    "fetchedAt": "2026-10-19T11:21:32.024Z"
+  },
+  "https://img.newzone.top/20261016065629829.jpeg?imageMogr2/format/webp": {
+    "file": "a9a90d82421fa8ddb269b4c833e362884e909fde59a81bb07664b0a5e50c2d11.jpeg",
+    "sha256": "a9a90d82421fa8ddb269b4c833e362884e909fde59a81bb07664b0a5e50c2d11",
+    "bytes": 5744,
+    "fetchedAt": "2026-10-19T11:21:32.032Z"
+  },
+  "https://img.newzone.top/20261016070445106.jpeg?imageMogr2/format/webp": {
+    "file": "61aa17aef72891a213899603cc0119cac6083bbd8d66743c4f7de0a5ae735ca9.jpeg",
+    "sha256": "61aa17aef72891a213899603cc0119cac6083bbd8d66743c4f7de0a5ae735ca9",
+    "bytes": 9562,
+    "fetchedAt": "2026-10-19T11:21:32.118Z"
+  },
+  "https://img.newzone.top/20261016070446126.jpeg?imageMogr2/format/webp": {
+    "file": "6e3e760d4e1c8d11a66f79c8b6c24020d96529607e359707754f601d7ba27bbd.jpeg",
+    "sha256": "6e3e760d4e1c8d11a66f79c8b6c24020d96529607e359707754f601d7ba27bbd",
+    "bytes": 11092,
+    "fetchedAt": "2026-10-19T11:21:32.135Z"
+  },
+  "https://img.newzone.top/20261016070436266.png?imageMogr2/format/webp": {
+    "file": "f01dd9b70cb64b3b276a7059e06ccff47fc51d0d9677854943d9ede5502bc782.png",
+    "sha256": "f01dd9b70cb64b3b276a7059e06ccff47fc51d0d9677854943d9ede5502bc782",
+    "bytes": 6022,
+    "fetchedAt": "2026-10-19T11:21:32.141Z"
+  },
+  "https://img.newzone.top/20261016070446486.jpeg?imageMogr2/format/webp": {
+    "file": "7d44000a88a441fc82a52c65e9c6d0d5ae51053ad1684b7d54ee9cbe0a7b582e.jpeg",
+    "sha256": "7d44000a88a441fc82a52c65e9c6d0d5ae51053ad1684b7d54ee9cbe0a7b582e",
+    "bytes": 9710,
+    "fetchedAt": "2026-10-19T11:21:32.199Z"
+  },
+  "https://img.newzone.top/20261016070445622.jpeg?imageMogr2/format/webp": {
+    "file": "9548d839868bf7fe7ee4337f55bc0b88e1121c380e2358b8cbc3aa2ac7890d0a.jpeg",
+    "sha256": "9548d839868bf7fe7ee4337f55bc0b88e1121c380e2358b8cbc3aa2ac7890d0a",
+    "bytes": 10698,
+    "fetchedAt": "2026-10-19T11:21:32.205Z"
+  },
+  "https://img.newzone.top/2024-10-29-16-21-54.png?imageMogr2/format/webp": {
+    "file": "750e5cff302d62aa09150a073852dc106ce17862308366ed2da2ca69b8cac74f.png",
+    "sha256": "750e5cff302d62aa09150a073852dc106ce17862308366ed2da2ca69b8cac74f",
+    "bytes": 60240,
+    "fetchedAt": "2026-10-19T11:21:32.244Z"
+  },
+  "https://img.newzone.top/2024-10-29-16-23-06.png?imageMogr2/format/webp": {
+    "file": "d04a5637404ae8f2eec8526548f03b309d1fe13b320a9a0920366c77bf6adc32.png",
+    "sha256": "d04a5637404ae8f2eec8526548f03b309d1fe13b320a9a0920366c77bf6adc32",
+    "bytes": 82532,
+    "fetchedAt": "2026-10-19T11:21:32.252Z"
+  },
+  "https://img.newzone.top/20261016070447583.jpeg?imageMogr2/format/webp": {
+    "file": "5217ccff051480e3816f140ca255acf4a19960b831cebef593dc3caf3713e60d.jpeg",
+    "sha256": "5217ccff051480e3816f140ca255acf4a19960b831cebef593dc3caf3713e60d",
+    "bytes": 10790,
+    "fetchedAt": "2026-10-19T11:21:32.267Z"
+  },
+  "https://img.newzone.top/20261016070447256.jpeg?imageMogr2/format/webp": {
+    "file": "6ec609de1bd405f9c43507492d33e47c06be7d37fad11ee394f2c6cf0415b54a.jpeg",
+    "sha256": "6ec609de1bd405f9c43507492d33e47c06be7d37fad11ee394f2c6cf0415b54a",
+    "bytes": 9370,
+    "fetchedAt": "2026-10-19T11:21:32.269Z"
+  },
+  "https://img.newzone.top/2024-10-29-16-24-14.png?imageMogr2/format/webp": {
+    "file": "5c5492e07e726355ed2b9da336d81d6c3d9fb85de36db29e3a32b1fd333f960d.png",
+    "sha256": "5c5492e07e726355ed2b9da336d81d6c3d9fb85de36db29e3a32b1fd333f960d",
+    "bytes": 38442,
+    "fetchedAt": "2026-10-19T11:21:32.270Z"
+  },
+  "https://img.newzone.top/20261016070446860.jpeg?imageMogr2/format/webp": {
+    "file": "a1f77a2e49a87fcd7bcbc51e1f822f99ad8b924b72856500005a27be30e75687.jpeg",
+    "sha256": "a1f77a2e49a87fcd7bcbc51e1f822f99ad8b924b72856500005a27be30e75687",
+    "bytes": 9742,
+    "fetchedAt": "2026-10-19T11:21:32.306Z"
+  },
+  "https://img.newzone.top/20261016065657392.png?imageMogr2/format/webp": {
+    "file": "d62977b18d95dc3a03ed76e22c187bbccd11dc2ed2ba16a3a75b3b9a662695d4.png",
+    "sha256": "d62977b18d95dc3a03ed76e22c187bbccd11dc2ed2ba16a3a75b3b9a662695d4",
+    "bytes": 41442,
+    "fetchedAt": "2026-10-19T11:21:32.310Z"
+  },
+  "https://img.newzone.top/20261016065701731.png?imageMogr2/format/webp": {
+    "file": "116644d71790ce81654769c30e000de9aae767496830b692026208fc6615ce5f.png",
+    "sha256": "116644d71790ce81654769c30e000de9aae767496830b692026208fc6615ce5f",
+    "bytes": 50732,
+    "fetchedAt": "2026-10-19T11:21:32.320Z"
+  },
+  "https://img.newzone.top/20261016065659730.png?imageMogr2/format/webp": {
+    "file": "86b734561c75633461b32ac3cf2660565a736e6ba9cb2b503901b19852dc301c.png",
+    "sha256": "86b734561c75633461b32ac3cf2660565a736e6ba9cb2b503901b19852dc301c",
+    "bytes": 38058,
+    "fetchedAt": "2026-10-19T11:21:32.322Z"
+  },
+  "https://img.newzone.top/20261016065703893.png?imageMogr2/format/webp": {
+    "file": "c57cda7ccdad21ef71e76460af6165904253f9e807f2a8742b56d694771dd2ea.png",
+    "sha256": "c57cda7ccdad21ef71e76460af6165904253f9e807f2a8742b56d694771dd2ea",
+    "bytes": 57978,
+    "fetchedAt": "2026-10-19T11:21:32.338Z"
+  },
+  "https://img.newzone.top/20261016065759083.png?imageMogr2/format/webp": {
+    "file": "12b0c51a5861a9a64fe6e5048b682be92c10d0e643f2d123447ea185c39d54fc.png",
+    "sha256": "12b0c51a5861a9a64fe6e5048b682be92c10d0e643f2d123447ea185c39d54fc",
+    "bytes": 35548,
+    "fetchedAt": "2026-10-19T11:21:32.480Z"
+  },
+  "https://img.newzone.top/20261016065707193.png?imageMogr2/format/webp": {
+    "file": "662902ca94c8e1c836f7baba43607c81ab86dec561375a2bb5ae556dd6c7556f.png",
+    "sha256": "662902ca94c8e1c836f7baba43607c81ab86dec561375a2bb5ae556dd6c7556f",
+    "bytes": 9734,
+    "fetchedAt": "2026-10-19T11:21:32.494Z"
+  },
+  "https://img.newzone.top/20261016065714283.png?imageMogr2/format/webp": {
+    "file": "7357325000de5d9ef169b04eabff0a59a78d459082d7391e5b1792231c48bc7c.png",
+    "sha256": "7357325000de5d9ef169b04eabff0a59a78d459082d7391e5b1792231c48bc7c",
+    "bytes": 43124,
+    "fetchedAt": "2026-10-19T11:21:32.530Z"
+  },
+  "https://img.newzone.top/20261016065715676.png?imageMogr2/format/webp": {
+    "file": "42f1cc7312b3874d6afae6de1e5731add35f518d735f246d8065965f791aaeed.png",
+    "sha256": "42f1cc7312b3874d6afae6de1e5731add35f518d735f246d8065965f791aaeed",
+    "bytes": 21400,
+    "fetchedAt": "2026-10-19T11:21:32.547Z"
+  },
+  "https://img.newzone.top/2024-10-17-09-24-55.png?imageMogr2/format/webp": {
+    "file": "9dcb7a09279b73bb1b14313df4422f5d98b9ad9dec5841f68bd64a88954fa110.png",
+    "sha256": "9dcb7a09279b73bb1b14313df4422f5d98b9ad9dec5841f68bd64a88954fa110",
+    "bytes": 40098,
+    "fetchedAt": "2026-10-19T11:21:32.581Z"
+  },
+  "https://img.newzone.top/2024-10-17-04-34-44.png?imageMogr2/format/webp": {
+    "file": "00af014a6f7241fa14b61df67049b02c2a8e987da8a00604eedacb84c59f679b.png",
+    "sha256": "00af014a6f7241fa14b61df67049b02c2a8e987da8a00604eedacb84c59f679b",
+    "bytes": 76186,
+    "fetchedAt": "2026-10-19T11:21:32.587Z"
+  },
+  "https://img.newzone.top/2024-10-17-11-07-01.png?imageMogr2/format/webp": {
+    "file": "e4fbc6d6da1542a4c91284dd13bfd35db627a1c481a7ad25a40924316853a4ab.png",
+    "sha256": "e4fbc6d6da1542a4c91284dd13bfd35db627a1c481a7ad25a40924316853a4ab",
+    "bytes": 72372,
+    "fetchedAt": "2026-10-19T11:21:32.614Z"
+  },
+  "https://img.newzone.top/20261016065708895.png?imageMogr2/format/webp": {
+    "file": "1fb1c0b82c8916685986f613adebe5898b9a84b46761e5597618a6782651810c.png",
+    "sha256": "1fb1c0b82c8916685986f613adebe5898b9a84b46761e5597618a6782651810c",
+    "bytes": 39770,
+    "fetchedAt": "2026-10-19T11:21:32.696Z"
+  },
+  "https://img.newzone.top/20261016065712478.png?imageMogr2/format/webp": {
+    "file": "311b497752f3dafb0a8da662b4fbb15c7e887647da40dd86b9c7907b79143f71.png",
+    "sha256": "311b497752f3dafb0a8da662b4fbb15c7e887647da40dd86b9c7907b79143f71",
+    "bytes": 33874,
+    "fetchedAt": "2026-10-19T11:21:32.713Z"
+  },
+  "https://img.newzone.top/20261016070623608.png?imageMogr2/format/webp": {
+    "file": "4007d79b44eebc4b0e385e308f406e6a2198f9ffcecea4b0a2e52210378caea5.png",
+    "sha256": "4007d79b44eebc4b0e385e308f406e6a2198f9ffcecea4b0a2e52210378caea5",
+    "bytes": 5148,
+    "fetchedAt": "2026-10-19T11:21:32.724Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-10-34.png?imageMogr2/format/webp": {
+    "file": "c98b258fed33eea8c69124f590ef43d24a1ca54987dd70b267984c230dbeaa36.png",
+    "sha256": "c98b258fed33eea8c69124f590ef43d24a1ca54987dd70b267984c230dbeaa36",
+    "bytes": 20912,
+    "fetchedAt": "2026-10-19T11:21:32.745Z"
+  },
+  "https://img.newzone.top/20261016070624321.png?imageMogr2/format/webp": {
+    "file": "7173b12f176758c8e68c33e049fa3ff55cf27b98a9603763a3a6ea74c861b5f4.png",
+    "sha256": "7173b12f176758c8e68c33e049fa3ff55cf27b98a9603763a3a6ea74c861b5f4",
+    "bytes": 5018,
+    "fetchedAt": "2026-10-19T11:21:32.748Z"
+  },
+  "https://img.newzone.top/2024-10-17-12-59-44.png?imageMogr2/format/webp": {
+    "file": "d37e6405a33ccd5fe8e42497a7650345abe24b875d3d202fc520c96b1ec11d5e.png",
+    "sha256": "d37e6405a33ccd5fe8e42497a7650345abe24b875d3d202fc520c96b1ec11d5e",
+    "bytes": 63016,
+    "fetchedAt": "2026-10-19T11:21:32.751Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-11-08.png?imageMogr2/format/webp": {
+    "file": "a612a46494ac9bc5dec04a5f2454a1bac6fd75d1aac641c8b45ec28fa8e7af20.png",
+    "sha256": "a612a46494ac9bc5dec04a5f2454a1bac6fd75d1aac641c8b45ec28fa8e7af20",
+    "bytes": 23636,
+    "fetchedAt": "2026-10-19T11:21:32.765Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-51-42.png?imageMogr2/format/webp": {
+    "file": "4239e9a4071a760c7e1abb1a24dbf12586d0b861fc51493bd7b88d61af95e790.png",
+    "sha256": "4239e9a4071a760c7e1abb1a24dbf12586d0b861fc51493bd7b88d61af95e790",
+    "bytes": 29366,
+    "fetchedAt": "2026-10-19T11:21:32.772Z"
+  },
+  "https://img.newzone.top/20261016070624773.jpeg?imageMogr2/format/webp": {
+    "file": "d952e95d20ec017ea214e089e0f26bb60dfd49d28972c334c1c558858e67e4bf.jpeg",
+    "sha256": "d952e95d20ec017ea214e089e0f26bb60dfd49d28972c334c1c558858e67e4bf",
+    "bytes": 32310,
+    "fetchedAt": "2026-10-19T11:21:32.781Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-52-10.png?imageMogr2/format/webp": {
+    "file": "2443cc666e2ecf98111058132cd0bbef37ff75739883d79c916f2e1990cc5a8b.png",
+    "sha256": "2443cc666e2ecf98111058132cd0bbef37ff75739883d79c916f2e1990cc5a8b",
+    "bytes": 34198,
+    "fetchedAt": "2026-10-19T11:21:32.782Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-59-43.png?imageMogr2/format/webp": {
+    "file": "69fc7c72d2a85414d53bbb67d21314122976aa993f20a914f2fb3fee477e6cb2.png",
+    "sha256": "69fc7c72d2a85414d53bbb67d21314122976aa993f20a914f2fb3fee477e6cb2",
+    "bytes": 37346,
+    "fetchedAt": "2026-10-19T11:21:32.793Z"
+  },
+  "https://img.newzone.top/2024-10-17-14-00-05.png?imageMogr2/format/webp": {
+    "file": "753670824cc4e4abbfd9b7e74f7197fe5527941ab567f050db6cb9e3fb173b3a.png",
+    "sha256": "753670824cc4e4abbfd9b7e74f7197fe5527941ab567f050db6cb9e3fb173b3a",
+    "bytes": 37166,
+    "fetchedAt": "2026-10-19T11:21:32.800Z"
+  },
+  "https://img.newzone.top/2024-10-17-14-00-34.png?imageMogr2/format/webp": {
+    "file": "8fa7b93a2a5ce496f36895da0e842c9b2b3ff1939008b36619f4c3d69ce6bea9.png",
+    "sha256": "8fa7b93a2a5ce496f36895da0e842c9b2b3ff1939008b36619f4c3d69ce6bea9",
+    "bytes": 30790,
+    "fetchedAt": "2026-10-19T11:21:32.801Z"
+  },
+  "https://img.newzone.top/2024-10-17-14-01-06.png?imageMogr2/format/webp": {
+    "file": "ee15185fc46ec899312c7e8d2b57b7682d148320b7d16f241c3ff47241234d9e.png",
+    "sha256": "ee15185fc46ec899312c7e8d2b57b7682d148320b7d16f241c3ff47241234d9e",
+    "bytes": 34816,
+    "fetchedAt": "2026-10-19T11:21:32.806Z"
+  },
+  "https://img.newzone.top/2024-10-17-14-01-30.png?imageMogr2/format/webp": {
+    "file": "f43dee243c1eca59a38c2e4fda754419a5b92f9c8783951825a43e5378548450.png",
+    "sha256": "f43dee243c1eca59a38c2e4fda754419a5b92f9c8783951825a43e5378548450",
+    "bytes": 19538,
+    "fetchedAt": "2026-10-19T11:21:32.812Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-13-44.png?imageMogr2/format/webp": {
+    "file": "7d3e92c94f616d0747303e8c1e1464975ab3350ab06fe9d39245468c4a3310d2.png",
+    "sha256": "7d3e92c94f616d0747303e8c1e1464975ab3350ab06fe9d39245468c4a3310d2",
+    "bytes": 38938,
+    "fetchedAt": "2026-10-19T11:21:32.825Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-14-40.png?imageMogr2/format/webp": {
+    "file": "a9f7db8ea96ca50961dec2e66321db265c43ac0e79e7b6afac7a8f20ce2b7ca2.png",
+    "sha256": "a9f7db8ea96ca50961dec2e66321db265c43ac0e79e7b6afac7a8f20ce2b7ca2",
+    "bytes": 27940,
+    "fetchedAt": "2026-10-19T11:21:32.826Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-16-48.png?imageMogr2/format/webp": {
+    "file": "f33578b613cfd52999778755ad554e9dc305dc87cf95e6eb6ef98a192a775e83.png",
+    "sha256": "f33578b613cfd52999778755ad554e9dc305dc87cf95e6eb6ef98a192a775e83",
+    "bytes": 32168,
+    "fetchedAt": "2026-10-19T11:21:32.832Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-19-10.png?imageMogr2/format/webp": {
+    "file": "0847db09178258a1bfd6d66f4382070b6c6ed4674ed3ff73e6f420f0848197f8.png",
+    "sha256": "0847db09178258a1bfd6d66f4382070b6c6ed4674ed3ff73e6f420f0848197f8",
+    "bytes": 41294,
+    "fetchedAt": "2026-10-19T11:21:32.840Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-20-51.png?imageMogr2/format/webp": {
+    "file": "cff4753bfd762bbe63cadcd0af446d5ec9847361f653fb3f45c257590221293c.png",
+    "sha256": "cff4753bfd762bbe63cadcd0af446d5ec9847361f653fb3f45c257590221293c",
+    "bytes": 23334,
+    "fetchedAt": "2026-10-19T11:21:32.849Z"
+  },
+  "https://img.newzone.top/20261016065706235.png?imageMogr2/format/webp": {
+    "file": "865f09c6087fbb213b969433771f1cbfcc73a150d842b574ce5c6c947a851eae.png",
+    "sha256": "865f09c6087fbb213b969433771f1cbfcc73a150d842b574ce5c6c947a851eae",
+    "bytes": 59866,
+    "fetchedAt": "2026-10-19T11:21:32.850Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-21-53.png?imageMogr2/format/webp": {
+    "file": "59e6f1942de9213a991fd27e955ec4dae9650d9b1ee0cec72ac449d2bfbb55d9.png",
+    "sha256": "59e6f1942de9213a991fd27e955ec4dae9650d9b1ee0cec72ac449d2bfbb55d9",
+    "bytes": 31012,
+    "fetchedAt": "2026-10-19T11:21:32.851Z"
+  },
+  "https://img.newzone.top/2024-10-17-13-22-47.png?imageMogr2/format/webp": {
+    "file": "e9e011f2a602a1f39029416d218d24e5df0eecec662379e280ef1f9792ffe17b.png",
+    "sha256": "e9e011f2a602a1f39029416d218d24e5df0eecec662379e280ef1f9792ffe17b",
+    "bytes": 36716,
+    "fetchedAt": "2026-10-19T11:21:32.860Z"
+  },
+  "https://img.newzone.top/2024-10-16-13-37-03.png?imageMogr2/format/webp": {
+    "file": "b575a232d088e3aad4e0578deb86b4e0e512d4e3bd17114aa2db5423c60aef0b.png",
+    "sha256": "b575a232d088e3aad4e0578deb86b4e0e512d4e3bd17114aa2db5423c60aef0b",
+    "bytes": 39554,
+    "fetchedAt": "2026-10-19T11:21:32.876Z"
+  },
+  "https://img.newzone.top/20261016065631044.jpeg?imageMogr2/format/webp": {
+    "file": "e03617f60b01ef9d5f7b53f6dbbc21cd2caeb38d6d6659a03fb241e6acf3bf46.jpeg",
+    "sha256": "e03617f60b01ef9d5f7b53f6dbbc21cd2caeb38d6d6659a03fb241e6acf3bf46",
+    "bytes": 11142,
+    "fetchedAt": "2026-10-19T11:21:32.884Z"
+  },
+  "https://img.newzone.top/20261016065710459.png?imageMogr2/format/webp": {
+    "file": "e15f3906448b08ec25cb31ccc79df04fdc1d82d9d9dbd723fe8b39c21bd134c3.png",
+    "sha256": "e15f3906448b08ec25cb31ccc79df04fdc1d82d9d9dbd723fe8b39c21bd134c3",
+    "bytes": 42786,
+    "fetchedAt": "2026-10-19T11:21:32.886Z"
+  },
+  "https://img.newzone.top/2024-10-17-04-12-16.png?imageMogr2/format/webp": {
+    "file": "5f47b9de0d1d5025b45a756c21d6465355a5a712719c89efb3827db850e1a2c5.png",
+    "sha256": "5f47b9de0d1d5025b45a756c21d6465355a5a712719c89efb3827db850e1a2c5",
+    "bytes": 17900,
+    "fetchedAt": "2026-10-19T11:21:32.892Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-57-13.png?imageMogr2/format/webp": {
+    "file": "2023334a5730d28b134db0803dc1f7e1bae9ada218bdf4f53726544b0351c994.png",
+    "sha256": "2023334a5730d28b134db0803dc1f7e1bae9ada218bdf4f53726544b0351c994",
+    "bytes": 43552,
+    "fetchedAt": "2026-10-19T11:21:32.908Z"
+  },
+  "https://img.newzone.top/2024-10-17-04-51-42.png?imageMogr2/format/webp": {
+    "file": "8481d9ed35fcaec11df651ddfc5614b39539bf7bf7ad074cf7c77340c6b708be.png",
+    "sha256": "8481d9ed35fcaec11df651ddfc5614b39539bf7bf7ad074cf7c77340c6b708be",
+    "bytes": 15496,
+    "fetchedAt": "2026-10-19T11:21:32.918Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-58-55.png?imageMogr2/format/webp": {
+    "file": "59154e4ab01c54e43d6d471c614351eed9b2d9ef4c8327aa190dd9b52bb1e375.png",
+    "sha256": "59154e4ab01c54e43d6d471c614351eed9b2d9ef4c8327aa190dd9b52bb1e375",
+    "bytes": 118606,
+    "fetchedAt": "2026-10-19T11:21:32.942Z"
+  },
+  "https://img.newzone.top/20261016070430967.png?imageMogr2/format/webp": {
+    "file": "883f4e8095bf6b380d1a228dbe426268352671d4a6e10f36b4ac2eaa854fdc40.png",
+    "sha256": "883f4e8095bf6b380d1a228dbe426268352671d4a6e10f36b4ac2eaa854fdc40",
+    "bytes": 7848,
+    "fetchedAt": "2026-10-19T11:21:32.950Z"
+  },
+  "https://img.newzone.top/20261016070431680.png?imageMogr2/format/webp": {
+    "file": "017617a439470c699cbe329668356cb6dc473930c3466beca5ee98010baf8d95.png",
+    "sha256": "017617a439470c699cbe329668356cb6dc473930c3466beca5ee98010baf8d95",
+    "bytes": 6762,
+    "fetchedAt": "2026-10-19T11:21:32.963Z"
+  },
+  "https://img.newzone.top/20261016065631427.jpeg?imageMogr2/format/webp": {
+    "file": "9572673caaaae30611014ac842b2b1466afbb4864f6d27ecd71ea710a70ea42c.jpeg",
+    "sha256": "9572673caaaae30611014ac842b2b1466afbb4864f6d27ecd71ea710a70ea42c",
+    "bytes": 11412,
+    "fetchedAt": "2026-10-19T11:21:32.979Z"
+  },
+  "https://img.newzone.top/20261016065630590.jpeg?imageMogr2/format/webp": {
+    "file": "a3eef61e4cb10055694376f9b8351a86385ecfe3edddb324395b63a3c7f494fa.jpeg",
+    "sha256": "a3eef61e4cb10055694376f9b8351a86385ecfe3edddb324395b63a3c7f494fa",
+    "bytes": 13520,
+    "fetchedAt": "2026-10-19T11:21:33.008Z"
+  },
+  "https://img.newzone.top/20261016070433087.png?imageMogr2/format/webp": {
+    "file": "022a9671259c52bf5956a74c9337fbe3466eea8129f9ba247b74945024d4524f.png",
+    "sha256": "022a9671259c52bf5956a74c9337fbe3466eea8129f9ba247b74945024d4524f",
+    "bytes": 8140,
+    "fetchedAt": "2026-10-19T11:21:33.012Z"
+  },
+  "https://img.newzone.top/20261016065630186.jpeg?imageMogr2/format/webp": {
+    "file": "dc4850f5daf9206fa14500e67a1ec3589bb220cc3ef912e0ed95c6074d9804af.jpeg",
+    "sha256": "dc4850f5daf9206fa14500e67a1ec3589bb220cc3ef912e0ed95c6074d9804af",
+    "bytes": 7242,
+    "fetchedAt": "2026-10-19T11:21:33.016Z"
+  },
+  "https://img.newzone.top/20261016070433679.png?imageMogr2/format/webp": {
+    "file": "62606c706e8589f7a4620cba8a9fe4c64f3ed1d8e531ab1b09aaddb3865e9ebb.png",
+    "sha256": "62606c706e8589f7a4620cba8a9fe4c64f3ed1d8e531ab1b09aaddb3865e9ebb",
+    "bytes": 5476,
+    "fetchedAt": "2026-10-19T11:21:33.027Z"
+  },
+  "https://img.newzone.top/2024-10-17-18-58-42.png?imageMogr2/format/webp": {
+    "file": "20130e561a9b927fe70b0b317df5cd8828350e2af4a633a2325ffc393244d55e.png",
+    "sha256": "20130e561a9b927fe70b0b317df5cd8828350e2af4a633a2325ffc393244d55e",
+    "bytes": 51106,
+    "fetchedAt": "2026-10-19T11:21:33.047Z"
+  },
+  "https://img.newzone.top/2025-05-08-10-39-55.jpg?imageMogr2/format/webp": {
+    "file": "21a2d3fa6579dc0daf34b880b7d74b06502c6af3789965981180371fff543140.jpg",
+    "sha256": "21a2d3fa6579dc0daf34b880b7d74b06502c6af3789965981180371fff543140",
+    "bytes": 30718,
+    "fetchedAt": "2026-10-19T11:21:33.061Z"
+  },
+  "https://img.newzone.top/2024-10-17-19-02-45.png?imageMogr2/format/webp": {
+    "file": "7b6fbab15072f11783dbe9d4b68a4f25eb7f2678fc97e6616cf45cb9989b0251.png",
+    "sha256": "7b6fbab15072f11783dbe9d4b68a4f25eb7f2678fc97e6616cf45cb9989b0251",
+    "bytes": 19334,
+    "fetchedAt": "2026-10-19T11:21:33.073Z"
+  },
+  "https://img.newzone.top/20261016070432497.png?imageMogr2/format/webp": {
+    "file": "995b6d57a5b5730f44d1499ae03a76fd037a181d0c2a4472f761e7c5ce991ea3.png",
+    "sha256": "995b6d57a5b5730f44d1499ae03a76fd037a181d0c2a4472f761e7c5ce991ea3",
+    "bytes": 7966,
+    "fetchedAt": "2026-10-19T11:21:33.099Z"
+  },
+  "https://img.newzone.top/20261016070625226.jpeg?imageMogr2/format/webp": {
+    "file": "e1dc7103bf682035ca0b5a28ca0d4f601c363e130ca6355bb0c279d65bbbc39b.jpeg",
+    "sha256": "e1dc7103bf682035ca0b5a28ca0d4f601c363e130ca6355bb0c279d65bbbc39b",
+    "bytes": 13992,
+    "fetchedAt": "2026-10-19T11:21:33.107Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-03-58.png?imageMogr2/format/webp": {
+    "file": "8252785c7e06a805d0c3e5aa2e0ca324beb8c58a62a8d571c5f7e6a1773b464f.png",
+    "sha256": "8252785c7e06a805d0c3e5aa2e0ca324beb8c58a62a8d571c5f7e6a1773b464f",
+    "bytes": 22392,
+    "fetchedAt": "2026-10-19T11:21:33.123Z"
+  },
+  "https://img.newzone.top/20261016070430075.png?imageMogr2/format/webp": {
+    "file": "6bc675c6fb63d24b5d48b21d2c6ae43534337afce6f7322e7a51e332b36fe026.png",
+    "sha256": "6bc675c6fb63d24b5d48b21d2c6ae43534337afce6f7322e7a51e332b36fe026",
+    "bytes": 34006,
+    "fetchedAt": "2026-10-19T11:21:33.132Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-05-34.png?imageMogr2/format/webp": {
+    "file": "92e00b699cfd5edf0e18e1bee132bdd4c93fa929eb3dd2711203bd33969dd859.png",
+    "sha256": "92e00b699cfd5edf0e18e1bee132bdd4c93fa929eb3dd2711203bd33969dd859",
+    "bytes": 55722,
+    "fetchedAt": "2026-10-19T11:21:33.138Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-06-41.png?imageMogr2/format/webp": {
+    "file": "9d3d60f35f32ad666ae11c4bee018042b5e3d16322190ad7001675802828122e.png",
+    "sha256": "9d3d60f35f32ad666ae11c4bee018042b5e3d16322190ad7001675802828122e",
+    "bytes": 15428,
+    "fetchedAt": "2026-10-19T11:21:33.151Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-06-05.png?imageMogr2/format/webp": {
+    "file": "55a4d7b898bc345a15ec3e86db60ba88fc52f0670c6e7297c59943b6c120dc0a.png",
+    "sha256": "55a4d7b898bc345a15ec3e86db60ba88fc52f0670c6e7297c59943b6c120dc0a",
+    "bytes": 37714,
+    "fetchedAt": "2026-10-19T11:21:33.152Z"
+  },
+  "https://img.newzone.top/20261016070435555.png?imageMogr2/format/webp": {
+    "file": "aa4937bc2bea7601dcb841b27bf9a4cf40bf941947d3e9bb7e8dff02452a0a68.png",
+    "sha256": "aa4937bc2bea7601dcb841b27bf9a4cf40bf941947d3e9bb7e8dff02452a0a68",
+    "bytes": 7322,
+    "fetchedAt": "2026-10-19T11:21:33.168Z"
+  },
+  "https://img.newzone.top/2024-10-16-11-15-38.png?imageMogr2/format/webp": {
+    "file": "d5b9659214d6dc09fc71fccfb7be0ba25a6a2e817cc03fedd1b88bb65a3f1369.png",
+    "sha256": "d5b9659214d6dc09fc71fccfb7be0ba25a6a2e817cc03fedd1b88bb65a3f1369",
+    "bytes": 56116,
+    "fetchedAt": "2026-10-19T11:21:33.172Z"
+  },
+  "https://img.newzone.top/2024-10-14-09-07-01.png?imageMogr2/format/webp": {
+    "file": "bc42b9a831faafb3dc0a4faef30f1e739d75ab3afb1af97a9b46fb71a780965d.png",
+    "sha256": "bc42b9a831faafb3dc0a4faef30f1e739d75ab3afb1af97a9b46fb71a780965d",
+    "bytes": 59952,
+    "fetchedAt": "2026-10-19T11:21:33.172Z"
+  },
+  "https://img.newzone.top/2024-10-16-09-45-51.png?imageMogr2/format/webp": {
+    "file": "f346c4f759502e8854906dd37f7af4bc33703670adddaff09188c8d59497ac00.png",
+    "sha256": "f346c4f759502e8854906dd37f7af4bc33703670adddaff09188c8d59497ac00",
+    "bytes": 40170,
+    "fetchedAt": "2026-10-19T11:21:33.182Z"
+  },
+  "https://img.newzone.top/202204192027831.png?imageMogr2/format/webp": {
+    "file": "d6151e60f77fa20264f16f0f1aaab43ac0a4c4137edaf6da2cd2d6e4d0a0ecaa.png",
+    "sha256": "d6151e60f77fa20264f16f0f1aaab43ac0a4c4137edaf6da2cd2d6e4d0a0ecaa",
+    "bytes": 12168,
+    "fetchedAt": "2026-10-19T11:21:33.208Z"
+  },
+  "https://img.newzone.top/20261016070625770.png?imageMogr2/format/webp": {
+    "file": "adee909608d9b590660525b635fa2399315e45795907313043d135677925cc72.png",
+    "sha256": "adee909608d9b590660525b635fa2399315e45795907313043d135677925cc72",
+    "bytes": 5356,
+    "fetchedAt": "2026-10-19T11:21:33.210Z"
+  },
+  "https://img.newzone.top/20261016070434903.png?imageMogr2/format/webp": {
+    "file": "fc932e411138ccc574b14756d949628716539fa8c3a71502b3dce467e878606e.png",
+    "sha256": "fc932e411138ccc574b14756d949628716539fa8c3a71502b3dce467e878606e",
+    "bytes": 93466,
+    "fetchedAt": "2026-10-19T11:21:33.378Z"
+  }
+}

@@ -1,0 +1,106 @@
+article: the-savvy-life-manual/body-care/tears.md
+kind: practice
+coverage: partial
+
+# 覆盖清单：这个文件里哪些内容明确不抽成卡，以及为什么。
+#
+# 本篇只抽「睑缘清洗」这一张卡。热敷、眨眼训练、滴眼药水都是各自独立的做法，
+# 泪膜结构与油脂不足的成因是背景知识——都不是「把手指洗一洗」这一招。
+#
+# 注意：开篇小节里「觉得还是干涩，就再加50℃ 热敷」被本卡的 info 禁忌引用，
+# 所以标题小节不在 ignore 里。
+#
+ignore:
+  sections:
+    - anchor: "更干涩时的对策：50℃ 热敷"
+      reason: "热敷（温罨法）是睑缘清洗之外的另一套做法，器具、水温、时长都另有一套，本篇只抽睑缘清洗"
+    - anchor: "眨眼要「眨完整」"
+      reason: "眼轮匝肌操是另一套肌肉训练，和睑缘清洗不是同一个动作，混在一起会让人以为做一遍就够"
+    - anchor: "眼轮匝肌操（眼科医生有田玲子）"
+      reason: "同上：这是被忽略的「眨眼要「眨完整」」小节里的四步训练，不属于睑缘清洗"
+    - anchor: "最后：滴眼药水的正确姿势"
+      reason: "滴药姿势属于用药方法，睑缘清洗不涉及滴眼药水，另开一卡更清楚"
+    - anchor: "泪是一层「油＋水＋黏膜」的三明治"
+      reason: "泪膜三层结构与油脂不足的统计是背景知识，说明为什么要洗，但没给出动作"
+    - anchor: "油脂为什么会不够"
+      reason: "睑板腺出口被堵的三个场景是成因分析（饮食油腻、头屑、眼妆），属背景，本卡只解决怎么清洁"
+
+  images:
+    - url: "https://img.newzone.top/20261016070432497.png?imageMogr2/format/webp"
+      reason: "热敷做法①（把毛巾浸入约 50℃ 热水）的配图，属被忽略的热敷小节"
+    - url: "https://img.newzone.top/20261016070433087.png?imageMogr2/format/webp"
+      reason: "热敷做法②（毛巾套塑料袋再卷起）的配图，属被忽略的热敷小节"
+    - url: "https://img.newzone.top/20261016070433679.png?imageMogr2/format/webp"
+      reason: "热敷做法③（热毛巾敷在眼睑上）的配图，属被忽略的热敷小节"
+    - url: "https://img.newzone.top/20261016070434903.png?imageMogr2/format/webp"
+      reason: "眼轮匝肌操四步的配图，属被忽略的眨眼训练小节"
+    - url: "https://img.newzone.top/20261016070435555.png?imageMogr2/format/webp"
+      reason: "滴眼药水姿势的配图，属被忽略的滴眼药水小节"
+
+cards:
+  - id: eyelid-clean
+    status: reviewed
+    name: "轻洗睫毛根部给眼睛补油"
+    source:
+      anchor: "睑缘清洗：每天 10 秒"
+    # 原文写的是「早晚各一次」，早晚都做，所以不固定到某个时段。
+    slot: anytime
+
+    remind:
+      text: "每天 10 秒、早晚各一次、连续做 2 周"
+      quote: "每天 10 秒、早晚各一次、连续做 2 周"
+
+    dose:
+      - value: 10
+        unit: "秒"
+        what: "每次清洗时长"
+        quote: "每天 10 秒"
+      - value: 1
+        unit: "次"
+        what: "早晚各一次"
+        quote: "早晚各一次"
+      - value: 2
+        unit: "周"
+        what: "连续做"
+        quote: "连续做 2 周"
+      - value: 5
+        unit: "次"
+        what: "来回轻洗"
+        quote: "来回轻柔地洗约 5 次"
+
+    # 原文直接给了「每天 10 秒」，不用换算。
+    duration:
+      basis: quote
+      sec: 10
+      quote: "每天 10 秒"
+
+    steps:
+      - id: wash-hands
+        text: "做法 开始前先洗净双手：用温水打湿指尖，顺着睫毛根部，来回轻柔地洗约 5 次"
+        quote: "做法 ① 开始前先洗净双手：用温水打湿指尖，顺着睫毛根部，来回轻柔地洗约 5 次"
+        images:
+          - "https://img.newzone.top/20261016070430967.png?imageMogr2/format/webp"
+      - id: cotton-pad
+        text: "做法 用化妆棉也可以：把眼周专用的化妆棉用温水打湿，同样轻柔洗约 5 次"
+        quote: "做法 ② 用化妆棉也可以：把眼周专用的化妆棉用温水打湿，同样轻柔洗约 5 次"
+        images:
+          - "https://img.newzone.top/20261016070431680.png?imageMogr2/format/webp"
+      - id: timing
+        text: "说明书建议洗脸后或洗澡时做，顺手完成"
+        quote: "说明书建议洗脸后或洗澡时做，顺手完成"
+
+    cautions:
+      - level: stop
+        text: "不要用力搓洗，也不要把手指伸进眼睑内侧"
+        quote: "不要用力搓洗，也不要把手指伸进眼睑内侧"
+      - level: info
+        text: "觉得还是干涩，就再加50℃ 热敷"
+        quote: "觉得还是干涩，就再加50℃ 热敷"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cc6e8ddcee5aaaee
+    variants:
+      busy:
+        include:
+          - wash-hands

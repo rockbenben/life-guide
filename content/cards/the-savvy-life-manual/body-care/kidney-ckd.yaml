@@ -1,0 +1,276 @@
+article: the-savvy-life-manual/body-care/kidney-ckd.md
+kind: condition
+coverage: complete
+ignore:
+  sections:
+    - anchor: '肾功能悄悄变差？eGFR 44 以下就该找医生'
+      reason: '该节是饮水和就医门槛的开头总览，内容已由饮水卡与就医门槛卡完整覆盖；为遵守每篇最多六张卡，不另设卡。'
+  images: []
+cards:
+  - id: kidney-hydration-on-thirst
+    status: reviewed
+    source:
+      anchor: '夏天怎么喝水：两个要点'
+    remind:
+      text: '口渴时立即补水；轻至中度慢性肾病患者按每日饮水目标补水，限水人群先问过主治医生。'
+      quote:
+        - '一感觉到口渴，不要放着不管，必须马上补水。'
+        - '对于轻至中度慢性肾病患者，诊疗指南给出的每日饮水目标是 1～1.5L。'
+        - '注意：以下人群可能需要限制饮水，务必先问过主治医生。'
+    steps:
+      - id: drink-at-once
+        text: '一感觉到口渴，不要放着不管，必须马上补水。'
+        quote: '一感觉到口渴，不要放着不管，必须马上补水。'
+      - id: choose-drink
+        text: '茶水等不含糖分的饮料也可以。酒精不行。'
+        quote:
+          - '茶水等不含糖分的饮料也可以。'
+          - '酒精不行。'
+      - id: target-intake
+        text: '对于轻至中度慢性肾病患者，诊疗指南给出的每日饮水目标是 1～1.5L。'
+        quote: '对于轻至中度慢性肾病患者，诊疗指南给出的每日饮水目标是 1～1.5L。'
+      - id: proactive-intake
+        text: '慢性肾病患者、平时没有喝水习惯的人、高龄者、有中暑风险的人更要主动喝'
+        quote: '慢性肾病患者、平时没有喝水习惯的人、高龄者、有中暑风险的人更要主动喝'
+    notices:
+      - level: with-doctor
+        text: '注意：以下人群可能需要限制饮水，务必先问过主治医生。'
+        quote: '注意：以下人群可能需要限制饮水，务必先问过主治医生。'
+      - level: info
+        text: '健康人靠喝水能把肾功能下降防到什么程度，目前还不清楚从长期眼光看，把补水变成习惯是有意义的'
+        quote:
+          - '健康人靠喝水能把肾功能下降防到什么程度，目前还不清楚'
+          - '从长期眼光看，把补水变成习惯是有意义的'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c4bc07f8436e51b0
+
+  - id: kidney-egfr-trend
+    status: reviewed
+    name: "用 eGFR 看肾功能趋势"
+    source:
+      anchor: '用 eGFR 把肾功能「看见」'
+    remind:
+      text: '用血液检查中的 eGFR 观察肾功能长期趋势，不要只看单次数值。'
+      quote:
+        - 'eGFR 属于血液检查项目，多数体检单上会有。'
+        - '单次数值意义有限，要看长期走势：'
+    steps:
+      - id: read-egfr
+        text: '它标示过滤血液的肾小球还剩下百分之多少的功能'
+        quote: '它标示过滤血液的肾小球还剩下百分之多少的功能'
+      - id: calculate-egfr
+        text: '万一没有这一项，也可以只用「肌酐值 + 年龄」推算出来。'
+        quote: '万一没有这一项，也可以只用「肌酐值 + 年龄」推算出来。'
+      - id: creatinine-check
+        text: '肌酐本身是 40～74 岁人群特定体检的推荐项目'
+        quote: '肌酐本身是 40～74 岁人群特定体检的推荐项目'
+      - id: example-result
+        text: '一份体检单上肌酐 0.84 mg/dl、eGFR 90.2 ml/min/1.73m²。'
+        quote: '一份体检单上肌酐 0.84 mg/dl、eGFR 90.2 ml/min/1.73m²。'
+      - id: urine-protein
+        text: '尿蛋白是和 eGFR 并列的重要项目。'
+        quote: '尿蛋白是和 eGFR 并列的重要项目。'
+      - id: read-trend
+        text: 'eGFR 从 50 多岁、60 多岁开始，一年大约下降 0.8～1.0。如果下降速度比这更快，就意味着肾功能可能正在恶化。'
+        quote:
+          - 'eGFR 从 50 多岁、60 多岁开始，一年大约下降 0.8～1.0。'
+          - '如果下降速度比这更快，就意味着肾功能可能正在恶化。'
+      - id: local-monitoring
+        text: '熊本市从 2009 年就开始推进慢性肾病对策在体检等场合调查肾功能时把 eGFR 列出来岐阜县从 2022 年开始，把 eGFR 的历年变化做成图表让患者一起看。'
+        quote:
+          - '熊本市从 2009 年就开始推进慢性肾病对策'
+          - '在体检等场合调查肾功能时把 eGFR 列出来'
+          - '岐阜县从 2022 年开始，把 eGFR 的历年变化做成图表让患者一起看。'
+      - id: local-outcomes
+        text: '一旦 eGFR 或尿检结果不好，基层医生就把患者介绍给肾脏专科医生，形成了一套机制新发透析患者的增长因此被压住了。患者的意识发生了变化，主动去改善生活习惯的人正在增加。'
+        quote:
+          - '一旦 eGFR 或尿检结果不好，基层医生就把患者介绍给肾脏专科医生，形成了一套机制'
+          - '新发透析患者的增长因此被压住了。'
+          - '患者的意识发生了变化，主动去改善生活习惯的人正在增加。'
+    notices:
+      - level: info
+        text: '如果下降速度比这更快，就意味着肾功能可能正在恶化。'
+        quote: '如果下降速度比这更快，就意味着肾功能可能正在恶化。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: daf25e96d18caa4e
+
+  - id: kidney-egfr-early-table
+    status: reviewed
+    source:
+      # 草稿把「早见表」写成了「早发表」，这里指回快照里的真实小节标题
+      anchor: 'eGFR 早见表怎么查'
+    remind:
+      text: '用年龄和血清肌酐值查 eGFR，再对照分级决定是否找家庭医生。'
+      quote:
+        - '横轴是年龄、纵轴是血清肌酐值，交叉点的数字就是 eGFR'
+        - '对照下面的分级，就能知道该做什么：'
+    steps:
+      - id: read-table-axes
+        text: '横轴是年龄、纵轴是血清肌酐值，交叉点的数字就是 eGFR（单位 ml/min/1.73m²）。'
+        quote: '横轴是年龄、纵轴是血清肌酐值，交叉点的数字就是 eGFR（单位 ml/min/1.73m²）。'
+      - id: table-age-limit
+        text: '这张表适用于 18 岁以上，不能用于小儿。'
+        quote: '这张表适用于 18 岁以上，不能用于小儿。'
+      - id: interpolate-egfr
+        text: '如果年龄和肌酐值不是正好落在某一条线上，就取相邻两格数字之间的范围：'
+        quote: '如果年龄和肌酐值不是正好落在某一条线上，就取相邻两格数字之间的范围：'
+      - id: example-egfr
+        text: '女性、40 岁、肌酐 0.61 mg/dleGFR 在 73.5～87.0 之间男性、36 岁、肌酐 0.77 mg/dleGFR 在 85.9～103.3 之间'
+        quote:
+          - '女性、40 岁、肌酐 0.61 mg/dl'
+          - 'eGFR 在 73.5～87.0 之间'
+          - '男性、36 岁、肌酐 0.77 mg/dl'
+          - 'eGFR 在 85.9～103.3 之间'
+      - id: grade-normal
+        text: '60% 以上定期体检即可'
+        quote:
+          - '60% 以上'
+          - '定期体检即可'
+      - id: grade-age
+        text: '59%～45%随年龄发生的下降但未满 60 岁落在这个区间，要找家庭医生'
+        quote:
+          - '59%～45%'
+          - '随年龄发生的下降'
+          - '但未满 60 岁落在这个区间，要找家庭医生'
+      - id: grade-kidney
+        text: '44%～30%29%～15%找家庭医生'
+        quote:
+          - '44%～30%'
+          - '29%～15%'
+          - '找家庭医生'
+      - id: grade-severe
+        text: '15% 不到需要人工透析或肾移植找家庭医生'
+        quote:
+          - '15% 不到'
+          - '需要人工透析或肾移植'
+          - '找家庭医生'
+    notices:
+      - level: seek-care
+        text: '59%～45%但未满 60 岁落在这个区间，要找家庭医生44%～30%29%～15%15% 不到找家庭医生'
+        quote:
+          - '59%～45%'
+          - '但未满 60 岁落在这个区间，要找家庭医生'
+          - '44%～30%'
+          - '29%～15%'
+          - '15% 不到'
+          - '找家庭医生'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 2aed81c09e3e5481
+
+  - id: kidney-doctor-thresholds
+    status: reviewed
+    name: "什么时候找肾脏专科"
+    source:
+      anchor: '什么时候该去找专科医生'
+    remind:
+      text: '符合任一 eGFR 或尿蛋白条件时先找家庭医生，确诊后由家庭医生介绍肾脏专科医生。'
+      quote:
+        - '符合以下任意一条，先找家庭医生'
+        - '确诊肾病之后，再由家庭医生介绍肾脏专科医生，两者协作治疗：'
+    steps:
+      - id: check-egfr-threshold
+        text: 'eGFR 在 44 以下（未满 60 岁的人为 59 以下）'
+        quote: 'eGFR 在 44 以下（未满 60 岁的人为 59 以下）'
+      - id: check-protein-threshold
+        text: '尿蛋白为 ＋，或者连续两年达到 ± 以上（±、＋、＋＋、＋＋＋，不含 −）'
+        quote: '尿蛋白为 ＋，或者连续两年达到 ± 以上（±、＋、＋＋、＋＋＋，不含 −）'
+      - id: treat-underlying-disease
+        text: '在医生指导下正确用药，控制糖尿病、高血压运动和饮食等生活习惯的改善也非常有效。'
+        quote:
+          - '在医生指导下正确用药，控制糖尿病、高血压'
+          - '运动和饮食等生活习惯的改善也非常有效。'
+    notices:
+      - level: seek-care
+        text: '符合以下任意一条，先找家庭医生'
+        quote: '符合以下任意一条，先找家庭医生'
+      - level: with-doctor
+        text: '务必先问过主治医生在医生指导下正确用药，控制糖尿病、高血压'
+        quote:
+          - '务必先问过主治医生'
+          - '在医生指导下正确用药，控制糖尿病、高血压'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ec60f06b72cce3f8
+
+  - id: kidney-cardio-cognition-risk
+    status: reviewed
+    source:
+      anchor: '肾脏坏了，会连累心血管和认知'
+    remind:
+      text: '肾功能轻微下降也会增加心脏病、脑卒中和痴呆风险。'
+      quote: '只要肾功能出现轻微下降，心脏病、脑卒中和痴呆的风险就会上升。'
+    steps:
+      - id: kidney-to-urine
+        text: '把血液里的老废物和毒素过滤掉、做成尿。'
+        quote: '把血液里的老废物和毒素过滤掉、做成尿。'
+      - id: dialysis-schedule
+        text: '一旦它坏掉，就需要人工透析——每周 3 次、每次 4～5 小时，把血液一遍遍滤过。'
+        quote: '一旦它坏掉，就需要人工透析——每周 3 次、每次 4～5 小时，把血液一遍遍滤过。'
+      - id: compare-risk
+        text: '患心脏病或脑卒中的风险约为普通人的 3 倍患痴呆的风险为 1.7～2.6 倍'
+        quote:
+          - '患心脏病或脑卒中的风险约为普通人的 3 倍'
+          - '患痴呆的风险为 1.7～2.6 倍'
+    notices:
+      - level: seek-care
+        text: '一旦它坏掉，就需要人工透析'
+        quote: '一旦它坏掉，就需要人工透析'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: cca2a428f678cde0
+
+  - id: kidney-dehydration-hypoxia
+    status: reviewed
+    source:
+      anchor: '新认识：脱水，就是肾脏缺氧'
+    remind:
+      text: '脱水会让肾脏血流量和氧量下降，持续脱水会降低过滤功能。'
+      quote:
+        - '一旦身体进入脱水状态，流经肾脏的血流量下降，被血液带进来的氧气量也随之减少。'
+        - '脱水持续下去，肾组织被破坏、过滤功能随之下降。'
+    steps:
+      - id: risk-factors
+        text: '糖尿病、高血压、肥胖、吸烟脱水导致的肾功能下降'
+        quote:
+          - '糖尿病、高血压、肥胖、吸烟'
+          - '脱水导致的肾功能下降'
+      - id: oxygen-mechanism
+        text: '肾脏在过滤血液、制造尿液的过程中，会消耗大量氧气，因此天生就容易「缺氧」。'
+        quote: '肾脏在过滤血液、制造尿液的过程中，会消耗大量氧气，因此天生就容易「缺氧」。'
+      - id: glomeruli
+        text: '一个肾脏里就有约 100 万个'
+        quote: '一个肾脏里就有约 100 万个'
+      - id: oxygen-signal
+        text: '脱水状态下肾脏的平均氧浓度信号为 50.9，补水 40 分钟后升到 55.0。'
+        quote: '脱水状态下肾脏的平均氧浓度信号为 50.9，补水 40 分钟后升到 55.0。'
+      - id: global-pattern
+        text: '患者多数是在炎热环境中劳作的农业从业者脱水被认为是主因之一'
+        quote:
+          - '患者多数是在炎热环境中劳作的农业从业者'
+          - '脱水被认为是主因之一'
+      - id: summer-hydration
+        text: '夏天尤其要当心脱水。而老年人往往察觉不到口渴正在接受高血压治疗的人也是如此这两类人必须主动补水。'
+        quote:
+          - '夏天尤其要当心脱水。'
+          - '而老年人往往察觉不到口渴'
+          - '正在接受高血压治疗的人也是如此'
+          - '这两类人必须主动补水。'
+    notices:
+      - level: with-doctor
+        text: '夏季 eGFR 会急剧下降，并以此为起点让肾功能进一步恶化。'
+        quote: '夏季 eGFR 会急剧下降，并以此为起点让肾功能进一步恶化。'
+      - level: info
+        text: '脱水被认为是主因之一'
+        quote: '脱水被认为是主因之一'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 481529bf28e480a2

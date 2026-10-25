@@ -1,0 +1,195 @@
+article: the-savvy-life-manual/body-care/lymph.md
+kind: practice
+coverage: partial
+
+# 这张卡横跨四节：淋巴按摩准备 / 脸部淋巴按摩 / 眼周的淋巴护理 / 足部淋巴按摩。
+# anchor 取整套流程的起点「淋巴按摩准备」，其余三节由步骤引文覆盖。
+#
+# 覆盖清单：「这些人先问医生」一节里只抽说明书自己写明的东西——
+#   · 节内四条「先咨询医生／先问过医生」→ 已写进卡片的 cautions；
+#   · 节末引用块里的「通行的一般性注意」（恶性肿瘤、急性感染期、深静脉血栓与
+#     血栓性静脉炎、孕期、已出现淋巴结肿大）→ 原文明说「不是这份说明书的内容」，
+#     不是这份说明书的禁忌，不抽进 cautions。
+#
+# 为什么不用 segments：原文确实写了「不同人群做不同的动作」（甲状腺异常、高血压者
+# 脸部与眼周两节不适用），但这不是用户画像标签（KNOWN_TAGS 里没有甲状腺／高血压），
+# 写进 segments 只会永远匹配不上，所以留在 cautions 里。
+ignore:
+  sections:
+    - anchor: "这些人先问医生"
+      reason: "只抽说明书自己写明的四条「先咨询医生」，已写进卡片的 cautions；节末引用块里的「通行的一般性注意」（恶性肿瘤、急性感染期、深静脉血栓与血栓性静脉炎、孕期、已出现淋巴结肿大）原文明说不是这份说明书的内容，不抽成禁忌"
+
+cards:
+  - id: lymph-drainage
+    status: reviewed
+    source:
+      anchor: "淋巴按摩准备"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-17-12-59-44.png?imageMogr2/format/webp"
+
+    remind:
+      text: "先准备，再依次做脸部、眼周、足部，全程从四肢末端往锁骨方向轻抚"
+      quote:
+        - "从身体末端（头面、四肢）**推向锁骨**，顺着淋巴液的自然走向。"
+        - "先**准备**（肩部前后旋转 **4 次**、手放在锁骨凹陷处做圆周运动 **4 次**），再依次做**脸部**（耳部 → 脸颊 → 额头 → 下巴 → 颈部，每个 **4 次**，最后从耳朵再推到锁骨 **1 次**）、**眼周**，然后是**足部**"
+
+    # 脸部的每个动作 4 次、足部每一段 4 组；原文没给整套做一次要多久，
+    # duration 写 unknown。
+    dose:
+      - value: 4
+        unit: 次
+        what: "准备、脸部、眼周的每个动作"
+        quote: "每个 **4 次**"
+      - value: 4
+        unit: 组
+        what: "足部各段按摩"
+        quote: "各 **4 组**"
+
+    duration:
+      basis: unknown
+
+    steps:
+      # —— 准备 ——
+      - id: shoulder-rotation
+        text: "肩部前后旋转（4 次）"
+        quote: "**肩部前后旋转**（4 次）"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-10-34.png?imageMogr2/format/webp"
+      - id: clavicle-circles
+        text: "手放在锁骨凹陷处，做圆周运动（4 次）"
+        quote: "**手放在锁骨凹陷处，做圆周运动**（4 次）"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-11-08.png?imageMogr2/format/webp"
+
+      # —— 脸部 ——
+      - id: ear-circles
+        text: "用食指和中指夹住耳朵，双手并拢，做圆周运动（4 次）。"
+        quote: "用食指和中指夹住耳朵，双手并拢，做圆周运动（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-51-42.png?imageMogr2/format/webp"
+      - id: ear-to-clavicle
+        text: "从耳朵轻柔地按摩至锁骨（1 次）。"
+        quote: "从耳朵轻柔地按摩至锁骨（1 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-52-10.png?imageMogr2/format/webp"
+      - id: cheek
+        text: "脸颊：将手掌放在脸颊上，从鼻子向耳朵方向轻抚（4 次）。"
+        quote: "**脸颊**：将手掌放在脸颊上，从鼻子向耳朵方向轻抚（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-59-43.png?imageMogr2/format/webp"
+      - id: forehead
+        text: "额头：将手掌放在额头上，从额头向耳朵方向抚摸（4 次）。"
+        quote: "**额头**：将手掌放在额头上，从额头向耳朵方向抚摸（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-14-00-05.png?imageMogr2/format/webp"
+      - id: chin
+        text: "下巴：用拇指垫放在下巴下方，沿着下颌线轻轻抚摸（4 次）。"
+        quote: "**下巴**：用拇指垫放在下巴下方，沿着下颌线轻轻抚摸（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-14-00-34.png?imageMogr2/format/webp"
+      - id: face-finish
+        text: "最后，再次从耳朵按摩到锁骨（1 次）。"
+        quote: "最后，再次从耳朵按摩到锁骨（1 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-14-01-06.png?imageMogr2/format/webp"
+      - id: neck
+        text: "从上到下轻柔地抚摸整个颈部（4 次）。"
+        quote: "从上到下轻柔地抚摸整个颈部（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-14-01-30.png?imageMogr2/format/webp"
+      - id: neck-finish
+        text: "最后，从耳朵再次按摩到锁骨（1 次）。"
+        quote: "最后，从耳朵再次按摩到锁骨（1 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-52-10.png?imageMogr2/format/webp"
+
+      # —— 眼周 ——
+      - id: eye-upper-lid
+        text: "闭着眼睛，用指腹在上眼睑画圈移动 4 次"
+        quote: "闭着眼睛，用指腹在上眼睑画圈移动 **4 次**"
+      - id: eye-ball-rotation
+        text: "手指固定不动，转动眼球，再依次上下左右转"
+        quote: "手指固定不动，转动眼球，再依次上下左右转"
+      - id: eye-upper-socket
+        text: "眼眶上缘与骨骼之间的凹陷处，由内向外各 4 次"
+        quote: "眼眶上缘与骨骼之间的凹陷处，**由内向外各 4 次**"
+      - id: eye-lower-inner
+        text: "眼头 4 次"
+        quote: "眼头 **4 次**"
+      - id: eye-lower-socket
+        text: "眼眶下缘与骨骼之间的凹陷处，由内向外各 4 次"
+        quote: "眼眶下缘与骨骼之间的凹陷处，**由内向外各 4 次**"
+      - id: eye-lower-outer
+        text: "眼尾 4 次"
+        quote: "眼尾 **4 次**"
+
+      # —— 足部 ——
+      - id: abdominal-breathing
+        text: "慢慢用鼻子吸气，然后通过嘴巴缓慢呼气（4 次），有助于吸出下半身的淋巴液。"
+        quote: "慢慢用鼻子吸气，然后通过嘴巴缓慢呼气（4 次），有助于吸出下半身的淋巴液。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-13-44.png?imageMogr2/format/webp"
+      - id: groin-circles
+        text: "在腹股沟区域，双手并拢，进行圆周按摩（4 次）。"
+        quote: "在腹股沟区域，双手并拢，进行圆周按摩（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-14-40.png?imageMogr2/format/webp"
+      - id: thigh-inner
+        text: "从膝盖内侧向腹股沟抚摸，逐渐增加按摩距离（4 组）。"
+        quote: "**从膝盖内侧向腹股沟抚摸**，逐渐增加按摩距离（4 组）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-16-48.png?imageMogr2/format/webp"
+      - id: thigh-outer
+        text: "从膝盖外侧抚摸至内侧，并流向腹股沟（4 组）。"
+        quote: "**从膝盖外侧抚摸至内侧**，并流向腹股沟（4 组）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-19-10.png?imageMogr2/format/webp"
+      - id: behind-knee
+        text: "在膝盖后方，双手做圆周运动，刺激淋巴结（4 次）。"
+        quote: "在膝盖后方，双手做圆周运动，刺激淋巴结（4 次）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-20-51.png?imageMogr2/format/webp"
+      - id: calf
+        text: "从脚踝到膝盖进行按摩，逐渐增加与腹股沟的距离（4 组）。"
+        quote: "从脚踝到膝盖进行按摩，逐渐增加与腹股沟的距离（4 组）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-21-53.png?imageMogr2/format/webp"
+      - id: whole-foot
+        text: "最后，从脚尖开始，逐渐按摩到腹股沟区域（4 组）。"
+        quote: "最后，从脚尖开始，逐渐按摩到腹股沟区域（4 组）。"
+        images:
+          - "https://img.newzone.top/2024-10-17-13-22-47.png?imageMogr2/format/webp"
+
+    cautions:
+      # 说明书自己写明的四条「先问医生」。原文说「不要在它之外自行扩大或缩小」，
+      # 所以这里不掺入通行的一般性注意。
+      - level: with-doctor
+        text: "甲状腺异常、高血压：说明书在脸部和眼周两处都明确写了「先咨询医生」，这两节对这一类人不适用"
+        quote: "**甲状腺异常、高血压**：说明书在**脸部**和**眼周**两处都明确写了「**先咨询医生**」，这两节对这一类人不适用"
+      - level: with-doctor
+        text: "面部可能有淋巴水肿：先咨询医生再开始。"
+        quote: "**面部可能有淋巴水肿**：先咨询医生再开始。"
+      - level: with-doctor
+        text: "心力衰竭、脚突然单侧肿起来：先咨询医生。"
+        quote: "**心力衰竭、脚突然单侧肿起来**：**先咨询医生**。"
+      - level: with-doctor
+        text: "有肾脏、心脏疾病：说明书写明这一类人先问过医生再开始。"
+        quote: "**有肾脏、心脏疾病**：说明书写明这一类人**先问过医生再开始**。"
+      # 说明书列的红旗症状：立即停止。
+      - level: stop
+        text: "出现急性的浮肿、或者伴随疼痛、呼吸困难，立即停止并去医院——说明书把这条列为红旗症状。"
+        quote: "**出现急性的浮肿、或者伴随疼痛、呼吸困难**，立即停止并去医院——说明书把这条列为红旗症状。"
+      # 眼周一节的说明书原话。
+      - level: stop
+        text: "不要给眼球施压，用干净的手指。"
+        quote: "**不要给眼球施压，用干净的手指。**"
+      # 手法规则里的力度要求。
+      - level: info
+        text: "力度以「像海绵微微陷下去」为准，不要用力按压。"
+        quote: "力度以「像海绵微微陷下去」为准，不要用力按压。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: dfc313abdc9e3562
+    name: 从四肢向锁骨按摩

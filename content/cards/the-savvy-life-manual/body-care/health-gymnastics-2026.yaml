@@ -1,0 +1,260 @@
+article: 'the-savvy-life-manual/body-care/health-gymnastics-2026.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '健康体操 2026 改订版：三招与做法'
+      reason: '本节介绍册子来源、调查对象和排行榜背景；三个具体动作已分别从后续小节抽卡。'
+    - anchor: '最后一件必须说的事：别把它和另一本册子混起来'
+      reason: '本节用于辨析与 2025 年另一本册子的处方差异，没有新增可独立执行的动作；本文动作数字已从对应小节收入卡片。'
+  images: []
+cards:
+  - id: single-leg-stand
+    status: reviewed
+    source:
+      anchor: '第 3 位：单脚站立'
+    slot: anytime
+    remind:
+      text: '扶稳后抬起一只脚并按原定时间保持'
+      quote:
+        - 把一只脚抬高约 5 cm，保持 30 秒到 1 分钟
+        # 「左右分别做」是第 4 步那句；「扶稳后」要有出处：防跌倒的准备在第 1 步
+        - 保持 30 秒到 1 分钟，左右分别做
+        - 先做好防跌倒的准备：务必在椅子或墙等可以扶住的地方备好手，再开始。椅子必须是稳固的。
+    effect:
+      text: '有防止跌倒的效果'
+      quote: '有防止跌倒的效果'
+    dose:
+      - value: 5
+        unit: 'cm'
+        what: '抬脚高度'
+        quote: '把一只脚抬高约 5 cm'
+      # 「30 秒到 1 分钟」是**一条**范围，不拆成下限/上限两条（AGENTS.md §5.2）。
+      # 换算成同一单位（1 分钟 = 60 秒）要写出算式。
+      - value: 30
+        valueMax: 60
+        unit: '秒'
+        what: '保持时长'
+        quote: '保持 30 秒到 1 分钟，左右分别做'
+        derived:
+          formula: '原文 30 秒到 1 分钟；1 分钟 = 60 秒，所以是 30～60 秒'
+    steps:
+      - id: single-leg-prepare
+        text: '先做好防跌倒的准备：务必在椅子或墙等可以扶住的地方备好手，再开始。椅子必须是稳固的。'
+        quote: '先做好防跌倒的准备：务必在椅子或墙等可以扶住的地方备好手，再开始。椅子必须是稳固的。'
+      - id: single-leg-position
+        text: '双手放在腰上，眼睛睁开，把一只脚抬高约 5 cm。'
+        quote: '双手放在腰上，眼睛睁开，把一只脚抬高约 5 cm。'
+      - id: single-leg-align
+        text: '姿势要求是支撑脚大脚趾的根部、肚脐、鼻尖连成一条直线。'
+        quote: '姿势要求是支撑脚大脚趾的根部、肚脐、鼻尖连成一条直线。'
+      - id: single-leg-hold
+        text: '保持 30 秒到 1 分钟，左右分别做'
+        quote: '保持 30 秒到 1 分钟，左右分别做'
+      - id: single-leg-supported
+        text: '撑不住单脚站的人，就在椅子等处轻轻搭着手练习'
+        quote: '撑不住单脚站的人，就在椅子等处轻轻搭着手练习'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: f0f6d38156860465
+    name: 扶稳单脚站立
+  - id: calf-raise
+    status: reviewed
+    name: "扶稳提踵"
+    source:
+      anchor: '第 2 位：提踵（calf raise）'
+    slot: anytime
+    remind:
+      text: '扶稳后用小腿把脚跟上下提放'
+      quote:
+        - 也就是用小腿把脚跟上下提放
+        # 「扶稳后」要有出处：册子把防跌倒的准备放在第 1 步
+        - 先做好防跌倒的准备：务必准备可以扶住的地方。椅子必须是稳固的。
+    effect:
+      text: '有防止跌倒的效果'
+      quote: '有防止跌倒的效果'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '脚跟上下完成每侧所需时间'
+        quote: '脚跟的上下以每侧约 3 秒的速度慢慢完成'
+      - value: 10
+        unit: '次'
+        what: '每组次数'
+        quote: '次数以 10 次为 1 组，再按体力调整'
+    steps:
+      - id: calf-prepare
+        text: '先做好防跌倒的准备：务必准备可以扶住的地方。椅子必须是稳固的。'
+        quote: '先做好防跌倒的准备：务必准备可以扶住的地方。椅子必须是稳固的。'
+      - id: calf-support
+        text: '轻轻把手搭在椅背上'
+        quote: '轻轻把手搭在椅背上'
+      - id: calf-stance
+        text: '双脚打开与肩同宽，脚尖朝前'
+        quote: '双脚打开与肩同宽，脚尖朝前'
+      - id: calf-lift
+        text: '像被垂直向上拉一样抬起脚跟'
+        quote: '像被垂直向上拉一样抬起脚跟'
+      - id: calf-tempo
+        text: '脚跟的上下以每侧约 3 秒的速度慢慢完成'
+        quote: '脚跟的上下以每侧约 3 秒的速度慢慢完成'
+      - id: calf-set-count
+        text: '次数以 10 次为 1 组，再按体力调整'
+        quote: '次数以 10 次为 1 组，再按体力调整'
+      - id: calf-easier
+        text: '想减轻就把脚跟抬得低一点'
+        quote: '想减轻就把脚跟抬得低一点'
+      - id: calf-stronger
+        text: '想加强就利用台阶之类的高度差，把脚跟往更低的下面压，但此时同样要扶着扶手或墙以免跌倒'
+        quote: '想加强就利用台阶之类的高度差，把脚跟往更低的下面压，但此时同样要扶着扶手或墙以免跌倒'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 749d1e96e6b90ed2
+  - id: squat
+    status: reviewed
+    source:
+      anchor: '第 1 位：深蹲'
+    slot: anytime
+    remind:
+      text: '按正确姿势做深蹲，稳住躯干并伸直背部'
+      quote: '姿势正确的深蹲必须稳住躯干、把背伸直着做'
+    effect:
+      text: '对下半身施加较大负荷被认为有预防骨质疏松的好处'
+      quote: '对下半身施加较大负荷被认为有预防骨质疏松的好处'
+    dose:
+      - value: 10
+        unit: '次'
+        what: '每组次数'
+        quote: '次数以 10 次为 1 组，按体力调整'
+      - value: 90
+        unit: '度'
+        what: '中等负荷时的膝盖弯曲角度'
+        quote: '中等负荷时把膝盖弯到约 90 度'
+      - value: 10
+        unit: '秒'
+        what: '椅式深蹲保持时长'
+        quote: '臀部即将碰到椅面时保持 10 秒'
+    steps:
+      - id: squat-stance
+        text: '双脚打开比肩略宽，脚尖朝前'
+        quote: '双脚打开比肩略宽，脚尖朝前'
+      - id: squat-arms
+        text: '为了保持平衡，把两臂向前伸出去'
+        quote: '为了保持平衡，把两臂向前伸出去'
+      - id: squat-trunk
+        text: '躯干轻轻用力稳住，背保持伸直，同时骨盆前倾，慢慢地把腰放下去，再慢慢站起来'
+        quote: '躯干轻轻用力稳住，背保持伸直，同时骨盆前倾，慢慢地把腰放下去，再慢慢站起来'
+      - id: squat-set-count
+        text: '次数以 10 次为 1 组，按体力调整'
+        quote: '次数以 10 次为 1 组，按体力调整'
+      - id: squat-depth
+        text: '中等负荷时把膝盖弯到约 90 度；想加强就蹲到大腿与地面接近平行'
+        quote: '中等负荷时把膝盖弯到约 90 度；想加强就蹲到大腿与地面接近平行'
+      - id: squat-daily
+        text: '完全不必专门当成体操，工作中或在家坐在椅子上、从椅子上站起来、上厕所时从马桶座上起落——每一次都慢慢坐下、慢慢站起来'
+        quote: '完全不必专门当成体操，工作中或在家坐在椅子上、从椅子上站起来、上厕所时从马桶座上起落——每一次都慢慢坐下、慢慢站起来'
+      - id: squat-chair
+        text: '坐在椅子上做深蹲，臀部即将碰到椅面时保持 10 秒，保持 10 秒后站起来，重复深蹲'
+        quote: '坐在椅子上做深蹲，臀部即将碰到椅面时保持 10 秒，保持 10 秒后站起来，重复深蹲'
+    cautions:
+      - level: info
+        text: '体操过程中绝对不要憋住呼吸。'
+        quote: '体操过程中绝对不要憋住呼吸。'
+      - level: info
+        text: '以不勉强的次数进行'
+        quote: '以不勉强的次数进行'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e96bde699bccd5f6
+    name: 做深蹲
+  - id: three-step-preparation
+    status: reviewed
+    source:
+      anchor: '做任何一个动作之前的三步准备'
+    slot: anytime
+    remind:
+      text: '做动作前先激活深层肌肉并稳住躯干'
+      quote: '动手之前先把深层肌肉好好激活、稳住躯干'
+    effect:
+      text: '身体内部的深层肌肉应当比表层肌肉先一点点启动、撑住脊椎'
+      quote: '身体内部的深层肌肉应当比表层肌肉先一点点启动、撑住脊椎'
+    steps:
+      - id: prep-wall-contact
+        text: '脚跟、臀部、肩胛骨贴住墙面，直立地站好'
+        quote: '脚跟、臀部、肩胛骨贴住墙面，直立地站好'
+      - id: prep-hand-gap
+        text: '墙面和腰之间留出大约一个手掌厚的缝'
+        quote: '墙面和腰之间留出大约一个手掌厚的缝'
+      - id: prep-core
+        text: '像把肚脐下方往里收一样轻轻用力，稳住躯干'
+        quote: '像把肚脐下方往里收一样轻轻用力，稳住躯干'
+    cautions:
+      - level: stop
+        text: '册子的红字前提：任何一个动作，只要身体出现疼痛就请中止。'
+        quote: '册子的红字前提：任何一个动作，只要身体出现疼痛就请中止。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 248989c5d675f632
+  - id: one-month-consistency
+    status: reviewed
+    name: "先坚持满 1 个月"
+    source:
+      anchor: '怎么才能坚持下去：先做满 1 个月'
+    slot: anytime
+    remind:
+      text: '请先坚持 1 个月'
+      quote: '「只要让他们做满 1 个月，就一定能感觉到某种效果，总之请先坚持 1 个月。」'
+    effect:
+      text: '「只要让他们做满 1 个月，就一定能感觉到某种效果，总之请先坚持 1 个月。」'
+      quote: '「只要让他们做满 1 个月，就一定能感觉到某种效果，总之请先坚持 1 个月。」'
+    dose:
+      - value: 1
+        unit: '月'
+        what: '建议坚持时长'
+        quote: '请先坚持 1 个月'
+    steps:
+      - id: persist-mark
+        text: '做完一个动作就打一个 ○'
+        quote: '做完一个动作就打一个 ○'
+      - id: persist-stop-ok
+        text: '做满 1 个月停掉也没关系，请轻松开始'
+        quote: '做满 1 个月停掉也没关系，请轻松开始'
+      - id: persist-support
+        text: '绝对要扶着椅子或墙来做，不要跌倒'
+        quote: '绝对要扶着椅子或墙来做，不要跌倒'
+      - id: persist-rain-rest
+        text: '「下雨天今天就不出门了，但把这当作大自然的奖赏，喝杯咖啡、慢慢看看电视也不错」'
+        quote: '「下雨天今天就不出门了，但把这当作大自然的奖赏，喝杯咖啡、慢慢看看电视也不错」'
+      - id: persist-no-force
+        text: '绝不做勉强自己的事'
+        quote: '绝不做勉强自己的事'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 003ab93c874a2cfc
+  - id: squat-posture-key
+    status: draft
+    source:
+      anchor: '改订版新增：深蹲姿势的一个关键'
+    slot: anytime
+    remind:
+      text: '深蹲时夹紧肩胛骨并把下巴往回收'
+      quote: '「尽量把肩胛骨往中间夹、把下巴往回收」'
+    steps:
+      - id: key-engage-core
+        text: '先有意识地收紧腹横肌（想象把肚脐下方轻轻往里收），一边让骨盆前倾，一边慢慢弯膝'
+        quote: '先有意识地收紧腹横肌（想象把肚脐下方轻轻往里收），一边让骨盆前倾，一边慢慢弯膝'
+      - id: key-upper-body
+        text: '这时身体不要向前倒，要尽量把肩胛骨夹到身后，并且尽量把下巴往回收、不要让头往前伸'
+        quote: '这时身体不要向前倒，要尽量把肩胛骨夹到身后，并且尽量把下巴往回收、不要让头往前伸'
+      - id: key-back-straight
+        text: '一边保持背部挺直的姿势，一边做深蹲'
+        quote: '一边保持背部挺直的姿势，一边做深蹲'
+    cautions:
+      - level: info
+        text: '这个姿势如果做不到位，会给腰部或肌肉带来负担、进而引起腰痛，请务必留意。'
+        quote: '这个姿势如果做不到位，会给腰部或肌肉带来负担、进而引起腰痛，请务必留意。'

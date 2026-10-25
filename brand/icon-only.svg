@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    启动图标（不透明，整块）：给 @capacitor/assets 用。
+    手机桌面的圆角/形状由系统切，所以这里不画圆角 —— 画了会被再切一次。
+  -->
+  <rect width="1024" height="1024" fill="#a82a24"/>
+  <g>
+    <rect x="225" y="287" width="574" height="451" rx="51" fill="#fbf6ec"/>
+    <rect x="307" y="358" width="369" height="37" rx="18.5" fill="#a82a24"/>
+    <rect x="307" y="461" width="266" height="37" rx="18.5" fill="#a82a24"/>
+    <rect x="307" y="563" width="184" height="37" rx="18.5" fill="#a82a24"/>
+    <rect x="573" y="512" width="205" height="205" rx="41" fill="#a82a24" stroke="#fbf6ec" stroke-width="32"/>
+  </g>
+</svg>

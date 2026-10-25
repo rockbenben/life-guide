@@ -1,0 +1,259 @@
+article: 'the-savvy-life-manual/body-care/oral-health.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '口腔功能 50 代起下滑：5 项自查先做起来'
+      reason: '文章总览与节目导语，没有可独立执行的保健动作。'
+    - anchor: '下滑从 50 代就开始，不是 60、70 代'
+      reason: '年龄趋势与研究背景属于疾病知识，未形成可执行动作。'
+    - anchor: '配角是牙，主角是舌'
+      reason: '舌的分工及舌压判定线属于评估知识，其中风险区间的判断需交给医生。'
+    - anchor: '四步「负连锁」：从口走到需要照护'
+      reason: '负连锁是风险机制说明，不是可执行动作。'
+    - anchor: '去做检查：7 个项目，3 项以上即诊断'
+      reason: '诊疗项目与诊断标准属于疾病知识，应由牙科诊所检查，不能作为自诊练习。'
+  images: []
+cards:
+  - id: oral-frail-self-check
+    status: reviewed
+    name: "自查口腔功能是否下降"
+    source:
+      anchor: '5 项自查：中 2 项就算口腔衰弱'
+    slot: anytime
+    remind:
+      text: '今天完成口腔衰弱自查'
+      quote:
+        - 任何人都能简单掌握自己状况
+        - 它把口的衰老叫作「オーラルフレイル（口腔衰弱）」，并把「口的机能会左右寿命」这件「意外的关系」摆在了封面之后第一页。
+    dose:
+      - value: 5
+        unit: '项'
+        what: '口腔衰弱自查项目数'
+        quote: '5 项里有 2 项以上符合，即被判定为「口腔衰弱」。'
+    steps:
+      - id: check-own-teeth
+        text: '自己的牙少于 20 颗'
+        quote: '自己的牙少于 20 颗'
+      - id: check-hard-food
+        text: '半年以前起就难咬硬的东西'
+        quote: '半年以前起就难咬硬的东西'
+      - id: check-choking
+        text: '喝茶或喝汤会呛'
+        quote: '喝茶或喝汤会呛'
+      - id: check-dry-mouth
+        text: '口里容易干'
+        quote: '口里容易干'
+      - id: check-tongue-mobility
+        text: '滑舌变差'
+        quote: '滑舌变差'
+      - id: summarize-result
+        text: '5 项里有 2 项以上符合，即被判定为「口腔衰弱」。'
+        quote: '5 项里有 2 项以上符合，即被判定为「口腔衰弱」。'
+    cautions:
+      - level: info
+        text: '镶的假牙和金属冠要算作自己的牙但种植牙不算自己的牙'
+        quote:
+          - '镶的假牙和金属冠要算作自己的牙'
+          - '但种植牙不算自己的牙'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ae25f826cae280ba
+
+  - id: tongue-aaue-exercise
+    status: draft
+    name: "舌尖舌根发声训练"
+    source:
+      anchor: '做什么：三个舌力动作，外加唱歌'
+    slot: anytime
+    remind:
+      text: '今天做舌尖和舌根同时受力的发声训练'
+      quote:
+        - 把舌用力顶到上颚
+        - 保持这个状态把嘴张开，交替发出「アー」「ウー」的声音。
+        - 这个动作的效果是：舌尖和舌根同时得到锻炼。
+    effect:
+      text: '舌尖和舌根同时得到锻炼。'
+      quote: '舌尖和舌根同时得到锻炼。'
+    dose:
+      - value: 10
+        unit: '次'
+        what: '每次训练中「アーウー」动作次数'
+        quote: '「アーウー」算 1 次，这个动作做 10 次。'
+      - value: 3
+        unit: '组'
+        what: '包含本动作在内的每日训练组数'
+        quote: '1 天 3 组'
+    steps:
+      - id: aaue-lift-tongue
+        text: '把舌用力顶到上颚'
+        quote: '把舌用力顶到上颚'
+      - id: aaue-open-and-sound
+        text: '保持这个状态把嘴张开，交替发出「アー」「ウー」的声音。'
+        quote: '保持这个状态把嘴张开，交替发出「アー」「ウー」的声音。'
+      - id: aaue-mouth-shape
+        text: '「アー」时把嘴大幅张开，「ウー」时把嘴收成尖的形状。'
+        quote: '「アー」时把嘴大幅张开，「ウー」时把嘴收成尖的形状。'
+      - id: aaue-repeat
+        text: '「アーウー」算 1 次，这个动作做 10 次。'
+        quote: '「アーウー」算 1 次，这个动作做 10 次。'
+    cautions:
+      - level: stop
+        text: '有疼痛的人，请不要勉强进行。'
+        quote: '有疼痛的人，请不要勉强进行。'
+      - level: with-doctor
+        text: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+        quote: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+      - level: info
+        text: '请在自己做得到的范围内进行。'
+        quote: '请在自己做得到的范围内进行。'
+
+  - id: tongue-ee-exercise
+    status: draft
+    name: "舌尖离口腔的训练"
+    source:
+      anchor: '做什么：三个舌力动作，外加唱歌'
+    slot: anytime
+    remind:
+      text: '今天做舌尖离开口腔并配合点头按压的训练'
+      quote:
+        - 把拳头放在下巴下面。
+        - 保持这个状态张开嘴，发出「イー」的声音
+        - 一边点头、一边用拳头按压下巴。
+    effect:
+      text: '作用于舌的边缘和舌根，锻炼吞咽所需的力。'
+      quote: '作用于舌的边缘和舌根，锻炼吞咽所需的力。'
+    dose:
+      - value: 10
+        unit: '次'
+        what: '每次训练中「イー」动作次数'
+        quote: '「イー」算 1 次，这个动作做 10 次。'
+      - value: 3
+        unit: '组'
+        what: '包含本动作在内的每日训练组数'
+        quote: '1 天 3 组'
+    steps:
+      - id: ee-support-chin
+        text: '把拳头放在下巴下面。'
+        quote: '把拳头放在下巴下面。'
+      - id: ee-open-and-sound
+        text: '保持这个状态张开嘴，发出「イー」的声音'
+        quote: '保持这个状态张开嘴，发出「イー」的声音'
+      - id: ee-keep-tongue-clear
+        text: '舌尖不接触口腔里的任何部位'
+        quote: '舌尖不接触口腔里的任何部位'
+      - id: ee-nod-and-press
+        text: '一边点头、一边用拳头按压下巴。'
+        quote: '一边点头、一边用拳头按压下巴。'
+      - id: ee-repeat
+        text: '「イー」算 1 次，这个动作做 10 次。'
+        quote: '「イー」算 1 次，这个动作做 10 次。'
+    cautions:
+      - level: stop
+        text: '有疼痛的人，请不要勉强进行。'
+        quote: '有疼痛的人，请不要勉强进行。'
+      - level: with-doctor
+        text: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+        quote: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+      - level: info
+        text: '请在自己做得到的范围内进行。'
+        quote: '请在自己做得到的范围内进行。'
+
+  - id: tongue-stretch-exercise
+    status: draft
+    name: "把舌头用力向外伸"
+    source:
+      anchor: '做什么：三个舌力动作，外加唱歌'
+    slot: anytime
+    remind:
+      text: '把舌用力向外（朝前）伸出来。'
+      quote:
+        - 把舌用力向外（朝前）伸出来。
+        - 保持伸出的状态上下缓慢活动，做 10 次。
+    effect:
+      text: '提高舌的柔软性、扩大可动范围，从而更容易分泌唾液。'
+      quote: '提高舌的柔软性、扩大可动范围，从而更容易分泌唾液。'
+    dose:
+      - value: 10
+        unit: '次'
+        what: '舌头上下缓慢活动次数'
+        quote: '保持伸出的状态上下缓慢活动，做 10 次。'
+      - value: 10
+        unit: '次'
+        what: '有余力时左右方向活动次数'
+        quote: '有余力的话，左右方向也活动 10 次。'
+      - value: 3
+        unit: '组'
+        what: '包含本动作在内的每日训练组数'
+        quote: '1 天 3 组'
+    steps:
+      - id: stretch-tongue-forward
+        text: '把舌用力向外（朝前）伸出来。'
+        quote: '把舌用力向外（朝前）伸出来。'
+      - id: stretch-up-and-down
+        text: '保持伸出的状态上下缓慢活动，做 10 次。'
+        quote: '保持伸出的状态上下缓慢活动，做 10 次。'
+      - id: stretch-side-to-side
+        text: '有余力的话，左右方向也活动 10 次。'
+        quote: '有余力的话，左右方向也活动 10 次。'
+    cautions:
+      - level: stop
+        text: '有疼痛的人，请不要勉强进行。'
+        quote: '有疼痛的人，请不要勉强进行。'
+      - level: with-doctor
+        text: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+        quote: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+      - level: info
+        text: '请在自己做得到的范围内进行。'
+        quote: '请在自己做得到的范围内进行。'
+
+  - id: singing-tongue-training
+    status: reviewed
+    source:
+      anchor: '做什么：三个舌力动作，外加唱歌'
+    slot: anytime
+    remind:
+      text: '今天安排趣味唱歌训练'
+      quote:
+        - 在享受乐趣的同时让舌最大限度地活动
+        - 节目组让有口部衰退的 50 代到 70 代做了 2 周训练，结果 11 人全员舌压都上升了，滑舌也有改善。参与者的反馈包括「肉能顺畅地咬碎了」「不再咳呛了」。
+    effect:
+      text: '每周 1 次、每次 2 小时的唱歌持续 12 周后，确认舌压平均上升 3.71 千帕'
+      quote: '每周 1 次、每次 2 小时的唱歌持续 12 周后，确认舌压平均上升 3.71 千帕'
+    dose:
+      - value: 1
+        unit: '次'
+        what: '每周唱歌次数'
+        quote: '每周 1 次、每次 2 小时的唱歌持续 12 周后，确认舌压平均上升 3.71 千帕'
+      - value: 2
+        unit: '小时'
+        what: '每次唱歌时长'
+        quote: '每周 1 次、每次 2 小时的唱歌持续 12 周后，确认舌压平均上升 3.71 千帕'
+      - value: 12
+        unit: '周'
+        what: '持续唱歌训练周期'
+        quote: '每周 1 次、每次 2 小时的唱歌持续 12 周后，确认舌压平均上升 3.71 千帕'
+    duration:
+      basis: derived
+      sec: 7200
+      formula: '2 小时 × 60 分钟/小时 × 60 秒/分钟 = 7200 秒'
+    steps:
+      - id: sing-with-tongue-movement
+        text: '在享受乐趣的同时让舌最大限度地活动'
+        quote: '在享受乐趣的同时让舌最大限度地活动'
+      - id: sing-with-mouth-muscles
+        text: '唱歌用到的不只是舌，还有口唇、口轮肌、呼吸等更多的肌肉和功能'
+        quote: '唱歌用到的不只是舌，还有口唇、口轮肌、呼吸等更多的肌肉和功能'
+    cautions:
+      - level: stop
+        text: '有疼痛的人，请不要勉强进行。'
+        quote: '有疼痛的人，请不要勉强进行。'
+      - level: with-doctor
+        text: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+        quote: '口的功能已经在衰退、平时吃东西会呛，或有基础疾病的人，请先咨询牙科医生再开始。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 434e01aa30f362e7
+    name: 唱首歌练舌力

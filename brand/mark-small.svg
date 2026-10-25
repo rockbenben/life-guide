@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    生活指南 · 小尺寸简版
+    完整标记（一卡三行 + 印）在 16px 上会糊成一团 ——
+    缩略图要另画，不是换个滤镜（html-shot 的 --small 就是干这个的）。
+    这里只留最认得出的两笔：纸卡 + 一颗盖好的印。
+  -->
+  <rect width="1024" height="1024" rx="224" fill="#a82a24"/>
+  <path d="M262 528 L436 690 L772 344" fill="none" stroke="#fbf6ec" stroke-width="108"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

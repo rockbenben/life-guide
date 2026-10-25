@@ -1,0 +1,78 @@
+{
+  "name": "@life-guide/desktop",
+  "productName": "生活指南",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "description": "桌面端：Electron 壳，跑的是同一份 PWA 构建产物",
+  "author": "benson",
+  "main": "main.mjs",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --publish never"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "top.045.life-guide",
+    "productName": "生活指南",
+    "copyright": "生活指南",
+    "directories": {
+      "output": "release"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "rockbenben",
+        "repo": "life-guide"
+      }
+    ],
+    "files": [
+      "main.mjs",
+      "preload.cjs",
+      "lib/*.mjs",
+      "!lib/*.test.mjs",
+      "build/tray.png",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../app/dist",
+        "to": "app"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "executableName": "LifeGuide"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.healthcare-fitness"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Health"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "生活指南",
+      "artifactName": "LifeGuide-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "LifeGuide-Portable-${version}.${ext}"
+    }
+  }
+}

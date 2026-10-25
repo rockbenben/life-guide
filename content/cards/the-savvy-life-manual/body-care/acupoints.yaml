@@ -1,0 +1,381 @@
+article: 'the-savvy-life-manual/body-care/acupoints.md'
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: set-acupressure-expectations
+    status: reviewed
+    source:
+      anchor: '经络穴位说明书：位置与按法'
+    slot: anytime
+    remind:
+      text: '把穴位按压定位为促进血流的健康辅助，并与西医配合，不把它当成能治好所有疾病和症状的方法。'
+      quote:
+        - '按压是否起效的已知代表性机制是促进血流'
+        - '按穴位并不能治好所有疾病和症状'
+        - '它应当和西医配合，作为保持健康的辅助'
+    steps:
+      - id: set-blood-flow-expectation
+        text: '按压是否起效的已知代表性机制是促进血流'
+        quote: '按压是否起效的已知代表性机制是促进血流'
+      - id: use-as-adjunct
+        text: '它应当和西医配合，作为保持健康的辅助'
+        quote: '它应当和西医配合，作为保持健康的辅助'
+    cautions:
+      - level: with-doctor
+        text: '按穴位并不能治好所有疾病和症状'
+        quote: '按穴位并不能治好所有疾病和症状'
+      - level: info
+        text: '以及被哪些针灸师票选为「特别有效」，并未承诺治疗效果'
+        quote: '以及被哪些针灸师票选为「特别有效」，并未承诺治疗效果'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b758e50c3c445704
+    name: 穴位只是保健辅助
+
+  - id: press-acupoints-basics
+    status: reviewed
+    source:
+      anchor: '按法：三件事'
+    slot: anytime
+    remind:
+      text: '先摸出最敏感的穴位点，以有点痛但按完舒服的力度缓缓加力，保持 3 秒后慢慢松力。'
+      quote:
+        - '用手指在前后左右摸出最敏感的那个点'
+        - '力度以「有点痛、但按完舒服」为准'
+        - '缓缓加力，感到舒服后保持 3 秒，然后慢慢松力'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '每次按压的保持时长'
+        quote: '保持 3 秒'
+    duration:
+      basis: quote
+      sec: 3
+      quote: '慢慢按 3 秒'
+    steps:
+      - id: find-sensitive-point
+        text: '用手指在前后左右摸出最敏感的那个点'
+        quote: '用手指在前后左右摸出最敏感的那个点'
+      - id: set-comfortable-pressure
+        text: '力度以「有点痛、但按完舒服」为准'
+        quote: '力度以「有点痛、但按完舒服」为准'
+      - id: press-and-release-slowly
+        text: '缓缓加力，感到舒服后保持 3 秒，然后慢慢松力'
+        quote: '缓缓加力，感到舒服后保持 3 秒，然后慢慢松力'
+    cautions:
+      - level: stop
+        text: '硬按可能反而伤到肌肉'
+        quote: '硬按可能反而伤到肌肉'
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 245da8b31989ff6a
+    name: 按穴位：找点加力保持
+
+  - id: fatigue-zusanli
+    status: reviewed
+    source:
+      anchor: '各部位对应的穴位位置'
+    slot: anytime
+    remind:
+      text: '疲劳时找足三里：膝盖骨下方、外侧凹陷往下四指宽处。'
+      quote: '疲劳：足三里——膝盖骨下方、外侧凹陷往下四指宽处，被称为万能、长寿之穴。'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '每次按压的保持时长'
+        quote: '保持 3 秒'
+    steps:
+      - id: locate-zusanli
+        text: '足三里——膝盖骨下方、外侧凹陷往下四指宽处'
+        quote: '足三里——膝盖骨下方、外侧凹陷往下四指宽处'
+    cautions:
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 486d2591636bfe99
+    name: 疲劳时按足三里
+
+  - id: lower-back-shenshu-weizhong
+    status: reviewed
+    source:
+      anchor: '各部位对应的穴位位置'
+    slot: anytime
+    remind:
+      text: '腰痛时找肾俞和委中：肾俞在脊椎两侧两指处，委中在膝关节背面正中附近。'
+      quote: '腰痛：肾俞——沿腰线，在脊椎两侧两指处；不好按的时候，可以在地板上放个网球之类，躺上去压。委中——膝关节背面正中附近。'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '每次按压的保持时长'
+        quote: '保持 3 秒'
+    steps:
+      - id: locate-shenshu
+        text: '肾俞——沿腰线，在脊椎两侧两指处'
+        quote: '肾俞——沿腰线，在脊椎两侧两指处'
+      - id: use-ball-for-shenshu
+        text: '不好按的时候，可以在地板上放个网球之类，躺上去压'
+        quote: '不好按的时候，可以在地板上放个网球之类，躺上去压'
+      - id: locate-weizhong
+        text: '委中——膝关节背面正中附近'
+        quote: '委中——膝关节背面正中附近'
+    cautions:
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cac416cc3adedd45
+    name: 腰痛时按肾俞和委中
+
+  - id: shoulder-stiffness-points
+    status: reviewed
+    source:
+      anchor: '各部位对应的穴位位置'
+    slot: anytime
+    remind:
+      text: '肩部僵硬时找肩井和合谷：肩井在脖子根部与肩端的中点附近，合谷在拇指与食指的手骨交叉处、偏向食指的那个凹陷。'
+      quote: '肩部僵硬：肩井——脖子根部与肩端的中点附近。合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷。'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '每次按压的保持时长'
+        quote: '保持 3 秒'
+    steps:
+      - id: locate-jianjing
+        text: '肩井——脖子根部与肩端的中点附近'
+        quote: '肩井——脖子根部与肩端的中点附近'
+      - id: locate-hegu
+        text: '合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷'
+        quote: '合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷'
+    cautions:
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 200ef7c957053add
+    name: 肩僵时按肩井和合谷
+
+  - id: stress-points
+    status: reviewed
+    source:
+      anchor: '各部位对应的穴位位置'
+    slot: anytime
+    remind:
+      text: '压力时找内关和百会：内关在手腕横纹往里约三指处，百会在两耳最高点连成的线与鼻梁中线交汇处。'
+      quote: '压力：内关——手腕横纹往里约三指处。百会——两耳最高点连成的线，与鼻梁中线交汇处。'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '每次按压的保持时长'
+        quote: '保持 3 秒'
+    steps:
+      - id: locate-neiguan
+        text: '内关——手腕横纹往里约三指处'
+        quote: '内关——手腕横纹往里约三指处'
+      - id: locate-baihui
+        text: '百会——两耳最高点连成的线，与鼻梁中线交汇处'
+        quote: '百会——两耳最高点连成的线，与鼻梁中线交汇处'
+    cautions:
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 32bef7e96d1301a5
+    name: 压力大时按内关百会
+
+  - id: cold-sensitivity-points
+    status: reviewed
+    source:
+      anchor: '各部位对应的穴位位置'
+    slot: anytime
+    remind:
+      text: '畏寒时找三阴交：内脚踝上方四指、紧贴粗骨的后方。'
+      quote: '畏寒：三阴交——内脚踝上方四指、紧贴粗骨的后方。'
+    dose:
+      - value: 3
+        unit: '秒'
+        what: '每次按压的保持时长'
+        quote: '保持 3 秒'
+    steps:
+      - id: locate-sanyinjiao
+        text: '三阴交——内脚踝上方四指、紧贴粗骨的后方'
+        quote: '三阴交——内脚踝上方四指、紧贴粗骨的后方'
+    cautions:
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 3171aa525c85a075
+    name: 畏寒时按三阴交
+
+  - id: beauty-basic-four
+    status: reviewed
+    source:
+      anchor: '美容用的 12 个穴位'
+    slot: anytime
+    remind:
+      text: '第一次不妨只做基础的 4 个穴位：太阳、颧髎、颊车、翳风，对着镜子边看边按。'
+      quote:
+        - '第一次不妨只做「基础的 4 个」，对着镜子边看边按：'
+        - '太阳——眉毛外端与眼尾之间、往外约一拇指的凹陷处。'
+        - '颧髎——眼尾下方、颧骨下面的凹陷处，沿法令纹方向按。'
+        - '颊车——下颌角往内斜一指宽处。'
+        - '翳风——耳垂后方的凹陷，用拇指腹按住，同时轻轻捏着耳垂转一转。'
+    dose:
+      - value: 3
+        unit: '次'
+        what: '头、肩、脸颊、颈部的穴位每组刺激次数'
+        quote: '头、肩、脸颊、颈部的穴位，每组刺激 3 次'
+      - value: 5
+        unit: '次'
+        what: '耳部穴位以拉扯方式的刺激次数'
+        quote: '耳部的穴位则以拉扯的方式刺激 5 次'
+      - value: 2
+        valueMax: 3
+        unit: '组'
+        what: '全天合计组数'
+        quote: '早、中、晚各做，全天合计 2 到 3 组'
+      - value: 2
+        unit: '周'
+        what: '建议先坚持的周数'
+        quote: '建议先坚持两周'
+    steps:
+      - id: locate-taiyang
+        text: '太阳——眉毛外端与眼尾之间、往外约一拇指的凹陷处'
+        quote: '太阳——眉毛外端与眼尾之间、往外约一拇指的凹陷处'
+      - id: press-jianliao
+        text: '颧髎——眼尾下方、颧骨下面的凹陷处，沿法令纹方向按'
+        quote: '颧髎——眼尾下方、颧骨下面的凹陷处，沿法令纹方向按'
+      - id: locate-jiache
+        text: '颊车——下颌角往内斜一指宽处'
+        quote: '颊车——下颌角往内斜一指宽处'
+      - id: press-yifeng
+        text: '翳风——耳垂后方的凹陷，用拇指腹按住，同时轻轻捏着耳垂转一转'
+        quote: '翳风——耳垂后方的凹陷，用拇指腹按住，同时轻轻捏着耳垂转一转'
+      - id: count-one-round
+        text: '这一组算作一次'
+        quote: '这一组算作一次'
+      - id: press-without-pain
+        text: '不痛的时候也该按'
+        quote: '不痛的时候也该按'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: dfe496d6618d7737
+    name: 先按美容基础 4 穴
+
+  - id: beauty-add-eight-points
+    status: draft
+    source:
+      anchor: '美容用的 12 个穴位'
+    slot: anytime
+    remind:
+      text: '完成基础 4 个后，再加百会、上星、攒竹、巨髎、风池、完骨、肺、神门这 8 个，凑齐完整版。'
+      quote:
+        - '第一次不妨只做「基础的 4 个」，对着镜子边看边按：'
+        - '要凑齐完整版，再加这 8 个：百会、上星（发际正中往里一拇指）、攒竹（眉头下方凹陷）、巨髎（瞳孔向下的竖线与鼻翼两侧横线交汇处）、风池（后脑、发际附近的凹陷）、完骨（耳后、骨的突起稍下方的凹陷）、肺（耳孔外侧宽凹陷的中心附近）、神门（耳朵上方三角形的凹陷）。'
+    dose:
+      - value: 3
+        unit: '次'
+        what: '头、肩、脸颊、颈部的穴位每组刺激次数'
+        quote: '头、肩、脸颊、颈部的穴位，每组刺激 3 次'
+      - value: 5
+        unit: '次'
+        what: '耳部穴位以拉扯方式的刺激次数'
+        quote: '耳部的穴位则以拉扯的方式刺激 5 次'
+      - value: 2
+        valueMax: 3
+        unit: '组'
+        what: '全天合计组数'
+        quote: '早、中、晚各做，全天合计 2 到 3 组'
+      - value: 2
+        unit: '周'
+        what: '建议先坚持的周数'
+        quote: '建议先坚持两周'
+    steps:
+      - id: locate-baihui
+        text: '百会——两耳最高点连成的线，与鼻梁中线交汇处'
+        quote: '百会——两耳最高点连成的线，与鼻梁中线交汇处'
+      - id: locate-shangxing
+        text: '上星（发际正中往里一拇指）'
+        quote: '上星（发际正中往里一拇指）'
+      - id: locate-zhuanti
+        text: '攒竹（眉头下方凹陷）'
+        quote: '攒竹（眉头下方凹陷）'
+      - id: locate-juliao
+        text: '巨髎（瞳孔向下的竖线与鼻翼两侧横线交汇处）'
+        quote: '巨髎（瞳孔向下的竖线与鼻翼两侧横线交汇处）'
+      - id: locate-fengchi
+        text: '风池（后脑、发际附近的凹陷）'
+        quote: '风池（后脑、发际附近的凹陷）'
+      - id: locate-wangu
+        text: '完骨（耳后、骨的突起稍下方的凹陷）'
+        quote: '完骨（耳后、骨的突起稍下方的凹陷）'
+      - id: locate-fei
+        text: '肺（耳孔外侧宽凹陷的中心附近）'
+        quote: '肺（耳孔外侧宽凹陷的中心附近）'
+      - id: locate-shenmen
+        text: '神门（耳朵上方三角形的凹陷）'
+        quote: '神门（耳朵上方三角形的凹陷）'
+      - id: press-without-pain
+        text: '不痛的时候也该按'
+        quote: '不痛的时候也该按'
+    cautions:
+      - level: info
+        text: '红色的 7 个——百会、太阳、上星、风池、攒竹、完骨、神门——对头痛也已知有效'
+        quote: '红色的 7 个——百会、太阳、上星、风池、攒竹、完骨、神门——对头痛也已知有效'
+    name: 再按 8 穴凑齐 12 穴
+
+  - id: safe-acupressure-and-care
+    status: reviewed
+    source:
+      anchor: '注意与就医提示'
+    slot: anytime
+    remind:
+      text: '按压保持有点痛但舒服；遇到不明原因或持续不缓解的疼痛，以及下肢麻木无力、大小便异常时，不要靠按穴位处理，先到骨科或神经内科就诊。'
+      quote:
+        - '按压务必控制在「有点痛但舒服」的程度'
+        - '如果疼痛原因不明、持续不缓解，或伴随下肢麻木无力、大小便异常等症状，不要靠按穴位处理，请到骨科或神经内科就诊，先查明病因。'
+    steps:
+      - id: control-pressure
+        text: '按压务必控制在「有点痛但舒服」的程度'
+        quote: '按压务必控制在「有点痛但舒服」的程度'
+      - id: seek-care-for-warning-signs
+        text: '如果疼痛原因不明、持续不缓解，或伴随下肢麻木无力、大小便异常等症状，不要靠按穴位处理，请到骨科或神经内科就诊，先查明病因。'
+        quote: '如果疼痛原因不明、持续不缓解，或伴随下肢麻木无力、大小便异常等症状，不要靠按穴位处理，请到骨科或神经内科就诊，先查明病因。'
+    cautions:
+      - level: stop
+        text: '用力过度反而会引起炎症'
+        quote: '用力过度反而会引起炎症'
+      - level: stop
+        text: '穴位按摩不能代替就医，症状持续时请先看专科'
+        quote: '穴位按摩不能代替就医，症状持续时请先看专科'
+      - level: with-doctor
+        text: '穴位并不能改善所有的疾病和症状，请与西医良好配合，作为保持健康的助力'
+        quote: '穴位并不能改善所有的疾病和症状，请与西医良好配合，作为保持健康的助力'
+      - level: info
+        text: '针和灸等穴位治疗在某些情况下可以适用健康保险，目前适用的是神经痛、风湿病、腰痛症、五十肩、腕管综合征、颈椎扭伤后遗症等（需医生同意），其他疾病则属于全额自费的自由诊疗。'
+        quote: '针和灸等穴位治疗在某些情况下可以适用健康保险，目前适用的是神经痛、风湿病、腰痛症、五十肩、腕管综合征、颈椎扭伤后遗症等（需医生同意），其他疾病则属于全额自费的自由诊疗。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ab0d3d14b8852de7
+    name: 按穴位前先看禁忌

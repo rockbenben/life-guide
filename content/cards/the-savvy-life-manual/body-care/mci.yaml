@@ -1,0 +1,239 @@
+article: the-savvy-life-manual/body-care/mci.md
+kind: condition
+coverage: partial
+ignore:
+  sections:
+    - anchor: '认知下降有 70 种原因：先查因再谈 MCI'
+      reason: '开场的背景概述与「70 种以上」这一信息已并入查原因卡片，不另重复制卡。'
+    - anchor: 'MCI：健常与认知症之间的那一段'
+      reason: '用于界定疾病阶段的基础知识，没有独立的就诊或对策动作，未制卡。'
+    - anchor: '察觉的关键：给了提示也想不起来'
+      reason: '在最多 6 张卡的限制下，症状识别细节未单独制卡；与就诊相关的遗忘表现已并入就诊契机卡片。'
+    - anchor: '为什么会这样：海马先坏'
+      reason: '海马、阿尔茨海默病病理机制及影像图说明属于背景知识，没有可执行动作，未制卡。'
+    - anchor: '最要紧的一项，其实是「交流」'
+      reason: '交流与抑郁、认知功能下降之间的机制性说明未单独制卡；其中可执行的每日交流动作、效果和研究证据已在每日通话卡片中处理。'
+  images: []
+cards:
+  - id: check-cognitive-decline-cause
+    status: reviewed
+    name: "先查认知下降的原因"
+    source:
+      anchor: '该做的第一件事：查原因'
+    remind:
+      text: '先查明认知功能下降的原因'
+      quote: '为了知道认知功能下降的原因而去就诊'
+    steps:
+      - id: seek-etiology
+        text: '为了知道认知功能下降的原因而去就诊'
+        quote: '为了知道认知功能下降的原因而去就诊'
+      - id: report-possible-causes
+        text: '脑以外的疾病、特定的营养失调、药物的副作用等'
+        quote: '脑以外的疾病、特定的营养失调、药物的副作用等'
+      - id: address-treatable-cause
+        text: '通过药物治疗，可以期待认知功能得到恢复'
+        quote:
+          - 通过药物治疗，可以期待认知功能得到恢复
+          - 它的整条主张只有一句：认知功能下降的原因有 70 种以上，而绝大多数人第一时间想到的阿尔茨海默病，只是其中一种。
+    notices:
+      - level: info
+        text: '认知功能下降的原因有 70 种以上'
+        quote: '认知功能下降的原因有 70 种以上'
+      - level: with-doctor
+        text: '※ 请不要自行判断就停药或减药。务必咨询医生。'
+        quote: '※ 请不要自行判断就停药或减药。务必咨询医生。'
+      - level: info
+        text: '药可以引起认知功能下降，但停药的决定权不在你手上。'
+        quote: '药可以引起认知功能下降，但停药的决定权不在你手上。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 35bddf7fa2e41056
+  - id: mci-care-triggers
+    status: reviewed
+    name: "该去就诊的三个契机"
+    source:
+      anchor: '什么时候该去：遗忘之外的三个契机'
+    remind:
+      text: '出现遗忘变化或其他症状时，核对就诊契机'
+      quote:
+        - 如果你因为遗忘而担心，请确认以下两点——两点都符合的话，有可能就是 MCI：
+        - 它同时给出了一组实际的就诊契机（报道中那位男性的情况）：
+    steps:
+      - id: more-forgetting
+        text: '和以前相比，遗忘变多了'
+        quote: '和以前相比，遗忘变多了'
+      - id: family-observation
+        text: '家人等身边人，对你的遗忘提出过意见'
+        quote: '家人等身边人，对你的遗忘提出过意见'
+      - id: forgotten-appointments
+        text: '忘记约定的事变多了'
+        quote: '忘记约定的事变多了'
+      - id: forgotten-emails
+        text: '忘记回复邮件变多了'
+        quote: '忘记回复邮件变多了'
+      - id: appliance-operation
+        text: '家电的操作变得搞不明白了'
+        quote: '家电的操作变得搞不明白了'
+      - id: language-problems
+        text: '说、听、读都变得困难'
+        quote: '说、听、读都变得困难'
+      - id: spatial-problems
+        text: '难以识别物体的位置、距离感'
+        quote: '难以识别物体的位置、距离感'
+      - id: low-energy
+        text: '以前理所当然会做的事提不起劲；被问到「为什么没精神」也答不上来'
+        quote: '以前理所当然会做的事提不起劲；被问到「为什么没精神」也答不上来'
+    notices:
+      - level: seek-care
+        text: '判断自己是不是 MCI、要做什么治疗，请以专科医生的面诊为准；已有家庭医生的，先找家庭医生。'
+        quote: '判断自己是不是 MCI、要做什么治疗，请以专科医生的面诊为准；已有家庭医生的，先找家庭医生。'
+      - level: info
+        text: '这份说明书讲的是就诊与对策指引，不是诊断，也不是治疗方案。'
+        quote: '这份说明书讲的是就诊与对策指引，不是诊断，也不是治疗方案。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 6c6d2662cece6182
+  - id: amyloid-antibody-medicine
+    status: reviewed
+    source:
+      anchor: '药：有，但只针对一部分人'
+    remind:
+      text: '药物是否适用及可能获益由医生判断'
+      quote: '是否适用、能得到什么，全部要由医生判断。'
+    effect:
+      text: '认知功能不会恢复到原来的样子，但能让这个人以他本来的样子继续生活的时间变长。'
+      quote: '认知功能不会恢复到原来的样子，但能让这个人以他本来的样子继续生活的时间变长。'
+    steps:
+      - id: learn-medicine
+        text: '说明书介绍的是抗淀粉样蛋白 β 抗体药。'
+        quote: '说明书介绍的是抗淀粉样蛋白 β 抗体药。'
+      - id: confirm-eligibility
+        text: '以阿尔茨海默病为病因的 MCI，或者轻度阿尔茨海默型认知症——这两者之中满足一定条件的人'
+        quote: '以阿尔茨海默病为病因的 MCI，或者轻度阿尔茨海默型认知症——这两者之中满足一定条件的人'
+      - id: doctor-determines-use
+        text: '是否适用、能得到什么，全部要由医生判断。'
+        quote: '是否适用、能得到什么，全部要由医生判断。'
+    notices:
+      - level: info
+        text: '说明书只写了「满足一定条件的人」，并没有列出那些条件是什么'
+        quote: '说明书只写了「满足一定条件的人」，并没有列出那些条件是什么'
+      - level: info
+        text: '说明书也没有写给药方法、费用、疗程与风险'
+        quote: '说明书也没有写给药方法、费用、疗程与风险'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 31d56b5429af0f42
+    name: 认知症药只对部分人有效
+  - id: mci-four-combination
+    status: reviewed
+    source:
+      anchor: '改善认知功能：四件事一起做'
+    remind:
+      text: '该做的全部，同时做。'
+      quote:
+        - 该做的全部，同时做。
+        - 背景是：2025 年被选为「全世界最受关注的认知症研究」之一的一项研究，由国立长寿医疗研究中心进行。 参与者同时做了四件事——①运动　②动脑训练　③改善饮食　④管理・改善生活习惯——结果是 MCI 的人在 1 年半里，让认知功能得到了有统计学意义的改善。
+    effect:
+      text: '结果是 MCI 的人在 1 年半里，让认知功能得到了有统计学意义的改善'
+      quote: '结果是 MCI 的人在 1 年半里，让认知功能得到了有统计学意义的改善'
+    steps:
+      - id: exercise
+        text: '运动被认为能增加脑的神经细胞和血流量'
+        quote: '运动被认为能增加脑的神经细胞和血流量'
+      - id: brain-training
+        text: '想办法把东西回忆起来这件事本身，就对认知功能改善很重要'
+        quote: '想办法把东西回忆起来这件事本身，就对认知功能改善很重要'
+      - id: improve-diet
+        text: '摄取多种多样的食材很重要'
+        quote: '摄取多种多样的食材很重要'
+      - id: manage-lifestyle
+        text: '改善高血压、糖尿病等，对认知功能改善很重要'
+        quote: '改善高血压、糖尿病等，对认知功能改善很重要'
+    notices:
+      - level: with-doctor
+        text: '视 MCI 的原因不同，只改善生活习惯有时难以取得效果。MCI 的人应该在治疗的同时并行去做。'
+        quote: '视 MCI 的原因不同，只改善生活习惯有时难以取得效果。MCI 的人应该在治疗的同时并行去做。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4be69694bce331a0
+  - id: daily-supportive-call
+    status: reviewed
+    source:
+      anchor: '打电话也算交流：1 天 1 通'
+    remind:
+      text: '每天给家人和朋友打 1 次电话'
+      quote: '周围的人能做的事，是每天给家人和朋友打 1 次电话。'
+    effect:
+      text: '在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%'
+      quote: '在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%'
+    dose:
+      - value: 1
+        unit: 次
+        what: 每天给家人和朋友打电话的次数
+        quote: '周围的人能做的事，是每天给家人和朋友打 1 次电话。'
+      - value: 10
+        unit: 分钟
+        what: 每次电话时长
+        quote: '在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%'
+    duration:
+      basis: quote
+      sec: 10
+      quote: '在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%'
+    steps:
+      - id: call-family-friends
+        text: '周围的人能做的事，是每天给家人和朋友打 1 次电话。'
+        quote: '周围的人能做的事，是每天给家人和朋友打 1 次电话。'
+      - id: ask-how-are-you
+        text: '确认一下你现在好不好'
+        quote: '确认一下你现在好不好'
+      - id: ask-happy-thing
+        text: '最近有没有什么开心的事'
+        quote: '最近有没有什么开心的事'
+    notices:
+      - level: info
+        text: '请注意，这组数字来自海外研究，不是日本自己的数据。'
+        quote: '请注意，这组数字来自海外研究，不是日本自己的数据。'
+      - level: info
+        text: '电话有改善老年人心理孤立感的效果'
+        quote: '电话有改善老年人心理孤立感的效果'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 453a7a91e5796d62
+  - id: community-support-center
+    status: draft
+    source:
+      anchor: '门诊和交流的烦恼，去这里问'
+    remind:
+      text: '向地域包括支援中心咨询就诊与交流的烦恼'
+      quote:
+        - 为地区居民的生活烦恼提供倾听的综合咨询窗口
+        - 说明书把最后一页整页给了地域包括支援中心，并写明认知症本人与家属都推荐去。
+    steps:
+      - id: find-center
+        text: '查询方式是都道府县官网，或直接向你所在自治体的窗口询问'
+        quote: '查询方式是都道府县官网，或直接向你所在自治体的窗口询问'
+      - id: find-medical-institution
+        text: '中心掌握该地区对认知症较为了解的医疗机构信息，会结合咨询者的状况提供合适的医疗机构信息。'
+        quote: '中心掌握该地区对认知症较为了解的医疗机构信息，会结合咨询者的状况提供合适的医疗机构信息。'
+      - id: help-refusing-patient
+        text: '中心的职员有时会替家人去确认拒绝就诊者本人的心情，也会在本人能安心就诊的前提下帮忙对接医疗机构'
+        quote: '中心的职员有时会替家人去确认拒绝就诊者本人的心情，也会在本人能安心就诊的前提下帮忙对接医疗机构'
+      - id: find-social-place
+        text: '中心会告诉你住处附近有哪些交流的场所'
+        quote: '中心会告诉你住处附近有哪些交流的场所'
+    notices:
+      - level: info
+        text: '可以免费咨询'
+        quote: '可以免费咨询'
+      - level: info
+        text: '设施数量包含支所在内，全日本 9,000 处以上；你所在的自治体一定有。'
+        quote: '设施数量包含支所在内，全日本 9,000 处以上；你所在的自治体一定有。'
+      - level: with-doctor
+        text: '已有家庭医生的人，请先跟家庭医生商量。'
+        quote: '已有家庭医生的人，请先跟家庭医生商量。'
+    name: 去地域包括支援中心咨询

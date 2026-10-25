@@ -1,0 +1,304 @@
+article: the-savvy-life-manual/food/spice.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '香料：用水调成酱，香气强度从 124 涨到 360'
+      reason: '这是导语式概述；滤镜酱的材料、步骤和实测效果已纳入“粉状香料的最大问题，和「滤镜酱」解法”下的卡片。'
+    - anchor: '铁律：把好几种香料混在一起'
+      reason: '本节包含混合原理、香味分组和两组可选混合方案；为遵守全文最多 6 张卡，优先抽取 6 个完整食谱，未把该背景与备选组合另做卡片。'
+  images: []
+cards:
+  - id: filter-sauce-chicken
+    status: reviewed
+    source:
+      anchor: '粉状香料的最大问题，和「滤镜酱」解法'
+    slot: anytime
+    remind:
+      text: 做滤镜酱鸡腿排
+      quote: '鸡腿肉熟透后，加入滤镜酱，和油一起裹匀后继续煎。'
+    effect:
+      text: 用滤镜酱炒出来的菜，残留的香气约是 3 倍。
+      quote: '用滤镜酱炒出来的菜，残留的香气约是 3 倍。'
+    dose:
+      - { value: 2, unit: 小勺, what: 孜然粉用量, quote: '孜然粉 2 小勺' }
+      - { value: 2, unit: 小勺, what: 红椒粉用量, quote: '红椒粉 2 小勺' }
+      - { value: 2, unit: 小勺, what: 肉豆蔻粉用量, quote: '肉豆蔻粉 2 小勺' }
+      - { value: 2, unit: 大勺, what: 滤镜酱用水量, quote: '水 2 大勺' }
+      - { value: 2, unit: 块, what: 鸡腿肉用量, quote: '鸡腿肉 2 块' }
+      - { value: 2, unit: 小勺, what: 成菜滤镜酱用量, quote: '滤镜酱 2 小勺' }
+      - { value: 1, unit: 小勺, what: 油用量, quote: '油 1 小勺' }
+    steps:
+      - id: mix-filter-sauce
+        text: 孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状
+        quote: '孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状'
+      - id: season-chicken
+        text: 鸡腿肉撒盐。
+        quote: '鸡腿肉撒盐。'
+      - id: sear-chicken
+        text: 油烧热的平底锅中皮朝下放入鸡腿，小火煎到皮变脆，约 7～8 分钟，再翻面煎另一面。
+        quote: '油烧热的平底锅中皮朝下放入鸡腿，小火煎到皮变脆，约 7～8 分钟，再翻面煎另一面。'
+      - id: coat-with-sauce
+        text: 鸡腿肉熟透后，加入滤镜酱，和油一起裹匀后继续煎。
+        quote: '鸡腿肉熟透后，加入滤镜酱，和油一起裹匀后继续煎。'
+    cautions:
+      - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 095a70a9f12c8ad1
+    name: 做滤镜酱鸡腿排
+
+  - id: filter-sauce-curry
+    status: reviewed
+    source:
+      anchor: '粉状香料的最大问题，和「滤镜酱」解法'
+    slot: anytime
+    remind:
+      text: 做甜口咖喱
+      quote: '加入咖喱块搅匀。'
+    dose:
+      - { value: 200, unit: g, what: 鸡肉用量, quote: '鸡肉 200g' }
+      - { value: 1, unit: 根, what: 胡萝卜用量, quote: '胡萝卜 1 根' }
+      - { value: 1, unit: 个, what: 洋葱用量, quote: '洋葱 1 个' }
+      - { value: 2, unit: 个, what: 土豆用量, quote: '土豆 2 个' }
+      - { value: 850, unit: mL, what: 水用量, quote: '水 850mL' }
+      - { value: 1, unit: 大勺, what: 油用量, quote: '油 1 大勺' }
+      - { value: 115, unit: g, what: 咖喱块用量, quote: '咖喱块 115g（1 盒 6 盘份）' }
+      - { value: 2, unit: 大勺, what: 滤镜酱用量, quote: '滤镜酱 2 大勺' }
+    steps:
+      - id: mix-filter-sauce
+        text: 孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状
+        quote: '孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状'
+      - id: cut-ingredients
+        text: 鸡肉切一口大；胡萝卜去皮乱切；洋葱切 1cm 宽；土豆去皮切一口大。
+        quote: '鸡肉切一口大；胡萝卜去皮乱切；洋葱切 1cm 宽；土豆去皮切一口大。'
+      - id: fry-chicken
+        text: 锅中倒油，炒鸡肉。
+        quote: '锅中倒油，炒鸡肉。'
+      - id: simmer-vegetables
+        text: 加入 翻炒后加水，小火煮到蔬菜变软。
+        quote: '加入 ① 翻炒后加水，小火煮到蔬菜变软。'
+      - id: add-curry-roux
+        text: 加入咖喱块搅匀。
+        quote: '加入咖喱块搅匀。'
+      - id: mix-extra-sauce
+        text: （可选）另取滤镜酱加辣椒调匀。
+        quote: '（可选）另取滤镜酱加辣椒调匀。'
+      - id: add-extra-sauce
+        text: 如果用了 ，就把它加进 的锅中，再煮 2～3 分钟。
+        quote: '如果用了 ⑤，就把它加进 ④ 的锅中，再煮 2～3 分钟。'
+    cautions:
+      - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: abdd207e54b6ac4e
+    name: 做甜口咖喱
+
+  - id: super-filter-sauce
+    status: reviewed
+    source:
+      anchor: '粉状香料的最大问题，和「滤镜酱」解法'
+    slot: anytime
+    remind:
+      text: 制作超级滤镜酱
+      quote:
+        - 中小火搅拌着炒约 1 分钟。
+        - 超级滤镜酱 2 大勺
+    dose:
+      - { value: 3, unit: 大勺, what: 滤镜酱用量, quote: '滤镜酱 3 大勺' }
+      - { value: 4, unit: 大勺, what: 油用量, quote: '油 4 大勺' }
+      - { value: 1, unit: 瓣, what: 蒜末用量, quote: '蒜末 1 瓣' }
+      - { value: 1, unit: 小勺, what: 盐用量, quote: '盐 1 小勺' }
+      - { value: 1, unit: 大勺, what: 砂糖用量, quote: '砂糖 1 大勺' }
+    duration:
+      basis: derived
+      sec: 60
+      quote: '中小火搅拌着炒约 1 分钟。'
+      formula: '1 分钟 × 60 秒 = 60 秒'
+    steps:
+      - id: mix-filter-sauce
+        text: 孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状
+        quote: '孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状'
+      - id: fry-garlic
+        text: 平底锅中倒油和蒜末，小火炒到出香。
+        quote: '平底锅中倒油和蒜末，小火炒到出香。'
+      - id: add-seasonings
+        text: 加入滤镜酱、盐、砂糖。
+        quote: '加入滤镜酱、盐、砂糖。'
+      - id: stir-sauce
+        text: 中小火搅拌着炒约 1 分钟。
+        quote: '中小火搅拌着炒约 1 分钟。'
+    cautions:
+      - { level: info, text: 冷藏保存，并在 3～4 天内用完。, quote: '冷藏保存，并在 3～4 天内用完。' }
+      - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7935f1e41e87c149
+    name: 做超级滤镜酱
+
+  - id: super-filter-sauce-noodles
+    status: reviewed
+    source:
+      anchor: '粉状香料的最大问题，和「滤镜酱」解法'
+    slot: anytime
+    remind:
+      text: 做超级滤镜酱拌素面
+      quote:
+        - 素面煮熟后过冷水，充分沥干后盛入碗中。
+        - 超级滤镜酱 2 大勺
+    dose:
+      - { value: 2, unit: 把, what: 素面用量, quote: '素面 2 把' }
+      - { value: 0.5, unit: 根, what: 黄瓜用量, derived: { formula: 1/2 根 = 0.5 根 }, quote: '黄瓜 1/2 根' }
+      - { value: 4, unit: 片, what: 紫苏用量, quote: '紫苏 4 片' }
+      - { value: 1, unit: 个, what: 嫩姜用量, quote: '嫩姜 1 个' }
+      - { value: 2, unit: 大勺, what: 超级滤镜酱用量, quote: '超级滤镜酱 2 大勺' }
+      - { value: 2, unit: 大勺, what: 芝麻油用量, quote: '芝麻油 2 大勺' }
+      - { value: 0.5, unit: 小勺, what: 醋用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '醋 1/2 小勺' }
+    steps:
+      - id: make-super-sauce
+        text: '孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状平底锅中倒油和蒜末，小火炒到出香。加入滤镜酱、盐、砂糖。中小火搅拌着炒约 1 分钟。'
+        quote:
+          - '孜然粉 2 小勺、红椒粉 2 小勺、肉豆蔻粉 2 小勺、水 2 大勺拌到糊状'
+          - '平底锅中倒油和蒜末，小火炒到出香。'
+          - '加入滤镜酱、盐、砂糖。'
+          - '中小火搅拌着炒约 1 分钟。'
+      - id: cut-vegetables
+        text: 黄瓜、紫苏切丝，嫩姜切薄片。
+        quote: '黄瓜、紫苏切丝，嫩姜切薄片。'
+      - id: cook-noodles
+        text: 素面煮熟后过冷水，充分沥干后盛入碗中。
+        quote: '素面煮熟后过冷水，充分沥干后盛入碗中。'
+      - id: mix-noodles
+        text: 加入 和超级滤镜酱、芝麻油、醋，拌匀。
+        quote: '加入 ① 和超级滤镜酱、芝麻油、醋，拌匀。'
+    cautions:
+      - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 657a5c5007173145
+    name: 做滤镜酱拌素面
+
+  - id: spice-wine-ginger-pork
+    status: reviewed
+    source:
+      anchor: '香料酒：让和食也好吃的捷径'
+    slot: anytime
+    remind:
+      text: 做香料酒姜烧猪肉
+      quote:
+        - 用厨房纸吸掉油分，加入 ①，大火翻炒到肉裹上浓汁。
+        - 许多香料的香气成分能溶于油和酒精。说明书利用这一点，做出了一样新调味料：在料理酒中加入混合香料，再用微波炉加热，得到「香料酒」。
+    effect:
+      text: 它让味道变浓，还有可能有助于减盐
+      quote: '它让味道变浓，还有可能有助于减盐'
+    dose:
+      - { value: 150, unit: g, what: 料理酒用量, quote: '料理酒（加盐型）150g' }
+      - { value: 0.5, unit: 小勺, what: 红椒粉用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '红椒粉 1/2 小勺' }
+      - { value: 0.5, unit: 小勺, what: 肉豆蔻粉用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '肉豆蔻粉 1/2 小勺' }
+      - { value: 4, unit: 片, what: 猪里脊姜烧肉片用量, quote: '猪里脊姜烧用 4 片（约 150g）' }
+      - { value: 2, unit: 小勺, what: 香料酒用量, quote: '香料酒 2 小勺' }
+      - { value: 4, unit: 大勺, what: 水用量, quote: '水 4 大勺' }
+      - { value: 0.5, unit: 小勺, what: 酱油用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '酱油 1/2 小勺' }
+      - { value: 2, unit: g, what: 砂糖用量, quote: '砂糖 2g' }
+      - { value: 2, unit: 小勺, what: 油用量, quote: '油 2 小勺' }
+    steps:
+      - id: mix-spice-wine
+        text: '孜然粉 少许红椒粉 1/2 小勺肉豆蔻粉 1/2 小勺料理酒（加盐型）150g把香料放进料理酒搅匀。'
+        quote:
+          - '孜然粉 少许'
+          - '红椒粉 1/2 小勺'
+          - '肉豆蔻粉 1/2 小勺'
+          - '料理酒（加盐型）150g'
+          - '把香料放进料理酒搅匀。'
+      - id: heat-spice-wine
+        text: 500W 微波炉加热 6 分钟。
+        quote: '500W 微波炉加热 6 分钟。'
+      - id: mix-marinade
+        text: 'A：姜蓉 1 小勺、香料酒 2 小勺、水 4 大勺、酱油 1/2 小勺、砂糖 2g先把 A 混合好。'
+        quote:
+          - 'A：姜蓉 1 小勺、香料酒 2 小勺、水 4 大勺、酱油 1/2 小勺、砂糖 2g'
+          - '先把 A 混合好。'
+      - id: prepare-pork
+        text: 猪肉切断筋络，薄薄拍上小麦粉。
+        quote: '猪肉切断筋络，薄薄拍上小麦粉。'
+      - id: sear-pork
+        text: 平底锅倒油烧热，放入猪肉，中火两面煎。
+        quote: '平底锅倒油烧热，放入猪肉，中火两面煎。'
+      - id: simmer-pork
+        text: 用厨房纸吸掉油分，加入 ，大火翻炒到肉裹上浓汁。
+        quote: '用厨房纸吸掉油分，加入 ①，大火翻炒到肉裹上浓汁。'
+    cautions:
+      - { level: stop, text: 微波加热时为防溢出，请不要盖保鲜膜，使用开口较宽的容器。, quote: '微波加热时为防溢出，请不要盖保鲜膜，使用开口较宽的容器。' }
+      - { level: info, text: 除了香料的效果，料理酒中的盐分也会生效，使用香料酒时请把咸味调料控制在平时用量的一半左右。, quote: '除了香料的效果，料理酒中的盐分也会生效，使用香料酒时请把咸味调料控制在平时用量的一半左右。' }
+      - { level: info, text: 效果可持续 3～4 天，冷藏保存后请尽快用完。, quote: '效果可持续 3～4 天，冷藏保存后请尽快用完。' }
+      - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 4c8b8f68f3b2b89c
+    name: 做香料酒姜烧猪肉
+
+  - id: spice-wine-oden
+    status: reviewed
+    source:
+      anchor: '香料酒：让和食也好吃的捷径'
+    slot: anytime
+    remind:
+      text: 做香料酒关东煮
+      quote: '加水、香料酒、高汤、砂糖、酱油，小火煮 20～25 分钟。'
+    effect:
+      text: 它让味道变浓，还有可能有助于减盐
+      quote: '它让味道变浓，还有可能有助于减盐'
+    dose:
+      - { value: 150, unit: g, what: 料理酒用量, quote: '料理酒（加盐型）150g' }
+      - { value: 0.5, unit: 小勺, what: 红椒粉用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '红椒粉 1/2 小勺' }
+      - { value: 0.5, unit: 小勺, what: 肉豆蔻粉用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '肉豆蔻粉 1/2 小勺' }
+      - { value: 100, unit: g, what: 鸡肉用量, quote: '鸡肉 100g' }
+      - { value: 30, unit: g, what: 牛蒡用量, quote: '牛蒡 30g' }
+      - { value: 50, unit: g, what: 胡萝卜用量, quote: '胡萝卜 50g' }
+      - { value: 50, unit: g, what: 蒟蒻用量, quote: '蒟蒻 50g' }
+      - { value: 50, unit: g, what: 莲藕用量, quote: '莲藕 50g' }
+      - { value: 300, unit: mL, what: 水用量, quote: '水 300ml' }
+      - { value: 2, unit: 大勺, what: 香料酒用量, quote: '香料酒 2 大勺' }
+      - { value: 2, unit: g, what: 日式高汤块用量, quote: '日式高汤块（粉）2g' }
+      - { value: 1, unit: 小勺, what: 砂糖用量, quote: '砂糖 1 小勺' }
+      - { value: 0.5, unit: 小勺, what: 酱油用量, derived: { formula: 1/2 小勺 = 0.5 小勺 }, quote: '酱油 1/2 小勺' }
+      - { value: 1, unit: 小勺, what: 油用量, quote: '油 1 小勺' }
+    steps:
+      - id: mix-spice-wine
+        text: '孜然粉 少许红椒粉 1/2 小勺肉豆蔻粉 1/2 小勺料理酒（加盐型）150g把香料放进料理酒搅匀。'
+        quote:
+          - '孜然粉 少许'
+          - '红椒粉 1/2 小勺'
+          - '肉豆蔻粉 1/2 小勺'
+          - '料理酒（加盐型）150g'
+          - '把香料放进料理酒搅匀。'
+      - id: heat-spice-wine
+        text: 500W 微波炉加热 6 分钟。
+        quote: '500W 微波炉加热 6 分钟。'
+      - id: cut-ingredients
+        text: 所有食材切成易入口的大小。
+        quote: '所有食材切成易入口的大小。'
+      - id: fry-chicken
+        text: 平底锅倒油烧热，放入鸡肉，中火炒。
+        quote: '平底锅倒油烧热，放入鸡肉，中火炒。'
+      - id: add-vegetables
+        text: 加入牛蒡、胡萝卜、莲藕、蒟蒻拌匀。
+        quote: '加入牛蒡、胡萝卜、莲藕、蒟蒻拌匀。'
+      - id: simmer-oden
+        text: 加水、香料酒、高汤、砂糖、酱油，小火煮 20～25 分钟。
+        quote: '加水、香料酒、高汤、砂糖、酱油，小火煮 20～25 分钟。'
+    cautions:
+      - { level: stop, text: 微波加热时为防溢出，请不要盖保鲜膜，使用开口较宽的容器。, quote: '微波加热时为防溢出，请不要盖保鲜膜，使用开口较宽的容器。' }
+      - { level: info, text: 同上，请把咸味调料减到平时的一半左右。, quote: '同上，请把咸味调料减到平时的一半左右。' }
+      - { level: info, text: 效果可持续 3～4 天，冷藏保存后请尽快用完。, quote: '效果可持续 3～4 天，冷藏保存后请尽快用完。' }
+      - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a634fb9f7b064f3a
+    name: 做香料酒关东煮

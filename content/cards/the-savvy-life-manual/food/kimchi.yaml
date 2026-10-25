@@ -1,0 +1,268 @@
+article: the-savvy-life-manual/food/kimchi.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '泡菜：加一味鲣鱼末，鲜味最多增到接近 8 倍'
+      reason: '文章总标题式主题；其中可执行的谷氨酸与肌苷酸配比已在“鲜味最多增到接近 8 倍的黄金法则”卡中覆盖，不重复制卡。'
+    - anchor: '在家做泡菜真的要 16 种材料吗'
+      reason: '本节主要说明十六种腌料与九种材料替代版等背景；具体九种材料和用量已在“简易泡菜腌料（300ml 保存瓶份）”卡中抽取，不另设重复卡。'
+  images: []
+cards:
+  - id: kimchi-umami-pairing
+    status: reviewed
+    name: "小虾酱配鲣鱼片"
+    source:
+      anchor: '鲜味最多增到接近 8 倍的黄金法则'
+    slot: anytime
+    remind:
+      text: '组合小虾酱与富含肌苷酸的鲣鱼片，把两种鲜味物质的配比调到接近 50:50。'
+      quote:
+        - '小虾酱经过发酵会产生谷氨酸，这是泡菜鲜味的底子。'
+        - '要让它爆炸，只需要再加一样东西——而富含这种物质、日本人餐桌上最常见的就是鲣鱼片。'
+        - '那种物质叫肌苷酸。'
+        - '两者的配比接近 50:50 时，鲜味达到峰值；单纯加谷氨酸或单纯加肌苷酸，都到不了这个高度。'
+    effect:
+      text: '二者组合后鲜味最多能增加到接近 8 倍。'
+      quote: '二者组合后鲜味最多能增加到接近 8 倍。'
+    steps:
+      - id: provide-glutamate
+        text: '小虾酱经过发酵会产生谷氨酸，这是泡菜鲜味的底子。'
+        quote: '小虾酱经过发酵会产生谷氨酸，这是泡菜鲜味的底子。'
+      - id: add-inosinate
+        text: '要让它爆炸，只需要再加一样东西——而富含这种物质、日本人餐桌上最常见的就是鲣鱼片。那种物质叫肌苷酸。'
+        quote:
+          - '要让它爆炸，只需要再加一样东西——而富含这种物质、日本人餐桌上最常见的就是鲣鱼片。'
+          - '那种物质叫肌苷酸。'
+      - id: balance-umami
+        text: '两者的配比接近 50:50 时，鲜味达到峰值；单纯加谷氨酸或单纯加肌苷酸，都到不了这个高度。'
+        quote: '两者的配比接近 50:50 时，鲜味达到峰值；单纯加谷氨酸或单纯加肌苷酸，都到不了这个高度。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c078256bd021439a
+  - id: kimchi-container-acidity-check
+    status: reviewed
+    source:
+      anchor: '看容器预判酸度'
+    slot: anytime
+    remind:
+      text: '看容器判断泡菜是否越放越酸。'
+      quote:
+        - '越放越酸（传统型）：韩式做法，靠乳酸发酵改变味道'
+        - '越放越慢（调整型）：出厂前调整过含盐量等，人为推迟发酵'
+        - '会变酸的容器：硬质容器配螺旋盖；有大排气孔；按量零售的泡菜（韩国的一般做法）'
+        - '不容易变酸的：软质容器'
+    effect:
+      text: '泡菜的酸味来自乳酸——乳酸菌以白菜的葡萄糖之类为食增殖时产生乳酸，时间越久，乳酸积累越多，酸味就越强。'
+      quote: '泡菜的酸味来自乳酸——乳酸菌以白菜的葡萄糖之类为食增殖时产生乳酸，时间越久，乳酸积累越多，酸味就越强。'
+    steps:
+      - id: inspect-hard-container
+        text: '会变酸的容器：硬质容器配螺旋盖；有大排气孔；按量零售的泡菜（韩国的一般做法）'
+        quote: '会变酸的容器：硬质容器配螺旋盖；有大排气孔；按量零售的泡菜（韩国的一般做法）'
+      - id: inspect-soft-container
+        text: '越放越慢（调整型）：出厂前调整过含盐量等，人为推迟发酵不容易变酸的：软质容器'
+        quote:
+          - '越放越慢（调整型）：出厂前调整过含盐量等，人为推迟发酵'
+          - '不容易变酸的：软质容器'
+      - id: understand-pressure
+        text: '图片说明写得很直白——硬容器强度足以承受内部气压，大排气孔让气体跑掉，而软容器本来就不怎么产气。'
+        quote: '图片说明写得很直白——硬容器强度足以承受内部气压，大排气孔让气体跑掉，而软容器本来就不怎么产气。'
+    cautions:
+      - level: info
+        text: '试验由乳酸菌专业厂商协助完成。'
+        quote: '试验由乳酸菌专业厂商协助完成。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 64bec228a6aa4d0d
+  - id: kimchi-simple-paste
+    status: reviewed
+    name: "简易泡菜腌料"
+    source:
+      anchor: '简易泡菜腌料（300ml 保存瓶份）'
+    slot: anytime
+    remind:
+      text: '把所有材料放进容器，搅匀即可。'
+      quote: '把所有材料放进容器，搅匀即可。'
+    dose:
+      - value: 4
+        unit: '大勺'
+        what: '番茄膏用量'
+        quote: '番茄膏 4 大勺'
+      - value: 6
+        unit: '大勺'
+        what: '甘酒用量'
+        quote: '甘酒 6 大勺'
+      - value: 4
+        unit: '大勺弱'
+        what: '辣椒酱用量'
+        quote: '辣椒酱 4 大勺弱'
+      - value: 2
+        unit: '小勺'
+        what: '醋用量'
+        quote: '醋 2 小勺'
+      - value: 2
+        unit: '小勺'
+        what: '酱油用量'
+        quote: '酱油 2 小勺'
+      - value: 1
+        unit: '小勺'
+        what: '蒜用量'
+        quote: '蒜（磨泥）1 小勺'
+      - value: 10
+        unit: 'g'
+        what: '细香菜用量'
+        quote: '细香菜（切碎）约 10g'
+      - value: 4
+        unit: 'g'
+        what: '鲣鱼末用量'
+        quote: '鲣鱼末（磨成粉）约 4g'
+      - value: 1
+        unit: '小勺'
+        what: '一味辣椒用量'
+        quote: '一味辣椒 1 小勺'
+    steps:
+      - id: measure-ingredients
+        text: '番茄膏 4 大勺甘酒 6 大勺辣椒酱 4 大勺弱醋 2 小勺酱油 2 小勺蒜（磨泥）1 小勺细香菜（切碎）约 10g鲣鱼末（磨成粉）约 4g一味辣椒 1 小勺'
+        quote:
+          - '番茄膏 4 大勺'
+          - '甘酒 6 大勺'
+          - '辣椒酱 4 大勺弱'
+          - '醋 2 小勺'
+          - '酱油 2 小勺'
+          - '蒜（磨泥）1 小勺'
+          - '细香菜（切碎）约 10g'
+          - '鲣鱼末（磨成粉）约 4g'
+          - '一味辣椒 1 小勺'
+      - id: mix-ingredients
+        text: '把所有材料放进容器，搅匀即可。'
+        quote: '把所有材料放进容器，搅匀即可。'
+    cautions:
+      - level: info
+        text: '冷藏保存约 1 周。'
+        quote: '冷藏保存约 1 周。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 31d748244e6b56e6
+  - id: kimchi-vegetable-marinade
+    status: reviewed
+    source:
+      anchor: '用它做任何菜'
+    slot: anytime
+    remind:
+      text: '给喜欢的蔬菜淋上腌料，拌着吃或腌上几天。'
+      quote:
+        - '给喜欢的蔬菜淋上腌料就行——说明书示例包括白菜、菠菜（焯水）、西兰花（焯水）、芹菜、红薯（微波加热）、西瓜。'
+        - '不只是拌着吃，腌上几天也很好吃（红薯、莲藕这类水分少的蔬菜尤其适合）。'
+    steps:
+      - id: choose-vegetables
+        text: '给喜欢的蔬菜淋上腌料就行——说明书示例包括白菜、菠菜（焯水）、西兰花（焯水）、芹菜、红薯（微波加热）、西瓜。'
+        quote: '给喜欢的蔬菜淋上腌料就行——说明书示例包括白菜、菠菜（焯水）、西兰花（焯水）、芹菜、红薯（微波加热）、西瓜。'
+      - id: add-paste
+        text: '给喜欢的蔬菜淋上腌料就行——说明书示例包括白菜、菠菜（焯水）、西兰花（焯水）、芹菜、红薯（微波加热）、西瓜。'
+        quote: '给喜欢的蔬菜淋上腌料就行——说明书示例包括白菜、菠菜（焯水）、西兰花（焯水）、芹菜、红薯（微波加热）、西瓜。'
+      - id: marinate-vegetables
+        text: '不只是拌着吃，腌上几天也很好吃（红薯、莲藕这类水分少的蔬菜尤其适合）。'
+        quote: '不只是拌着吃，腌上几天也很好吃（红薯、莲藕这类水分少的蔬菜尤其适合）。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b0f95364e147f277
+    name: 给蔬菜淋腌料
+  - id: kimchi-microwave-soup
+    status: reviewed
+    source:
+      anchor: '用它做任何菜'
+    slot: anytime
+    remind:
+      text: '做泡菜炸汤。'
+      quote:
+        - '泡菜连汁一起放进耐热杯。'
+        - '加入豆芽等喜欢的配料。'
+        - '撒上鲣鱼末，加水。'
+        - '轻轻盖上保鲜膜，600W 微波 3 分钟。'
+    dose:
+      - value: 40
+        unit: 'g'
+        what: '泡菜用量'
+        quote: '泡菜 40g'
+      - value: 1.5
+        unit: '大勺'
+        what: '泡菜汁用量'
+        quote: '泡菜汁 1.5 大勺'
+      - value: 20
+        unit: 'g'
+        what: '豆芽用量'
+        quote: '豆芽 20g'
+      - value: 150
+        unit: 'ml'
+        what: '水量'
+        quote: '水 150ml'
+    duration:
+      basis: derived
+      sec: 180
+      quote: '轻轻盖上保鲜膜，600W 微波 3 分钟。'
+      formula: '3 分钟 × 60 秒/分钟 = 180 秒'
+    steps:
+      - id: add-kimchi
+        text: '泡菜连汁一起放进耐热杯。'
+        quote: '泡菜连汁一起放进耐热杯。'
+      - id: add-sprouts
+        text: '加入豆芽等喜欢的配料。'
+        quote: '加入豆芽等喜欢的配料。'
+      - id: season-and-water
+        text: '撒上鲣鱼末，加水。'
+        quote: '撒上鲣鱼末，加水。'
+      - id: heat-soup
+        text: '轻轻盖上保鲜膜，600W 微波 3 分钟。'
+        quote: '轻轻盖上保鲜膜，600W 微波 3 分钟。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d6dbb04ca3d65543
+    name: 做微波泡菜汤
+  - id: kimchi-tuna-rice-bowl
+    status: reviewed
+    source:
+      anchor: '用它做任何菜'
+    slot: anytime
+    remind:
+      text: '用电饭锅做金枪鱼泡菜盖饭。'
+      quote:
+        - '电饭锅放入米，按平时的水量加水。'
+        - '放入泡菜和金枪鱼，轻轻拌匀后再煮。'
+        - '煮好后加盐，整体拌匀。'
+        - '盛出，撒上紫苏和白芝麻。'
+    dose:
+      - value: 100
+        unit: 'g'
+        what: '泡菜用量'
+        quote: '泡菜 100g'
+      - value: 140
+        unit: 'g'
+        what: '金枪鱼罐头用量'
+        quote: '金枪鱼罐头 140g（1 罐）'
+      - value: 2
+        unit: '杯'
+        what: '米用量'
+        quote: '米 2 杯（约 300g，生米）'
+    steps:
+      - id: cook-rice
+        text: '电饭锅放入米，按平时的水量加水。'
+        quote: '电饭锅放入米，按平时的水量加水。'
+      - id: mix-and-cook
+        text: '放入泡菜和金枪鱼，轻轻拌匀后再煮。'
+        quote: '放入泡菜和金枪鱼，轻轻拌匀后再煮。'
+      - id: season-rice
+        text: '煮好后加盐，整体拌匀。'
+        quote: '煮好后加盐，整体拌匀。'
+      - id: garnish-rice
+        text: '盛出，撒上紫苏和白芝麻。'
+        quote: '盛出，撒上紫苏和白芝麻。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7f3d4a4bf06111ad
+    name: 做金枪鱼泡菜盖饭

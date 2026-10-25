@@ -1,0 +1,181 @@
+article: the-savvy-life-manual/mind-growth/focus.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '5. 什么时候该怀疑不是「注意力问题」'
+      reason: '本节是 ADHD、抑郁、甲状腺功能减退、贫血及药物影响等疾病鉴别与就医提示，属于 condition 内容；为避免在 practice 文档中把疾病知识做成可勾选动作，本节不制卡。'
+  images: []
+cards:
+  - id: focus-basic-routine
+    status: reviewed
+    name: "明确目的加番茄钟"
+    source:
+      anchor: '总是走神？明确目的 + 番茄钟 + 5 分钟休息'
+    slot: anytime
+    remind:
+      text: '用明确目的、设定时间限制和定期休息安排专注任务'
+      quote:
+        - '在白板或日程表上清楚地列出当前的计划、目标和任务'
+        - '每个任务设一个具体的完成时间'
+        - '在你感到疲倦之前就休息'
+    steps:
+      - id: list-plan-goals-tasks
+        text: '在白板或日程表上清楚地列出当前的计划、目标和任务'
+        quote: '在白板或日程表上清楚地列出当前的计划、目标和任务'
+      - id: set-task-completion-time
+        text: '每个任务设一个具体的完成时间'
+        quote: '每个任务设一个具体的完成时间'
+      - id: rest-before-fatigue
+        text: '在你感到疲倦之前就休息'
+        quote: '在你感到疲倦之前就休息'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: aa5779ea63176567
+  - id: clarify-task-purpose
+    status: reviewed
+    source:
+      anchor: '1. 明确目的'
+    slot: anytime
+    remind:
+      text: '先把当前计划、目标和任务写清楚'
+      quote: '在白板或日程表上，清楚地列出当前的计划、目标和任务。'
+    effect:
+      text: '当人们明确知道下一步要做什么时，就会更容易集中注意力。'
+      quote: '当人们明确知道下一步要做什么时，就会更容易集中注意力。'
+    steps:
+      - id: write-current-tasks
+        text: '在白板或日程表上，清楚地列出当前的计划、目标和任务。'
+        quote: '在白板或日程表上，清楚地列出当前的计划、目标和任务。'
+      - id: clarify-each-purpose
+        text: '明确每个任务的目的，确保你知道接下来该做什么，从而减少因迷茫而导致的分心。'
+        quote: '明确每个任务的目的，确保你知道接下来该做什么，从而减少因迷茫而导致的分心。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b186a1a17374e92d
+    name: 先写清目的和任务
+  - id: pomodoro-focus-cycle
+    status: reviewed
+    source:
+      anchor: '2. 设定时间限制'
+    slot: anytime
+    remind:
+      text: '按番茄工作法集中工作，再安排短休息'
+      quote: '利用番茄工作法，每 25 分钟集中工作后，休息 5 分钟，能帮助你保持较高的专注度。'
+    effect:
+      text: '能帮助你保持较高的专注度'
+      quote: '能帮助你保持较高的专注度'
+    dose:
+      - value: 25
+        unit: 分钟
+        what: 集中工作时长
+        quote: '利用番茄工作法，每 25 分钟集中工作后，休息 5 分钟，能帮助你保持较高的专注度。'
+      - value: 5
+        unit: 分钟
+        what: 休息时长
+        quote: '利用番茄工作法，每 25 分钟集中工作后，休息 5 分钟，能帮助你保持较高的专注度。'
+    duration:
+      basis: derived
+      sec: 1800
+      formula: '25 分钟 × 60 秒 + 5 分钟 × 60 秒 = 1800 秒'
+    steps:
+      - id: set-specific-completion-time
+        text: '每个任务设定一个具体的完成时间，这样可以给大脑提供新的刺激，促使它保持警觉。'
+        quote: '每个任务设定一个具体的完成时间，这样可以给大脑提供新的刺激，促使它保持警觉。'
+      - id: focus-then-rest
+        text: '利用番茄工作法，每 25 分钟集中工作后，休息 5 分钟，能帮助你保持较高的专注度。'
+        quote: '利用番茄工作法，每 25 分钟集中工作后，休息 5 分钟，能帮助你保持较高的专注度。'
+    cautions:
+      - level: info
+        text: '25 分钟配 5 分钟这个组合本身，并没有同等强度的证据支持，它是好用的习惯，不是被验证过的数字。'
+        quote: '25 分钟配 5 分钟这个组合本身，并没有同等强度的证据支持，它是好用的习惯，不是被验证过的数字。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 8c4f062bbd85efbe
+    name: 用番茄钟定时间盒
+  - id: scheduled-micro-break
+    status: reviewed
+    source:
+      anchor: '3. 定期休息'
+    slot: anytime
+    remind:
+      text: '在感到疲倦前休息，并按任务消耗调整休息间隔'
+      quote:
+        - '在你感到疲倦之前就进行休息，而不是等到精力耗尽才停下来。'
+        - '所以按任务消耗调整，不必守着 5 分钟。'
+    effect:
+      text: '一项汇总 22 个独立样本、2335 人的荟萃分析发现，微休息对活力（d=0.36）和疲劳（d=0.35）的改善明确，但总体表现的影响并不显著（d=0.16）；而且休息时间越长、表现恢复越好，消耗大的任务可能需要 10 分钟以上的休息。'
+      quote: '一项汇总 22 个独立样本、2335 人的荟萃分析发现，微休息对活力（d=0.36）和疲劳（d=0.35）的改善明确，但总体表现的影响并不显著（d=0.16）；而且休息时间越长、表现恢复越好，消耗大的任务可能需要 10 分钟以上的休息。'
+    dose:
+      - value: 30
+        unit: 分钟
+        what: 建议休息间隔
+        quote: '设置计时器，每 30 分钟到 1 小时进行一次短暂休息。'
+      - value: 1
+        unit: 小时
+        what: 建议休息间隔
+        quote: '设置计时器，每 30 分钟到 1 小时进行一次短暂休息。'
+    duration:
+      basis: unknown
+    steps:
+      - id: set-break-timer
+        text: '设置计时器，每 30 分钟到 1 小时进行一次短暂休息。'
+        quote: '设置计时器，每 30 分钟到 1 小时进行一次短暂休息。'
+      - id: change-during-break
+        text: '休息期间，尝试做一些与之前工作完全不同的事情，比如伸展运动、与同事交谈或简单地浏览手机。'
+        quote: '休息期间，尝试做一些与之前工作完全不同的事情，比如伸展运动、与同事交谈或简单地浏览手机。'
+    cautions:
+      - level: info
+        text: '休息时间不宜过长，以免难以重新投入到工作中。休息多长合适没有统一答案所以按任务消耗调整，不必守着 5 分钟。'
+        quote:
+          - '休息时间不宜过长，以免难以重新投入到工作中。'
+          - '休息多长合适没有统一答案'
+          - '所以按任务消耗调整，不必守着 5 分钟。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b05edf899b0f13ab
+    name: 疲倦前安排短休息
+  - id: retrieval-practice
+    status: reviewed
+    source:
+      anchor: '4. 想真的记住，还有更硬的证据'
+    slot: anytime
+    remind:
+      text: '学完后先合上书回想一遍，再核对答案'
+      quote: '学完先合上书回想一遍，再核对答案。'
+    effect:
+      text: '提取收益明显更大，其中主动回忆又高于只需再认'
+      quote: '提取收益明显更大，其中主动回忆又高于只需再认'
+    steps:
+      - id: recall-before-checking
+        text: '学完先合上书回想一遍，再核对答案。'
+        quote: '学完先合上书回想一遍，再核对答案。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 014b8dea5712794d
+    name: 合上书回想再核对
+  - id: spaced-repetition
+    status: reviewed
+    source:
+      anchor: '4. 想真的记住，还有更硬的证据'
+    slot: anytime
+    remind:
+      text: '把复习分散到不同日期，而不是考前集中重复'
+      quote: '把复习摊开到几天、几周，而不是考前集中重复。'
+    effect:
+      text: '一项覆盖 184 篇文章、317 个实验、839 次测量的综述显示，间隔学习整体优于集中重复，且最佳间隔随想保持的时间变长而变长'
+      quote: '一项覆盖 184 篇文章、317 个实验、839 次测量的综述显示，间隔学习整体优于集中重复，且最佳间隔随想保持的时间变长而变长'
+    steps:
+      - id: spread-reviews-over-time
+        text: '把复习摊开到几天、几周，而不是考前集中重复。'
+        quote: '把复习摊开到几天、几周，而不是考前集中重复。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d289927c6fe80ed4
+    name: 复习分散到不同日期

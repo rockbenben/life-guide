@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>生活指南 · 标记候选（改版）</title>
+    <style>
+      :root {
+        --paper: #fbf6ec;
+        --sheet: #fffcf6;
+        --rule: #e3d9c6;
+        --ink: #241f1a;
+        --ink-2: #5b5347;
+        --zhu: #a82a24;
+        --zhu-soft: #f7e9e6;
+        --moss: #3f6b4b;
+        --indigo: #2f5e8c;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 40px;
+        background: #efe8db;
+        font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+        color: var(--ink);
+      }
+      h1 { font-size: 20px; margin: 0 0 4px; }
+      p.sub { margin: 0 0 28px; color: var(--ink-2); font-size: 13px; }
+      .grid { display: grid; grid-template-columns: repeat(2, 560px); gap: 24px; }
+      .cell { background: #fff; padding: 22px; border-radius: 8px; }
+      .cell h2 { font-size: 14px; margin: 0 0 14px; color: var(--ink-2); font-weight: 600; }
+      .row { display: flex; align-items: flex-end; gap: 26px; }
+      .sizes { display: flex; align-items: flex-end; gap: 20px; margin-top: 16px; }
+      .sizes figure { margin: 0; text-align: center; }
+      .sizes figcaption { font-size: 11px; color: #8a8073; margin-top: 6px; }
+      .mark { position: relative; width: 512px; height: 512px; flex: none; }
+      .tile { position: absolute; inset: 0; background: var(--zhu); border-radius: 112px; }
+      .tile.flat { border-radius: 0; }
+      .mini { width: 192px; height: 192px; }
+      .mini .tile { border-radius: 42px; }
+      .s48 { width: 48px; height: 48px; }
+      .s48 .tile { border-radius: 11px; }
+      .s32 { width: 32px; height: 32px; }
+      .s32 .tile { border-radius: 7px; }
+      .note { font-size: 12px; color: #8a8073; margin: 14px 0 0; line-height: 1.7; }
+
+      /* 所有尺寸都用百分比定位，缩放时形状不变 */
+      .u { position: absolute; }
+
+      /* A：印 —— 印框 + 勾 */
+      .a-frame { border-style: solid; border-color: var(--paper); }
+      .a-tick path { fill: none; stroke: var(--paper); stroke-linecap: round; stroke-linejoin: round; }
+
+      /* B：一卡三行 + 角上的印 */
+      .b-card { background: var(--paper); }
+      .b-ln { background: var(--zhu); border-radius: 999px; }
+      .b-stamp { background: var(--zhu); border-style: solid; border-color: var(--paper); }
+
+      /* D：日（几何画，不依赖字体） */
+      .d-ri { border-style: solid; border-color: var(--paper); }
+      .d-bar { background: var(--paper); }
+
+      /* E：印里的日 */
+      .e-frame { border-style: solid; border-color: var(--paper); }
+      .e-ri { border-style: solid; border-color: var(--paper); }
+      .e-bar { background: var(--paper); }
+    </style>
+  </head>
+  <body>
+    <h1>生活指南 · 标记候选（改版）</h1>
+    <p class="sub">同一形状在 512 / 192 / 48 / 32 四个尺寸下各画一遍 —— 小尺寸还认得出才算数</p>
+
+    <div class="grid">
+      <!-- A -->
+      <div class="cell">
+        <h2>A · 印（今天的印）</h2>
+        <div class="row">
+          <div class="mark">
+            <div class="tile"></div>
+            <div class="u a-frame" style="left:25%;top:25%;width:50%;height:50%;border-width:3.1%;border-radius:8%"></div>
+            <svg class="u a-tick" style="left:34%;top:33%;width:32%;height:32%" viewBox="0 0 100 100"><path d="M14 52 L40 76 L86 24" stroke-width="30" /></svg>
+          </div>
+          <div class="sizes">
+            <figure><div class="mark mini"><div class="tile"></div><div class="u a-frame" style="left:25%;top:25%;width:50%;height:50%;border-width:3.1%;border-radius:8%"></div><svg class="u a-tick" style="left:34%;top:33%;width:32%;height:32%" viewBox="0 0 100 100"><path d="M14 52 L40 76 L86 24" stroke-width="30" /></svg></div><figcaption>192</figcaption></figure>
+            <figure><div class="mark s48"><div class="tile"></div><div class="u a-frame" style="left:25%;top:25%;width:50%;height:50%;border-width:3.1%;border-radius:8%"></div><svg class="u a-tick" style="left:34%;top:33%;width:32%;height:32%" viewBox="0 0 100 100"><path d="M14 52 L40 76 L86 24" stroke-width="30" /></svg></div><figcaption>48</figcaption></figure>
+            <figure><div class="mark s32"><div class="tile"></div><div class="u a-frame" style="left:25%;top:25%;width:50%;height:50%;border-width:3.1%;border-radius:8%"></div><svg class="u a-tick" style="left:34%;top:33%;width:32%;height:32%" viewBox="0 0 100 100"><path d="M14 52 L40 76 L86 24" stroke-width="30" /></svg></div><figcaption>32</figcaption></figure>
+          </div>
+        </div>
+        <p class="note">印框 + 勾：一眼是「印章」，也一眼是「待办」。跟 App 里那颗印同一个形。</p>
+      </div>
+
+      <!-- B -->
+      <div class="cell">
+        <h2>B · 一卡三行 + 印</h2>
+        <div class="row">
+          <div class="mark">
+            <div class="tile"></div>
+            <div class="u b-card" style="left:22%;top:28%;width:56%;height:44%;border-radius:5%"></div>
+            <div class="u b-ln" style="left:30%;top:35%;width:36%;height:3.6%"></div>
+            <div class="u b-ln" style="left:30%;top:45%;width:26%;height:3.6%"></div>
+            <div class="u b-ln" style="left:30%;top:55%;width:18%;height:3.6%"></div>
+            <div class="u b-stamp" style="left:56%;top:50%;width:20%;height:20%;border-width:1.6%;border-radius:18%"></div>
+          </div>
+          <div class="sizes">
+            <figure><div class="mark mini"><div class="tile"></div><div class="u b-card" style="left:22%;top:28%;width:56%;height:44%;border-radius:5%"></div><div class="u b-ln" style="left:30%;top:35%;width:36%;height:3.6%"></div><div class="u b-ln" style="left:30%;top:45%;width:26%;height:3.6%"></div><div class="u b-ln" style="left:30%;top:55%;width:18%;height:3.6%"></div><div class="u b-stamp" style="left:56%;top:50%;width:20%;height:20%;border-width:1.6%;border-radius:18%"></div></div><figcaption>192</figcaption></figure>
+            <figure><div class="mark s48"><div class="tile"></div><div class="u b-card" style="left:22%;top:28%;width:56%;height:44%;border-radius:5%"></div><div class="u b-ln" style="left:30%;top:35%;width:36%;height:3.6%"></div><div class="u b-ln" style="left:30%;top:45%;width:26%;height:3.6%"></div><div class="u b-ln" style="left:30%;top:55%;width:18%;height:3.6%"></div><div class="u b-stamp" style="left:56%;top:50%;width:20%;height:20%;border-width:1.6%;border-radius:18%"></div></div><figcaption>48</figcaption></figure>
+            <figure><div class="mark s32"><div class="tile"></div><div class="u b-card" style="left:22%;top:28%;width:56%;height:44%;border-radius:5%"></div><div class="u b-ln" style="left:30%;top:35%;width:36%;height:3.6%"></div><div class="u b-ln" style="left:30%;top:45%;width:26%;height:3.6%"></div><div class="u b-ln" style="left:30%;top:55%;width:18%;height:3.6%"></div><div class="u b-stamp" style="left:56%;top:50%;width:20%;height:20%;border-width:1.6%;border-radius:18%"></div></div><figcaption>32</figcaption></figure>
+          </div>
+        </div>
+        <p class="note">三行契约 + 盖在末行末端的印。概念最贴产品，但 32px 下三行会糊成一团。</p>
+      </div>
+
+      <!-- D -->
+      <div class="cell">
+        <h2>D · 日</h2>
+        <div class="row">
+          <div class="mark">
+            <div class="tile"></div>
+            <div class="u d-ri" style="left:27%;top:25%;width:46%;height:50%;border-width:3.6%;border-radius:6%"></div>
+            <div class="u d-bar" style="left:31%;top:48%;width:38%;height:3.6%;border-radius:2px"></div>
+          </div>
+          <div class="sizes">
+            <figure><div class="mark mini"><div class="tile"></div><div class="u d-ri" style="left:27%;top:25%;width:46%;height:50%;border-width:3.6%;border-radius:6%"></div><div class="u d-bar" style="left:31%;top:48%;width:38%;height:3.6%;border-radius:2px"></div></div><figcaption>192</figcaption></figure>
+            <figure><div class="mark s48"><div class="tile"></div><div class="u d-ri" style="left:27%;top:25%;width:46%;height:50%;border-width:3.6%;border-radius:6%"></div><div class="u d-bar" style="left:31%;top:48%;width:38%;height:3.6%;border-radius:2px"></div></div><figcaption>48</figcaption></figure>
+            <figure><div class="mark s32"><div class="tile"></div><div class="u d-ri" style="left:27%;top:25%;width:46%;height:50%;border-width:3.6%;border-radius:6%"></div><div class="u d-bar" style="left:31%;top:48%;width:38%;height:3.6%;border-radius:2px"></div></div><figcaption>32</figcaption></figure>
+          </div>
+        </div>
+        <p class="note">几何画的「日」：每天盖一个印的那个「日」。不像待办，像日历。</p>
+      </div>
+
+      <!-- E -->
+      <div class="cell">
+        <h2>E · 印里的日</h2>
+        <div class="row">
+          <div class="mark">
+            <div class="tile"></div>
+            <div class="u e-frame" style="left:18%;top:18%;width:64%;height:64%;border-width:2.6%;border-radius:11%"></div>
+            <div class="u e-ri" style="left:31%;top:30%;width:38%;height:40%;border-width:3.2%;border-radius:8%"></div>
+            <div class="u e-bar" style="left:34.5%;top:48%;width:31%;height:3.2%;border-radius:2px"></div>
+          </div>
+          <div class="sizes">
+            <figure><div class="mark mini"><div class="tile"></div><div class="u e-frame" style="left:18%;top:18%;width:64%;height:64%;border-width:2.6%;border-radius:11%"></div><div class="u e-ri" style="left:31%;top:30%;width:38%;height:40%;border-width:3.2%;border-radius:8%"></div><div class="u e-bar" style="left:34.5%;top:48%;width:31%;height:3.2%;border-radius:2px"></div></div><figcaption>192</figcaption></figure>
+            <figure><div class="mark s48"><div class="tile"></div><div class="u e-frame" style="left:18%;top:18%;width:64%;height:64%;border-width:2.6%;border-radius:11%"></div><div class="u e-ri" style="left:31%;top:30%;width:38%;height:40%;border-width:3.2%;border-radius:8%"></div><div class="u e-bar" style="left:34.5%;top:48%;width:31%;height:3.2%;border-radius:2px"></div></div><figcaption>48</figcaption></figure>
+            <figure><div class="mark s32"><div class="tile"></div><div class="u e-frame" style="left:18%;top:18%;width:64%;height:64%;border-width:2.6%;border-radius:11%"></div><div class="u e-ri" style="left:31%;top:30%;width:38%;height:40%;border-width:3.2%;border-radius:8%"></div><div class="u e-bar" style="left:34.5%;top:48%;width:31%;height:3.2%;border-radius:2px"></div></div><figcaption>32</figcaption></figure>
+          </div>
+        </div>
+        <p class="note">印 + 日：两层框，32px 下最糊。适合只当 favicon，不适合当 App 图标。</p>
+      </div>
+    </div>
+  </body>
+</html>

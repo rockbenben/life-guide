@@ -1,0 +1,384 @@
+article: the-savvy-life-manual/food/apple.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: "苹果别只当水果：一罐「盐苹果」配肉酱意面和鸡胸"
+      reason: "文章导语与主题概览；基础调味料、肉酱意面和鸡胸肉的具体操作已由后续小节分别成卡，重复的背景说明不另抽。"
+  images: []
+cards:
+  - id: make-salted-apple
+    status: reviewed
+    name: "熬盐苹果当调味料"
+    source:
+      anchor: "先熬一罐「盐苹果」"
+    slot: anytime
+    remind:
+      text: "制作盐苹果，作为肉酱和鸡胸的基础调味料"
+      quote:
+        - 这是整份说明书的基础调味料，做一次能用两周。
+        - 碗里放绞肉和盐苹果，用勺子轻轻拌匀。
+    dose:
+      - value: 1
+        unit: "个"
+        what: "苹果用量"
+        quote: "1 个（300g）"
+      - value: 300
+        unit: "g"
+        what: "苹果重量"
+        quote: "300g"
+      - value: 1
+        unit: "小勺"
+        what: "盐用量"
+        quote: "1 小勺"
+    steps:
+      - id: grate-apple-with-skin
+        text: "擦丝器把苹果连皮一起擦成泥皮上有营养，别削。"
+        quote:
+          - "擦丝器把苹果连皮一起擦成泥"
+          - "皮上有营养，别削。"
+      - id: season-and-heat
+        text: "1 小勺中火加热"
+        quote:
+          - "1 小勺"
+          - "中火加热"
+      - id: stir-while-heating
+        text: "适时用锅铲搅拌避免糊底。"
+        quote:
+          - "适时用锅铲搅拌"
+          - "避免糊底。"
+      - id: reduce-to-thick
+        text: "4～5 分钟熬到水分差不多挥发完、质地浓稠即可。"
+        quote:
+          - "4～5 分钟"
+          - "熬到水分差不多挥发完、质地浓稠即可。"
+      - id: cool-and-refrigerate
+        text: "稍微放凉后进冰箱可保存 1～2 周"
+        quote:
+          - "稍微放凉后进冰箱"
+          - "可保存 1～2 周"
+    cautions:
+      - level: info
+        text: "避免糊底。一旦焦了，焦香会盖掉苹果本来的味道。"
+        quote:
+          - "避免糊底。"
+          - "一旦焦了，焦香会盖掉苹果本来的味道。"
+      - level: info
+        text: "加热时间会因品种和季节不同而略有差别。"
+        quote: "加热时间会因品种和季节不同而略有差别。"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 30d8c89074a1f2a8
+
+  - id: make-wet-meat-sauce
+    status: reviewed
+    source:
+      anchor: "肉酱意面：让绞肉变湿润的关键"
+    slot: anytime
+    remind:
+      text: "先用盐苹果拌绞肉，再加入番茄酱和意大利面翻炒"
+      quote:
+        - 盐苹果的第一个用途，是解决绞肉做酱容易发柴的问题。
+        - 意大利面 160g
+    effect:
+      text: "盐苹果能让绞肉吃进水、变得湿润松软。"
+      quote: "盐苹果能让绞肉吃进水、变得湿润松软。"
+    dose:
+      - value: 2
+        unit: "人份"
+        what: "料理份量"
+        quote: "2 人份"
+      - value: 120
+        unit: "g"
+        what: "牛猪绞肉用量"
+        quote: "120g"
+      - value: 3
+        unit: "大勺"
+        what: "盐苹果用量"
+        quote: "3 大勺"
+      - value: 1
+        unit: "大勺"
+        what: "橄榄油用量"
+        quote: "1 大勺"
+      - value: 160
+        unit: "g"
+        what: "意大利面用量"
+        quote: "160g"
+      - value: 2
+        unit: "大勺"
+        what: "番茄酱用量"
+        quote: "2 大勺"
+      - value: 2
+        unit: "大勺"
+        what: "煮面水用量"
+        quote: "约 2 大勺"
+    steps:
+      - id: mix-minced-meat
+        text: "碗里放绞肉和盐苹果轻轻拌匀"
+        quote:
+          - "碗里放绞肉和"
+          - "盐苹果"
+          - "轻轻拌匀"
+      - id: sear-meat-and-add-sauce
+        text: "平底锅放橄榄油和，中火把肉炒到变色这一步要炒透；然后加番茄酱和酱油。"
+        quote:
+          - "平底锅放橄榄油和①，中火"
+          - "把肉炒到变色"
+          - "这一步要炒透；然后加番茄酱和酱油。"
+      - id: toss-pasta
+        text: "把煮好的意大利面放进的锅里，加约 2 大勺煮面水一起翻炒。"
+        quote:
+          - "把煮好的意大利面放进②的锅里，加"
+          - "约 2 大勺煮面水"
+          - "一起翻炒。"
+      - id: adjust-salt
+        text: "最后用盐调整咸淡即可。"
+        quote: "最后用盐调整咸淡即可。"
+    cautions:
+      - level: info
+        text: "提前拌这一步很关键"
+        quote: "提前拌这一步很关键"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 44a6a78f1d97a4c5
+
+  - id: make-tender-chicken-breast
+    status: reviewed
+    source:
+      anchor: "鸡胸肉：嫩到中心也不柴"
+    slot: anytime
+    remind:
+      text: "用盐苹果充分揉进鸡胸肉，冷藏后再煎"
+      quote:
+        - 充分揉进肉里
+        - 冷藏 20 分钟～1 小时
+        - 盐苹果的第一个用途，是解决绞肉做酱容易发柴的问题。
+    effect:
+      text: "容易柴也能用同一罐盐苹果解决。"
+      quote:
+        - "容易柴"
+        - "也能用同一罐盐苹果解决。"
+    dose:
+      - value: 1
+        unit: "块"
+        what: "鸡胸肉用量"
+        quote: "1 块（约 300g）"
+      - value: 300
+        unit: "g"
+        what: "鸡胸肉重量"
+        quote: "约 300g"
+      - value: 3
+        unit: "大勺"
+        what: "盐苹果用量"
+        quote: "3 大勺"
+      - value: 1
+        unit: "大勺"
+        what: "橄榄油用量"
+        quote: "1 大勺"
+    steps:
+      - id: de-skin-and-pierce
+        text: "去皮叉子扎出均匀的小孔抹上盐苹果，装进塑料袋等充分揉进肉里"
+        quote:
+          - "去皮"
+          - "叉子扎出均匀的小孔"
+          - "抹上盐苹果，装进塑料袋等"
+          - "充分揉进肉里"
+      - id: marinate-chicken
+        text: "冷藏 20 分钟～1 小时"
+        quote: "冷藏 20 分钟～1 小时"
+      - id: sear-chicken
+        text: "锅里放橄榄油，开中火把鸡胸两面煎到金黄上色"
+        quote:
+          - "锅里放橄榄油，开"
+          - "中火"
+          - "把鸡胸"
+          - "两面煎到金黄上色"
+      - id: cover-and-finish
+        text: "上色后留在锅里盖上盖子转小火不时翻面前后总共约 10 分钟"
+        quote:
+          - "上色后"
+          - "留在锅里盖上盖子转小火"
+          - "不时翻面"
+          - "前后总共约 10 分钟"
+      - id: make-leftover-sauce
+        text: "袋子里剩下的盐苹果别倒，加点水和酱油或巴尔萨米醋煮热，就是一份现成酱汁。"
+        quote:
+          - "袋子里剩下的盐苹果别倒，加点水和"
+          - "酱油或巴尔萨米醋"
+          - "煮热，就是一份现成酱汁。"
+    duration:
+      basis: quote
+      sec: 600
+      quote: "前后总共约 10 分钟"
+    cautions:
+      - level: info
+        text: "腌得久一点更好。"
+        quote: "腌得久一点更好。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 7f15452a2142170f
+
+  - id: store-whole-apple
+    status: reviewed
+    source:
+      anchor: "保存：给苹果「松口气」"
+    slot: anytime
+    remind:
+      text: "用微湿的报纸或厨房纸包苹果，装袋排气后冷藏"
+      quote:
+        - 微微沾湿的报纸或厨房纸
+        - 把苹果包起来——保湿是第一步。
+        - 排出袋内的空气
+        - 这篇从一罐基础调味料开始：1 个苹果（约 300g）连皮擦成泥，加 1 小勺盐，中火加热 4～5 分钟，放凉后冷藏可存 1～2 周。后面两道菜——肉酱意面和嫩煎鸡胸——都用它。整颗苹果吃不完，还有一招能让它多放 2～3 周。
+    effect:
+      text: "一整颗苹果吃不完，可以让它多放两三周。"
+      quote: "一整颗苹果吃不完，可以让它多放两三周。"
+    dose:
+      - value: 2
+        valueMax: 4
+        unit: "圈"
+        what: "橡皮筋圈数"
+        quote: "大约绕 2～4 圈"
+    steps:
+      - id: wrap-apple
+        text: "微微沾湿的报纸或厨房纸把苹果包起来——保湿是第一步。"
+        quote:
+          - "微微沾湿的报纸或厨房纸"
+          - "把苹果包起来——保湿是第一步。"
+      - id: bag-and-deflate
+        text: "苹果放进塑料袋排出袋内的空气"
+        quote:
+          - "苹果放进"
+          - "塑料袋"
+          - "排出袋内的空气"
+      - id: secure-bag
+        text: "松松地扎住袋口。大约绕 2～4 圈"
+        quote:
+          - "松松地扎住袋口。"
+          - "大约绕 2～4 圈"
+      - id: refrigerate-apple
+        text: "放进冰箱保存。低温冷藏室最适合苹果。"
+        quote:
+          - "放进冰箱保存。"
+          - "低温冷藏室"
+          - "最适合苹果。"
+    cautions:
+      - level: stop
+        text: "千万别扎太紧苹果还在呼吸，扎死会导致变质。"
+        quote:
+          - "千万别扎太紧"
+          - "苹果还在呼吸，扎死会导致变质。"
+      - level: info
+        text: "按品种和成熟度不同可以放 2～3 周"
+        quote:
+          - "按品种和成熟度不同"
+          - "可以放 2～3 周"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: fb6d402873664fc9
+    name: 用湿纸包苹果冷藏
+
+  - id: use-leftover-salt-apple
+    status: reviewed
+    source:
+      anchor: "保存：给苹果「松口气」"
+    slot: anytime
+    remind:
+      text: "用剩余盐苹果拌冰淇淋，或做成简易小点"
+      quote:
+        - "拌进原味冰淇淋"
+        - "把夹了坚果、葡萄干的面包切成一入口大小"
+        - "沥水酸奶"
+        - "再堆一点盐苹果，就是一份简易小点。"
+    steps:
+      - id: make-salt-apple-ice
+        text: "拌进原味冰淇淋"
+        quote: "拌进原味冰淇淋"
+      - id: make-bread-snack
+        text: "把夹了坚果、葡萄干的面包切成一入口大小沥水酸奶再堆一点盐苹果，就是一份简易小点。"
+        quote:
+          - "把夹了坚果、葡萄干的面包切成一入口大小"
+          - "沥水酸奶"
+          - "再堆一点盐苹果，就是一份简易小点。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 201dac2569229430
+    name: 剩盐苹果拌冰淇淋
+
+  - id: choose-widely-circulated-apple
+    status: reviewed
+    source:
+      anchor: "保存：给苹果「松口气」"
+    slot: anytime
+    remind:
+      text: "图里挑的是流通量大的品种"
+      quote:
+        - 图里挑的是流通量大的品种
+        - 绞肉酱炒出来发柴、鸡胸煎完咬不动？这两样都能用同一罐酱料解决——苹果酸和果胶会渗进肉里，让它吃进水、变得湿润松软。
+    steps:
+      - id: choose-common-variety
+        text: "图里挑的是流通量大的品种"
+        quote:
+          - 图里挑的是流通量大的品种
+          - 说明书里附了一张品种对照图，横轴是甜度、纵轴是酸度，标出了红玉、富士、信浓金冠、世界一等流通量较大的常见品种。记住两条：图里挑的是流通量大的品种；因为采收期和进货状况的关系，店里不一定买得到。
+    cautions:
+      - level: info
+        text: "店里不一定买得到"
+        quote: "店里不一定买得到"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cfb7829d497f04ec
+    name: 挑流通量大的苹果
+
+  - id: use-apple-in-seven-ways
+    status: reviewed
+    source:
+      anchor: "苹果身上真正起作用的 7 件事"
+    slot: anytime
+    remind:
+      text: "苹果既能当调味，也能当腌料、增稠剂和清洁剂。"
+      quote:
+        - 苹果既能当调味，也能当腌料、增稠剂和清洁剂。
+        - 适时用锅铲搅拌，避免糊底。一旦焦了，焦香会盖掉苹果本来的味道。
+    steps:
+      - id: add-acidity-and-aroma
+        text: "清爽的酸味和香气"
+        quote: "清爽的酸味和香气"
+      - id: retain-moisture
+        text: "保水肉和菜不易变干（苹果酸）"
+        quote:
+          - "保水"
+          - "肉和菜不易变干（苹果酸）"
+      - id: add-sweetness
+        text: "浓厚的甜味"
+        quote: "浓厚的甜味"
+      - id: improve-keeping
+        text: "更耐存放不易坏（苹果酸）"
+        quote:
+          - "更耐存放"
+          - "不易坏（苹果酸）"
+      - id: thicken-soup
+        text: "让汤汁变浓稠"
+        quote: "让汤汁变浓稠"
+      - id: remove-stains
+        text: "去污渍这也是它出现在清洁类产品里的原因"
+        quote:
+          - 去污渍
+          - 这也是它出现在清洁类产品里的原因
+          - 绞肉酱炒出来发柴、鸡胸煎完咬不动？这两样都能用同一罐酱料解决——苹果酸和果胶会渗进肉里，让它吃进水、变得湿润松软。
+      - id: remove-odor
+        text: "除臭"
+        quote:
+          - 除臭
+          - 绞肉酱炒出来发柴、鸡胸煎完咬不动？这两样都能用同一罐酱料解决——苹果酸和果胶会渗进肉里，让它吃进水、变得湿润松软。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 49f7e774e5444bd7
+    name: 把苹果当调味和腌料

@@ -1,0 +1,326 @@
+article: "the-savvy-life-manual/food/asparagus.md"
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: asparagus-cooking-overview
+    status: reviewed
+    name: "保持芦笋脆甜的两种做法"
+    source:
+      anchor: "芦笋怎么做才脆？焯水 24 秒 + 整根裹油煎"
+    slot: anytime
+    remind:
+      text: "保持脆度用短时间焯水留住甜味用整根裹油煎"
+      quote:
+        - "保持脆度用短时间焯水"
+        - "留住甜味用整根裹油煎"
+    effect:
+      text: "留住甜味用整根裹油煎保持脆度用短时间焯水"
+      quote:
+        - "留住甜味用整根裹油煎"
+        - "保持脆度用短时间焯水"
+    steps:
+      - id: trim-hard-stem
+        text: "先从根部折断或削掉根部约 5cm 的硬筋"
+        quote: "先从根部折断或削掉根部约 5cm 的硬筋"
+      - id: blanch-by-diameter
+        text: "沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒"
+        quote:
+          - 沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒
+          - 处理芦笋是两个关键动作。留住甜味用整根裹油煎：油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒。保持脆度用短时间焯水：先从根部折断或削掉根部约 5cm 的硬筋，沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒，实测只需 24 秒。下面先给做法，甜味为什么埋在地下放在最后。
+      - id: sear-whole
+        text: "油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒"
+        quote:
+          - 油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒
+          - 处理芦笋是两个关键动作。留住甜味用整根裹油煎：油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒。保持脆度用短时间焯水：先从根部折断或削掉根部约 5cm 的硬筋，沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒，实测只需 24 秒。下面先给做法，甜味为什么埋在地下放在最后。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 46693961a4c8ef3a
+
+  - id: asparagus-crisp-blanch
+    status: reviewed
+    name: "焯水去硬筋"
+    source:
+      anchor: "脆嫩的关键：短时间焯水 + 去掉硬筋"
+    slot: anytime
+    remind:
+      text: "关键动作是把硬筋彻底去掉"
+      quote:
+        - 关键动作是把硬筋彻底去掉
+        - 处理芦笋是两个关键动作。留住甜味用整根裹油煎：油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒。保持脆度用短时间焯水：先从根部折断或削掉根部约 5cm 的硬筋，沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒，实测只需 24 秒。下面先给做法，甜味为什么埋在地下放在最后。
+    effect:
+      text: "趁短暂的时间焯水，品尝本该有的爽脆口感"
+      quote: "趁短暂的时间焯水，品尝本该有的爽脆口感"
+    dose:
+      - value: 20
+        valueMax: 30
+        unit: 秒
+        what: "直径 1～1.5cm 芦笋焯水时长"
+        quote: "直径 1～1.5cm → 20～30 秒"
+      - value: 30
+        valueMax: 40
+        unit: 秒
+        what: "直径 1.5～2cm 芦笋焯水时长"
+        quote: "直径 1.5～2cm → 30～40 秒"
+    duration:
+      basis: quote
+      sec: 24
+      quote: "实测只需 24 秒"
+    steps:
+      - id: remove-hard-stem
+        text: "准备：从根部折断，或用削皮器从根部削去约 5cm 的皮，去除硬筋"
+        quote: "准备：从根部折断，或用削皮器从根部削去约 5cm 的皮，去除硬筋"
+      - id: snap-hard-stem
+        text: "握住芦笋的中部与根部，朝根部的反方向用力，硬筋就会在靠近端口的部位自然折断"
+        quote: "握住芦笋的中部与根部，朝根部的反方向用力，硬筋就会在靠近端口的部位自然折断"
+      - id: blanch-in-boiling-water
+        text: "放入沸腾的水中焯烫"
+        quote: "放入沸腾的水中焯烫"
+      - id: choose-time-by-diameter
+        text: "直径 1～1.5cm → 20～30 秒；直径 1.5～2cm → 30～40 秒"
+        quote: "直径 1～1.5cm → 20～30 秒；直径 1.5～2cm → 30～40 秒"
+    cautions:
+      - level: info
+        text: "这段硬化的部分，无论煮多久都不会变软"
+        quote: "这段硬化的部分，无论煮多久都不会变软"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: cc200751fa36ac24
+
+  - id: asparagus-snow-sauce
+    status: reviewed
+    source:
+      anchor: "两道食谱：淡雪淋与米饭"
+    slot: anytime
+    remind:
+      text: "将脆芦笋切段，浇上淡雪淋酱"
+      quote:
+        - "将脆芦笋斜切成约 4cm 的段，盛入器皿"
+        - "将淋酱浇在脆芦笋上"
+    dose:
+      - value: 8
+        unit: 根
+        what: "芦笋用量"
+        quote: "芦笋 8 根"
+      - value: 2
+        unit: 个
+        what: "鸡蛋用量"
+        quote: "鸡蛋（蛋黄蛋白分开）2 个"
+      - value: 2
+        unit: 根
+        what: "蟹肉棒用量"
+        quote: "蟹肉棒（用手撕碎）2 根"
+      - value: 1
+        unit: 小勺
+        what: "酱油用量"
+        quote: "酱油 1 小勺"
+      - value: 300
+        unit: mL
+        what: "水用量"
+        quote: "水 300mL"
+      - value: 1
+        unit: 小勺
+        what: "鸡高汤块粉用量"
+        quote: "鸡高汤块粉 1 小勺"
+      - value: 1
+        unit: g
+        what: "食盐用量"
+        quote: "盐 1g（约两小撮）"
+      - value: 2
+        unit: 小勺
+        what: "水溶性葛粉用量"
+        quote: "水溶性葛粉 2 小勺"
+      - value: 2
+        unit: 小勺
+        what: "调配葛粉的水量"
+        quote: "水 2 小勺"
+    steps:
+      - id: separate-egg
+        text: "鸡蛋（蛋黄蛋白分开）2 个"
+        quote: "鸡蛋（蛋黄蛋白分开）2 个"
+      - id: cut-asparagus
+        text: "将脆芦笋斜切成约 4cm 的段，盛入器皿"
+        quote: "将脆芦笋斜切成约 4cm 的段，盛入器皿"
+      - id: whip-egg-white
+        text: "打发蛋白——以「厚重地垂落」为标准，约相当于 6 分发"
+        quote: "打发蛋白——以「厚重地垂落」为标准，约相当于 6 分发"
+      - id: mix-egg-yolk
+        text: "打发好的蛋白中加入蛋黄，用橡皮刮刀轻轻拌匀"
+        quote: "打发好的蛋白中加入蛋黄，用橡皮刮刀轻轻拌匀"
+      - id: simmer-seasoning-a
+        text: "平底锅放入（A），煮沸后转小火"
+        quote: "平底锅放入（A），煮沸后转小火"
+      - id: add-seasoning-b
+        text: "一边搅拌一边分次加入（B），调出浓稠芡汁"
+        quote: "一边搅拌一边分次加入（B），调出浓稠芡汁"
+      - id: mix-egg-and-crab
+        text: "转中火，放入打发的蛋白和蟹肉棒，轻快翻拌 3～4 次，不要把蛋白弄碎"
+        quote: "转中火，放入打发的蛋白和蟹肉棒，轻快翻拌 3～4 次，不要把蛋白弄碎"
+      - id: pour-sauce
+        text: "将淋酱浇在脆芦笋上"
+        quote: "将淋酱浇在脆芦笋上"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 70403b288929e18c
+    name: 做芦笋淡雪淋
+
+  - id: asparagus-rice-bowl
+    status: reviewed
+    source:
+      anchor: "两道食谱：淡雪淋与米饭"
+    slot: anytime
+    remind:
+      text: "把芦笋根部切丁拌入米饭，盖盖蒸后即可"
+      quote:
+        - "芦笋根部约 5cm 切成宽约 2mm 的小丁"
+        - "煮好的米饭中拌入芦笋丁和盐"
+        - "拌匀后盖盖蒸约 5 分钟即可"
+    dose:
+      - value: 70
+        unit: g
+        what: "芦笋根部用量"
+        quote: "芦笋根部 5cm 的部分 70g"
+      - value: 2
+        unit: 杯
+        what: "米饭用量"
+        quote: "米饭 2 杯（约 300g）"
+      - value: 0.5
+        unit: 小勺
+        what: "食盐用量"
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: "盐 1/2 小勺"
+    duration:
+      basis: quote
+      sec: 300
+      quote: "拌匀后盖盖蒸约 5 分钟"
+    steps:
+      - id: dice-root
+        text: "芦笋根部约 5cm 切成宽约 2mm 的小丁"
+        quote: "芦笋根部约 5cm 切成宽约 2mm 的小丁"
+      - id: mix-rice
+        text: "煮好的米饭中拌入芦笋丁和盐"
+        quote: "煮好的米饭中拌入芦笋丁和盐"
+      - id: steam-rice
+        text: "拌匀后盖盖蒸约 5 分钟即可"
+        quote: "拌匀后盖盖蒸约 5 分钟即可"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d9d998a4742d7e92
+    name: 做芦笋拌饭
+
+  - id: asparagus-whole-oil-sear
+    status: reviewed
+    source:
+      anchor: "甜味的来源：根里装满了糖"
+    slot: anytime
+    remind:
+      text: "整根裹油煎，防止甜味汁液流出"
+      quote: "先给整根芦笋刷一层油再烤，以此防止甜味汁液流出"
+    effect:
+      text: "芦笋因此变得又甜又多汁"
+      quote: "芦笋因此变得又甜又多汁"
+    dose:
+      - value: 4
+        unit: 根
+        what: "芦笋用量"
+        quote: "芦笋 4 根"
+      - value: 1
+        unit: 小勺
+        what: "油用量"
+        quote: "油 1 小勺"
+      - value: 1
+        unit: g
+        what: "食盐用量"
+        quote: "盐 1g（约两小撮）"
+    duration:
+      basis: derived
+      sec: 210
+      formula: "3 分钟 × 60 秒 + 30 秒 = 210 秒"
+    steps:
+      - id: peel-root
+        text: "用削皮器削去芦笋根部约 5cm 的外皮"
+        quote: "用削皮器削去芦笋根部约 5cm 的外皮"
+      - id: coat-with-oil-salt
+        text: "把芦笋摆在冷锅里，撒上油和盐，让油盐均匀裹满全身"
+        quote: "把芦笋摆在冷锅里，撒上油和盐，让油盐均匀裹满全身"
+      - id: heat-without-turning
+        text: "大火加热约 3 分钟全程不要翻动芦笋——这样才能煎出焦香"
+        quote:
+          - "大火加热约 3 分钟"
+          - "全程不要翻动芦笋——这样才能煎出焦香"
+      - id: flip-and-finish
+        text: "翻面，背面再加热约 30 秒即可出锅"
+        quote: "翻面，背面再加热约 30 秒即可出锅"
+    cautions:
+      - level: info
+        text: "全程不要翻动芦笋——这样才能煎出焦香"
+        quote: "全程不要翻动芦笋——这样才能煎出焦香"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 42b5bf581d44102a
+    name: 整根裹油煎芦笋
+
+  - id: asparagus-hotdog-sandwich
+    status: reviewed
+    source:
+      anchor: "甜味的来源：根里装满了糖"
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: "把油煎芦笋、培根和酱夹进面包"
+      quote: "面包夹入培根、备好的酱和油煎芦笋"
+    effect:
+      text: "是一道以芦笋为主角的菜，值得一试"
+      quote: "是一道以芦笋为主角的菜，值得一试"
+    dose:
+      - value: 4
+        unit: 根
+        what: "油煎芦笋用量"
+        quote: "油煎整根芦笋 4 根"
+      - value: 2
+        unit: 条
+        what: "面包用量"
+        quote: "长条面包 2 条"
+      - value: 2
+        unit: 片
+        what: "培根用量"
+        quote: "培根（4～5cm 宽）2 片"
+      - value: 2
+        unit: 大勺
+        what: "塔塔酱用量"
+        quote: "你喜欢的塔塔酱 2 大勺"
+      - value: 1
+        unit: 个
+        what: "水煮蛋用量"
+        quote: "水煮蛋 1 个"
+      - value: 1
+        unit: 大勺
+        what: "蛋黄酱用量"
+        quote: "蛋黄酱 1 大勺"
+      - value: 1.5
+        unit: 大勺
+        what: "洋葱碎用量"
+        quote: "洋葱碎 1.5 大勺"
+    steps:
+      - id: prepare-sauce
+        text: "用塔塔酱就直接备好；另一支是水煮蛋用勺子压碎，拌入蛋黄酱、洋葱碎和盐"
+        quote: "用塔塔酱就直接备好；另一支是水煮蛋用勺子压碎，拌入蛋黄酱、洋葱碎和盐"
+      - id: fry-bacon
+        text: "平底锅煎培根"
+        quote: "平底锅煎培根"
+      - id: assemble-sandwich
+        text: "面包夹入培根、备好的酱和油煎芦笋"
+        quote: "面包夹入培根、备好的酱和油煎芦笋"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 2d43f234597b5689
+    name: 做芦笋热狗三明治

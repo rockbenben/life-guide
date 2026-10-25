@@ -1,0 +1,245 @@
+article: the-savvy-life-manual/body-care/iron.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '验血没贫血却总疲劳？五条自查 + 每天补 3mg 铁'
+      reason: '本节是全文导语，核心内容与后续“五条自测”和“每天补 3mg”小节重复；为避免重复卡片，未另抽。'
+  images: []
+cards:
+  - id: iron-storage-self-check
+    status: reviewed
+    source:
+      anchor: '五条自测：你可能贮藏铁不足'
+    slot: anytime
+    remind:
+      text: '如果符合的条目较多：在日常吃饭时有意识地补铁。'
+      quote: '如果符合的条目较多：在日常吃饭时有意识地补铁。'
+    steps:
+      - id: check-fatigue-recovery
+        text: '睡了多久都恢复不了疲劳'
+        quote: '睡了多久都恢复不了疲劳'
+      - id: check-stairs-breathless
+        text: '上楼梯时经常气喘吁吁'
+        quote: '上楼梯时经常气喘吁吁'
+      - id: check-nail-condition
+        text: '指甲容易断裂、缺损、凹陷'
+        quote: '指甲容易断裂、缺损、凹陷'
+      - id: check-ice-craving
+        text: '特别想吃冰'
+        quote: '特别想吃冰'
+      - id: check-restless-legs
+        text: '夜里双腿躁动难眠（小腿发麻、虫爬感）'
+        quote: '夜里双腿躁动难眠（小腿发麻、虫爬感）'
+    cautions:
+      - level: with-doctor
+        text: '如果疲乏、失眠等症状明显且长期持续：请到附近的内科就诊。'
+        quote: '如果疲乏、失眠等症状明显且长期持续：请到附近的内科就诊。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 24349f3a5d970542
+    name: 自测是否缺贮藏铁
+
+  - id: iron-daily-three-mg-plan
+    status: reviewed
+    name: "每天补 3mg 铁"
+    source:
+      anchor: '每天补 3mg：一张可以照着点的铁活卡'
+    # 原文是「吃饭时把主食换成高铁版本」加下午加餐 —— 跟着三餐走，不落某一段。
+    slot: anytime
+    remind:
+      text: '早餐和晚餐把白米饭换成糙米饭，下午加餐吃烤红薯。'
+      quote:
+        - '早餐和晚餐的白米饭换成糙米饭：每碗从 0.15mg 升到 1mg，一天两碗净增约 1.7mg。'
+        - '下午加餐吃一个烤红薯（200g）：再增 1.5mg。'
+    dose:
+      - value: 1
+        unit: 碗
+        what: '每碗白米饭换成糙米饭'
+        quote: '早餐和晚餐的白米饭换成糙米饭：每碗从 0.15mg 升到 1mg，一天两碗净增约 1.7mg。'
+      - value: 200
+        unit: g
+        what: '下午加餐的烤红薯份量'
+        quote: '下午加餐吃一个烤红薯（200g）：再增 1.5mg。'
+      - value: 1.5
+        unit: mg
+        what: '烤红薯的补铁量'
+        quote: '下午加餐吃一个烤红薯（200g）：再增 1.5mg。'
+      - value: 3.2
+        unit: mg
+        what: '一天合计补铁量'
+        quote: '一天合计 +3.2mg，超过所需的 3mg。'
+    steps:
+      - id: replace-rice-with-brown-rice
+        text: '早餐和晚餐的白米饭换成糙米饭：每碗从 0.15mg 升到 1mg，一天两碗净增约 1.7mg。'
+        quote: '早餐和晚餐的白米饭换成糙米饭：每碗从 0.15mg 升到 1mg，一天两碗净增约 1.7mg。'
+      - id: add-roasted-sweet-potato
+        text: '下午加餐吃一个烤红薯（200g）：再增 1.5mg。'
+        quote: '下午加餐吃一个烤红薯（200g）：再增 1.5mg。'
+      - id: distinguish-iron-card-colors
+        text: '红色＝血红素铁绿色＝非血红素铁黄色＝维生素 C'
+        quote:
+          - '红色＝血红素铁'
+          - '绿色＝非血红素铁'
+          - '黄色＝维生素 C'
+      - id: pair-vitamin-c
+        text: '黄色＝维生素 C帮非血红素铁吸收吃绿卡食物时配一张黄卡最划算'
+        quote:
+          - '黄色＝维生素 C'
+          - '帮非血红素铁吸收'
+          - '吃绿卡食物时配一张黄卡最划算'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c5b088405a012b0b
+
+  - id: iron-recommended-intake
+    status: reviewed
+    source:
+      anchor: '推荐摄入量：补多少才算够'
+    slot: anytime
+    remind:
+      text: '查看铁推荐摄入量，既避免不足，也避免过量。'
+      quote: '人体内的铁会被高效循环利用，真正吸收和排出的量都不多。所以知道推荐摄入量很重要——既避免不足，也避免过量。'
+    dose:
+      - value: 10.5
+        unit: mg
+        what: '15～49 岁女性每日铁推荐量'
+        quote: '15～49 岁女性的铁推荐量约 10.5mg。'
+    steps:
+      - id: check-intake-table
+        text: '日本铁推荐摄入量（mg）（日本人膳食营养素参考摄入量 2020 年版，厚生劳动省）'
+        quote: '日本铁推荐摄入量（mg）（日本人膳食营养素参考摄入量 2020 年版，厚生劳动省）'
+      - id: check-pregnancy-add-on
+        text: '女性孕期与哺乳期在此基础上另加：'
+        quote: '女性孕期与哺乳期在此基础上另加：'
+    cautions:
+      - level: with-doctor
+        text: '贫血最常见的原因是「缺铁性贫血」。但也不排除其他原因——一旦被诊断为贫血，请咨询医生。'
+        quote: '贫血最常见的原因是「缺铁性贫血」。但也不排除其他原因——一旦被诊断为贫血，请咨询医生。'
+    segments:
+      - id: adult-menstruating-intake
+        when: [ age:adult, menstruating ]
+        action:
+          text: '查看女性月经期栏的铁推荐摄入量。'
+          quote: '女性（月经期）'
+        dose:
+          text: '成年女性月经期每日铁推荐摄入量为 10.5～11mg。'
+          quote:
+            - '日本铁推荐摄入量（mg）'
+            - '18～64 岁'
+            - '10.5～11'
+      - id: pregnancy-add-on
+        when: [ pregnant ]
+        action:
+          text: '孕期与哺乳期在基础推荐摄入量上另加铁。'
+          quote: '女性孕期与哺乳期在此基础上另加：'
+        dose:
+          text: '孕早期另加 2.5mg，孕中晚期另加 9.5mg。'
+          quote:
+            - '孕早期'
+            - '+2.5mg'
+            - '孕中晚期'
+            - '+9.5mg'
+        avoid:
+          - text: '一旦被诊断为贫血，请咨询医生。'
+            quote: '一旦被诊断为贫血，请咨询医生'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: afc9a9367c3068f9
+    name: 按年龄查每日铁推荐量
+
+  - id: iron-overload-liver-safety
+    status: reviewed
+    source:
+      anchor: '补过头也有代价：铁与肝脏'
+    slot: anytime
+    remind:
+      text: '补铁时留意铁过剩风险；有肝脏疾病或 C 型肝炎的人，补铁前先咨询医生。'
+      quote:
+        - '风险主要来自大量服用补铁类补充剂——有导致铁过剩症的风险（厚生劳动省 e-健康网）。'
+        - '患有肝脏疾病、尤其是 C 型肝炎的人，补铁前务必咨询医生。'
+    steps:
+      - id: distinguish-food-and-supplements
+        text: '日常吃饭摄入的铁，基本不会过量；'
+        quote: '日常吃饭摄入的铁，基本不会过量；'
+      - id: watch-supplement-overdose
+        text: '风险主要来自大量服用补铁类补充剂——有导致铁过剩症的风险（厚生劳动省 e-健康网）。'
+        quote: '风险主要来自大量服用补铁类补充剂——有导致铁过剩症的风险（厚生劳动省 e-健康网）。'
+      - id: consult-with-liver-disease
+        text: '患有肝脏疾病、尤其是 C 型肝炎的人，补铁前务必咨询医生。'
+        quote: '患有肝脏疾病、尤其是 C 型肝炎的人，补铁前务必咨询医生。'
+    cautions:
+      - level: info
+        text: '日常吃饭摄入的铁，基本不会过量；'
+        quote: '日常吃饭摄入的铁，基本不会过量；'
+      - level: with-doctor
+        text: '患有肝脏疾病、尤其是 C 型肝炎的人，补铁前务必咨询医生。'
+        quote: '患有肝脏疾病、尤其是 C 型肝炎的人，补铁前务必咨询医生。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 8f8b76696a77024a
+    name: 补铁过多会伤肝
+
+  - id: hidden-iron-deficiency-awareness
+    status: reviewed
+    source:
+      anchor: '验血合格 ≠ 不缺铁：隐藏性贫血'
+    slot: anytime
+    remind:
+      text: '验血未被判定为贫血时，也要留意隐藏性贫血。'
+      quote:
+        - '即使血液检查没有被判定为贫血，也仍有相当比例的人被列为铁不足；'
+        - '20 多岁女性中，大约一半属于这种「隐藏性贫血」状态——即处在「贫血预备军」阶段；'
+    steps:
+      - id: learn-normal-test-gap
+        text: '即使血液检查没有被判定为贫血，也仍有相当比例的人被列为铁不足；'
+        quote: '即使血液检查没有被判定为贫血，也仍有相当比例的人被列为铁不足；'
+      - id: check-age-specific-rates
+        text: '按年龄段划分的贮藏铁不足比例（2009 年厚生劳动省国民健康・营养调查）：'
+        quote: '按年龄段划分的贮藏铁不足比例（2009 年厚生劳动省国民健康・营养调查）：'
+      - id: learn-pre-anemia-stage
+        text: '20 多岁女性中，大约一半属于这种「隐藏性贫血」状态——即处在「贫血预备军」阶段；'
+        quote: '20 多岁女性中，大约一半属于这种「隐藏性贫血」状态——即处在「贫血预备军」阶段；'
+    cautions:
+      - level: with-doctor
+        text: '如果疲乏、失眠等症状明显且长期持续：请到附近的内科就诊。'
+        quote: '如果疲乏、失眠等症状明显且长期持续：请到附近的内科就诊。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: dd79544d460bd40d
+    name: 验血正常也要留意缺铁
+
+  - id: stored-iron-role
+    status: reviewed
+    source:
+      anchor: '贮藏铁：身体的备用铁仓库'
+    slot: anytime
+    remind:
+      text: '出现肌肉疲乏无力、大脑烦躁失眠或肌肤干燥粗糙时，留意贮藏铁不足。'
+      quote: '一旦「贮藏铁」不足，所有这些需要铁作原料的生命活动都会卡顿，身体各处便开始出现各种不适：肌肉疲乏无力、大脑烦躁失眠、肌肤干燥粗糙。'
+    steps:
+      - id: learn-hemoglobin-role
+        text: '食物中的铁大部分进入血液，成为血红蛋白的原料，负责把氧气运到全身。'
+        quote: '食物中的铁大部分进入血液，成为血红蛋白的原料，负责把氧气运到全身。'
+      - id: learn-stored-iron-location
+        text: '暂时用不上的铁，则以「贮藏铁」的形式主要储存在肝脏等部位。'
+        quote: '暂时用不上的铁，则以「贮藏铁」的形式主要储存在肝脏等部位。'
+      - id: learn-stored-iron-functions
+        text: '肌肉的能量生产大脑的神经传导物质生成皮肤的生成'
+        quote:
+          - '肌肉的能量生产'
+          - '大脑的神经传导物质生成'
+          - '皮肤的生成'
+      - id: watch-deficiency-symptoms
+        text: '一旦「贮藏铁」不足，所有这些需要铁作原料的生命活动都会卡顿，身体各处便开始出现各种不适：肌肉疲乏无力、大脑烦躁失眠、肌肤干燥粗糙。'
+        quote: '一旦「贮藏铁」不足，所有这些需要铁作原料的生命活动都会卡顿，身体各处便开始出现各种不适：肌肉疲乏无力、大脑烦躁失眠、肌肤干燥粗糙。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 91a16de3b91cf17b
+    name: 留意贮藏铁不足信号

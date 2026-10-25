@@ -1,0 +1,349 @@
+article: 'the-savvy-life-manual/body-care/bath.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '每天泡汤冠心病风险低 35%：NHK 洗澡说明书'
+      reason: '文章总标题与导言；导言中的安全事项已在安全卡中处理，不另设卡片。'
+    - anchor: '每天泡汤的人，冠心病风险低 35%'
+      reason: '内容为观察性研究的风险关联数据，属于背景证据而非可独立执行的保健动作。'
+    - anchor: '机制：温热 + 水压，把血「推」起来'
+      reason: '内容为温热与水压的作用机制说明，已作为泡澡卡片的背景，不另设卡片。'
+    - anchor: '一氧化氮：血管实测被撑开约 22%'
+      reason: '内容为一氧化氮机制与短时测量数据，没有给出可独立执行的动作。'
+    - anchor: '洗澡时的灵光：「shower effect」'
+      reason: '内容属于认知与创意话题，不属于本篇保健泡澡动作。'
+    - anchor: '哪些情况下别泡'
+      reason: '关键禁忌已并入安全卡；为遵守每篇最多六张卡的限制，未另设卡片。'
+  images: []
+cards:
+  - id: tub-internal-muscle-exercises
+    status: reviewed
+    name: "泡澡时摆动腿和手臂"
+    source:
+      anchor: '在浴缸里练「内肌」：浮力让外肌卸力'
+    slot: anytime
+    remind:
+      text: '手臂钟摆运动腿钟摆运动要慢不要过量'
+      quote:
+        - '手臂钟摆运动'
+        - '腿钟摆运动'
+        - '要慢'
+        - '不要过量'
+    dose:
+      - value: 10
+        unit: '次'
+        what: '单侧摆动次数'
+        quote: '各 10 次为 1 组'
+      - value: 1
+        valueMax: 3
+        unit: '组'
+        what: '建议组数'
+        quote: '在不勉强的范围内做 1～3 组'
+    steps:
+      - id: arm-palm-forward
+        text: '手掌朝内，手臂向正前方伸直'
+        quote:
+          - '手掌朝内，手臂'
+          - '向正前方伸直'
+      - id: arm-shoulder-swing
+        text: '肩关节左右慢慢摆动'
+        quote:
+          - '肩关节'
+          - '左右慢慢摆动'
+      - id: arm-repetitions
+        text: '各 10 次为 1 组在不勉强的范围内做 1～3 组'
+        quote:
+          - '各 10 次为 1 组'
+          - '在不勉强的范围内做 1～3 组'
+      - id: leg-lift-suspend
+        text: '双脚在水中抬起、悬空'
+        quote:
+          - '双脚'
+          - '在水中抬起、悬空'
+      - id: leg-hip-swing
+        text: '髋关节左右慢慢摆动'
+        quote:
+          - '髋关节'
+          - '左右慢慢摆动'
+      - id: leg-repetitions
+        text: '各 10 次为 1 组同样做 1～3 组'
+        quote:
+          - '各 10 次为 1 组'
+          - '同样做 1～3 组'
+    cautions:
+      - level: info
+        text: '要慢动作太猛，反而是外肌先被刺激到不要过量'
+        quote:
+          - '要慢'
+          - '动作太猛，反而是外肌先被刺激到'
+          - '不要过量'
+      - level: info
+        text: '每周 2～3 次就够别间隔 3 天以上'
+        quote:
+          - '每周 2～3 次就够'
+          - '别间隔 3 天以上'
+      - level: info
+        text: '浴缸太窄时屈膝也没关系'
+        quote:
+          - '浴缸太窄时'
+          - '屈膝也没关系'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cf3fb6cc559897fe
+
+  - id: bath-temperature-duration
+    status: reviewed
+    source:
+      anchor: '水温与时长：记住三条硬数字'
+    slot: anytime
+    remind:
+      text: '汤温 41℃ 以下、泡到 10 分钟为止'
+      quote: '汤温 41℃ 以下、泡到 10 分钟为止'
+    dose:
+      - value: 41
+        unit: '℃'
+        what: '汤温'
+        quote: '汤温 41℃ 以下'
+      - value: 10
+        unit: '分钟'
+        what: '安全泡浴时长'
+        quote: '泡到 10 分钟为止'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '泡到 10 分钟为止'
+    steps:
+      - id: adjust-time-by-temperature
+        text: '水温越高，能泡的时间就越短'
+        quote: '水温越高，能泡的时间就越短'
+      - id: follow-safety-limit
+        text: '汤温 41℃ 以下、泡到 10 分钟为止'
+        quote: '汤温 41℃ 以下、泡到 10 分钟为止'
+      - id: avoid-42c-10min
+        text: '42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大'
+        quote: '42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大'
+    cautions:
+      - level: stop
+        text: '很多人泡到头晕才肯出来，其实早已泡过头。'
+        quote: '很多人泡到头晕才肯出来，其实早已泡过头。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6a1aa4fc43c21348
+    name: 泡澡水温和时长
+
+  - id: bath-method-selection
+    status: reviewed
+    source:
+      anchor: '按泡法选：全身浴、半身浴、坐浴'
+    slot: anytime
+    remind:
+      text: '半身浴全身浴坐浴'
+      quote:
+        - '半身浴'
+        - '全身浴'
+        - '坐浴'
+    dose:
+      - value: 38
+        valueMax: 39
+        unit: '℃'
+        what: '半身浴水温'
+        quote: '38-39℃'
+      - value: 15
+        valueMax: 20
+        unit: '分钟'
+        what: '半身浴时长'
+        quote: '15-20 分钟'
+      - value: 20
+        unit: '厘米'
+        what: '坐浴水位高度'
+        quote: '20 厘米高度的水平线'
+      - value: 15
+        unit: '分钟'
+        what: '坐浴时长'
+        quote: '15 分钟'
+    steps:
+      - id: half-bath
+        text: '半身浴肚脐平齐38-39℃15-20 分钟'
+        quote:
+          - '半身浴'
+          - '肚脐平齐'
+          - '38-39℃'
+          - '15-20 分钟'
+      - id: full-bath
+        text: '全身浴覆盖肩膀用温水'
+        quote:
+          - '全身浴'
+          - '覆盖肩膀'
+          - '用温水'
+      - id: sitz-bath
+        text: '坐浴20 厘米高度的水平线浸到腰椎、尾椎、臀部15 分钟'
+        quote:
+          - '坐浴'
+          - '20 厘米高度的水平线'
+          - '浸到腰椎、尾椎、臀部'
+          - '15 分钟'
+    cautions:
+      - level: with-doctor
+        text: '痔疮、肛裂的不适不是「治疗」尿路感染、生殖方面的问题要看医生，不是坐个澡就能解决'
+        quote:
+          - '痔疮、肛裂的不适'
+          - '不是「治疗」'
+          - '尿路感染、生殖方面的问题要看医生，不是坐个澡就能解决'
+      - level: info
+        text: '痔疮、肛裂的不适不是「治疗」'
+        quote:
+          - '痔疮、肛裂的不适'
+          - '不是「治疗」'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 526b4663f13626a7
+    name: 选全身浴半身浴或坐浴
+
+  - id: bath-safety-basics
+    status: reviewed
+    source:
+      anchor: '安全：说明书写明的几条'
+    slot: anytime
+    remind:
+      text: '按安全要点泡澡：不够时间可分次，出浴不要猛地站起，泡前后补水。'
+      quote:
+        - '泡不够 10 分钟也有效'
+        - '出浴缸时不要猛地站起来'
+        - '为防止脱水，泡澡前后都要好好补水'
+    effect:
+      text: '泡不够 10 分钟也有效分成几次泡也照样有健康效果'
+      quote:
+        - '泡不够 10 分钟也有效'
+        - '分成几次泡也照样有健康效果'
+    steps:
+      - id: split-short-bath
+        text: '分成几次泡也照样有健康效果中途可以冲洗身体或为了休息而出浴缸'
+        quote:
+          - '分成几次泡也照样有健康效果'
+          - '中途可以冲洗身体'
+          - '或为了休息而出浴缸'
+      - id: stand-slowly
+        text: '出浴缸时不要猛地站起来'
+        quote: '出浴缸时不要猛地站起来'
+      - id: hydrate-around-bath
+        text: '为防止脱水，泡澡前后都要好好补水'
+        quote: '为防止脱水，泡澡前后都要好好补水'
+      - id: warm-changing-room
+        text: '入浴前先把更衣间和浴室暖起来'
+        quote: '入浴前先把更衣间和浴室暖起来'
+      - id: avoid-after-meal-alcohol-medicine
+        text: '饭后马上泡、喝过酒后泡、服过药后泡，都避开'
+        quote: '饭后马上泡、喝过酒后泡、服过药后泡，都避开'
+      - id: notify-household
+        text: '泡之前跟同住的人打声招呼'
+        quote: '泡之前跟同住的人打声招呼'
+    cautions:
+      - level: with-doctor
+        text: '血压高的人、或有慢性病的人咨询主治医负担较小的泡法（如半身浴）'
+        quote:
+          - '血压高的人、或有慢性病的人'
+          - '咨询主治医'
+          - '负担较小的泡法（如半身浴）'
+      - level: stop
+        text: '饮酒后不要立刻洗澡'
+        quote: '饮酒后不要立刻洗澡'
+      - level: stop
+        text: '头晕、胸闷、眼花立即停浴并到医院就诊'
+        quote:
+          - '头晕、胸闷、眼花'
+          - '立即停浴'
+          - '并到医院就诊'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 013114ffdd079e77
+    name: 泡澡前先看安全要点
+
+  - id: post-bath-rinse-rise
+    status: reviewed
+    source:
+      anchor: '泡完别直接走'
+    slot: anytime
+    remind:
+      text: '泡完用冷水冲淋头发部位和面部，冲完后不要立刻起身。'
+      quote:
+        - '泡浴后的冲淋是必要的'
+        - '头发部位和面部用'
+        - '冷水'
+        - '也别立刻起身'
+    effect:
+      text: '把热水浴带来的血管扩张和困倦感收一收也别立刻起身此时血压处在较低位置，突然改变姿势容易体位性低血压'
+      quote:
+        - '把热水浴带来的血管扩张和困倦感收一收'
+        - '也别立刻起身'
+        - '此时血压处在较低位置，突然改变姿势容易体位性低血压'
+    steps:
+      - id: cold-rinse-hair-face
+        text: '泡浴后的冲淋是必要的头发部位和面部用冷水冲淋'
+        quote:
+          - '泡浴后的冲淋是必要的'
+          - '头发部位和面部用'
+          - '冷水'
+          - '冲淋'
+      - id: wait-before-standing
+        text: '也别立刻起身'
+        quote: '也别立刻起身'
+    cautions:
+      - level: info
+        text: '也别立刻起身此时血压处在较低位置，突然改变姿势容易体位性低血压'
+        quote:
+          - '也别立刻起身'
+          - '此时血压处在较低位置，突然改变姿势容易体位性低血压'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: fff24b3c0a804394
+
+  - id: pre-sleep-hot-bath
+    status: reviewed
+    name: "睡前泡澡更快入睡"
+    source:
+      anchor: '睡前泡澡，时机比温度更重要'
+    slot: evening
+    remind:
+      text: '40-42.5℃ 热水浴安排在睡前 1-2 小时短到 10 分钟'
+      quote:
+        - '40-42.5℃ 热水浴安排在睡前 1-2 小时'
+        - '短到 10 分钟'
+    effect:
+      text: '也能显著缩短入睡潜伏期'
+      quote: '也能显著缩短入睡潜伏期'
+    dose:
+      - value: 40
+        valueMax: 42.5
+        unit: '℃'
+        what: '热水浴水温'
+        quote: '40-42.5℃ 热水浴安排在睡前 1-2 小时'
+      - value: 1
+        valueMax: 2
+        unit: '小时'
+        what: '睡前安排时间'
+        quote: '40-42.5℃ 热水浴安排在睡前 1-2 小时'
+      - value: 10
+        unit: '分钟'
+        what: '热水浴时长'
+        quote: '短到 10 分钟'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '短到 10 分钟'
+    steps:
+      - id: schedule-before-bed
+        text: '40-42.5℃ 热水浴安排在睡前 1-2 小时'
+        quote: '40-42.5℃ 热水浴安排在睡前 1-2 小时'
+      - id: ten-minute-bath
+        text: '短到 10 分钟'
+        quote: '短到 10 分钟'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 9e3c33a3e05fc694

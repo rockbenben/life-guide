@@ -1,0 +1,428 @@
+article: 'the-savvy-life-manual/life-hacks/picks-100.md'
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '精选修订版：穴位与鸡胸肉的新结论'
+      reason: '仅说明本册由说明书修订汇编而成并介绍收录两集内容，没有独立可执行动作；穴位与鸡胸肉的具体做法已分别抽卡。'
+  images: []
+cards:
+  - id: daily-acupressure-when-pain-free
+    status: reviewed
+    name: "不痛时提拉穴位"
+    source:
+      anchor: '穴位：痛的时候按，其实已经晚了一步'
+    slot: anytime
+    remind:
+      text: '不痛、没有症状时也每天按穴位'
+      quote: '在完全不痛、也没有症状的时候也按，才能把穴位的效果拉到最大'
+    effect:
+      text: '对 20 名偏头痛患者做了 8 周刺激发现神经活动发生改变的区域，很多都跟疼痛有关大脑从「对痛过度敏感」的状态，变成了「疼痛被控制住」的状态'
+      quote:
+        - '对 20 名偏头痛患者做了 8 周刺激'
+        - '发现神经活动发生改变的区域，很多都跟疼痛有关'
+        - '大脑从「对痛过度敏感」的状态，变成了「疼痛被控制住」的状态'
+    steps:
+      - id: press-during-pain-free-time
+        text: '在完全不痛、也没有症状的时候也按，才能把穴位的效果拉到最大'
+        quote: '在完全不痛、也没有症状的时候也按，才能把穴位的效果拉到最大'
+      - id: repeat-safe-stimulus
+        text: '在不痛的时候反复给刺激，大脑会学会「就算有刺激也是安全的」，兴奋随之被镇住，神经的工作方式也就变了'
+        quote: '在不痛的时候反复给刺激，大脑会学会「就算有刺激也是安全的」，兴奋随之被镇住，神经的工作方式也就变了'
+      - id: use-pain-relief-differently
+        text: '痛的时候按——刺激穴位让血流上升，血液把肌肉里堆积的老废物冲走，于是痛感缓解'
+        quote: '痛的时候按——刺激穴位让血流上升，血液把肌肉里堆积的老废物冲走，于是痛感缓解'
+    cautions:
+      - level: info
+        text: '力度只要「痛但舒服」的程度。'
+        quote: '力度只要「痛但舒服」的程度。'
+      - level: stop
+        text: '按得太重可能适得其反，产生反效果'
+        quote: '按得太重可能适得其反，产生反效果'
+      - level: with-doctor
+        text: '穴位不能治好所有病和所有症状。说明书要求和西医好好配合，把它当成保持健康的助力'
+        quote:
+          - '穴位不能治好所有病和所有症状。'
+          - '说明书要求和西医好好配合，把它当成保持健康的助力'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: fba064ad1db1daca
+
+  - id: headache-acupoint-shortlist
+    status: reviewed
+    name: "头痛时提拉这 7 个穴位"
+    source:
+      anchor: '穴位：痛的时候按，其实已经晚了一步'
+    slot: anytime
+    remind:
+      text: '提拉穴位中，百会、太阳、上星、风池、攒竹、完骨、神门已知对头痛也有效'
+      quote:
+        - '用红色标出的 7 个'
+        - '已知对头痛也有效'
+        - '百会、太阳、上星、风池、攒竹、完骨、神门'
+    steps:
+      - id: identify-red-marked-points
+        text: '书里给出一张由东京有明医疗大学教授、针灸师安野富美子监修的「提拉」穴位表，共 12 个，其中用红色标出的 7 个是已知对头痛也有效'
+        quote: '书里给出一张由东京有明医疗大学教授、针灸师安野富美子监修的「提拉」穴位表，共 12 个，其中用红色标出的 7 个是已知对头痛也有效'
+      - id: identify-headache-points
+        text: '已知对头痛也有效百会、太阳、上星、风池、攒竹、完骨、神门'
+        quote:
+          - '已知对头痛也有效'
+          - '百会、太阳、上星、风池、攒竹、完骨、神门'
+      - id: distinguish-other-points
+        text: '其余 5 个颊车、翳风、肺、巨髎、颧髎'
+        quote:
+          - '其余 5 个'
+          - '颊车、翳风、肺、巨髎、颧髎'
+    cautions:
+      - level: info
+        text: '力度只要「痛但舒服」的程度。'
+        quote: '力度只要「痛但舒服」的程度。'
+      - level: with-doctor
+        text: '穴位不能治好所有病和所有症状。说明书要求和西医好好配合，把它当成保持健康的助力'
+        quote:
+          - '穴位不能治好所有病和所有症状。'
+          - '说明书要求和西医好好配合，把它当成保持健康的助力'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: b03633af744c490f
+
+  - id: morning-hegu
+    status: reviewed
+    source:
+      anchor: '三个想每天都按的穴位'
+    slot: morning
+    remind:
+      text: '早上合谷醒神、清爽'
+      quote:
+        - '早上'
+        - '合谷'
+        - '醒神、清爽'
+    steps:
+      - id: locate-hegu
+        text: '合谷拇指和食指的骨交叉处、偏向食指的那个凹陷'
+        quote:
+          - '合谷'
+          - '拇指和食指的骨交叉处、偏向食指的那个凹陷'
+    cautions:
+      - level: info
+        text: '力度只要「痛但舒服」的程度。'
+        quote: '力度只要「痛但舒服」的程度。'
+      - level: with-doctor
+        text: '穴位不能治好所有病和所有症状。说明书要求和西医好好配合，把它当成保持健康的助力'
+        quote:
+          - '穴位不能治好所有病和所有症状。'
+          - '说明书要求和西医好好配合，把它当成保持健康的助力'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a0fd5ebfe2ca0cb0
+    name: 早上按合谷醒神
+
+  - id: daytime-baihui
+    status: reviewed
+    name: "中午按头顶百会穴提集中力"
+    source:
+      anchor: '三个想每天都按的穴位'
+    slot: daytime
+    remind:
+      text: '中午百会集中力提升'
+      quote:
+        - '中午'
+        - '百会'
+        - '集中力提升'
+    steps:
+      - id: locate-baihui
+        text: '百会两耳最高点连成的线，与鼻梁中线的交汇处'
+        quote:
+          - '百会'
+          - '两耳最高点连成的线，与鼻梁中线的交汇处'
+    cautions:
+      - level: info
+        text: '力度只要「痛但舒服」的程度。'
+        quote: '力度只要「痛但舒服」的程度。'
+      - level: with-doctor
+        text: '穴位不能治好所有病和所有症状。说明书要求和西医好好配合，把它当成保持健康的助力'
+        quote:
+          - '穴位不能治好所有病和所有症状。'
+          - '说明书要求和西医好好配合，把它当成保持健康的助力'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7338a6f81b8fb2c2
+
+  - id: evening-neiguan
+    status: reviewed
+    name: "晚上按手腕内关穴助眠"
+    source:
+      anchor: '三个想每天都按的穴位'
+    slot: evening
+    remind:
+      text: '晚上内关安睡；对恶心、胃痛也有效'
+      quote:
+        - '晚上'
+        - '内关'
+        - '安睡；对恶心、胃痛也有效'
+    steps:
+      - id: locate-neiguan
+        text: '内关手腕横纹往里约三指宽（图中标注「指幅 3 本分」）'
+        quote:
+          - '内关'
+          - '手腕横纹往里约三指宽'
+          - '（图中标注「指幅 3 本分」）'
+    cautions:
+      - level: info
+        text: '力度只要「痛但舒服」的程度。'
+        quote: '力度只要「痛但舒服」的程度。'
+      - level: with-doctor
+        text: '穴位不能治好所有病和所有症状。说明书要求和西医好好配合，把它当成保持健康的助力'
+        quote:
+          - '穴位不能治好所有病和所有症状。'
+          - '说明书要求和西医好好配合，把它当成保持健康的助力'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d95255d112563864
+
+  - id: wind-pool-neck-shoulder
+    status: reviewed
+    name: "按风池穴"
+    source:
+      anchor: '头痛专门穴：风池，以及两条别踩的线'
+    slot: anytime
+    remind:
+      text: '按风池，它对颈部僵硬和肩部僵硬也有效'
+      quote:
+        - '风池'
+        - '后脑勺、发际线附近的凹陷处'
+        - '对颈部僵硬和肩部僵硬也有效'
+    steps:
+      - id: locate-wind-pool
+        text: '风池后脑勺、发际线附近的凹陷处'
+        quote:
+          - '风池'
+          - '后脑勺、发际线附近的凹陷处'
+    cautions:
+      - level: info
+        text: '力度只要「痛但舒服」的程度。'
+        quote: '力度只要「痛但舒服」的程度。'
+      - level: stop
+        text: '就算怎么都不舒服的时候，也别下死手按得太重可能适得其反，产生反效果'
+        quote:
+          - '就算怎么都不舒服的时候，也别下死手'
+          - '按得太重可能适得其反，产生反效果'
+      - level: with-doctor
+        text: '穴位不能治好所有病和所有症状。说明书要求和西医好好配合，把它当成保持健康的助力'
+        quote:
+          - '穴位不能治好所有病和所有症状。'
+          - '说明书要求和西医好好配合，把它当成保持健康的助力'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 8632e0953cca28f8
+
+  - id: shake-chicken-breast
+    status: reviewed
+    source:
+      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
+    slot: anytime
+    remind:
+      text: '用沙沙摇腌鸡胸肉，牛奶和盐先混匀，装袋灌满空气后摇，再加热'
+      quote:
+        - '沙沙摇（摇动）鸡胸肉'
+        - '先把牛奶和盐放进袋子里混匀'
+        - '鸡肉放进袋中，把空气尽量灌满，然后封好袋口'
+        - '沙沙摇 1 分钟'
+        - '摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。'
+    effect:
+      text: '全程不揉水分和鲜味成分不会被挤出去牛奶能均匀地走遍全身'
+      quote:
+        - '全程不揉'
+        - '水分和鲜味成分不会被挤出去'
+        - '牛奶能均匀地走遍全身'
+    dose:
+      - value: 300
+        unit: '克'
+        what: '鸡胸肉每盒约用量'
+        quote: '鸡胸肉 1 盒（约 300g）'
+      - value: 3
+        unit: '大勺'
+        what: '牛奶用量'
+        quote: '牛奶 3 大勺'
+      - value: 1.5
+        valueMax: 3
+        unit: '克'
+        what: '盐用量'
+        quote: '盐 1.5～3g'
+    duration:
+      basis: derived
+      sec: 60
+      quote: '沙沙摇 1 分钟'
+      formula: '1 分钟 × 60 秒/分钟 = 60 秒'
+    steps:
+      - id: prepare-ingredients
+        text: '鸡胸肉 1 盒（约 300g）牛奶 3 大勺盐 1.5～3g'
+        quote:
+          - '鸡胸肉 1 盒（约 300g）'
+          - '牛奶 3 大勺'
+          - '盐 1.5～3g'
+      - id: mix-milk-and-salt
+        text: '先把牛奶和盐放进袋子里混匀'
+        quote: '先把牛奶和盐放进袋子里混匀'
+      - id: add-chicken-and-air
+        text: '鸡肉放进袋中，把空气尽量灌满，然后封好袋口'
+        quote: '鸡肉放进袋中，把空气尽量灌满，然后封好袋口'
+      - id: shake-one-minute
+        text: '沙沙摇 1 分钟'
+        quote: '沙沙摇 1 分钟'
+      - id: cook-thoroughly
+        text: '摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。'
+        quote: '摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。'
+    cautions:
+      - level: info
+        text: '盐同时负责调味，按自己口味调整'
+        quote: '盐同时负责调味，按自己口味调整'
+      - level: info
+        text: '想更嫩就先彻底加热熟透'
+        quote: '想更嫩就先彻底加热熟透'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6ecdc40d026551a5
+    name: 摇匀腌鸡胸肉
+
+  - id: bag-knead-vs-shake
+    status: reviewed
+    source:
+      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
+    slot: anytime
+    remind:
+      text: '鸡胸肉用晃而不是袋揉，避免把肉里的汁水挤出去'
+      quote:
+        - '袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去'
+        - '「沙沙摇（摇动）鸡胸肉」'
+        - '做法就是往袋里灌满空气，然后晃。仅此而已。'
+    effect:
+      text: '袋揉比手揉少 13%。每 100g 鸡胸肉吸收的牛奶量手揉9.1g袋揉7.9g相对手揉的吸收量沙沙摇94%'
+      quote:
+        - '袋揉比手揉少 13%。'
+        - '每 100g 鸡胸肉吸收的牛奶量'
+        - '手揉'
+        - '9.1g'
+        - '袋揉'
+        - '7.9g'
+        - '相对手揉的吸收量'
+        - '沙沙摇'
+        - '94%'
+    steps:
+      - id: avoid-bag-kneading
+        text: '袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去'
+        quote: '袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去'
+      - id: shake-without-kneading
+        text: '做法就是往袋里灌满空气，然后晃。仅此而已。全程不揉'
+        quote:
+          - '做法就是往袋里灌满空气，然后晃。仅此而已。'
+          - '全程不揉'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 889d57f0f8b4e3eb
+    name: 用摇代替袋揉
+
+  - id: bag-seasoning-menu
+    status: reviewed
+    source:
+      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
+    slot: anytime
+    remind:
+      text: '调味也在袋子里一次完成，按固定步骤操作'
+      quote:
+        - '调味也能在袋子里一次做完'
+        - '固定四步'
+        - '先做沙沙摇'
+        - '往袋里加调味料摇匀'
+        - '再加 1 大勺玉米淀粉摇匀'
+        - '取出加热'
+    dose:
+      - value: 300
+        unit: '克'
+        what: '每份鸡胸肉约用量'
+        quote: '鸡胸肉 1 盒（约 300g）'
+      - value: 1
+        unit: '大勺'
+        what: '玉米淀粉用量'
+        quote: '再加 1 大勺玉米淀粉摇匀'
+    steps:
+      - id: choose-seasoning-menu
+        text: 'A 辣酱B 紫苏粉C 青海苔D 橘子酱E 蒜香蛋黄酱'
+        quote:
+          - 'A 辣酱'
+          - 'B 紫苏粉'
+          - 'C 青海苔'
+          - 'D 橘子酱'
+          - 'E 蒜香蛋黄酱'
+      - id: add-menu-seasoning
+        text: '辣酱 2 小勺、蒜蓉 1 小勺、酱油 1 小勺紫苏粉 1 小勺、姜蓉 1 小勺、紫苏粉少许（加热后按口味加）青海苔 2 小勺、酱油 1 小勺橘子酱 1 大勺半、酱油 2 小勺蛋黄酱 1 大勺、蒜蓉 1 小勺、酱油 1 小勺'
+        quote:
+          - '辣酱 2 小勺、蒜蓉 1 小勺、酱油 1 小勺'
+          - '紫苏粉 1 小勺、姜蓉 1 小勺、紫苏粉少许（加热后按口味加）'
+          - '青海苔 2 小勺、酱油 1 小勺'
+          - '橘子酱 1 大勺半、酱油 2 小勺'
+          - '蛋黄酱 1 大勺、蒜蓉 1 小勺、酱油 1 小勺'
+      - id: shake-before-seasoning
+        text: '先做沙沙摇'
+        quote: '先做沙沙摇'
+      - id: shake-seasoning
+        text: '往袋里加调味料摇匀'
+        quote: '往袋里加调味料摇匀'
+      - id: add-cornstarch
+        text: '再加 1 大勺玉米淀粉摇匀'
+        quote: '再加 1 大勺玉米淀粉摇匀'
+      - id: remove-and-heat
+        text: '取出加热（烤、炸都行）'
+        quote:
+          - '取出加热'
+          - '（烤、炸都行）'
+    cautions:
+      - level: info
+        text: '盐同时负责调味，按自己口味调整'
+        quote: '盐同时负责调味，按自己口味调整'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: adc51b806c768ebb
+    name: 在袋子里一次调味
+
+  - id: milk-meat-substitutions
+    status: reviewed
+    source:
+      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
+    slot: anytime
+    remind:
+      text: '换奶或换肉时按问答选择'
+      quote:
+        - '能用低脂奶或豆奶吗？'
+        - '这招对别的肉也管用吗？'
+    steps:
+      - id: consider-low-fat-milk
+        text: '低脂奶：脂肪含量越少，吸收量越有往下走的趋势'
+        quote: '低脂奶：脂肪含量越少，吸收量越有往下走的趋势'
+      - id: consider-soy-milk
+        text: '豆奶和牛奶一样含谷氨酸牛奶过敏的人可以考虑用豆奶'
+        quote:
+          - '豆奶'
+          - '和牛奶一样含谷氨酸'
+          - '牛奶过敏的人可以考虑用豆奶'
+      - id: choose-pork
+        text: '脂肪少的猪肉里脊这类推荐'
+        quote: '脂肪少的猪肉里脊这类推荐'
+      - id: avoid-unconfirmed-fish-use
+        text: '鱼类没有确认到效果'
+        quote: '鱼类没有确认到效果'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cc6f4504b79af8fe
+    name: 按问答换奶换肉

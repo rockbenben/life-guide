@@ -1,0 +1,142 @@
+article: the-savvy-life-manual/life-hacks/traffic.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '机票、接送机和火车票怎么买更省？'
+      reason: '本节是三条省钱路径及风险提示的总览，没有独立动作；相关时效性提醒和第三方软件风险已分别并入对应卡片。'
+  images: []
+cards:
+  - id: buy-flight-tickets-with-points
+    status: reviewed
+    source:
+      anchor: '买机票'
+    slot: anytime
+    remind:
+      text: '兑换机票前查询当前积分活动，确认加赠比例、有效期和兑换后的乘坐限制。'
+      quote:
+        - '查看'
+        - '当前进行中'
+        - '的积分兑换里程活动，确认加赠比例与有效期。'
+        - '同时看清是否要求兑换后乘坐同一航司。'
+    steps:
+      - id: register-points-account
+        text: '在银行 App（如壹钱包）注册并关联自己的积分账户。'
+        quote: '在银行 App（如壹钱包）注册并关联自己的积分账户。'
+      - id: check-points-campaign
+        text: '查看当前进行中的积分兑换里程活动，确认加赠比例与有效期。'
+        quote:
+          - '查看'
+          - '当前进行中'
+          - '的积分兑换里程活动，确认加赠比例与有效期。'
+      - id: convert-points-to-miles
+        text: '在活动有效期内，把积分换成目标航司的里程。'
+        quote: '在活动有效期内，把积分换成目标航司的里程。'
+      - id: redeem-airline-ticket
+        text: '用里程兑换机票，奖励票库存通常远早于起飞日期就开放一开放就该订——里程活动往往只持续几个月，早订比等临期更划算。'
+        quote:
+          - '用里程兑换机票，'
+          - '奖励票库存通常远早于起飞日期就开放'
+          - '一开放就该订——里程活动往往只持续几个月，早订比等临期更划算。'
+    cautions:
+      - level: info
+        text: '活动截止日为 2025 年 6 月 30 日，现已结束。加赠比例必须以你查询时的官方活动页为准不要照搬下面的数字。'
+        quote:
+          - '活动截止日为 2025 年 6 月 30 日，现已结束。'
+          - '加赠比例必须以你查询时的官方活动页为准'
+          - '不要照搬下面的数字。'
+      - level: stop
+        text: '不要在闲鱼/淘宝购买航空类积分多数积分体系的积分不可转让、不可继承，买来的积分来源不明，可能导致账户被冻结或兑换被拒。'
+        quote:
+          - '不要在闲鱼/淘宝购买航空类积分'
+          - '多数积分体系的积分不可转让、不可继承，买来的积分来源不明，可能导致账户被冻结或兑换被拒。'
+      - level: info
+        text: '同时看清是否要求兑换后乘坐同一航司。'
+        quote: '同时看清是否要求兑换后乘坐同一航司。'
+      - level: info
+        text: '同时注意：部分活动要求非首次添加受益人、或需满足一定乘机记录才即时生效。'
+        quote: '同时注意：部分活动要求非首次添加受益人、或需满足一定乘机记录才即时生效。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 33564828ed8af03c
+    name: 用积分换机票
+  - id: choose-airport-transfer-service
+    status: reviewed
+    source:
+      anchor: '接送机'
+    slot: anytime
+    remind:
+      text: '没有官方接送机权益时，比较接送机服务与打车价格，并先确认联系渠道。'
+      quote:
+        - '如果没有官方渠道的接送机权益，也可以在二手平台购买「接送机服务」'
+        - '高峰和夜间时段通常比打车便宜'
+        - '白天的打车费用也基本与接送机持平'
+    steps:
+      - id: compare-transfer-cost
+        text: '高峰和夜间时段通常比打车便宜白天的打车费用也基本与接送机持平高峰或夜间时段打车往往更贵，而专车服务的体验也更稳定。'
+        quote:
+          - '高峰和夜间时段通常比打车便宜'
+          - '白天的打车费用也基本与接送机持平'
+          - '高峰或夜间时段打车往往更贵，而专车服务的体验也更稳定。'
+      - id: confirm-driver-contact
+        text: '务必确认司机通过你预留的手机号与你联系'
+        quote: '务必确认司机通过你预留的手机号与你联系'
+      - id: check-driver-details
+        text: '优先选择能提供车牌号、司机信息的商家，下单前先确认接送时段与车型。'
+        quote: '优先选择能提供车牌号、司机信息的商家，下单前先确认接送时段与车型。'
+    cautions:
+      - level: info
+        text: '务必确认司机通过你预留的手机号与你联系深夜联系不上，容易接错人或彼此错过。'
+        quote:
+          - '务必确认司机通过你预留的手机号与你联系'
+          - '深夜联系不上，容易接错人或彼此错过。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: eed069d993053568
+    name: 比较接送机与打车
+  - id: buy-train-tickets-with-official-waitlist
+    status: reviewed
+    source:
+      anchor: '火车购票'
+    slot: anytime
+    remind:
+      text: '优先使用铁路官方候补，提交后及时支付，并用官方 App 查询相邻车站。'
+      quote:
+        - '优先用 12306 官方候补'
+        - '第一时间提交候补并第一时间支付'
+        - '用官方 App 的多站查询'
+        - '把相邻车站加进来一起看'
+    steps:
+      - id: submit-official-waitlist
+        text: '起售即显示候补，通常说明这一区段确实没放票，但仍有后续机会——关键是第一时间提交候补并第一时间支付候补按支付时间排位。'
+        quote:
+          - '起售即显示候补，通常说明这一区段确实没放票，但仍有后续机会——关键是'
+          - '第一时间提交候补并第一时间支付'
+          - '候补按支付时间排位。'
+      - id: refresh-while-waiting
+        text: '候补和刷票不冲突，建议同时进行保持耐心直到截止时间。'
+        quote:
+          - '候补和刷票不冲突，建议同时进行'
+          - '保持耐心直到截止时间。'
+      - id: search-nearby-stations
+        text: '用官方 App 的多站查询把相邻车站加进来一起看，常常能多出一段可用票源。'
+        quote:
+          - '用官方 App 的多站查询'
+          - '把相邻车站加进来一起看，常常能多出一段可用票源。'
+      - id: choose-blue-berth-train
+        text: '车次列表中蓝色的车次才支持选上下铺。'
+        quote: '车次列表中蓝色的车次才支持选上下铺。'
+    cautions:
+      - level: stop
+        text: '不建议使用第三方抢票软件'
+        quote: '不建议使用第三方抢票软件'
+      - level: stop
+        text: '需要把账号凭证交给第三方，存在信息泄露与账号异常风险，且不保证出票。'
+        quote: '需要把账号凭证交给第三方，存在信息泄露与账号异常风险，且不保证出票。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 2d5e262d1cf49fbe
+    name: 用官方候补买火车票

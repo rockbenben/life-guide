@@ -1,0 +1,315 @@
+article: the-savvy-life-manual/food/fried-food.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '炸物放凉就软塌？先拌油 + 冷藏一晚防飞溅'
+      reason: '文章总标题和导语只概述两项方法；具体动作已分别归入“先拌油”和“抑制油花飞溅”卡片，导语不另重复成卡。'
+    - anchor: '面衣变软，主因是水而不是油'
+      reason: '这一节解释水分导致面衣变软的机制并给出对照数据，没有新的独立可执行动作；可执行方法已在相关技术卡中覆盖。'
+  images: []
+cards:
+  - id: mix-oil-into-batter
+    status: reviewed
+    name: "面衣先拌油"
+    source:
+      anchor: '先拌油：让面衣少吸水的唯一开关'
+    slot: anytime
+    remind:
+      text: '调面衣时先把油拌进面粉，让油先在面粉中分布'
+      quote:
+        - '在裹面衣之前，先把油拌进面糊里'
+        - '先把油拌进面粉，油就像给面粉裹了一层防水膜，把水挡在外面'
+    effect:
+      text: '实测结果：用先拌油法炸的天妇罗，放置 10 分钟后面衣含水量为 12.5%'
+      quote: '实测结果：用先拌油法炸的天妇罗，放置 10 分钟后面衣含水量为 12.5%'
+    steps:
+      - id: mix-oil-first
+        text: '在裹面衣之前，先把油拌进面糊里'
+        quote: '在裹面衣之前，先把油拌进面糊里'
+      - id: block-water-with-oil
+        text: '先把油拌进面粉，油就像给面粉裹了一层防水膜，把水挡在外面'
+        quote: '先把油拌进面粉，油就像给面粉裹了一层防水膜，把水挡在外面'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 74f87d0930d57779
+
+  - id: overnight-dry-ingredients
+    status: reviewed
+    source:
+      anchor: '抑制油花飞溅：食材要"过夜风干"'
+    slot: evening
+    remind:
+      text: '切好食材后不裹保鲜膜，平铺冷藏过夜'
+      quote:
+        - '把新鲜食材切好。'
+        - '平铺在托盘里，互相不要重叠。'
+        - '不裹保鲜膜，直接放进冰箱冷藏。'
+        - '放置一晚，即约 16 小时以上。'
+    effect:
+      text: '过夜晾干让水分适度流失、味道浓缩，意外地连油溅一起解决了。'
+      quote: '过夜晾干让水分适度流失、味道浓缩，意外地连油溅一起解决了。'
+    duration:
+      basis: quote
+      sec: 57600
+      quote: '放置一晚，即约 16 小时以上。'
+    steps:
+      - id: choose-suitable-ingredients
+        text: '鱿鱼、章鱼、虾等海产类——鲜味成分会得到浓缩芋头、莲藕等根茎类——糖分浓缩，风味更足'
+        quote:
+          - 鱿鱼、章鱼、虾等海产类——鲜味成分会得到浓缩
+          - 芋头、莲藕等根茎类——糖分浓缩，风味更足
+          - 适合处理的食材：
+      - id: cut-ingredients
+        text: '把新鲜食材切好。'
+        quote: '把新鲜食材切好。'
+      - id: spread-ingredients
+        text: '平铺在托盘里，互相不要重叠。'
+        quote: '平铺在托盘里，互相不要重叠。'
+      - id: chill-without-wrap
+        text: '不裹保鲜膜，直接放进冰箱冷藏。'
+        quote: '不裹保鲜膜，直接放进冰箱冷藏。'
+      - id: chill-ingredients-overnight
+        text: '放置一晚，即约 16 小时以上。'
+        quote:
+          - 放置一晚，即约 16 小时以上。
+          - 防软塌是在调面衣时先把油拌进面粉（先油法）——实测放置 10 分钟后面衣含水量 12.5%，已经逼近料亭的 10%；防油溅是把食材切好、平铺互不重叠、不裹保鲜膜冷藏一晚（约 16 小时以上），利用冰箱除湿让食材适度脱水。下面先给这两招、三份食谱和酥脆土豆，成因放在最后。^[「揚げ物」のトリセツ]
+    cautions:
+      - level: stop
+        text: '存放过久会产生气味、成为杂菌繁殖的原因，务必一晚后就烹调'
+        quote: '存放过久会产生气味、成为杂菌繁殖的原因，务必一晚后就烹调'
+      - level: info
+        text: '另外带加湿功能的冰箱可能没有效果，使用前请确认冰箱说明书。'
+        quote: '另外带加湿功能的冰箱可能没有效果，使用前请确认冰箱说明书。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 78536f1f3b553682
+
+  - id: tempura-recipe
+    status: reviewed
+    source:
+      anchor: '三份食谱'
+    slot: anytime
+    remind:
+      text: '调好面衣后，把食材薄裹防粘面粉，再蘸面衣下锅炸'
+      quote:
+        - '把油和水混合均匀，再加入低筋面粉，搅拌成面衣。'
+        - '食材先薄薄裹一层防粘面粉，蘸上面衣，放入 180℃ 的油中炸。'
+    dose:
+      - value: 100
+        unit: '克'
+        what: '面衣用低筋面粉'
+        quote: '100g'
+      - value: 180
+        unit: '毫升'
+        what: '面衣用水量'
+        quote: '180ml'
+      - value: 40
+        unit: '克'
+        what: '面衣用油量'
+        quote: '40g'
+    steps:
+      - id: tempura-mix-batter
+        text: '把油和水混合均匀，再加入低筋面粉，搅拌成面衣。'
+        quote: '把油和水混合均匀，再加入低筋面粉，搅拌成面衣。'
+      - id: tempura-coat-ingredients
+        text: '食材先薄薄裹一层防粘面粉'
+        quote: '食材先薄薄裹一层防粘面粉'
+      - id: tempura-fry
+        text: '食材先薄薄裹一层防粘面粉，蘸上面衣，放入 180℃ 的油中炸。'
+        quote: '食材先薄薄裹一层防粘面粉，蘸上面衣，放入 180℃ 的油中炸。'
+      - id: tempura-check-color
+        text: '面衣边缘微微变成茶色即可。'
+        quote: '面衣边缘微微变成茶色即可。'
+      - id: tempura-fry-to-target
+        text: '炸制时间目标：蔬菜约 3 分钟，鱼贝类约 1 分～1 分 30 秒。'
+        quote: '炸制时间目标：蔬菜约 3 分钟，鱼贝类约 1 分～1 分 30 秒。'
+      - id: tempura-fry-slightly-longer
+        text: '比平时稍微多炸一会儿（时间略长一点），正是保持酥脆的要点。'
+        quote: '比平时稍微多炸一会儿（时间略长一点），正是保持酥脆的要点。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 30e49e27fab02d42
+    name: 炸物薄裹面衣再下锅
+    variants:
+      busy:
+        include:
+          - tempura-mix-batter
+          - tempura-coat-ingredients
+          - tempura-fry
+
+  - id: fried-chicken-recipe
+    status: reviewed
+    source:
+      anchor: '三份食谱'
+    slot: anytime
+    remind:
+      text: '鸡腿肉切块后先用调料揉搓，再薄裹面粉复炸'
+      quote:
+        - '鸡腿肉切成一口大小。'
+        - '鸡肉和调料（酱油、酒、姜蓉、油）放入塑料袋，揉搓到不粘粉的程度。'
+        - '在②的鸡肉上薄薄裹一层面粉，放入 160～170℃ 的油中炸约 4 分钟，先取出。'
+        - '把油温升到 180℃，将③再炸约 2 分钟。'
+    dose:
+      - value: 1
+        unit: '块'
+        what: '鸡腿肉用量'
+        quote: '1 块（约 300g）'
+      - value: 300
+        unit: '克'
+        what: '鸡腿肉约重量'
+        quote: '约 300g'
+      - value: 2
+        unit: '大勺弱'
+        what: '酱油用量'
+        quote: '2 大勺弱'
+      - value: 2
+        unit: '大勺弱'
+        what: '酒用量'
+        quote: '2 大勺弱'
+      - value: 3
+        unit: '大勺'
+        what: '腌制用油量'
+        quote: '3 大勺'
+      - value: 4
+        unit: '大勺'
+        what: '低筋面粉用量'
+        quote: '4 大勺'
+    duration:
+      basis: derived
+      sec: 360
+      formula: '约 4 分钟 × 60 秒 + 约 2 分钟 × 60 秒 = 约 360 秒'
+    steps:
+      - id: fried-chicken-cut
+        text: '鸡腿肉切成一口大小。'
+        quote: '鸡腿肉切成一口大小。'
+      - id: fried-chicken-marinate
+        text: '鸡肉和调料（酱油、酒、姜蓉、油）放入塑料袋，揉搓到不粘粉的程度。'
+        quote: '鸡肉和调料（酱油、酒、姜蓉、油）放入塑料袋，揉搓到不粘粉的程度。'
+      - id: fried-chicken-first-fry
+        text: '在的鸡肉上薄薄裹一层面粉，放入 160～170℃ 的油中炸约 4 分钟，先取出。'
+        quote: '在②的鸡肉上薄薄裹一层面粉，放入 160～170℃ 的油中炸约 4 分钟，先取出。'
+      - id: fried-chicken-second-fry
+        text: '把油温升到 180℃，将再炸约 2 分钟。'
+        quote: '把油温升到 180℃，将③再炸约 2 分钟。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: eacbac5c8b0b58a3
+    name: 做薄裹面衣炸鸡
+
+  - id: onion-rings-recipe
+    status: reviewed
+    source:
+      anchor: '三份食谱'
+    slot: anytime
+    remind:
+      text: '调好面衣后，把洋葱切环、薄裹防粘面粉，再蘸面衣炸制'
+      quote:
+        - '把油和水混合均匀，加入低筋面粉，搅拌成面衣。'
+        - '洋葱切成约 1cm 厚的圆环，薄薄裹上防粘面粉。'
+        - '③蘸上面衣，放入 170℃ 的油中，炸至面衣上色，约 3～4 分钟。'
+    dose:
+      - value: 1
+        unit: '个'
+        what: '洋葱用量'
+        quote: '1 个'
+      - value: 100
+        unit: '克'
+        what: '面衣用低筋面粉'
+        quote: '100g'
+      - value: 40
+        unit: '克'
+        what: '面衣用油量'
+        quote: '40g（约 3 大勺）'
+      - value: 110
+        unit: '毫升'
+        what: '面衣用水量'
+        quote: '110ml'
+      - value: 1.5
+        unit: '小勺'
+        what: '鸡精颗粒用量'
+        derived:
+          formula: 1 小勺半 小勺 = 1.5 小勺
+        quote: '1 小勺半（5g）'
+      - value: 0.5
+        unit: '小勺'
+        what: '盐用量'
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: '1/2 小勺（2.5g）'
+    steps:
+      - id: onion-ring-mix-batter
+        text: '把油和水混合均匀，加入低筋面粉，搅拌成面衣。'
+        quote: '把油和水混合均匀，加入低筋面粉，搅拌成面衣。'
+      - id: onion-ring-season-batter
+        text: '在的面衣中加入鸡精颗粒和盐，搅拌均匀。'
+        quote: '在①的面衣中加入鸡精颗粒和盐，搅拌均匀。'
+      - id: onion-ring-use-spices
+        text: '把第 2 步里的鸡精颗粒和盐换成香料，就是一份香料味的炸物面衣。'
+        quote: '把第 2 步里的鸡精颗粒和盐换成香料，就是一份香料味的炸物面衣。'
+      - id: onion-ring-cut-and-coat
+        text: '洋葱切成约 1cm 厚的圆环，薄薄裹上防粘面粉。'
+        quote: '洋葱切成约 1cm 厚的圆环，薄薄裹上防粘面粉。'
+      - id: onion-ring-fry
+        text: '蘸上面衣，放入 170℃ 的油中，炸至面衣上色，约 3～4 分钟。'
+        quote: '③蘸上面衣，放入 170℃ 的油中，炸至面衣上色，约 3～4 分钟。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 5dae9f6bc5ff5d9e
+    name: 做洋葱圈
+
+  - id: crispy-potatoes
+    status: reviewed
+    source:
+      anchor: '附：酥脆土豆'
+    slot: anytime
+    remind:
+      text: '土豆切块后先微波加热，再冷冻并分阶段炸制'
+      quote:
+        - 这道「酥脆土豆」用的是冷冻油炸法，冷冻过的土豆内部水分结冰后炸出来格外酥松。
+        - 长崎县对马市一家海鲜食堂的炸鱿鱼很特别——味道浓而且非常甜，而且整个炸制过程完全不溅油。秘密是对马的传统做法——把鱿鱼过夜晾干：当地用一种专用的旋转脱水装置把鱿鱼晾上一夜。
+    dose:
+      - value: 2
+        unit: '个'
+        what: '带皮土豆用量'
+        quote: '带皮土豆 2 个（约 260g）'
+      - value: 260
+        unit: '克'
+        what: '带皮土豆约重量'
+        quote: '约 260g'
+    steps:
+      - id: potato-cut
+        text: '土豆切得厚一些——6～8 等分的条状，或 1.5cm 见方的滚刀块。'
+        quote: '土豆切得厚一些——6～8 等分的条状，或 1.5cm 见方的滚刀块。'
+      - id: potato-microwave
+        text: '铺在耐热盘上，轻轻盖上保鲜膜，用微波炉 600W 加热 4 分 30 秒。'
+        quote: '铺在耐热盘上，轻轻盖上保鲜膜，用微波炉 600W 加热 4 分 30 秒。'
+      - id: potato-cool
+        text: '加热后取下保鲜膜，放至不烫手。'
+        quote: '加热后取下保鲜膜，放至不烫手。'
+      - id: potato-freeze
+        text: '放凉后整体用保鲜膜包好，冷冻保存。'
+        quote: '放凉后整体用保鲜膜包好，冷冻保存。'
+      - id: potato-first-fry
+        text: '油温调到常温，把冻结状态的土豆下锅，大火炸约 3 分钟。'
+        quote: '油温调到常温，把冻结状态的土豆下锅，大火炸约 3 分钟。'
+      - id: potato-second-fry
+        text: '油面翻滚沸腾后，调到弱火与中火之间的火力，再炸 12 分钟。'
+        quote: '油面翻滚沸腾后，调到弱火与中火之间的火力，再炸 12 分钟。'
+      - id: potato-final-fry
+        text: '捞出静置约 3 分钟，再回锅用大火炸约 1 分钟，完成。'
+        quote: '捞出静置约 3 分钟，再回锅用大火炸约 1 分钟，完成。'
+    cautions:
+      - level: info
+        text: '加热过程中粘在一起的土豆，要随时分开。'
+        quote: '加热过程中粘在一起的土豆，要随时分开。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 99355e78e513063b
+    name: 做外酥土豆

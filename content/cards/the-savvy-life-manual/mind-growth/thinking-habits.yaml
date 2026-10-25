@@ -1,0 +1,153 @@
+article: the-savvy-life-manual/mind-growth/thinking-habits.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '诈骗、谣言与争吵的共同根源'
+      reason: '开篇说明诈骗、谣言、争执与思考习惯的共同根源，属于背景导入，没有可独立执行的动作。'
+    - anchor: '越听越像真的：「单纯接触效果」的实测'
+      reason: '本节用实验说明重复接触会增强相信程度，属于机制与实验说明；知道机制后的行动已由“知道脑习惯”卡承载。'
+    - anchor: '骗子怎么利用它'
+      reason: '本节解释骗子如何利用重复接触效应，没有给出文章中的防骗操作步骤。'
+    - anchor: '夫妻吵架的根源：自我中心偏差'
+      reason: '本节解释自我中心偏差及疲劳时的增强效应；对应的“只记录客观事实”动作已放入语言化卡。'
+    - anchor: '背景：系统 1 与系统 2 的拉锯'
+      reason: '本节解释系统 1 与系统 2 的运作机制，不含独立动作。'
+    - anchor: '扁桃体：太古的警报器在现代失灵'
+      reason: '本节解释扁桃体在现代环境中的作用与误触发机制，不含独立动作。'
+    - anchor: '册子没有说的几件事'
+      reason: '本节集中列出实验和迁移到日常场景的证据限制；相关限制已写入各动作卡的 cautions，不另做动作卡。'
+  images: []
+cards:
+  - id: pause-before-acting
+    status: reviewed
+    source:
+      anchor: '两个能立刻上手的对策'
+    slot: anytime
+    remind:
+      text: '在社交媒体上感到恐惧或愤怒，或觉得「总是只有我」时，先暂停至少 5 秒再行动'
+      quote:
+        - '适用于在社交媒体上感到恐惧或愤怒、以及在人际关系里觉得「总是只有我」的场合'
+        - '总之用「5 秒以上」的时间想着别的事情'
+    effect:
+      text: '光是这样就能缓和系统 1（直觉）的暴走'
+      quote: '光是这样就能缓和系统 1（直觉）的暴走'
+    dose:
+      - value: 5
+        unit: '秒'
+        what: '转移注意力的最短时间'
+        quote: '用「5 秒以上」的时间想着别的事情'
+    duration:
+      basis: quote
+      sec: 5
+      quote: '用「5 秒以上」的时间想着别的事情'
+    steps:
+      - id: shift-attention
+        text: '把手机扣下、深呼吸、或者先去做别的事'
+        quote: '把手机扣下、深呼吸、或者先去做别的事'
+      - id: wait-and-think
+        text: '用「5 秒以上」的时间想着别的事情'
+        quote: '用「5 秒以上」的时间想着别的事情'
+    cautions:
+      - level: info
+        text: '飞行员训练的 1.5 秒是航空领域的做法，册子没有提供把它迁移到日常情绪场景的验证数据'
+        quote: '飞行员训练的 1.5 秒是航空领域的做法，册子没有提供把它迁移到日常情绪场景的验证数据'
+      - level: info
+        text: '就算采取了对策，「脑习惯」也不可能完全消失'
+        quote: '就算采取了对策，「脑习惯」也不可能完全消失'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b2433b417e695307
+    name: 先暂停 5 秒再行动
+  - id: language-express-thinking
+    status: reviewed
+    source:
+      anchor: '两个能立刻上手的对策'
+    slot: anytime
+    remind:
+      text: '想冷静时写下情绪被触动的原因；想理解对方时，只记录客观事实'
+      quote:
+        - '想让自己冷静下来'
+        - '写「为什么这份情绪被触动了」'
+        - '想理解对方的感受和处境'
+        - '把情绪抽掉，只记录「客观事实」'
+    effect:
+      text: '把思考语言化并加以理解，会让系统 2（逻辑思考）活跃起来'
+      quote: '把思考语言化并加以理解，会让系统 2（逻辑思考）活跃起来'
+    steps:
+      - id: write-emotion-trigger
+        text: '写「为什么这份情绪被触动了」'
+        quote: '写「为什么这份情绪被触动了」'
+      - id: record-objective-facts
+        text: '把情绪抽掉，只记录「客观事实」'
+        quote:
+          - 把情绪抽掉，只记录「客观事实」
+          - 想理解对方的感受和处境的时候，把情绪抽掉，只记录「客观事实」。
+    cautions:
+      - level: info
+        text: '疲劳的时候，这个偏差会格外强烈'
+        quote: '疲劳的时候，这个偏差会格外强烈'
+      - level: info
+        text: '大阪府那所小学的实验只写了「成功看穿魔术」，没有给出人数与对照'
+        quote: '大阪府那所小学的实验只写了「成功看穿魔术」，没有给出人数与对照'
+      - level: info
+        text: '就算采取了对策，「脑习惯」也不可能完全消失'
+        quote: '就算采取了对策，「脑习惯」也不可能完全消失'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a5ab0a77834d400c
+    name: 写下情绪或只记事实
+  - id: coexist-with-brain-habit
+    status: reviewed
+    source:
+      anchor: '一条必须记住的注意'
+    slot: anytime
+    remind:
+      text: '接受「脑习惯」不会完全消失，学会和它相处'
+      quote:
+        - '就算采取了对策，「脑习惯」也不可能完全消失'
+        - '只能学会和它相处'
+    steps:
+      - id: accept-persistence
+        text: '就算采取了对策，「脑习惯」也不可能完全消失'
+        quote: '就算采取了对策，「脑习惯」也不可能完全消失'
+      - id: learn-to-coexist
+        text: '为了让人活下来而配备的机制只能学会和它相处'
+        quote:
+          - '为了让人活下来而配备的机制'
+          - '只能学会和它相处'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: cd89f70ea5241b43
+  - id: know-brain-habit
+    status: reviewed
+    name: "知道脑习惯少被谣言带"
+    source:
+      anchor: '光是「知道」也有用'
+    slot: anytime
+    remind:
+      text: '接触材料前先知道「脑习惯」存在，并留意它对情绪和谣言的影响'
+      quote:
+        - '这次先告诉受试者「脑习惯」的存在，再让他们读材料'
+        - '光是知道「脑习惯」存在，就足以减轻被情绪和谣言牵着走的程度'
+    effect:
+      text: '光是知道「脑习惯」存在，就足以减轻被情绪和谣言牵着走的程度'
+      quote: '光是知道「脑习惯」存在，就足以减轻被情绪和谣言牵着走的程度'
+    steps:
+      - id: learn-about-brain-habit
+        text: '这次先告诉受试者「脑习惯」的存在，再让他们读材料'
+        quote: '这次先告诉受试者「脑习惯」的存在，再让他们读材料'
+      - id: use-as-background
+        text: '光是知道「脑习惯」存在，就足以减轻被情绪和谣言牵着走的程度'
+        quote: '光是知道「脑习惯」存在，就足以减轻被情绪和谣言牵着走的程度'
+    cautions:
+      - level: info
+        text: '册子没有说明两组实验的受试者是否为同一批人（45 人）、没有给出统计显著性、也没有说明评分量表 1 到 6 的锚点是什么'
+        quote: '册子没有说明两组实验的受试者是否为同一批人（45 人）、没有给出统计显著性、也没有说明评分量表 1 到 6 的锚点是什么'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 52277171988b6efc

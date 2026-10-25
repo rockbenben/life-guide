@@ -1,0 +1,438 @@
+article: the-savvy-life-manual/food/tomato.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: sear-tomato-in-olive-oil
+    status: reviewed
+    name: "橄榄油煎番茄"
+    source:
+      anchor: "番茄煮出来没味道？用橄榄油煎透 3 分钟"
+    slot: anytime
+    remind:
+      text: "把日本番茄切成一口大小，用橄榄油煎透，不加水煮。"
+      quote: "日本番茄别加水煮，改用橄榄油一次煎透：橄榄油中火加热，放厚片蒜翻炒，1 分钟左右蒜开始变色时保持中火，下一口大小的番茄块，转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
+    dose:
+      - value: 1
+        unit: 分钟
+        what: "蒜片开始变色的等待时间"
+        quote: "1 分钟左右蒜开始变色时保持中火"
+      - value: 3
+        unit: 分钟
+        what: "番茄翻炒时长"
+        quote: "炒 3 分钟左右"
+    duration:
+      basis: quote
+      sec: 180
+      quote: "炒 3 分钟左右"
+    steps:
+      - id: heat-olive-oil-garlic
+        text: "橄榄油中火加热，放厚片蒜翻炒"
+        quote: "橄榄油中火加热，放厚片蒜翻炒"
+      - id: add-tomato-to-pan
+        text: "1 分钟左右蒜开始变色时保持中火，下一口大小的番茄块"
+        quote: "1 分钟左右蒜开始变色时保持中火，下一口大小的番茄块"
+      - id: sear-tomato
+        text: "转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
+        quote: "转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 72fe883a71423c47
+  - id: make-okuda-tomato-sauce
+    status: reviewed
+    source:
+      anchor: "奥田式番茄酱：油与番茄的平衡"
+    slot: anytime
+    remind:
+      text: "做番茄酱时，把油和番茄的量配平。"
+      quote: "油和番茄的量要配平，比例不能搞错。"
+    dose:
+      - value: 400
+        unit: g
+        what: "番茄用量"
+        quote: "番茄 400g（中果 2～3 个）"
+      - value: 90
+        unit: ml
+        what: "橄榄油用量"
+        quote: "橄榄油 90ml（约 6 大勺）"
+      - value: 1
+        unit: 瓣
+        what: "蒜用量"
+        quote: "蒜 1 瓣"
+      - value: 200
+        unit: g
+        what: "意大利面用量"
+        quote: "意大利面 200g（2 把）"
+      - value: 2
+        unit: L
+        what: "煮面用水量"
+        quote: "水 2L"
+      - value: 40
+        unit: g
+        what: "煮面用盐量"
+        quote: "盐 40g"
+      - value: 5
+        unit: g
+        what: "单独作酱汁时补加的盐量"
+        quote: "若不配面食单独当酱汁，加热中补 5g（1 小勺）盐"
+    steps:
+      - id: heat-garlic-deep-pot
+        text: "橄榄油中火加热，放入厚片蒜翻炒。炒的时候要使用尽量深的锅，防油飞溅。"
+        quote: "橄榄油中火加热，放入厚片蒜翻炒。炒的时候要使用尽量深的锅，防油飞溅。"
+      - id: add-covered-tomato
+        text: "1 分钟左右蒜开始变色时，保持中火，下一口大小的番茄块。油会飞溅，下锅时盖上锅盖更安全。"
+        quote:
+          - "1 分钟左右蒜开始变色时，保持中火，下一口大小的番茄块。"
+          - "油会飞溅，下锅时盖上锅盖更安全。"
+      - id: toss-tomato
+        text: "转强火交替操作：切、颠勺、转回火上，让油均匀走遍每一颗番茄。下锅的瞬间能听到「啾哇」的声音，这是关键；听不到就加大火。"
+        quote:
+          - "转强火交替操作：切、颠勺、转回火上，让油均匀走遍每一颗番茄。"
+          - "下锅的瞬间能听到「啾哇」的声音，这是关键；听不到就加大火。"
+      - id: reduce-sauce
+        text: "炒 3 分钟左右，达到「咕嘟咕嘟」的浓稠状态。不够浓稠：延长加热时间，或关火后前后各颠 20 秒。"
+        quote:
+          - "炒 3 分钟左右，达到「咕嘟咕嘟」的浓稠状态。"
+          - "不够浓稠：延长加热时间，或关火后前后各颠 20 秒。"
+      - id: season-sauce-alone
+        text: "若不配面食单独当酱汁，加热中补 5g（1 小勺）盐"
+        quote: "若不配面食单独当酱汁，加热中补 5g（1 小勺）盐"
+      - id: boil-pasta
+        text: "另起一锅，2L 水加 40g 盐（盐量按水量的 2%）煮开，下意大利面煮到断生。"
+        quote: "另起一锅，2L 水加 40g 盐（盐量按水量的 2%）煮开，下意大利面煮到断生。"
+      - id: mix-pasta
+        text: "留一点面汤不要倒干，把面放进酱汁里充分混合即可。"
+        quote: "留一点面汤不要倒干，把面放进酱汁里充分混合即可。"
+    cautions:
+      - level: info
+        text: "橄榄油 90ml 已超出「一天推荐摄入量约 50g」的基准，注意别吃过头。"
+        quote: "橄榄油 90ml 已超出「一天推荐摄入量约 50g」的基准，注意别吃过头。"
+      - level: info
+        text: "面不要另外加盐"
+        quote: "面不要另外加盐"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 40122deb0280164c
+  - id: use-tomato-paste
+    status: reviewed
+    source:
+      anchor: "番茄膏：万能调味料"
+    slot: anytime
+    remind:
+      text: "汤或炖菜缺番茄味时加入番茄膏，稍微煮一下让它入味。"
+      quote: "要补足整道菜的番茄味就加它。这东西稍微煮一下让它入味就行，用量按口味把握；节目组也提到，日本家庭买得最多的是偏淡的那一档。"
+    effect:
+      text: "它既是「浓郁番茄风味」，又是「久煮不变色的红褐色」——要补足整道菜的番茄味就加它。"
+      quote: "它既是「浓郁番茄风味」，又是「久煮不变色的红褐色」——要补足整道菜的番茄味就加它。"
+    steps:
+      - id: add-paste-to-dish
+        text: "从汤到炖菜几乎每道菜都放红色酱料，那就是番茄膏（トマトペースト）。要补足整道菜的番茄味就加它。"
+        quote:
+          - "从汤到炖菜几乎每道菜都放红色酱料，那就是番茄膏（トマトペースト）。"
+          - "要补足整道菜的番茄味就加它。"
+      - id: simmer-paste-briefly
+        text: "这东西稍微煮一下让它入味就行"
+        quote: "这东西稍微煮一下让它入味就行"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 1050f21f2fc705b1
+    name: 汤里加番茄膏提味
+  - id: make-tomato-butter-curry
+    status: reviewed
+    name: "用番茄膏煮鸡肉咖喱"
+    source:
+      anchor: "番茄膏：万能调味料"
+    slot: anytime
+    remind:
+      text: "用番茄膏、鸡肉和调味料同煮，关火后拌入黄油，5 分钟出锅。"
+      quote:
+        - "「加热只要 5 分钟」就能做出店里的味道。"
+        - "关火后拌入黄油，完成。"
+    dose:
+      - value: 200
+        unit: g
+        what: "鸡胸肉用量"
+        quote: "鸡肉 200g"
+      - value: 40
+        unit: g
+        what: "番茄膏用量"
+        quote: "番茄膏 40g"
+      - value: 2
+        unit: 小勺
+        what: "咖喱粉用量"
+        quote: "咖喱粉 2 小勺"
+      - value: 2
+        unit: 小勺
+        what: "砂糖用量"
+        quote: "砂糖 2 小勺"
+      - value: 1
+        unit: 小勺
+        what: "盐用量"
+        quote: "盐 1 小勺"
+      - value: 0.5
+        unit: 小勺
+        what: "姜用量"
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: "姜 1/2 小勺"
+      - value: 0.5
+        unit: 小勺
+        what: "蒜用量"
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: "蒜 1/2 小勺"
+      - value: 2
+        unit: 小勺
+        what: "橄榄油用量"
+        quote: "橄榄油 2 小勺"
+      - value: 200
+        unit: ml
+        what: "生奶油用量"
+        quote: "生奶油 200ml（乳脂含量 35% 以上）"
+      - value: 120
+        unit: ml
+        what: "水的用量"
+        quote: "水 120ml"
+      - value: 2
+        unit: 小勺
+        what: "醋用量"
+        quote: "醋 2 小勺"
+      - value: 20
+        unit: g
+        what: "黄油用量"
+        quote: "黄油 20g（关火后再拌入）"
+      - value: 35
+        unit: "%"
+        what: "生奶油乳脂含量"
+        quote: "生奶油 200ml（乳脂含量 35% 以上）"
+      - value: 1.5
+        unit: 分钟
+        what: "鸡胸肉强火炒制时长"
+        derived: { formula: "1 分半 = 1.5 分钟" }
+        quote: "强火炒 1 分半"
+      - value: 3.5
+        unit: 分钟
+        what: "加入B组后的煮制时长"
+        derived: { formula: "3 分半 = 3.5 分钟" }
+        quote: "边轻轻晃锅边继续煮 3 分半"
+    duration:
+      basis: quote
+      sec: 300
+      quote: "「加热只要 5 分钟」就能做出店里的味道。"
+    steps:
+      - id: dice-mix-chicken
+        text: "鸡胸肉切小丁，和 A 组材料充分拌匀。"
+        quote: "鸡胸肉切小丁，和 A 组材料充分拌匀。"
+      - id: sear-chicken
+        text: "煎锅倒橄榄油，强火炒 1 分半。"
+        quote: "煎锅倒橄榄油，强火炒 1 分半。"
+      - id: add-cream-mix
+        text: "加入 B 组（黄油除外），边轻轻晃锅边继续煮 3 分半。"
+        quote: "加入 B 组（黄油除外），边轻轻晃锅边继续煮 3 分半。"
+      - id: finish-curry
+        text: "关火后拌入黄油，完成。"
+        quote: "关火后拌入黄油，完成。"
+    cautions:
+      - level: info
+        text: "鸡肉切太大火不易熟透，务必切小。"
+        quote: "鸡肉切太大火不易熟透，务必切小。"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: bacfee848f227bb0
+  - id: make-pickled-daikon-tomato-sauce
+    status: reviewed
+    source:
+      anchor: "番茄膏：万能调味料"
+    slot: anytime
+    remind:
+      text: "把大根腌后浇上番茄膏酱汁，拌匀即可。"
+      quote: "大根上浇 2 大勺 C 酱，充分拌匀即可。"
+    dose:
+      - value: 200
+        unit: g
+        what: "大根用量"
+        quote: "大根（白萝卜） 200g"
+      - value: 2
+        unit: g
+        what: "大根用盐量"
+        quote: "盐 2g"
+      - value: 40
+        unit: g
+        what: "番茄膏用量"
+        quote: "番茄膏 40g"
+      - value: 1
+        unit: 大勺
+        what: "醋用量"
+        quote: "醋 1 大勺"
+      - value: 1
+        unit: 小勺
+        what: "酱油用量"
+        quote: "酱油 1 小勺"
+      - value: 1
+        unit: 小勺
+        what: "芝麻油用量"
+        quote: "芝麻油 1 小勺"
+      - value: 0.5
+        unit: 小勺
+        what: "一味唐辛子用量"
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: "一味唐辛子 1/2 小勺"
+      - value: 0.3333333333333333
+        unit: 小勺
+        what: "蒜蓉用量"
+        derived:
+          formula: 1/3 小勺 = 0.3333333333333333 小勺
+        quote: "蒜蓉 1/3 小勺"
+      - value: 0.2
+        unit: 小勺
+        what: "C组盐用量"
+        derived:
+          formula: 1/5 小勺 = 0.2 小勺
+        quote: "盐 1/5 小勺"
+      - value: 1
+        unit: 撮
+        what: "砂糖用量"
+        quote: "砂糖 一小撮"
+      - value: 2
+        unit: 大勺
+        what: "浇在大根上的酱汁用量"
+        quote: "大根上浇 2 大勺 C 酱"
+    duration:
+      basis: quote
+      sec: 300
+      quote: "摇匀腌 5 分钟左右"
+    steps:
+      - id: prep-daikon
+        text: "大根去皮、斜切小片"
+        quote: "大根去皮、斜切小片"
+      - id: salt-pickle-daikon
+        text: "装入塑料袋，加大根重量 1% 的盐，摇匀腌 5 分钟左右。"
+        quote: "装入塑料袋，加大根重量 1% 的盐，摇匀腌 5 分钟左右。"
+      - id: mix-c-sauce
+        text: "碗中放 C 组全部材料，充分搅拌。"
+        quote: "碗中放 C 组全部材料，充分搅拌。"
+      - id: coat-daikon
+        text: "大根上浇 2 大勺 C 酱，充分拌匀即可。"
+        quote: "大根上浇 2 大勺 C 酱，充分拌匀即可。"
+      - id: use-other-vegetables
+        text: "除了大根，黄瓜、花椰菜、白菜等各类蔬菜都能用。"
+        quote: "除了大根，黄瓜、花椰菜、白菜等各类蔬菜都能用。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 2937317e6afa2efd
+    name: 腌萝卜配番茄膏酱
+  - id: choose-tomato-by-stem-star
+    status: reviewed
+    source:
+      anchor: "挑番茄：看蒂部的「星星」"
+    slot: anytime
+    remind:
+      text: "挑番茄时看蒂部的星标，白色线条越明显，番茄越甜。"
+      quote:
+        - "判断番茄好不好吃，诀窍是看番茄的蒂部。"
+        - "这个印记浮出来得越明显，番茄就越甜。"
+    steps:
+      - id: inspect-stem
+        text: "「星标（スターマーク）」：番茄蒂部像星星一样的纹路，这圈白色线条在番茄农户之间被称为「星标」。"
+        quote: "「星标（スターマーク）」：番茄蒂部像星星一样的纹路，这圈白色线条在番茄农户之间被称为「星标」。"
+      - id: compare-stem-mark
+        text: "这个印记浮出来得越明显，番茄就越甜。"
+        quote: "这个印记浮出来得越明显，番茄就越甜。"
+      - id: check-vascular-tissue
+        text: "维管束越粗、越清晰，说明输送过来的养分就越多。"
+        quote: "维管束越粗、越清晰，说明输送过来的养分就越多。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 52e64ddbe1c7132a
+    name: 看蒂部星星挑番茄
+  - id: cut-tomato-on-star-lines
+    status: reviewed
+    source:
+      anchor: "挑番茄：看蒂部的「星星」"
+    slot: anytime
+    remind:
+      text: "沿星标的线与线之间下刀，沿着蒂部那一侧切，在不让果汁流出来的状态下切开。"
+      quote: "切法也要配合：维管束与蒂部相连，所以沿着星标的线与线的之间下刀——沿着蒂部那一侧切，就能在不让果汁流出来的状态下切开。"
+    steps:
+      - id: locate-star-lines
+        text: "维管束与蒂部相连，所以沿着星标的线与线的之间下刀——沿着蒂部那一侧切"
+        quote: "维管束与蒂部相连，所以沿着星标的线与线的之间下刀——沿着蒂部那一侧切"
+      - id: cut-on-stem-side
+        text: "就能在不让果汁流出来的状态下切开"
+        quote: "就能在不让果汁流出来的状态下切开"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 045f00bc1e6d3448
+    name: 沿星标线切番茄
+  - id: eat-tomato-jelly-with-flesh
+    status: reviewed
+    source:
+      anchor: "挑番茄：看蒂部的「星星」"
+    slot: anytime
+    remind:
+      text: "吃番茄时连凝胶状果冻一起吃，保留鲜味；果冻部分足足是果肉的 3 倍。"
+      quote:
+        - "番茄里大量富含鲜味的谷氨酸，凝胶状的果冻部分比果肉还多，足足是果肉的 3 倍。"
+        - "所以吃的时候连果冻一起吃，鲜味才不会浪费。"
+    effect:
+      text: "所以吃的时候连果冻一起吃，鲜味才不会浪费。"
+      quote: "所以吃的时候连果冻一起吃，鲜味才不会浪费。"
+    steps:
+      - id: eat-tomato-jelly
+        text: "凝胶状的果冻部分比果肉还多，足足是果肉的 3 倍。所以吃的时候连果冻一起吃，鲜味才不会浪费。"
+        quote:
+          - "凝胶状的果冻部分比果肉还多，足足是果肉的 3 倍。"
+          - "所以吃的时候连果冻一起吃，鲜味才不会浪费。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e3d10de9e2c9d6c7
+    name: 连果冻一起吃番茄
+  - id: use-oil-to-sear-high-moisture-tomato
+    status: reviewed
+    source:
+      anchor: "日本番茄为什么不能加水煮"
+    slot: anytime
+    remind:
+      text: "日本番茄皮薄、甜、水分多，不加水煮，用橄榄油一次煎透。"
+      quote:
+        - "日本番茄：为了「生吃好吃」而独立进化出三个特点——皮薄、甜、含大量水分。"
+        - "而这三个特点，恰恰就是「下锅加水一煮就不好吃」的原因。"
+        - "奥田给出的解法是：用橄榄油一次煎透。"
+    effect:
+      text: "番茄里含有的、能抑制体内活性氧的「番茄红素」，和油一起摄取，吸收率会变成 4 倍。"
+      quote: "番茄里含有的、能抑制体内活性氧的「番茄红素」，和油一起摄取，吸收率会变成 4 倍。"
+    steps:
+      - id: identify-japanese-tomato-traits
+        text: "日本番茄：为了「生吃好吃」而独立进化出三个特点——皮薄、甜、含大量水分。"
+        quote: "日本番茄：为了「生吃好吃」而独立进化出三个特点——皮薄、甜、含大量水分。"
+      - id: avoid-water-heat
+        text: "而这三个特点，恰恰就是「下锅加水一煮就不好吃」的原因。奥田给出的解法是：用橄榄油一次煎透。"
+        quote:
+          - "而这三个特点，恰恰就是「下锅加水一煮就不好吃」的原因。"
+          - "奥田给出的解法是：用橄榄油一次煎透。"
+      - id: use-olive-oil
+        text: "水分太多，需要大量的油才能骗过这些水分、平衡掉它，然后逼出番茄本身的甜。"
+        quote: "水分太多，需要大量的油才能骗过这些水分、平衡掉它，然后逼出番茄本身的甜。"
+      - id: complete-tomato-sauce
+        text: "油和水的不平衡被解决后，极上的番茄酱（トマトソース）就完成了。"
+        quote: "油和水的不平衡被解决后，极上的番茄酱（トマトソース）就完成了。"
+    cautions:
+      - level: info
+        text: "油本身也是健康风险。油炸本身有负面影响"
+        quote: "油本身也是健康风险。油炸本身有负面影响"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 10f765b38b4b7e6b
+    name: 番茄不加水用油煎

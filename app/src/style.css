@@ -1,0 +1,1897 @@
+/*
+ * 样式层：设计令牌 + 组件层。
+ *
+ * 两套令牌（和紙 / 夜紙）就是这一轮重定的调：底色是手册的暖纸，
+ * 朱红只做两件事 —— 「当前这一件」与「今天盖的印」；禁忌另有更冷的深红，
+ * 不再和主色抢同一支红。暗色不是把 hex 反过来，是另一套算过对比度的暖色。
+ *
+ * 为什么组件层自己写而不用 daisyUI 的 btn/card/alert：
+ *   那套组件的形状语言是「一叠带阴影的圆角卡 + 粉色提示块」，
+ *   而这一屏要读的是「一页手帖」——细横线分栏、剂量成表。
+ *   daisyUI 仍留着做主题令牌机制与个别组件，但界面不再依赖它的形状。
+ *
+ * 类名一律 lg- 前缀：daisyUI 的类名是保留字（steps 是步骤条、card-body 是卡片体），
+ * 撞上就被它悄悄接管样式。守门的是 app/test/ui/classes.test.ts。
+ */
+
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: paper --default, paper-dark --prefersdark;
+  logs: false;
+}
+
+/* daisyUI 的两套主题仍在这里：没转完的组件（个别 alert）照旧能用。 */
+@plugin "daisyui/theme" {
+  name: "paper";
+  default: true;
+  color-scheme: light;
+
+  --color-base-100: #fffcf6;
+  --color-base-200: #fbf6ec;
+  --color-base-300: #e3d9c6;
+  --color-base-content: #241f1a;
+
+  --color-primary: #a82a24;
+  --color-primary-content: #fff6f4;
+  --color-secondary: #6f6154;
+  --color-secondary-content: #fdfaf4;
+  --color-accent: #3f6b4b;
+  --color-accent-content: #f1faf3;
+  --color-neutral: #241f1a;
+  --color-neutral-content: #f7f1e6;
+
+  --color-info: #2f5e8c;
+  --color-info-content: #f0f6fc;
+  --color-success: #3f6b4b;
+  --color-success-content: #f1faf3;
+  --color-warning: #8a5a09;
+  --color-warning-content: #fdf7e8;
+  --color-error: #9e2b1e;
+  --color-error-content: #fdf3f2;
+
+  --radius-selector: 0.6rem;
+  --radius-field: 0.6rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "paper-dark";
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: #221d18;
+  --color-base-200: #191512;
+  --color-base-300: #3a322a;
+  --color-base-content: #ede5da;
+
+  --color-primary: #e08a86;
+  --color-primary-content: #2a1512;
+  --color-secondary: #c3ae97;
+  --color-secondary-content: #241f1a;
+  --color-accent: #8fbf9c;
+  --color-accent-content: #14251a;
+  --color-neutral: #0f0c0a;
+  --color-neutral-content: #ede5da;
+
+  --color-info: #8fb6da;
+  --color-info-content: #10202c;
+  --color-success: #8fbf9c;
+  --color-success-content: #14251a;
+  --color-warning: #d9a441;
+  --color-warning-content: #2a1e08;
+  --color-error: #f0a49c;
+  --color-error-content: #2a1512;
+
+  --radius-selector: 0.6rem;
+  --radius-field: 0.6rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  /* 中文字体栈：系统字体优先，不打包字体文件（离线也要能用） */
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
+/* ---------------------------------------------------------------- 设计令牌 */
+:root {
+  --lg-paper: #fbf6ec; /* 页面底 */
+  --lg-sheet: #fffcf6; /* 栏面 */
+  --lg-rule: #e3d9c6; /* 细横线 */
+  --lg-rule-soft: #efe7d8;
+  --lg-ink: #241f1a;
+  --lg-ink-2: #5b5347; /* 次级文字 */
+  --lg-ink-3: #756b5d; /* 11px 小字专用；#8a8073 在纸上只有 3.60，不到 4.5 */
+  --lg-zhu: #a82a24; /* 朱：当前这一件 + 印章，不做装饰 */
+  --lg-on-zhu: #fff6f4; /* 朱红底上的字：浅色下是暖白，深色下要换成深墨 */
+  --lg-zhu-soft: #f7e9e6;
+  --lg-moss: #3f6b4b; /* 能照着做 / 正向计数 */
+  --lg-indigo: #2f5e8c; /* 出处、逐字引文 */
+  --lg-alert: #9e2b1e; /* 禁忌：比朱更冷更暗，两者不能混为一谈 */
+  --lg-alert-soft: #fbeae7;
+  --lg-warn: #8a5a09; /* 推算、未给、如实提示 */
+
+  /* 字号梯子：13 × 1.25^n。只准用这六档 ——
+     现状实际用到 10/11/12/13/14/15/16/17/20/24 十档，15/16/17 相邻只差 1px。 */
+  --lg-t1: 11px;
+  --lg-t2: 13px;
+  --lg-t3: 15.5px;
+  --lg-t4: 19px;
+  --lg-t5: 24px;
+  --lg-t6: 30px;
+
+  --lg-measure: 34em; /* 汉字一行 34 字是读得下去的上限 */
+  --lg-tap: 44px; /* 触控下限 */
+  --lg-col: 660px; /* 正文栏 */
+  --lg-rail: 232px; /* 页边 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lg-paper: #191512;
+    --lg-sheet: #221d18;
+    --lg-rule: #3a322a;
+    --lg-rule-soft: #2c2620;
+    --lg-ink: #ede5da;
+    --lg-ink-2: #b8ac9c;
+    --lg-ink-3: #978b7b;
+    --lg-zhu: #e08a86;
+    --lg-on-zhu: #2a1512;
+    --lg-zhu-soft: #3a2320;
+    --lg-moss: #8fbf9c;
+    --lg-indigo: #8fb6da;
+    --lg-alert: #f0a49c;
+    --lg-alert-soft: #3b211d;
+    --lg-warn: #d9a441;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+  body {
+    margin: 0;
+    background: var(--lg-paper);
+    color: var(--lg-ink);
+    font:
+      400 var(--lg-t3)/1.75 var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* 数字用等宽：剂量、时长、累计天数对齐了才读得出差别 */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+  }
+  a {
+    color: var(--lg-indigo);
+    text-decoration: none;
+  }
+}
+
+/* 换页时轻微淡入：让「切了个页」这件事有反馈，但不晃眼 */
+@keyframes lg-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-fade {
+  animation: lg-fade-in 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade {
+    animation: none;
+  }
+  .lg-seal i {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------- 壳与页边 */
+.lg-shell {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 18px 120px;
+}
+.lg-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 0 10px;
+  background: linear-gradient(var(--lg-paper) 78%, transparent);
+}
+.lg-h1 {
+  margin: 0;
+  font-size: var(--lg-t5);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.lg-dateline {
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  letter-spacing: 0.02em;
+}
+
+/* 时段：分段控件。整块高度 ≥44px，现状的胶囊只有 32px */
+.lg-slots {
+  display: flex;
+  margin: 4px 0 0;
+  border: 1px solid var(--lg-rule);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--lg-sheet);
+}
+.lg-slot {
+  flex: 1;
+  min-height: var(--lg-tap);
+  padding: 6px 4px;
+  border: 0;
+  border-right: 1px solid var(--lg-rule);
+  background: transparent;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t3);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+.lg-slot:last-child {
+  border-right: 0;
+}
+.lg-slot[aria-pressed="true"] {
+  background: var(--lg-ink);
+  color: var(--lg-paper);
+}
+.lg-slot small {
+  font-size: var(--lg-t1);
+  opacity: 0.75;
+  letter-spacing: 0.04em;
+}
+
+.lg-condrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.lg-cond {
+  min-height: var(--lg-tap);
+  padding: 0 14px;
+  border: 1px dashed var(--lg-rule);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+.lg-cond b {
+  color: var(--lg-ink);
+  font-weight: 600;
+}
+
+.lg-overview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin: 14px 0 2px;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+}
+.lg-overview .lg-big {
+  font-size: var(--lg-t4);
+  font-weight: 650;
+  color: var(--lg-ink);
+}
+/* 断签不清零：14 格印迹，做过的天留色；撤销的周期完成不算这一天 */
+.lg-dots {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: -1px;
+}
+.lg-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--lg-rule);
+}
+.lg-dot[data-on] {
+  background: var(--lg-zhu);
+}
+
+/* ---------------------------------------------------------------- 手帖清单 */
+.lg-card {
+  border-bottom: 1px solid var(--lg-rule-soft);
+}
+.lg-log {
+  margin: 8px 0 0;
+  border-top: 1px solid var(--lg-rule);
+}
+.lg-row {
+  display: grid;
+  grid-template-columns: 76px 1fr 44px;
+  gap: 0 10px;
+  align-items: start;
+  padding: 14px 0;
+}
+.lg-card[data-open="true"] .lg-row {
+  padding-bottom: 6px;
+}
+.lg-guide {
+  margin: 0 0 14px;
+}
+.lg-row[data-done="true"] {
+  background: linear-gradient(90deg, var(--lg-rule-soft), transparent 46%);
+}
+.lg-when {
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  line-height: 1.5;
+  padding-top: 2px;
+}
+.lg-when .lg-dur {
+  display: block;
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-3);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.lg-when .lg-dur[data-state="derived"],
+.lg-when .lg-dur[data-state="unknown"],
+.lg-when .lg-dur[data-state="suspicious"] {
+  color: var(--lg-warn);
+}
+.lg-when .lg-dur[data-state="mode"] {
+  color: var(--lg-indigo);
+}
+.lg-modeflag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 7px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: var(--lg-t1);
+  line-height: 1.6;
+  color: var(--lg-indigo);
+}
+.lg-modeflag[data-mode="sick"] {
+  color: var(--lg-alert);
+}
+.lg-modeflag[data-mode="travel"] {
+  color: var(--lg-moss);
+}
+.lg-name {
+  display: block;
+  margin: 0;
+  font-size: var(--lg-t4);
+  font-weight: 620;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.lg-do {
+  display: block;
+  margin: 3px 0 0;
+  font-size: var(--lg-t3);
+  line-height: 1.6;
+  color: var(--lg-ink-2);
+  max-width: var(--lg-measure);
+}
+.lg-dose {
+  display: flex;
+  margin-top: 7px;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 7px 0 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+}
+.lg-dose b {
+  font-size: var(--lg-t3);
+  font-weight: 650;
+  /* 剂量是事实，不是警示。
+     朱色留给印章、红留给禁忌 —— 两者色相几乎一样（#a82a24 / #9e2b1e），
+     数字若也用朱红，扫一眼会与「不要做」的那行红混在一起。 */
+  color: var(--lg-ink);
+}
+/* R11：stop 级禁忌必须在收起态。全文留在 DOM 里，只是不再一人一块粉底 */
+.lg-stop {
+  display: flex;
+  gap: 6px;
+  margin: 7px 0 0;
+  font-size: var(--lg-t2);
+  line-height: 1.6;
+  color: var(--lg-alert);
+  max-width: var(--lg-measure);
+}
+.lg-stop span:first-child {
+  flex: none;
+  font-weight: 700;
+}
+.lg-segdose {
+  display: block;
+  margin: 6px 0 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  max-width: var(--lg-measure);
+}
+.lg-segflag {
+  display: inline-block;
+  margin: 6px 0 0;
+  padding: 1px 7px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 999px;
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-2);
+}
+
+/* 印章：完成态不画勾，盖一枚日付印。断签不清零，印子留在纸上 */
+.lg-seal {
+  width: 44px;
+  height: 44px;
+  margin: -6px 0 0 -5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.lg-seal i {
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--lg-zhu);
+  border-radius: 4px;
+  color: var(--lg-zhu);
+  background: var(--lg-zhu-soft);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-size: var(--lg-t1);
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-7deg);
+  opacity: 0.92;
+}
+.lg-seal[data-empty="true"] i {
+  background: transparent;
+  border-color: var(--lg-rule);
+}
+.lg-seal[data-empty="true"]:hover i {
+  border-color: var(--lg-zhu);
+}
+
+/* 行本身可点开展开（button 里只放 span，h3/p 是 flow content，不许嵌进 button） */
+.lg-name-btn {
+  grid-column: 2;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  min-width: 0;
+}
+.lg-name-btn:focus-visible,
+.lg-seal:focus-visible,
+.lg-slot:focus-visible,
+.lg-cond:focus-visible,
+.lg-btn:focus-visible,
+.lg-cat:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- 展开态：用法用量表 */
+.lg-guide {
+  border: 1px solid var(--lg-rule);
+  border-radius: 12px;
+  background: var(--lg-sheet);
+  padding: 4px 16px 16px;
+  margin: 0 0 14px;
+}
+.lg-guide-h {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 0 8px;
+  border-bottom: 1px solid var(--lg-rule);
+}
+.lg-kv {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 5.5em 1fr;
+}
+.lg-kv dt {
+  padding: 9px 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  border-bottom: 1px dotted var(--lg-rule-soft);
+}
+.lg-kv dd {
+  margin: 0;
+  padding: 9px 0;
+  font-size: var(--lg-t3);
+  border-bottom: 1px dotted var(--lg-rule-soft);
+}
+.lg-kv dd .lg-note-inline {
+  display: block;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+}
+.lg-unknown {
+  color: var(--lg-warn);
+}
+.lg-dl {
+  display: grid;
+  gap: 3px;
+}
+.lg-dl > span {
+  display: block;
+}
+.lg-dl b {
+  color: var(--lg-ink);
+  font-weight: 650;
+  margin-right: 5px;
+}
+.lg-linkbtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--lg-tap);
+  margin: -8px 0;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--lg-indigo);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.lg-streak {
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-3);
+  white-space: nowrap;
+}
+.lg-segbox {
+  border: 1px solid var(--lg-rule);
+  border-radius: 10px;
+  background: var(--lg-paper);
+  padding: 9px 11px;
+}
+.lg-segbox-who {
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+}
+.lg-segbox-do {
+  margin-top: 2px;
+  font-size: var(--lg-t3);
+  font-weight: 600;
+}
+.lg-sec {
+  margin-top: 18px;
+}
+.lg-sec > h3 {
+  margin: 0 0 6px;
+  font-size: var(--lg-t2);
+  font-weight: 650;
+  color: var(--lg-ink-2);
+  letter-spacing: 0.12em;
+}
+.lg-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: lg-st;
+}
+.lg-steps li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-top: 1px solid var(--lg-rule-soft);
+  counter-increment: lg-st;
+}
+.lg-steps li:first-child {
+  border-top: 0;
+}
+.lg-steps li::before {
+  content: counter(lg-st);
+  position: absolute;
+  left: 0;
+  top: 11px;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.lg-steps p {
+  margin: 0;
+  font-size: var(--lg-t3);
+  line-height: 1.7;
+}
+.lg-steps img {
+  display: block;
+  margin-top: 8px;
+  max-width: 100%;
+  max-height: 240px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-paper);
+}
+.lg-imgs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+/* 首启说明：清单是 App 替你放的，得说清能怎么改 */
+.lg-firstrun {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-left: 2px solid var(--lg-indigo);
+  background: var(--lg-paper);
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  line-height: 1.6;
+}
+.lg-firstrun p {
+  margin: 0;
+}
+.lg-firstrun p + p {
+  margin-top: 4px;
+}
+.lg-ageask {
+  margin: 12px 0 0;
+  border-left-color: var(--lg-moss);
+}
+.lg-ageask .lg-btn-row {
+  margin-top: 8px;
+}
+/* 短标签不许被拆到两行（「调顺序」断成「调 / 顺序」很难看） */
+.lg-nb {
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- 提醒 */
+/* 提醒：整段那两条竖着排 —— 横着排的话两组模式小片会并成一行，
+   看不出哪几颗属于哪一条。 */
+.lg-remrows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+}
+.lg-remrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lg-remcheck {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--lg-tap);
+  font-size: var(--lg-t3);
+  color: var(--lg-ink);
+  cursor: pointer;
+}
+.lg-remcheck input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--lg-zhu);
+}
+.lg-remtime {
+  min-height: var(--lg-tap);
+  padding: 6px 10px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-paper);
+  color: var(--lg-ink);
+  font-size: var(--lg-t3);
+  font-variant-numeric: tabular-nums;
+}
+.lg-note {
+  color: var(--lg-ink-3);
+}
+
+/* 卡片展开态里「提醒」那一行：值在左，那颗键在右 */
+.lg-remval {
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t3);
+}
+.lg-rembtn {
+  margin-left: auto;
+}
+/* 编辑器：模式 + 时刻 + 各模式要的字段 */
+.lg-remedit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 12px;
+  border: 1px solid var(--lg-rule-soft);
+  border-radius: 10px;
+  background: var(--lg-paper);
+}
+.lg-remedit-modes,
+.lg-remdays {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+/* 小圆片：模式与周几 */
+.lg-chip {
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+.lg-chip[data-on="true"] {
+  border-color: var(--lg-zhu);
+  background: var(--lg-zhu-soft);
+  color: var(--lg-zhu);
+}
+/* 交互态成套性：这三态缺一不可（app/test/ui/states.test.ts 盯着） */
+.lg-chip:hover {
+  border-color: var(--lg-zhu);
+  background: color-mix(in srgb, var(--lg-zhu) 14%, var(--lg-sheet));
+  color: var(--lg-zhu);
+}
+.lg-chip:active {
+  transform: translateY(1px);
+}
+.lg-chip:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 2px;
+}
+/* 时刻 / 天数 / 日期那一行 */
+.lg-remrow2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t3);
+}
+.lg-remrow2 input {
+  min-height: 38px;
+  padding: 4px 10px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-sheet);
+  color: var(--lg-ink);
+  font-size: var(--lg-t3);
+  font-variant-numeric: tabular-nums;
+}
+.lg-remrow2 input[type="number"] {
+  width: 84px;
+}
+/* 设置页里那两条整段提醒的模式选择 */
+.lg-rempicker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+/* 设置页里绑在卡上的那几条 */
+.lg-remcards {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--lg-rule-soft);
+}
+.lg-remcard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+.lg-remcardname {
+  color: var(--lg-ink);
+  font-size: var(--lg-t3);
+}
+.lg-remcard .lg-remval {
+  color: var(--lg-ink-3);
+  font-size: var(--lg-t2);
+}
+
+/* ---------------------------------------------------------------- 调顺序 */
+.lg-sortbtn {
+  margin: 8px 0 0;
+  min-height: var(--lg-tap);
+}
+/* 顶部那一排：调顺序 + 重置为默认 */
+.lg-setuprow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lg-setuprow .lg-sortbtn {
+  margin: 8px 0 0;
+}
+.lg-sort-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.lg-sort-h h2 {
+  font-size: var(--lg-t3);
+  font-weight: 650;
+  margin: 0;
+}
+.lg-sortlist {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.lg-sortlist li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--lg-rule-soft);
+}
+.lg-sortlist li:first-child {
+  border-top: 0;
+}
+.lg-sort-when {
+  flex: 0 0 auto;
+  min-width: 3.2em;
+  color: var(--lg-ink-3);
+  font-size: var(--lg-t1);
+}
+
+/* 调顺序的手柄：按住它就能拖。
+   touch-action: none 是必须的 —— 触屏上不跟页面一起滚，拖才拖得动。 */
+.lg-grip {
+  flex: 0 0 auto;
+  min-width: 26px;
+  min-height: 34px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lg-ink-3);
+  font-size: var(--lg-t2);
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+}
+.lg-grip:hover {
+  color: var(--lg-zhu);
+  background: var(--lg-zhu-soft);
+}
+.lg-grip:active {
+  cursor: grabbing;
+}
+.lg-grip:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 2px;
+}
+.lg-sortlist li[data-dragging="true"] {
+  background: var(--lg-sheet);
+  box-shadow: 0 6px 18px rgba(36, 31, 26, 0.1);
+}
+.lg-sort-name {
+  flex: 1 1 auto;
+  font-size: var(--lg-t3);
+  color: var(--lg-ink);
+}
+/* 同名的卡（一个小节拆出多张）靠这行分清在挪哪张 */
+.lg-sort-name small {
+  display: block;
+  color: var(--lg-ink-3);
+  font-size: var(--lg-t1);
+  font-weight: 400;
+}
+.lg-sort-ops {
+  display: flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+/* 有提醒的卡移出前先问：单独占一行，别把 320px 上的三个键挤没 */
+.lg-sort-ask {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 2px;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+}
+/* 先让询问那句独占一行，三个选择排在下一行；320px 上也不会把「取消」挤下去 */
+.lg-sort-ask > span {
+  flex: 1 0 100%;
+}
+.lg-move {
+  min-width: var(--lg-tap);
+  min-height: var(--lg-tap);
+  padding: 0 10px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-paper);
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+.lg-caut {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--lg-t3);
+}
+.lg-caut li {
+  padding: 7px 0 7px 16px;
+  border-top: 1px solid var(--lg-rule-soft);
+  position: relative;
+}
+.lg-caut li:first-child {
+  border-top: 0;
+}
+.lg-caut li::before {
+  content: "·";
+  position: absolute;
+  left: 2px;
+  color: var(--lg-ink-3);
+}
+.lg-caut li[data-level="stop"] {
+  color: var(--lg-alert);
+}
+.lg-caut li[data-level="stop"]::before {
+  content: "!";
+  width: 13px;
+  height: 13px;
+  line-height: 11px;
+  top: 10px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--lg-alert);
+}
+.lg-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--lg-rule);
+  font-size: var(--lg-t2);
+}
+.lg-from {
+  color: var(--lg-ink-2);
+}
+.lg-from a {
+  color: var(--lg-indigo);
+}
+.lg-close {
+  min-height: var(--lg-tap);
+  padding: 0 16px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- 按钮与选择片 */
+.lg-btn {
+  min-height: var(--lg-tap);
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid var(--lg-ink);
+  background: var(--lg-ink);
+  color: var(--lg-paper);
+  font-size: var(--lg-t3);
+  cursor: pointer;
+}
+.lg-btn-ghost {
+  background: transparent;
+  color: var(--lg-ink);
+  border-color: var(--lg-rule);
+}
+.lg-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.lg-cat {
+  min-height: var(--lg-tap);
+  padding: 0 14px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 999px;
+  background: var(--lg-sheet);
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+/* 选中的样子。
+   两组都用这一条：模式那组用 aria-pressed（可切回），
+   年龄段与「我的情况」那两组用 aria-checked（单选）——
+   以前只写了 aria-pressed，于是「成年人（未满 70 岁）」明明是选中的，看上去
+   却和另外两个一模一样。 */
+.lg-cat[aria-pressed="true"],
+.lg-cat[aria-checked="true"] {
+  background: var(--lg-ink);
+  border-color: var(--lg-ink);
+  color: var(--lg-paper);
+}
+.lg-cat .tabular {
+  margin-left: 4px;
+  color: var(--lg-ink-3);
+}
+/* 选中的分类按钮底色已经是墨色；计数跟着按钮走，别再压暗。 */
+.lg-cat[aria-pressed="true"] .tabular,
+.lg-cat[aria-checked="true"] .tabular {
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------- 首启与发现层 */
+.lg-empty {
+  padding: 34px 0 8px;
+}
+.lg-empty h2 {
+  margin: 0 0 6px;
+  font-size: var(--lg-t4);
+  font-weight: 650;
+}
+.lg-empty p {
+  margin: 0 0 18px;
+  font-size: var(--lg-t3);
+  color: var(--lg-ink-2);
+  max-width: 30em;
+}
+.lg-discover {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--lg-rule);
+}
+/* 今天给的三张：一张一格，格与格之间留一道缝（不是连成一片目录） */
+.lg-discover-item {
+  margin-top: 14px;
+}
+.lg-discover-item .lg-btn-row {
+  margin-top: 6px;
+}
+.lg-discover > h2 {
+  margin: 0;
+  font-size: var(--lg-t2);
+  font-weight: 650;
+  color: var(--lg-ink-2);
+  letter-spacing: 0.12em;
+}
+.lg-pool {
+  margin: 8px 0 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+}
+.lg-disclaim {
+  margin: 26px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed var(--lg-rule-soft);
+  font-size: var(--lg-t2);
+  line-height: 1.65;
+  color: var(--lg-ink-2);
+}
+.lg-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- 自定义习惯 */
+/* 加一条用户自己的习惯。侧栏里、按钮的正下方 —— 触发的地方和表单挨着。 */
+.lg-habitform {
+  margin: 10px 0 0;
+  padding: 10px 11px 11px;
+  border: 1px solid var(--lg-rule);
+  border-left: 2px solid var(--lg-indigo);
+  border-radius: 8px;
+  background: var(--lg-sheet);
+}
+.lg-habitform h3 {
+  margin: 0 0 9px;
+  font-size: var(--lg-t3);
+  font-weight: 650;
+  color: var(--lg-ink);
+}
+.lg-habitfield {
+  display: block;
+  margin: 0 0 9px;
+}
+.lg-habitfield > span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-3);
+}
+.lg-habitfield > span small {
+  font-size: inherit;
+  color: var(--lg-ink-3);
+}
+.lg-habitfield input {
+  width: 100%;
+  min-height: var(--lg-tap);
+  padding: 0 10px;
+  font: inherit;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink);
+  background: var(--lg-paper);
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+}
+.lg-habitfield input:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 1px;
+}
+.lg-habitform .lg-cats {
+  margin-top: 0;
+}
+.lg-habitform .lg-cat {
+  min-height: 34px;
+}
+
+/* ---------------------------------------------------------------- 手册 */
+.lg-search {
+  width: 100%;
+  min-height: var(--lg-tap);
+  margin: 12px 0 0;
+  padding: 0 14px;
+  font: inherit;
+  font-size: var(--lg-t3);
+  color: var(--lg-ink);
+  background: var(--lg-sheet);
+  border: 1px solid var(--lg-rule);
+  border-radius: 10px;
+}
+.lg-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+}
+.lg-arts {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lg-rule);
+}
+.lg-art {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--lg-rule-soft);
+  padding: 13px 0;
+  cursor: pointer;
+  display: block;
+}
+.lg-art:hover .lg-art-t {
+  color: var(--lg-zhu);
+}
+.lg-art-t {
+  display: block;
+  font-size: var(--lg-t3);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--lg-ink);
+  /* 标题多行时把各行长度拉平，免得最后一行只挂一个字（「…洗澡说明 / 书」） */
+  text-wrap: balance;
+}
+.lg-art-m {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  /* 标题与这一行之间原来只隔 3px：标题换行时末行字与「身体」几乎贴着 */
+  margin-top: 7px;
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-3);
+}
+.lg-badge {
+  padding: 1px 6px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: var(--lg-t1);
+}
+.lg-badge[data-k="cond"] {
+  color: var(--lg-alert);
+}
+.lg-badge[data-k="act"] {
+  color: var(--lg-moss);
+}
+
+/* 文章页：阅读栏 34 字一行（读得下去的上限），但在框架里**居中**。
+   原来它死贴着左边，右边空出四五百像素 —— 暗色下那一片是黑的，
+   看着像页面坏了一块。居中之后两边的留白对称，就成了「排版的留白」而不是「空了一块」。 */
+.lg-read {
+  max-width: var(--lg-measure);
+  margin-inline: auto;
+}
+.lg-read h1.lg-h1 {
+  font-size: var(--lg-t5);
+  line-height: 1.35;
+}
+.lg-disclaim {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--lg-alert);
+  background: var(--lg-alert-soft);
+  color: var(--lg-alert);
+  font-size: var(--lg-t2);
+  line-height: 1.65;
+}
+.lg-sec-h {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 26px 0 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--lg-rule);
+}
+.lg-sec-h h2 {
+  margin: 0;
+  font-size: var(--lg-t4);
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.lg-sec-h .lg-num {
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.lg-read p {
+  margin: 0 0 14px;
+  font-size: var(--lg-t3);
+  line-height: 1.95;
+  color: var(--lg-ink);
+}
+.lg-read .lg-imgs {
+  margin: 4px 0 16px;
+}
+.lg-read .lg-imgs img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-paper);
+}
+
+/* ---------------------------------------------------------------- 手册正文（markdown 渲染）
+   手册是给人读的东西，格式就是内容的一部分：表格、图片、列表、加粗都在里面。
+   114 篇里 47 篇带表格、27 篇带图、113 篇带嵌套列表 —— 剥成纯文本这些全没了。 */
+.lg-md {
+  font-size: var(--lg-t3);
+  line-height: 1.95;
+  color: var(--lg-ink);
+}
+.lg-md > *:first-child {
+  margin-top: 0;
+}
+.lg-md p {
+  margin: 0 0 14px;
+}
+.lg-md h3 {
+  margin: 22px 0 8px;
+  font-size: var(--lg-t4);
+  font-weight: 650;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+.lg-md h4 {
+  margin: 18px 0 6px;
+  font-size: var(--lg-t3);
+  font-weight: 650;
+}
+.lg-md strong {
+  font-weight: 650;
+  color: var(--lg-ink);
+}
+.lg-md ul,
+.lg-md ol {
+  margin: 0 0 14px;
+  padding-left: 1.5em;
+}
+.lg-md li {
+  margin: 4px 0;
+}
+.lg-md li > ul,
+.lg-md li > ol {
+  margin: 4px 0;
+}
+.lg-md a {
+  color: var(--lg-indigo);
+  text-underline-offset: 3px;
+}
+.lg-md code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--lg-rule-soft);
+  font-size: 0.9em;
+  word-break: break-all;
+}
+.lg-md img {
+  display: block;
+  max-width: 100%;
+  max-height: 320px;
+  margin: 4px 0 12px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-paper);
+}
+/* 表格：横向能滚，不撑破正文栏 */
+.lg-md .lg-tablewrap {
+  margin: 0 0 16px;
+  overflow-x: auto;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+}
+.lg-md table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--lg-t2);
+  line-height: 1.7;
+}
+.lg-md th,
+.lg-md td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--lg-rule-soft);
+  text-align: left;
+  vertical-align: top;
+}
+.lg-md th {
+  background: var(--lg-rule-soft);
+  font-weight: 650;
+  white-space: nowrap;
+}
+.lg-md tr:last-child td {
+  border-bottom: 0;
+}
+.lg-md blockquote {
+  margin: 0 0 14px;
+  padding: 2px 0 2px 12px;
+  border-left: 3px solid var(--lg-rule);
+  color: var(--lg-ink-2);
+}
+.lg-md blockquote p:last-child {
+  margin-bottom: 0;
+}
+/* 提示框（> [!IMPORTANT] 这类）：带底色，跟普通引用区分开 */
+.lg-md .lg-callout {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--lg-rule);
+  border-left: 3px solid var(--lg-indigo);
+  border-radius: 0 8px 8px 0;
+  background: var(--lg-sheet);
+  color: var(--lg-ink);
+}
+.lg-md .lg-callout-h {
+  margin: 0 0 4px;
+  font-size: var(--lg-t1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--lg-indigo);
+}
+.lg-md .lg-callout-important {
+  border-left-color: var(--lg-alert);
+  background: var(--lg-alert-soft);
+}
+.lg-md .lg-callout-important .lg-callout-h {
+  color: var(--lg-alert);
+}
+.lg-md .lg-callout-warning,
+.lg-md .lg-callout-caution {
+  border-left-color: var(--lg-warn);
+}
+.lg-md .lg-callout-warning .lg-callout-h,
+.lg-md .lg-callout-caution .lg-callout-h {
+  color: var(--lg-warn);
+}
+/* 脚注出处：小字，搁在段尾 */
+.lg-md .lg-fn {
+  margin-left: 2px;
+  font-size: var(--lg-t1);
+  font-weight: 400;
+  white-space: nowrap;
+}
+/* 脚注链接的命中区要够大（脚注是上标的 11px 小字，直接点只有 15px 高）。
+   inline-block + 上下 padding 把命中区撑到 30px 以上，负 margin 把行距还回去 ——
+   视觉不变，手指好点。
+   line-height 必须显式给：Tailwind 的 preflight 把 sup 设成 line-height:0，
+   会把内联块的内容盒压成 0（那样撑大命中区也没用）。 */
+.lg-md .lg-fn a {
+  display: inline-block;
+  line-height: 1.6;
+  padding: 8px 0;
+  margin: -8px 0;
+  color: var(--lg-ink-3);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--lg-rule);
+}
+.lg-md .lg-fn a:hover {
+  color: var(--lg-indigo);
+}
+.lg-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: var(--lg-tap);
+  min-width: var(--lg-tap);
+  margin: 0 0 2px;
+  padding: 0 10px;
+  border: 0;
+  background: none;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+
+/* 设置 */
+.lg-set {
+  margin-top: 22px;
+}
+.lg-set > h2 {
+  margin: 0 0 4px;
+  font-size: var(--lg-t3);
+  font-weight: 650;
+}
+.lg-set > p {
+  margin: 0 0 10px;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  line-height: 1.7;
+  max-width: 34em;
+}
+.lg-hint {
+  margin: 8px 0 0;
+  padding: 9px 11px;
+  border: 1px dashed var(--lg-warn);
+  border-radius: 8px;
+  color: var(--lg-warn);
+  font-size: var(--lg-t2);
+  line-height: 1.6;
+}
+.lg-danger {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--lg-rule);
+}
+.lg-danger .lg-btn {
+  border-color: var(--lg-alert);
+  color: var(--lg-alert);
+  background: transparent;
+}
+
+/* 读不到构建产物时的提示（这一条留着用 daisyUI 的 alert：它是异常态，不是界面） */
+.lg-alert-error {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--lg-alert);
+  background: var(--lg-alert-soft);
+  color: var(--lg-alert);
+  font-size: var(--lg-t2);
+  line-height: 1.7;
+}
+.lg-alert-error code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.95em;
+}
+
+/* ---------------------------------------------------------------- 导航 */
+.lg-nav {
+  position: fixed;
+  left: 50%;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 40;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  display: flex;
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 999px;
+  background: var(--lg-sheet);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
+}
+.lg-nav button {
+  min-height: var(--lg-tap);
+  white-space: nowrap;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t3);
+  cursor: pointer;
+}
+.lg-nav button[aria-current="page"] {
+  background: var(--lg-zhu);
+  color: var(--lg-on-zhu);
+}
+
+/* ---------------------------------------------------------------- 宽屏：页边 + 正文栏 */
+/* 清单不需要 1100px 宽。多出来的宽度给「页边」（日期 / 时段 / 累计），
+   正文栏仍钉在汉字读得下去的宽度上。 */
+@media (min-width: 1000px) {
+  .lg-shell {
+    max-width: 1010px;
+    padding: 0 32px 60px;
+  }
+  .lg-shell[data-desk="1"] {
+    display: grid;
+    grid-template-columns: var(--lg-rail) minmax(0, var(--lg-col));
+    gap: 0 48px;
+    align-items: start;
+    justify-content: center;
+  }
+  .lg-aside {
+    position: sticky;
+    /* 顶部那条导航标签条是 61px：侧栏得停在它下面，
+       否则滚下去以后「今天」标题和日期被压在标签条底下看不见。 */
+    top: 72px;
+  }
+  .lg-aside .lg-topbar {
+    position: static;
+    padding: 30px 0 12px;
+    background: none;
+    display: block;
+  }
+  .lg-aside .lg-dateline {
+    display: block;
+    margin-top: 6px;
+  }
+  .lg-h1 {
+    font-size: var(--lg-t6);
+  }
+  .lg-slots {
+    flex-direction: column;
+  }
+  .lg-slot {
+    border-right: 0;
+    border-bottom: 1px solid var(--lg-rule);
+  }
+  .lg-slot:last-child {
+    border-bottom: 0;
+  }
+  .lg-overview {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 8px;
+    align-items: baseline;
+  }
+  .lg-main {
+    min-width: 0;
+  }
+  .lg-arts {
+    columns: 2;
+    column-gap: 34px;
+    border-top: 0;
+  }
+  .lg-art {
+    break-inside: avoid;
+    border-top: 1px solid var(--lg-rule-soft);
+  }
+  /* 导航：窗口顶部的一条固定标签条。
+     原来是浮在正文列上方的一颗药丸，还会随页面滚走 —— 今天页十几张卡、
+     手册一整篇，滚下去就找不回「手册 / 设置」了。
+     现在它是贴着窗口顶的一条：内容从它下面滚过去，导航一直在。
+     窄屏（手机、拖窄的窗口）还是底部那颗悬浮药丸 —— 拇指够得到。
+
+     三颗键**靠左**：四种排法实测比较过（居中 / 左对齐 / 贴正文列 / 居中药丸），
+     左对齐最顺——眼睛本来就从左上角进，切换器紧贴页面左缘，
+     跟下面那列侧栏是一条竖线；居中那条顶上会空掉一大块。 */
+  .lg-nav {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    transform: none;
+    width: auto;
+    max-width: none;
+    /* 整条横贯页面（跟 .lg-shell 一样留 32px 的边） */
+    margin: 0 32px 20px;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid var(--lg-rule-soft);
+    border-radius: 0;
+    background: var(--lg-paper);
+    box-shadow: none;
+    justify-content: flex-start;
+  }
+  /* 页面自己的标题条（手册 / 设置）粘在导航条下面，别叠住 */
+  .lg-topbar {
+    top: 61px;
+  }
+  /* 导航在页面外面，窗口再宽它也贴不到正文列上 —— 给它一个跟页面同宽的框 */
+  .lg-frame {
+    max-width: 1010px;
+    margin: 0 auto;
+    /* 页面头部要有呼吸位：导航是这一页的页眉，贴着窗口上沿看着像被切掉 */
+    padding-top: 24px;
+  }
+  .lg-shell {
+    padding-top: 0;
+  }
+}
+
+/* ---------------------------------------------------------------- 补上的几处 */
+.lg-app {
+  min-height: 100dvh;
+}
+.lg-condpanel {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid var(--lg-rule);
+  border-radius: 12px;
+  background: var(--lg-sheet);
+  padding: 13px;
+}
+.lg-condpanel .lg-cats + .lg-cats {
+  margin-top: 10px;
+}
+.lg-condrow {
+  display: block;
+}
+/* 反馈条：浮在底部（导航之上），别沉在列表下面 ——
+   手机上列表一屏放不完，「已把 X 移出今天」沉在末尾根本看不见。 */
+.lg-flash {
+  position: fixed;
+  left: 50%;
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 45;
+  max-width: min(92vw, 520px);
+  margin: 0;
+  padding: 9px 14px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 12px;
+  background: var(--lg-sheet);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  font-size: var(--lg-t2);
+  color: var(--lg-ink);
+  text-align: center;
+}
+.lg-flash::before {
+  content: "✓";
+  margin-right: 6px;
+  color: var(--lg-moss);
+}
+.lg-flash[data-kind="error"] {
+  border-color: var(--lg-alert);
+  color: var(--lg-alert);
+}
+.lg-flash[data-kind="error"]::before {
+  content: "!";
+  color: var(--lg-alert);
+}
+.lg-rowfoot {
+  display: flex;
+  justify-content: flex-end;
+  margin: -6px 0 14px;
+}
+.lg-rowfoot-ask {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px 12px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 10px;
+  background: var(--lg-sheet);
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+}
+.lg-rowfoot-ask .lg-close,
+.lg-rowfoot-ask .lg-linkbtn {
+  min-height: var(--lg-tap);
+}
+.lg-perioddone {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 1px dashed var(--lg-rule);
+  border-radius: 10px;
+}
+.lg-perioddone .lg-pool {
+  margin: 0 0 6px;
+}
+.lg-perioddone .lg-btn-row {
+  gap: 4px 12px;
+}
+.lg-dose > span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+}
+.lg-more {
+  min-height: var(--lg-tap);
+  margin-top: 10px;
+  padding: 0 14px;
+  border: 1px dashed var(--lg-rule);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- 交互态成套性
+ * 每一类可点控件都必须齐六态：静止 / hover / 按下 / 键盘焦点 / 「开着」/ 禁用。
+ * 缺哪一态，app/test/ui/states.test.ts 就红 —— 否则会像 batch2 量到那样：
+ * 18 类控件里只有印章有 hover，主键的静止/hover/按下三帧 PNG 逐字节相同。
+ */
+.lg-btn:hover,
+.lg-jump:hover,
+.lg-cat:hover,
+.lg-slot:hover,
+.lg-cond:hover,
+.lg-close:hover,
+.lg-more:hover,
+.lg-back:hover,
+.lg-linkbtn:hover,
+.lg-move:hover,
+.lg-art:hover,
+.lg-seal:hover {
+  border-color: var(--lg-zhu);
+  background: color-mix(in srgb, var(--lg-zhu) 9%, var(--lg-sheet));
+}
+/* 主键是深底浅字：hover 若只把底铺成浅粉，字就留在浅底上（实测 1.1:1）。
+   主键 hover 改成朱底浅字（浅色 6.45:1、深色 7.04:1）；ghost 与危险键仍是浅底深字。 */
+.lg-btn:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--lg-zhu);
+  border-color: var(--lg-zhu);
+  color: var(--lg-paper);
+}
+.lg-btn-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: color-mix(in srgb, var(--lg-zhu) 9%, var(--lg-sheet));
+  border-color: var(--lg-zhu);
+  color: var(--lg-ink);
+}
+.lg-danger .lg-btn:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: color-mix(in srgb, var(--lg-zhu) 9%, var(--lg-sheet));
+  border-color: var(--lg-zhu);
+  color: var(--lg-alert);
+}
+/* 行与印章本来就有底色语义，hover 只动边框与印色，不铺底 */
+.lg-name-btn:hover {
+  color: var(--lg-zhu);
+}
+.lg-seal:hover i {
+  border-color: var(--lg-zhu);
+  color: var(--lg-zhu);
+}
+.lg-btn:active,
+.lg-jump:active,
+.lg-cat:active,
+.lg-slot:active,
+.lg-cond:active,
+.lg-close:active,
+.lg-more:active,
+.lg-back:active,
+.lg-linkbtn:active,
+.lg-move:active,
+.lg-art:active,
+.lg-name-btn:active,
+.lg-seal:active {
+  transform: translateY(1px);
+  filter: saturate(1.2);
+}
+.lg-seal:active i {
+  background: var(--lg-zhu);
+  color: var(--lg-sheet);
+}
+/* 「开着」态：aria-expanded / aria-pressed 反白之外的键也要看得出来 */
+.lg-more[aria-expanded="true"],
+.lg-cond[aria-expanded="true"] {
+  color: var(--lg-zhu);
+  text-decoration: none;
+  background: var(--lg-zhu-soft);
+  border-radius: 6px;
+}
+/* 禁用态：不能点的键不许和能点的长得一样，且要说出为什么 */
+.lg-btn:disabled,
+.lg-jump:disabled,
+.lg-btn[aria-disabled="true"],
+.lg-cat:disabled,
+.lg-more:disabled,
+.lg-move:disabled,
+.lg-close:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+.lg-btn:disabled:hover,
+.lg-jump:disabled:hover,
+.lg-btn[aria-disabled="true"]:hover {
+  border-color: var(--lg-rule);
+  background: transparent;
+}
+.lg-btn:focus-visible,
+.lg-jump:focus-visible,
+.lg-btn-ghost:focus-visible,
+.lg-cat:focus-visible,
+.lg-slot:focus-visible,
+.lg-cond:focus-visible,
+.lg-close:focus-visible,
+.lg-more:focus-visible,
+.lg-back:focus-visible,
+.lg-linkbtn:focus-visible,
+.lg-move:focus-visible,
+.lg-art:focus-visible,
+.lg-name-btn:focus-visible,
+.lg-seal:focus-visible,
+.lg-search:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 2px;
+}
+/* 键盘通路：展开态顶部的跳转键，让人不用 Tab 过 15 个同名按钮 */
+.lg-jump {
+  min-height: var(--lg-tap);
+  margin: 10px 0 0;
+  padding: 0 14px;
+  border: 1px dashed var(--lg-rule);
+  border-radius: 10px;
+  background: none;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+/* 截断兜底：被截掉的那半句要在展开态读得到 */
+.lg-fullremind {
+  display: block;
+  margin: 6px 0 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+}
+.lg-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  color: inherit;
+}

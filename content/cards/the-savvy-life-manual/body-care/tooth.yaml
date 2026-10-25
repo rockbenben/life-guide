@@ -1,0 +1,127 @@
+article: the-savvy-life-manual/body-care/tooth.md
+kind: practice
+coverage: partial
+
+# 覆盖清单：本篇只抽「刷牙」与「牙线」两张卡。
+#
+# 「3. 定期接受专业口腔护理」不抽：那是去诊所做检查与洁牙，不是能在家做的
+# 保健动作，原文给的是费用与保险信息，勾选不了也不该勾选。
+# 「为什么要认真刷：口腔细菌牵动全身」是口腔细菌与全身疾病关系的背景介绍，
+# 没有可执行动作。
+#
+# 标题下那段导语（「改法有三条」……）被两张卡的提醒语引用，所以不在 ignore 里。
+ignore:
+  sections:
+    - anchor: "为什么要认真刷：口腔细菌牵动全身"
+      reason: "口腔细菌与糖尿病、脑梗塞等全身疾病关系的背景介绍，没有可执行动作"
+
+cards:
+  # 一、刷牙：把「用力」换成「轻 + 握法」。
+  - id: brush-teeth
+    status: reviewed
+    name: "轻握牙刷轻轻刷"
+    source:
+      anchor: "刷牙步骤"
+    # 原文：「顺序不重要，每天做就行」「什么时候刷都一样」—— 早晚都做。
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-17-18-58-42.png?imageMogr2/format/webp"
+
+    remind:
+      text: "改用笔握法或端握法轻轻刷，别用力"
+      quote:
+        - "**① 换成笔握法或端握法**，像握笔一样握住牙刷，自然降低力度"
+
+    effect:
+      text: "尽管这两种方法都有效，但要改掉从小养成的用力刷牙习惯并不容易——笔握法需要刻意练习一阵子才顺手。"
+      quote: "尽管这两种方法都有效，但要改掉从小养成的用力刷牙习惯并不容易——笔握法需要刻意练习一阵子才顺手。"
+
+    # 原文没给刷牙的次数与一次要多久，所以没有 dose、duration 写 unknown。
+    duration:
+      basis: unknown
+
+    steps:
+      - id: grip-pen
+        text: "笔握法：像握笔一样握住牙刷，能更好地控制刷牙时的力度和方向。"
+        quote: "**笔握法**：像握笔一样握住牙刷，能更好地控制刷牙时的力度和方向。"
+      - id: grip-end
+        text: "端握法：轻轻握住牙刷末端，自然降低用力。"
+        quote: "**端握法**：轻轻握住牙刷末端，自然降低用力。"
+      - id: tape-mark
+        text: "在牙刷末端贴上一条显眼的胶带标记，能无意识地引导使用者握在尾端，自然减小刷牙时的力度。"
+        quote: "在牙刷末端贴上一条显眼的胶带标记，能无意识地引导使用者握在尾端，自然减小刷牙时的力度。"
+        images:
+          - "https://img.newzone.top/2024-10-17-19-02-45.png?imageMogr2/format/webp"
+
+    cautions:
+      - level: stop
+        text: "用力过猛反而会降低清洁效率，甚至损伤牙龈。"
+        quote: "用力过猛反而会降低清洁效率，甚至损伤牙龈。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a52b6813d5dfa6a2
+    variants:
+      busy:
+        include:
+          - grip-pen
+
+  # 二、牙线：原文说「顺序不重要，每天做」比「每餐后都做」更实际，
+  #    所以时段是「随时」，不做早晚之分。
+  #    anchor 只能填 ## 级的小节（快照只把 ## 当小节，### 子标题不算），
+  #    牙线那一段在「刷牙步骤」下面，所以两张卡同名 —— 屏上靠「做什么」那行区分。
+  - id: floss
+    status: reviewed
+    name: "每天用牙线清牙缝"
+    source:
+      anchor: "刷牙步骤"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2025-05-08-10-39-55.jpg?imageMogr2/format/webp"
+
+    remind:
+      text: "每天用牙线：缠在手指上，拉锯式滑入牙缝，C 形环绕牙面刮擦"
+      quote:
+        - "**每天都做**比每餐后都做更实际"
+        - "**② 用牙线**，取一段缠在左右手中指上，拉锯式滑入牙缝、C 形环绕牙面刮擦，别忘了最后一颗牙的远中面。"
+
+    effect:
+      text: "正确使用牙线并不会使牙缝变大，反而可以预防牙缝变大。"
+      quote: "正确使用牙线并不会使牙缝变大，反而可以预防牙缝变大。"
+
+    # 原文只说「每天都做」，没给次数 —— 写「1 次/天」是卡片自己换算出来的，
+    # 具体内容不许改，所以这条不列剂量；「每天都做」放进 remind 的引文里。
+    duration:
+      basis: unknown
+
+    steps:
+      - id: wrap
+        text: "取一段牙线，两端缠在左右手中指上。"
+        quote: "取一段牙线，两端缠在左右手中指上。"
+      - id: tension
+        text: "拇指、食指绷直牙线。"
+        quote: "拇指、食指绷直牙线。"
+      - id: slide-in
+        text: "牙线拉锯式轻轻滑入牙间隙，轻放于牙龈上。"
+        quote: "牙线拉锯式轻轻滑入牙间隙，轻放于牙龈上。"
+      - id: c-shape
+        text: "牙线成 C 形环绕牙面，从根方向冠方提拉刮擦牙面，清理牙间隙。"
+        quote: "牙线成 C 形环绕牙面，从根方向冠方提拉刮擦牙面，清理牙间隙。"
+      - id: all-gaps
+        text: "按一定顺序清理每个牙间隙，不要忘记最后一颗牙的远中面。"
+        quote: "按一定顺序清理每个牙间隙，不要忘记最后一颗牙的远中面。"
+
+    cautions:
+      - level: stop
+        text: "做法上注意用轻柔的力气把牙线划入牙缝，避免暴力损伤牙龈。"
+        quote: "做法上注意用轻柔的力气把牙线划入牙缝，避免暴力损伤牙龈。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e607ca6332f0004d
+    variants:
+      busy:
+        include:
+          - wrap
+          - slide-in
+          - c-shape

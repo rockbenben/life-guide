@@ -1,0 +1,398 @@
+article: 'the-savvy-life-manual/food/eringii.md'
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: choose-whole-or-four-cuts
+    status: reviewed
+    name: "杏鲍菇整根还是切"
+    source:
+      anchor: '杏鲍菇怎么切？四种 5mm 刀法，黄油煎 4 分钟'
+    slot: anytime
+    remind:
+      text: '在整根直接烤与分切处理之间选择。'
+      quote: '整根直接烤，或者把一整根分成四种刀法'
+    steps:
+      - id: overview-choose-whole
+        text: '整根直接烤'
+        quote: '整根直接烤'
+      - id: overview-choose-cuts
+        text: '把一整根分成四种刀法'
+        quote: '把一整根分成四种刀法'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5378c631713e1b8a
+  - id: separate-cap-and-stem-cuts
+    status: reviewed
+    source:
+      anchor: '四种刀法，对应四种口感'
+    slot: anytime
+    remind:
+      text: '先分开伞和柄，再分别做放射状厚切、纵向薄片与柄下部横切圆片。'
+      quote:
+        - 口蘑（マッシュルーム）切法：放射状厚切
+        - 鲍鱼（アワビ）切法：纵向切成 5mm 厚的薄片
+        - 芽菜（メンマ）切法：顺着纤维方向，纵向切成 5mm 厚的薄片
+        - 扇贝（ホタテ）切法：在柄的最下方约三分之一处，5mm 厚横切成圆片
+        - 前提是：伞（盖）和柄（茎）要分开处理。原因是纤维走向不同——柄（轴）的上部纤维规则地沿纵向排列，而柄的下部纤维交织缠绕、方向随机。
+    dose:
+      - value: 5
+        unit: mm
+        what: '伞盖鲍鱼切法薄片厚度'
+        quote: '鲍鱼（アワビ）切法：纵向切成 5mm 厚的薄片'
+      - value: 5
+        unit: mm
+        what: '柄芽菜切法薄片厚度'
+        quote: '芽菜（メンマ）切法：顺着纤维方向，纵向切成 5mm 厚的薄片'
+      - value: 5
+        unit: mm
+        what: '柄下部圆片厚度'
+        quote: '扇贝（ホタテ）切法：在柄的最下方约三分之一处，5mm 厚横切成圆片'
+    steps:
+      - id: cuts-separate
+        text: '前提是：伞（盖）和柄（茎）要分开处理。原因是纤维走向不同——柄（轴）的上部纤维规则地沿纵向排列，而柄的下部纤维交织缠绕、方向随机。'
+        quote: '前提是：伞（盖）和柄（茎）要分开处理。原因是纤维走向不同——柄（轴）的上部纤维规则地沿纵向排列，而柄的下部纤维交织缠绕、方向随机。'
+      - id: cuts-cap-radiant
+        text: '口蘑（マッシュルーム）切法：放射状厚切'
+        quote:
+          - 口蘑（マッシュルーム）切法：放射状厚切
+          - 整根直接烤，或者把一整根分成四种刀法——伞盖放射状厚切、伞盖（鲍鱼切法）纵向 5mm 厚薄片、柄（芽菜切法）纵向 5mm 厚薄片、柄最下方约三分之一处 5mm 厚横切圆片。下面先给四种刀法和四道食谱，最后再讲它为什么越烤越出汁。^[「エリンギ」のトリセツ]
+      - id: cuts-cap-longitudinal
+        text: '鲍鱼（アワビ）切法：纵向切成 5mm 厚的薄片'
+        quote:
+          - 鲍鱼（アワビ）切法：纵向切成 5mm 厚的薄片
+          - 整根直接烤，或者把一整根分成四种刀法——伞盖放射状厚切、伞盖（鲍鱼切法）纵向 5mm 厚薄片、柄（芽菜切法）纵向 5mm 厚薄片、柄最下方约三分之一处 5mm 厚横切圆片。下面先给四种刀法和四道食谱，最后再讲它为什么越烤越出汁。^[「エリンギ」のトリセツ]
+      - id: cuts-stem-longitudinal
+        text: '芽菜（メンマ）切法：顺着纤维方向，纵向切成 5mm 厚的薄片'
+        quote: '芽菜（メンマ）切法：顺着纤维方向，纵向切成 5mm 厚的薄片'
+      - id: cuts-stem-cross
+        text: '扇贝（ホタテ）切法：在柄的最下方约三分之一处，5mm 厚横切成圆片'
+        quote: '扇贝（ホタテ）切法：在柄的最下方约三分之一处，5mm 厚横切成圆片'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 73f5b370111d4452
+    name: 按四种刀法切杏鲍菇
+  - id: french-eringii-meat-roll
+    status: reviewed
+    name: "杏鲍菇裹猪肉烤法式肉卷"
+    source:
+      anchor: '食谱一：法式肉卷（1～2 人份）'
+    slot: anytime
+    remind:
+      text: '用整根杏鲍菇裹住猪肉和芝士再烤。'
+      quote: '用整根杏鲍菇裹住猪肉和芝士，烤出来汁水丰盈。'
+    dose:
+      - value: 2
+        unit: 根
+        what: '杏鲍菇根数'
+        quote: '杏鲍菇 2 根'
+      - value: 4
+        valueMax: 6
+        unit: 片
+        what: '猪五花肉片数'
+        quote: '猪五花肉（薄切）4～6 片'
+      - value: 4
+        unit: 片
+        what: '芝士片数'
+        quote: '切片芝士 4 片（容易被撕下来的那种）'
+      - value: 4
+        unit: 片
+        what: '罗勒片数'
+        quote: '罗勒（任意）4 片'
+      - value: 200
+        unit: ℃
+        what: '烤面包机温度'
+        quote: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟'
+      - value: 220
+        unit: ℃
+        what: '烤箱温度'
+        quote: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟'
+      - value: 15
+        valueMax: 20
+        unit: 分钟
+        what: '烘烤时长'
+        quote: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟'
+    steps:
+      - id: meat-prepare
+        text: '猪五花肉撒少许盐、拍上薄力粉；杏鲍菇切面也拍一层薄力粉。'
+        quote: '猪五花肉撒少许盐、拍上薄力粉；杏鲍菇切面也拍一层薄力粉。'
+      - id: meat-roll
+        text: '在柄的轴向位置放上芝士片，把沾了粉的那一面朝内卷紧。'
+        quote: '在柄的轴向位置放上芝士片，把沾了粉的那一面朝内卷紧。'
+      - id: meat-bake
+        text: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟。'
+        quote: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟。'
+      - id: meat-basil
+        text: '想吃得柔和一点，可以在芝士下面卷一片罗勒。'
+        quote: '想吃得柔和一点，可以在芝士下面卷一片罗勒。'
+    cautions:
+      - level: info
+        text: '注意：芝士一定会流出来，务必在下面垫铝箔。'
+        quote: '注意：芝士一定会流出来，务必在下面垫铝箔。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 62309fe888ee801d
+  - id: butter-pan-fried-eringii
+    status: reviewed
+    name: "黄油煎杏鲍菇"
+    source:
+      anchor: '食谱二：四种刀法的黄油煎杏鲍菇（2 人份）'
+    slot: anytime
+    remind:
+      text: '把四种刀法的杏鲍菇平铺煎到上色，再翻面烤熟。'
+      quote:
+        - '黄油快化开时，把四种切法的杏鲍菇平铺、互不重叠地排入锅中。'
+        - '上色后翻面，尽量不要挪动继续加热，直到整体烤熟（全程约 4 分钟）。'
+    dose:
+      - value: 2
+        unit: 根
+        what: '杏鲍菇根数'
+        quote: '四种刀法切好的杏鲍菇 2 根（约 100g）'
+      - value: 100
+        unit: g
+        what: '杏鲍菇重量'
+        quote: '四种刀法切好的杏鲍菇 2 根（约 100g）'
+      - value: 20
+        valueMax: 30
+        unit: g
+        what: '黄油用量'
+        quote: '黄油 20～30g'
+      - value: 26
+        unit: cm
+        what: '平底锅直径'
+        quote: '26cm 以上的平底锅放黄油，大火加热。'
+    duration:
+      basis: derived
+      sec: 240
+      formula: '4 分钟 × 60 秒/分钟 = 240 秒'
+      quote: '直到整体烤熟（全程约 4 分钟）。'
+    steps:
+      - id: butter-pan
+        text: '26cm 以上的平底锅放黄油，大火加热。'
+        quote: '26cm 以上的平底锅放黄油，大火加热。'
+      - id: butter-arrange
+        text: '黄油快化开时，把四种切法的杏鲍菇平铺、互不重叠地排入锅中。'
+        quote: '黄油快化开时，把四种切法的杏鲍菇平铺、互不重叠地排入锅中。'
+      - id: butter-color
+        text: '煎到接触面变成漂亮的棕褐色之前都不要翻动——中途来回翻会影响上色。'
+        quote: '煎到接触面变成漂亮的棕褐色之前都不要翻动——中途来回翻会影响上色。'
+      - id: butter-finish
+        text: '上色后翻面，尽量不要挪动继续加热，直到整体烤熟（全程约 4 分钟）。'
+        quote: '上色后翻面，尽量不要挪动继续加热，直到整体烤熟（全程约 4 分钟）。'
+    cautions:
+      - level: info
+        text: '煎到接触面变成漂亮的棕褐色之前都不要翻动——中途来回翻会影响上色。'
+        quote: '煎到接触面变成漂亮的棕褐色之前都不要翻动——中途来回翻会影响上色。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 64870d5e3bce1abc
+  - id: four-texture-eringii-risotto
+    status: reviewed
+    name: "四种口感炖饭"
+    source:
+      anchor: '食谱三：四种刀法的意式炖饭（2 人份）'
+    slot: anytime
+    remind:
+      text: '先把四种刀法的杏鲍菇煎好，再做能呈现软、韧、弹、脆口感的意式炖饭。'
+      quote:
+        - '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+        - '一口下去同时吃到软、韧、弹、脆四种口感——这就是「不可思议口感炖饭」。'
+    dose:
+      - value: 2
+        unit: 根
+        what: '杏鲍菇根数'
+        quote: '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+      - value: 100
+        unit: g
+        what: '杏鲍菇重量'
+        quote: '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+      - value: 1
+        unit: 杯
+        what: '米饭用量'
+        quote: '米 1 杯（约 150g，生米）'
+      - value: 150
+        unit: g
+        what: '生米重量'
+        quote: '米 1 杯（约 150g，生米）'
+      - value: 700
+        unit: mL
+        what: '高汤用量'
+        quote: '高汤 700mL'
+      - value: 1
+        unit: 小勺
+        what: '大蒜用量'
+        quote: '大蒜（切碎）1 小勺'
+      - value: 10
+        unit: g
+        what: '黄油用量'
+        quote: '黄油 10g'
+      - value: 1
+        unit: 大勺
+        what: '橄榄油用量'
+        quote: '锅中放蒜末和 1 大勺橄榄油，小火加热。'
+      - value: 2
+        unit: 勺
+        what: '首次加入的高汤量'
+        quote: '倒入 2 勺加热过的高汤，用木勺轻轻搅匀，转中火。'
+    duration:
+      basis: derived
+      sec: 1200
+      formula: '20 分钟 × 60 秒/分钟 = 1200 秒'
+      quote: '全程约 20 分钟'
+    steps:
+      - id: risotto-garlic-rice
+        text: '锅中放蒜末和 1 大勺橄榄油，小火加热。'
+        quote: '锅中放蒜末和 1 大勺橄榄油，小火加热。'
+      - id: risotto-toast-rice
+        text: '闻到蒜香后放入米，轻轻翻炒。'
+        quote: '闻到蒜香后放入米，轻轻翻炒。'
+      - id: risotto-add-stock
+        text: '倒入 2 勺加热过的高汤，用木勺轻轻搅匀，转中火。'
+        quote: '倒入 2 勺加热过的高汤，用木勺轻轻搅匀，转中火。'
+      - id: risotto-top-up
+        text: '水分变少时，再一勺一勺补高汤，边补边搅，直到看不见锅底的湿气。千万不要煮到烧干。'
+        quote: '水分变少时，再一勺一勺补高汤，边补边搅，直到看不见锅底的湿气。千万不要煮到烧干。'
+      - id: risotto-finish
+        text: '重复上一步，直到米熟透、质地偏软——全程约 20 分钟，关火前拌入黄油 10g。'
+        quote: '重复上一步，直到米熟透、质地偏软——全程约 20 分钟，关火前拌入黄油 10g。'
+      - id: risotto-plate
+        text: '盛盘后铺上杏鲍菇黄油煎，最后浇橄榄油、撒胡椒。'
+        quote: '盛盘后铺上杏鲍菇黄油煎，最后浇橄榄油、撒胡椒。'
+    cautions:
+      - level: info
+        text: '千万不要煮到烧干。'
+        quote: '千万不要煮到烧干。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 60e23d893c030d2f
+  - id: potato-soft-egg-eringii-salad
+    status: reviewed
+    name: "土豆溏心蛋拌杏鲍菇"
+    source:
+      anchor: '食谱四：土豆与溏心蛋的酱汁（2 人份）'
+    slot: anytime
+    remind:
+      text: '把杏鲍菇拌入放凉后的土豆，再加入水煮蛋和蛋黄酱。'
+      quote:
+        - 在 ②里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。
+        - 在 ②里拌入蛋黄酱、洋葱片、水煮蛋，混匀。
+        - 节目组对 648 人做了问卷调查，结果显示超过七成的人把杏鲍菇竖着切（縦スライス）。意大利名厨奥田政行厨师长随后公开了一套把杏鲍菇口感最大化的方法——把一整根杏鲍菇分成四种切法。
+    dose:
+      - value: 2
+        unit: 根
+        what: '杏鲍菇根数'
+        quote: '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+      - value: 100
+        unit: g
+        what: '杏鲍菇重量'
+        quote: '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+      - value: 2
+        unit: 个
+        what: '土豆个数'
+        quote: '土豆 2 个（约 300g）'
+      - value: 300
+        unit: g
+        what: '土豆重量'
+        quote: '土豆 2 个（约 300g）'
+      - value: 40
+        unit: g
+        what: '洋葱重量'
+        quote: '洋葱（切薄片）1/8 个（40g）'
+      - value: 2
+        unit: 个
+        what: '水煮蛋个数'
+        quote: '水煮蛋 2 个'
+      - value: 4
+        unit: 大勺
+        what: '蛋黄酱用量'
+        quote: '蛋黄酱 4 大勺'
+      - value: 1
+        unit: 小勺
+        what: '醋用量'
+        quote: '醋 1 小勺'
+    steps:
+      - id: salad-boil-potato
+        text: '土豆去皮，切成一口大小，冷水下锅煮到变软。'
+        quote: '土豆去皮，切成一口大小，冷水下锅煮到变软。'
+      - id: salad-fry-potato
+        text: '沥干后趁热用中火炒，让水分飞散、表面煎到微微焦脆。'
+        quote: '沥干后趁热用中火炒，让水分飞散、表面煎到微微焦脆。'
+      - id: salad-season-cool
+        text: '在 里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。'
+        quote: '在 ②里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。'
+      - id: salad-mix
+        text: '在 里拌入蛋黄酱、洋葱片、水煮蛋，混匀。'
+        quote: '在 ②里拌入蛋黄酱、洋葱片、水煮蛋，混匀。'
+      - id: salad-mushroom-half
+        text: '拌入一半量的杏鲍菇黄油煎。'
+        quote: '拌入一半量的杏鲍菇黄油煎。'
+      - id: salad-serve
+        text: '把剩下的杏鲍菇铺在土豆沙拉上即可上桌。'
+        quote: '把剩下的杏鲍菇铺在土豆沙拉上即可上桌。'
+    cautions:
+      - level: info
+        text: '在 里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。'
+        quote: '在 ②里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 193e964b76ea1893
+  - id: whole-eringii-water-retention
+    status: reviewed
+    name: "整根烤不用加油"
+    source:
+      anchor: '它出汁的真正原因：陆生菌的保水能力'
+    slot: anytime
+    remind:
+      text: '烤的时候水分被逼出来，全程不需要加油。'
+      quote:
+        - 烤的时候水分被逼出来，全程不需要加油。
+        - 杏鲍菇整根加热后残留的水量远高于其他食用菌。
+    steps:
+      - id: moisture-heat-whole
+        text: '杏鲍菇整根加热后残留的水量远高于其他食用菌。'
+        quote: '杏鲍菇整根加热后残留的水量远高于其他食用菌。'
+      - id: moisture-no-oil
+        text: '烤的时候水分被逼出来，全程不需要加油。'
+        quote: '烤的时候水分被逼出来，全程不需要加油。'
+    cautions:
+      - level: info
+        text: '杏鲍菇一旦切成薄片，内部的萃取物就会从断面渗出来'
+        quote: '杏鲍菇一旦切成薄片，内部的萃取物就会从断面渗出来'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 265999e2345a9188
+  - id: whole-eringii-roast
+    status: reviewed
+    name: "整根烤杏鲍菇"
+    source:
+      anchor: '为什么整根烤才好吃'
+    slot: anytime
+    remind:
+      text: '整根上烤，让外皮形成焦壳，锁住内部水分和鲜味。'
+      quote:
+        - '一整根烤的时候，外皮先形成焦壳，把内部的水分和鲜味锁在里面；'
+        - '一旦切开、切片，水分和萃取物就流失了。'
+    steps:
+      - id: roast-whole
+        text: '所以想吃得像海鲜，就要尽量不切，整根上烤。'
+        quote: '所以想吃得像海鲜，就要尽量不切，整根上烤。'
+      - id: roast-crust
+        text: '一整根烤的时候，外皮先形成焦壳，把内部的水分和鲜味锁在里面'
+        quote: '一整根烤的时候，外皮先形成焦壳，把内部的水分和鲜味锁在里面'
+    cautions:
+      - level: info
+        text: '一旦切开、切片，水分和萃取物就流失了。'
+        quote: '一旦切开、切片，水分和萃取物就流失了。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 669391bc484f1d73

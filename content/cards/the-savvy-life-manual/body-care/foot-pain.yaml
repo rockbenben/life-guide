@@ -1,0 +1,331 @@
+article: "the-savvy-life-manual/body-care/foot-pain.md"
+kind: condition
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: foot-sos-overview
+    status: reviewed
+    name: "脚的求救信号"
+    source:
+      anchor: "脚的 SOS 疼痛与浮肿：三个自查 + ABI 检查"
+    remind:
+      text: "留意走不远、腿肚子痛、脚的颜色变差、脚上有个总不收口的伤口，以及脚一到下午就肿、按下去一个坑这些求救信号。"
+      quote:
+        - "走不远、腿肚子痛、脚的颜色变差、脚上有个总不收口的伤口——这些都被统称为「脚的 SOS」。"
+        - "脚一到下午就肿、按下去一个坑，也是另一个方向的求救信号。"
+    steps:
+      - id: sos-ischemia-signals
+        text: "走不远、腿肚子痛、脚的颜色变差、脚上有个总不收口的伤口——这些都被统称为「脚的 SOS」。"
+        quote: "走不远、腿肚子痛、脚的颜色变差、脚上有个总不收口的伤口——这些都被统称为「脚的 SOS」。"
+      - id: sos-edema-signal
+        text: "脚一到下午就肿、按下去一个坑，也是另一个方向的求救信号。"
+        quote: "脚一到下午就肿、按下去一个坑，也是另一个方向的求救信号。"
+    notices:
+      - level: info
+        text: "走不远、腿肚子痛、脚的颜色变差、脚上有个总不收口的伤口——这些都被统称为「脚的 SOS」。脚一到下午就肿、按下去一个坑，也是另一个方向的求救信号。"
+        quote:
+          - "走不远、腿肚子痛、脚的颜色变差、脚上有个总不收口的伤口——这些都被统称为「脚的 SOS」。"
+          - "脚一到下午就肿、按下去一个坑，也是另一个方向的求救信号。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 8af988eb576306d7
+
+  - id: foot-occlusion-and-risk
+    status: reviewed
+    name: "足梗塞是什么病"
+    source:
+      anchor: "「足梗塞」到底是什么病"
+    remind:
+      text: "脚部的血管堵塞引起的病，正式名称是末梢动脉疾患"
+      quote: "脚部的血管堵塞引起的病，正式名称是末梢动脉疾患"
+    steps:
+      - id: occlusion-definition
+        text: "脚部的血管堵塞引起的病，正式名称是末梢动脉疾患"
+        quote: "脚部的血管堵塞引起的病，正式名称是末梢动脉疾患"
+      - id: occlusion-risk-factors
+        text: "册子特别点名：糖尿病、肾脏病、吸烟、高血压、高胆固醇这几类人更容易发生动脉硬化，需要留意。"
+        quote: "册子特别点名：糖尿病、肾脏病、吸烟、高血压、高胆固醇这几类人更容易发生动脉硬化，需要留意。"
+    notices:
+      - level: info
+        text: "册子给出的口径是推定患者数 300 万人以上。"
+        quote: "册子给出的口径是推定患者数 300 万人以上。"
+      - level: with-doctor
+        text: "它可能在短时间内急剧恶化，严重时不得不截肢。"
+        quote: "它可能在短时间内急剧恶化，严重时不得不截肢。"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 9937285e6c83b4ef
+
+  - id: foot-occlusion-symptoms
+    status: reviewed
+    name: "走不远是足梗塞的征兆"
+    source:
+      anchor: "最近走不远？册子说这本身就是征兆"
+    remind:
+      text: "走了 5 分钟左右，小腿肚就开始痛，而且脚的颜色明显变差。"
+      quote: "走了 5 分钟左右，小腿肚就开始痛，而且脚的颜色明显变差。"
+    steps:
+      - id: occlusion-pain
+        text: "走了 5 分钟左右，小腿肚就开始痛，而且脚的颜色明显变差。"
+        quote: "走了 5 分钟左右，小腿肚就开始痛，而且脚的颜色明显变差。"
+      - id: occlusion-time-variation
+        text: "疼痛开始出现的时间因人而异，所以别用「我还能忍」当成判断标准。"
+        quote: "疼痛开始出现的时间因人而异，所以别用「我还能忍」当成判断标准。"
+    notices:
+      - level: info
+        text: "「足梗塞」最容易表现的症状是肌肉疼痛。"
+        quote: "「足梗塞」最容易表现的症状是肌肉疼痛。"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 63e132271fb0a028
+
+  - id: foot-occlusion-hidden-signals
+    status: draft
+    name: "足梗塞为什么难察觉"
+    source:
+      anchor: "为什么这么危险的事，你却察觉不到"
+    remind:
+      text: "了解足梗塞可能被当成老毛病、身体绕路或感觉不到疼而更难察觉。"
+      quote:
+        - 年纪一大就容易发疼，很多人把它归给「年龄的错」，休息一下疼痛缓解就不再理会。
+        - 于是症状缓解、疼痛也减轻了，反而更难察觉。
+        - 糖尿病患者如果已经出现神经障碍，就可能感觉不到疼痛，需要格外留意。
+        - 当成老毛病。年纪一大就容易发疼，很多人把它归给「年龄的错」，休息一下疼痛缓解就不再理会。
+        - 节目这次展示的是一位查出足梗塞的人的「脚的动脉」实物：石灰化。这是动脉硬化血管上出现的变化之一——动脉硬化让血管内侧鼓起瘤状物，血液中的钙附着上去，血管就变得像骨头一样硬。册子特别点名：糖尿病、肾脏病、吸烟、高血压、高胆固醇这几类人更容易发生动脉硬化，需要留意。^[「足のSOS」痛み・むくみに潜む危機のトリセツ]
+    steps:
+      - id: hidden-old-pain
+        text: "年纪一大就容易发疼，很多人把它归给「年龄的错」，休息一下疼痛缓解就不再理会。"
+        quote: "年纪一大就容易发疼，很多人把它归给「年龄的错」，休息一下疼痛缓解就不再理会。"
+      - id: hidden-collateral-route
+        text: "即使是大血管堵住了，人体也会新造血管、把细血管扩张来勉强把营养送过去，于是症状缓解、疼痛也减轻了，反而更难察觉。"
+        quote: "即使是大血管堵住了，人体也会新造血管、把细血管扩张来勉强把营养送过去，于是症状缓解、疼痛也减轻了，反而更难察觉。"
+      - id: hidden-neuropathy
+        text: "糖尿病患者如果已经出现神经障碍，就可能感觉不到疼痛，需要格外留意。"
+        quote: "糖尿病患者如果已经出现神经障碍，就可能感觉不到疼痛，需要格外留意。"
+    notices:
+      - level: info
+        text: "于是症状缓解、疼痛也减轻了，反而更难察觉。糖尿病患者如果已经出现神经障碍，就可能感觉不到疼痛，需要格外留意。"
+        quote:
+          - "于是症状缓解、疼痛也减轻了，反而更难察觉。"
+          - "糖尿病患者如果已经出现神经障碍，就可能感觉不到疼痛，需要格外留意。"
+
+  - id: three-minute-foot-self-check
+    status: reviewed
+    source:
+      anchor: "不用去医院的三分钟自查"
+    remind:
+      text: "现在按册子的方法自查脚的缺血警讯。"
+      quote:
+        - 册子给了三条判断方法，你可以现在就对一下自己的脚
+        - 平躺下来把脚抬高约 1 分钟，看看脚的颜色会不会变差。抬高后缺血更明显，颜色改变就是警讯。
+    duration:
+      basis: quote
+      sec: 180
+      quote: "这篇给两件能立刻上手的事：不用去医院的三分钟自查，以及ABI 检查的风险计分表；脚部浮肿的部分单独放在后面。"
+    steps:
+      - id: self-check-elevated-foot
+        text: "平躺下来把脚抬高约 1 分钟，看看脚的颜色会不会变差。抬高后缺血更明显，颜色改变就是警讯。"
+        quote: "平躺下来把脚抬高约 1 分钟，看看脚的颜色会不会变差。抬高后缺血更明显，颜色改变就是警讯。"
+      - id: self-check-walking-pain
+        text: "连续走 5 分钟左右，有没有小腿肚疼痛，而且伴随脚的颜色变差。"
+        quote: "连续走 5 分钟左右，有没有小腿肚疼痛，而且伴随脚的颜色变差。"
+      - id: self-check-nonhealing-wound
+        text: "脚上有没有超过 2 周都不愈合的伤口。"
+        quote: "脚上有没有超过 2 周都不愈合的伤口。"
+    notices:
+      - level: seek-care
+        text: "三条中有任何一条对上，就去血管外科、心脏血管外科或循环器内科和专科医生聊聊。"
+        quote: "三条中有任何一条对上，就去血管外科、心脏血管外科或循环器内科和专科医生聊聊。"
+      - level: info
+        text: "即使已经出现症状，也不会马上就连到截肢生活习惯的改善、投药、运动疗法都能抑制进展，还可以通过导管治疗或搭桥手术来改善血流。"
+        quote:
+          - "即使已经出现症状，也不会马上就连到截肢"
+          - "生活习惯的改善、投药、运动疗法都能抑制进展，还可以通过导管治疗或搭桥手术来改善血流。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4cd1d6d76a3528fd
+
+  - id: abi-screening-and-risk-score
+    status: draft
+    name: "ABI 检查与风险计分"
+    source:
+      anchor: "早期发现：ABI 检查与风险计分表"
+    remind:
+      text: "了解 ABI 检查和风险计分表。"
+      quote:
+        - ABI（踝肱指数，足压检查）是册子重点推荐的早期发现手段
+        - 这篇给两件能立刻上手的事：不用去医院的三分钟自查，以及ABI 检查的风险计分表；脚部浮肿的部分单独放在后面。
+    steps:
+      - id: abi-pressure-measurement
+        text: "同时测量脚踝和手臂的血压，用两个数值来判断脚的血管有没有堵塞"
+        quote: "同时测量脚踝和手臂的血压，用两个数值来判断脚的血管有没有堵塞"
+      - id: abi-score-diabetes
+        text: "糖尿病 4 分"
+        quote: "糖尿病 4 分"
+      - id: abi-score-smoking
+        text: "吸烟 4 分"
+        quote: "吸烟 4 分"
+      - id: abi-score-dialysis
+        text: "肾脏病（透析）4 分"
+        quote: "肾脏病（透析）4 分"
+      - id: abi-score-nondialysis
+        text: "肾脏病（未透析）2 分"
+        quote: "肾脏病（未透析）2 分"
+      - id: abi-score-cholesterol
+        text: "高胆固醇 3 分"
+        quote: "高胆固醇 3 分"
+      - id: abi-score-hypertension
+        text: "高血压 2 分"
+        quote: "高血压 2 分"
+      - id: abi-score-over-fifty
+        text: "年龄超过 50 岁 1 分"
+        quote: "年龄超过 50 岁 1 分"
+      - id: abi-score-over-sixty-five
+        text: "年龄超过 65 岁 4 分"
+        quote: "年龄超过 65 岁 4 分"
+      - id: abi-score-total
+        text: "合计 7 分以上的人，建议每年做一次足部血压检查。"
+        quote: "合计 7 分以上的人，建议每年做一次足部血压检查。"
+    notices:
+      - level: with-doctor
+        text: "如果脚的血压比手臂还低，就要怀疑脚的血管堵住了。"
+        quote: "如果脚的血压比手臂还低，就要怀疑脚的血管堵住了。"
+      - level: info
+        text: "年龄到 50 岁以上，风险本身就会升高。"
+        quote: "年龄到 50 岁以上，风险本身就会升高。"
+      - level: info
+        text: "这项检查在全国的综合医院和血管专科诊所里已经相当普及。"
+        quote: "这项检查在全国的综合医院和血管专科诊所里已经相当普及。"
+
+  - id: venous-reflux-and-edema
+    status: reviewed
+    name: "静脉逆流引起的脚肿"
+    source:
+      anchor: "脚浮肿：另一个 SOS，来自静脉的「逆流」"
+    remind:
+      text: "留意脚一到下午就肿、按下去久久不弹回来的静脉逆流信号。"
+      quote: "脚一到下午就肿、按下去久久不弹回来，册子把它归到另一个机制上——静脉的逆流。"
+    steps:
+      - id: edema-venous-reflux
+        text: "脚一到下午就肿、按下去久久不弹回来，册子把它归到另一个机制上——静脉的逆流。"
+        quote: "脚一到下午就肿、按下去久久不弹回来，册子把它归到另一个机制上——静脉的逆流。"
+      - id: edema-valve-cause
+        text: "但长时间站立工作或久坐，会让血液淤积，瓣膜就关不严了。"
+        quote: "但长时间站立工作或久坐，会让血液淤积，瓣膜就关不严了。"
+      - id: edema-study-result
+        text: "节目请 16 位受困扰的志愿者做了检查，结果是：有 4 人的静脉里看到了血液逆流（判断依据是静脉回声检查）。"
+        quote: "节目请 16 位受困扰的志愿者做了检查，结果是：有 4 人的静脉里看到了血液逆流（判断依据是静脉回声检查）。"
+    notices:
+      - level: with-doctor
+        text: "已经损坏的瓣膜不会自然痊愈；放着不管，血液反复淤积，还可能引起下肢静脉瘤（也就是曲张的静脉）。"
+        quote: "已经损坏的瓣膜不会自然痊愈；放着不管，血液反复淤积，还可能引起下肢静脉瘤（也就是曲张的静脉）。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ece94adb88311d36
+
+  - id: compression-stockings-use
+    status: reviewed
+    source:
+      anchor: "弹力袜的效果与正确穿法"
+    remind:
+      text: "册子因此给了四步穿法"
+      quote:
+        - 册子因此给了四步穿法
+        - 册子在最后用高亮框写明：糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。 具体请咨询专门处理下肢静脉瘤的血管外科等医生。
+    effect:
+      text: "和之前相比，脚部浮肿的减少量达到 213 mL 以上"
+      quote: "和之前相比，脚部浮肿的减少量达到 213 mL 以上"
+    steps:
+      - id: stocking-grip-heel
+        text: "把手伸进袜子里，捏住脚跟的部分"
+        quote: "把手伸进袜子里，捏住脚跟的部分"
+      - id: stocking-turn-and-fold
+        text: "就那样把袜子翻过来，对折成两半"
+        quote: "就那样把袜子翻过来，对折成两半"
+      - id: stocking-start-at-toe
+        text: "上下确认，把袜口撑开，从脚尖开始套进去"
+        quote: "上下确认，把袜口撑开，从脚尖开始套进去"
+      - id: stocking-roll-to-front
+        text: "最后把翻过来的那部分翻回正面"
+        quote: "最后把翻过来的那部分翻回正面"
+    notices:
+      - level: info
+        text: "这是对能感觉到浮肿的被试测得的结果"
+        quote: "这是对能感觉到浮肿的被试测得的结果"
+      - level: info
+        text: "节目请以站立工作为职业的警备会社（保安公司）人员配合，实测了弹性裤袜（弹力袜）的效果"
+        quote: "节目请以站立工作为职业的警备会社（保安公司）人员配合，实测了弹性裤袜（弹力袜）的效果"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 20a5a7c4e6ff772d
+
+  - id: compression-stockings-contraindication
+    status: reviewed
+    source:
+      anchor: "这条底线不能碰"
+    remind:
+      text: "糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。"
+      quote: "糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。"
+    steps:
+      - id: stocking-contraindication
+        text: "糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。"
+        quote: "糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。"
+    notices:
+      - level: with-doctor
+        text: "具体请咨询专门处理下肢静脉瘤的血管外科等医生。"
+        quote: "具体请咨询专门处理下肢静脉瘤的血管外科等医生。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7b1edaf9a3fa43d7
+    name: 这些人别穿弹力袜
+
+  - id: booklet-clinical-gaps
+    status: reviewed
+    source:
+      anchor: "册子没有说的几件事"
+    remind:
+      text: "以上缺口都只能以临床医生意见为准"
+      quote: "以上缺口都只能以临床医生意见为准"
+    steps:
+      - id: gap-abi-threshold
+        text: "册子没有给出 ABI 的正常值范围或诊断阈值"
+        quote:
+          - 册子没有给出 ABI 的正常值范围或诊断阈值
+          - 册子在最后用高亮框写明：糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。 具体请咨询专门处理下肢静脉瘤的血管外科等医生。
+      - id: gap-stock-pressure
+        text: "没有给出弹力袜应该选几毫米汞柱压力"
+        quote:
+          - 没有给出弹力袜应该选几毫米汞柱压力
+          - 册子在最后用高亮框写明：糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。 具体请咨询专门处理下肢静脉瘤的血管外科等医生。
+      - id: gap-edema-followup
+        text: "没有给出浮肿的观察时长或复查间隔"
+        quote:
+          - 没有给出浮肿的观察时长或复查间隔
+          - 册子在最后用高亮框写明：糖尿病患者，以及走路时小腿肚会痛、怀疑是足梗塞的人，请不要使用弹力袜。 具体请咨询专门处理下肢静脉瘤的血管外科等医生。
+      - id: gap-study-limit
+        text: "弹力袜那组实测只报了浮肿量的减少，没有报人数、平均值和对照组的设置"
+        quote: "弹力袜那组实测只报了浮肿量的减少，没有报人数、平均值和对照组的设置"
+      - id: gap-clinical-opinion
+        text: "以上缺口都只能以临床医生意见为准。"
+        quote: "以上缺口都只能以临床医生意见为准。"
+    notices:
+      - level: with-doctor
+        text: "以上缺口都只能以临床医生意见为准。"
+        quote: "以上缺口都只能以临床医生意见为准。"
+      - level: info
+        text: "只给了「脚的血压低于手臂就值得怀疑」这一条定性判断"
+        quote: "只给了「脚的血压低于手臂就值得怀疑」这一条定性判断"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d81618e1b0362864
+    name: 册子没写清的四件事

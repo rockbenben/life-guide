@@ -1,0 +1,350 @@
+article: 'the-savvy-life-manual/food/maple-syrup.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '枫糖浆当调料用：125mL 万能调味液配遍和食'
+      reason: '开篇原则已并入万能调味液卡片，配方内容与后文重复，未另立卡片。'
+    - anchor: '枫糖浆的四道「高手」食谱'
+      reason: '只抽取了枫糖浆味噌烤饭团；枫糖浆散寿司、枫糖浆炖南瓜和枫糖浆姜烧猪肉因本篇卡片上限未抽取。'
+    - anchor: '越过黄油：三种香气叠加糖浆'
+      reason: '只抽取了酱油黄油枫糖浆；炒芝麻咖啡枫糖浆和培根土豆枫糖浆因本篇卡片上限未抽取。'
+    - anchor: '附：厚松饼（厚焼 pancakes）的关键三点'
+      reason: '该节需要配合另述的厚松饼面糊配方，且煎制时长为区间；因本篇卡片上限未抽取。'
+    - anchor: '万能的是余韵，不是甜味'
+      reason: '本节解释香气成分协同与风味搭配原理，不形成独立可执行动作，未做成卡片。'
+    - anchor: '它为什么回味悠长：其实是苦味'
+      reason: '本节说明苦味成分与回味的机制，属于背景知识，未做成卡片。'
+  images: []
+cards:
+  - id: 'maple-universal-seasoning'
+    status: reviewed
+    name: "枫糖浆调万能调味液"
+    source:
+      anchor: '万能调味液（なこり液）'
+    slot: anytime
+    remind:
+      text: '调配 125mL 万能调味液，摇匀后冷藏，并在 2～3 天内用完。'
+      quote:
+        - '原液 125mL 的配比'
+        - '摇匀即可'
+        - '冷藏保存、最好在 2～3 天内用完'
+    dose:
+      - value: 125
+        unit: 'mL'
+        what: '原液总量'
+        quote: '原液 125mL 的配比'
+      - value: 6
+        unit: '大勺'
+        what: '酱油用量'
+        quote: '6 大勺'
+      - value: 2
+        unit: '大勺'
+        what: '枫糖浆用量'
+        quote: '2 大勺'
+      - value: 1
+        unit: '小勺'
+        what: '醋用量'
+        quote: '1 小勺'
+    steps:
+      - id: 'mix-seasoning'
+        text: '把三样放进容器里，充分摇匀即可'
+        quote: '把三样放进容器里，充分摇匀即可'
+      - id: 'adjust-strength'
+        text: '想浓就原液直接用，想淡就加水稀释'
+        quote: '想浓就原液直接用，想淡就加水稀释'
+      - id: 'store-seasoning'
+        text: '冷藏保存、最好在 2～3 天内用完'
+        quote: '冷藏保存、最好在 2～3 天内用完'
+    cautions:
+      - level: info
+        text: '用法是当提鲜的调料，不是当糖'
+        quote: '用法是当提鲜的调料，不是当糖'
+      - level: info
+        text: '这是纯手摇、无防腐剂的液体'
+        quote: '这是纯手摇、无防腐剂的液体'
+      - level: info
+        text: '冷藏保存、最好在 2～3 天内用完'
+        quote: '冷藏保存、最好在 2～3 天内用完'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 7426bd79db2f6cab
+  - id: 'maple-seasoning-chawanmushi'
+    status: reviewed
+    source:
+      anchor: '三款枫糖浆风味食谱'
+    slot: anytime
+    remind:
+      text: '蒸锅上汽后放入大火 2 分钟，再转小火约 10 分钟'
+      quote:
+        - '蒸锅上汽后放入'
+        - '大火 2 分钟，再转小火约 10 分钟'
+    dose:
+      - value: 3
+        unit: '大勺'
+        what: '万能调味液用量'
+        quote: '3 大勺 + 1/2 大勺'
+      - value: 0.5
+        unit: '大勺'
+        what: '追加万能调味液用量'
+        derived:
+          formula: 1/2 大勺 = 0.5 大勺
+        quote: '3 大勺 + 1/2 大勺'
+      - value: 300
+        unit: 'mL'
+        what: '水量'
+        quote: '300mL'
+      - value: 2
+        unit: '个'
+        what: '鸡蛋用量'
+        quote: '2 个'
+      - value: 50
+        unit: 'g'
+        what: '鸡肉用量'
+        quote: '50g'
+    duration:
+      basis: derived
+      sec: 720
+      formula: '2 分钟 × 60 秒 + 约 10 分钟 × 60 秒 = 约 720 秒'
+    steps:
+      - id: 'mix-egg'
+        text: '碗里把鸡蛋打散，加入 A 组液体混合，过筛'
+        quote: '碗里把鸡蛋打散，加入 A 组液体混合，过筛'
+      - id: 'arrange-chawanmushi'
+        text: '耐热容器里放入鸡肉、香菇和金针菇静静注入第 1 步的蛋液，一格一格地加'
+        quote:
+          - '耐热容器里放入鸡肉、香菇和金针菇'
+          - '静静注入第 1 步的蛋液，一格一格地加'
+      - id: 'steam-chawanmushi'
+        text: '蒸锅上汽后放入大火 2 分钟，再转小火约 10 分钟出锅撒上三之叶'
+        quote:
+          - '蒸锅上汽后放入'
+          - '大火 2 分钟，再转小火约 10 分钟'
+          - '出锅撒上三之叶'
+    cautions:
+      - level: info
+        text: '蛋液没能凝固的话延长小火的加热时间'
+        quote:
+          - '蛋液没能凝固的话'
+          - '延长小火的加热时间'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 2d59fc61f80e5e75
+    name: 做枫糖浆茶碗蒸
+  - id: 'maple-seasoning-oyakodon'
+    status: reviewed
+    name: "枫糖浆鸡肉盖饭"
+    source:
+      anchor: '三款枫糖浆风味食谱'
+    slot: anytime
+    remind:
+      text: '中火加热 3～4 分钟回锅后中火再加热约 2 分钟'
+      quote:
+        - '中火加热 3～4 分钟'
+        - '回锅后中火再加热约 2 分钟'
+    dose:
+      - value: 3
+        unit: '大勺'
+        what: '万能调味液用量'
+        quote: '3 大勺'
+      - value: 60
+        unit: 'mL'
+        what: '水量'
+        quote: '60mL'
+      - value: 4
+        unit: '个'
+        what: '鸡蛋用量'
+        quote: '4 个'
+      - value: 150
+        unit: 'g'
+        what: '鸡腿肉用量'
+        quote: '150g'
+      - value: 2
+        unit: '碗'
+        what: '米饭用量'
+        quote: '2 碗'
+    steps:
+      - id: 'cook-oyakodon'
+        text: '小锅里放入 A 组和鸡肉、洋葱中火加热 3～4 分钟直到鸡肉完全熟透'
+        quote:
+          - '小锅里放入 A 组和鸡肉、洋葱'
+          - '中火加热 3～4 分钟'
+          - '直到鸡肉完全熟透'
+      - id: 'add-egg'
+        text: '一边搅拌一边倒入打散的鸡蛋回锅后中火再加热约 2 分钟达到半熟就关火'
+        quote:
+          - '一边搅拌一边倒入打散的鸡蛋'
+          - '回锅后中火再加热约 2 分钟'
+          - '达到半熟就关火'
+      - id: 'serve-oyakodon'
+        text: '饭盛进碗里，把第 2 步淋在上面，撒上三之叶'
+        quote: '饭盛进碗里，把第 2 步淋在上面，撒上三之叶'
+    cautions:
+      - level: info
+        text: '锅小只做一人份的话，把 1～3 步重复一轮即可'
+        quote: '锅小只做一人份的话，把 1～3 步重复一轮即可'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5fe13ea086d5a81f
+  - id: 'maple-seasoning-soba'
+    status: reviewed
+    source:
+      anchor: '三款枫糖浆风味食谱'
+    slot: anytime
+    remind:
+      text: '用万能调味液煮荞麦面，汤煮沸后放入荞麦，加热到熟透。'
+      quote:
+        - '锅里放入 A 组，煮沸'
+        - '把荞麦放进'
+        - '刚好熟透的软硬度'
+        - '的汤里，加热'
+    dose:
+      - value: 5
+        unit: '大勺'
+        what: '万能调味液用量'
+        quote: '5 大勺'
+      - value: 500
+        unit: 'mL'
+        what: '水量'
+        quote: '500mL'
+      - value: 200
+        unit: 'g'
+        what: '荞麦用量'
+        quote: '200g'
+    effect:
+      text: '枫糖浆能顶掉荞麦汤里的豆腥味，吃起来更清爽'
+      quote:
+        - '枫糖浆能顶掉荞麦汤里的'
+        - '豆腥味'
+        - '，吃起来更清爽'
+    steps:
+      - id: 'boil-soba'
+        text: '锅里放入 A 组，煮沸'
+        quote: '锅里放入 A 组，煮沸'
+      - id: 'cook-soba'
+        text: '把荞麦放进刚好熟透的软硬度的汤里，加热'
+        quote:
+          - '把荞麦放进'
+          - '刚好熟透的软硬度'
+          - '的汤里，加热'
+      - id: 'serve-soba'
+        text: '盛入器皿，撒上葱花'
+        quote: '盛入器皿，撒上葱花'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 1d1e93fed98ae934
+    name: 做枫糖浆荞麦面
+  - id: 'maple-miso-rice-balls'
+    status: reviewed
+    name: "饭团刷味噌枫糖浆烤"
+    source:
+      anchor: '枫糖浆的四道「高手」食谱'
+    slot: anytime
+    remind:
+      text: '把饭团捏成中间松软、外面紧实，烤至两面焦色，刷上味噌枫糖浆再烤香。'
+      quote:
+        - '捏成中间松软、外面紧实'
+        - '烤到底面上色就算成功'
+        - '两面都烤出焦色'
+        - '把味噌和枫糖浆混匀，薄薄刷在饭团表面'
+        - '把刷了味噌的一面烤到微微焦香'
+    dose:
+      - value: 2
+        unit: '大勺'
+        what: '味噌用量'
+        quote: '2 大勺'
+      - value: 2
+        unit: '大勺'
+        what: '枫糖浆用量'
+        quote: '2 大勺'
+    steps:
+      - id: 'shape-rice-ball'
+        text: '捏成中间松软、外面紧实'
+        quote: '捏成中间松软、外面紧实'
+      - id: 'preheat-grill'
+        text: '先把空网充分烤热'
+        quote: '先把空网充分烤热'
+      - id: 'grill-rice-ball'
+        text: '烤到底面上色就算成功两面都烤出焦色'
+        quote:
+          - '烤到底面上色就算成功'
+          - '两面都烤出焦色'
+      - id: 'brush-rice-ball'
+        text: '把味噌和枫糖浆混匀，薄薄刷在饭团表面'
+        quote: '把味噌和枫糖浆混匀，薄薄刷在饭团表面'
+      - id: 'toast-rice-ball'
+        text: '把刷了味噌的一面烤到微微焦香'
+        quote: '把刷了味噌的一面烤到微微焦香'
+    cautions:
+      - level: info
+        text: '枫糖浆的用量按口味自行增减'
+        quote:
+          - '枫糖浆的用量'
+          - '按口味自行增减'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 33244a2905246aed
+  - id: 'soy-butter-maple-syrup'
+    status: reviewed
+    source:
+      anchor: '越过黄油：三种香气叠加糖浆'
+    slot: anytime
+    remind:
+      text: '将黄油、枫糖浆和酱油在冰水碗中打匀，打到发白、蓬松状。'
+      quote:
+        - '冰水中把过热的碗'
+        - '冰镇'
+        - '放入黄油、枫糖浆、酱油，用打蛋器充分打匀'
+        - '打到发白、蓬松状即可'
+    dose:
+      - value: 100
+        unit: 'mL'
+        what: '枫糖浆用量'
+        quote: '100mL'
+      - value: 60
+        unit: 'g'
+        what: '无盐黄油用量'
+        quote: '60g'
+      - value: 0.5
+        unit: '小勺'
+        what: '酱油用量'
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: '1/2 小勺'
+    effect:
+      text: '酱油和枫糖浆含有相同的香气成分相乘之下香气更浓'
+      quote:
+        - '酱油和枫糖浆含有相同的香气成分'
+        - '相乘之下香气更浓'
+    steps:
+      - id: 'melt-butter'
+        text: '小锅里放无盐黄油，小火加热'
+        quote: '小锅里放无盐黄油，小火加热'
+      - id: 'melt-butter-residual'
+        text: '边搅边融化到咕嘟冒小泡时关火余温再继续融化'
+        quote:
+          - '边搅边融化'
+          - '到咕嘟冒小泡时关火'
+          - '余温再继续融化'
+      - id: 'cool-bowl'
+        text: '冰水中把过热的碗冰镇放入黄油、枫糖浆、酱油，用打蛋器充分打匀'
+        quote:
+          - '冰水中把过热的碗'
+          - '冰镇'
+          - '放入黄油、枫糖浆、酱油，用打蛋器充分打匀'
+      - id: 'whip-syrup'
+        text: '打到发白、蓬松状即可'
+        quote: '打到发白、蓬松状即可'
+    cautions:
+      - level: info
+        text: '全程用冰水碗冷藏着打，乳化效果会明显更好'
+        quote: '全程用冰水碗冷藏着打，乳化效果会明显更好'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 8772420528c400e7

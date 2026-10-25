@@ -1,0 +1,410 @@
+article: the-savvy-life-manual/body-care/gout-prevention.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: daily-water-and-milk
+    status: reviewed
+    name: "多喝水加一杯牛奶"
+    source:
+      anchor: '尿酸高、痛风？多喝水 + 每天一杯牛奶'
+    # 原文只说每天多喝水、每天一杯牛奶，没给具体时段。
+    slot: anytime
+    remind:
+      text: '今天按目标饮水，并安排一杯牛奶'
+      quote:
+        - '每天饮水 2000–3000 毫升'
+        - '每天一杯牛奶，适量喝咖啡、适量吃樱桃'
+    dose:
+      - value: 2000
+        valueMax: 3000
+        unit: 毫升
+        what: 每日饮水目标范围
+        quote: '每天饮水 2000–3000 毫升'
+      - value: 1
+        unit: 杯
+        what: 每日牛奶份量
+        quote: '每天一杯牛奶，适量喝咖啡、适量吃樱桃'
+    steps:
+      - id: drink-enough-water
+        text: '充足饮水有助于促进尿酸通过尿液排出，是最基本、最有效的措施之一。'
+        quote:
+          - 充足饮水有助于促进尿酸通过尿液排出，是最基本、最有效的措施之一。
+          - 先把两个数字摆出来：尿酸值超过 7.0 mg/dL 就诊断为高尿酸血症，放任不管就会发展为痛风；说明书给的溶解结晶目标更保守，是 6.0 mg/dL 以下（据《高尿酸血症·痛风的治疗指南 第3版》）。^[「尿酸値」のトリセツ（2025年1月9日放送）]
+      - id: choose-milk-or-yogurt
+        text: '低脂牛奶和酸奶与尿酸水平改善相关（具体幅度各研究不一，方向可信、量级不统一）。'
+        quote: '低脂牛奶和酸奶与尿酸水平改善相关（具体幅度各研究不一，方向可信、量级不统一）。'
+    notices:
+      - level: info
+        text: '尿酸值超过 7.0 mg/dL 就诊断为高尿酸血症说明书给的溶解结晶目标更保守，是 6.0 mg/dL 以下（据《高尿酸血症·痛风的治疗指南 第3版》）。'
+        quote:
+          - '尿酸值超过 7.0 mg/dL 就诊断为高尿酸血症'
+          - '说明书给的溶解结晶目标更保守，是 6.0 mg/dL 以下（据《高尿酸血症·痛风的治疗指南 第3版》）。'
+      - level: info
+        text: '其中的酪蛋白和乳清蛋白具有抑制尿酸生成和促进排泄的作用。'
+        quote: '其中的酪蛋白和乳清蛋白具有抑制尿酸生成和促进排泄的作用。'
+      - level: info
+        text: '一项跟踪 4.7 万名男性 12 年的队列研究发现，乳制品摄入最高的一组比最低的一组痛风风险低约 44%。'
+        quote: '一项跟踪 4.7 万名男性 12 年的队列研究发现，乳制品摄入最高的一组比最低的一组痛风风险低约 44%。'
+    cautions:
+      - level: info
+        text: '注意这是「吃得多的比吃得少的」相对差距，不是「每天喝 250 毫升就能减半」，而且是观察性研究、只能说明相关。'
+        quote: '注意这是「吃得多的比吃得少的」相对差距，不是「每天喝 250 毫升就能减半」，而且是观察性研究、只能说明相关。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: bd416eb139740755
+
+  - id: address-uric-acid-excretion
+    status: reviewed
+    source:
+      anchor: '控制高尿酸，从认识根本原因开始'
+    slot: anytime
+    remind:
+      text: '今天从改善排泄与代谢入手，而不只靠限制高嘌呤食物'
+      quote:
+        - 因此，想要控制尿酸水平，仅靠限制高嘌呤食物远远不够。
+        - 控制体重、改善代谢状态，并限制酒精摄入
+        - 减少内脏脂肪的积聚
+        - 体检单上「尿酸高」这一项亮红灯？近年高尿酸血症和痛风的发病率持续上升，而大多数高尿酸患者的问题并不在「摄入过多」，而在「排泄不足」——背后与胰岛素抵抗和乳酸积聚密切相关。
+    steps:
+      - id: control-weight-and-metabolism
+        text: '控制体重、改善代谢状态，并限制酒精摄入'
+        quote: '控制体重、改善代谢状态，并限制酒精摄入'
+      - id: reduce-visceral-fat
+        text: '减少内脏脂肪的积聚'
+        quote: '减少内脏脂肪的积聚'
+      - id: limit-alcohol
+        text: '控制体重、改善代谢状态，并限制酒精摄入'
+        quote: '控制体重、改善代谢状态，并限制酒精摄入'
+    notices:
+      - level: info
+        text: '尿酸排泄减少才是高尿酸血症的主要原因，而其背后则与胰岛素抵抗和乳酸积聚密切相关。'
+        quote: '尿酸排泄减少才是高尿酸血症的主要原因，而其背后则与胰岛素抵抗和乳酸积聚密切相关。'
+      - level: info
+        text: '只有约两成来自饮食，剩下八成是体内自己产生的'
+        quote: '只有约两成来自饮食，剩下八成是体内自己产生的'
+      - level: info
+        text: '通常与内脏脂肪过多有关，会抑制肾脏对尿酸的排泄功能。'
+        quote: '通常与内脏脂肪过多有关，会抑制肾脏对尿酸的排泄功能。'
+      - level: info
+        text: '在酒精代谢过程中大量产生，会与尿酸竞争排泄路径，进一步加重尿酸潴留。'
+        quote: '在酒精代谢过程中大量产生，会与尿酸竞争排泄路径，进一步加重尿酸潴留。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 5632253a1f0f79b9
+    name: 控体重改善尿酸代谢
+
+  - id: drink-coffee
+    status: reviewed
+    source:
+      anchor: '推荐的摄入'
+    # 原文只说每天一杯，没给具体时段。
+    slot: anytime
+    remind:
+      text: '今天安排咖啡饮用'
+      quote: '经常喝咖啡可以帮助降低血尿酸水平。'
+    steps:
+      - id: choose-coffee
+        text: '值得注意的是，无论是含咖啡因还是脱咖啡因的咖啡，都可能带来益处。'
+        quote: '值得注意的是，无论是含咖啡因还是脱咖啡因的咖啡，都可能带来益处。'
+    notices:
+      - level: info
+        text: '咖啡对血尿酸水平影响的机制尚未明确。'
+        quote: '咖啡对血尿酸水平影响的机制尚未明确。'
+      - level: info
+        text: '咖啡中的咖啡因 (1,3,7-三甲基黄嘌呤) 抑制黄嘌呤氧化酶，增加肾血流量，改善尿酸盐通过尿路排泄；'
+        quote: '咖啡中的咖啡因 (1,3,7-三甲基黄嘌呤) 抑制黄嘌呤氧化酶，增加肾血流量，改善尿酸盐通过尿路排泄；'
+      - level: info
+        text: '含咖啡因和脱咖啡因的咖啡都含有绿原酸，可以改善胰岛素抵抗，从而降低血尿酸水平；'
+        quote: '含咖啡因和脱咖啡因的咖啡都含有绿原酸，可以改善胰岛素抵抗，从而降低血尿酸水平；'
+      - level: info
+        text: '咖啡因可以降低痛风的风险。'
+        quote: '咖啡因可以降低痛风的风险。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: fdc8415737443d72
+    name: 按推荐量喝咖啡
+
+  - id: eat-cherries
+    status: reviewed
+    source:
+      anchor: '推荐的摄入'
+    # 原文只说每天吃，没给具体时段。
+    slot: anytime
+    remind:
+      text: '今天食用樱桃，尤其是 Montmorency 品种'
+      quote: '樱桃 (尤其是 Montmorency 品种) 可以通过促进尿排泄来降低血尿酸水平。'
+    steps:
+      - id: choose-cherries
+        text: '樱桃 (尤其是 Montmorency 品种) 可以通过促进尿排泄来降低血尿酸水平。'
+        quote: '樱桃 (尤其是 Montmorency 品种) 可以通过促进尿排泄来降低血尿酸水平。'
+    notices:
+      - level: info
+        text: '酸樱桃（含有特别高的花青素，被认为对健康有很多好处。）与别嘌呤醇结合可能具有互补作用。'
+        quote: '酸樱桃（含有特别高的花青素，被认为对健康有很多好处。）与别嘌呤醇结合可能具有互补作用。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7e842597ce46ef7e
+    name: 每天吃樱桃
+
+  - id: limit-red-meat-and-offal
+    status: reviewed
+    source:
+      anchor: '建议限制的摄入'
+    slot: anytime
+    remind:
+      text: '今天减少红肉、内脏和香肠制品'
+      quote:
+        - '红肉、内脏和香肠制品'
+        - '食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险'
+    steps:
+      - id: reduce-red-meat
+        text: '食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险'
+        quote: '食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险'
+      - id: keep-plant-purines
+        text: '在任何情况下都应该鼓励食用，也就是说不用担心植物嘌呤。'
+        quote: '在任何情况下都应该鼓励食用，也就是说不用担心植物嘌呤。'
+    notices:
+      - level: info
+        text: '其富含膳食纤维、维生素和矿物质，不影响血尿酸水平'
+        quote: '其富含膳食纤维、维生素和矿物质，不影响血尿酸水平'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 144c88f1e15e1088
+    name: 少吃红肉内脏和香肠
+
+  - id: limit-seafood
+    status: reviewed
+    source:
+      anchor: '建议限制的摄入'
+    slot: anytime
+    remind:
+      text: '今天减少海鲜，尤其是甲壳类和贻贝'
+      quote: '海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。'
+    dose:
+      - value: 1
+        valueMax: 2
+        unit: 次/周
+        what: 建议鱼类食用频次范围
+        quote: '建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。'
+    steps:
+      - id: reduce-shellfish
+        text: '海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。'
+        quote: '海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。'
+      - id: eat-fish-regularly
+        text: '建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。'
+        quote: '建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。'
+      - id: choose-oily-fish
+        text: '包括脂肪较多的鱼类，如鲭鱼和沙丁鱼以及所有的鱼皮，从血管健康的角度来看是可以吃的。'
+        quote: '包括脂肪较多的鱼类，如鲭鱼和沙丁鱼以及所有的鱼皮，从血管健康的角度来看是可以吃的。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6b163161d524c79b
+    name: 少吃甲壳类和贻贝
+
+  - id: limit-alcohol
+    status: reviewed
+    source:
+      anchor: '建议限制的摄入'
+    slot: anytime
+    remind:
+      text: '每天酒精不超过 20～25 克'
+      quote: '每天酒精不超过 20～25 克'
+    dose:
+      - value: 20
+        valueMax: 25
+        unit: 克
+        what: 每日酒精上限范围
+        quote: '每天酒精不超过 20～25 克'
+    duration:
+      basis: derived
+      sec: 1800
+      quote: '第一杯用 30 分钟慢慢喝完'
+      formula: '30 分钟 × 60 秒 = 1800 秒'
+    steps:
+      - id: avoid-beer-and-spirits
+        text: '啤酒和烈酒尤其应该避免，而红葡萄酒增加痛风风险的可能性最小。'
+        quote: '啤酒和烈酒尤其应该避免，而红葡萄酒增加痛风风险的可能性最小。'
+      - id: keep-to-one-glass
+        text: '换算成酒大约是一杯（「オールワンの法則」）'
+        quote: '换算成酒大约是一杯（「オールワンの法則」）'
+      - id: sip-first-glass-slowly
+        text: '第一杯用 30 分钟慢慢喝完'
+        quote: '第一杯用 30 分钟慢慢喝完'
+    notices:
+      - level: info
+        text: '痛风的风险随着酒精摄入量的增加而增加；'
+        quote: '痛风的风险随着酒精摄入量的增加而增加；'
+    cautions:
+      - level: stop
+        text: '不必靠多喝凑感觉。'
+        quote: '不必靠多喝凑感觉。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: caa429392587cc64
+    name: 每天酒精不超过 20～25 克
+
+  - id: limit-fructose
+    status: reviewed
+    source:
+      anchor: '建议限制的摄入'
+    slot: anytime
+    remind:
+      text: '今天避开含果糖饮料与高果糖食品'
+      quote: '含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。'
+    steps:
+      - id: avoid-sugary-drinks
+        text: '含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。'
+        quote: '含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。'
+      - id: avoid-fructose-rich-foods
+        text: '还应特别避免摄入富含果糖的果汁 (尤其是橙汁) 和富含果糖的甜水果 (如橙子或甜苹果)。'
+        quote: '还应特别避免摄入富含果糖的果汁 (尤其是橙汁) 和富含果糖的甜水果 (如橙子或甜苹果)。'
+      - id: choose-fresh-fruit
+        text: '新鲜水果中含有的天然果糖风险较低，适量摄入是安全的。'
+        quote: '新鲜水果中含有的天然果糖风险较低，适量摄入是安全的。'
+    notices:
+      - level: info
+        text: '目前添加果糖食品几乎无处不在，方便食品尤其具有潜在的高风险；'
+        quote: '目前添加果糖食品几乎无处不在，方便食品尤其具有潜在的高风险；'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 55185a649fc54b6d
+    name: 避开含果糖饮料食品
+
+  - id: three-control-methods
+    status: reviewed
+    source:
+      anchor: '说明书的三个控制术'
+    slot: anytime
+    remind:
+      text: '今天按适用方向选择渐进减重、限酒或补牛奶'
+      quote:
+        - 3% 减肥（针对稍胖的人）
+        - 遵守酒精的适量线（针对喝多的人）
+        - 每天一杯牛奶（针对排不出去的人）
+        - 所以这篇不是一味忌口，而是两件事：把该补的补上——每天饮水 2000–3000 毫升、每天一杯牛奶，适量喝咖啡、适量吃樱桃；把该避开的避开——红肉、内脏和香肠制品、海鲜（尤其甲壳类和贝类）、酒精（重点避开啤酒与烈酒）、含果糖饮料与高果糖食品，同时控制体重、改善代谢状态。植物嘌呤在任何情况下都可以放心食用，新鲜水果里的天然果糖适量摄入也是安全的。
+    dose:
+      - value: 3
+        unit: '%'
+        what: 减重比例目标
+        quote: '3% 减肥（针对稍胖的人）'
+      - value: 300
+        unit: 千卡
+        what: 每日热量摄入缺口
+        quote: '每天少摄入 300 千卡、连续坚持 2 个月'
+      - value: 2
+        unit: 个月
+        what: 连续坚持时长
+        quote: '每天少摄入 300 千卡、连续坚持 2 个月'
+      - value: 20
+        valueMax: 25
+        unit: 克
+        what: 每日酒精上限范围
+        quote: '一天的酒精量控制在 20～25 克以内，配合阿尔帕喝法。'
+      - value: 1
+        unit: 杯
+        what: 每日牛奶份量
+        quote: '每天一杯牛奶（针对排不出去的人）'
+    steps:
+      - id: gradual-weight-loss
+        text: '3% 减肥（针对稍胖的人）——尿酸排不出去的关键是内脏脂肪，所以减重很重要；但急剧减肥反而会把尿酸顶上去。'
+        quote: '3% 减肥（针对稍胖的人）——尿酸排不出去的关键是内脏脂肪，所以减重很重要；但急剧减肥反而会把尿酸顶上去。'
+      - id: reduce-daily-calories
+        text: '每天少摄入 300 千卡、连续坚持 2 个月。'
+        quote: '每天少摄入 300 千卡、连续坚持 2 个月。'
+      - id: use-calorie-reduction-table
+        text: '说明书为此专门做了一张「100 千卡削减表」，把各种食物对应的热量列成一张纸，方便对照。'
+        quote: '说明书为此专门做了一张「100 千卡削减表」，把各种食物对应的热量列成一张纸，方便对照。'
+      - id: follow-alcohol-line
+        text: '一天的酒精量控制在 20～25 克以内，配合阿尔帕喝法。'
+        quote:
+          - 一天的酒精量控制在 20～25 克以内，配合阿尔帕喝法。
+          - ② 遵守酒精的适量线（针对喝多的人）——见「控制酒精摄入」一节，一天的酒精量控制在 20～25 克以内，配合阿尔帕喝法。
+      - id: drink-daily-milk
+        text: '每天一杯牛奶（针对排不出去的人）——酪蛋白 → 丙氨酸这条路径，见「每天一杯牛奶」一节。'
+        quote: '每天一杯牛奶（针对排不出去的人）——酪蛋白 → 丙氨酸这条路径，见「每天一杯牛奶」一节。'
+    cautions:
+      - level: stop
+        text: '急剧减肥反而会把尿酸顶上去'
+        quote: '急剧减肥反而会把尿酸顶上去'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6a179a9ed7028b49
+    name: 按情况选减重限酒补奶
+
+  - id: moderate-exercise-when-uric-acid-high
+    status: reviewed
+    name: "尿酸高时别剧烈运动"
+    source:
+      anchor: '尿酸超过 7 的人，要额外注意两件事'
+    slot: anytime
+    remind:
+      text: '尿酸值超过 7 时，今天避免剧烈运动并分次补水'
+      quote:
+        - 说明书针对尿酸值已超过 7 的人给了两条提醒。
+        - 别做太剧烈的运动
+        - 别让自己脱水
+        - 注意：说明书针对尿酸值已超过 7 的人给了两条提醒。一是别做太剧烈的运动——心率超过 100 的一次剧烈运动会产生大量乳酸，反而妨碍尿酸排出、拉高尿酸值；强度以还能和旁边的人正常聊天为准。二是别让自己脱水——脱水会让尿酸更难排出去，记得少量多次补水。
+    steps:
+      - id: keep-exercise-moderate
+        text: '强度以还能和旁边的人正常聊天为准'
+        quote: '强度以还能和旁边的人正常聊天为准'
+      - id: drink-in-sessions
+        text: '记得少量多次补水'
+        quote: '记得少量多次补水'
+    cautions:
+      - level: stop
+        text: '心率超过 100 的一次剧烈运动会产生大量乳酸，反而妨碍尿酸排出、拉高尿酸值；'
+        quote: '心率超过 100 的一次剧烈运动会产生大量乳酸，反而妨碍尿酸排出、拉高尿酸值；'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 0400f4c5ae2f1c75
+
+  - id: gout-when-to-seek-care
+    status: reviewed
+    name: "核对痛风就医条件"
+    source:
+      anchor: '什么时候该去医院'
+    slot: anytime
+    remind:
+      text: '今天核对就医条件；符合任一条就先看诊'
+      quote: '尿酸值超过 7，并且符合下面任一条的，说明书建议不要只靠改善生活方式，先去看诊（附近的内科或痛风专科门诊）：'
+    steps:
+      - id: check-uric-acid-value
+        text: '尿酸值超过 7，并且符合下面任一条的'
+        quote: '尿酸值超过 7，并且符合下面任一条的'
+      - id: check-prior-gout
+        text: '已经得过痛风的人'
+        quote: '已经得过痛风的人'
+      - id: check-elevation-duration
+        text: '尿酸值偏高已经持续5 年以上的人。'
+        quote: '尿酸值偏高已经持续5 年以上的人。'
+      - id: visit-clinic
+        text: '先去看诊（附近的内科或痛风专科门诊）'
+        quote: '先去看诊（附近的内科或痛风专科门诊）'
+      - id: identify-uric-acid-type
+        text: '抽血和验尿能分辨自己属于哪一种，从而拿到对症的用药和生活方式指导；'
+        quote: '抽血和验尿能分辨自己属于哪一种，从而拿到对症的用药和生活方式指导；'
+      - id: check-related-complications
+        text: '进一步检查还能查出高尿酸血症常伴的各类合并症。'
+        quote: '进一步检查还能查出高尿酸血症常伴的各类合并症。'
+    notices:
+      - level: seek-care
+        text: '尿酸值超过 7，并且符合下面任一条的，说明书建议不要只靠改善生活方式，先去看诊（附近的内科或痛风专科门诊）：'
+        quote: '尿酸值超过 7，并且符合下面任一条的，说明书建议不要只靠改善生活方式，先去看诊（附近的内科或痛风专科门诊）：'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 21b75d2edb3ef1f3

@@ -1,0 +1,25 @@
+{
+  "name": "@life-guide/mobile",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "description": "手机端：Capacitor 壳，WebView 里跑的是同一份构建产物",
+  "scripts": {
+    "sync": "cap sync",
+    "add:android": "cap add android",
+    "add:ios": "cap add ios",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios",
+    "build:android": "cd android && gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/local-notifications": "^8.3.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.3"
+  }
+}

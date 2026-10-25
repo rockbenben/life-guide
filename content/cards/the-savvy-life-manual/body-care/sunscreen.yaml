@@ -1,0 +1,103 @@
+article: "the-savvy-life-manual/body-care/sunscreen.md"
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: "为什么「明明涂了」还是会晒黑"
+      reason: "解释涂抹不匀的成因，属于背景知识；打圈涂这一步已由涂法卡提炼。"
+  images: []
+cards:
+  # 这一篇是一套做法（原文自己写的「这套做法是三步」），不是三个动作。
+  # 拆成「涂法一」「涂法二」两张卡，清单里就会出现两行半截的做法 ——
+  # 所以合成一张卡：打圈涂 + 涂两遍 + 用量 + 注意事项都在里面。
+  # id 沿用 sunscreen-circle-application（id 不改名，见 schema 说明）。
+  - id: sunscreen-circle-application
+    status: reviewed
+    name: "打圈涂防晒霜两遍"
+    source:
+      anchor: "涂法一：打圈涂（クルクル塗り）"
+    slot: anytime
+    remind:
+      text: "打圈涂，涂两遍"
+      quote:
+        - "这套做法是三步：① 打圈涂，填进皮肤细纹；② 涂两遍，把量补到适量；③ 记住 2～3 小时要补涂。"
+    dose:
+      - value: 2
+        unit: "mg/cm²"
+        what: "每 1cm² 涂 2mg"
+        quote: "适量 = 每 1cm² 涂 2mg。"
+      - value: 2
+        unit: "次"
+        what: "涂抹次数"
+        quote: "用和平常一样的量，涂 2 次，总量自然就到了适量。"
+    effect:
+      text: "2 天、合计 11 小时在海边，打圈涂的一侧几乎晒不黑"
+      quote: "它给的效果证据是一次海边对照——2 天、合计 11 小时在海边，其中打圈涂的一侧几乎晒不黑。"
+    steps:
+      - id: sunscreen-take-amount
+        text: "取平时的量在手上。"
+        quote: "取平时的量在手上。"
+      - id: sunscreen-dot-five-areas
+        text: "额头、两侧脸颊、鼻尖、下巴这 5 个地方先点上防晒霜。"
+        quote: "额头、两侧脸颊、鼻尖、下巴这 5 个地方先点上防晒霜。"
+      - id: sunscreen-circle-blend
+        text: "像画圆一样打圈抹匀，不留下涂抹纹。"
+        quote: "像画圆一样打圈抹匀，不留下涂抹纹。"
+      - id: sunscreen-gentle-detail
+        text: "眼周、鼻梁等细小部位，用指尖顺着纹路轻轻带过。"
+        quote: "眼周、鼻梁等细小部位，用指尖顺着纹路轻轻带过。"
+      - id: sunscreen-blend-full-face
+        text: "延伸到全脸，让产品整体融合。"
+        quote: "延伸到全脸，让产品整体融合。"
+      - id: sunscreen-repeat-sequence
+        text: "把这套动作重复 2 次。"
+        quote: "把这套动作重复 2 次。"
+      - id: sunscreen-two-coats
+        text: "用和平常一样的量，涂 2 次，总量自然就到了适量。"
+        quote: "用和平常一样的量，涂 2 次，总量自然就到了适量。"
+      - id: sunscreen-amount-dish
+        text: "一次倒在浅盘里的量，就是合适的量"
+        quote: "一次倒在浅盘里的量，就是合适的量"
+    cautions:
+      - level: stop
+        text: "皮肤出现瘙痒等异常：停止使用，并咨询医生。"
+        quote: "皮肤出现瘙痒等异常：停止使用，并咨询医生。"
+      - level: info
+        text: "不要为了完全不晒黑而彻底不出门：过度的紫外线防护会导致维生素 D 不足"
+        quote: "不要为了完全不晒黑而彻底不出门：说明书特别提醒，过度的紫外线防护会导致维生素 D 不足，一边做防晒、一边适度外出同样重要"
+      - level: info
+        text: "别把它当成「涂得越厚越好」"
+        quote: "别把它当成「涂得越厚越好」"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 912d16dbef4bed82
+    variants:
+      busy:
+        include:
+          - sunscreen-take-amount
+          - sunscreen-dot-five-areas
+          - sunscreen-circle-blend
+          - sunscreen-repeat-sequence
+
+  # 补涂是另一时刻的事（早上涂完 2～3 小时后），单独一张卡挂在日间。
+  - id: sunscreen-reapply
+    status: reviewed
+    name: "超过 2～3 小时补涂防晒霜"
+    source:
+      anchor: "该什么时候补涂"
+    slot: daytime
+    remind:
+      text: "超过 2～3 小时就要补"
+      quote: "也就是说，早上认真涂好只是起点——超过 2～3 小时就要补"
+    effect:
+      text: "防晒霜的高效效果只持续 2～3 小时左右，所以要勤于补涂"
+      quote: "防晒霜的高效效果只持续 2～3 小时左右，所以要勤于补涂"
+    steps:
+      - id: sunscreen-reapply-regularly
+        text: "防晒霜的高效效果只持续 2～3 小时左右，所以要勤于补涂"
+        quote: "防晒霜的高效效果只持续 2～3 小时左右，所以要勤于补涂"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 6178573c96efab1e

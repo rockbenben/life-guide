@@ -1,0 +1,58 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# 构建产物，不进 git（ARCHITECTURE.md §1）
+app/public/cards.json
+app/public/manual.json
+app/public/media/
+
+# 校验报告，每次跑都会变
+content/report.md
+content/report.json
+
+# 审阅报告，每次审都会变
+content/audit-report.md
+content/audit-state.json
+content/audit-report.backup.md
+content/audit-state.backup.json
+
+# 待签字清单：签字时一张张勾，随勾随变
+content/signing-list.md
+
+# 时段检查报告与重签清单：每次跑都会变
+content/slot-report.md
+content/slot-resign.md
+
+# 布局截图（scripts/screenshot.mjs 的产物，随看随生）
+tmp-shots/
+
+# 桌面端打包产物（desktop/build/ 里的图标是源，要入库）
+desktop/release/
+# 打包时的临时输出目录（清自己的产物会被占用时，改打到旁边再搬回来）
+desktop/release-new/
+
+# 别的工具留下的中间产物（Qoder 的 design preview 报告等），不是本项目的内容
+.qoder-credits/
+
+# 编辑器与系统
+.DS_Store
+Thumbs.db
+*.log
+
+# 本机配置：blog 仓库在哪（各人机器不同，不入库）
+blog.path
+
+# 本机配置：LLM 凭据（绝不入库）
+content/llm.local.json
+
+# Python 字节码
+__pycache__/
+*.pyc
+
+# 设计打磨稿工作目录（batchN.html / after.html / 取证产物），不入库
+design-preview/
+
+
+# 本机审查报告，不含产品内容
+.desktop-app-standard-review-*.json

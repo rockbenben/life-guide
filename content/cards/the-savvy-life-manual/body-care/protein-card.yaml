@@ -1,0 +1,187 @@
+article: the-savvy-life-manual/body-care/protein-card.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '一张卡只回答一件事'
+      reason: '本节是卡片读法与监修信息的说明，已并入“蛋白质卡：一张卡算清这一份有多少克蛋白质”卡片，没有独立的额外动作。'
+  images: []
+cards:
+  - id: read-protein-card
+    status: draft
+    name: "读蛋白质卡"
+    source:
+      anchor: '蛋白质卡：一张卡算清这一份有多少克蛋白质'
+    slot: anytime
+    remind:
+      text: '今天用经神奈川县立保健福祉大学铃木志保子教授监修的卡片，查看每份食物的蛋白质和分量。'
+      quote:
+        - '整套卡片由'
+        - '神奈川县立保健福祉大学铃木志保子教授'
+        - '监修'
+        - '每张卡左上角星形里的数字'
+        - '蛋白质克数'
+        - '卡片下方标注对应分量'
+    dose:
+      - { value: 3, unit: g, what: '白米饭对应分量的蛋白质', quote: [ '3g' ] }
+    steps:
+      - id: read-star-number
+        text: '每张卡左上角星形里的数字蛋白质克数'
+        quote: [ '每张卡左上角星形里的数字', '蛋白质克数' ]
+      - id: read-portion
+        text: '卡片下方标注对应分量'
+        quote: [ '卡片下方标注对应分量' ]
+      - id: use-white-rice-example
+        text: '比如白米饭一张卡是3g蛋白质150g分量（一碗）'
+        quote: [ '比如白米饭一张卡是', '3g', '蛋白质', '150g', '分量（一碗）' ]
+
+  - id: plan-three-color-meal
+    status: reviewed
+    name: "三色搭配凑 20g"
+    source:
+      anchor: '三色搭配：每餐 3 色、合计 20g 以上'
+    slot: anytime
+    remind:
+      text: '一餐用 3 种颜色的卡片来搭配让菜单更完整合计蛋白质 20g 以上'
+      quote:
+        - '一餐用 3 种颜色的卡片来搭配'
+        - '让菜单更完整'
+        - '合计蛋白质 20g 以上'
+    dose:
+      - { value: 20, unit: g, what: '每餐合计蛋白质', quote: [ '20g' ] }
+    steps:
+      - id: choose-three-colors
+        text: '卡片按食材系分成三种颜色：一餐用 3 种颜色的卡片来搭配'
+        quote: [ '卡片按', '食材系', '分成三种颜色：', '一餐用 3 种颜色的卡片来搭配' ]
+      - id: read-each-gram
+        text: '每张卡的左上角有一个星形数字该份食物的蛋白质克数'
+        quote: [ '每张卡的左上角有一个星形数字', '该份食物的蛋白质克数' ]
+      - id: sum-to-target
+        text: '合计蛋白质 20g 以上'
+        quote: [ '合计蛋白质 20g 以上' ]
+    cautions:
+      - level: with-doctor
+        text: '肾脏有疾病的人如果摄入过多蛋白质可能会导致病情进展请务必咨询主治医生'
+        quote:
+          - '肾脏有疾病的人如果摄入过多蛋白质'
+          - '可能会导致病情进展'
+          - '请务必'
+          - '咨询主治医生'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 7cb60a78854d2d8c
+
+  - id: yellow-staple-card
+    status: reviewed
+    name: "按黄色卡配主食蛋白"
+    source:
+      anchor: '黄色卡（主食系）：12 张'
+    slot: anytime
+    remind:
+      text: '黄色主食系照着数字搭配就行'
+      quote: [ '黄色', '主食系', '照着数字搭配就行' ]
+    dose:
+      - { value: 3, unit: g, what: '可颂（1 个 45g）的蛋白质', quote: [ '可颂', '3g', '1 个', '45g' ] }
+      - { value: 3, unit: g, what: '无糖玉米片（1 份 50g）的蛋白质', quote: [ '无糖玉米片', '3g', '1 份', '50g' ] }
+      - { value: 3, unit: g, what: '白米饭（1 碗 150g）的蛋白质', quote: [ '白米饭', '3g', '1 碗', '150g' ] }
+      - { value: 4, unit: g, what: '糙米饭（1 碗 150g）的蛋白质', quote: [ '糙米饭', '4g', '1 碗', '150g' ] }
+      - { value: 4, unit: g, what: '燕麦片（干重 30g；1 餐）的蛋白质', quote: [ '燕麦片', '4g', '干重', '30g', '（1 餐）' ] }
+      - { value: 4, unit: g, what: '吐司（1 片；6 片切；60g）的蛋白质', quote: [ '吐司', '4g', '1 片', '（6 片切）', '60g' ] }
+      - { value: 5, unit: g, what: '葡萄干面包（1 片；6 片切；75g）的蛋白质', quote: [ '葡萄干面包', '5g', '1 片', '（6 片切）', '75g' ] }
+      - { value: 5, unit: g, what: '乌冬面（1 团 200g）的蛋白质', quote: [ '乌冬面', '5g', '1 团', '200g' ] }
+      - { value: 6, unit: g, what: '菠萝包（1 个 90g）的蛋白质', quote: [ '菠萝包', '6g', '1 个', '90g' ] }
+      - { value: 7, unit: g, what: '豆沙包（1 个 120g）的蛋白质', quote: [ '豆沙包', '7g', '1 个', '120g' ] }
+      - { value: 10, unit: g, what: '荞麦面（生重 120g；1 团）的蛋白质', quote: [ '荞麦面', '10g', '生重', '120g', '（1 团）' ] }
+      - { value: 10, unit: g, what: '中华面（生重 120g；1 团）的蛋白质', quote: [ '中华面', '10g', '生重', '120g', '（1 团）' ] }
+    steps:
+      - id: yellow-choose-food
+        text: '黄色主食系卡片下方标注对应分量'
+        quote: [ '黄色', '主食系', '卡片下方标注对应分量' ]
+      - id: yellow-add-protein
+        text: '该份食物的蛋白质克数'
+        quote: [ '该份食物的蛋白质克数' ]
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: fc67c9b21ad4dda4
+
+  - id: green-plant-card
+    status: reviewed
+    name: "按绿色卡配植物蛋白"
+    source:
+      anchor: '绿色卡（植物系）：12 张'
+    slot: anytime
+    remind:
+      text: '绿色植物系照着数字搭配就行'
+      quote: [ '绿色', '植物系', '照着数字搭配就行' ]
+    dose:
+      - { value: 1, unit: g, what: '带皮马铃薯（生重 100g；1 个）的蛋白质', quote: [ '带皮马铃薯', '1g', '生重', '100g', '（1 个）' ] }
+      - { value: 1, unit: g, what: '带皮红薯（生重 100g）的蛋白质', quote: [ '带皮红薯', '1g', '生重', '100g' ] }
+      - { value: 1, unit: g, what: '山药（生重 50g）的蛋白质', quote: [ '山药', '1g', '生重', '50g' ] }
+      - { value: 1, unit: g, what: '炒核桃（5 小把 10g）的蛋白质', quote: [ '炒核桃', '1g', '5 小把', '10g' ] }
+      - { value: 2, unit: g, what: '厚油豆腐皮（20g；1/9 块）的蛋白质', quote: [ '厚油豆腐皮', '2g', '20g', '（1/9 块）' ] }
+      - { value: 2, unit: g, what: '花生（10 粒；10g）的蛋白质', quote: [ '花生', '2g', '10 粒', '10g' ] }
+      - { value: 3, unit: g, what: '豆腐（50g；1/6 块）的蛋白质', quote: [ '豆腐', '3g', '50g', '（1/6 块）' ] }
+      - { value: 3, unit: g, what: '煮黄豆（1 大勺；山盛；20g）的蛋白质', quote: [ '煮黄豆', '3g', '1 大勺（山盛）', '20g' ] }
+      - { value: 4, unit: g, what: '纳豆（迷你杯 1 盒 30g）的蛋白质', quote: [ '纳豆', '4g', '迷你杯 1 盒', '30g' ] }
+      - { value: 5, unit: g, what: '煮毛豆（100g；可食部 50g）的蛋白质', quote: [ '煮毛豆', '5g', '100g', '可食部', '50g' ] }
+      - { value: 5, unit: g, what: '豆浆（浅装 1 杯 150g）的蛋白质', quote: [ '豆浆', '5g', '浅装 1 杯', '150g' ] }
+      - { value: 8, unit: g, what: '干高野豆腐（1 块 17g）的蛋白质', quote: [ '干高野豆腐', '8g', '1 块', '17g' ] }
+    steps:
+      - id: green-choose-food
+        text: '绿色植物系卡片下方标注对应分量'
+        quote: [ '绿色', '植物系', '卡片下方标注对应分量' ]
+      - id: green-add-protein
+        text: '该份食物的蛋白质克数'
+        quote: [ '该份食物的蛋白质克数' ]
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 2e82acd986f3618d
+
+  - id: red-animal-card
+    status: reviewed
+    name: "按红色卡配动物蛋白"
+    source:
+      anchor: '红色卡（动物系）：16 张'
+    slot: anytime
+    remind:
+      text: '红色动物系照着数字搭配就行'
+      quote: [ '红色', '动物系', '照着数字搭配就行' ]
+    dose:
+      - { value: 3, unit: g, what: '迷你汉堡肉饼（1 个 25g）的蛋白质', quote: [ '迷你汉堡肉饼', '3g', '1 个', '25g' ] }
+      - { value: 3, unit: g, what: '火腿（2 片 20g）的蛋白质', quote: [ '火腿', '3g', '2 片', '20g' ] }
+      - { value: 3, unit: g, what: '无糖酸奶（1 杯 100g）的蛋白质', quote: [ '无糖酸奶', '3g', '1 杯', '100g' ] }
+      - { value: 4, unit: g, what: '奶酪（18g；切片 6p；1 块）的蛋白质', quote: [ '奶酪', '4g', '18g', '切片 6p', '1 块' ] }
+      - { value: 4, unit: g, what: '吞拿鱼罐头（25g；1 勺）的蛋白质', quote: [ '吞拿鱼罐头', '4g', '25g', '（1 勺）' ] }
+      - { value: 4, unit: g, what: '鲭鱼（1 块 20g）的蛋白质', quote: [ '鲭鱼', '4g', '1 块', '20g' ] }
+      - { value: 5, unit: g, what: '牛奶（浅装 1 杯 150g）的蛋白质', quote: [ '牛奶', '5g', '浅装 1 杯', '150g' ] }
+      - { value: 5, unit: g, what: '布丁（1 个 90g）的蛋白质', quote: [ '布丁', '5g', '1 个', '90g' ] }
+      - { value: 5, unit: g, what: '三文鱼（1 块 20g）的蛋白质', quote: [ '三文鱼', '5g', '1 块', '20g' ] }
+      - { value: 2, unit: g, what: '培根（1 片 20g）的蛋白质', quote: [ '培根', '2g', '1 片', '20g' ] }
+      - { value: 2, unit: g, what: '香肠（1 根 20g）的蛋白质', quote: [ '香肠', '2g', '1 根', '20g' ] }
+      - { value: 2, unit: g, what: '厚烧蛋（20g；1/3 个蛋）的蛋白质', quote: [ '厚烧蛋', '2g', '20g', '（1/3 个蛋）' ] }
+      - { value: 5, unit: g, what: '鸡胸肉（25g；1/10 块）的蛋白质', quote: [ '鸡胸肉', '5g', '25g', '（1/10 块）' ] }
+      - { value: 6, unit: g, what: '鸡蛋（1 个 50g）的蛋白质', quote: [ '鸡蛋', '6g', '1 个', '50g' ] }
+      - { value: 6, unit: g, what: '三文鱼碎（25g；1 勺）的蛋白质', quote: [ '三文鱼碎', '6g', '25g', '（1 勺）' ] }
+      - { value: 7, unit: g, what: '鱼肉香肠（1 根 70g）的蛋白质', quote: [ '鱼肉香肠', '7g', '1 根', '70g' ] }
+    steps:
+      - id: red-choose-food
+        text: '红色动物系卡片下方标注对应分量'
+        quote: [ '红色', '动物系', '卡片下方标注对应分量' ]
+      - id: red-add-protein
+        text: '该份食物的蛋白质克数'
+        quote: [ '该份食物的蛋白质克数' ]
+    cautions:
+      - level: with-doctor
+        text: '肾脏有疾病的人如果摄入过多蛋白质可能会导致病情进展请务必咨询主治医生'
+        quote:
+          - '肾脏有疾病的人如果摄入过多蛋白质'
+          - '可能会导致病情进展'
+          - '请务必'
+          - '咨询主治医生'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 952f026aa8f7f373

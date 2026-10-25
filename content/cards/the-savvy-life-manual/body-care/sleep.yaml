@@ -1,0 +1,169 @@
+article: the-savvy-life-manual/body-care/sleep.md
+kind: practice
+coverage: partial
+
+# 覆盖清单：这个文件里哪些内容明确不抽成卡，以及为什么。
+#
+# 「隐性鼻塞自我检查表」是判断「是不是鼻塞」的诊断标准，不是一条可执行动作；
+# 「一个让人沉默的数字」是节目组对 9 名员工的实测背景数据，只是佐证，不含新动作。
+#
+# 注意：开篇小节（标题导语）的两条硬指标已被两张卡的 remind 引文覆盖，
+# 「光是怎么变成睡眠的」里的「持续约 1 个月」被 morning-light 的 effect 引用，
+# 「什么时候该去看医生」被两张卡的 with-doctor 禁忌引用——这些都不在 ignore 里。
+#
+ignore:
+  sections:
+    - anchor: "一个让人沉默的数字"
+      reason: "节目组对 9 名员工的实测背景（在家办公那几天达标人数为 0 人），只是佐证光照不足，不含新的可执行动作"
+    - anchor: "隐性鼻塞自我检查表"
+      reason: "判断是否鼻塞的诊断标准与监修医师署名，属疾病判断信息，不是可执行动作"
+
+cards:
+  - id: morning-light
+    status: reviewed
+    name: "起床后晒 15 分钟晨光"
+    source:
+      anchor: "光照建议"
+    slot: morning
+
+    remind:
+      text: "起床后 3 小时内，暴露在 2500 Lux 以上的光线下至少 15 分钟以上"
+      quote:
+        - "起床后 3 小时内：至少暴露在 2500 Lux 以上的光线下 15 分钟以上"
+
+    effect:
+      text: "习惯通常不会立刻改变：持续约 1 个月，夜里一到点就困的睡眠节律才会慢慢成形"
+      quote: "习惯通常不会立刻改变：持续约 1 个月，夜里一到点就困的睡眠节律才会慢慢成形"
+
+    dose:
+      - value: 3
+        unit: "小时内"
+        what: "起床后接受光照的时限"
+        quote: "起床后 3 小时内"
+      - value: 2500
+        unit: "Lux"
+        what: "光照强度"
+        quote: "至少暴露在 2500 Lux 以上的光线下"
+      - value: 15
+        unit: "分钟"
+        what: "每次照光时长"
+        quote: "15 分钟以上"
+
+    # 原文只给了「15 分钟以上」这个下限，没有上限。
+    # 换算成秒是推算而不是原文照抄，所以 basis=derived 并写清算式。
+    duration:
+      basis: derived
+      sec: 900
+      formula: "原文「15 分钟以上」：15 分钟 × 60 秒/分钟 = 900 秒（这是下限，不是上限）"
+
+    steps:
+      - id: timing
+        text: "起床后 3 小时内：至少暴露在 2500 Lux 以上的光线下 15 分钟以上"
+        quote: "起床后 3 小时内：至少暴露在 2500 Lux 以上的光线下 15 分钟以上"
+      - id: outdoor
+        text: "只要走到户外就能获得足够的光线"
+        quote: "只要走到户外就能获得足够的光线"
+      - id: indoor
+        text: "站在窗户旁，让光线照在脸上，同样可以获得足够的光线"
+        quote: "站在窗户旁，让光线照在脸上，同样可以获得足够的光线"
+      - id: split
+        text: "连续照满 15 分钟有困难时，分几次零散地照也可以，但每一次都要落在起床后 3 小时内"
+        quote: "连续照满 15 分钟有困难时，分几次零散地照也可以，但每一次都要落在起床后 3 小时内"
+
+    cautions:
+      - level: stop
+        text: "绝对不要直视太阳"
+        quote: "绝对不要直视太阳"
+      - level: info
+        text: "节目实验中，即便在雨天，户外也拿到了足够的亮度"
+        quote: "节目实验中，即便在雨天，户外也拿到了足够的亮度"
+      - level: with-doctor
+        text: "坚持约 1 个月仍不见改善建议到精神科、心疗内科或内科就诊"
+        quote:
+          - "坚持约 1 个月仍不见改善"
+          - "建议到精神科、心疗内科或内科就诊"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6307cdb08bcc1223
+    variants:
+      busy:
+        include:
+          - timing
+          - outdoor
+          - indoor
+
+  - id: nasal-rinse
+    status: reviewed
+    name: "睡前用生理盐水冲鼻腔"
+    source:
+      anchor: "鼻塞对睡眠的影响"
+    slot: evening
+
+    remind:
+      text: "睡前用生理盐水冲洗鼻腔，坚持约 2 周"
+      quote:
+        - "用生理盐水冲洗鼻腔，睡前坚持约 2 周"
+        - "值得一试的是鼻腔冲洗，在睡前坚持约 2 周就可能见效"
+
+    effect:
+      text: "睡前坚持约 2 周的鼻腔冲洗可能取得成效"
+      quote: "睡前坚持约 2 周的鼻腔冲洗可能取得成效"
+
+    dose:
+      - value: 2
+        unit: "次"
+        what: "每个鼻孔"
+        quote: "左右鼻孔各做 2 次"
+      - value: 2
+        unit: "周"
+        what: "睡前坚持"
+        quote: "睡前坚持约 2 周"
+      - value: 2
+        unit: "克"
+        what: "食盐用量"
+        quote: "将约 2 克食盐溶解在 250 毫升温水中"
+      - value: 250
+        unit: "毫升"
+        what: "温水用量"
+        quote: "将约 2 克食盐溶解在 250 毫升温水中"
+      - value: 38
+        unit: "℃"
+        what: "水温"
+        quote: "水温约为 38℃"
+
+    # 原文没有说一次冲洗要花多久，只给了每步的量（盐 2 克、水 250 毫升、38℃）。
+    # 推算耗时就是编数字，所以 basis=unknown，不写 sec。
+    duration:
+      basis: unknown
+
+    steps:
+      - id: prepare-saline
+        text: "将约 2 克食盐溶解在 250 毫升温水中，水温约为 38℃，浓度约 0.8%"
+        quote: "将约 2 克食盐溶解在 250 毫升温水中，水温约为 38℃，浓度约 0.8%"
+      - id: posture
+        text: "上身前倾，一边发“啊——”一边冲洗，左右鼻孔各做 2 次"
+        quote: "上身前倾，一边发“啊——”一边冲洗，左右鼻孔各做 2 次"
+      - id: blow-nose
+        text: "轻轻擤出鼻腔内残留的盐水和鼻涕"
+        quote: "轻轻擤出鼻腔内残留的盐水和鼻涕"
+
+    cautions:
+      - level: stop
+        text: "请勿提前制作盐水"
+        quote: "请勿提前制作盐水"
+      - level: info
+        text: "用剩的应直接丢弃"
+        quote: "用剩的应直接丢弃"
+      - level: info
+        text: "水温过热或过冷都可能损伤鼻黏膜"
+        quote: "水温过热或过冷都可能损伤鼻黏膜"
+      - level: with-doctor
+        text: "坚持约 1 个月仍不见改善建议到精神科、心疗内科或内科就诊"
+        quote:
+          - "坚持约 1 个月仍不见改善"
+          - "建议到精神科、心疗内科或内科就诊"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 3ffe58c121c1f246

@@ -1,0 +1,140 @@
+article: "the-savvy-life-manual/body-care/constipation.md"
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: "便秘怎么办？每天 2 次如厕 + 2 个绿奇异果"
+      reason: "文章总览与背景介绍；其中如厕安排和奇异果吃法已分别依据后续详细小节抽卡，其余非动作性背景不单列。"
+    - anchor: "食物和运动都治不好的一类：便意消失"
+      reason: "本节主要说明便意消失的患病率、形成机制与年龄因素，属于疾病知识而非可执行保健动作，未在 practice 文档中制卡。"
+  images: []
+cards:
+  - id: scheduled-toilet-visits
+    status: reviewed
+    source:
+      anchor: "新对策：Go to 厕所"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016070436266.png?imageMogr2/format/webp"
+    remind:
+      text: "每天早、晚去厕所，饭后 30 分钟去，每次 3 分钟；即使没有便意也去，连续坚持 2 周。"
+      quote:
+        - "每天去两次厕所——早上和晚上，就算完全没有便意也去。以每次 3 分钟为目标。"
+        - "早餐后、晚餐后，也就是「饭后 30 分钟」最理想。"
+        - "就算排不出来，也请连续坚持 2 周。"
+    dose:
+      - value: 2
+        unit: 次
+        what: 每日如厕次数
+        quote: "一天 2 次（早 + 晚）"
+      - value: 3
+        unit: 分钟
+        what: 每次如厕目标时长
+        quote: "每次 3 分钟"
+      - value: 30
+        unit: 分钟
+        what: 饭后去厕所时间
+        quote: "饭后 30 分钟"
+      - value: 2
+        unit: 周
+        what: 连续坚持时长
+        quote: "连续坚持 2 周"
+    duration:
+      basis: quote
+      sec: 180
+      quote: "以每次 3 分钟为目标。"
+    steps:
+      - id: set-two-fixed-times
+        text: "每天去两次厕所——早上和晚上，就算完全没有便意也去。以每次 3 分钟为目标。"
+        quote: "每天去两次厕所——早上和晚上，就算完全没有便意也去。以每次 3 分钟为目标。"
+      - id: go-after-meal
+        text: "早餐后、晚餐后，也就是「饭后 30 分钟」最理想。"
+        quote: "早餐后、晚餐后，也就是「饭后 30 分钟」最理想。"
+      - id: use-evening-slot-without-breakfast
+        text: "如果早上吃不了早餐，那么晚上的放松时段去也完全可以。"
+        quote: "如果早上吃不了早餐，那么晚上的放松时段去也完全可以。"
+      - id: continue-without-success
+        text: "就算排不出来，也请连续坚持 2 周。"
+        quote: "就算排不出来，也请连续坚持 2 周。"
+      - id: strain-gently
+        text: "以轻轻用力为度，如厕时间控制在 3 分钟左右。"
+        quote: "以轻轻用力为度，如厕时间控制在 3 分钟左右。"
+    cautions:
+      - level: stop
+        text: "千万别憋着使劲：会导致血压上升，也有脑卒中的风险。"
+        quote: "千万别憋着使劲：会导致血压上升，也有脑卒中的风险。"
+      - level: info
+        text: "以轻轻用力为度，如厕时间控制在 3 分钟左右。"
+        quote: "以轻轻用力为度，如厕时间控制在 3 分钟左右。"
+      - level: info
+        text: "每周排便 3 次以上，完全属于正常范围。"
+        quote: "每周排便 3 次以上，完全属于正常范围。"
+    segments:
+      - id: child-toileting
+        when:
+          - age:child
+        action:
+          text: "孩子可以放心用力，重要的是别让便子积在直肠里。"
+          quote: "孩子则可以放心用力——重要的是别让便子积在直肠里。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 784e1998ba82d625
+    name: 每天定时去厕所 3 分钟
+    variants:
+      busy:
+        include:
+          - set-two-fixed-times
+  - id: daily-green-kiwis
+    status: reviewed
+    source:
+      anchor: "新指南里的新面孔：奇异果"
+    slot: anytime
+    remind:
+      text: "每天吃 2 个绿奇异果，并留意便秘和腹部不适感的变化。"
+      quote: "说明书引述的 2022 年论文：每天吃 2 个绿奇异果，便秘和腹部不适感都有所改善。"
+    dose:
+      - value: 2
+        unit: 个
+        what: 每日绿奇异果用量
+        quote: "每天吃 2 个绿奇异果"
+    steps:
+      - id: eat-two-green-kiwis
+        text: "每天吃 2 个绿奇异果"
+        quote: "每天吃 2 个绿奇异果"
+      - id: check-bowel-and-abdominal-comfort
+        text: "便秘和腹部不适感都有所改善。"
+        quote: "便秘和腹部不适感都有所改善。"
+    cautions:
+      - level: stop
+        text: "如果吃了之后出现身体不适，请立即中止。"
+        quote: "如果吃了之后出现身体不适，请立即中止。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6218de48aa91bf7d
+    name: 每天吃 2 个绿奇异果
+  - id: guar-gum-breakdown-product
+    status: reviewed
+    source:
+      anchor: "另一道新增食材：瓜尔胶分解物"
+    slot: anytime
+    remind:
+      text: "药店和网上都能买到，使用前请仔细阅读包装背面的说明。"
+      quote: "药店和网上都能买到，使用前请仔细阅读包装背面的说明。"
+    steps:
+      - id: obtain-and-read-instructions
+        text: "它的形态是经过精制后的白色粉末。说明书注明：药店和网上都能买到，使用前请仔细阅读包装背面的说明。"
+        quote: "它的形态是经过精制后的白色粉末。说明书注明：药店和网上都能买到，使用前请仔细阅读包装背面的说明。"
+      - id: choose-suitable-combination
+        text: "把这类食材组合起来，从中找出最适合自己的那一个。"
+        quote: "把这类食材组合起来，从中找出最适合自己的那一个。"
+    cautions:
+      - level: info
+        text: "药店和网上都能买到，使用前请仔细阅读包装背面的说明。"
+        quote: "药店和网上都能买到，使用前请仔细阅读包装背面的说明。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: f53a6284ea006e57
+    name: 瓜尔胶分解物按说明用

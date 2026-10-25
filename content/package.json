@@ -1,0 +1,16 @@
+{
+  "name": "@life-guide/content",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "description": "内容管线：快照 → 校验 → 覆盖报告 → 构建 cards.json",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "yaml": "^2.8.0"
+  }
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    自适应图标的前景层（透明）：只画标记本身，缩到中间的安全区里 ——
+    Android 会按任意形状切边缘，图形超出安全区就会被切掉。
+  -->
+  <g transform="translate(334 372) scale(0.62) translate(-225 -287)">
+    <rect x="225" y="287" width="574" height="451" rx="51" fill="#fbf6ec"/>
+    <rect x="307" y="358" width="369" height="37" rx="18.5" fill="#a82a24"/>
+    <rect x="307" y="461" width="266" height="37" rx="18.5" fill="#a82a24"/>
+    <rect x="307" y="563" width="184" height="37" rx="18.5" fill="#a82a24"/>
+    <rect x="573" y="512" width="205" height="205" rx="41" fill="#a82a24" stroke="#fbf6ec" stroke-width="32"/>
+  </g>
+</svg>

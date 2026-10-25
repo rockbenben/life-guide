@@ -1,0 +1,405 @@
+article: the-savvy-life-manual/body-care/sex-hormones.md
+kind: condition
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: low-dose-contraceptive-overview
+    status: reviewed
+    source:
+      anchor: 经期不适怎么管：低剂量避孕药的利与弊
+    remind:
+      text: 要处理它，这条说明书给的是一条完整路径：
+      quote: 要处理它，这条说明书给的是一条完整路径：
+    effect:
+      text: 3 个月内可感受到改善
+      quote: 3 个月内可感受到改善
+    steps:
+      - id: understand-symptom-types
+        text: 说明书说这类「月经相关症状」一说超过 50 种；
+        quote: 说明书说这类「月经相关症状」一说超过 50 种；
+      - id: understand-root
+        text: 根源是雌激素与孕激素大约每 1 个月涨落一次，不调正是由此而来。
+        quote: 根源是雌激素与孕激素大约每 1 个月涨落一次，不调正是由此而来。
+      - id: review-risks-before-use
+        text: 用药前先看副作用与风险
+        quote: ① 用药前先看副作用与风险
+      - id: learn-cycle-regimen
+        text: 用法是周期给药（约吃 3 周、停药约 1 周），3 个月内可感受到改善
+        quote: ② 用法是周期给药（约吃 3 周、停药约 1 周），3 个月内可感受到改善
+      - id: check-insurance
+        text: 一经诊断为「月经困难症」，医保每月 1100 日元起
+        quote: ③ 一经诊断为「月经困难症」，医保每月 1100 日元起
+      - id: find-gynecologist
+        text: 不知道怎么找妇科，就按官网和学会名录两条路搜
+        quote: ④ 不知道怎么找妇科，就按官网和学会名录两条路搜
+    notices:
+      - level: with-doctor
+        text: 40 岁以上须与医生商讨、50 岁以上原则上不使用
+        quote: 40 岁以上须与医生商讨、50 岁以上原则上不使用
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: bdc0c6f6b1675669
+  - id: common-side-effects
+    status: reviewed
+    source:
+      anchor: 低剂量避孕药的副作用与风险
+    remind:
+      text: 了解开始服药时可能出现的副作用及消退时间
+      quote: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+    effect:
+      text: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+      quote: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+    steps:
+      - id: note-medical-supervision
+        text: 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
+        quote: 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
+      - id: watch-common-effects
+        text: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+        quote: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+      - id: compare-super-low-dose
+        text: 「超低剂量」制剂较少引发恶心和浮肿；
+        quote: 「超低剂量」制剂较少引发恶心和浮肿；
+      - id: weight-gain-evidence
+        text: 体重增加与服药之间的因果关系，目前并未获认可。
+        quote: 体重增加与服药之间的因果关系，目前并未获认可。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 74ef52b64b03997a
+    name: 低剂量避孕药初期副作用
+  - id: clot-risk
+    status: reviewed
+    source:
+      anchor: 低剂量避孕药的副作用与风险
+    remind:
+      text: 了解血栓风险及需要咨询医生的症状
+      quote:
+        - 服用者每万人 3～9 人，未服用者为 1～5 人。
+        - ⚠️ 年龄提示：血栓风险随年龄上升。因此40 岁以上需与医生商讨（慎重投药），50 岁以上原则上不使用。不受年龄限制的替代选项是**「黄体激素制剂」**。
+    steps:
+      - id: compare-clot-risk
+        text: 服用者每万人 3～9 人，未服用者为 1～5 人。
+        quote: 服用者每万人 3～9 人，未服用者为 1～5 人。
+      - id: identify-risk-factors
+        text: 肥胖、吸烟、遗传等因素会使风险进一步升高。
+        quote: 肥胖、吸烟、遗传等因素会使风险进一步升高。
+    notices:
+      - level: with-doctor
+        text: 若出现腿部疼痛、肿胀等症状，应咨询主治医生。
+        quote: 若出现腿部疼痛、肿胀等症状，应咨询主治医生。
+      - level: with-doctor
+        text: 40 岁以上需与医生商讨（慎重投药）
+        quote: 40 岁以上需与医生商讨（慎重投药）
+      - level: with-doctor
+        text: 50 岁以上原则上不使用
+        quote: 50 岁以上原则上不使用
+      - level: info
+        text: 不受年龄限制的替代选项是「黄体激素制剂」
+        quote: 不受年龄限制的替代选项是「黄体激素制剂」
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: c4c6e44442336e1d
+    name: 避孕药的血栓风险
+  - id: cancer-risk
+    status: reviewed
+    source:
+      anchor: 低剂量避孕药的副作用与风险
+    remind:
+      text: 了解低剂量避孕药相关癌症风险与停药后的变化
+      quote:
+        - 但说明书引述的数据是，停药 5 年以后会回到与未服药者相同的水平。
+        - 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
+    effect:
+      text: 停药 5 年以后会回到与未服药者相同的水平
+      quote: 停药 5 年以后会回到与未服药者相同的水平
+    steps:
+      - id: review-breast-cancer-risk
+        text: '乳腺癌可能性为 1.24 倍'
+        quote:
+          - 乳腺癌
+          - 可能性为 1.24 倍
+      - id: review-cervical-cancer-risk
+        text: '宫颈癌连续服用 5 年以上为 1.9 倍'
+        quote:
+          - 宫颈癌
+          - 连续服用 5 年以上为 1.9 倍
+      - id: arrange-screening
+        text: 自治体的定期体检也有助于早期发现。
+        quote: 自治体的定期体检也有助于早期发现。
+    notices:
+      - level: with-doctor
+        text: 治疗需权衡「效果」与「风险」后再作选择。
+        quote: 治疗需权衡「效果」与「风险」后再作选择。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: f763503c6c4e823c
+    name: 避孕药与癌症风险
+  - id: future-pregnancy
+    status: reviewed
+    source:
+      anchor: 低剂量避孕药的副作用与风险
+    remind:
+      text: 了解低剂量避孕药对将来怀孕的影响
+      quote: 说明书认为激素制剂的服用不影响将来的怀孕，并给出两项调查：
+    steps:
+      - id: compare-pregnancy-1
+        text: 停药后 1 年内怀孕的比例为 79.4%（平均服药 7.2 年；欧洲 7 国调查）
+        quote: 停药后 1 年内怀孕的比例为 79.4%（平均服药 7.2 年；欧洲 7 国调查）
+      - id: compare-pregnancy-2
+        text: 计划怀孕后 1 年内受孕的比例为 79.3%（美加调查，25～27 岁女性）
+        quote: 计划怀孕后 1 年内受孕的比例为 79.3%（美加调查，25～27 岁女性）
+      - id: explain-pregnancy-comparison
+        text: 两个比例几乎一样——这正是说明书给出「不影响」的依据。
+        quote: 两个比例几乎一样——这正是说明书给出「不影响」的依据。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e44e3bc95bd4db5c
+    name: 避孕药对将来怀孕的影响
+  - id: medication-administration
+    status: reviewed
+    source:
+      anchor: 用法与费用
+    remind:
+      text: 了解周期给药与连续给药的服用方式
+      quote:
+        - 周期给药：约服用 3 周，停药约 1 周，如此循环；
+        - 连续服用 5 年以上为 1.9 倍
+    dose:
+      - value: 3
+        unit: 周
+        what: 每周期服药时长
+        quote: 周期给药：约服用 3 周，停药约 1 周，如此循环；
+      - value: 1
+        unit: 周
+        what: 每周期停药时长
+        quote: 周期给药：约服用 3 周，停药约 1 周，如此循环；
+    effect:
+      text: 经期相关症状的改善与出血量减少，约 1 个月就能感受到
+      quote: 经期相关症状的改善与出血量减少，约 1 个月就能感受到
+    steps:
+      - id: take-cycle-regimen
+        text: 周期给药：约服用 3 周，停药约 1 周，如此循环；
+        quote: 周期给药：约服用 3 周，停药约 1 周，如此循环；
+      - id: take-continuous-regimen
+        text: 连续给药：长期不间断服用。
+        quote: 连续给药：长期不间断服用。
+      - id: discuss-regimen
+        text: 两种方式都需与医生商讨，由医生控制出血时期。
+        quote: 两种方式都需与医生商讨，由医生控制出血时期。
+    notices:
+      - level: with-doctor
+        text: 两种方式都需与医生商讨，由医生控制出血时期。
+        quote: 两种方式都需与医生商讨，由医生控制出血时期。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 3684c9a2a69dbc8d
+    name: 避孕药的服法与费用
+  - id: intrauterine-hormonal-system
+    status: reviewed
+    source:
+      anchor: 用法与费用
+    remind:
+      text: 了解宫内黄体激素释放系统最长可放置 5 年及预期效果
+      quote: 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
+    effect:
+      text: 经血量减少与痛经减轻
+      quote: 经血量减少与痛经减轻
+    steps:
+      - id: place-system
+        text: 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
+        quote: 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 099ad4904e2ca5d7
+    name: 宫内激素系统放 5 年
+  - id: insurance-coverage
+    status: reviewed
+    source:
+      anchor: 用法与费用
+    remind:
+      text: 确认月经困难症诊断后的医保适用情况
+      quote: 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
+    steps:
+      - id: confirm-diagnosis
+        text: 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
+        quote: 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
+      - id: check-price
+        text: 诊察内容不同价格会变；
+        quote: 诊察内容不同价格会变；
+      - id: check-eligibility
+        text: 若仅为调整经期时间或作为避孕用途，则不适用医保。
+        quote: 若仅为调整经期时间或作为避孕用途，则不适用医保。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b8ff7b02f93e9fd4
+    name: 月经困难症的医保
+  - id: starting-low-dose-contraceptive
+    status: reviewed
+    source:
+      anchor: 用法与费用
+    remind:
+      text: 原则上，初潮来潮后即可服用。
+      quote:
+        - 原则上，初潮来潮后即可服用。
+        - 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
+    steps:
+      - id: review-start
+        text: 原则上，初潮来潮后即可服用。
+        quote: 原则上，初潮来潮后即可服用。
+      - id: consult-bone
+        text: （初潮之后考虑到对骨骼的影响，请先咨询主治医生。）
+        quote: （初潮之后考虑到对骨骼的影响，请先咨询主治医生。）
+      - id: discuss-family
+        text: 说明书特别强调家人的理解也很重要：有人是和母亲一起去妇产科听取说明，在自己和母亲都认可之后才开始服用低剂量避孕药的。
+        quote: 说明书特别强调家人的理解也很重要：有人是和母亲一起去妇产科听取说明，在自己和母亲都认可之后才开始服用低剂量避孕药的。
+    notices:
+      - level: with-doctor
+        text: （初潮之后考虑到对骨骼的影响，请先咨询主治医生。）
+        quote: （初潮之后考虑到对骨骼的影响，请先咨询主治医生。）
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6958d976a68bfe04
+    name: 初潮后即可开始服药
+  - id: finding-gynecologist
+    status: reviewed
+    source:
+      anchor: 怎么找妇科、就诊会经历什么
+    remind:
+      text: 按官网和学会名录寻找妇科
+      quote:
+        - 可搜索妇科、妇产科、Lady Clinic、Women Clinic 等关键词。
+        - 要处理它，这条说明书给的是一条完整路径：① 用药前先看副作用与风险——血栓、癌症，以及40 岁以上须与医生商讨、50 岁以上原则上不使用的年龄线；② 用法是周期给药（约吃 3 周、停药约 1 周），3 个月内可感受到改善；③ 一经诊断为「月经困难症」，医保每月 1100 日元起；④ 不知道怎么找妇科，就按官网和学会名录两条路搜，就诊一般经过问诊、超声、咨询方案三个环节。^[「性ホルモン」のトリセツ]
+    steps:
+      - id: search-official
+        text: 如果某家妇科在网站上详细刊载了「月经・PMS・避孕药」等解说，说明它很可能在积极从事月经相关症状的治疗。
+        quote: 如果某家妇科在网站上详细刊载了「月经・PMS・避孕药」等解说，说明它很可能在积极从事月经相关症状的治疗。
+      - id: use-society-directory
+        text: 日本女性医学学会官网可按地区检索专科医师。
+        quote: 日本女性医学学会官网可按地区检索专科医师。
+    notices:
+      - level: info
+        text: 大学医院和综合医院有时需要「介绍信」才能就诊，请预先确认。
+        quote: 大学医院和综合医院有时需要「介绍信」才能就诊，请预先确认。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 45f646fe2be631aa
+    name: 按名录找妇科
+  - id: gynecology-consultation
+    status: reviewed
+    source:
+      anchor: 怎么找妇科、就诊会经历什么
+    remind:
+      text: 了解就诊时的问诊、超声检查与治疗方案咨询
+      quote: 就诊一般经过问诊、超声、咨询方案三个环节
+    steps:
+      - id: complete-interview
+        text: 医生问诊——以问诊表为基础，耐心听你讲述；
+        quote: 医生问诊——以问诊表为基础，耐心听你讲述；
+      - id: perform-ultrasound
+        text: 子宫与卵巢的超声检查——有痛经时，查明是否潜藏着子宫或卵巢的疾病至关重要。经阴道超声检查更精确，但抗拒的人可以选择腹部超声。
+        quote: 子宫与卵巢的超声检查——有痛经时，查明是否潜藏着子宫或卵巢的疾病至关重要。经阴道超声检查更精确，但抗拒的人可以选择腹部超声。
+      - id: identify-underlying-disease
+        text: 放过它可能导致不孕——说明书特别提示，可能查出子宫腺肌症、子宫内膜异位症等疾病。
+        quote: 放过它可能导致不孕——说明书特别提示，可能查出子宫腺肌症、子宫内膜异位症等疾病。
+      - id: discuss-treatment-options
+        text: 不只有激素治疗，还会就使用汉方药的对症疗法、饮食、运动等生活习惯改善给出建议。
+        quote: 不只有激素治疗，还会就使用汉方药的对症疗法、饮食、运动等生活习惯改善给出建议。
+    notices:
+      - level: seek-care
+        text: 即使症状较轻，只要认为经期相关症状已经妨碍到日常生活，也请尽早就诊。
+        quote: 即使症状较轻，只要认为经期相关症状已经妨碍到日常生活，也请尽早就诊。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9ca649cb1734aa14
+    name: 妇科问诊和超声检查
+  - id: lifetime-menstrual-burden
+    status: reviewed
+    source:
+      anchor: 一生多来 9 倍月经，是负担也是风险
+    remind:
+      text: 了解女性一生月经次数增加到从前的 9 倍
+      quote: 女性一生中的月经次数增加到从前的 9 倍
+    steps:
+      - id: compare-lifetime-counts
+        text: 据图中数据，从约 50 次（旧时）增至约 450 次（现代）。
+        quote: 据图中数据，从约 50 次（旧时）增至约 450 次（现代）。
+      - id: recognize-disease-risk
+        text: 与此同时，罹患子宫内膜异位症等疾病的风险也在升高。
+        quote: 与此同时，罹患子宫内膜异位症等疾病的风险也在升高。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: de7110d6df7ef2d2
+    name: 一生月经次数多了 9 倍
+  - id: menstrual-symptom-spectrum
+    status: reviewed
+    source:
+      anchor: 一生多来 9 倍月经，是负担也是风险
+    remind:
+      text: 了解月经相关症状超过 50 种的身体与精神表现
+      quote:
+        - 说明书把经期中的月经困难症、经前症候群（PMS）统称为「月经相关症状」，并指出其一说超过 50 种。
+        - 身体症状：全身痛、头痛、腰痛、眩晕与站起时头晕、贫血、耳鸣、视物模糊、皮肤粗糙、肩颈僵硬、胸口疼痛、心悸、恶心、腹痛、腹胀、背部疼痛、腹泻、手脚发麻、水肿、体重增加、疲劳、潮热与发热、怕冷、身体变沉；
+    steps:
+      - id: review-physical-symptoms
+        text: 身体症状：全身痛、头痛、腰痛、眩晕与站起时头晕、贫血、耳鸣、视物模糊、皮肤粗糙、肩颈僵硬、胸口疼痛、心悸、恶心、腹痛、腹胀、背部疼痛、腹泻、手脚发麻、水肿、体重增加、疲劳、潮热与发热、怕冷、身体变沉；
+        quote: 身体症状：全身痛、头痛、腰痛、眩晕与站起时头晕、贫血、耳鸣、视物模糊、皮肤粗糙、肩颈僵硬、胸口疼痛、心悸、恶心、腹痛、腹胀、背部疼痛、腹泻、手脚发麻、水肿、体重增加、疲劳、潮热与发热、怕冷、身体变沉；
+      - id: review-mental-symptoms
+        text: 精神症状：易怒、难以入睡或嗜睡、愤怒与不安、紧张与混乱、食欲减退或增加、性欲减退或增强、情绪低落（变得悲伤）、感到寂寞、想独处、流泪、注意力下降、判断力下降、容易忘事、罪恶感、急躁、无法容忍、冲动、有自杀念头、不愿说话、懒得动、神经敏感、情绪失控、心情忽好忽坏、饮食偏好改变、想喝酒。
+        quote: 精神症状：易怒、难以入睡或嗜睡、愤怒与不安、紧张与混乱、食欲减退或增加、性欲减退或增强、情绪低落（变得悲伤）、感到寂寞、想独处、流泪、注意力下降、判断力下降、容易忘事、罪恶感、急躁、无法容忍、冲动、有自杀念头、不愿说话、懒得动、神经敏感、情绪失控、心情忽好忽坏、饮食偏好改变、想喝酒。
+      - id: understand-spectrum
+        text: 「生理的烦恼」是一整片症状谱系，而不是几种固定反应。
+        quote: 「生理的烦恼」是一整片症状谱系，而不是几种固定反应。
+    notices:
+      - level: seek-care
+        text: 有自杀念头
+        quote: 有自杀念头
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 567ece63883be745
+    name: 月经相关症状超过 50 种
+  - id: hormonal-fluctuation-mechanism
+    status: reviewed
+    source:
+      anchor: 成因：两种激素一个月涨落一次
+    remind:
+      text: 了解月经相关症状的激素波动机制与改善思路
+      quote:
+        - 关键在于卵巢分泌的两种性激素——雌激素与孕激素。
+        - 看官网：如果某家妇科在网站上详细刊载了「月经・PMS・避孕药」等解说，说明它很可能在积极从事月经相关症状的治疗。可搜索妇科、妇产科、Lady Clinic、Women Clinic 等关键词。
+    effect:
+      text: 服下后，体内循环的性激素量趋于恒定，经期相关症状随之改善。
+      quote: 服下后，体内循环的性激素量趋于恒定，经期相关症状随之改善。
+    steps:
+      - id: track-hormones
+        text: 这两种激素大约每 1 个月（一个月经周期）增减起伏一次，不调正是由此而来。
+        quote: 这两种激素大约每 1 个月（一个月经周期）增减起伏一次，不调正是由此而来。
+      - id: stabilize-hormones
+        text: 因此，改善思路是把体内性激素的量维持稳定。
+        quote: 因此，改善思路是把体内性激素的量维持稳定。
+      - id: use-hormone-therapy
+        text: 说明书提到，妇科等科室会开具低剂量避孕药等激素制剂；
+        quote: 说明书提到，妇科等科室会开具低剂量避孕药等激素制剂；
+      - id: observe-response
+        text: 服下后，体内循环的性激素量趋于恒定，经期相关症状随之改善。
+        quote: 服下后，体内循环的性激素量趋于恒定，经期相关症状随之改善。
+      - id: allow-reproductive-rest
+        text: 用激素疗法让子宫和卵巢「休息」，能减轻月经对身体造成的负担。
+        quote: 用激素疗法让子宫和卵巢「休息」，能减轻月经对身体造成的负担。
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 0dc2c664121202bf

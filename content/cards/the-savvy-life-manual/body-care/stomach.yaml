@@ -1,0 +1,257 @@
+article: the-savvy-life-manual/body-care/stomach.md
+kind: condition
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: symptom-overview
+    status: reviewed
+    name: "胃胀胃痛胃灼热"
+    source:
+      anchor: '胃胀、胃痛、胃灼热？三套对策分开看'
+    remind:
+      text: '先区分胃胀、胃痛和胃灼热，再选择对应措施'
+      quote:
+        - '饭后总觉得撑、胃里发胀；饿的时候胃痛；躺下来就烧心——胃胀、胃痛、胃灼热是三种不同的毛病，对策也不一样。'
+    steps:
+      - id: distinguish-symptoms
+        text: '胃胀、胃痛、胃灼热是三种不同的毛病，对策也不一样。'
+        quote: '胃胀、胃痛、胃灼热是三种不同的毛病，对策也不一样。'
+    notices:
+      - level: info
+        text: '胃胀、胃痛、胃灼热是三种不同的毛病，对策也不一样。'
+        quote: '胃胀、胃痛、胃灼热是三种不同的毛病，对策也不一样。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4bdd624f088d6f65
+
+  - id: bloating-management
+    status: reviewed
+    source:
+      anchor: '胃胀的对策'
+    remind:
+      text: '饭后至少 2 小时内不要躺下，避开高脂肪食物，并通过散步促进胃蠕动'
+      quote:
+        - '饭后至少 2 小时内不要躺下'
+        - '避免高脂肪食物'
+        - '适度的运动，如散步，可以促进胃蠕动，改善胃胀的症状。'
+    dose:
+      - value: 2
+        unit: '小时'
+        what: '饭后至少避免躺下的时长'
+        quote: '饭后至少 2 小时内不要躺下'
+    steps:
+      - id: no-lying-after-meal
+        text: '饭后至少 2 小时内不要躺下'
+        quote: '饭后至少 2 小时内不要躺下'
+      - id: avoid-high-fat-food
+        text: '避免高脂肪食物'
+        quote: '避免高脂肪食物'
+      - id: walk-for-motility
+        text: '适度的运动，如散步，可以促进胃蠕动，改善胃胀的症状。'
+        quote: '适度的运动，如散步，可以促进胃蠕动，改善胃胀的症状。'
+    notices:
+      - level: info
+        text: '胃胀的主要原因是胃蠕动较弱，导致食物消化速度变慢。'
+        quote: '胃胀的主要原因是胃蠕动较弱，导致食物消化速度变慢。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 24dfb5fcd5bb0179
+
+  - id: heartburn-prevention
+    status: reviewed
+    source:
+      anchor: '防止胃灼热的措施'
+    remind:
+      text: '饭后保持正确姿势睡前避免饮酒左侧卧位睡觉'
+      quote:
+        - 饭后保持正确姿势
+        - 睡前避免饮酒
+        - 左侧卧位睡觉
+        - 饭后保持正确姿势：吃完饭后，避免弯腰或前倾，这会对胃部施加压力，使胃酸更容易回流。坐直或在沙发上靠坐，避免对胃部的额外挤压。
+    images:
+      - 'https://img.newzone.top/2024-10-17-04-51-42.png?imageMogr2/format/webp'
+    steps:
+      - id: upright-after-meal
+        text: '吃完饭后，避免弯腰或前倾，这会对胃部施加压力，使胃酸更容易回流。坐直或在沙发上靠坐，避免对胃部的额外挤压。'
+        quote: '吃完饭后，避免弯腰或前倾，这会对胃部施加压力，使胃酸更容易回流。坐直或在沙发上靠坐，避免对胃部的额外挤压。'
+      - id: loose-belt-and-weight
+        text: '腰带勒得过紧和体重超重都会增加胃酸反流的风险。'
+        quote: '腰带勒得过紧和体重超重都会增加胃酸反流的风险。'
+      - id: avoid-alcohol-before-bed
+        text: '酒精会使连接胃和食道的肌肉放松，从而增加胃酸反流的可能性。'
+        quote:
+          - 酒精会使连接胃和食道的肌肉放松，从而增加胃酸反流的可能性。
+          - 睡前避免饮酒：酒精会使连接胃和食道的肌肉放松，从而增加胃酸反流的可能性。
+      - id: sleep-on-left-side
+        text: '当你左侧卧时，胃的入口会朝上，能有效减少胃酸反流的发生；而右侧卧时，胃的入口朝下，更容易发生反流。'
+        quote: '当你左侧卧时，胃的入口会朝上，能有效减少胃酸反流的发生；而右侧卧时，胃的入口朝下，更容易发生反流。'
+    notices:
+      - level: info
+        text: '胃灼热主要是由于胃酸反流引起的，以下措施可以帮助预防和缓解：'
+        quote: '胃灼热主要是由于胃酸反流引起的，以下措施可以帮助预防和缓解：'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ac99a1e0fb1ac236
+
+  - id: h-pylori-screening
+    status: reviewed
+    name: "幽门螺杆菌的检查"
+    source:
+      anchor: '第三部分：幽门螺杆菌——胃癌的成因与检查'
+    remind:
+      text: '了解幽门螺杆菌的感染时间点、检查方式，以及家庭成员共同检查的要点'
+      quote:
+        - '胃癌的 95% 由幽门螺杆菌引起，日本每年发病在 10 万人以上。'
+        - '关键时间点在感染年龄'
+        - '检查有三种方式：血液、粪便、内镜。'
+        - '家里有人感染，其他人一定要一起检查。'
+    steps:
+      - id: cause-and-burden
+        text: '胃癌的 95% 由幽门螺杆菌引起，日本每年发病在 10 万人以上。'
+        quote: '胃癌的 95% 由幽门螺杆菌引起，日本每年发病在 10 万人以上。'
+      - id: infection-course
+        text: '主要在 5 岁前后、也就是婴幼儿期感染10 岁以后几乎不会自然消失10 岁以后的「新发感染」多数属于一过性'
+        quote:
+          - '主要在 5 岁前后、也就是婴幼儿期感染'
+          - '10 岁以后几乎不会自然消失'
+          - '10 岁以后的「新发感染」多数属于一过性'
+      - id: test-methods
+        text: '检查有三种方式：血液、粪便、内镜。'
+        quote: '检查有三种方式：血液、粪便、内镜。'
+      - id: screening-settings-and-costs
+        text: '健诊和人間ドック可以做，费用数百日元到 3,000 日元左右；消化内科也能做，主要靠内镜，但也可以用呼气或粪便检测，费用数千日元加诊察费；做了内镜、被诊断为慢性胃炎等情况，可以用保险；认定医可在日本幽门螺旋杆菌学会官网查。'
+        quote:
+          - '健诊和人間ドック可以做，费用数百日元到 3,000 日元左右；'
+          - '消化内科也能做，主要靠内镜，但也可以用呼气或粪便检测，费用数千日元加诊察费；做了内镜、被诊断为慢性胃炎等情况，可以用保险；'
+          - '认定医可在日本幽门螺旋杆菌学会官网查。'
+      - id: family-screening
+        text: '感染途径的 8 成是亲子感染——家里有人感染，其他人一定要一起检查。'
+        quote: '感染途径的 8 成是亲子感染——家里有人感染，其他人一定要一起检查。'
+      - id: early-detection-and-treatment
+        text: '尽早发现、尽早治疗'
+        quote: '尽早发现、尽早治疗'
+    notices:
+      - level: info
+        text: '费用因地区和检查方式而异，以受理机构说明为准。'
+        quote: '费用因地区和检查方式而异，以受理机构说明为准。'
+      - level: seek-care
+        text: '若非内镜检查判定为「阳性」「需精密检查」，务必去做精密检查。'
+        quote: '若非内镜检查判定为「阳性」「需精密检查」，务必去做精密检查。'
+      - level: with-doctor
+        text: '除菌治疗请遵医嘱。'
+        quote: '除菌治疗请遵医嘱。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4d03664229068273
+
+  - id: urgent-care-signals
+    status: reviewed
+    source:
+      anchor: '什么时候别自己调理，先去医院'
+    remind:
+      text: '出现危险信号或规律胃痛时，尽快就医'
+      quote:
+        - '不是「调理一下就好」，要尽快就医'
+        - '胃痛规律发作、夜间痛醒，或按压后不缓解'
+    steps:
+      - id: bleeding-signs
+        text: '黑色柏油样大便、呕血或咖啡渣样呕吐物'
+        quote: '黑色柏油样大便、呕血或咖啡渣样呕吐物'
+      - id: systemic-warning-signs
+        text: '体重持续下降、贫血、不明原因乏力'
+        quote: '体重持续下降、贫血、不明原因乏力'
+      - id: swallowing-and-mass-signs
+        text: '吞咽困难、持续呕吐、腹中摸到硬块'
+        quote: '吞咽困难、持续呕吐、腹中摸到硬块'
+      - id: recurrent-pain-signs
+        text: '胃痛规律发作、夜间痛醒，或按压后不缓解'
+        quote: '胃痛规律发作、夜间痛醒，或按压后不缓解'
+      - id: ulcer-pain-pattern
+        text: '尤其是「饿的时候胃痛、吃了东西就好」这种，常见于十二指肠溃疡，靠饮食调整压不住，需要医生评估是否需要用药。'
+        quote: '尤其是「饿的时候胃痛、吃了东西就好」这种，常见于十二指肠溃疡，靠饮食调整压不住，需要医生评估是否需要用药。'
+    notices:
+      - level: seek-care
+        text: '不是「调理一下就好」，要尽快就医'
+        quote: '不是「调理一下就好」，要尽快就医'
+      - level: with-doctor
+        text: '靠饮食调整压不住，需要医生评估是否需要用药。'
+        quote: '靠饮食调整压不住，需要医生评估是否需要用药。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 533ee7896f91fbf4
+
+  - id: stomach-pain-management
+    status: reviewed
+    source:
+      anchor: '胃痛的对策'
+    remind:
+      text: '避免频繁使用止痛药，控制蛋白质摄入量并减少辛辣食物'
+      quote:
+        - '避免频繁使用止痛药'
+        - '应适量控制蛋白质的摄入量'
+        - '避免辛辣食物'
+    steps:
+      - id: avoid-frequent-analgesics
+        text: '避免频繁使用止痛药一些止痛药（包括外用贴剂）含有刺激胃粘膜的成分。如果你有胃部不适，建议咨询医生或药剂师以获得更合适的治疗方案。'
+        quote:
+          - '避免频繁使用止痛药'
+          - '一些止痛药（包括外用贴剂）含有刺激胃粘膜的成分。如果你有胃部不适，建议咨询医生或药剂师以获得更合适的治疗方案。'
+      - id: control-protein-intake
+        text: '蛋白质会促进胃酸分泌，导致胃酸过多。因此，如果有胃部问题，应适量控制蛋白质的摄入量。'
+        quote: '蛋白质会促进胃酸分泌，导致胃酸过多。因此，如果有胃部问题，应适量控制蛋白质的摄入量。'
+      - id: reduce-spicy-food
+        text: '辛辣食物会强烈刺激胃粘膜，导致胃部不适加剧。对于有胃痛症状的人，最好减少辛辣食物的摄入。'
+        quote: '辛辣食物会强烈刺激胃粘膜，导致胃部不适加剧。对于有胃痛症状的人，最好减少辛辣食物的摄入。'
+    notices:
+      - level: with-doctor
+        text: '如果你有胃部不适，建议咨询医生或药剂师以获得更合适的治疗方案。'
+        quote: '如果你有胃部不适，建议咨询医生或药剂师以获得更合适的治疗方案。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 1e655762ec1cabaf
+
+  - id: functional-dyspepsia-check
+    status: reviewed
+    source:
+      anchor: '功能性消化不良自查'
+    remind:
+      text: '对照症状自查，若间歇性持续一个月以上就有嫌疑'
+      quote: '如果其中之一间歇性持续一个月以上，就有嫌疑。'
+    steps:
+      - id: frequent-burping
+        text: '我经常打嗝'
+        quote: '我经常打嗝'
+      - id: hunger-pain
+        text: '饥饿时胃部疼痛'
+        quote: '饥饿时胃部疼痛'
+      - id: early-fullness
+        text: '吃饭中途感到饱'
+        quote: '吃饭中途感到饱'
+      - id: post-meal-bloating
+        text: '吃完饭后我的胃感觉胀'
+        quote: '吃完饭后我的胃感觉胀'
+      - id: post-meal-heaviness
+        text: '吃完饭后感觉胃部沉重'
+        quote: '吃完饭后感觉胃部沉重'
+      - id: post-meal-discomfort
+        text: '饭后感觉不舒服'
+        quote: '饭后感觉不舒服'
+      - id: post-meal-pain
+        text: '吃完饭后胃部疼痛'
+        quote: '吃完饭后胃部疼痛'
+    notices:
+      - level: info
+        text: '如果其中之一间歇性持续一个月以上，就有嫌疑。'
+        quote: '如果其中之一间歇性持续一个月以上，就有嫌疑。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 38a361cda39586c6

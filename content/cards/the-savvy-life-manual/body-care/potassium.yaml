@@ -1,0 +1,264 @@
+article: the-savvy-life-manual/body-care/potassium.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: potassium-card-overview
+    status: reviewed
+    name: "一天吃够 1200mg 钾"
+    source:
+      anchor: '钾活卡片：一天凑满 4 张，补足 1200mg'
+    slot: anytime
+    remind:
+      text: '正餐每天加入 4 张以上钾活卡片；整套共 36 张，按颜色与每张对应的食材和分量取用。'
+      quote:
+        - '每天在正餐里加入 4 张以上'
+        - '整套共 36 张卡片，下面按颜色列出每张对应的食材和分量（绿色 11 张、粉色 9 张、红黄 7 张、蓝橙 9 张），照着分量取量即可。'
+    dose:
+      - value: 4
+        unit: '张'
+        what: '每天在正餐里加入的卡片数'
+        quote: '每天在正餐里加入 4 张以上'
+      - value: 300
+        unit: 'mg'
+        what: '每张卡片提供的钾量'
+        quote: '每张卡片 = 300mg 钾'
+      - value: 1200
+        unit: 'mg'
+        what: '每天额外补钾的目标量'
+        quote: '4 张 × 300mg = 1200mg，这就是整套卡片每天要额外补上的目标线。'
+    steps:
+      - id: potassium-card-check-header
+        text: '每张卡片 = 300mg 钾、每天在正餐里加入 4 张以上'
+        quote: '每张卡片 = 300mg 钾、每天在正餐里加入 4 张以上'
+      - id: potassium-card-group-counts
+        text: '整套共 36 张卡片，下面按颜色列出每张对应的食材和分量（绿色 11 张、粉色 9 张、红黄 7 张、蓝橙 9 张），照着分量取量即可。'
+        quote: '整套共 36 张卡片，下面按颜色列出每张对应的食材和分量（绿色 11 张、粉色 9 张、红黄 7 张、蓝橙 9 张），照着分量取量即可。'
+      - id: potassium-card-calculate-target
+        text: '4 张 × 300mg = 1200mg，这就是整套卡片每天要额外补上的目标线。'
+        quote: '4 张 × 300mg = 1200mg，这就是整套卡片每天要额外补上的目标线。'
+    cautions:
+      - level: info
+        text: '摄取钾是"减盐"的辅助手段，不能代替减盐。'
+        quote: '摄取钾是"减盐"的辅助手段，不能代替减盐。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 724f5023f9702700
+  - id: potassium-daily-target
+    status: reviewed
+    source:
+      anchor: '目标：每天额外 1200mg'
+    slot: anytime
+    remind:
+      text: '按每张 300mg 钾计算，每天在正餐里加入 4 张以上卡片；4 张对应 1200mg 目标线。'
+      quote:
+        - '每张卡片 = 300mg 钾'
+        - '每天在正餐里加入 4 张以上卡片'
+        - '4 张 × 300mg = 1200mg，这就是整套卡片的目标线。'
+    dose:
+      - value: 4
+        unit: '张'
+        what: '每天在正餐里加入的卡片数'
+        quote: '每天在正餐里加入 4 张以上卡片'
+      - value: 300
+        unit: 'mg'
+        what: '每张卡片提供的钾量'
+        quote: '每张卡片 = 300mg 钾'
+      - value: 1200
+        unit: 'mg'
+        what: '每天额外补钾的目标量'
+        quote: '4 张 × 300mg = 1200mg，这就是整套卡片的目标线。'
+    steps:
+      - id: potassium-daily-calculate
+        text: '4 张 × 300mg = 1200mg，这就是整套卡片的目标线。'
+        quote: '4 张 × 300mg = 1200mg，这就是整套卡片的目标线。'
+      - id: potassium-daily-count
+        text: '整套共 36 张卡片，全部算齐可提供 10800mg 钾（36 × 300mg）。'
+        quote: '整套共 36 张卡片，全部算齐可提供 10800mg 钾（36 × 300mg）。'
+    cautions:
+      - level: info
+        text: '摄取钾是"减盐"的辅助手段，不能代替减盐。'
+        quote: '摄取钾是"减盐"的辅助手段，不能代替减盐。'
+      - level: stop
+        text: '说明书没有写这一条，但慢性肾病、或正在服用降压药（尤其 ACEI／ARB）与保钾利尿剂的人不要自己加钾——高钾血症会危及心脏，这类人先问医生。'
+        quote: '说明书没有写这一条，但慢性肾病、或正在服用降压药（尤其 ACEI／ARB）与保钾利尿剂的人不要自己加钾——高钾血症会危及心脏，这类人先问医生。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 40b8e0159e5992bd
+    name: 每天用 4 张钾卡
+  - id: green-potassium-foods
+    status: draft
+    name: "用绿色卡补钾"
+    source:
+      anchor: '绿色卡：蔬菜、水果与豆荚（11 张）'
+    slot: anytime
+    remind:
+      text: '绿色卡覆盖蔬菜、水果与豆荚；香蕉的单卡分量是 2/3 根 80g，密度高的食物用量较少。'
+      quote:
+        - 值得注意的是，香蕉的分量偏小（2/3 根 80g），香蕉这类密度高的食物，一张卡对应的量就少。
+        - 「钾活卡片」的用法只有两条，两句话就印在每张卡的表头：每张卡片 = 300mg 钾、每天在正餐里加入 4 张以上——4 张 × 300mg = 1200mg，这就是整套卡片每天要额外补上的目标线。整套共 36 张卡片，下面按颜色列出每张对应的食材和分量（绿色 11 张、粉色 9 张、红黄 7 张、蓝橙 9 张），照着分量取量即可。前提只有一句：摄取钾是"减盐"的辅助手段，不能代替减盐。^[「カリ活カード」のトリセツ]
+    steps:
+      - id: green-celery
+        text: '芹菜1 根 70g'
+        quote: [ '芹菜', '1 根 70g' ]
+      - id: green-cabbage
+        text: '卷心菜160g'
+        quote: [ '卷心菜', '160g' ]
+      - id: green-lettuce
+        text: '生菜150g'
+        quote: [ '生菜', '150g' ]
+      - id: green-eggplant
+        text: '茄子中等 1.5 根 140g'
+        quote: [ '茄子', '中等 1.5 根 140g' ]
+      - id: green-edamame
+        text: '毛豆50g'
+        quote: [ '毛豆', '50g' ]
+      - id: green-corn
+        text: '玉米罐头1 罐 230g'
+        quote: [ '玉米罐头', '1 罐 230g' ]
+      - id: green-orange
+        text: '橙子（去皮）2 个 200g'
+        quote: [ '橙子（去皮）', '2 个 200g' ]
+      - id: green-mandarin
+        text: '橘子2 个 200g'
+        quote: [ '橘子', '2 个 200g' ]
+      - id: green-banana
+        text: '香蕉2/3 根 80g'
+        quote: [ '香蕉', '2/3 根 80g' ]
+      - id: green-avocado
+        text: '牛油果1/2 个 50g'
+        quote: [ '牛油果', '1/2 个 50g' ]
+      - id: green-kiwi
+        text: '猕猴桃1 个 100g'
+        quote: [ '猕猴桃', '1 个 100g' ]
+  - id: pink-potassium-foods
+    status: draft
+    name: "用粉色卡补钾"
+    source:
+      anchor: '粉色卡：薯类、根菜与菌菇（9 张）'
+    slot: anytime
+    remind:
+      text: '根茎与菌菇各自都能贡献一张 300mg。'
+      quote:
+        - 根茎与菌菇各自都能贡献一张 300mg。
+        - 「钾活卡片」的用法只有两条，两句话就印在每张卡的表头：每张卡片 = 300mg 钾、每天在正餐里加入 4 张以上——4 张 × 300mg = 1200mg，这就是整套卡片每天要额外补上的目标线。整套共 36 张卡片，下面按颜色列出每张对应的食材和分量（绿色 11 张、粉色 9 张、红黄 7 张、蓝橙 9 张），照着分量取量即可。前提只有一句：摄取钾是"减盐"的辅助手段，不能代替减盐。^[「カリ活カード」のトリセツ]
+    dose:
+      - value: 300
+        unit: 'mg'
+        what: '单张粉色卡提供的钾量'
+        quote: '根茎与菌菇各自都能贡献一张 300mg。'
+    steps:
+      - id: pink-taro
+        text: '芋头（生）1 个 50g'
+        quote: [ '芋头（生）', '1 个 50g' ]
+      - id: pink-sweet-potato
+        text: '烤红薯（去皮）1/3 根 60g'
+        quote: [ '烤红薯（去皮）', '1/3 根 60g' ]
+      - id: pink-potato
+        text: '带皮土豆（生）1/2 个 70g'
+        quote: [ '带皮土豆（生）', '1/2 个 70g' ]
+      - id: pink-daikon
+        text: '白萝卜（生）切成 3cm 圆片 130g'
+        quote: [ '白萝卜（生）', '切成 3cm 圆片 130g' ]
+      - id: pink-dried-sweet-potato
+        text: '干し芋（干红薯）2 张 30g'
+        quote: [ '干し芋（干红薯）', '2 张 30g' ]
+      - id: pink-shimeji
+        text: '真姬菇约 1 盒 80g'
+        quote: [ '真姬菇', '约 1 盒 80g' ]
+      - id: pink-enoki
+        text: '金针菇约 1 盒 90g'
+        quote: [ '金针菇', '约 1 盒 90g' ]
+      - id: pink-king-oyster
+        text: '杏鲍菇2～2.5 根 90g'
+        quote: [ '杏鲍菇', '2～2.5 根 90g' ]
+      - id: pink-maitake
+        text: '舞茸（灰口蘑）约 1～1.5 盒 130g'
+        quote: [ '舞茸（灰口蘑）', '约 1～1.5 盒 130g' ]
+  - id: red-yellow-potassium-foods
+    status: reviewed
+    name: "钾卡用豆制品和奶类"
+    source:
+      anchor: '红黄卡：豆制品与奶类（7 张）'
+    slot: anytime
+    remind:
+      text: '红黄卡覆盖豆制品与奶类，按单卡分量取用；黄豆粉一张卡只要 15g，牛奶、酸奶、豆浆按杯或克数计。'
+      quote:
+        - 黄豆粉一张卡只要 15g，已经算小的了
+        - 牛奶、酸奶、豆浆则按杯或克数计，不按固体重量。
+        - 「钾活卡片」的用法只有两条，两句话就印在每张卡的表头：每张卡片 = 300mg 钾、每天在正餐里加入 4 张以上——4 张 × 300mg = 1200mg，这就是整套卡片每天要额外补上的目标线。整套共 36 张卡片，下面按颜色列出每张对应的食材和分量（绿色 11 张、粉色 9 张、红黄 7 张、蓝橙 9 张），照着分量取量即可。前提只有一句：摄取钾是"减盐"的辅助手段，不能代替减盐。^[「カリ活カード」のトリセツ]
+    steps:
+      - id: red-yellow-silken-tofu
+        text: '绢豆腐2/3 块 200g'
+        quote: [ '绢豆腐', '2/3 块 200g' ]
+      - id: red-yellow-firm-tofu
+        text: '北豆腐1 块 270g'
+        quote: [ '北豆腐', '1 块 270g' ]
+      - id: red-yellow-natto
+        text: '纳豆1 盒 50g'
+        quote: [ '纳豆', '1 盒 50g' ]
+      - id: red-yellow-soybean-powder
+        text: '黄豆粉2 大勺 15g'
+        quote: [ '黄豆粉', '2 大勺 15g' ]
+      - id: red-yellow-milk
+        text: '牛奶1 杯 200mL'
+        quote: [ '牛奶', '1 杯 200mL' ]
+      - id: red-yellow-yogurt
+        text: '酸奶180g'
+        quote: [ '酸奶', '180g' ]
+      - id: red-yellow-soy-milk
+        text: '豆浆1 杯（略浅） 160mL'
+        quote: [ '豆浆', '1 杯（略浅） 160mL' ]
+      - id: red-yellow-soybean-powder-note
+        text: '黄豆粉一张卡只要 15g，已经算小的了（比它更小的是滑海带，一张卡只要 6g）'
+        quote: '黄豆粉一张卡只要 15g，已经算小的了（比它更小的是滑海带，一张卡只要 6g）'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 2aa07a3aff9538b2
+  - id: blue-orange-potassium-foods
+    status: draft
+    name: "钾卡用海产和瘦肉"
+    source:
+      anchor: '蓝橙卡：海产与肉类替换（9 张）'
+    slot: anytime
+    remind:
+      text: '海产类按可数单位取量；肉类用瘦肉替换肥肉，在卡片数量不变的前提下选择替换后的单卡分量。'
+      quote:
+        - '海产类有 6 张，全部按"刺身几片"这种可数单位来标。'
+        - '最后 3 张是肉类替换卡，画法是"用箭头从肥的换到瘦的"，让你在不改变卡片数量的前提下降低脂肪：'
+    steps:
+      - id: blue-orange-sea-bream
+        text: '真鲷刺身 4 片 60g'
+        quote: [ '真鲷', '刺身 4 片 60g' ]
+      - id: blue-orange-tuna
+        text: '金枪鱼刺身 5 片 70g'
+        quote: [ '金枪鱼', '刺身 5 片 70g' ]
+      - id: blue-orange-scallop
+        text: '扇贝（贝柱）3 个 80g'
+        quote: [ '扇贝（贝柱）', '3 个 80g' ]
+      - id: blue-orange-yellowtail
+        text: '鰤鱼2/3 片 80g'
+        quote: [ '鰤鱼', '2/3 片 80g' ]
+      - id: blue-orange-salmon
+        text: '三文鱼刺身 5 片 80g'
+        quote: [ '三文鱼', '刺身 5 片 80g' ]
+      - id: blue-orange-wakame
+        text: '滑海带6g'
+        quote: [ '滑海带', '6g' ]
+      - id: blue-orange-pork-lean
+        text: '五花肉 → 猪里脊160g'
+        quote: [ '五花肉 → 猪里脊', '160g' ]
+      - id: blue-orange-beef-lean
+        text: '西冷牛排 → 牛里脊160g'
+        quote: [ '西冷牛排 → 牛里脊', '160g' ]
+      - id: blue-orange-chicken-lean
+        text: '鸡腿肉 → 鸡胸肉250g'
+        quote: [ '鸡腿肉 → 鸡胸肉', '250g' ]
+      - id: blue-orange-lean-portion-note
+        text: '替换后三者的分量都比替换前大，说明同样一份卡，换成瘦肉后可以吃到更多。'
+        quote: '替换后三者的分量都比替换前大，说明同样一份卡，换成瘦肉后可以吃到更多。'

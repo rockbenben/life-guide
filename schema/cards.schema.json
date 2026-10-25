@@ -1,0 +1,345 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://newzone.top/life-guide/cards.schema.json",
+  "title": "生活指南卡片文件",
+  "description": "每篇手册文章一个 yaml。content 管线与 app 共用本 schema。",
+  "type": "object",
+  "required": ["article", "kind", "coverage", "cards"],
+  "additionalProperties": false,
+  "properties": {
+    "article": {
+      "type": "string",
+      "description": "快照内的相对路径，如 body-care/tears.md"
+    },
+    "kind": {
+      "enum": ["practice", "condition"],
+      "description": "practice=保健动作（可进今日清单）；condition=疾病信息（只浏览，不可勾选）"
+    },
+    "coverage": {
+      "enum": ["partial", "complete"],
+      "description": "complete=本篇内容已全部覆盖；partial=仍有未覆盖内容"
+    },
+    "ignore": {
+      "description": "明确不抽的内容：每个小节、每张图要么被引用，要么在此说明理由",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "images": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["all", "reason"],
+                  "properties": {
+                    "all": { "const": true },
+                    "reason": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["url", "reason"],
+                    "properties": {
+                      "url": { "type": "string", "minLength": 1 },
+                      "reason": { "type": "string", "minLength": 1 }
+                    }
+                  }
+                }
+              ]
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["anchor", "reason"],
+                "properties": {
+                  "anchor": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "cards": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/card" }
+    }
+  },
+  "definitions": {
+    "quote": {
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      ]
+    },
+    "card": {
+      "type": "object",
+      "required": ["id", "status", "source", "remind", "steps"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "全局唯一、稳定，发布后不改名"
+        },
+        "status": { "enum": ["draft", "reviewed"] },
+        "source": {
+          "type": "object",
+          "required": ["anchor"],
+          "additionalProperties": false,
+          "properties": {
+            "anchor": { "type": "string", "minLength": 1 }
+          }
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "description": "屏上显示的动作名（如「涂防晒霜」）。原文小节名不适合当名字时用它 —— 小节名常是「涂法一：…」「为什么…」这类，它在文章里是标题，在清单里不是名字。不填就用小节名。"
+        },
+        "review": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["by", "date", "hash"],
+              "properties": {
+                "by": { "type": "string", "minLength": 1 },
+                "date": { "type": "string", "minLength": 1 },
+                "hash": { "type": "string", "minLength": 1 }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "slot": {
+          "enum": ["morning", "daytime", "evening", "anytime"],
+          "description": "condition 类卡片不得有"
+        },
+        "images": {
+          "type": "array",
+          "description": "卡片级配图（动作示意图），与步骤图分开",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "remind": {
+          "type": "object",
+          "required": ["text", "quote"],
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string", "minLength": 1 },
+            "quote": { "$ref": "#/definitions/quote" }
+          }
+        },
+        "effect": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["text", "quote"],
+              "additionalProperties": false,
+              "properties": {
+                "text": { "type": "string", "minLength": 1 },
+                "quote": { "$ref": "#/definitions/quote" }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "dose": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "unit", "what", "quote"],
+            "additionalProperties": false,
+            "properties": {
+              "value": { "type": "number" },
+              "valueMax": { "type": "number" },
+              "unit": { "type": "string", "minLength": 1 },
+              "what": { "type": "string", "minLength": 1 },
+              "derived": {
+                "type": "object",
+                "required": ["formula"],
+                "additionalProperties": false,
+                "properties": { "formula": { "type": "string", "minLength": 1 } }
+              },
+              "quote": { "$ref": "#/definitions/quote" }
+            }
+          }
+        },
+        "duration": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["basis"],
+              "additionalProperties": false,
+              "properties": {
+                "basis": { "enum": ["quote", "derived", "unknown"] },
+                "sec": { "type": "number", "minimum": 0 },
+                "quote": { "$ref": "#/definitions/quote" },
+                "formula": { "type": "string", "minLength": 1 }
+              },
+              "allOf": [
+                {
+                  "if": { "properties": { "basis": { "const": "quote" } } },
+                  "then": { "required": ["sec", "quote"] }
+                },
+                {
+                  "if": { "properties": { "basis": { "const": "derived" } } },
+                  "then": { "required": ["sec", "formula"] }
+                }
+              ]
+            },
+            { "type": "null" }
+          ]
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "text", "quote"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+              "text": { "type": "string", "minLength": 1 },
+              "quote": { "$ref": "#/definitions/quote" },
+              "images": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+            }
+          }
+        },
+        "cautions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["level", "text", "quote"],
+            "additionalProperties": false,
+            "properties": {
+              "level": { "enum": ["stop", "with-doctor", "info"] },
+              "text": { "type": "string", "minLength": 1 },
+              "quote": { "$ref": "#/definitions/quote" }
+            }
+          }
+        },
+        "notices": {
+          "type": "array",
+          "description": "疾病类卡片的提示分级（AGENTS.md §5.4）：seek-care 出现某症状应就医，with-doctor 需在医生指导下调整，info 一般知识。提示分级与动作禁忌（cautions）是两回事。",
+          "items": {
+            "type": "object",
+            "required": ["level", "text", "quote"],
+            "additionalProperties": false,
+            "properties": {
+              "level": { "enum": ["seek-care", "with-doctor", "info"] },
+              "text": { "type": "string", "minLength": 1 },
+              "quote": { "$ref": "#/definitions/quote" }
+            }
+          }
+        },
+        "derived": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "value", "formula"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string", "minLength": 1 },
+              "value": { "type": "number" },
+              "unit": { "type": "string" },
+              "formula": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "variants": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "busy": { "$ref": "#/definitions/variant" },
+            "travel": { "$ref": "#/definitions/variant" },
+            "sick": { "$ref": "#/definitions/variant" }
+          }
+        },
+        "segments": {
+          "type": "array",
+          "description": "人群分档：适用人群不同，就该做不同的动作。when 是标签列表（AND 语义），由 App 的用户画像匹配。",
+          "items": { "$ref": "#/definitions/segment" }
+        }
+      }
+    },
+    "segment": {
+      "type": "object",
+      "required": ["id", "when"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "when": {
+          "type": "array",
+          "minItems": 1,
+          "description": "人群标签，AND 语义。内置：age:child / age:adult / age:senior；其余为用户自选标签",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9]*(:[a-z0-9][a-z0-9-]*)*$" }
+        },
+        "action": {
+          "type": "object",
+          "required": ["text", "quote"],
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string", "minLength": 1 },
+            "quote": { "$ref": "#/definitions/quote" }
+          }
+        },
+        "dose": {
+          "type": "object",
+          "required": ["text", "quote"],
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string", "minLength": 1 },
+            "quote": { "$ref": "#/definitions/quote" }
+          }
+        },
+        "avoid": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["text", "quote"],
+            "additionalProperties": false,
+            "properties": {
+              "text": { "type": "string", "minLength": 1 },
+              "quote": { "$ref": "#/definitions/quote" }
+            }
+          }
+        }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "include": { "type": "array", "items": { "type": "string" } },
+        "replace": {
+          "type": "object",
+          "required": ["text", "quote"],
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string", "minLength": 1 },
+            "quote": { "$ref": "#/definitions/quote" }
+          }
+        },
+        "skip": { "type": "boolean" }
+      },
+      "oneOf": [
+        { "required": ["include"] },
+        { "required": ["replace"] },
+        { "required": ["skip"] }
+      ]
+    }
+  }
+}

@@ -1,0 +1,165 @@
+article: the-savvy-life-manual/body-care/glycation.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: 糖化的自查：10 项检查表 + 饭后 1～2 分钟
+      reason: 导语只概述糖化定义及后文两项可执行内容；具体自查和饭后动作已分别在对应小节成卡，不重复抽卡。
+    - anchor: 糖化落在身体的哪些地方
+      reason: 仅为 AGE 可能影响的身体部位和关联疾病的知识说明，不含可执行的日常动作，故不抽成可勾选卡。
+    - anchor: 一项 7 万人规模的研究
+      reason: 研究背景和群体风险统计不构成本文的日常动作，也不宜改写成个人诊断或风险承诺。
+    - anchor: 被藏起来的风险：餐后高血糖
+      reason: 主要介绍餐后高血糖的检测盲区和提示阈值；关键阈值与就医提醒已收录为运动卡的安全提示，不另立日常动作。
+    - anchor: 什么时候该去医院
+      reason: 求医路径和运动安全事项已作为运动卡的 cautions 收录，不另立可勾选的独立动作。
+  images: []
+cards:
+  - id: glycation-self-check
+    status: draft
+    name: "糖化度 10 项自查"
+    source:
+      anchor: 糖化度检查表：10 项，3～4 项与 5 项是两条线
+    slot: anytime
+    remind:
+      text: 今天按检查表的 10 项逐项自查
+      quote:
+        - 据此做成了这份糖化度检查表。
+        - 表里一共 10 项：
+    steps:
+      - id: check-exercise
+        text: 运动不足（30 分钟程度的运动每周不到 1 次）
+        quote: 运动不足（30 分钟程度的运动每周不到 1 次）
+      - id: check-sleep
+        text: 睡眠不足（睡眠不足 5 小时每周有 4 天以上）
+        quote: 睡眠不足（睡眠不足 5 小时每周有 4 天以上）
+      - id: check-sweets
+        text: 经常吃或喝甜的东西
+        quote: 经常吃或喝甜的东西
+      - id: check-breakfast
+        text: 平时经常不吃早餐
+        quote: 平时经常不吃早餐
+      - id: check-fast-eating
+        text: 吃得太快（10 分钟以内吃完）
+        quote: 吃得太快（10 分钟以内吃完）
+      - id: check-post-meal-sleepiness
+        text: 饭后会突然感到强烈的困意
+        quote: 饭后会突然感到强烈的困意
+      - id: check-evening-fatigue
+        text: 傍晚会感到倦怠、无力
+        quote: 傍晚会感到倦怠、无力
+      - id: check-burnt-food
+        text: 经常吃焦糊的食物或加工食品
+        quote: 经常吃焦糊的食物或加工食品
+      - id: check-alcohol
+        text: 经常喝酒（几乎每天）
+        quote: 经常喝酒（几乎每天）
+      - id: check-smoking
+        text: 吸烟
+        quote: 吸烟
+      - id: assess-three-to-four
+        text: 符合 3～4 项 → 需注意糖化风险
+        quote: 符合 3～4 项 → 需注意糖化风险
+      - id: assess-five-or-more
+        text: 符合 5 项及以上 → 需特别注意糖化风险
+        quote: 符合 5 项及以上 → 需特别注意糖化风险
+    cautions:
+      - level: info
+        text: '糖化是随长时间逐渐推进的，短时间不会改善。把这份表当作参考、长期保持不易糖化的生活习惯才是关键。'
+        quote:
+          - 糖化是随长时间逐渐推进的，短时间不会改善。
+          - 把这份表当作参考、长期保持不易糖化的生活习惯才是关键。
+
+  - id: post-meal-leg-movement
+    status: reviewed
+    name: "饭后动腿 1～2 分钟"
+    source:
+      anchor: 「ちょっと運動」：饭后 15～30 分钟起，1～2 分钟
+    slot: anytime
+    remind:
+      text: 饭后 15～30 分钟开始，做 1～2 分钟的上下楼梯或快走
+      quote:
+        - 运动时间 1～2 分钟即可
+        - 从饭后 15～30 分钟开始
+        - 饭后上下约 2 层楼梯的台阶
+        - 或在走廊里快走
+    effect:
+      text: '血液中的糖是在肌肉活动时被使用的人体中最大的肌肉是大腿活动大腿肌肉，目的是高效消耗饭后升上来的糖'
+      quote:
+        - 血液中的糖是在肌肉活动时被使用的
+        - 人体中最大的肌肉是大腿
+        - 活动大腿肌肉，目的是高效消耗饭后升上来的糖
+    dose:
+      - value: 2
+        unit: 层
+        what: 上下楼梯的参考层数
+        quote: 饭后上下约 2 层楼梯的台阶
+      - value: 1
+        valueMax: 2
+        unit: 分钟
+        what: 每次运动时长的
+        quote: 运动时间 1～2 分钟即可
+      - value: 30
+        unit: 分钟
+        what: 重复运动的建议间隔
+        quote: 饭后 2 小时之间，每 30 分钟做一次
+    duration:
+      basis: quote
+      sec: 60
+      quote: 运动时间 1～2 分钟即可
+    steps:
+      - id: start-timing
+        text: 从饭后 15～30 分钟开始
+        quote: 从饭后 15～30 分钟开始
+      - id: choose-movement
+        text: '饭后上下约 2 层楼梯的台阶或在走廊里快走'
+        quote:
+          - 饭后上下约 2 层楼梯的台阶
+          - 或在走廊里快走
+      - id: move-duration
+        text: 运动时间 1～2 分钟即可
+        quote: 运动时间 1～2 分钟即可
+      - id: repeat-movement
+        text: 饭后 2 小时之间，每 30 分钟做一次
+        quote: 饭后 2 小时之间，每 30 分钟做一次
+      - id: use-alternative
+        text: 即使不用楼梯，做深蹲、快走，或者只是站着，也有效果
+        quote: 即使不用楼梯，做深蹲、快走，或者只是站着，也有效果
+      - id: go-upstairs
+        text: '能做到膝盖弯成 90 度就一次跨两级最好身体略向前倾、重心放在大腿上会更有效'
+        quote:
+          - 能做到膝盖弯成 90 度就一次跨两级最好
+          - 身体略向前倾、重心放在大腿上会更有效
+      - id: go-downstairs
+        text: '尽量少弯膝盖注意不要发出声响、有意识地使用大腿肌肉'
+        quote:
+          - 尽量少弯膝盖
+          - 注意不要发出声响、有意识地使用大腿肌肉
+    cautions:
+      - level: stop
+        text: 对上下楼梯感到不安的人不要勉强
+        quote: 对上下楼梯感到不安的人不要勉强
+      - level: with-doctor
+        text: '餐后血糖超过 180mg/dL 就需要注意如果你有这种感觉，可以带着这份记录去咨询医生。'
+        quote:
+          - 餐后血糖超过 180mg/dL 就需要注意
+          - 如果你有这种感觉，可以带着这份记录去咨询医生。
+      - level: info
+        text: '一般健康体检测的是空腹血糖这种餐后才出现的升高平时很难察觉'
+        quote:
+          - 一般健康体检测的是空腹血糖
+          - 这种餐后才出现的升高平时很难察觉
+      - level: with-doctor
+        text: 餐后高血糖若长期放着不管，血液中多余的糖会使糖化继续推进
+        quote: 餐后高血糖若长期放着不管，血液中多余的糖会使糖化继续推进
+      - level: with-doctor
+        text: '想去测自己的 AGE 值请咨询主治医生要使用 24 小时血糖监测设备使用设备前请与主治医生或医疗机构商量'
+        quote:
+          - 想去测自己的 AGE 值
+          - 请咨询主治医生
+          - 要使用 24 小时血糖监测设备
+          - 使用设备前请与主治医生或医疗机构商量
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 3e9aed93fe3100b4

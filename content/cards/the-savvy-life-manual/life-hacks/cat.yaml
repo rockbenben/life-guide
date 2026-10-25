@@ -1,0 +1,173 @@
+article: the-savvy-life-manual/life-hacks/cat.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '猫的说明书：静坐最有效，慢眨眼按 3 秒'
+      reason: '本节主要解释猫的婴儿图式、叫声及猫不配合时促使人思考的背景，没有独立的可执行动作；静坐和慢眨眼已分别在对应小节抽卡。'
+    - anchor: '一万年的同行者'
+      reason: '本节是关于人猫共同生活历史与关系的反思性结语，没有可执行的保健动作。'
+  images: []
+cards:
+  - id: sit-still-for-cat-approach
+    status: reviewed
+    source:
+      anchor: '让猫走过来：四种方法实测'
+    slot: anytime
+    remind:
+      text: '今天保持静坐不动，等猫靠近。'
+      quote:
+        - 排第一的是「静坐着不动」。
+        - 很多猫咖都推荐这一招
+        - 3 分钟内靠近的猫数
+    effect:
+      text: '静坐着不动3 分钟内靠近的猫数7 只'
+      quote:
+        - '静坐着不动'
+        - '3 分钟内靠近的猫数'
+        - '7 只'
+    steps:
+      - id: keep-still
+        text: '静坐着不动人和猫相处的基本姿势'
+        quote:
+          - '静坐着不动'
+          - '人和猫相处的基本姿势'
+    cautions:
+      - level: info
+        text: '时间段和猫当时的状态都可能影响结果所以这四个数字是当次测量的记录，不是能照搬的定论。'
+        quote:
+          - '时间段和猫当时的状态都可能影响结果'
+          - '所以这四个数字是当次测量的记录，不是能照搬的定论。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6290b789fb0eb20e
+    name: 静坐等猫靠近
+
+  - id: slow-blink-non-hostile-signal
+    status: reviewed
+    name: "对猫慢慢眨眼示好"
+    source:
+      anchor: '慢慢眨眼：猫的「我没有敌意」'
+    slot: anytime
+    remind:
+      text: '今天对着猫慢慢眨眼，表达没有敌意和放松。'
+      quote: '慢慢的眨眼，是告诉对方「我没有敌意、我很放松」的信号'
+    effect:
+      text: '人缓慢地眨眼，猫会回你一个眨眼。'
+      quote: '人缓慢地眨眼，猫会回你一个眨眼。'
+    steps:
+      - id: slow-blink
+        text: '慢慢的眨眼，是告诉对方「我没有敌意、我很放松」的信号'
+        quote: '慢慢的眨眼，是告诉对方「我没有敌意、我很放松」的信号'
+    cautions:
+      - level: info
+        text: '确实有猫会回眨，但反应不大的更多'
+        quote: '确实有猫会回眨，但反应不大的更多'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 30c71e875e594ab0
+
+  - id: ultra-slow-blink-four-steps
+    status: reviewed
+    source:
+      anchor: '超慢眨眼的四步做法'
+    slot: anytime
+    remind:
+      text: '今天按步骤慢慢眨眼，在猫放松时做，并且不要死盯猫眼。'
+      quote:
+        - '有意识地慢慢动眼皮'
+        - '尽量在它放松的时候做'
+        - '不要一边眨眼一边死盯着猫的眼睛看'
+    effect:
+      text: '这样反复下去，比较容易奏效。'
+      quote: '这样反复下去，比较容易奏效。'
+    dose:
+      - value: 3
+        unit: 秒
+        what: '闭眼到重新睁开的往返时长'
+        quote:
+          - '速度：一次往返 3 秒。'
+          - '从闭眼到重新睁开算一次、算 3 秒。'
+      - value: 3
+        unit: 回
+        what: '慢慢眨眼的每轮次数'
+        quote: '次数：连做 3 回。'
+      - value: 1
+        unit: 分钟
+        what: '整个慢慢眨眼的控制时长'
+        quote: '整个「慢慢眨眼」控制在 1 分钟左右就收。'
+    duration:
+      basis: quote
+      sec: 60
+      quote: '整个「慢慢眨眼」控制在 1 分钟左右就收。'
+    steps:
+      - id: blink-speed
+        text: '速度：一次往返 3 秒。从闭眼到重新睁开算一次、算 3 秒。'
+        quote:
+          - '速度：一次往返 3 秒。'
+          - '从闭眼到重新睁开算一次、算 3 秒。'
+      - id: draw-eyesight
+        text: '先把视线引过来。让猫看着你，办法就是叫它的名字。'
+        quote:
+          - '先把视线引过来。'
+          - '让猫看着你，办法就是叫它的名字。'
+      - id: repeat-blink
+        text: '次数：连做 3 回。这样反复下去，比较容易奏效。'
+        quote:
+          - '次数：连做 3 回。'
+          - '这样反复下去，比较容易奏效。'
+      - id: choose-timing
+        text: '尽量在它放松的时候做反面例子是玩玩具的时候和快到饭点的时候看着要睡的猫不要做。'
+        quote:
+          - '尽量在它放松的时候做'
+          - '反面例子是玩玩具的时候和快到饭点的时候'
+          - '看着要睡的猫不要做。'
+    cautions:
+      - level: stop
+        text: '一旦觉得猫的心情变差，马上停。'
+        quote: '一旦觉得猫的心情变差，马上停。'
+      - level: stop
+        text: '不要一边眨眼一边死盯着猫的眼睛看，它可能把这理解成威吓。书里提到，确实有猫会因此哈气、抓人、甚至扑上来咬人。'
+        quote:
+          - '不要一边眨眼一边死盯着猫的眼睛看，它可能把这理解成威吓。'
+          - '书里提到，确实有猫会因此哈气、抓人、甚至扑上来咬人。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: b1ffb6a5de0ad7b4
+
+  - id: keep-cat-fully-indoors
+    status: reviewed
+    source:
+      anchor: '完全室内饲养，和流浪猫的问题'
+    slot: anytime
+    remind:
+      text: '今天确认家里能否提供完全室内饲养的环境。'
+      quote: '所以养猫前要确认：家里是不是真能提供完全室内饲养的环境，然后尽量别让猫出去。'
+    effect:
+      text: '完全不出门的猫，寿命更长'
+      quote: '完全不出门的猫，寿命更长'
+    steps:
+      - id: check-home
+        text: '所以养猫前要确认：家里是不是真能提供完全室内饲养的环境，然后尽量别让猫出去。'
+        quote: '所以养猫前要确认：家里是不是真能提供完全室内饲养的环境，然后尽量别让猫出去。'
+      - id: keep-indoors
+        text: '然后尽量别让猫出去。'
+        quote: '然后尽量别让猫出去。'
+      - id: find-new-home
+        text: '万一养不下去了，先自己动手给它找新主人；实在找不到，再去问行政部门或救助团体'
+        quote: '万一养不下去了，先自己动手给它找新主人；实在找不到，再去问行政部门或救助团体'
+    cautions:
+      - level: info
+        text: '出门则意味着生病和因交通事故受伤的风险都更高。'
+        quote: '出门则意味着生病和因交通事故受伤的风险都更高。'
+      - level: stop
+        text: '但责任始终在饲主身上——绝对不要弃养'
+        quote: '但责任始终在饲主身上——绝对不要弃养'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 90614fb966105d92
+    name: 尽量完全室内养猫

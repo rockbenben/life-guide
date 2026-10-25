@@ -1,0 +1,101 @@
+article: the-savvy-life-manual/body-care/sagging.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "表情肌不是唯一原因：立毛筋伸展法每天早晚各 1 次"
+      reason: "该节是原理与适用边界说明；其中只靠表情肌不够的提醒及结构性下垂边界已并入伸展安全卡，不另建重复卡。"
+    - anchor: "新原因：起鸡皮疙瘩的肌肉在支撑皮肤"
+      reason: "立毛筋机制及年龄测试数据是动作依据，不是可执行步骤；顺着立毛筋走向向上提拉的原则已进入主卡。"
+    - anchor: "立毛筋还管毛孔和头发"
+      reason: "毛孔和头发的补充知识未形成独立动作；原文明确没有给头发生效的量化承诺，不据此生成效果或练习卡。"
+    - anchor: "医美和仪器：说明书泼了两盆冷水"
+      reason: "医美与仪器问答及泛化的成因说明不足以形成边界明确、可执行的独立练习，未把改善生活习惯等原则扩写成步骤。"
+  images: []
+cards:
+  - id: arrectus-pili-stretch
+    status: reviewed
+    source:
+      anchor: "四个动作，每天早晚各一次"
+    slot: anytime
+    remind:
+      text: "开始前先涂面霜，按下列动作顺着立毛筋的走向向上提拉；整套动作每天早晚各做 1 次，目标为连续做 4 周。"
+      quote:
+        - "开始前务必先涂面霜"
+        - "顺着立毛筋的走向向上提拉"
+        - "整套动作每天早晚各做 1 次"
+        - "说明书设定的目标是连续做 4 周"
+    dose:
+      - value: 3
+        unit: "次"
+        what: "每个动作各做 3 次"
+        quote: "每个动作各做 3 次"
+      - value: 1
+        unit: "次"
+        what: "整套动作每天早晚各做 1 次"
+        quote: "整套动作每天早晚各做 1 次"
+      - value: 6
+        unit: "秒"
+        what: "托起脸颊向上提拉时的保持时长"
+        quote: "从下巴下方托起脸颊，向上提拉至覆盖眼周，保持 6 秒"
+      - value: 6
+        unit: "秒"
+        what: "按压颞部时的保持时长"
+        quote: "横向移动，改为按压颞部，保持 6 秒"
+    steps:
+      - id: thumb-slide
+        text: "拇指沿下颌骨滑动，从下颌线向颞部方向向上滑。"
+        quote: "拇指沿下颌骨滑动，从下颌线向颞部方向向上滑。"
+      - id: lift-cheek
+        text: "从下巴下方托起脸颊，向上提拉至覆盖眼周，保持 6 秒。"
+        quote: "从下巴下方托起脸颊，向上提拉至覆盖眼周，保持 6 秒。"
+      - id: press-temple
+        text: "横向移动，改为按压颞部，保持 6 秒。"
+        quote: "横向移动，改为按压颞部，保持 6 秒。"
+      - id: lift-from-collarbone
+        text: "从锁骨出发向上提拉至颞部，同时用另一只手向下延伸。"
+        quote: "从锁骨出发向上提拉至颞部，同时用另一只手向下延伸。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7431886ca975348d
+    name: 每天早晚各做一次面部提拉
+  - id: stretch-safety-check
+    status: reviewed
+    source:
+      anchor: "注意事项与何时该就医"
+    slot: anytime
+    remind:
+      text: "开始前必须涂面霜；肌肤出现异常时立刻停止，并到皮肤科就诊。"
+      quote:
+        - "必须涂面霜再开始"
+        - "肌肤出现异常时立刻停止"
+        - "感到肌肤异常就中止伸展，并到皮肤科就诊"
+    steps:
+      - id: apply-face-cream-first
+        text: "必须涂面霜再开始：这是说明书对摩擦的唯一预防手段，不能跳过"
+        quote: "必须涂面霜再开始：这是说明书对摩擦的唯一预防手段，不能跳过"
+      - id: stop-on-skin-abnormality
+        text: "感到肌肤异常就中止伸展，并到皮肤科就诊"
+        quote: "感到肌肤异常就中止伸展，并到皮肤科就诊"
+    cautions:
+      - level: info
+        text: "只靠表情肌，谈不上万全"
+        quote: "只靠表情肌，谈不上万全"
+      - level: with-doctor
+        text: "当深层组织下移、骨骼支撑改变这类结构性下垂已经发生时，护肤品和拉伸都无从谈起，那属于需要面诊判断的范畴。"
+        quote: "当深层组织下移、骨骼支撑改变这类结构性下垂已经发生时，护肤品和拉伸都无从谈起，那属于需要面诊判断的范畴。"
+      - level: with-doctor
+        text: "如果松弛伴随单侧下垂、面部麻木、近期出现明显不对称，请到整形外科或皮肤科就诊"
+        quote: "如果松弛伴随单侧下垂、面部麻木、近期出现明显不对称，请到整形外科或皮肤科就诊"
+      - level: with-doctor
+        text: "皮肤本身有炎症、破损或皮肤病的情况下，先治皮肤再谈伸展"
+        quote: "皮肤本身有炎症、破损或皮肤病的情况下，先治皮肤再谈伸展"
+      - level: info
+        text: "这是美容保养范畴的做法，不替代医学诊断"
+        quote: "这是美容保养范畴的做法，不替代医学诊断"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9d6d69028de1d8d8
+    name: 提拉前先涂面霜

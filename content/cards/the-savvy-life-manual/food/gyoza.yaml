@@ -1,0 +1,236 @@
+article: 'the-savvy-life-manual/food/gyoza.md'
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: gyoza-reduce-water
+    status: reviewed
+    name: "饺子少放水"
+    source:
+      anchor: '饺子皮发烂？水从 250ml 减到 40ml'
+    slot: anytime
+    remind:
+      text: '饺子皮软塌、口感发烂且肉汁外漏时，先减少锅里的水量。'
+      quote:
+        - '自家包的饺子皮软塌、口感发烂，肉汁还漏得到处都是？'
+        - '先别急着改手法——锅里的水太多。'
+    dose:
+      - value: 40
+        unit: ml
+        what: '最终加水量'
+        quote: '把水从 250ml 减到 40ml 就行'
+    steps:
+      - id: reduce-water-volume
+        text: '把水从 250ml 减到 40ml 就行'
+        quote: '把水从 250ml 减到 40ml 就行'
+      - id: use-few-pleats
+        text: '不会包就用少褶 & 口角压紧的包法'
+        quote: '不会包就用少褶 & 口角压紧的包法'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 58eb236b8f57df59
+  - id: gyoza-steam-water-purpose
+    status: reviewed
+    source:
+      anchor: '水从 250ml 减到 40ml'
+    slot: anytime
+    remind:
+      text: '把锅里的水大幅减少，并认真蒸透饺子。'
+      quote: '把锅里的水大幅减少、认真蒸透，就能在家里做出糯糯皮的店味饺子。'
+    steps:
+      - id: limit-water-for-steaming
+        text: '那水是为了高效地把饺子加热——用来制造水蒸气的结论：水量要「超少」，然后好好蒸。'
+        quote:
+          - '那水是为了高效地把饺子加热——用来制造水蒸气的'
+          - '结论：水量要「超少」，然后好好蒸。'
+      - id: avoid-third-water
+        text: '市售饺子皮包装背面推荐的做法是「放入约饺子三分之一的水量」，而那行小字的本意是出于安全考虑、为了确保饺子被彻底加热。照这个量做，正是自家饺子皮变得软烂的主因。'
+        quote:
+          - '市售饺子皮包装背面推荐的做法是「放入约饺子三分之一的水量」，而那行小字的本意是出于安全考虑、为了确保饺子被彻底加热。'
+          - '照这个量做，正是自家饺子皮变得软烂的主因。'
+      - id: use-wrapper-moisture
+        text: '生饺子皮里本来就含有大约相当于「煮熟的乌冬面」那么多的水分。所以饺子需要的水分，它自己已经有了。'
+        quote:
+          - 生饺子皮里本来就含有大约相当于「煮熟的乌冬面」那么多的水分。
+          - 所以饺子需要的水分，它自己已经有了。
+          - 结论：水量要「超少」，然后好好蒸。 把锅里的水大幅减少、认真蒸透，就能在家里做出糯糯皮的店味饺子。
+      - id: steam-through
+        text: '把锅里的水大幅减少、认真蒸透，就能在家里做出糯糯皮的店味饺子。'
+        quote: '把锅里的水大幅减少、认真蒸透，就能在家里做出糯糯皮的店味饺子。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a0b4f8a7d7d74ba5
+    name: 饺子水减到 40ml
+  - id: gyoza-steam-then-fry
+    status: reviewed
+    source:
+      anchor: '煎法：先蒸后煎，收汁出焦壳'
+    slot: anytime
+    remind:
+      text: '按先蒸后煎的顺序操作，蒸制后揭盖煎出紧实的焦褐色底。'
+      quote: '把水从 250ml 减到 40ml 就行：热水 40ml＋油 1 小勺从锅边倒入，盖上铝箔开大火加热 3 分钟，关火但锅盖不动原地再蒸 3 分钟，最后揭掉锅盖和铝箔、用大火煎到底部变成紧实的焦褐色。'
+    dose:
+      - value: 40
+        unit: ml
+        what: '热水加水量'
+        quote: '把热水 40ml 和油 1 小勺混合，从锅边倒入锅底。'
+      - value: 1
+        unit: '小勺'
+        what: '加油量'
+        quote: '把热水 40ml 和油 1 小勺混合，从锅边倒入锅底。'
+      - value: 3
+        unit: '分钟'
+        what: '大火加热时长'
+        quote: '盖上铝箔，开大火加热 3 分钟。'
+      - value: 3
+        unit: '分钟'
+        what: '关火后原地蒸制时长'
+        quote: '原地再蒸 3 分钟'
+    duration:
+      basis: derived
+      sec: 360
+      formula: '3 分钟 + 3 分钟 = 6 分钟 = 360 秒（仅定时加热与蒸制阶段；最后煎至焦褐色阶段原文未给定时）'
+    steps:
+      - id: space-dumplings
+        text: '饺子彼此不接触地间隔开，平铺在平底锅里。'
+        quote: '饺子彼此不接触地间隔开，平铺在平底锅里。'
+      - id: add-water-and-oil
+        text: '把热水 40ml 和油 1 小勺混合，从锅边倒入锅底。'
+        quote: '把热水 40ml 和油 1 小勺混合，从锅边倒入锅底。'
+      - id: steam-covered
+        text: '盖上铝箔，开大火加热 3 分钟。'
+        quote: '盖上铝箔，开大火加热 3 分钟。'
+      - id: steam-with-lid-closed
+        text: '关火，但锅盖不要动，原地再蒸 3 分钟。'
+        quote: '关火，但锅盖不要动，原地再蒸 3 分钟。'
+      - id: pan-fry-until-browned
+        text: '揭掉锅盖和铝箔，用大火加热，煎到底面变成紧实的焦褐色。'
+        quote: '揭掉锅盖和铝箔，用大火加热，煎到底面变成紧实的焦褐色。'
+    cautions:
+      - level: info
+        text: '盖铝箔是为了高效利用蒸汽，别省。'
+        quote: '盖铝箔是为了高效利用蒸汽，别省。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: b6bbd7befac72fdd
+  - id: gyoza-few-pleats
+    status: reviewed
+    source:
+      anchor: '少褶包法：不会包也能包'
+    slot: anytime
+    remind:
+      text: '用少褶并压紧口角的方法包饺子，锁住肉汁并保持皮子偏软。'
+      quote: '说明书给的「少褶 & 口角压紧」包法正好解决这三点：超简单、皮的端头向上收起把肉汁牢牢锁住、因为褶数少所以皮偏软、吃起来糯糯的。'
+    steps:
+      - id: why-few-pleats
+        text: '普通的包法有三个弱点：难包、肉汁容易漏出来、皮容易变硬。说明书给的「少褶 & 口角压紧」包法正好解决这三点'
+        quote:
+          - '普通的包法有三个弱点：难包、肉汁容易漏出来、皮容易变硬。'
+          - '说明书给的「少褶 & 口角压紧」包法正好解决这三点'
+      - id: place-filling
+        text: '把饺子馅放在皮子中央。'
+        quote: '把饺子馅放在皮子中央。'
+      - id: pinch-top
+        text: '把皮的顶点对捏合上。'
+        quote: '把皮的顶点对捏合上。'
+      - id: hold-side-ends
+        text: '捏住左右两个端头的前侧。'
+        quote: '捏住左右两个端头的前侧。'
+      - id: pinch-corners
+        text: '把翘出来的「角」捏合。'
+        quote: '把翘出来的「角」捏合。'
+      - id: finish-wrapping
+        text: '完成。'
+        quote: '完成。'
+      - id: fry-wrapped-dumplings
+        text: '包好的饺子用上面「煎法」一节的煎法去煎，会得到更饱满、更糯糯的饺子。'
+        quote: '包好的饺子用上面「煎法」一节的煎法去煎，会得到更饱满、更糯糯的饺子。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 87897740474aa9c9
+  - id: gyoza-cabbage-pork-filling
+    status: reviewed
+    name: "白菜猪肉馅"
+    source:
+      anchor: '惊艳的肉汁：白菜猪肉馅（约 25 个份）'
+    slot: anytime
+    remind:
+      text: '先放酱油搅匀，再加其他调味料，把肉搅至发白并产生黏性后拌入蔬菜。'
+      quote:
+        - '先放酱油搅匀，再加其他调味料，肉汁会更多。'
+        - '一直搅到肉发白、开始出黏性为止。'
+        - '加入蔬菜（卷心菜、韭菜），再拌匀。'
+    dose:
+      - value: 25
+        unit: '个'
+        what: '馅料制作份数'
+        quote: '馅是白菜猪肉（约 25 个份）'
+      - value: 200
+        unit: g
+        what: '猪绞肉用量'
+        quote: '猪绞肉 200g'
+      - value: 100
+        unit: g
+        what: '卷心菜用量'
+        quote: '卷心菜 100g（切碎，用 1g 盐腌软挤水）'
+      - value: 1
+        unit: g
+        what: '盐用量'
+        quote: '卷心菜 100g（切碎，用 1g 盐腌软挤水）'
+      - value: 40
+        unit: g
+        what: '韭菜用量'
+        quote: '韭菜 40g（切成 5mm 以下的小段）'
+      - value: 5
+        unit: mm
+        what: '韭菜切段长度'
+        quote: '韭菜 40g（切成 5mm 以下的小段）'
+      - value: 1
+        unit: '小勺'
+        what: '生姜用量'
+        quote: '生姜 1 小勺（擦泥）'
+      - value: 1.5
+        unit: '小勺'
+        what: '酱油用量'
+        quote: '酱油 半大勺（约 1.5 小勺）'
+      - value: 1
+        unit: '小勺'
+        what: '砂糖用量'
+        quote: '砂糖 1 小勺加满'
+      - value: 1
+        unit: '小勺'
+        what: '芝麻油用量'
+        quote: '芝麻油 1 小勺'
+    duration:
+      basis: quote
+      sec: 300
+      quote: '包之前在室温放约 5 分钟'
+    steps:
+      - id: mix-meat-seasoning
+        text: '猪绞肉加调味料充分搅拌。'
+        quote: '猪绞肉加调味料充分搅拌。'
+      - id: add-soy-sauce-first
+        text: '先放酱油搅匀，再加其他调味料，肉汁会更多。'
+        quote: '先放酱油搅匀，再加其他调味料，肉汁会更多。'
+      - id: mix-until-sticky
+        text: '一直搅到肉发白、开始出黏性为止。'
+        quote: '一直搅到肉发白、开始出黏性为止。'
+      - id: add-vegetables
+        text: '加入蔬菜（卷心菜、韭菜），再拌匀。'
+        quote: '加入蔬菜（卷心菜、韭菜），再拌匀。'
+      - id: rest-filling-before-wrapping
+        text: '包之前在室温放约 5 分钟，肉汁会进一步增加——所以馅别一次包完。'
+        quote: '包之前在室温放约 5 分钟，肉汁会进一步增加——所以馅别一次包完。'
+      - id: wrap-filling
+        text: '用皮包入适量馅料。'
+        quote: '用皮包入适量馅料。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 99048b9a8a4abaf9

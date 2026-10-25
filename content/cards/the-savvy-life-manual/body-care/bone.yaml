@@ -1,0 +1,124 @@
+article: the-savvy-life-manual/body-care/bone.md
+kind: practice
+coverage: partial
+
+# 覆盖清单：这个文件里哪些内容明确不抽成卡，以及为什么。
+#
+# 「膝盖疼另有一套练法」指向另一篇文章，本篇不重复抽。
+# 「骨密度低，可能从二十几岁就开始了」是流行病学背景知识，没有可执行动作。
+#
+# 注意：「按世代分的运动法」不在 ignore 里——它是同���张卡的 segments。
+# 最初它被列进 ignore，因为当时的 schema 表达不了「不同人群做不同的动作」。
+# 现在有了 segments，就该表达出来而不是绕开。
+ignore:
+  sections:
+    - anchor: "膝盖疼另有一套练法"
+      reason: "正文指向另一篇膝盖文章，本篇不重复抽"
+    - anchor: "骨密度低，可能从二十几岁就开始了"
+      reason: "流行病学背景知识，没有可执行动作"
+
+cards:
+  - id: heel-raise
+    status: reviewed
+    source:
+      anchor: "每天 50 次快速踮脚尖"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016070621720.png?imageMogr2/format/webp"
+
+    remind:
+      text: "踮起脚尖再快速落下，每天 50 次、约 90 秒"
+      quote:
+        - "踮起脚尖再快速落下，每天 50 次、连贯做完约 90 秒"
+
+    effect:
+      text: "但要连续做 5～6 个月，才会显现效果"
+      quote: "但要连续做 5～6 个月，才会显现效果"
+
+    dose:
+      - value: 50
+        unit: 次
+        what: "踮脚"
+        quote: "每天 50 次"
+      - value: 90
+        unit: 秒
+        what: "整套做完大约"
+        quote: "整套做完大约 90 秒"
+
+    duration:
+      basis: quote
+      sec: 90
+      quote: "整套做完大约 90 秒"
+
+    steps:
+      - id: prep
+        text: "将脚尖踮起，身体挺直。双手可以自然放在体侧，或向上伸展"
+        quote: "将脚尖踮起，身体挺直。双手可以自然放在体侧，或向上伸展"
+        images:
+          - "https://img.newzone.top/20261016070621079.png?imageMogr2/format/webp"
+      - id: drop
+        text: "卸掉脚上的力，让脚跟自然落下，不弯膝盖"
+        quote: "卸掉脚上的力，让脚跟自然落下，不弯膝盖"
+        images:
+          - "https://img.newzone.top/20261016070622360.png?imageMogr2/format/webp"
+      - id: count
+        text: "每天 50 次（「1日50回が目安」），动作连贯快速进行，整套做完大约 90 秒"
+        quote: "每天 50 次（「1日50回が目安」），动作连贯快速进行，整套做完大约 90 秒"
+      - id: support
+        text: "如果感到不稳，可以找一张桌子或椅子用手扶稳"
+        quote: "如果感到不稳，可以找一张桌子或椅子用手扶稳"
+        images:
+          - "https://img.newzone.top/20261016070622992.png?imageMogr2/format/webp"
+
+    cautions:
+      - level: stop
+        text: "膝盖或腰部患有疾病的人"
+        quote: "膝盖或腰部患有疾病的人"
+      - level: stop
+        text: "正在治疗重度骨质疏松症的人"
+        quote: "正在治疗重度骨质疏松症的人"
+      - level: stop
+        text: "有跌倒风险的话，请不要做这个动作"
+        quote: "有跌倒风险的话，请不要做这个动作"
+
+    # 人群分档：不同世代该做不同的动作。
+    # 原文说得很直接——「没有一个动作适合所有人」，所以这不是可选项而是必须表达的。
+    # 默认动作（踮脚 50 次）出自《骨取扱説明書》；下面三档出自《一生ものの骨取扱説明書》。
+    # 两者不是同一本书，引用各自照抄。
+    segments:
+      - id: bone-child
+        when: [ "age:child" ]
+        action:
+          text: "跳跃"
+          quote: "跳跃"
+        dose:
+          text: "每天 10 次、每周 2～3 次"
+          quote: "每天 10 次、每周 2～3 次"
+        avoid:
+          - text: "疼痛、担心跌倒者请不要做"
+            quote: "疼痛、担心跌倒者请不要做"
+
+      - id: bone-adult
+        when: [ "age:adult" ]
+        action:
+          text: "深蹲一类的力量训练"
+          quote: "深蹲一类的力量训练"
+        dose:
+          text: "负荷越高效果越高，养成持续运动的习惯"
+          quote: "负荷越高效果越高，养成持续运动的习惯"
+        avoid:
+          - text: "注意脚下防跌倒；疼痛时中止"
+            quote: "注意脚下防跌倒；疼痛时中止"
+
+      - id: bone-senior
+        when: [ "age:senior" ]
+        action:
+          text: "防跌倒——单脚站立、提踵、深蹲"
+          quote: "防跌倒——单脚站立、提踵、深蹲"
+        avoid:
+          - text: "用一张稳固的椅子"
+            quote: "用一张稳固的椅子"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: aba99c621ee2a14e

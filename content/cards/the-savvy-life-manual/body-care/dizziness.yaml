@@ -1,0 +1,100 @@
+article: 'the-savvy-life-manual/body-care/dizziness.md'
+kind: condition
+coverage: partial
+ignore:
+  sections:
+    - anchor: '眩晕分三种：耳石、内耳积水、查不出原因'
+      reason: '该节是三型眩晕的导览性概览；耳石型的适用核对已并入卡片，其余分型不另立浏览卡。'
+    - anchor: '先对号入座：你是哪一种眩晕'
+      reason: '三种眩晕的鉴别标准属于阅读信息；耳石型的适用条件与急症警示已并入卡片。'
+    - anchor: '怎么找到对的医生'
+      reason: '专科医生检索属于就医导航信息，未形成可独立执行的动作卡。'
+    - anchor: '类型一的成因：内耳里缺了一块「耳石」'
+      reason: '耳石脱落机制与医院复位治疗属于病因和医疗处置，需由医疗专业人员处理。'
+    - anchor: '类型二的成因：内耳积水'
+      reason: '梅尼埃病的治疗与饮水建议需要结合病情和医嘱，不能抽成通用保健动作。'
+    - anchor: '原因不明型：眩晕诊疗最前线'
+      reason: '相关诊断、检查与治疗属于疾病知识，未形成日常保健动作。'
+  images: []
+cards:
+  - id: brandt-daroff-earstone-exercise
+    status: draft
+    source:
+      anchor: '家里也能做：耳石消散操'
+    images:
+      - 'https://img.newzone.top/20261016070445106.jpeg?imageMogr2/format/webp'
+      - 'https://img.newzone.top/20261016070445622.jpeg?imageMogr2/format/webp'
+      - 'https://img.newzone.top/20261016070446126.jpeg?imageMogr2/format/webp'
+      - 'https://img.newzone.top/20261016070446486.jpeg?imageMogr2/format/webp'
+      - 'https://img.newzone.top/20261016070446860.jpeg?imageMogr2/format/webp'
+      - 'https://img.newzone.top/20261016070447256.jpeg?imageMogr2/format/webp'
+      - 'https://img.newzone.top/20261016070447583.jpeg?imageMogr2/format/webp'
+    remind:
+      text: '～完整做 5 遍算 1 组，早晚各做 1 组。'
+      quote: '①～⑦完整做 5 遍算 1 组，早晚各做 1 组。'
+    effect:
+      text: '说明书注明约 1 周开始见效，1 个月内 4～6 成的人会改善。'
+      quote: '说明书注明约 1 周开始见效，1 个月内 4～6 成的人会改善。'
+    dose:
+      - value: 5
+        unit: '遍'
+        what: '每组完整动作的遍数'
+        quote: '①～⑦完整做 5 遍算 1 组，早晚各做 1 组。'
+      - value: 30
+        unit: '秒'
+        what: '每次保持姿势的时长'
+        quote: '朝与所看的方向相反的一侧倒下，保持 30 秒；'
+    duration:
+      basis: unknown
+    steps:
+      - id: check-bppv-pattern
+        text: '5 分钟以内缓解、改变头位时发作、不伴随听力下降或耳鸣——四条全中就是最常见的耳石眩晕，可以直接做耳石消散操：～完整做 5 遍算 1 组，早晚各 1 组，约 1 周开始见效，1 个月内 4～6 成的人会改善。'
+        quote: '5 分钟以内缓解、改变头位时发作、不伴随听力下降或耳鸣——四条全中就是最常见的耳石眩晕，可以直接做耳石消散操：①～⑦完整做 5 遍算 1 组，早晚各 1 组，约 1 周开始见效，1 个月内 4～6 成的人会改善。'
+      - id: sit-safely
+        text: '坐在即使倒下也安全的地方；'
+        quote: '坐在即使倒下也安全的地方；'
+        images:
+          - 'https://img.newzone.top/20261016070445106.jpeg?imageMogr2/format/webp'
+      - id: turn-head-to-side
+        text: '头转向正侧面；'
+        quote: '头转向正侧面；'
+        images:
+          - 'https://img.newzone.top/20261016070445622.jpeg?imageMogr2/format/webp'
+      - id: fall-opposite-hold
+        text: '朝与所看的方向相反的一侧倒下，保持 30 秒；'
+        quote: '朝与所看的方向相反的一侧倒下，保持 30 秒；'
+        images:
+          - 'https://img.newzone.top/20261016070446126.jpeg?imageMogr2/format/webp'
+      - id: face-ceiling
+        text: '的关键：倒下时让脸尽量朝向天花板（自然会形成大约斜 45 度的角度）。'
+        quote: '③④⑥的关键：倒下时让脸尽量朝向天花板（自然会形成大约斜 45 度的角度）。'
+      - id: return-and-hold
+        text: '回到原来的姿势，保持 30 秒；'
+        quote: '回到原来的姿势，保持 30 秒；'
+        images:
+          - 'https://img.newzone.top/20261016070446486.jpeg?imageMogr2/format/webp'
+      - id: turn-head-opposite
+        text: '头转向相反方向；'
+        quote: '头转向相反方向；'
+        images:
+          - 'https://img.newzone.top/20261016070446860.jpeg?imageMogr2/format/webp'
+      - id: fall-opposite-again-hold
+        text: '朝与所看方向相反的一侧倒下，保持 30 秒；'
+        quote: '朝与所看方向相反的一侧倒下，保持 30 秒；'
+        images:
+          - 'https://img.newzone.top/20261016070447256.jpeg?imageMogr2/format/webp'
+      - id: return-to-start
+        text: '回到原来的姿势。'
+        quote: '回到原来的姿势。'
+        images:
+          - 'https://img.newzone.top/20261016070447583.jpeg?imageMogr2/format/webp'
+    notices:
+      - level: seek-care
+        text: '若一次眩晕超过 30 秒仍不缓解，请停止操练并就医。'
+        quote: '若一次眩晕超过 30 秒仍不缓解，请停止操练并就医。'
+      - level: seek-care
+        text: '若看到的东西重影、四肢发麻、说话含糊等症状同时出现，请立即前往急诊、脑神经内科或脑神经外科就诊。'
+        quote: '若看到的东西重影、四肢发麻、说话含糊等症状同时出现，请立即前往急诊、脑神经内科或脑神经外科就诊。'
+      - level: info
+        text: '有颈部或腰部疼痛者请不要做。'
+        quote: '有颈部或腰部疼痛者请不要做。'

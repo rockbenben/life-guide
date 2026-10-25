@@ -1,0 +1,137 @@
+article: "the-savvy-life-manual/body-care/hair.md"
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "脂溢性皮炎"
+      reason: "该小节属于疾病知识与就医提示；本篇按 practice 保健动作抽取，不将其制为可勾选动作卡。"
+    - anchor: "每天掉 50～100 根算正常"
+      reason: "该小节属于脱发、贫血的疾病知识与就医提示；本篇按 practice 保健动作抽取，不将其制为可勾选动作卡。"
+  images: []
+cards:
+  - id: prevent-hair-hollowing
+    status: reviewed
+    name: "温和洗发防头发空心"
+    source:
+      anchor: "头发干枯易断？温和洗发 + 泡沫护理，补蛋白质铁锌"
+    slot: anytime
+    remind:
+      text: "洗头时减少摩擦并用泡沫护理，补足蛋白质、铁和锌，避免头发半干时入睡，并防紫外线和过高温度"
+      quote:
+        - "洗发时减少头发之间的摩擦、用泡沫来护理头发"
+        - "营养上补足蛋白质、铁和锌"
+        - "避免在头发半干的状态下入睡"
+        - "紫外线、过热、烫发和染发同样伤发，所以该用遮阳伞和帽子"
+        - "吹风机和卷发棒也别给太高温度"
+    steps:
+      - id: reduce-washing-friction
+        text: "洗发时减少头发之间的摩擦、用泡沫来护理头发"
+        quote: "洗发时减少头发之间的摩擦、用泡沫来护理头发"
+      - id: replenish-protein-iron-zinc
+        text: "营养上补足蛋白质、铁和锌"
+        quote: "营养上补足蛋白质、铁和锌"
+      - id: avoid-half-dry-sleep
+        text: "避免在头发半干的状态下入睡"
+        quote: "避免在头发半干的状态下入睡"
+      - id: use-sun-protection
+        text: "紫外线、过热、烫发和染发同样伤发，所以该用遮阳伞和帽子"
+        quote: "紫外线、过热、烫发和染发同样伤发，所以该用遮阳伞和帽子"
+      - id: avoid-high-heat
+        text: "吹风机和卷发棒也别给太高温度"
+        quote: "吹风机和卷发棒也别给太高温度"
+    cautions:
+      - level: info
+        text: "节目的实验给了个具体数字：反复用力洗头 5 次，大约六成的头发就出现了空洞"
+        quote: "节目的实验给了个具体数字：反复用力洗头 5 次，大约六成的头发就出现了空洞"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b37811eb3498d1ff
+  - id: gentle-shampoo-steps
+    status: reviewed
+    name: "温水预冲后泡沫轻洗"
+    source:
+      anchor: "洗发步骤"
+    slot: anytime
+    remind:
+      text: "洗发前先梳理，再用温水预冲洗，最后用泡沫轻柔洗发并避免来回搓洗"
+      quote:
+        - "洗发前先用梳子梳理头发，避免打结。"
+        - "用温水充分冲洗 1～1.5 分钟左右，洗净附着的灰尘和油脂，泡沫才起得干净。"
+        - "使用泡沫轻柔地洗发，避免来回搓洗，以减少对头发的摩擦。"
+    duration:
+      basis: derived
+      sec: 90
+      formula: "1～1.5 分钟 × 60 秒/分钟 = 60～90 秒，按上限计 90 秒"
+    steps:
+      - id: comb-before-shampoo
+        text: "洗发前先用梳子梳理头发，避免打结。"
+        quote: "洗发前先用梳子梳理头发，避免打结。"
+      - id: warm-water-pre-rinse
+        text: "用温水充分冲洗 1～1.5 分钟左右，洗净附着的灰尘和油脂，泡沫才起得干净。"
+        quote: "用温水充分冲洗 1～1.5 分钟左右，洗净附着的灰尘和油脂，泡沫才起得干净。"
+      - id: wash-gently-with-foam
+        text: "使用泡沫轻柔地洗发，避免来回搓洗，以减少对头发的摩擦。"
+        quote: "使用泡沫轻柔地洗发，避免来回搓洗，以减少对头发的摩擦。"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: e82d6901054e0619
+  - id: straighten-curly-hair
+    status: reviewed
+    source:
+      anchor: "把卷毛拉直"
+    slot: anytime
+    remind:
+      text: "先喷水，再把卷发向内回转 180 度拉直并吹干，最后用冷风定型"
+      quote:
+        - "在头发上喷少量水。"
+        - "用梳子贴住头发、梳齿朝下，向内回转 180 度把头发挑起拉直，同时用吹风机吹干。"
+        - "最后用冷风定型，让拉直的形状保持得更久。"
+    steps:
+      - id: lightly-wet-hair
+        text: "在头发上喷少量水。"
+        quote: "在头发上喷少量水。"
+      - id: pull-hair-straight
+        text: "用梳子贴住头发、梳齿朝下，向内回转 180 度把头发挑起拉直，同时用吹风机吹干。"
+        quote: "用梳子贴住头发、梳齿朝下，向内回转 180 度把头发挑起拉直，同时用吹风机吹干。"
+        images:
+          - "https://img.newzone.top/2024-10-17-04-34-44.png?imageMogr2/format/webp"
+      - id: set-with-cool-air
+        text: "最后用冷风定型，让拉直的形状保持得更久。"
+        quote: "最后用冷风定型，让拉直的形状保持得更久。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 845982cb685b3798
+  - id: scalp-based-hair-care
+    status: draft
+    source:
+      anchor: "洗发频率按头皮定"
+    slot: anytime
+    remind:
+      text: "按头皮出油和头发变脏的速度决定洗发频率，并按发质使用洗发水和护发素"
+      quote:
+        - 洗多勤看头发多久变脏、变油。
+        - 洗发水只上头皮不是整根头发
+        - 护发素细软或笔直的只涂发尾，干燥卷曲的涂满全长
+        - 轻柔洗发：使用泡沫轻柔地洗发，避免来回搓洗，以减少对头发的摩擦。
+        - 头发干燥、缺乏弹性、分叉、不规则、失去光泽——这些大多不是各自独立的毛病，而是指向同一个原因：头发空洞化。它是多种头发问题的根源，源于蛋白质和水分的流失，而过度洗头正是导致这种流失的主要原因之一。节目的实验给了个具体数字：反复用力洗头 5 次，大约六成的头发就出现了空洞。
+    steps:
+      - id: choose-shampoo-frequency
+        text: "直发加油性头皮可以每天洗干燥或卷曲的按需要洗，最少每 2 到 3 周一次。"
+        quote:
+          - "直发加油性头皮可以每天洗"
+          - "干燥或卷曲的按需要洗，最少每 2 到 3 周一次。"
+      - id: apply-shampoo-to-scalp
+        text: "洗发水只上头皮不是整根头发"
+        quote: "洗发水只上头皮不是整根头发"
+      - id: apply-conditioner-by-hair-type
+        text: "护发素细软或笔直的只涂发尾，干燥卷曲的涂满全长。"
+        quote: "护发素细软或笔直的只涂发尾，干燥卷曲的涂满全长。"
+      - id: comb-wet-hair-with-wide-teeth
+        text: "湿着时头发最脆弱，用宽齿梳而不是刷子，先梳发尾再往上梳。"
+        quote: "湿着时头发最脆弱，用宽齿梳而不是刷子，先梳发尾再往上梳。"
+      - id: reduce-heat-damage
+        text: "减少吹风，用低温或中温档配热保护产品。"
+        quote: "减少吹风，用低温或中温档配热保护产品。"

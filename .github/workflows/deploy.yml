@@ -1,0 +1,47 @@
+# push 即发布：构建产物推到 gh-pages 分支，EdgeOne Pages 从那个分支取。
+#
+# 跟 onepage 同一个模式（那边是 dist，这里是 app/dist）：
+#   · 构建产物推到 gh-pages 分支
+#   · EdgeOne Pages 的 Git 集成指向这个仓的这个分支
+#   · 绑自定义域名（life.newzone.top）
+#
+# 首次跑完之后不用再动设置：以后每次推 main 都重新构建并覆盖 gh-pages。
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 推分支要写权限（verify 那个 job 只读，这里要写）
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Build & push to gh-pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        # OG_IMAGE_URL 是社交预览那张图的**绝对地址**（og:image 只认绝对 URL）。
+        # 在仓库的 Settings → Variables 里设成 OG_IMAGE_URL；
+        # 没设时用下面的默认值 —— 域名定下来后改这里或改变量都行。
+        env:
+          OG_IMAGE_URL: ${{ vars.OG_IMAGE_URL || 'https://life.newzone.top/og.png' }}
+        run: npm run app:build
+
+      - name: Push to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: app/dist
+          clean: true # 每次先清空分支，别让旧文件留在上面

@@ -1,0 +1,252 @@
+article: the-savvy-life-manual/body-care/shoulder.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: shoulder-arm-elevation-ratio
+    status: reviewed
+    name: "举手时留意肩臂 1:2"
+    source:
+      anchor: "肩的活动该是1比2：改订版肩部说明书"
+    slot: anytime
+    remind:
+      text: "举手时留意肩胛骨和上臂骨的活动比例"
+      quote: "手臂往上举 180 度，肩胛骨应该走 60 度、上臂骨应该走 120 度，这个 1 比 2 医学上叫「肩甲上腕节奏」。"
+    steps:
+      - id: raise-arm-and-observe
+        text: "手臂往上举 180 度，肩胛骨应该走 60 度、上臂骨应该走 120 度，这个 1 比 2 医学上叫「肩甲上腕节奏」。"
+        quote: "手臂往上举 180 度，肩胛骨应该走 60 度、上臂骨应该走 120 度，这个 1 比 2 医学上叫「肩甲上腕节奏」。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 93c0fee16c01ad95
+
+  - id: shoulder-routine-order
+    status: reviewed
+    name: "整套肩部动作的次序"
+    source:
+      anchor: "肩的活动该是1比2：改订版肩部说明书"
+    slot: anytime
+    remind:
+      text: "整套肩部训练包含盘腿拉伸、肩胛骨训练和肩袖训练，盘腿拉伸放在最前面"
+      quote: "做法分两段：一段是 1 套 3 分钟、每天 1 到 3 次的肩胛骨训练，另一段是每天 3 次的肩袖训练。另外还有一记盘腿拉伸，它不在这两段里，而要放在整套动作的最前面做，理由见下。"
+    steps:
+      - id: stretch-first
+        text: "另外还有一记盘腿拉伸，它不在这两段里，而要放在整套动作的最前面做"
+        quote: "另外还有一记盘腿拉伸，它不在这两段里，而要放在整套动作的最前面做"
+      - id: complete-scapular-training
+        text: "一段是 1 套 3 分钟、每天 1 到 3 次的肩胛骨训练"
+        quote: "一段是 1 套 3 分钟、每天 1 到 3 次的肩胛骨训练"
+      - id: complete-cuff-training
+        text: "另一段是每天 3 次的肩袖训练"
+        quote: "另一段是每天 3 次的肩袖训练"
+    cautions:
+      - level: stop
+        text: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        quote: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 9de203a665f31eb9
+
+  - id: shoulder-self-checks
+    status: reviewed
+    name: "肩部训练前的自检"
+    source:
+      anchor: "先做两个自我检查"
+    slot: anytime
+    remind:
+      text: "开始肩部训练前确认肩胛骨是否参与，并比较左右肩高度"
+      quote:
+        - 检查一：手掌贴在胸前的锁骨上，掌心保持贴合，把肘抬到不勉强的位置。如果脖子根部带着肩膀一起往上耸，就要留意——肩胛骨没有参与。
+        - 检查二：双手抬到肩的高度，做「预备姿势」。左右肩高度不一样就要留意——上臂骨的活动变差了。
+        - 肩痛这件事，很少是肌肉本身坏了。昭和医科大学西中直也教授给了一个可测量的指标：手臂往上举 180 度，肩胛骨应该走 60 度、上臂骨应该走 120 度，这个 1 比 2 医学上叫「肩甲上腕节奏」。节目组查了 33 位自诉肩部不适的人，其中 32 人这个节奏是乱的；最夸张的一个，肩胛骨几乎不动，比例到了 1 比 10。^[「肩の健康」のトリセツ 改訂版（品番 TAKT-150）]
+    steps:
+      - id: check-scapular-engagement
+        text: "检查一：手掌贴在胸前的锁骨上，掌心保持贴合，把肘抬到不勉强的位置。如果脖子根部带着肩膀一起往上耸，就要留意——肩胛骨没有参与。"
+        quote: "检查一：手掌贴在胸前的锁骨上，掌心保持贴合，把肘抬到不勉强的位置。如果脖子根部带着肩膀一起往上耸，就要留意——肩胛骨没有参与。"
+      - id: compare-shoulder-height
+        text: "检查二：双手抬到肩的高度，做「预备姿势」。左右肩高度不一样就要留意——上臂骨的活动变差了。"
+        quote: "检查二：双手抬到肩的高度，做「预备姿势」。左右肩高度不一样就要留意——上臂骨的活动变差了。"
+    cautions:
+      - level: stop
+        text: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
+        quote: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 2896d137b711061f
+
+  - id: scapular-muscle-training
+    status: reviewed
+    name: "肩胛骨训练"
+    source:
+      anchor: "1 套 3 分钟：调整肩胛骨的三个动作"
+    slot: anytime
+    remind:
+      text: "依次拉伸背阔肌和肩胛提肌，再练前锯肌与斜方肌下部纤维"
+      quote: "节目请了 4 位肩部专家，结论是有效率地调整节奏，要同时处理 4 块肌肉：背阔肌、肩胛提肌、前锯肌，以及斜方肌的下部纤维。前两个动作拉后两个练。"
+    dose:
+      - value: 20
+        unit: 秒
+        what: 每侧背阔肌和肩胛提肌拉伸保持时长
+        quote: "左右各 20 秒"
+      - value: 10
+        unit: 次
+        what: 前锯肌练习次数
+        quote: "练前锯肌：10 次"
+      - value: 10
+        unit: 次
+        what: 斜方肌下部纤维练习次数
+        quote: "练斜方肌下部纤维：10 次"
+      - value: 1
+        unit: 套
+        what: 每天肩胛骨训练最少套数
+        quote: "每天做 1 到 3 套"
+      - value: 3
+        unit: 套
+        what: 每天肩胛骨训练最多套数
+        quote: "每天做 1 到 3 套"
+    duration:
+      basis: derived
+      sec: 180
+      formula: "1 套 × 3 分钟 × 60 秒 = 180 秒"
+    steps:
+      - id: stretch-latissimus-and-levator
+        text: "一只手绕到对侧肩后，指尖摸到凸起的那块肩胛骨，另一只手把它往下按；再换手抓住对侧手肘，头向斜前方倒、身体同时侧倾，保持 20 秒。"
+        quote: "一只手绕到对侧肩后，指尖摸到凸起的那块肩胛骨，另一只手把它往下按；再换手抓住对侧手肘，头向斜前方倒、身体同时侧倾，保持 20 秒。"
+      - id: train-serratus-anterior
+        text: "两肘在身体前方并拢，保持夹住的状态向上抬。肩膀不要用力，注意力放在腋下。"
+        quote: "两肘在身体前方并拢，保持夹住的状态向上抬。肩膀不要用力，注意力放在腋下。"
+      - id: train-lower-trapezius
+        text: "双手在脑后交扣，手肘向后带、挺胸；吸气时把肩胛骨往脊柱方向收，呼气放松。"
+        quote: "双手在脑后交扣，手肘向后带、挺胸；吸气时把肩胛骨往脊柱方向收，呼气放松。"
+    cautions:
+      - level: stop
+        text: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        quote: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+      - level: stop
+        text: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
+        quote: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4e51701a4c5bacc2
+
+  - id: shoulder-cuff-training
+    status: reviewed
+    source:
+      anchor: "肩袖：撑住肩关节的那四块肌肉"
+    slot: anytime
+    remind:
+      text: "用夹住毛巾和按压毛巾的方式练肩袖"
+      quote:
+        - "肩袖练习一：折叠的毛巾夹在腋下固定住肘部，手里拿一把扇子，肘部不动、只用手臂把扇子向外拉开到最开，再轻轻扇动。手腕不要弯。"
+        - "肩袖练习二：把卷成团的毛巾放在腹部，双手叠在上面轻轻按压，肘部的位置保持不动。"
+    dose:
+      - value: 10
+        unit: 次
+        what: 每个肩袖动作每侧练习次数
+        quote: "左右各 10 次算 1 套"
+      - value: 3
+        unit: 套
+        what: 每天肩袖训练套数
+        quote: "每天 3 套"
+    steps:
+      - id: cuff-fan-exercise
+        text: "肩袖练习一：折叠的毛巾夹在腋下固定住肘部，手里拿一把扇子，肘部不动、只用手臂把扇子向外拉开到最开，再轻轻扇动。手腕不要弯。"
+        quote: "肩袖练习一：折叠的毛巾夹在腋下固定住肘部，手里拿一把扇子，肘部不动、只用手臂把扇子向外拉开到最开，再轻轻扇动。手腕不要弯。"
+      - id: cuff-abdominal-press
+        text: "肩袖练习二：把卷成团的毛巾放在腹部，双手叠在上面轻轻按压，肘部的位置保持不动。"
+        quote: "肩袖练习二：把卷成团的毛巾放在腹部，双手叠在上面轻轻按压，肘部的位置保持不动。"
+    cautions:
+      - level: stop
+        text: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        quote: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cf5698cf94f03372
+    name: 夹毛巾练肩袖
+
+  - id: cross-legged-hip-stretch
+    status: reviewed
+    name: "盘腿拉伸"
+    source:
+      anchor: "盘腿拉伸：整套动作的第一招"
+    slot: anytime
+    remind:
+      text: "整套肩部动作开始时先做盘腿拉伸"
+      quote: "节目组要求放在最前面做——在三个肩胛骨动作和肩袖练习之前。"
+    dose:
+      - value: 5
+        unit: 次
+        what: 每侧盘腿拉伸次数
+        quote: "左右各 5 次，共 10 次。"
+      - value: 10
+        unit: 次
+        what: 双侧盘腿拉伸总次数
+        quote: "左右各 5 次，共 10 次。"
+      - value: 5
+        unit: 秒
+        what: 每次前倾保持时长
+        quote: "慢慢数 5 秒"
+    steps:
+      - id: set-cross-legged-position
+        text: "坐姿盘起一条腿，把脚踝搭到另一条腿上，搭上去的脚保持水平；双手握拳，拳面叠在小腿上"
+        quote: "坐姿盘起一条腿，把脚踝搭到另一条腿上，搭上去的脚保持水平；双手握拳，拳面叠在小腿上"
+      - id: lean-forward-and-hold
+        text: "背部保持伸直，像是把胸口靠向拳头一样慢慢把上半身向前倾。倾到臀部到大腿后侧那条肌肉被拉开的感觉，慢慢数 5 秒，然后换另一侧。"
+        quote: "背部保持伸直，像是把胸口靠向拳头一样慢慢把上半身向前倾。倾到臀部到大腿后侧那条肌肉被拉开的感觉，慢慢数 5 秒，然后换另一侧。"
+    cautions:
+      - level: stop
+        text: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        quote: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+      - level: stop
+        text: "盘腿拉伸时出现强烈疼痛要停下，特别是臀部以外的部位，即腰部、膝盖、髋关节出现疼痛时要中止。"
+        quote: "盘腿拉伸时出现强烈疼痛要停下，特别是臀部以外的部位，即腰部、膝盖、髋关节出现疼痛时要中止。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 0817784ee884afb9
+
+  - id: shoulder-safety-and-care
+    status: reviewed
+    source:
+      anchor: "不要做的情况和就医提示"
+    slot: anytime
+    remind:
+      text: "训练前确认是否适合做整套动作，出现持续肩痛或手臂麻木无力时及时就医"
+      quote:
+        - "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        - "如果肩痛持续不缓解、或者伴随手臂麻木无力，不要靠按穴位或自己练动作拖下去，请就医。"
+    steps:
+      - id: screen-before-routine
+        text: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        quote: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+      - id: seek-care-for-persistent-pain
+        text: "如果肩痛持续不缓解、或者伴随手臂麻木无力，不要靠按穴位或自己练动作拖下去，请就医。（这条就医提示是编者补的，说明书本身没有写。）"
+        quote: "如果肩痛持续不缓解、或者伴随手臂麻木无力，不要靠按穴位或自己练动作拖下去，请就医。（这条就医提示是编者补的，说明书本身没有写。）"
+    cautions:
+      - level: stop
+        text: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+        quote: "有脱臼史、或者做动作时感到强烈疼痛：整套都不要做。"
+      - level: stop
+        text: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
+        quote: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
+      - level: info
+        text: "头几天出现轻微肌肉痛一样的异样感：说明书说这是正常的。"
+        quote: "头几天出现轻微肌肉痛一样的异样感：说明书说这是正常的。"
+      - level: stop
+        text: "盘腿拉伸时出现强烈疼痛要停下，特别是臀部以外的部位，即腰部、膝盖、髋关节出现疼痛时要中止。"
+        quote: "盘腿拉伸时出现强烈疼痛要停下，特别是臀部以外的部位，即腰部、膝盖、髋关节出现疼痛时要中止。"
+      - level: with-doctor
+        text: "如果肩痛持续不缓解、或者伴随手臂麻木无力，不要靠按穴位或自己练动作拖下去，请就医。"
+        quote: "如果肩痛持续不缓解、或者伴随手臂麻木无力，不要靠按穴位或自己练动作拖下去，请就医。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: befdf060929c0880
+    name: 肩痛时先停练就医

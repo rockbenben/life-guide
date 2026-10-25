@@ -1,0 +1,21 @@
+# 自动识别文本文件并做 LF 归一化
+* text=auto
+
+# 仓库内一律 LF：这机器的 core.autocrlf=true，CI 又跑在 ubuntu 上，
+# 不固定的话本地 diff 会整文件变化，CI 也可能因行尾不一致报错
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.ps1 text eol=lf
+
+# 快照里的图片是二进制，不做任何行尾转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary
+*.woff binary

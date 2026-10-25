@@ -1,0 +1,205 @@
+article: the-savvy-life-manual/food/omega-3.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: daily-omega-3-oil
+    status: reviewed
+    name: "每天一茶匙亚麻籽油"
+    source:
+      anchor: Omega-3 怎么补？每天一茶匙亚麻籽油
+    slot: anytime
+    remind:
+      text: 每天 1 茶匙紫苏油（えごま油）或亚麻仁油（アマニ油）
+      quote: 说明书推荐的是紫苏油（えごま油）或亚麻仁油（アマニ油），每天 1 茶匙就够。
+    dose:
+      - value: 1
+        unit: 茶匙
+        what: 每日推荐量
+        quote: 说明书推荐的是紫苏油（えごま油）或亚麻仁油（アマニ油），每天 1 茶匙就够。
+    steps:
+      - id: c1-drink-or-mix
+        text: 可以直接饮用、调成沙拉酱，或加进咖啡、酸奶，撒在谷物麦片上；说明书推荐的是紫苏油（えごま油）或亚麻仁油（アマニ油），每天 1 茶匙就够。
+        quote: 可以直接饮用、调成沙拉酱，或加进咖啡、酸奶，撒在谷物麦片上；说明书推荐的是紫苏油（えごま油）或亚麻仁油（アマニ油），每天 1 茶匙就够。
+      - id: c1-enhance-flavor
+        text: 加在苦味蔬菜冰沙和果汁里能抑制苦味，加在浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐里能引出鲜味。
+        quote: 加在苦味蔬菜冰沙和果汁里能抑制苦味，加在浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐里能引出鲜味。
+    cautions:
+      - level: stop
+        text: Omega-3 在高温下容易氧化，因此不适合用于炒或油炸食品。
+        quote: Omega-3 在高温下容易氧化，因此不适合用于炒或油炸食品。
+      - level: info
+        text: 建议将其存放在冰箱中，以防止因光照导致的氧化。开封后请在一个月内用完。
+        quote: 建议将其存放在冰箱中，以防止因光照导致的氧化。开封后请在一个月内用完。
+      - level: stop
+        text: 严禁将其放入因倒入热水而变热的聚苯乙烯容器中，以免容器熔化或变质。
+        quote: 严禁将其放入因倒入热水而变热的聚苯乙烯容器中，以免容器熔化或变质。
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 38b55d95304d0fca
+
+  - id: omega-3-food-pairings
+    status: reviewed
+    source:
+      anchor: 每天一茶匙，具体放进哪些食物
+    # 原文：「早上直接喝。」
+    slot: morning
+    remind:
+      text: 每天 1 茶匙，按食物风味选择直接饮用或搭配
+      quote:
+        - 说明书推荐的油是 紫苏油（えごま油）或亚麻仁油（アマニ油），每天 1 茶匙 的量就足够。
+        - 早上直接喝。
+        - 苦味蔬菜冰沙和果汁：加 1 茶匙，有抑制苦味的效果。
+        - 浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐：加 1 茶匙，有引出鲜味的效果。
+    dose:
+      - value: 1
+        unit: 茶匙
+        what: 每日油量
+        quote: 说明书推荐的油是 紫苏油（えごま油）或亚麻仁油（アマニ油），每天 1 茶匙 的量就足够。
+    steps:
+      - id: c2-drink-in-morning
+        text: 早上直接喝。
+        quote: 早上直接喝。
+      - id: c2-make-salad-dressing
+        text: 调成沙拉酱，或加入咖啡、酸奶。
+        quote: 调成沙拉酱，或加入咖啡、酸奶。
+      - id: c2-sprinkle-on-cereal
+        text: 撒在谷物麦片上。
+        quote: 撒在谷物麦片上。
+      - id: c2-reduce-bitterness
+        text: 苦味蔬菜冰沙和果汁：加 1 茶匙，有抑制苦味的效果。
+        quote: 苦味蔬菜冰沙和果汁：加 1 茶匙，有抑制苦味的效果。
+      - id: c2-enhance-umami
+        text: 浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐：加 1 茶匙，有引出鲜味的效果。
+        quote: 浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐：加 1 茶匙，有引出鲜味的效果。
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 7ab25f72d724111f
+
+  - id: cold-infused-flavor-oil
+    status: reviewed
+    name: "油里冷浸 3 天做调味油"
+    source:
+      anchor: 用油冷浸 3 天：代替酱油做出香味油
+    slot: anytime
+    remind:
+      text: 将柑橘、生姜等香味类切片后浸 3 天左右
+      quote: 柑橘、生姜等香味类：切成片后浸 3 天左右。
+    dose:
+      - value: 3
+        unit: 天
+        what: 香味类冷浸时间
+        quote: 柑橘、生姜等香味类：切成片后浸 3 天左右。
+    duration:
+      basis: derived
+      sec: 259200
+      quote: 柑橘、生姜等香味类：切成片后浸 3 天左右。
+      formula: 3 天 × 24 小时 × 60 分钟 × 60 秒 = 259200 秒
+    steps:
+      - id: c3-slice-and-infuse
+        text: 柑橘、生姜等香味类：切成片后浸 3 天左右。
+        quote: 柑橘、生姜等香味类：切成片后浸 3 天左右。
+      - id: c3-infuse-dried-kelp
+        text: 昆布等干货：直接泡就能用；昆布事先烘烤，香气出得更足。
+        quote: 昆布等干货：直接泡就能用；昆布事先烘烤，香气出得更足。
+      - id: c3-choose-light-oil
+        text: 建议用气味小的色拉油或米油，免得和原本想萃取的香气打架。
+        quote: 建议用气味小的色拉油或米油，免得和原本想萃取的香气打架。
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 3e1f83afc0a30409
+
+  - id: oil-cooking-and-omega-3-effects
+    status: reviewed
+    source:
+      anchor: 油的作用
+    slot: anytime
+    remind:
+      text: 用油软化苦辣味并增强鲜味；金枪鱼按 6:1 混合紫苏油与橄榄油，冷藏 1 小时
+      quote:
+        - 油具有吸收和包裹苦味、辣味等物质的能力，能够软化强烈的味道，同时增强甜味、鲜味和咸味的体验。
+        - 金枪鱼：将紫苏油和橄榄油按 6:1 的比例混合，浸泡金枪鱼，放入冰箱冷藏 1 小时。
+    duration:
+      basis: derived
+      sec: 3600
+      quote: 金枪鱼：将紫苏油和橄榄油按 6:1 的比例混合，浸泡金枪鱼，放入冰箱冷藏 1 小时。
+      formula: 1 小时 × 60 分钟 × 60 秒 = 3600 秒
+    steps:
+      - id: c4-soften-and-enhance
+        text: 油具有吸收和包裹苦味、辣味等物质的能力，能够软化强烈的味道，同时增强甜味、鲜味和咸味的体验。
+        quote: 油具有吸收和包裹苦味、辣味等物质的能力，能够软化强烈的味道，同时增强甜味、鲜味和咸味的体验。
+      - id: c4-marinate-tuna
+        text: 金枪鱼：将紫苏油和橄榄油按 6:1 的比例混合，浸泡金枪鱼，放入冰箱冷藏 1 小时。
+        quote: 金枪鱼：将紫苏油和橄榄油按 6:1 的比例混合，浸泡金枪鱼，放入冰箱冷藏 1 小时。
+    effect:
+      text: '在一项实验中，早晚各一小勺的 Omega-3（原文「朝夕小さじ1杯」），持续一个月，许多参与者发现他们的皮肤纹理得到改善，皮肤的水分含量增加。此外，导致动脉硬化的坏胆固醇（LDL）也减少了。'
+      quote:
+        - 在一项实验中，早晚各一小勺的 Omega-3（原文「朝夕小さじ1杯」），持续一个月，许多参与者发现他们的皮肤纹理得到改善，皮肤的水分含量增加。
+        - 此外，导致动脉硬化的坏胆固醇（LDL）也减少了。
+    cautions:
+      - level: with-doctor
+        text: 这是那项实验的用量（早晚各一次）；说明书给出的每日推荐量是「1 日小さじ1杯程度」，两者不是一回事。
+        quote: 这是那项实验的用量（早晚各一次）；说明书给出的每日推荐量是「1 日小さじ1杯程度」，两者不是一回事。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: eaff9ebbb8fdbac9
+    name: 用油软化苦辣增鲜
+
+  - id: balanced-oil-intake
+    status: reviewed
+    name: "换着吃不同的油"
+    source:
+      anchor: 12 万人调查：油的「种类」决定死亡风险
+    slot: anytime
+    remind:
+      text: 把 Omega-6 与 Omega-3 的摄入比例保持为 2:1，并主动补充 Omega-3
+      quote: 因此「适量平衡」被放在第一位：Omega-6 与 Omega-3 保持 2:1，比一味少吃油更接近正确答案。日本人的实际饮食 Omega-6 偏多、比例接近 6:1，所以有意识地补 Omega-3 才是重点。
+    steps:
+      - id: c5-limit-saturated-fat
+        text: 肉类、黄油（饱和脂肪酸）：摄取量越高，全因死亡风险上升。
+        quote: 肉类、黄油（饱和脂肪酸）：摄取量越高，全因死亡风险上升。
+      - id: c5-choose-olive-oil
+        text: 橄榄油（以 Omega-9 为主）：摄取量越高，死亡风险下降。
+        quote: 橄榄油（以 Omega-9 为主）：摄取量越高，死亡风险下降。
+      - id: c5-combine-omega-oils
+        text: Omega-3 与 Omega-6 搭配（鱼・亚麻籽复合油 3 份、色拉油 6 份）：下降幅度最大。
+        quote: Omega-3 与 Omega-6 搭配（鱼・亚麻籽复合油 3 份、色拉油 6 份）：下降幅度最大。
+    cautions:
+      - level: with-doctor
+        text: 还有一条容易被忽略的反向提醒：针对 40～69 岁 人群的调查显示，饱和脂肪酸摄取过少同样会让脑出血、脑梗塞的风险升高——不是越少越好。
+        quote: 还有一条容易被忽略的反向提醒：针对 40～69 岁 人群的调查显示，饱和脂肪酸摄取过少同样会让脑出血、脑梗塞的风险升高——不是越少越好。
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 6b188847b92d32fa
+
+  - id: oil-for-flavor
+    status: reviewed
+    source:
+      anchor: 油到底是怎么让菜变好吃的
+    slot: anytime
+    remind:
+      text: 在拉面等菜肴中加入油，提高鲜味强度
+      quote: 一项对照实验中，10 人里有 8 人觉得加油的拉面味道更浓郁；味觉传感器分析也确认了油脂能提高鲜味强度。
+    steps:
+      - id: c6-confirm-ramen-flavor
+        text: 一项对照实验中，10 人里有 8 人觉得加油的拉面味道更浓郁；味觉传感器分析也确认了油脂能提高鲜味强度。
+        quote: 一项对照实验中，10 人里有 8 人觉得加油的拉面味道更浓郁；味觉传感器分析也确认了油脂能提高鲜味强度。
+      - id: c6-balance-taste
+        text: 油脂会吸附并包裹住苦味、辣味，同时增强甜味、鲜味和咸味，所以「放一点油」不只是增加润滑感。
+        quote: 油脂会吸附并包裹住苦味、辣味，同时增强甜味、鲜味和咸味，所以「放一点油」不只是增加润滑感。
+    cautions:
+      - level: info
+        text: 同时说明书提醒，油吃过量同样会增加肥胖和生活习惯病的风险。
+        quote: 同时说明书提醒，油吃过量同样会增加肥胖和生活习惯病的风险。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 0fb4ddc27459b747
+    name: 用油提高菜鲜味

@@ -1,0 +1,185 @@
+article: "the-savvy-life-manual/body-care/itching.md"
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "痒的机制：干燥让一根神经伸展到表面"
+      reason: "本节解释干燥、Semaphorin 3A 与痒神经伸展的机制及实验依据，属于疾病知识而非可执行动作，未单独制卡。"
+    - anchor: "涂了还是痒：什么时候该去医院"
+      reason: "本节涉及内脏疾病、精神性原因及停用后就医边界，需要按 condition 知识另行人工审阅，未混入可勾选的 practice 卡。"
+    - anchor: "这类方法解决什么问题、不解决什么"
+      reason: "本节说明适应范围与疾病边界，属于 condition 类适用范围说明，不是具体保健动作。"
+  images: []
+cards:
+  - id: three-t-fixed-regimen
+    status: reviewed
+    name: "用 3T 涂法涂保湿剂"
+    source:
+      anchor: "越痒越想挠？3T 涂法压住伸展的痒神经"
+    slot: anytime
+    remind:
+      text: "用足量的保湿剂，每个部位涂 30 回，一天 2 次。"
+      quote:
+        - 用足量的保湿剂，每个部位涂 30 回，一天 2 次。
+        - 说明书给出的对策是保湿，具体做法是3T 涂法：用足量的保湿剂，每个部位涂 30 回，一天 2 次。它不是「多涂点试试看」，而是每天固定执行的一套手法。
+    dose:
+      - value: 30
+        unit: "回"
+        what: "每个部位涂抹次数"
+        quote: "每个部位涂 30 回"
+      - value: 2
+        unit: "次/天"
+        what: "每天涂抹频率"
+        quote: "一天 2 次"
+    steps:
+      - id: fixed-daily-regimen
+        text: "用足量的保湿剂，每个部位涂 30 回，一天 2 次。它不是「多涂点试试看」，而是每天固定执行的一套手法。"
+        quote:
+          - "用足量的保湿剂，每个部位涂 30 回，一天 2 次。"
+          - "它不是「多涂点试试看」，而是每天固定执行的一套手法。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: af507676ceca3569
+
+  - id: three-t-amount-and-technique
+    status: reviewed
+    source:
+      anchor: "3T 涂法：量、手法、频率"
+    slot: anytime
+    remind:
+      text: "按部位用足量，并把 30 回涂开动作做得缓慢轻柔。"
+      quote:
+        - 量：足量。
+        - 手法：涂 30 回。
+        - 因为皮肤怕摩擦，这 30 回要缓慢、轻柔地涂开，不是来回使劲搓。
+        - 量：足量。标准是 1FTU（Finger Tip Unit），即从食指第一关节挤出的一条。这一条够涂两个手掌的面积，涂到纸巾能粘住的程度就是够。说明书给的换算参考是：两个手掌的面积，大致相当于手臂从肘部往下那一段。各部位用量是：
+    dose:
+      - value: 1
+        unit: "FTU"
+        what: "食指第一关节挤出的单条标准用量"
+        quote: "标准是 1FTU（Finger Tip Unit），即从食指第一关节挤出的一条。"
+      - value: 7
+        unit: "FTU"
+        what: "胸腹部位用量"
+        quote: "胸腹 7FTU"
+      - value: 7
+        unit: "FTU"
+        what: "背部与臀部用量"
+        quote: "背中 7FTU（含臀部）"
+      - value: 3
+        unit: "FTU"
+        what: "单臂用量"
+        quote: "单臂 3FTU"
+      - value: 1
+        unit: "FTU"
+        what: "单手用量"
+        quote: "单手 1FTU"
+      - value: 6
+        unit: "FTU"
+        what: "单腿用量"
+        quote: "单腿 6FTU"
+      - value: 2
+        unit: "FTU"
+        what: "单足用量"
+        quote: "单足 2FTU"
+      - value: 30
+        unit: "回"
+        what: "每个部位涂抹次数"
+        quote: "每个部位涂 30 回"
+      - value: 2
+        unit: "次/天"
+        what: "每天涂抹频率"
+        quote: "一天 2 次"
+    steps:
+      - id: area-specific-amount
+        text: "胸腹 7FTU背中 7FTU（含臀部）单臂 3FTU单手 1FTU单腿 6FTU单足 2FTU"
+        quote:
+          - "胸腹 7FTU"
+          - "背中 7FTU（含臀部）"
+          - "单臂 3FTU"
+          - "单手 1FTU"
+          - "单腿 6FTU"
+          - "单足 2FTU"
+      - id: finger-tip-amount
+        text: "即从食指第一关节挤出的一条。涂到纸巾能粘住的程度就是够。"
+        quote:
+          - "即从食指第一关节挤出的一条。"
+          - "涂到纸巾能粘住的程度就是够。"
+      - id: gentle-thirty-strokes
+        text: "因为皮肤怕摩擦，这 30 回要缓慢、轻柔地涂开，不是来回使劲搓。"
+        quote: "因为皮肤怕摩擦，这 30 回要缓慢、轻柔地涂开，不是来回使劲搓。"
+      - id: twice-daily-timing
+        text: "说明书推荐早上和晚上。换衣服时、洗浴后这些皮肤露出来的场合顺手涂，能减少「懒得做」的心理负担"
+        quote:
+          - "说明书推荐早上和晚上。"
+          - "换衣服时、洗浴后这些皮肤露出来的场合顺手涂，能减少「懒得做」的心理负担"
+      - id: moisturizer-within-reach
+        text: "把保湿剂放在洗手台或床边，用来防漏涂。"
+        quote: "把保湿剂放在洗手台或床边，用来防漏涂。"
+    cautions:
+      - level: stop
+        text: "激烈揉搓是禁忌；特应性皮炎（アトピー性皮膚炎）的人有可能因此恶化，严禁搓揉。"
+        quote: "激烈揉搓是禁忌；特应性皮炎（アトピー性皮膚炎）的人有可能因此恶化，严禁搓揉。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b7eb8ea051d04e11
+    name: 按部位取足量保湿剂
+
+  - id: control-scratch-cycle
+    status: reviewed
+    name: "控制抓挠"
+    source:
+      anchor: "抓挠是第二段恶循环"
+    slot: anytime
+    remind:
+      text: "痒时先控制抓挠冲动，不要靠抓挠缓解。"
+      quote:
+        - "痒了就想抓，抓了更痒，这一步有明确的生理原因：角质层非常怕摩擦。"
+        - "也就是说，抓挠不是缓解，是往回推这台机器的棘轮。"
+        - "控制住抓挠冲动这件事本身就是治疗的一部分。"
+    steps:
+      - id: hold-scratch-impulse
+        text: "抓挠不是缓解，是往回推这台机器的棘轮控制住抓挠冲动这件事本身就是治疗的一部分"
+        quote:
+          - "抓挠不是缓解，是往回推这台机器的棘轮"
+          - "控制住抓挠冲动这件事本身就是治疗的一部分"
+      - id: avoid-skin-friction
+        text: "角质层非常怕摩擦皮肤表面那层像屏障一样的角质，一旦被抓破，水分和钙离子流失得更多"
+        quote:
+          - "角质层非常怕摩擦"
+          - "皮肤表面那层像屏障一样的角质，一旦被抓破，水分和钙离子流失得更多"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: b4cd6a0d1463a4ea
+
+  - id: thirty-strokes-even-coverage
+    status: reviewed
+    name: "涂 30 回保湿剂"
+    source:
+      anchor: "为什么非要涂 30 回"
+    slot: anytime
+    remind:
+      text: "涂 30 回，让保湿剂涂匀并铺展进角质层缝隙。"
+      quote:
+        - "一是涂匀。"
+        - "涂「足量 + 30 回」的一侧，涂抹不均明显少于日常涂法的那一侧——漏涂的地方少了。"
+        - "差别来自涂开后保湿剂被反复铺展进角质层的缝隙，而不是单纯靠更大的力压进去。"
+    dose:
+      - value: 30
+        unit: "回"
+        what: "完整涂抹次数"
+        quote: "涂 30 回"
+    steps:
+      - id: complete-thirty-strokes
+        text: "涂「足量 + 30 回」的一侧，涂抹不均明显少于日常涂法的那一侧——漏涂的地方少了。"
+        quote: "涂「足量 + 30 回」的一侧，涂抹不均明显少于日常涂法的那一侧——漏涂的地方少了。"
+      - id: spread-into-corneum
+        text: "差别来自涂开后保湿剂被反复铺展进角质层的缝隙，而不是单纯靠更大的力压进去。"
+        quote: "差别来自涂开后保湿剂被反复铺展进角质层的缝隙，而不是单纯靠更大的力压进去。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 454a19c67b598443

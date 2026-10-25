@@ -1,0 +1,187 @@
+article: the-savvy-life-manual/food/burdock.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '「麻烦」才是真正的损失'
+      reason: '该小节重复“不去皮、不焯水”的处理原则，并补充膳食纤维、多酚和鲜味等背景；核心处理动作已收录，其余为知识背景，未另做可执行卡片。'
+  images: []
+cards:
+  - id: burdock-rinse-direct-use
+    status: reviewed
+    source:
+      anchor: '牛蒡免去皮免焯水：现磨比切丝更香'
+    slot: anytime
+    remind:
+      text: '用水冲掉泥土后直接用——不去皮，也不焯水'
+      quote: '用水冲掉泥土后直接用——不去皮，也不焯水'
+    steps:
+      - id: rinse-soil
+        text: '用水冲掉泥土'
+        quote: '用水冲掉泥土'
+      - id: use-directly
+        text: '直接用——不去皮，也不焯水'
+        quote: '直接用——不去皮，也不焯水'
+    cautions:
+      - level: info
+        text: '去皮和焯水会让多酚和鲜味一起流失'
+        quote: '去皮和焯水会让多酚和鲜味一起流失'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: d4e5baf1d8bdcbfa
+
+  - id: roast-grated-burdock
+    status: reviewed
+    source:
+      anchor: '香味的关键：现磨 + 现烤'
+    slot: anytime
+    remind:
+      text: '把牛蒡磨成泥后用火烤。'
+      quote: [ '磨成泥', '把磨好的泥用火烤过' ]
+    effect:
+      text: '「磨泥」比「切丝」香气更浓把磨好的泥用火烤过牛蒡特有的苦味被抑制，甘味增加'
+      quote: [ '「磨泥」比「切丝」香气更浓', '把磨好的泥用火烤过', '牛蒡特有的苦味被抑制，甘味增加' ]
+    steps:
+      - id: wash-and-grind
+        text: '用手指或棕刷快速冲净泥土用磨泥器磨成泥'
+        quote: [ '用手指或棕刷快速冲净泥土', '用磨泥器磨成泥' ]
+      - id: heat-pan
+        text: '平底锅下油大火加热后放入牛蒡泥'
+        quote: [ '平底锅下油', '大火加热后放入牛蒡泥' ]
+      - id: roast-puree
+        text: '原样不动地煎约 1 分半'
+        quote: '原样不动地煎约 1 分半'
+      - id: check-aroma-color
+        text: '香气升起、牛蒡颜色改变即告完成颜色会变成明亮的黄土色'
+        quote: [ '香气升起、牛蒡颜色改变', '即告完成', '颜色会变成明亮的黄土色' ]
+    duration:
+      basis: quote
+      sec: 90
+      quote: '原样不动地煎约 1 分半'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 872551423c1757c9
+    name: 现磨现烤牛蒡泥
+
+  - id: burdock-rice
+    status: reviewed
+    source:
+      anchor: '四道食谱（可丽饼用上面的烤牛蒡泥）'
+    slot: anytime
+    remind:
+      text: '把牛蒡洗净泥土并刨成细末，与米饭和黄油拌匀后蒸熟。'
+      quote: [ '洗净泥土', '削皮器刨成细末', '米饭煮好后', '与①、黄油一起', '轻轻拌匀', '盖上盖子蒸约 3 分钟', '整体拌一次' ]
+    steps:
+      - id: rice-prep-burdock
+        text: '牛蒡洗净泥土削皮器刨成细末'
+        quote: [ '牛蒡', '洗净泥土', '削皮器刨成细末' ]
+      - id: rice-mix
+        text: '米饭煮好后与、黄油一起轻轻拌匀按口味加盐调匀'
+        quote: [ '米饭煮好后', '与①、黄油一起', '轻轻拌匀', '按口味', '加盐', '调匀' ]
+      - id: rice-steam
+        text: '盖上盖子蒸约 3 分钟整体拌一次'
+        quote: [ '盖上盖子蒸约 3 分钟', '整体拌一次' ]
+    duration:
+      basis: quote
+      sec: 180
+      quote: '盖上盖子蒸约 3 分钟'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 47ae5aa3c15dc472
+    name: 牛蒡泥拌饭
+
+  - id: burdock-beef-pasta
+    status: reviewed
+    source:
+      anchor: '四道食谱（可丽饼用上面的烤牛蒡泥）'
+    slot: anytime
+    remind:
+      text: '将牛蒡快速冲净泥土并磨成泥，炒香牛肉后与意面、煮面水和酱汁拌匀收汁。'
+      quote: [ '快速冲净泥土', '磨成泥', '放入牛绞肉用大火翻炒 3～4 分钟', '炒到肉出油、表面微微焦黄', '预先煮好的意大利面与 50mL 煮面水', '充分拌匀收汁' ]
+    steps:
+      - id: pasta-wash-grind
+        text: '牛蒡快速冲净泥土磨成泥'
+        quote: [ '牛蒡', '快速冲净泥土', '磨成泥' ]
+      - id: pasta-brown-beef
+        text: '放入牛绞肉用大火翻炒 3～4 分钟炒到肉出油、表面微微焦黄为止'
+        quote: [ '放入牛绞肉用大火翻炒 3～4 分钟', '炒到肉出油、表面微微焦黄', '为止' ]
+      - id: pasta-add-sauce
+        text: '加入继续用大火翻炒 1～2 分钟（A）再炒约 1 分钟'
+        quote: [ '加入①', '继续用大火翻炒 1～2 分钟', '（A）', '再炒约 1 分钟' ]
+      - id: pasta-combine
+        text: '加入预先煮好的意大利面与 50mL 煮面水充分拌匀收汁'
+        quote: [ '加入', '预先煮好的意大利面与 50mL 煮面水', '充分拌匀收汁' ]
+      - id: pasta-pasta-timing
+        text: '意面最好在包装标示时间提前 1 分钟捞出'
+        quote: [ '意面最好在包装标示时间', '提前 1 分钟', '捞出' ]
+      - id: pasta-finish
+        text: '起锅前淋上橄榄油也很出彩'
+        quote: [ '起锅前淋上橄榄油', '也很出彩' ]
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: df7b3a7935cbbcba
+    name: 牛蒡牛肉意面
+
+  - id: burdock-crepe
+    status: reviewed
+    name: "用牛蒡泥煎可丽饼"
+    source:
+      anchor: '四道食谱（可丽饼用上面的烤牛蒡泥）'
+    slot: anytime
+    remind:
+      text: '把（A）、松饼粉和烤牛蒡泥调成面糊，煎成可丽饼。'
+      quote: [ '（A）', '打蛋器充分搅拌', '松饼粉和烤牛蒡泥', '继续搅拌均匀', '面糊边缘出现焦色', '另一面再煎约 1 分钟' ]
+    steps:
+      - id: crepe-mix
+        text: '（A）打蛋器充分搅拌松饼粉和烤牛蒡泥继续搅拌均匀'
+        quote: [ '（A）', '打蛋器充分搅拌', '松饼粉和烤牛蒡泥', '继续搅拌均匀' ]
+      - id: crepe-heat-spread
+        text: '大火加热约 1 分钟约一杯面糊倾斜锅子，让面糊快速摊薄摊圆'
+        quote: [ '大火加热约 1 分钟', '约一杯面糊', '倾斜锅子，让面糊快速摊薄摊圆' ]
+      - id: crepe-first-side
+        text: '转中大火，煎约 1 分半'
+        quote: '转中大火，煎约 1 分半'
+      - id: crepe-flip
+        text: '面糊边缘出现焦色橡皮刮刀等从边缘慢慢伸入另一面再煎约 1 分钟'
+        quote: [ '面糊边缘出现焦色', '橡皮刮刀等从边缘慢慢伸入', '另一面再煎约 1 分钟' ]
+      - id: crepe-second-side
+        text: '只要稍微上色即可'
+        quote: [ '只要稍微上色', '即可' ]
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e02ed1c472510e79
+
+  - id: burdock-chicken-meatballs
+    status: reviewed
+    source:
+      anchor: '四道食谱（可丽饼用上面的烤牛蒡泥）'
+    slot: anytime
+    remind:
+      text: '把牛蒡磨成泥，与鸡绞肉和调味料拌匀，搓成肉丸煎熟后裹上酱汁。'
+      quote: [ '快速冲净泥土', '磨成泥', '鸡绞肉和酱油', '搅至起黏', '分成 8 等份', '搓圆', '大火煎 2 分半', '让酱汁裹遍整颗肉丸' ]
+    steps:
+      - id: meatball-wash-grind
+        text: '牛蒡快速冲净泥土磨成泥'
+        quote: [ '牛蒡', '快速冲净泥土', '磨成泥' ]
+      - id: meatball-mix
+        text: '鸡绞肉和酱油搅至起黏（A）最后加入充分拌匀'
+        quote: [ '鸡绞肉和酱油', '搅至起黏', '（A）', '最后加入①', '充分拌匀' ]
+      - id: meatball-shape
+        text: '分成 8 等份搓圆'
+        quote: [ '分成 8 等份', '搓圆' ]
+      - id: meatball-fry
+        text: '薄薄刷油排入锅中大火煎 2 分半翻面后盖上锅盖转中小火再煎 3～4 分钟'
+        quote: [ '薄薄刷油', '排入锅中', '大火煎 2 分半', '翻面后盖上锅盖', '转中小火再煎 3～4 分钟' ]
+      - id: meatball-sauce
+        text: '取下锅盖（B）让酱汁裹遍整颗肉丸'
+        quote: [ '取下锅盖', '（B）', '让酱汁裹遍整颗肉丸' ]
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 37b85ef1aa223df5
+    name: 牛蒡鸡肉丸

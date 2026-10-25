@@ -1,0 +1,523 @@
+/**
+ * 设置：条件（模式 + 我的情况）· 提醒 · 导出/导入数据 · 安装提示。
+ */
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+
+import { ConditionPanel, useConditions } from "./Conditions.tsx";
+import { Disclaimer } from "./Disclaimer.tsx";
+import { buildIcs, downloadIcs } from "../domain/ics.ts";
+import {
+  buildBackup,
+  downloadBackup,
+  parseBackup,
+  restoreBackup,
+} from "../data/backup.ts";
+import { allEvents, clearEvents, getSetting, setSetting } from "../data/db.ts";
+import type { Card, ModeCounts } from "../domain/routine.ts";
+import { variantAvailability } from "../domain/routine.ts";
+import {
+  describeReminder,
+  normalizeReminders,
+  parseTime,
+  type Reminder,
+} from "../domain/reminders.ts";
+import { cardName, displayNames } from "../domain/lines.ts";
+import { describeUpdate, updateBusy, type UpdateStatus } from "../domain/update.ts";
+import { ReminderModePicker } from "./Reminder.tsx";
+import {
+  exactAlarmStatus,
+  notifyKind,
+  openExactAlarmSettings,
+  requestPermission,
+  showNow,
+  status,
+  type NotifyStatus,
+} from "../platform/notify.ts";
+import {
+  checkForUpdate,
+  downloadUpdate,
+  hasUpdater,
+  installUpdate,
+  onUpdateChanged,
+  updateStatus,
+} from "../platform/update.ts";
+
+/** 屏幕上的每一句话都得有个期限 —— 与 Today 页那条提示同一个时限。 */
+const NOTICE_MS = 6000;
+
+type Notice = { text: string; kind: "ok" | "error" };
+
+export function Settings({
+  cards,
+  reminders,
+  onRemindersChange,
+  onRefreshSchedule,
+  refreshKey = 0,
+  onDataImported,
+}: {
+  cards?: Card[];
+  /** 提醒：整段那两条 + 绑在卡上的那些 */
+  reminders?: Reminder[];
+  /** 提醒改了 —— App 要重排一次，否则新时刻不生效 */
+  onRemindersChange?: (reminders: Reminder[]) => void;
+  /** 重排提醒（改了精确闹钟授权之后要立刻重排：已排的那几条还是「不精确」的） */
+  onRefreshSchedule?: () => void;
+  /** 数据在别处被换掉（导入备份）时，让这里再读一次 */
+  refreshKey?: number;
+  /** 导入成功：告诉 App 重新读清单与条件（不然界面还摆着导入前的旧值） */
+  onDataImported?: () => void;
+}) {
+  const cond = useConditions(refreshKey);
+  // 提醒由 App 持有（它要排程），这里只用来看与改
+  const reminderList = reminders ?? [];
+  /** 绑在卡上的那几条：卡片里改时间，这里只看得见、也删得掉 */
+  const cardReminders = reminderList.filter((r) => r.cardId);
+  const [count, setCount] = useState(0);
+  const [notice, setNotice] = useState<Notice | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [installed, setInstalled] = useState(false);
+  const [notify, setNotify] = useState<NotifyStatus | null>(null);
+  /** Android 12+：精确闹钟够不够用（不给的话提醒会晚几分钟） */
+  const [exact, setExact] = useState<{ needed: boolean; granted: boolean } | null>(null);
+  /** 自动更新：只有桌面端有这一说（浏览器更新 PWA、手机更新 APK，都不归这里管） */
+  const updaterOn = hasUpdater();
+  const [update, setUpdate] = useState<UpdateStatus | null>(null);
+  // 同一个「被拒绝」，浏览器、桌面、手机要去的地方不一样 —— 别在手机上叫用户改浏览器设置。
+  const deniedNotice =
+    notify?.kind === "native"
+      ? "通知被系统拒绝了 —— 到手机的「设置 → 通知」里允许生活指南，提醒才会响。"
+      : notify?.kind === "desktop"
+        ? "通知被系统拒绝了 —— 到系统的通知设置里允许生活指南，提醒才会响。"
+        : "通知被浏览器拒绝了 —— 到浏览器的网站设置里把「通知」改成允许，提醒才会响。";
+  const modeVariants = useMemo(() => variantAvailability(cards ?? []), [cards]);
+  const coverage = useMemo<ModeCounts>(
+    () => ({
+      busy: (cards ?? []).filter((c) => c.variants?.busy != null).length,
+      travel: (cards ?? []).filter((c) => c.variants?.travel != null).length,
+      sick: (cards ?? []).filter((c) => c.variants?.sick != null).length,
+    }),
+    [cards],
+  );
+  /** 有没有卡按人群换动作（分档）：有的话条件面板里要提一句 */
+  const hasSegments = (cards ?? []).some((c) => c.segments && c.segments.length > 0);
+  // 屏上叫什么：一个小节拆出多张卡时名字会撞车，回落到这张卡在做什么
+  const names = useMemo(() => displayNames(cards ?? []), [cards]);
+
+  useEffect(() => {
+    void allEvents().then((e) => setCount(e.length));
+    void status().then(setNotify);
+    void exactAlarmStatus().then(setExact);
+    setInstalled(
+      window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as { standalone?: boolean }).standalone === true,
+    );
+  }, []);
+
+  // 导出、导入、清空、改提醒都往这一条里报结果；到点就自己走。
+  useEffect(() => {
+    if (!notice) return;
+    const t = setTimeout(() => setNotice(null), NOTICE_MS);
+    return () => clearTimeout(t);
+  }, [notice]);
+
+  function showNotice(text: string, kind: Notice["kind"] = "ok"): void {
+    setNotice({ text, kind });
+  }
+
+  /**
+   * 自动更新的状态：进来先问一次，之后主进程推过来。
+   *
+   * 主进程启动 5 秒后也会自己查一遍 —— 查到了就弹系统通知，
+   * 所以用户不打开这一页也知道有新版本。
+   */
+  useEffect(() => {
+    if (!updaterOn) return;
+    void updateStatus().then(setUpdate);
+    onUpdateChanged(setUpdate);
+  }, [updaterOn]);
+
+  async function saveReminders(next: Reminder[]) {
+    const clean = normalizeReminders(next);
+    await setSetting("reminders", clean);
+    onRemindersChange?.(clean);
+    showNotice("提醒已保存。");
+  }
+
+  async function askPermission() {
+    const s = await requestPermission();
+    setNotify(s);
+    if (s.permission === "granted") {
+      showNotice("可以了，App 到点会自己提醒。");
+    } else if (s.permission === "denied") {
+      showNotice("通知被拒了。浏览器里要自己去站点设置里放行。", "error");
+    } else {
+      showNotice("这个环境暂时拿不到通知权限。", "error");
+    }
+    // 允许了才排得上程（没允许时 App 不会去弹那张系统授权页 ——
+    // 那是用户自己点的入口才该做的事），所以这里要重排一次。
+    if (s.permission === "granted") onRefreshSchedule?.();
+  }
+
+  return (
+    <main class="lg-shell">
+      <div class="lg-topbar">
+        <h1 class="lg-h1">设置</h1>
+        <span class="lg-dateline">
+          条件 · 提醒{updaterOn ? " · 更新" : ""} · 数据
+        </span>
+      </div>
+
+      <section class="lg-set">
+        <h2>条件</h2>
+        <p>
+          决定今天看哪些动作、哪些卡会换成你该做的那一版。
+          今天页顶部的「条件」改的是同一份。
+        </p>
+        <ConditionPanel
+          {...cond}
+          modeVariants={modeVariants}
+          coverage={coverage}
+          coverageScope="manual"
+          hasSegments={hasSegments}
+        />
+      </section>
+
+      <section class="lg-set">
+        <h2>提醒</h2>
+        <p>
+          App 自己到点提醒，响的时候直接告诉你这一段该做哪几件。
+          某一张卡要单独提醒，展开那张卡点「设提醒」。
+        </p>
+        {notify?.note ? <p class="lg-pool">{notify.note}</p> : null}
+
+        <div class="lg-remrows">
+          {reminderList
+            .filter((r) => !r.cardId)
+            .map((r) => (
+              <div class="lg-remblock" key={r.id}>
+                <div class="lg-remrow">
+                  <label class="lg-remcheck">
+                    <input
+                      type="checkbox"
+                      checked={r.on}
+                      onChange={(e) =>
+                        void saveReminders(
+                          reminderList.map((x) =>
+                            x.id === r.id ? { ...x, on: (e.target as HTMLInputElement).checked } : x,
+                          ),
+                        )
+                      }
+                    />
+                    <span>{r.label}</span>
+                  </label>
+                  <input
+                    class="lg-remtime"
+                    type="time"
+                    value={r.time}
+                    aria-label={`${r.label}提醒时刻`}
+                    onChange={(e) => {
+                      const v = (e.target as HTMLInputElement).value;
+                      // 清空输入框 ≠ 删掉这条提醒。
+                      // 时刻不合法时 normalizeReminders 会把整条丢掉 —— 那用户只是
+                      // 清了一下时间框，早晨提醒就整条没了（界面上还没有加回来的入口）。
+                      if (!parseTime(v)) return;
+                      void saveReminders(
+                        reminderList.map((x) => (x.id === r.id ? { ...x, time: v } : x)),
+                      );
+                    }}
+                  />
+                </div>
+                <ReminderModePicker
+                  reminder={r}
+                  onChange={(mode, extra) =>
+                    void saveReminders(reminderList.map((x) => (x.id === r.id ? { ...x, ...extra, mode } : x)))
+                  }
+                />
+              </div>
+            ))}
+        </div>
+
+        {/* 绑在卡上的提醒：时间在卡片里改，这里只列出来 —— 一处看得见全部 */}
+        {cardReminders.length ? (
+          <div class="lg-remcards">
+            <p class="lg-pool">绑在卡上的提醒（时间在卡片里改）：</p>
+            {cardReminders.map((r) => {
+              const card = cards?.find((c) => c.id === r.cardId);
+              const name = card
+                ? (names.get(card.id) ?? cardName(card))
+                : r.label;
+              return (
+                <div class="lg-remcard" key={r.id}>
+                  <span class="lg-remcardname">{name}</span>
+                  <span class="lg-remval">{describeReminder(r)}</span>
+                  <button
+                    class="lg-linkbtn"
+                    onClick={() =>
+                      void saveReminders(reminderList.filter((x) => x.id !== r.id))
+                    }
+                  >
+                    删掉
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+
+        {/* Android 12+：不给精确闹钟权限，系统就把闹钟攒着一起发 —— 实测晚了一分钟 */}
+        {exact?.needed && !exact.granted ? (
+          <div class="lg-pool" data-dp="exact">
+            <p>
+              提醒会晚几分钟才到：Android 不让这个 App 准点响铃，它把闹钟攒着一起发。
+              允许之后准点响。
+            </p>
+            <button
+              class="lg-btn lg-btn-ghost"
+              onClick={async () => {
+                await openExactAlarmSettings();
+                const now = await exactAlarmStatus();
+                setExact(now);
+                if (now.granted) {
+                  // 已经排上的那几条还是「不精确」排的 —— 立刻重排一遍才准点
+                  onRefreshSchedule?.();
+                  showNotice("准点响已开启，提醒重新排过了。");
+                } else {
+                  showNotice("还没打开「闹钟和提醒」，提醒会晚几分钟。", "error");
+                }
+              }}
+            >
+              去允许精确提醒
+            </button>
+          </div>
+        ) : null}
+
+        <div class="lg-btn-row" style="margin-top:12px">
+          {notify?.permission === "granted" ? null : notify?.permission === "denied" ? (
+            <span class="lg-pool" style="margin:0; align-self:center">
+              {deniedNotice}
+            </span>
+          ) : notify?.permission === "unsupported" ? (
+            <span class="lg-pool" style="margin:0; align-self:center">
+              这个环境没有通知通道，提醒不会响。
+            </span>
+          ) : (
+            <>
+              <button class="lg-btn" onClick={() => void askPermission()}>
+                允许通知
+              </button>
+              {/* 允许之前所有提醒都不会响 —— 包括卡上单独设的那些，
+                  否则用户以为设了提醒就一定会有。 */}
+              <span class="lg-pool" style="margin:0; align-self:center">
+                还没允许通知 —— 允许之前，所有提醒都不会响。
+              </span>
+            </>
+          )}
+          <button
+            class="lg-btn lg-btn-ghost"
+            disabled={notify?.permission !== "granted"}
+            onClick={() =>
+              void showNow(
+                "生活指南 · 试一下",
+                "到了这个点，App 就这样提醒你 —— 带上这一段该做的那几件。",
+              )
+            }
+          >
+            试一下
+          </button>
+        </div>
+
+        {/* 这台设备怎么响，上面那句 status().note 已经说清了；不重复第二遍 */}
+
+        <button
+          class="lg-btn lg-btn-ghost"
+          style="margin-top:10px"
+          onClick={() => {
+            // 时刻用**用户设的那个**（小时与分钟都要）——
+            // 只取小时的话，07:30 的提醒导成 07:00，日历那条会差几十分钟。
+            const timeOf = (id: "morning" | "evening", fallbackHour: number) => {
+              const t = parseTime(reminderList.find((r) => r.id === id)?.time ?? "");
+              return t ? { hour: t.hour, minute: t.minute } : { hour: fallbackHour, minute: 0 };
+            };
+            const m = timeOf("morning", 7);
+            const e = timeOf("evening", 21);
+            downloadIcs(
+              buildIcs({
+                urlBase: window.location.origin + window.location.pathname,
+                name: "生活指南",
+                morningHour: m.hour,
+                morningMinute: m.minute,
+                eveningHour: e.hour,
+                eveningMinute: e.minute,
+                cardReminders: reminderList.filter((r) => r.cardId),
+                cards,
+              }),
+            );
+          }}
+        >
+          导出日历（.ics，含卡片提醒）
+        </button>
+      </section>
+
+      <section class="lg-set">
+        <h2>数据</h2>
+        <p>
+          只存在这台设备上：没有服务器，也不会上传。
+          未「添加到主屏幕」的 Safari 站点长期不访问可能被系统回收本地数据，
+          所以定期导出一份。
+        </p>
+        <div class="lg-btn-row">
+          <button
+            class="lg-btn lg-btn-ghost"
+            onClick={async () => {
+              const b = await buildBackup();
+              downloadBackup(b);
+              showNotice(`已导出 ${b.events.length} 条记录`);
+            }}
+          >
+            导出数据
+          </button>
+          <button
+            class="lg-btn lg-btn-ghost"
+            onClick={() => fileRef.current?.click()}
+          >
+            导入数据
+          </button>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="application/json"
+            class="hidden"
+            onChange={async (e) => {
+              const input = e.target as HTMLInputElement;
+              const f = input.files?.[0];
+              if (!f) return;
+              try {
+                const backup = parseBackup(await f.text());
+                // 导入是**替换**，不是合并。不说清楚，用户会在「试试导入」时
+                // 丢掉这台设备上已经攒下的记录。先问一句再动手。
+                const ok = window.confirm(
+                  `导入会用备份里的 ${backup.events.length} 条记录替换这台设备现在的 ${count} 条记录。\n` +
+                    "日常清单、条件和自己加的习惯也会一起替换；备份里带了提醒的话，提醒也会替换。\n继续？",
+                );
+                if (!ok) return;
+                const n = await restoreBackup(backup);
+                showNotice(`已导入 ${n} 条记录`);
+                setCount(n);
+                // 清单与条件住在 App 层（不随页签重挂载）——
+                // 不叫它们重读，界面还摆着导入前的旧清单，
+                // 用户改一下就把刚导入的那份盖掉了。
+                onDataImported?.();
+              } catch (err) {
+                showNotice(
+                  `导入失败：${err instanceof Error ? err.message : String(err)}`,
+                  "error",
+                );
+              } finally {
+                // 同一个文件再选一次也会触发 change；不重置的话，失败后改好文件
+                // 同名再试，浏览器不会再给一次机会。
+                input.value = "";
+              }
+            }}
+          />
+        </div>
+        {/* 成功与失败分开：失败那条不能带「✓」 */}
+        {notice ? (
+          <p
+            class="lg-flash"
+            data-kind={notice.kind}
+            role="status"
+            aria-live="polite"
+          >
+            {notice.text}
+          </p>
+        ) : null}
+
+        {/* 危险操作单独隔开：清空是不可撤销的，不该跟导出挤在一排 */}
+        <div class="lg-danger">
+          <p class="lg-pool">
+            当前记录 <span class="tabular">{count}</span> 条。
+            清空之后只能靠导入备份恢复。
+          </p>
+          <button
+            class="lg-btn lg-btn-ghost"
+            style="margin-top:10px"
+            onClick={async () => {
+              const n = count;
+              // 不可撤销的操作先问一句：这些记录是用户攒下的天数，
+              // 手一滑清掉就只剩「导入备份」能救（而多数人没导过）。
+              if (
+                n > 0 &&
+                !window.confirm(
+                  `清空 ${n} 条盖章记录？\n清掉之后只能靠导入备份恢复。`,
+                )
+              ) {
+                return;
+              }
+              await clearEvents();
+              setCount(0);
+              showNotice(`已清空 ${n} 条记录`);
+            }}
+          >
+            清空记录
+          </button>
+        </div>
+      </section>
+
+      {!installed ? (
+        <section class="lg-set">
+          <h2>装到主屏幕</h2>
+          <p>
+            iOS：分享 → 添加到主屏幕。Android：浏览器菜单 → 安装应用。
+            装上之后数据才不会被系统回收。
+          </p>
+        </section>
+      ) : null}
+
+      {updaterOn ? (
+        <section class="lg-set">
+          <h2>更新</h2>
+          <p>
+            有新版本时这里会写清楚。下载要一百多兆，所以不自动下 ——
+            你点了才下，下完重启一下装上。
+          </p>
+          <p class="lg-pool">{update ? describeUpdate(update) : "正在查…"}</p>
+          <div class="lg-btn-row">
+            <button
+              class="lg-btn lg-btn-ghost"
+              disabled={update ? updateBusy(update) : false}
+              onClick={() => void checkForUpdate().then(setUpdate)}
+            >
+              检查更新
+            </button>
+            {update?.state === "available" ? (
+              <button
+                class="lg-btn"
+                onClick={() => void downloadUpdate().then(setUpdate)}
+              >
+                下载更新
+              </button>
+            ) : null}
+            {update?.state === "ready" ? (
+              <button
+                class="lg-btn"
+                onClick={() => void installUpdate().then(setUpdate)}
+              >
+                重启并安装
+              </button>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
+      <section class="lg-set">
+        <h2>关于</h2>
+        <p>
+          生活指南 —— 把《生活手册》变成能照着做的卡片。
+          卡里的每一步、每条禁忌都是原文的话，数字都对着原文逐字核过。
+        </p>
+        <p>换设备时用「导出数据 / 导入数据」搬家。</p>
+        <Disclaimer />
+      </section>
+    </main>
+  );
+}

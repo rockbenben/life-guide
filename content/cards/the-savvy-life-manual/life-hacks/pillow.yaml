@@ -1,0 +1,220 @@
+article: the-savvy-life-manual/life-hacks/pillow.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '枕头买多高？男性 7.5cm、女性 6.0cm'
+      reason: '该小节是“在家量出属于自己的高度”的提要；基准高度、容许区间、量具和三种姿势已由测量卡覆盖，单独建卡会重复。'
+  images: []
+cards:
+  - id: measure-personal-pillow-height
+    status: reviewed
+    source:
+      anchor: '在家量出属于自己的高度'
+    slot: anytime
+    remind:
+      text: '按性别取基准高度：男性 7.5cm、女性 6.0cm，在平时睡觉的地方按仰卧、侧卧、翻身三种姿势逐一确认'
+      quote: '这篇给一个不用买东西的量法：先按性别取基准高度，男性 7.5cm、女性 6.0cm（用手压下去时的状态），说明书给的容许区间是男性 7.0～8.5cm、女性 5.5～7.0cm；一张厚度约 1cm 的玄关垫加一条毛巾毯就能当量具，就在你平时睡觉的地方量出来，再按仰卧、侧卧、翻身三种姿势逐一确认。'
+    dose:
+      - value: 7.5
+        unit: cm
+        what: '男性基准高度'
+        quote: '男性 7.5cm'
+      - value: 6.0
+        unit: cm
+        what: '女性基准高度'
+        quote: '女性 6.0cm'
+      - value: 7.0
+        valueMax: 8.5
+        unit: cm
+        what: '男性容许区间'
+        quote: '男性 7.0～8.5cm'
+      - value: 5.5
+        valueMax: 7
+        unit: cm
+        what: '女性容许区间'
+        quote: '女性 5.5～7.0cm'
+    steps:
+      - id: prepare-adjustable-tool
+        text: '不用买任何东西，一张玄关垫加一条毛巾毯就能当量具。玄关垫 1 张：厚度约 1cm、绒毛短而硬的款式，尺寸约 60cm × 90cm。选它的理由是高度可调、且硬度足以维持高度。'
+        quote:
+          - '不用买任何东西，一张玄关垫加一条毛巾毯就能当量具。'
+          - '玄关垫 1 张：厚度约 1cm、绒毛短而硬的款式，尺寸约 60cm × 90cm。选它的理由是高度可调、且硬度足以维持高度。'
+      - id: measure-on-own-bed
+        text: '就在你平时睡觉的地方。床垫的硬度不同，身体下陷的深度也不同——在自己的床上量，才有参考价值。'
+        quote:
+          - '就在你平时睡觉的地方。'
+          - '床垫的硬度不同，身体下陷的深度也不同——在自己的床上量，才有参考价值。'
+      - id: fold-adjustable-layers
+        text: '把玄关垫折成三折。把折痕压实，高度才不会走形。叠上折好的毛巾毯。毛巾毯要做成蛇腹折（风琴折），这样最上面一层能一张一张翻下来，高度特别好调。'
+        quote:
+          - '把玄关垫折成三折。把折痕压实，高度才不会走形。'
+          - '叠上折好的毛巾毯。毛巾毯要做成蛇腹折（风琴折），这样最上面一层能一张一张翻下来，高度特别好调。'
+      - id: set-base-height
+        text: '用手压下去时的高度，做成——男性 7.5cm、女性 6.0cm。这就是基准高度，之后再按自己的体型微调。'
+        quote:
+          - '用手压下去时的高度，做成——男性 7.5cm、女性 6.0cm。'
+          - '这就是基准高度，之后再按自己的体型微调。'
+      - id: check-supine-position
+        text: '枕头填到肩膀被顶到的程度，把头稳稳托在枕上。呼吸不能费力枕的角不能硌到后脑勺不能发硬'
+        quote:
+          - '枕头填到肩膀被顶到的程度，把头稳稳托在枕上。'
+          - '呼吸不能费力'
+          - '枕的角不能硌到'
+          - '后脑勺不能发硬'
+      - id: check-side-position
+        text: '双手在胸前交叉，身体转向侧面。此时让下侧肩膀略微向前，不要把肩膀死死压在身下。肩部没有压迫感下巴、鼻子、额头连成的线，与床面平行'
+        quote:
+          - '双手在胸前交叉，身体转向侧面。此时让下侧肩膀略微向前，不要把肩膀死死压在身下。'
+          - '肩部没有压迫感'
+          - '下巴、鼻子、额头连成的线，与床面平行'
+      - id: check-turning-position
+        text: '屈膝，左右各转一次确认。翻身是否顺畅肩和腰能否同时翻转'
+        quote:
+          - '屈膝，左右各转一次确认。'
+          - '翻身是否顺畅'
+          - '肩和腰能否同时翻转'
+    cautions:
+      - level: info
+        text: '这是印刷品，受打印环境影响会有误差，请用自己手边的尺子复核。'
+        quote: '这是印刷品，受打印环境影响会有误差，请用自己手边的尺子复核。'
+      - level: info
+        text: '如果换了之后高度和硬度都变了，觉得不习惯，请先坚持两周。'
+        quote: '如果换了之后高度和硬度都变了，觉得不习惯，请先坚持两周。'
+      - level: with-doctor
+        text: '身体疼痛的原因并不全在枕头。疼痛强烈等情况，请就近就诊整形外科。'
+        quote: '身体疼痛的原因并不全在枕头。疼痛强烈等情况，请就近就诊整形外科。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 92d3d327e9afc61c
+  - id: use-cool-pillow
+    status: reviewed
+    source:
+      anchor: '专家推荐的补救办法'
+    slot: evening
+    remind:
+      text: '给头降温，或选用透气性好的材料'
+      quote: '所以要给头降温。市售的冰枕、水枕，或者拧湿后冻硬的毛巾都可以用。选用透气性好的材料同样有效：荞麦壳、纤维这类透气材料，能防止热量积聚在枕内。'
+    steps:
+      - id: choose-cooling-material
+        text: '所以要给头降温。市售的冰枕、水枕，或者拧湿后冻硬的毛巾都可以用。'
+        quote: '所以要给头降温。市售的冰枕、水枕，或者拧湿后冻硬的毛巾都可以用。'
+      - id: choose-breathable-material
+        text: '选用透气性好的材料同样有效：荞麦壳、纤维这类透气材料，能防止热量积聚在枕内。'
+        quote: '选用透气性好的材料同样有效：荞麦壳、纤维这类透气材料，能防止热量积聚在枕内。'
+    cautions:
+      - level: info
+        text: '医院可诊断的睡眠障碍有 60 种以上。想改善睡眠质量，请把枕头以外的因素也一并考虑。'
+        quote: '医院可诊断的睡眠障碍有 60 种以上。想改善睡眠质量，请把枕头以外的因素也一并考虑。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 09fd33a0374ba935
+    name: 用凉枕给头部降温
+  - id: use-hug-pillow
+    status: reviewed
+    name: "打鼾的人抱枕侧睡"
+    source:
+      anchor: '专家推荐的补救办法'
+    slot: evening
+    remind:
+      text: '抱枕特别推荐给打鼾的人和孕妇，可在侧睡时使用'
+      quote:
+        - '特别推荐给打鼾的人和孕妇。'
+        - '侧睡时抱枕能带来这些好处：'
+    steps:
+      - id: hug-pillow-while-side-sleeping
+        text: '侧睡时抱枕能带来这些好处：'
+        quote: '侧睡时抱枕能带来这些好处：'
+      - id: keep-airway-open
+        text: '气道开阔，更容易呼吸'
+        quote: '气道开阔，更容易呼吸'
+      - id: distribute-body-pressure
+        text: '身体承受的压力分散，肩和腰的负担减轻'
+        quote: '身体承受的压力分散，肩和腰的负担减轻'
+    segments:
+      - id: pregnant-hug-pillow
+        when: [ pregnant ]
+        action:
+          text: '特别推荐给孕妇使用抱枕'
+          quote: '特别推荐给打鼾的人和孕妇。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 2be3bda1ed35f42c
+  - id: stabilize-head-and-neck
+    status: reviewed
+    source:
+      anchor: '枕头唯一而重要的功能'
+    slot: anytime
+    remind:
+      text: '挑枕头时，以能稳住头和脖子为首要标准'
+      quote: '枕头最首要的作用只有一个：稳住头和脖子。'
+    steps:
+      - id: prioritize-head-and-neck-support
+        text: '枕头最首要的作用只有一个：稳住头和脖子。'
+        quote: '枕头最首要的作用只有一个：稳住头和脖子。'
+      - id: choose-suitable-pillow-height
+        text: '用与自己合适高度的枕头，能减少神经上多余的负荷，而这被认为与头痛、颈部疼痛、肩僵硬相连。'
+        quote: '用与自己合适高度的枕头，能减少神经上多余的负荷，而这被认为与头痛、颈部疼痛、肩僵硬相连。'
+    cautions:
+      - level: stop
+        text: '如果枕头不合适，反而会给脖子增加负担，进而引发疼痛。'
+        quote: '如果枕头不合适，反而会给脖子增加负担，进而引发疼痛。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: df51675d24e8cea0
+    name: 选枕头先稳住头颈
+  - id: avoid-pillow-too-high-or-low
+    status: reviewed
+    name: "枕头别太高也别太低"
+    source:
+      anchor: '枕头的陷阱：「合适」不等于「高」'
+    slot: anytime
+    remind:
+      text: '太高不行，太低也不行。'
+      quote: '太高不行，太低也不行。'
+    steps:
+      - id: reject-extreme-pillow-heights
+        text: '太高不行，太低也不行。'
+        quote: '太高不行，太低也不行。'
+    cautions:
+      - level: stop
+        text: '枕太高：实际查看那些一直用「过高的枕头」的人的 MRI，可以看到椎间盘突出并压迫神经。节目把这种状态命名为「枕ヘルニア」（枕疝；说明书后文也写作「首のヘルニア」）。'
+        quote: '枕太高：实际查看那些一直用「过高的枕头」的人的 MRI，可以看到椎间盘突出并压迫神经。节目把这种状态命名为「枕ヘルニア」（枕疝；说明书后文也写作「首のヘルニア」）。'
+      - level: stop
+        text: '枕太低：韧带松弛，同样有可能压迫神经。'
+        quote: '枕太低：韧带松弛，同样有可能压迫神经。'
+      - level: info
+        text: '颈部椎间盘突出的原因，也包括老化等枕头以外的因素。'
+        quote: '颈部椎间盘突出的原因，也包括老化等枕头以外的因素。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 4756c7981c97685f
+  - id: look-beyond-pillow
+    status: reviewed
+    name: "别只盯着枕头"
+    source:
+      anchor: '睡不好，可能是枕头的问题，也可能是「太在意枕头」的问题'
+    slot: evening
+    remind:
+      text: '不要只盯着枕头，也请关注其他原因'
+      quote: '不要只盯着枕头，也请关注其他原因。'
+    steps:
+      - id: check-other-sleep-factors
+        text: '睡眠质量牵涉的因素非常多：生活习惯、体温、声音、光、白天的压力、鼻塞、床垫、运动、气味——判断「哪种枕睡得好」本身就是件难事。'
+        quote: '睡眠质量牵涉的因素非常多：生活习惯、体温、声音、光、白天的压力、鼻塞、床垫、运动、气味——判断「哪种枕睡得好」本身就是件难事。'
+      - id: avoid-pillow-only-solution
+        text: '这种情况下，因为原因不在枕头，换枕头也不会改善睡眠质量。'
+        quote: '这种情况下，因为原因不在枕头，换枕头也不会改善睡眠质量。'
+    cautions:
+      - level: info
+        text: '失眠（枕头以外的原因）→ 觉得连枕头都不合适 → 因为在意枕头而大脑兴奋 → 更睡不着 → ……'
+        quote: '失眠（枕头以外的原因）→ 觉得连枕头都不合适 → 因为在意枕头而大脑兴奋 → 更睡不着 → ……'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4053877efa7b988c

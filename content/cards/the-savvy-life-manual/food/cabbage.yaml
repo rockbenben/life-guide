@@ -1,0 +1,262 @@
+article: 'the-savvy-life-manual/food/cabbage.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '四道食谱，两种变体'
+      reason: '已抽取超甜卷心菜、凉拌甜卷心菜、卷心菜卷及焦香卷心菜高汤；受本篇最多 6 张卡限制，中式卷心菜汤与奶油味卷心菜浓汤未独立成卡。'
+    - anchor: '没卷成球的圆白菜，苦味高 49%、甜味反而低 37%'
+      reason: '这是特定品种的味觉比较数据，不构成可执行的日常保健动作，故未做成卡。'
+    - anchor: '怪味从哪里来：细胞被咬伤时的报警'
+      reason: '这是卷心菜异味生成机制的知识说明，未提供独立操作步骤，故未做成卡。'
+  images: []
+cards:
+  - id: brine-with-2-5-percent-salt
+    status: reviewed
+    name: "2.5% 盐水焯卷心菜"
+    source:
+      anchor: '2.5% 浓盐水：把甜味推到 1.64 倍'
+    slot: anytime
+    remind:
+      text: '用 2.5% 浓盐水焯卷心菜'
+      quote:
+        - '想让甜味最大化，手册给出的方法不是加糖，而是用浓盐水焯。'
+        - '2.5% 的盐水是最佳值，也就是 1L 水配 25g 盐。'
+    effect:
+      text: '甜味达到生吃时的 1.64 倍（官能评价，同样由味觉战略研究所分析）。'
+      quote: '甜味达到生吃时的 1.64 倍（官能评价，同样由味觉战略研究所分析）。'
+    dose:
+      - value: 2.5
+        unit: '%'
+        what: '盐水浓度'
+        quote: '2.5% 的盐水是最佳值，也就是 1L 水配 25g 盐。'
+      - value: 25
+        unit: 'g'
+        what: '1L 水配盐量'
+        quote: '1L 水配 25g 盐'
+    steps:
+      - id: brine-cabbage
+        text: '想让甜味最大化，手册给出的方法不是加糖，而是用浓盐水焯。'
+        quote: '想让甜味最大化，手册给出的方法不是加糖，而是用浓盐水焯。'
+      - id: set-salt-ratio
+        text: '浓度是这招的关键：2.5% 的盐水是最佳值，也就是 1L 水配 25g 盐。'
+        quote:
+          - '浓度是这招的关键：'
+          - '2.5% 的盐水是最佳值，也就是 1L 水配 25g 盐。'
+      - id: retain-nutrient-concentrates
+        text: '焯完之后不只是甜：说明书引述的研究（京都大学大学院及川研究室分析）显示，谷氨酸、天冬氨酸、维生素 U（抗溃疡素）以及 GABA 这几类与营养和功能相关的成分浓度也会一起升高（京都大学大学院及川研究室分析）。'
+        quote: '焯完之后不只是甜：说明书引述的研究（京都大学大学院及川研究室分析）显示，谷氨酸、天冬氨酸、维生素 U（抗溃疡素）以及 GABA 这几类与营养和功能相关的成分浓度也会一起升高（京都大学大学院及川研究室分析）。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ef036e8d1fe21e22
+  - id: high-heat-short-cooking
+    status: reviewed
+    source:
+      anchor: '高温短时：把臭味压到 1/80'
+    slot: anytime
+    remind:
+      text: '用高温短时间烹调卷心菜'
+      quote:
+        - '既然是酶在干活，那就破坏酶。'
+        - '手册给出的解法是高温短时间烹调——足够高的温度能在臭味物质大量生成之前就把酶灭活。'
+    effect:
+      text: '焦香卷心菜的臭味只剩生卷心菜的约 1/80；'
+      quote: '焦香卷心菜的臭味只剩生卷心菜的约 1/80；'
+    steps:
+      - id: inactivate-enzymes
+        text: '足够高的温度能在臭味物质大量生成之前就把酶灭活。'
+        quote: '足够高的温度能在臭味物质大量生成之前就把酶灭活。'
+      - id: increase-aroma
+        text: '同时香香气和甜香气都增加了。'
+        quote: '同时香香气和甜香气都增加了。'
+    cautions:
+      - level: info
+        text: '提醒：做过焦香处理的卷心菜冷藏保存可以抑制臭味生成，但仍建议 2～3 天内吃完。'
+        quote: '提醒：做过焦香处理的卷心菜冷藏保存可以抑制臭味生成，但仍建议 2～3 天内吃完。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: fcdeb8a81a5f5e4f
+  - id: blanched-sweet-cabbage
+    status: reviewed
+    source:
+      anchor: '四道食谱，两种变体'
+    slot: anytime
+    remind:
+      text: '用 2.5% 盐水焯出超甜卷心菜'
+      quote:
+        - 整颗带芯用 2.5% 盐水焯，是本篇的招牌做法。
+        - 甜卷心菜 150g（约 1/8 颗）
+    dose:
+      - value: 2.5
+        unit: '%'
+        what: '盐水浓度'
+        quote: '整颗带芯用 2.5% 盐水焯，是本篇的招牌做法。'
+      - value: 300
+        valueMax: 350
+        unit: 'g'
+        what: '每份卷心菜重量'
+        quote: '卷心菜 1/4 颗（300～350g）'
+      - value: 1.5
+        unit: 'L'
+        what: '水用量'
+        quote: '水 1.5L'
+      - value: 37.5
+        unit: 'g'
+        what: '盐用量'
+        quote: '盐 37.5g（约 2～2.5 大勺）'
+    duration:
+      basis: derived
+      sec: 210
+      formula: '2 分钟 × 60 + 1 分钟 × 60 + 30 秒 = 210 秒'
+    steps:
+      - id: boil-salted-water
+        text: '水 1.5L盐 37.5g（约 2～2.5 大勺）锅中加水加盐，盖上盖子用大火充分煮沸，把盐完全化开。'
+        quote:
+          - '水 1.5L'
+          - '盐 37.5g（约 2～2.5 大勺）'
+          - '锅中加水加盐，盖上盖子用大火充分煮沸，把盐完全化开。'
+      - id: add-whole-cabbage
+        text: '转小火，把留着芯的卷心菜外层叶子朝下放入。'
+        quote: '转小火，把留着芯的卷心菜外层叶子朝下放入。'
+      - id: judge-heat
+        text: '判断火候：水面刚冒出细密小泡的程度最好；轻轻晃动，让火候也能传到叶子的根部。'
+        quote: '判断火候：水面刚冒出细密小泡的程度最好；轻轻晃动，让火候也能传到叶子的根部。'
+      - id: blanch-two-minutes
+        text: '焯满 2 分钟后，先取出外层叶放进装了水的碗里，余下部分边抖散叶片边继续焯。'
+        quote: '焯满 2 分钟后，先取出外层叶放进装了水的碗里，余下部分边抖散叶片边继续焯。'
+      - id: blanch-one-more-minute
+        text: '再焯 1 分钟，把剩下的叶片也取出，放进 30 秒冷水里浸泡去咸。沥干即可上桌。'
+        quote:
+          - '再焯 1 分钟，把剩下的叶片也取出，放进 30 秒冷水里浸泡去咸。'
+          - '沥干即可上桌。'
+    cautions:
+      - level: info
+        text: '若水量只有 1L，则用盐 25g（2.5% 盐水为最佳）'
+        quote: '若水量只有 1L，则用盐 25g（2.5% 盐水为最佳）'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 768dc8a31dfa248c
+    name: 焯出超甜卷心菜
+  - id: sweet-cabbage-salad
+    status: reviewed
+    source:
+      anchor: '四道食谱，两种变体'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '把焯好的卷心菜拌成凉拌甜卷心菜'
+      quote: '焯好的卷心菜只要拌一拌就能吃，凉拌后越吃越甜。'
+    effect:
+      text: '焯好的卷心菜只要拌一拌就能吃，凉拌后越吃越甜。'
+      quote: '焯好的卷心菜只要拌一拌就能吃，凉拌后越吃越甜。'
+    dose:
+      - value: 150
+        unit: 'g'
+        what: '甜卷心菜用量'
+        quote: '甜卷心菜 150g（约 1/8 颗）'
+      - value: 2
+        unit: '小勺'
+        what: '芝麻油用量'
+        quote: '芝麻油 2 小勺'
+    steps:
+      - id: tear-cabbage
+        text: '把甜卷心菜撕成一口大小，放进碗里。'
+        quote: '把甜卷心菜撕成一口大小，放进碗里。'
+      - id: mix-seasonings
+        text: '加入蒜蓉、芝麻油、酱油、盐，拌匀即成。'
+        quote: '加入蒜蓉、芝麻油、酱油、盐，拌匀即成。'
+      - id: add-garnish
+        text: '摆盘时撒上白芝麻或切碎的青椒更好。'
+        quote: '摆盘时撒上白芝麻或切碎的青椒更好。'
+      - id: make-italian-version
+        text: '换成橄榄油加少许柠檬盐，就是清爽的意式版本。'
+        quote: '换成橄榄油加少许柠檬盐，就是清爽的意式版本。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: c322437908ce716d
+    name: 拌凉拌甜卷心菜
+  - id: cabbage-rolls
+    status: reviewed
+    name: "卷心菜卷"
+    source:
+      anchor: '四道食谱，两种变体'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '把焯好的甜卷心菜用喜欢的食材卷起来吃'
+      quote: '把焯好的甜卷心菜用喜欢的食材卷起来吃。'
+    effect:
+      text: '营养：焯水容易流失的维生素 C 等，用前面那种 2.5% 浓盐水焯几乎没有损失。'
+      quote: '营养：焯水容易流失的维生素 C 等，用前面那种 2.5% 浓盐水焯几乎没有损失。'
+    steps:
+      - id: roll-cabbage
+        text: '把焯好的甜卷心菜用喜欢的食材卷起来吃。手册给出的是照片示例和推荐配料清单，没有给固定卷法，可自由发挥：'
+        quote: '把焯好的甜卷心菜用喜欢的食材卷起来吃。手册给出的是照片示例和推荐配料清单，没有给固定卷法，可自由发挥：'
+      - id: choose-filling
+        text: '三文鱼火腿、卡芒贝尔奶酪、番茄、橄榄'
+        quote: '三文鱼火腿、卡芒贝尔奶酪、番茄、橄榄'
+    cautions:
+      - level: info
+        text: '甜卷心菜 1/8 颗含盐约 0.4g，而 WHO 建议的标准是每天低于 5g——注意别吃过量。'
+        quote: '甜卷心菜 1/8 颗含盐约 0.4g，而 WHO 建议的标准是每天低于 5g——注意别吃过量。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 37a998794df48fac
+  - id: charred-cabbage-broth
+    status: reviewed
+    source:
+      anchor: '四道食谱，两种变体'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '把卷心菜两面烤焦后加水煮成高汤'
+      quote:
+        - '平底锅倒油，卷心菜排入锅中，用偏大的中火、两面各烤约 4 分钟，烤到出现焦痕即可出锅——焦香卷心菜完成。'
+        - '往锅里加入水与盐，中火煮 15 分钟——卷心菜高汤完成。'
+    effect:
+      text: '提醒：做过焦香处理的卷心菜冷藏保存可以抑制臭味生成，但仍建议 2～3 天内吃完。'
+      quote: '提醒：做过焦香处理的卷心菜冷藏保存可以抑制臭味生成，但仍建议 2～3 天内吃完。'
+    dose:
+      - value: 2
+        unit: '大勺'
+        what: '油用量'
+        quote: '油 2 大勺'
+      - value: 600
+        unit: 'mL'
+        what: '水用量'
+        quote: '水 600mL'
+      - value: 4
+        unit: 'g'
+        what: '盐用量'
+        quote: '盐 1 小勺弱（约 4g）'
+    duration:
+      basis: derived
+      sec: 1380
+      formula: '约 4 分钟 × 2 面 × 60 秒 + 15 分钟 × 60 秒 = 约 1380 秒'
+    steps:
+      - id: cut-cabbage
+        text: '卷心菜纵向切半，再切成 1/8 颗的块。'
+        quote: '卷心菜纵向切半，再切成 1/8 颗的块。'
+      - id: char-cabbage
+        text: '平底锅倒油，卷心菜排入锅中，用偏大的中火、两面各烤约 4 分钟，烤到出现焦痕即可出锅——焦香卷心菜完成。'
+        quote: '平底锅倒油，卷心菜排入锅中，用偏大的中火、两面各烤约 4 分钟，烤到出现焦痕即可出锅——焦香卷心菜完成。'
+      - id: simmer-broth
+        text: '往锅里加入水与盐，中火煮 15 分钟——卷心菜高汤完成。'
+        quote: '往锅里加入水与盐，中火煮 15 分钟——卷心菜高汤完成。'
+      - id: store-broth
+        text: '刚做好最好喝；要存的话冷藏，并尽量在 2～3 天内喝完。'
+        quote: '刚做好最好喝；要存的话冷藏，并尽量在 2～3 天内喝完。'
+    cautions:
+      - level: info
+        text: '怕焦的话自行调整火候或时间。'
+        quote: '怕焦的话自行调整火候或时间。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cb3c15004606eb0c
+    name: 烤焦卷心菜煮高汤

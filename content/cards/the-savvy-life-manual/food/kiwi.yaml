@@ -1,0 +1,347 @@
+article: the-savvy-life-manual/food/kiwi.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '猕猴桃：每天 2 个通便，扁果硬点吃才够味'
+      reason: '这是总览标题而非可独立执行的小节；其中每天吃 2 个的研究内容已归入健康数据卡。“1,000 万人”只是没有出处的栏目标题，不转成实践建议。'
+  images: []
+cards:
+  - id: daily-two-green-kiwis
+    status: reviewed
+    name: "每天 2 个猕猴桃"
+    source:
+      anchor: '健康数据：498 人、2 周、68%'
+    slot: anytime
+    remind:
+      text: '每天 2 个绿色猕猴桃持续 2 周'
+      quote:
+        - 每天 2 个绿色猕猴桃
+        - 持续 2 周
+        - 这一集分两条线：一条是健康功效有研究背书，另一条是超市里怎么买到好吃的那一颗。功效方面，猕猴桃被写进了日本消化科医生诊疗时使用的《便通异常症诊疗指南 2023》，作为对便秘有效的食物记载。说明书这一集的标题写作「1,000 万人を救う！？」，但这一千万的数字在说明书里没有给出出处，只作为栏目标题出现。^[「キウイ」のトリセツ]
+    effect:
+      text: '「每天都能排便」的人的比例，实验前 0% → 2 周后 68%'
+      quote:
+        - '「每天都能排便」的人的比例，'
+        - '实验前 0% → 2 周后 68%'
+    dose:
+      - value: 2
+        unit: 个
+        what: 每天绿色猕猴桃的用量
+        quote: '每天 2 个绿色猕猴桃'
+    duration:
+      basis: derived
+      sec: 1209600
+      quote: '持续 2 周'
+      formula: '2 周 × 7 天/周 × 24 小时/天 × 60 分钟/小时 × 60 秒/分钟 = 1209600 秒'
+    steps:
+      - id: eat-two-green-kiwis
+        text: '每天 2 个绿色猕猴桃持续 2 周'
+        quote:
+          - '每天 2 个绿色猕猴桃'
+          - '持续 2 周'
+    cautions:
+      - level: info
+        text: '「数日才排便一次」的498 人'
+        quote:
+          - '「数日才排便一次」的'
+          - '498 人'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 6d0cb9522ec991b0
+
+  - id: choose-flat-kiwi
+    status: reviewed
+    name: "挑扁一点的猕猴桃"
+    source:
+      anchor: '挑果法①：选「扁平的」'
+    slot: anytime
+    remind:
+      text: '选「扁扁的、被压扁的」那种形状'
+      quote: '选「扁扁的、被压扁的」那种形状。'
+    effect:
+      text: '它吸收到的养分多、形状会不够匀称，但味道会变好吃'
+      quote:
+        - '它吸收到的养分多、'
+        - '形状会不够匀称，但味道会变好吃'
+    steps:
+      - id: pick-flat-shape
+        text: '选「扁扁的、被压扁的」那种形状。'
+        quote: '选「扁扁的、被压扁的」那种形状。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 09a69d171f93f8b9
+
+  - id: eat-slightly-under-soft-kiwi
+    status: reviewed
+    name: "吃欠一点软的猕猴桃"
+    source:
+      anchor: '挑果法②：吃的时候要「稍微欠软」'
+    slot: anytime
+    remind:
+      text: '吃的时候选「稍微欠一点软」的猕猴桃'
+      quote: '专业买手挑的适食期是「稍微欠一点软」'
+    effect:
+      text: '稍微欠软的猕猴桃，味道才显得更浓酸味：↑27%清爽的香气：↑25%甜味：↑2%多汁度：↑10%'
+      quote:
+        - '稍微欠软的猕猴桃，味道才显得更浓'
+        - '酸味：↑27%'
+        - '清爽的香气：↑25%'
+        - '甜味：↑2%'
+        - '多汁度：↑10%'
+    steps:
+      - id: pick-slightly-under-soft
+        text: '「稍微欠一点软」'
+        quote: '「稍微欠一点软」'
+      - id: compare-with-soft-kiwi
+        text: '把它和软猕猴桃对比着吃，确认差别'
+        quote: '把它和软猕猴桃对比着吃，确认差别'
+      - id: judge-hardness-by-reference
+        text: '长葱尖端的白色部分手腕弯到 90 度时根部那一块（能摸到脉搏的部分）太阳穴'
+        quote:
+          - 长葱尖端的白色部分
+          - 手腕弯到 90 度时根部那一块（能摸到脉搏的部分）
+          - 太阳穴
+          - 猕猴桃放着继续后熟，就能软到刚刚好。说明书推荐的存放位置是冰箱的蔬菜室，并且指出：在 10℃ 左右的温度下保存，会慢慢变软——低温让软化过程变慢，反而更容易判断硬度。
+      - id: ripen-in-vegetable-drawer
+        text: '放着继续后熟冰箱的蔬菜室在 10℃ 左右的温度下保存，会慢慢变软'
+        quote:
+          - 放着继续后熟
+          - 冰箱的蔬菜室
+          - 在 10℃ 左右的温度下保存，会慢慢变软
+          - 猕猴桃放着继续后熟，就能软到刚刚好。说明书推荐的存放位置是冰箱的蔬菜室，并且指出：在 10℃ 左右的温度下保存，会慢慢变软——低温让软化过程变慢，反而更容易判断硬度。
+    cautions:
+      - level: stop
+        text: '在卖场里，请不要用力去捏猕猴桃'
+        quote:
+          - '在卖场里，'
+          - '请不要用力去捏猕猴桃'
+      - level: info
+        text: '这些百分比是感官比，不是绝对含量'
+        quote: '这些百分比是感官比，不是绝对含量'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 8dd02d32e6ad3c63
+
+  - id: kiwi-hamburger-patty
+    status: reviewed
+    source:
+      anchor: '软猕猴桃才做得出来的吃法'
+    slot: anytime
+    remind:
+      text: '只加猕猴桃软到能喝下去的肉饼。'
+      quote:
+        - '只加猕猴桃'
+        - '软到能喝下去'
+        - '的肉饼。'
+    effect:
+      text: '这种酶让肉变得柔软，烤出滑溜滑的奇特口感'
+      quote: '这种酶让肉变得柔软，烤出滑溜滑的奇特口感'
+    dose:
+      - value: 100
+        unit: g
+        what: 猪五花肉馅用量
+        quote: '猪五花肉馅 100g'
+      - value: 70
+        unit: g
+        what: 猕猴桃用量
+        quote: '猕猴桃 70g'
+      - value: 20
+        unit: g
+        what: 洋葱用量
+        quote: '洋葱（切末） 20g'
+      - value: 1
+        unit: 小勺
+        what: 酱油用量
+        quote: '酱油 1 小勺'
+      - value: 1
+        unit: 大勺
+        what: 牛乳用量
+        quote: '牛乳 1 大勺'
+      - value: 1
+        unit: 大勺
+        what: 食用油用量
+        quote: '油 1 大勺'
+    duration:
+      basis: derived
+      sec: 300
+      quote:
+        - '弱火偏中烤 3 分钟'
+        - '再烤 2 分钟'
+      formula: '3 分钟 + 2 分钟 = 5 分钟 × 60 秒/分钟 = 300 秒'
+    steps:
+      - id: mix-and-shape
+        text: '材料放进碗里，一边捏碎猕猴桃一边搅拌 1～2 分钟直到稍微起黏，做成饼形。'
+        quote:
+          - '材料放进碗里，'
+          - '一边捏碎猕猴桃一边搅拌 1～2 分钟'
+          - '直到稍微起黏，做成饼形。'
+      - id: season-with-salt-and-nutmeg
+        text: '盐、肉豆蔻 少许'
+        quote: '盐、肉豆蔻 少许'
+      - id: mix-before-cooking
+        text: '放置太久会变得过软在烤之前再拌'
+        quote:
+          - '放置太久会变得过软'
+          - '在烤之前再拌'
+      - id: pan-cook-first-side
+        text: '平底锅热油，放入，弱火偏中烤 3 分钟'
+        quote:
+          - '平底锅热油，放入①，'
+          - '弱火偏中烤 3 分钟'
+      - id: flip-and-cook-second-side
+        text: '再烤 2 分钟'
+        quote:
+          - 再烤 2 分钟
+          - 平底锅热油，放入①，弱火偏中烤 3 分钟，翻面后再烤 2 分钟。
+      - id: use-wooden-spatula
+        text: '翻面时很容易散用木铲像翻炒一样整体加热'
+        quote:
+          - '翻面时'
+          - '很容易散'
+          - '用木铲像翻炒一样整体加热'
+      - id: serve-with-bread
+        text: '搭配面包一起吃'
+        quote: '搭配面包一起吃'
+    cautions:
+      - level: info
+        text: '放置太久会变得过软在烤之前再拌'
+        quote:
+          - '放置太久会变得过软'
+          - '在烤之前再拌'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 308af43d9bba4d88
+    name: 做猕猴桃肉饼
+
+  - id: kiwi-tartare-and-sauce
+    status: reviewed
+    source:
+      anchor: '软猕猴桃才做得出来的吃法'
+    slot: anytime
+    remind:
+      text: '用软猕猴桃做塔塔酱或酱汁'
+      quote:
+        - 手捏碎的软猕猴桃做酱汁最好用
+        - 把洋葱末、蛋黄酱和盐放进
+        - 再加入猕猴桃，
+        - 用手捏碎
+        - 说明书没有给出「猕猴桃酱汁」单独的完整配方，只说明「用手捏碎即可」，并把读者指向第 6 页的食谱页（即上面的塔塔酱与 shaved ice）。这一集也没有给出猕猴桃的禁忌人群或注意事项（例如妊娠、服药、过敏等均未提及），唯一明确的注意事项是不要用力捏果、以及 10℃ 蔬菜室保存法。说明书同样没有列出猕猴桃的具体营养素含量数值，只有上面那张「一天所需营养素含有比例」的排序图。
+    effect:
+      text: '甜和酸兼具给菜调味最合适的自带黏稠度，容易挂在食材上'
+      quote:
+        - '甜和酸兼具'
+        - '给菜调味最合适的'
+        - '自带黏稠度，容易挂在食材上'
+    dose:
+      - value: 2
+        unit: 个
+        what: 猕猴桃用量
+        quote: '猕猴桃 2 个'
+      - value: 2
+        unit: 大勺
+        what: 洋葱用量
+        quote: '洋葱（切末） 2 大勺'
+      - value: 4
+        unit: 大勺
+        what: 蛋黄酱用量
+        quote: '蛋黄酱 4 大勺'
+    steps:
+      - id: mix-tartare
+        text: '把洋葱末、蛋黄酱和盐放进塑料袋之类'
+        quote:
+          - '把洋葱末、蛋黄酱和盐放进'
+          - '塑料袋'
+          - '之类'
+      - id: hand-mash-kiwi
+        text: '再加入猕猴桃，用手捏碎'
+        quote:
+          - '再加入猕猴桃，'
+          - '用手捏碎'
+      - id: use-soft-kiwi-as-sauce
+        text: '手捏碎的软猕猴桃做酱汁最好用'
+        quote: '手捏碎的软猕猴桃做酱汁最好用'
+    cautions:
+      - level: info
+        text: '没有给出「猕猴桃酱汁」单独的完整配方'
+        quote: '没有给出「猕猴桃酱汁」单独的完整配方'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 1929730b257e79f4
+    name: 做猕猴桃塔塔酱
+
+  - id: kiwi-shaved-ice
+    status: reviewed
+    source:
+      anchor: '软猕猴桃才做得出来的吃法'
+    slot: anytime
+    remind:
+      text: '把猕猴桃捏碎冷冻，保留一点柔软度时剪开袋角挤入容器'
+      quote:
+        - '用手捏碎'
+        - '连袋子一起'
+        - '放进冰箱，'
+        - '冷冻约 1 小时'
+        - '还留一点柔软度'
+        - '剪开袋角挤到容器里'
+    dose:
+      - value: 2
+        unit: 个
+        what: 猕猴桃用量
+        quote: '猕猴桃 2 个'
+      - value: 1
+        unit: 小勺
+        what: 想更甜时的蜂蜜用量
+        quote: '蜂蜜 1 小勺'
+      - value: 1
+        unit: 小勺
+        what: 想更清爽时的柠檬汁用量
+        quote: '柠檬汁 1 小勺'
+    duration:
+      basis: derived
+      sec: 3600
+      quote: '冷冻约 1 小时'
+      formula: '约 1 小时 × 60 分钟/小时 × 60 秒/分钟 = 约 3600 秒'
+    steps:
+      - id: peel-and-mash
+        text: '去皮的猕猴桃放进塑料袋，用手捏碎保留一点果肉的形状'
+        quote:
+          - '去皮'
+          - '的猕猴桃放进塑料袋，'
+          - '用手捏碎'
+          - '保留一点果肉的形状'
+      - id: freeze-in-bag
+        text: '连袋子一起放进冰箱，冷冻约 1 小时'
+        quote:
+          - '连袋子一起'
+          - '放进冰箱，'
+          - '冷冻约 1 小时'
+      - id: squeeze-when-soft
+        text: '冻到还留一点柔软度的程度就从冷冻室取出，剪开袋角挤到容器里'
+        quote:
+          - '冻到'
+          - '还留一点柔软度'
+          - '的程度就从冷冻室取出，'
+          - '剪开袋角挤到容器里'
+      - id: thaw-if-too-hard
+        text: '如果袋子在冷冻室里放了超过 1 小时、冻得硬邦邦在室温放约 20 分钟'
+        quote:
+          - '如果袋子在冷冻室里放了超过 1 小时、冻得硬邦邦'
+          - '在室温放约 20 分钟'
+      - id: adjust-sweetness-or-freshness
+        text: '想更甜蜂蜜 1 小勺想更清爽柠檬汁 1 小勺'
+        quote:
+          - '想更甜'
+          - '蜂蜜 1 小勺'
+          - '想更清爽'
+          - '柠檬汁 1 小勺'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: fde62fa578fc0dd4
+    name: 做猕猴桃刨冰

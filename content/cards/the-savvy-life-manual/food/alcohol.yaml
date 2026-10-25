@@ -1,0 +1,165 @@
+article: the-savvy-life-manual/food/alcohol.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '先看你是哪一型'
+      reason: '本节说明 A 到 E 型的代谢特征、比例及依赖等风险，属于疾病与风险知识；唾液基因检测也不是日常减量动作，因此不抽成今日清单卡。'
+    - anchor: '为什么说「酒没有适量」'
+      reason: '本节主体解释乙醛损伤 DNA 和癌症风险，属于疾病机制知识；无安全量的结论已在其他实践卡的注意项中引用。'
+    - anchor: '哪几型人必须格外小心'
+      reason: '各型的急性酒精中毒、肝脏、过量和依赖风险属于疾病知识；末尾“减量而非减害”的行动原则已抽入减少总量卡。'
+  images: []
+cards:
+  - id: reduce-total-not-spread-risk
+    status: reviewed
+    name: "把酒的总量降下来"
+    source:
+      anchor: '酒没有适量：每天两杯啤酒把口腔癌推到 3.2 倍'
+    slot: anytime
+    remind:
+      text: '目标都是把总量降下来，而不是把风险摊薄'
+      quote: '目标都是把总量降下来，而不是把风险摊薄'
+    steps:
+      - id: set-reduction-goal
+        text: '把总量降下来，而不是把风险摊薄'
+        quote: '把总量降下来，而不是把风险摊薄'
+      - id: reject-safe-amount-claim
+        text: '不存在一个喝多少就安全的量'
+        quote: '不存在一个喝多少就安全的量'
+    cautions:
+      - level: info
+        text: '也没有任何能抵消风险的喝法'
+        quote: '也没有任何能抵消风险的喝法'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: a56077d8505f48cd
+  - id: slow-first-drink
+    status: reviewed
+    source:
+      anchor: '说明书给的做法：减量，不是减害'
+    slot: anytime
+    remind:
+      text: '第一杯用 30 分钟喝完，之后正常喝'
+      quote:
+        - '第一杯用 30 分钟喝完'
+        - '第一杯慢下来之后，第二杯以后正常喝就行'
+    dose:
+      - value: 30
+        unit: '分钟'
+        what: '第一杯饮用时长'
+        quote: '第一杯用 30 分钟喝完'
+    duration:
+      basis: derived
+      sec: 1800
+      formula: '30 分钟 × 60 秒 = 1800 秒'
+    steps:
+      - id: drink-first-cup-slowly
+        text: '第一杯用 30 分钟喝完'
+        quote: '第一杯用 30 分钟喝完'
+      - id: keep-one-bottle-pace
+        text: '在醉意上来的这 30 分钟里按一瓶的节奏喝，既能少喝，也能舒服地醉。'
+        quote: '在醉意上来的这 30 分钟里按一瓶的节奏喝，既能少喝，也能舒服地醉。'
+      - id: drink-later-cups-normally
+        text: '第一杯慢下来之后，第二杯以后正常喝就行'
+        quote: '第一杯慢下来之后，第二杯以后正常喝就行'
+    cautions:
+      - level: info
+        text: '这不是「喝得更安全」，而是「喝得更少」'
+        quote: '这不是「喝得更安全」，而是「喝得更少」'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 546c3d104e0c6713
+    name: 第一杯用 30 分钟喝完
+  - id: calculate-pure-alcohol-intake
+    status: reviewed
+    source:
+      anchor: '用纯酒精量算账'
+    slot: anytime
+    remind:
+      text: '用纯酒精量掌握自己每天的实际摄入'
+      quote:
+        - '喝酒时在意纯酒精量'
+        - '这样更容易掌握自己每天的实际摄入'
+    dose:
+      - value: 40
+        unit: '克'
+        what: '男性提高生活习惯病风险的日均纯酒精量约值'
+        quote: '提高生活习惯病风险的饮酒量，约为 1 日平均纯酒精量男性 40 克、女性 20 克'
+      - value: 20
+        unit: '克'
+        what: '女性提高生活习惯病风险的日均纯酒精量约值'
+        quote: '提高生活习惯病风险的饮酒量，约为 1 日平均纯酒精量男性 40 克、女性 20 克'
+    steps:
+      - id: compare-risk-threshold
+        text: '提高生活习惯病风险的饮酒量，约为 1 日平均纯酒精量男性 40 克、女性 20 克'
+        quote: '提高生活习惯病风险的饮酒量，约为 1 日平均纯酒精量男性 40 克、女性 20 克'
+      - id: read-can-label
+        text: '近年罐装啤酒和罐装 chuhai 的背面都已经标了纯酒精量。'
+        quote: '近年罐装啤酒和罐装 chuhai 的背面都已经标了纯酒精量。'
+      - id: use-female-tier-cup-equivalents
+        text: '说明书把女性那一档换算成了看得懂的杯量：'
+        quote: '说明书把女性那一档换算成了看得懂的杯量：'
+      - id: convert-beer-amount
+        text: '啤酒 5 度500 毫升'
+        quote:
+          - '啤酒 5 度'
+          - '500 毫升'
+      - id: convert-sake-amount
+        text: '日本酒 14 度180 毫升'
+        quote:
+          - '日本酒 14 度'
+          - '180 毫升'
+      - id: convert-shochu-amount
+        text: '烧酎 25 度100 毫升'
+        quote:
+          - '烧酎 25 度'
+          - '100 毫升'
+      - id: convert-whisky-amount
+        text: '威士忌 40 度60 毫升'
+        quote:
+          - '威士忌 40 度'
+          - '60 毫升'
+      - id: convert-red-wine-amount
+        text: '红酒 12 度200 毫升'
+        quote:
+          - '红酒 12 度'
+          - '200 毫升'
+    cautions:
+      - level: info
+        text: '提高生活习惯病风险的饮酒量，约为 1 日平均纯酒精量男性 40 克、女性 20 克'
+        quote: '提高生活习惯病风险的饮酒量，约为 1 日平均纯酒精量男性 40 克、女性 20 克'
+      - level: info
+        text: '不存在一个喝多少就安全的量'
+        quote: '不存在一个喝多少就安全的量'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 2c91ab80b1db6772
+  - id: use-nonalcoholic-drinks
+    status: reviewed
+    source:
+      anchor: '说明书给的做法：减量，不是减害'
+    slot: anytime
+    remind:
+      text: '把无酒精饮料用于续杯和酒局收尾'
+      quote:
+        - '日常的续杯'
+        - '想喝啤酒的爽口感时第一杯换成无酒精啤酒；来不及慢喝时第二杯换成无酒精饮料；酒局最后收尾时用无酒精饮料结束'
+    steps:
+      - id: replace-first-beer
+        text: '想喝啤酒的爽口感时第一杯换成无酒精啤酒'
+        quote: '想喝啤酒的爽口感时第一杯换成无酒精啤酒'
+      - id: replace-second-drink
+        text: '来不及慢喝时第二杯换成无酒精饮料'
+        quote: '来不及慢喝时第二杯换成无酒精饮料'
+      - id: finish-with-nonalcoholic
+        text: '酒局最后收尾时用无酒精饮料结束'
+        quote: '酒局最后收尾时用无酒精饮料结束'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cf342881b75b8271
+    name: 用无酒精饮料收尾

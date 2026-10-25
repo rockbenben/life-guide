@@ -1,0 +1,175 @@
+article: 'the-savvy-life-manual/life-hacks/mold-2026.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '健康：多数人其实不用过度担心'
+      reason: '疾病风险与就医提示属于 condition 类；仅将高风险人群的就医提醒并入洗衣机卡片，未单列可勾选卡。'
+    - anchor: '水虫：一种长在皮肤上的霉菌'
+      reason: '疾病定义、用药和耐药菌信息属于 condition 类；治疗需要遵医嘱，未转成可勾选的保健动作卡。'
+  images:
+    all: true
+    reason: '原文及图片清单均无图片。'
+cards:
+  - id: ac-professional-internal-cleaning
+    status: reviewed
+    source:
+      anchor: '空调：霉菌最多的不是滤网'
+    slot: anytime
+    remind:
+      text: '委托专业业者清洗空调内部'
+      quote: '内部清洗是专业活。没有专门技术的人自己拆洗，有可能导致空调故障，请务必委托专业业者。'
+    effect:
+      text: '吹出的霉菌减少比例专业人员做内部清洗约 80%'
+      quote:
+        - '吹出的霉菌减少比例'
+        - '专业人员做内部清洗'
+        - '约 80%'
+    steps:
+      - id: delegate-internal-cleaning
+        text: '内部清洗是专业活。没有专门技术的人自己拆洗，有可能导致空调故障，请务必委托专业业者。'
+        quote: '内部清洗是专业活。没有专门技术的人自己拆洗，有可能导致空调故障，请务必委托专业业者。'
+    cautions:
+      - level: stop
+        text: '没有专门技术的人自己拆洗，有可能导致空调故障'
+        quote: '没有专门技术的人自己拆洗，有可能导致空调故障'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: b9587b3f152b2312
+
+  - id: ac-start-with-ventilation
+    status: reviewed
+    name: "开空调先通风换气"
+    source:
+      anchor: '空调：霉菌最多的不是滤网'
+    slot: anytime
+    remind:
+      text: '使用空调时，开头先通风换气'
+      quote: '用空调的时候，开头几分钟先通风换气，就能把大量霉菌排到室外。'
+    effect:
+      text: '和刚开机运行时相比，运行 10 分钟之后霉菌数量大幅下降。'
+      quote: '和刚开机运行时相比，运行 10 分钟之后霉菌数量大幅下降。'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '运行 10 分钟之后霉菌数量大幅下降。'
+    steps:
+      - id: ventilate-before-use
+        text: '用空调的时候，开头几分钟先通风换气，就能把大量霉菌排到室外。'
+        quote: '用空调的时候，开头几分钟先通风换气，就能把大量霉菌排到室外。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: c25d4d666145b0d1
+
+  - id: bathroom-ceiling-mold-cleaning
+    status: reviewed
+    source:
+      anchor: '浴室：先看天花板'
+    slot: anytime
+    remind:
+      text: '重点清洁天花板上的霉菌'
+      quote: '所以对付浴室霉菌，妥善清洁天花板才是关键。'
+    dose:
+      - value: 2
+        unit: '个月'
+        what: '天花板除霉频率'
+        quote: '每 2 个月做 1 次左右最有效。'
+    steps:
+      - id: prepare-chlorine-mold-remover
+        text: '准备含氯（氯系）的除霉剂。'
+        quote: '准备含氯（氯系）的除霉剂。'
+      - id: apply-remover-to-mop
+        text: '在长柄拖把上缠一条毛巾，把除霉剂适量喷在上面。'
+        quote: '在长柄拖把上缠一条毛巾，把除霉剂适量喷在上面。'
+      - id: wipe-ceiling-corners
+        text: '擦到天花板的每一个角落，不留遗漏。'
+        quote: '擦到天花板的每一个角落，不留遗漏。'
+      - id: wipe-and-dry
+        text: '擦完后最后再用水擦一遍、然后擦干，收工。'
+        quote: '擦完后最后再用水擦一遍、然后擦干，收工。'
+    cautions:
+      - level: stop
+        text: '绝对不要把含氯洗涤剂直接朝高于眼睛的位置喷。'
+        quote: '绝对不要把含氯洗涤剂直接朝高于眼睛的位置喷。'
+      - level: stop
+        text: '注意别让药剂滴落或飞溅'
+        quote: '注意别让药剂滴落或飞溅'
+      - level: info
+        text: '为了保护眼睛和口鼻，请戴眼镜和口罩，并在保持通风的条件下操作。'
+        quote: '为了保护眼睛和口鼻，请戴眼镜和口罩，并在保持通风的条件下操作。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 3550e19c84bee3f6
+    name: 清洁浴室天花板霉菌
+
+  - id: bathroom-fumigation-mold-prevention
+    status: reviewed
+    source:
+      anchor: '浴室：先看天花板'
+    slot: anytime
+    remind:
+      text: '够不着天花板时，使用熏蒸型除霉剂'
+      quote: '如果担心高处作业，说明书推荐「熏蒸（くん煙）型」的除霉剂：放在地面使用，靠含有防霉成分的烟扩散到各个角落，连手够不到的天花板霉菌也能预防。'
+    effect:
+      text: '连手够不到的天花板霉菌也能预防。'
+      quote: '连手够不到的天花板霉菌也能预防。'
+    dose:
+      - value: 2
+        unit: '个月'
+        what: '熏蒸型除霉剂使用频率'
+        quote: '每 2 个月做 1 次比较有效。'
+    steps:
+      - id: use-fumigation-product
+        text: '放在地面使用'
+        quote: '放在地面使用'
+      - id: let-fumigation-spread
+        text: '靠含有防霉成分的烟扩散到各个角落'
+        quote: '靠含有防霉成分的烟扩散到各个角落'
+    cautions:
+      - level: info
+        text: '不同产品有差异'
+        quote: '不同产品有差异'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 679716eac5b39ee7
+    name: 够不着时用熏蒸除霉剂
+
+  - id: washer-drum-mold-cleaning
+    status: reviewed
+    source:
+      anchor: '洗衣机：霉会沾到别的衣服上'
+    slot: anytime
+    remind:
+      text: '用洗衣槽专用含氯洗涤剂清洁洗衣槽'
+      quote: '对策是用「洗衣槽专用」的含氯洗涤剂做一次清洁，每 3～4 周做 1 次比较有效。'
+    dose:
+      - value: 3
+        valueMax: 4
+        unit: '周'
+        what: '洗衣槽清洁间隔'
+        quote: '每 3～4 周做 1 次比较有效。'
+    steps:
+      - id: check-remaining-odor
+        text: '洗了很多次、衣服上那股味道还在，就要怀疑是霉菌。'
+        quote: '洗了很多次、衣服上那股味道还在，就要怀疑是霉菌。'
+      - id: clean-washer-drum
+        text: '对策是用「洗衣槽专用」的含氯洗涤剂做一次清洁，每 3～4 周做 1 次比较有效。'
+        quote: '对策是用「洗衣槽专用」的含氯洗涤剂做一次清洁，每 3～4 周做 1 次比较有效。'
+      - id: check-washer-manual
+        text: '不同机型可能不能使用，所以请先确认自家洗衣机的说明书。'
+        quote: '不同机型可能不能使用，所以请先确认自家洗衣机的说明书。'
+    cautions:
+      - level: info
+        text: '不同机型可能不能使用，所以请先确认自家洗衣机的说明书。'
+        quote: '不同机型可能不能使用，所以请先确认自家洗衣机的说明书。'
+      - level: with-doctor
+        text: '哮喘患者、霉菌过敏者、患有肺部或支气管疾病的人——这三类人身上的病有可能被霉菌加重，需要格外注意。说明书要求：具体请咨询自己的医生。'
+        quote: '哮喘患者、霉菌过敏者、患有肺部或支气管疾病的人——这三类人身上的病有可能被霉菌加重，需要格外注意。说明书要求：具体请咨询自己的医生。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: d73043e422c7a009

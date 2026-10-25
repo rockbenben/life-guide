@@ -1,0 +1,260 @@
+article: the-savvy-life-manual/life-hacks/disaster-preparedness.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: "地震后别冲水？便携厕所 + 171 留言"
+      reason: "开篇总览没有独立的新动作，相关内容已分别在便携厕所、灾害留言电话和震后排泄建议卡片中处理。"
+  images: []
+cards:
+  - id: portable-toilet-preparation
+    status: reviewed
+    name: "备好便携厕所"
+    source:
+      anchor: "便携厕所：买多少、怎么用"
+    slot: anytime
+    remind:
+      text: "震后第一时间启用便携厕所用量按说明书估算"
+      quote:
+        - "震后第一时间启用便携厕所"
+        - "用量按说明书估算"
+    dose:
+      - value: 5
+        unit: "次"
+        what: "一般人每天排泄次数"
+        quote: "一般人每天排泄 5 次"
+      - value: 15
+        unit: "次"
+        what: "每人至少备用的便携厕所次数"
+        quote: "每人至少备 15 次（3 天份）"
+      - value: 3
+        unit: "天"
+        what: "建议备用量覆盖的天数"
+        quote: "每人至少备 15 次（3 天份）"
+    steps:
+      - id: choose-portable-toilet-type
+        text: "吸收片型：让排泄物吸附在薄片上凝固剂型：用特殊粉末把排泄物凝固成形"
+        quote:
+          - "吸收片型：让排泄物吸附在薄片上"
+          - "凝固剂型：用特殊粉末把排泄物凝固成形"
+      - id: adjust-stock-to-own-frequency
+        text: "排泄次数因人而异，请按自己的情况增减"
+        quote: "排泄次数因人而异，请按自己的情况增减"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 246cf5bff38bee57
+
+  - id: coagulant-portable-toilet
+    status: reviewed
+    source:
+      anchor: "便携厕所：买多少、怎么用"
+    slot: anytime
+    remind:
+      text: "凝固剂型便携厕所按三步使用：给便器和座圈各套一层袋、倒整整一包凝固剂再排泄、扎紧袋口再装进除臭袋存放与丢弃。"
+      quote: "凝固剂型的三步是给便器和座圈各套一层袋、倒整整一包凝固剂再排泄、扎紧袋口再装进除臭袋存放与丢弃"
+    dose:
+      - value: 1
+        unit: "包"
+        what: "每次排泄使用的凝固剂量"
+        quote: "倒整整一包凝固剂"
+    steps:
+      - id: bag-both
+        text: "给便器和座圈各套一层袋防污水袋：把座圈抬起，套在便器上接便袋：把座圈放下，套在座圈上"
+        quote:
+          - "给便器和座圈各套一层袋"
+          - "防污水袋：把座圈抬起，套在便器上"
+          - "接便袋：把座圈放下，套在座圈上"
+      - id: add-coagulant
+        text: "倒整整一包凝固剂，然后排泄大便也要用凝固剂"
+        quote:
+          - "倒整整一包凝固剂，然后排泄"
+          - "大便也要用凝固剂"
+      - id: seal-bag
+        text: "先把袋子扎紧，再装进除臭袋扎好存放"
+        quote: "先把袋子扎紧，再装进除臭袋扎好存放"
+      - id: store-without-deodorizer
+        text: "没有除臭袋，就放进带盖的箱子里，别让气味漏出来"
+        quote: "没有除臭袋，就放进带盖的箱子里，别让气味漏出来"
+    cautions:
+      - level: info
+        text: "加凝固剂的时机因产品而异，请照自家说明书"
+        quote: "加凝固剂的时机因产品而异，请照自家说明书"
+      - level: info
+        text: "废弃一般属于可燃垃圾，但各自治体规定不同，务必确认"
+        quote: "废弃一般属于可燃垃圾，但各自治体规定不同，务必确认"
+      - level: stop
+        text: "用过的便携厕所不要囤积——堆积会成为传染病的源头，尽量频繁处理"
+        quote: "用过的便携厕所不要囤积——堆积会成为传染病的源头，尽量频繁处理"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 624168a1cd517078
+
+  - id: disaster-message-record
+    status: reviewed
+    name: "灾害留言拨 171"
+    source:
+      anchor: "灾害留言电话 171"
+    slot: anytime
+    remind:
+      text: "要留言就拨 171按 1 录音不用等真出事"
+      quote:
+        - "要留言就拨 171"
+        - "按 1 录音"
+        - "不用等真出事"
+    steps:
+      - id: dial-service
+        text: "拨打 171"
+        quote: "拨打 171"
+      - id: choose-record-mode
+        text: "选择「录音」——语音提示为：按 1 录音、按 2 收听、按 3 用密码录音、按 4 用密码收听（在意隐私才需要设密码）"
+        quote: "选择「录音」——语音提示为：按 1 录音、按 2 收听、按 3 用密码录音、按 4 用密码收听（在意隐私才需要设密码）"
+      - id: enter-recipient-number
+        text: "输入对方电话号码（手机、座机都可以）"
+        quote: "输入对方电话号码（手机、座机都可以）"
+      - id: choose-area-code
+        text: "在受灾地区的人，请输入自己家的号码想联系其他受灾地区的人，请从区号开始输入"
+        quote:
+          - "在受灾地区的人，请输入自己家的号码"
+          - "想联系其他受灾地区的人，请从区号开始输入"
+      - id: choose-push-or-dial
+        text: "选择推送式／拨号式——推送式电话再按数字 1，拨号式则直接等待；不知道也什么都不用按"
+        quote: "选择推送式／拨号式——推送式电话再按数字 1，拨号式则直接等待；不知道也什么都不用按"
+      - id: leave-message
+        text: "录音，按语音提示进行，记得报上姓名"
+        quote: "录音，按语音提示进行，记得报上姓名"
+      - id: agree-family-message-plan
+        text: "事先和家人商量好「谁的号码留哪一条留言」"
+        quote: "事先和家人商量好「谁的号码留哪一条留言」"
+      - id: try-service-regularly
+        text: "不用等真出事每月 1 日和 15 日都可以正常体验，网页版 web171 同样可用"
+        quote:
+          - "不用等真出事"
+          - "每月 1 日和 15 日都可以正常体验，网页版 web171 同样可用"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 7c359806116c3800
+
+  - id: disaster-message-listen
+    status: reviewed
+    source:
+      anchor: "灾害留言电话 171"
+    slot: anytime
+    remind:
+      text: "拨打 171按 2 收听"
+      quote:
+        - "拨打 171"
+        - "按 2 收听"
+    steps:
+      - id: dial-service-listen
+        text: "拨打 171"
+        quote: "拨打 171"
+      - id: press-listen
+        text: "前四步和上面一样，区别只在第 2 步按 2（收听）"
+        quote: "前四步和上面一样，区别只在第 2 步按 2（收听）"
+      - id: enter-original-number
+        text: "对方当初录下留言时使用的号码"
+        quote: "对方当初录下留言时使用的号码"
+      - id: play-messages
+        text: "最后按提示选择并播放留言（有多个留言时需逐个选择）"
+        quote: "最后按提示选择并播放留言（有多个留言时需逐个选择）"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 52a98c481acb3a07
+
+  - id: altruistic-disaster-preparedness
+    status: reviewed
+    source:
+      anchor: "利他心平时用，才救得了命"
+    slot: anytime
+    remind:
+      text: "开一次家庭会议把应急食品当礼物送出去固定家具"
+      quote:
+        - 开一次家庭会议
+        - 把应急食品当礼物送出去
+        - 固定家具
+        - 大地震后电话和互联网都不稳定，灾害留言电话 171（NTT 提供）是那种时候最容易接通的方式：像电话答录机一样，用一个特定号码互传录音留言，并且在大灾害发生后立即开通。
+    steps:
+      - id: hold-family-meeting
+        text: "开一次家庭会议：确认避难时的集合地点和联络方式"
+        quote: "开一次家庭会议：确认避难时的集合地点和联络方式"
+      - id: give-emergency-food
+        text: "把应急食品当礼物送出去：对方得到的是一份准备，收到的人防灾意识也会提高"
+        quote: "把应急食品当礼物送出去：对方得到的是一份准备，收到的人防灾意识也会提高"
+      - id: secure-furniture
+        text: "固定家具重要的人可能被家具压住"
+        quote:
+          - "固定家具"
+          - "重要的人可能被家具压住"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 2e00a4c1acc6e6c7
+
+  - id: post-earthquake-no-flushing
+    status: reviewed
+    name: "地震后改用便携厕所"
+    source:
+      anchor: "地震后别冲水：马桶会「逆流」"
+    slot: anytime
+    remind:
+      text: "地震后不要冲马桶试水，改用便携厕所。"
+      quote:
+        - "地震之后，不要再抱任何「冲一下试试」的念头"
+        - "震后直接改用便携厕所"
+    steps:
+      - id: avoid-flushing
+        text: "地震之后，不要再抱任何「冲一下试试」的念头"
+        quote: "地震之后，不要再抱任何「冲一下试试」的念头"
+      - id: switch-to-portable-toilet
+        text: "震后直接改用便携厕所"
+        quote: "震后直接改用便携厕所"
+    cautions:
+      - level: stop
+        text: "第 4 次冲水时，水从 1 楼的马桶里喷了出来"
+        quote: "第 4 次冲水时，水从 1 楼的马桶里喷了出来"
+      - level: info
+        text: "这个现象在 1 楼以上都可能发生，不是只有高层才会中招"
+        quote: "这个现象在 1 楼以上都可能发生，不是只有高层才会中招"
+      - level: info
+        text: "排污管同样走地下污水还有可能从破损处渗漏"
+        quote:
+          - "排污管同样走地下"
+          - "污水还有可能从破损处渗漏"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: fc615440f3f2cd10
+
+  - id: avoid-retaining-restricting-intake
+    status: reviewed
+    source:
+      anchor: "比断水更危险的，是硬憋和少吃"
+    slot: anytime
+    remind:
+      text: "马桶冲不了水时为了少排泄而硬憋少吃"
+      quote: "马桶冲不了水时为了少排泄而硬憋少吃"
+    steps:
+      - id: do-not-retain
+        text: "为了少排泄而硬憋少吃"
+        quote: "为了少排泄而硬憋少吃"
+      - id: keep-intake
+        text: "而为了减少排泄次数，她们尽量不喝水、不吃东西地生活"
+        quote: "而为了减少排泄次数，她们尽量不喝水、不吃东西地生活"
+      - id: use-portable-toilet-for-excretion
+        text: "震后直接改用便携厕所"
+        quote: "震后直接改用便携厕所"
+    cautions:
+      - level: info
+        text: "长时间保持同一个姿势、水和食物摄入严重不足，会让血液凝固形成血栓"
+        quote: "长时间保持同一个姿势、水和食物摄入严重不足，会让血液凝固形成血栓"
+      - level: info
+        text: "血栓一旦堵住肺，就会引发呼吸困难或猝死"
+        quote: "血栓一旦堵住肺，就会引发呼吸困难或猝死"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 077843835d3897bd

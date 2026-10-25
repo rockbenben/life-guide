@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# 045 运行时与 CI 都不访问 blog 仓库，也不访问 img.newzone.top（AGENTS.md §4.1）。
+# 快照在 content import 那一步就已经落进仓库了，CI 只读本地文件。
+
+# 同一个 PR 推多次就取消前一次的：省 runner，也免得旧结果盖掉新的。
+# main 不取消 —— 取消掉等于那个提交从来没被验过。
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+# 令牌只读：CI 只需要 checkout，不需要写权限。
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      # 第一方 action：钉大版本标签，不钉 SHA（钉 SHA 得跟着每次更新改文件，
+      # 而第一方 tag 的安全性由他们自己保证）。
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          # 写死版本，不用 node-version-file: package.json —— 那等于把 CI 交给
+          # 未来的自己（package.json 里的 engines 什么时候涨到哪一版是未定的）。
+          node-version: "26"
+          # npm 的缓存留着：npm ci 会按 lock 里的 integrity 逐包校验，
+          # 缓存被污染会当场校验失败，所以留着是安全的。
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Content check
+        run: npm run content:check
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint markdown
+        run: npm run lint
+
+      - name: Check workflows
+        # 工作流文件本身坏了的话，GitHub 会拒绝整个文件、一个 job 都不跑，
+        # 而且只说一句「likely failed because of a workflow file issue」。
+        # 所以自己先验一遍：YAML 能不能解析、里面的 shell 语法对不对。
+        run: npm run lint:workflows
+
+      - name: Build cards.json
+        run: npm run content:build
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: content-report
+          path: |
+            content/report.md
+            content/report.json
+          if-no-files-found: ignore
+
+  # 桌面端打包：打包配置坏掉是很安静的事（本地不打包就没人发现），
+  # 所以单独一个 job 在 Windows 上打一次包 —— 只打 dir（免安装版），
+  # 快，而且能验出 asar 里少文件、extraResources 路径对不上这类问题。
+  desktop:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build web assets
+        run: npm run app:build
+
+      - name: Package desktop app
+        # electron-builder 要**写死**的 electron 版本（package.json 里已经是写死的），
+        # 版本写范围它会直接报错 —— 这条坑当初就踩过。
+        run: npm run build --workspace @life-guide/desktop -- --dir
+
+      - name: "Smoke: the packaged app really starts"
+        # 打包成功 ≠ 起得来：主进程加载失败时 Electron 只弹一个错误框，
+        # 打包照样成功、CI 全绿。这里真的起一次，窗口出不来就红。
+        run: node scripts/desktop-smoke.mjs desktop/release/win-unpacked/LifeGuide.exe
+
+      - name: Upload desktop build
+        uses: actions/upload-artifact@v7
+        with:
+          name: life-guide-desktop
+          path: desktop/release/win-unpacked
+          if-no-files-found: error
+
+  # 浏览器级验收：断网后还能用、.ics 是定时事件、导出→清空→导入后记录逐条一致、
+  # 卡上设的提醒存得住。单元测试验不了，单独一个 job 跑。
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser acceptance
+        run: npm run acceptance

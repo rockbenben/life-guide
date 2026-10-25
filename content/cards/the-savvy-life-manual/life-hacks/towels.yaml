@@ -1,0 +1,225 @@
+article: the-savvy-life-manual/life-hacks/towels.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '毛巾越洗越硬、越用越臭？加 10L 水和每月 1 次皂醋'
+      reason: '本节是全文总览；增加水量、皂醋护理、沸水处理及减少摩擦的原理已分别纳入后续动作卡，不另设重复卡。'
+    - anchor: '有几件事不要做'
+      reason: '本节三条注意事项已并入两张皂醋卡和沸水卡的 cautions，不另设重复卡。'
+  images: []
+cards:
+  - id: towel-water-top-loader
+    status: draft
+    source:
+      anchor: '水要加多少：自动设定的量再加 10L'
+    slot: anytime
+    dose:
+      - value: 10
+        unit: L
+        what: '自动设定水量之外的增加量'
+        quote: '自动设定的水量 +10L 左右'
+    remind:
+      text: '立式机洗毛巾时，用标准程序定好水量后暂停，再追加约 10L 水'
+      quote:
+        - '立式（たて型）机型'
+        - '标准程序'
+        - '等机器自动定好水量'
+        - '暂停'
+        - '水量'
+        - '自动设定的水量 +10L 左右'
+        - '把水量加大'
+        - '布与布之间的摩擦反而会减少'
+        - '磨损因此被压下来'
+    steps:
+      - id: start-standard-cycle
+        text: '标准程序等机器自动定好水量面板上会显示升数'
+        quote:
+          - '标准程序'
+          - '等机器自动定好水量'
+          - '面板上会显示升数'
+      - id: pause-and-add-water
+        text: '暂停水量布与布之间的摩擦反而会减少磨损因此被压下来'
+        quote:
+          - 暂停
+          - 水量
+          - 布与布之间的摩擦反而会减少
+          - 磨损因此被压下来
+          - 立式（たて型）机型：用标准程序开始洗，等机器自动定好水量（面板上会显示升数）→ 按「暂停」→
+            按「水量」键把水加上去。增加的量以自动设定的水量 +10L 左右为基准。
+    cautions:
+      - level: info
+        text: '吸水性靠它手感蓬松也靠它有些毛巾的绒圈本身就不是圈状的'
+        quote:
+          - '吸水性靠它'
+          - '手感蓬松也靠它'
+          - '有些毛巾的绒圈本身就不是圈状的'
+      - level: info
+        text: '洗过 50 次之后作为判断磨损程度的参考'
+        quote:
+          - '洗过 50 次之后'
+          - '作为判断磨损程度的参考'
+    name: 立式机多加水洗毛巾
+  - id: towel-water-drum
+    status: draft
+    source:
+      anchor: '水要加多少：自动设定的量再加 10L'
+    slot: anytime
+    remind:
+      text: '滚筒机选择高水位或水多め；不能调水时改用洗衣网限制摩擦'
+      quote:
+        - '滚筒式（ドラム式）机型'
+        - '高水位'
+        - '水多め'
+        - '有些滚筒机没有调整水量的功能'
+        - '一条一条放进洗衣网'
+        - '摩擦同样能被压下来'
+    steps:
+      - id: choose-high-water
+        text: '高水位水多め'
+        quote:
+          - '高水位'
+          - '水多め'
+      - id: use-laundry-net
+        text: '有些滚筒机没有调整水量的功能一条一条放进洗衣网单条毛巾能活动的空间被限制住摩擦同样能被压下来'
+        quote:
+          - '有些滚筒机没有调整水量的功能'
+          - '一条一条放进洗衣网'
+          - '单条毛巾能活动的空间被限制住'
+          - '摩擦同样能被压下来'
+    name: 滚筒机调高水位洗毛巾
+  - id: towel-soap-vinegar-top-loader
+    status: draft
+    source:
+      anchor: '变硬的真正原因：留在纤维里的水'
+    slot: anytime
+    dose:
+      - value: 1
+        unit: mL
+        what: '立式机型中每 1L 水对应的醋量'
+        quote: '水 1L 相当于 1mL'
+    remind:
+      text: '每月一次用洗衣皂加醋，把绒圈里被洗掉的油补回来'
+      quote:
+        - '问题出在残留的水上'
+        - '水留在那里，绒圈就会被粘在一起、躺平，站不起来'
+        - '真正该补的不是水，而是油'
+        - '每月一次'
+        - '用洗衣皂加醋把洗掉的油补回去'
+    steps:
+      - id: wash-with-soap
+        text: '标准程序按平常的量放入洗衣用皂'
+        quote:
+          - '标准程序'
+          - '按平常的量放入洗衣用皂'
+      - id: add-vinegar-at-rinse
+        text: '漂洗一开始暂停直接倒进洗衣槽'
+        quote:
+          - '漂洗一开始'
+          - '暂停'
+          - '直接倒进洗衣槽'
+      - id: finish-rinse-spin-dry
+        text: '照常完成漂洗、脱水、晾干'
+        quote: '照常完成漂洗、脱水、晾干'
+    cautions:
+      - level: info
+        text: '皂和醋不要洗太勤说明书明确说，洗过头会让吸水性下降一个月一次标准用量与频次'
+        quote:
+          - '皂和醋不要洗太勤'
+          - '说明书明确说，洗过头会让'
+          - '吸水性下降'
+          - '一个月一次'
+          - '标准用量与频次'
+      - level: stop
+        text: '醋不要多放醋放太多有可能损伤衣物和洗衣机本身务必守住那个比例'
+        quote:
+          - '醋不要多放'
+          - '醋放太多有可能损伤衣物和洗衣机本身'
+          - '务必守住那个比例'
+    name: 立式机用皂醋洗毛巾
+  - id: towel-soap-vinegar-drum
+    status: draft
+    source:
+      anchor: '变硬的真正原因：留在纤维里的水'
+    slot: anytime
+    remind:
+      text: '每月一次用洗衣皂加醋，把绒圈里被洗掉的油补回来'
+      quote:
+        - '问题出在残留的水上'
+        - '水留在那里，绒圈就会被粘在一起、躺平，站不起来'
+        - '真正该补的不是水，而是油'
+        - '每月一次'
+        - '用洗衣皂加醋把洗掉的油补回去'
+    steps:
+      - id: wash-with-soap
+        text: '标准程序按平常的量放入洗衣用皂'
+        quote:
+          - '标准程序'
+          - '按平常的量放入洗衣用皂'
+      - id: add-vinegar-at-rinse
+        text: '漂洗一开始暂停直接倒进洗衣槽约为放入洗衣皂量的那一半'
+        quote:
+          - '漂洗一开始'
+          - '暂停'
+          - '直接倒进洗衣槽'
+          - '约为'
+          - '放入洗衣皂量的那一半'
+      - id: finish-rinse-spin-dry
+        text: '照常完成漂洗、脱水、晾干'
+        quote: '照常完成漂洗、脱水、晾干'
+    cautions:
+      - level: info
+        text: '皂和醋不要洗太勤说明书明确说，洗过头会让吸水性下降一个月一次标准用量与频次'
+        quote:
+          - '皂和醋不要洗太勤'
+          - '说明书明确说，洗过头会让'
+          - '吸水性下降'
+          - '一个月一次'
+          - '标准用量与频次'
+      - level: stop
+        text: '醋不要多放醋放太多有可能损伤衣物和洗衣机本身务必守住那个比例'
+        quote:
+          - '醋不要多放'
+          - '醋放太多有可能损伤衣物和洗衣机本身'
+          - '务必守住那个比例'
+    name: 滚筒机用皂醋洗毛巾
+  - id: towel-boiling-water-treatment
+    status: draft
+    name: "沸水泡毛巾"
+    source:
+      anchor: '发黑发臭：菌在绒圈根部做了一层「膜」'
+    slot: anytime
+    remind:
+      text: '用沸水泡 10 分钟，处理菌膜带来的臭味和发黑'
+      quote:
+        - '在绒圈根部繁殖的细菌，会做出黏糊糊的一层屏障'
+        - '扎根在绒圈根部的菌，大多「怕热」'
+        - '用沸水泡 10 分钟处理菌膜带来的臭味和发黑'
+    duration:
+      basis: quote
+      sec: 600
+      quote: '就这么原样放置 10 分钟'
+    steps:
+      - id: pour-boiling-water
+        text: '耐热容器刚烧开的水水量以完全浸没为准'
+        quote:
+          - '耐热容器'
+          - '刚烧开的水'
+          - '水量以完全浸没为准'
+      - id: soak-ten-minutes
+        text: '就这么原样放置 10 分钟'
+        quote: '就这么原样放置 10 分钟'
+      - id: drain-and-rewash
+        text: '倒掉水，再照平常那样用洗衣机洗一遍'
+        quote: '倒掉水，再照平常那样用洗衣机洗一遍'
+    cautions:
+      - level: stop
+        text: '倒沸水会烫伤水温、水量都要按图示来'
+        quote:
+          - '倒沸水会烫伤'
+          - '水温、水量都要按图示来'
+      - level: info
+        text: '并不是所有的菌都会被杀死这一步针对的是那层菌膜，不是消毒处理。'
+        quote:
+          - '并不是所有的菌都会被杀死'
+          - '这一步针对的是那层菌膜，不是消毒处理。'

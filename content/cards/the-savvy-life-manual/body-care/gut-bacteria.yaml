@@ -1,0 +1,602 @@
+article: the-savvy-life-manual/body-care/gut-bacteria.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: read-fiber-score
+    status: reviewed
+    name: "读育菌卡的纤维分数"
+    source:
+      anchor: "育菌卡：把膳食纤维换成看得见的分数"
+    slot: anytime
+    remind:
+      text: 用育菌卡上的分数安排当天饮食
+      quote:
+        - "把每种食材的膳食纤维含量换算成"
+        - "分数"
+        - "印在卡面上，让你像配卡组一样安排一天的饮食。"
+    steps:
+      - id: arrange-food-by-score
+        text: '把每种食材的膳食纤维含量换算成分数印在卡面上，让你像配卡组一样安排一天的饮食。'
+        quote:
+          - "把每种食材的膳食纤维含量换算成"
+          - "分数"
+          - "印在卡面上，让你像配卡组一样安排一天的饮食。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4d8ebcf8eaa330c7
+
+  - id: follow-three-principles
+    status: reviewed
+    name: "每天额外加 6g 膳食纤维"
+    source:
+      anchor: "使用三原则"
+    slot: anytime
+    remind:
+      text: 在原有基础上每天额外加 6g 膳食纤维，轮换搭配不同食材，并每天至少用一张发酵卡
+      quote:
+        - "每天额外加 6g 膳食纤维"
+        - "卡片不是让你少吃，而是让你在原有基础上多补一点。"
+        - "尽量多搭配不同食材"
+        - "分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。"
+        - "每天至少用一张\"发酵卡\""
+        - "发酵性膳食纤维含量高的食材，比如纳豆、黄豆粉、牛油果、香蕉）"
+    dose:
+      - value: 6
+        unit: g
+        what: 每天额外增加的膳食纤维量
+        quote: "每天额外加 6g 膳食纤维"
+    steps:
+      - id: add-extra-fiber
+        text: '每天额外加 6g 膳食纤维卡片不是让你少吃，而是让你在原有基础上多补一点。'
+        quote:
+          - "每天额外加 6g 膳食纤维"
+          - "卡片不是让你少吃，而是让你在原有基础上多补一点。"
+      - id: rotate-different-foods
+        text: '尽量多搭配不同食材分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。'
+        quote:
+          - "尽量多搭配不同食材"
+          - "分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。"
+      - id: choose-fermented-card
+        text: '每天至少用一张"发酵卡"卡面带金边的，是发酵性膳食纤维含量高的食材，比如纳豆、黄豆粉、牛油果、香蕉）'
+        quote:
+          - "每天至少用一张\"发酵卡\""
+          - "卡面带"
+          - "金边"
+          - "的，是发酵性膳食纤维含量高的食材，比如纳豆、黄豆粉、牛油果、香蕉）"
+      - id: read-circled-score
+        text: '卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考'
+        quote:
+          - "卡片左上角的圆圈数字，就是该食材对应分量的"
+          - "膳食纤维量参考"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 2c2a100ff13a33c2
+    variants:
+      busy:
+        include:
+          - add-extra-fiber
+          - choose-fermented-card
+
+  - id: refrigerate-for-one-point
+    status: reviewed
+    source:
+      anchor: "冷藏一夜，反而多一分"
+    slot: anytime
+    remind:
+      text: 放进约4℃的冰箱放一晚而已大约各加 1 分冷藏过的食材要提前吃完，大约两天以内
+      quote:
+        - 放进约
+        - 4℃
+        - 的冰箱放一晚而已
+        - 大约各加 1 分
+        - 冷藏过的食材要
+        - 提前吃完，大约两天以内
+        - 这四类冷藏一晚后，分数大约各加 1 分。做法就是放进约 4℃ 的冰箱放一晚而已，但有两个前提：
+    duration:
+      basis: unknown
+    steps:
+      - id: select-eligible-foods
+        text: '整粒生燕麦（去壳、没压片，需先煮）＋白米白米土豆（蒸）红薯（烤）'
+        quote:
+          - "整粒生燕麦（去壳、没压片，需先煮）＋白米"
+          - "白米"
+          - "土豆（蒸）"
+          - "红薯（烤）"
+      - id: distinguish-oatmeal-types
+        text: '下面这张对照表里，三种燕麦不是同一件东西：整粒生燕麦压片燕麦片燕麦糊'
+        quote:
+          - "下面这张对照表里，三种燕麦不是同一件东西："
+          - "整粒生燕麦"
+          - "压片燕麦片"
+          - "燕麦糊"
+      - id: cool-before-fridge
+        text: '入冰箱前必须先放凉不能带着余温直接塞进去'
+        quote:
+          - "入冰箱前"
+          - "必须先放凉"
+          - "不能带着余温直接塞进去"
+      - id: refrigerate-overnight
+        text: '放进约4℃的冰箱放一晚而已'
+        quote:
+          - "放进约"
+          - "4℃"
+          - "的冰箱放一晚而已"
+      - id: finish-within-two-days
+        text: '冷藏过的食材要提前吃完，大约两天以内'
+        quote:
+          - "冷藏过的食材要"
+          - "提前吃完，大约两天以内"
+    cautions:
+      - level: stop
+        text: 不能带着余温直接塞进去
+        quote: "不能带着余温直接塞进去"
+      - level: stop
+        text: '冷藏过的食材要提前吃完，大约两天以内'
+        quote:
+          - "冷藏过的食材要"
+          - "提前吃完，大约两天以内"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 1295f61a1b6e80cc
+
+  - id: staple-food-score-guide
+    status: draft
+    source:
+      anchor: "全部 41 张卡片对照"
+    slot: anytime
+    remind:
+      text: 按主食与面点的分量查看对应分数，同分食材轮换搭配
+      quote:
+        - 分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 尽量多搭配不同食材——分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    dose:
+      - value: 6
+        unit: 分
+        what: 荞麦面（煮）一沥 200g 的对应分数
+        quote:
+          - "荞麦面（煮）"
+          - "一沥 200g"
+          - "6"
+      - value: 4
+        unit: 分
+        what: 整粒生燕麦＋白米一碗 50g ＋ 100g 的对应分数，冷藏 +1
+        quote:
+          - "整粒生燕麦＋白米"
+          - "一碗 50g ＋ 100g"
+          - "4"
+          - "（冷藏 +1）"
+      - value: 4
+        unit: 分
+        what: 压片燕麦片＋白米（免煮）50g ＋ 100g 的对应分数
+        quote:
+          - "压片燕麦片＋白米（免煮）"
+          - "50g ＋ 100g"
+          - "4"
+      - value: 4
+        unit: 分
+        what: 燕麦糊（automeal，即食）一份 30g 的对应分数
+        quote:
+          - "燕麦糊（automeal，即食）"
+          - "一份 30g"
+          - "4"
+      - value: 2
+        unit: 分
+        what: 白米一碗 150g 的对应分数，冷藏 +1
+        quote:
+          - "白米"
+          - "一碗 150g"
+          - "2"
+          - "（冷藏 +1）"
+      - value: 2
+        unit: 分
+        what: 糙米一碗 150g 的对应分数
+        quote:
+          - "糙米"
+          - "一碗 150g"
+          - "2"
+      - value: 3
+        unit: 分
+        what: 全麦面包 1 片 60g 的对应分数
+        quote:
+          - "全麦面包"
+          - "1 片 60g"
+          - "3"
+      - value: 3
+        unit: 分
+        what: 黑麦面包 1 片 60g 的对应分数
+        quote:
+          - "黑麦面包"
+          - "1 片 60g"
+          - "3"
+      - value: 3
+        unit: 分
+        what: 乌冬面（煮）1 把 200g 的对应分数
+        quote:
+          - "乌冬面（煮）"
+          - "1 把 200g"
+          - "3"
+    steps:
+      - id: lookup-staple-score
+        text: '荞麦面（煮）一沥 200g6'
+        quote:
+          - 荞麦面（煮）
+          - 一沥 200g
+          - "6"
+          - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    name: 查主食面点的纤维分
+
+  - id: vegetable-and-tuber-score-guide
+    status: draft
+    source:
+      anchor: "全部 41 张卡片对照"
+    slot: anytime
+    remind:
+      text: 按蔬菜与薯类的分量查看对应分数，同分食材轮换搭配
+      quote:
+        - 分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 尽量多搭配不同食材——分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    dose:
+      - value: 7
+        unit: 分
+        what: 红薯（去皮烤）大半个 150g 的对应分数，冷藏 +1
+        quote:
+          - "红薯（去皮烤）"
+          - "大半个 150g"
+          - "7"
+          - "（冷藏 +1）"
+      - value: 5
+        unit: 分
+        what: 牛蒡（焯）小碗 40g 的对应分数
+        quote:
+          - "牛蒡（焯）"
+          - "小碗 40g"
+          - "5"
+      - value: 5
+        unit: 分
+        what: 土豆（去皮蒸）1 个 150g 的对应分数，冷藏 +1
+        quote:
+          - "土豆（去皮蒸）"
+          - "1 个 150g"
+          - "5"
+          - "（冷藏 +1）"
+      - value: 4
+        unit: 分
+        what: 格兰诺拉麦片 50g 的对应分数
+        quote:
+          - "格兰诺拉麦片"
+          - "50g"
+          - "4"
+      - value: 3
+        unit: 分
+        what: 山药 15 片 50g 的对应分数
+        quote:
+          - "山药"
+          - "15 片 50g"
+          - "3"
+      - value: 2
+        unit: 分
+        what: 胡萝卜（焯）1/4 根 50g 的对应分数
+        quote:
+          - "胡萝卜（焯）"
+          - "1/4 根 50g"
+          - "2"
+      - value: 2
+        unit: 分
+        what: 菠菜（焯）2 株 50g 的对应分数
+        quote:
+          - "菠菜（焯）"
+          - "2 株 50g"
+          - "2"
+      - value: 2
+        unit: 分
+        what: 干萝卜丝（焯）小碗 46g 的对应分数
+        quote:
+          - "干萝卜丝（焯）"
+          - "小碗 46g"
+          - "2"
+      - value: 1
+        unit: 分
+        what: 秋葵 20g 的对应分数
+        quote:
+          - "秋葵"
+          - "20g"
+          - "1"
+    steps:
+      - id: lookup-vegetable-score
+        text: '红薯（去皮烤）大半个 150g7'
+        quote:
+          - 红薯（去皮烤）
+          - 大半个 150g
+          - "7"
+          - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    name: 查蔬菜薯类的纤维分
+
+  - id: fungi-and-bean-score-guide
+    status: draft
+    source:
+      anchor: "全部 41 张卡片对照"
+    slot: anytime
+    remind:
+      text: 按菌藻与豆类的分量查看对应分数，同分食材轮换搭配
+      quote:
+        - 分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 尽量多搭配不同食材——分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    dose:
+      - value: 5
+        unit: 分
+        what: 豆渣（鲜）40g 的对应分数
+        quote:
+          - "豆渣（鲜）"
+          - "40g"
+          - "5"
+      - value: 3
+        unit: 分
+        what: 纳豆 1 盒 40g 的对应分数；发酵卡
+        quote:
+          - "纳豆"
+          - "1 盒 40g"
+          - "3"
+          - "✓"
+          - "每天至少用一张\"发酵卡\""
+      - value: 3
+        unit: 分
+        what: 黄豆（煮）小碗 40g 的对应分数
+        quote:
+          - "黄豆（煮）"
+          - "小碗 40g"
+          - "3"
+      - value: 3
+        unit: 分
+        what: 豌豆（煮）40g 的对应分数
+        quote:
+          - "豌豆（煮）"
+          - "40g"
+          - "3"
+      - value: 3
+        unit: 分
+        what: 黑木耳（干）5g 的对应分数
+        quote:
+          - "黑木耳（干）"
+          - "5g"
+          - "3"
+      - value: 2
+        unit: 分
+        what: 枝豆（煮）约 12 粒 40g 的对应分数
+        quote:
+          - "枝豆（煮）"
+          - "约 12 粒 40g"
+          - "2"
+      - value: 1
+        unit: 分
+        what: 杏鲍菇小 1 根 20g 的对应分数
+        quote:
+          - "杏鲍菇"
+          - "小 1 根 20g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 鹿尾菜（干海带丝）20g 的对应分数
+        quote:
+          - "鹿尾菜（干海带丝）"
+          - "20g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 芝麻 1.5 大勺 10g 的对应分数
+        quote:
+          - "芝麻"
+          - "1.5 大勺 10g"
+          - "1"
+    steps:
+      - id: lookup-fungi-bean-score
+        text: '豆渣（鲜）40g5'
+        quote:
+          - 豆渣（鲜）
+          - 40g
+          - "5"
+          - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    name: 查菌藻豆类的纤维分
+
+  - id: bean-and-fruit-score-guide
+    status: draft
+    source:
+      anchor: "全部 41 张卡片对照"
+    slot: anytime
+    remind:
+      text: 按豆类与果类的分量查看对应分数，同分食材轮换搭配
+      quote:
+        - 分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 尽量多搭配不同食材——分数相同的食材轮换着吃，肠道菌群吃到的底物才丰富。
+        - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    dose:
+      - value: 4
+        unit: 分
+        what: 柿饼 1/2 个 30g 的对应分数
+        quote:
+          - "柿饼"
+          - "1/2 个 30g"
+          - "4"
+      - value: 3
+        unit: 分
+        what: 黄豆粉 2 大勺 16g 的对应分数；发酵卡
+        quote:
+          - "黄豆粉"
+          - "2 大勺 16g"
+          - "3"
+          - "✓"
+          - "每天至少用一张\"发酵卡\""
+      - value: 3
+        unit: 分
+        what: 牛油果（生）1/2 个 60g 的对应分数；发酵卡
+        quote:
+          - "牛油果（生）"
+          - "1/2 个 60g"
+          - "3"
+          - "✓"
+          - "每天至少用一张\"发酵卡\""
+      - value: 3
+        unit: 分
+        what: 香蕉（生）中 1 根 75g 的对应分数；发酵卡
+        quote:
+          - "香蕉（生）"
+          - "中 1 根 75g"
+          - "3"
+          - "✓"
+          - "每天至少用一张\"发酵卡\""
+      - value: 2
+        unit: 分
+        what: 红小豆（煮）20g 的对应分数
+        quote:
+          - "红小豆（煮）"
+          - "20g"
+          - "2"
+      - value: 1
+        unit: 分
+        what: 四季豆（煮）6 根 40g 的对应分数
+        quote:
+          - "四季豆（煮）"
+          - "6 根 40g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 黑豆约 6 粒 12g 的对应分数
+        quote:
+          - "黑豆"
+          - "约 6 粒 12g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 猕猴桃 1/2 个 50g 的对应分数
+        quote:
+          - "猕猴桃"
+          - "1/2 个 50g"
+          - "1"
+    steps:
+      - id: lookup-bean-fruit-score
+        text: '柿饼1/2 个 30g4'
+        quote:
+          - 柿饼
+          - 1/2 个 30g
+          - "4"
+          - 卡片左上角的圆圈数字，就是该食材对应分量的膳食纤维量参考。同样是蔬菜，牛蒡（焯）40g 记 5 分，而胡萝卜（焯）50g 只记 2 分——分量差得不多，分数差了一倍多。
+    name: 查豆类果类的纤维分
+
+  - id: daily-one-point-guide
+    status: reviewed
+    source:
+      anchor: "全部 41 张卡片对照"
+    slot: anytime
+    remind:
+      text: 按日常款的小分量查看对应分数，随手补入当天饮食
+      quote: "这批卡片统一起 1 分，分量都很小，适合每天随手补："
+    dose:
+      - value: 1
+        unit: 分
+        what: 海藻（红藻，盒装）1 盒 40g 的对应分数
+        quote:
+          - "海藻（红藻，盒装）"
+          - "1 盒 40g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 鲜香菇（焯）1 根 20g 的对应分数
+        quote:
+          - "鲜香菇（焯）"
+          - "1 根 20g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 真姬菇（焯）25g 的对应分数
+        quote:
+          - "真姬菇（焯）"
+          - "25g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 金针菇（焯）25g 的对应分数
+        quote:
+          - "金针菇（焯）"
+          - "25g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 西兰花（焯）2 朵 30g 的对应分数
+        quote:
+          - "西兰花（焯）"
+          - "2 朵 30g"
+          - "1"
+      - value: 1
+        unit: 分
+        what: 南瓜（焯）菱形切 1 块 30g 的对应分数
+        quote:
+          - "南瓜（焯）"
+          - "菱形切 1 块 30g"
+          - "1"
+    steps:
+      - id: lookup-daily-score
+        text: 这批卡片统一起 1 分，分量都很小，适合每天随手补：
+        quote: "这批卡片统一起 1 分，分量都很小，适合每天随手补："
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: eec36acb3fb74b3b
+    name: 查日常小份的纤维分
+
+  - id: review-safety
+    status: reviewed
+    source:
+      anchor: "安全提示"
+    slot: anytime
+    remind:
+      text: 增加膳食纤维前先核对手术史、冷藏条件、食用时限和分数用途
+      quote:
+        - "做过肠道相关手术的人"
+        - "增加膳食纤维前请先咨询医生。"
+        - "冷藏加分的食材放凉后再冷藏，且要"
+        - "两天左右吃完"
+        - "不要久放。"
+        - "分数只是相对参考，用于安排搭配，不等同于精确的营养摄入量。"
+    steps:
+      - id: check-surgical-history
+        text: '做过肠道相关手术的人增加膳食纤维前请先咨询医生。'
+        quote:
+          - "做过肠道相关手术的人"
+          - "增加膳食纤维前请先咨询医生。"
+      - id: chill-and-eat-soon
+        text: '冷藏加分的食材放凉后再冷藏，且要两天左右吃完不要久放。'
+        quote:
+          - "冷藏加分的食材放凉后再冷藏，且要"
+          - "两天左右吃完"
+          - "不要久放。"
+      - id: use-score-as-reference
+        text: 分数只是相对参考，用于安排搭配，不等同于精确的营养摄入量。
+        quote: "分数只是相对参考，用于安排搭配，不等同于精确的营养摄入量。"
+    cautions:
+      - level: with-doctor
+        text: '做过肠道相关手术的人增加膳食纤维前请先咨询医生。'
+        quote:
+          - "做过肠道相关手术的人"
+          - "增加膳食纤维前请先咨询医生。"
+      - level: stop
+        text: '冷藏加分的食材放凉后再冷藏，且要两天左右吃完不要久放。'
+        quote:
+          - "冷藏加分的食材放凉后再冷藏，且要"
+          - "两天左右吃完"
+          - "不要久放。"
+      - level: info
+        text: 分数只是相对参考，用于安排搭配，不等同于精确的营养摄入量。
+        quote: "分数只是相对参考，用于安排搭配，不等同于精确的营养摄入量。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ecdb038089dff9d8
+    name: 加纤维前先核对安全

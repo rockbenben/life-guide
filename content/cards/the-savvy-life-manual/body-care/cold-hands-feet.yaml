@@ -1,0 +1,119 @@
+article: the-savvy-life-manual/body-care/cold-hands-feet.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: hand-warming-pack
+    status: reviewed
+    name: "暖宝宝贴手肘"
+    source:
+      anchor: "手脚冰凉怎么办？暖宝宝 + 垒球按压 + 围巾"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-14-09-47-06.png?imageMogr2/format/webp"
+    remind:
+      text: "手冷时把暖宝宝贴在手肘外侧稍靠上的位置，并隔着衣物贴。"
+      quote:
+        - "手冷就把暖宝宝贴在手肘外侧稍靠上的位置"
+        - "注意贴在衣物上，不要直接贴皮肤，防止低温烫伤"
+    steps:
+      - id: choose-hand-warmth-spot
+        text: "为了缓解手部寒冷，推荐使用暖宝宝贴在手肘外侧稍靠上一些的位置。"
+        quote: "为了缓解手部寒冷，推荐使用暖宝宝贴在手肘外侧稍靠上一些的位置。"
+      - id: place-over-clothing
+        text: "需要注意的是，暖宝宝不能直接贴在皮肤上，应贴在衣物上，以防止低温烫伤。"
+        quote: "需要注意的是，暖宝宝不能直接贴在皮肤上，应贴在衣物上，以防止低温烫伤。"
+    cautions:
+      - level: stop
+        text: "暖宝宝不能直接贴在皮肤上，应贴在衣物上，以防止低温烫伤。"
+        quote: "暖宝宝不能直接贴在皮肤上，应贴在衣物上，以防止低温烫伤。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: f6538c6b938bb383
+
+  - id: foot-glute-ball-massage
+    status: reviewed
+    source:
+      anchor: "日常调理方法"
+    slot: anytime
+    remind:
+      text: "脚冷时用 3 号垒球按压一侧臀部中央，每侧按压 30 秒。"
+      quote: "脚冷就用 3 号垒球按压一侧臀部中央，每侧 30 秒、每天 1 到 2 次"
+    dose:
+      - value: 30
+        unit: "秒"
+        what: "每侧臀部按压时长"
+        quote: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
+    duration:
+      basis: quote
+      sec: 30
+      quote: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
+    steps:
+      - id: lie-down-place-ball
+        text: "仰面躺下，将垒球放在一侧臀部中央的位置。"
+        quote: "仰面躺下，将垒球放在一侧臀部中央的位置。"
+      - id: raise-contralateral-hip
+        text: "把放球那一侧的对侧臀部抬起，身体倾斜约 45 度，用体重压住球上的穴位。"
+        quote: "把放球那一侧的对侧臀部抬起，身体倾斜约 45 度，用体重压住球上的穴位。"
+      - id: press-glute-ball
+        text: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
+        quote: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
+    cautions:
+      - level: info
+        text: "按到痛就减力"
+        quote: "按到痛就减力"
+      - level: stop
+        text: "有骨科疾病或关节出现疼痛症状的人不要做"
+        quote: "有骨科疾病或关节出现疼痛症状的人不要做"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 80049ab6c0ea1493
+    name: 用垒球按臀部暖脚
+
+  - id: neck-scarf-warming
+    status: reviewed
+    source:
+      anchor: "其他保暖建议"
+    slot: anytime
+    remind:
+      text: "冬天出门前先系上围巾遮住颈部"
+      quote: "冬天出门前先系上围巾遮住颈部"
+    effect:
+      text: "以减少冷空气的刺激"
+      quote: "以减少冷空气的刺激"
+    steps:
+      - id: wear-scarf
+        text: "因此，在冬天出门前，务必先系上围巾，遮住颈部，以减少冷空气的刺激。"
+        quote: "因此，在冬天出门前，务必先系上围巾，遮住颈部，以减少冷空气的刺激。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 48ba98f6d5fabefb
+    name: 出门先系围巾护颈
+
+  - id: slow-savoring-warming
+    status: reviewed
+    source:
+      anchor: "其他保暖建议"
+    slot: anytime
+    remind:
+      text: "吃饭时慢慢品味，增加咀嚼次数。"
+      quote: "吃饭有意识地慢慢品味，咀嚼次数自然增加，比吃得快更暖和"
+    effect:
+      text: "比吃得快更暖和分解食物会产生大量热能"
+      quote:
+        - "比吃得快更暖和"
+        - "分解食物会产生大量热能"
+    steps:
+      - id: savor-food
+        text: "吃饭有意识地慢慢品味，咀嚼次数自然增加，比吃得快更暖和"
+        quote: "吃饭有意识地慢慢品味，咀嚼次数自然增加，比吃得快更暖和"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ed55c36718048da5
+    name: 慢慢吃饭多咀嚼

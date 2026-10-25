@@ -1,0 +1,285 @@
+article: 'the-savvy-life-manual/food/freezing.md'
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: freeze-before-cooking
+    status: reviewed
+    source:
+      anchor: '冷冻保存术：把食材冻得更好吃'
+    slot: anytime
+    remind:
+      text: '想提升食材的鲜味和香气时，先冷冻再料理。'
+      quote: '想提升食材的鲜味和香气，反着做效果更好——先冷冻，再料理。'
+    effect:
+      text: '想提升食材的鲜味和香气，反着做效果更好'
+      quote: '想提升食材的鲜味和香气，反着做效果更好'
+    steps:
+      - id: freeze-then-cook
+        text: '先冷冻，再料理。'
+        quote: '先冷冻，再料理。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 28588a1b239795ca
+    name: 先冷冻再料理
+
+  - id: three-step-freezing-prep
+    status: reviewed
+    source:
+      anchor: '冷冻前的三步处理'
+    slot: anytime
+    remind:
+      text: '冷冻前完成清洗、去皮和密封处理。'
+      quote:
+        - '冷冻之前，用清水彻底洗净。'
+        - '皮不能吃、也不好去皮的蔬菜和水果（洋葱、橙子、菠萝等），先剥掉皮再冷冻。'
+        - '为防止干燥，用保鲜膜裹紧或装进密封袋，再放进冷冻室。'
+    effect:
+      text: '大型蔬菜和水果可以切分开来，这样一晚就能冻好。'
+      quote: '大型蔬菜和水果可以切分开来，这样一晚就能冻好。'
+    steps:
+      - id: wash-before-freezing
+        text: '冷冻之前，用清水彻底洗净。'
+        quote: '冷冻之前，用清水彻底洗净。'
+      - id: peel-before-freezing
+        text: '皮不能吃、也不好去皮的蔬菜和水果（洋葱、橙子、菠萝等），先剥掉皮再冷冻。'
+        quote: '皮不能吃、也不好去皮的蔬菜和水果（洋葱、橙子、菠萝等），先剥掉皮再冷冻。'
+      - id: seal-before-freezing
+        text: '为防止干燥，用保鲜膜裹紧或装进密封袋，再放进冷冻室。'
+        quote: '为防止干燥，用保鲜膜裹紧或装进密封袋，再放进冷冻室。'
+      - id: cut-large-produce
+        text: '大型蔬菜和水果可以切分开来，这样一晚就能冻好。'
+        quote: '大型蔬菜和水果可以切分开来，这样一晚就能冻好。'
+      - id: choose-freezable-foods
+        text: '粉色系（推荐）：生姜、茗荷、紫苏叶。绿色系：小葱（青葱）、黄瓜、番茄、牛油果。水果：橙子、菠萝、草莓。'
+        quote:
+          - '粉色系（推荐）：生姜、茗荷、紫苏叶。'
+          - '绿色系：小葱（青葱）、黄瓜、番茄、牛油果。'
+          - '水果：橙子、菠萝、草莓。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 04fc7e41c5990cb5
+
+  - id: freeze-mushrooms
+    status: reviewed
+    name: "冷冻菌菇备餐"
+    source:
+      anchor: '冻蘑菇（喜欢的菌菇都可以）：一晚就能备好晚餐'
+    slot: anytime
+    remind:
+      text: '喜欢菌菇时先冷冻备餐，之后可直接用于炒菜、煮汤或煮意面。'
+      quote:
+        - '如果你喜欢菌菇，冷冻这件事几乎是为它设计的：'
+        - '之后炒菜、煮汤、煮意面都可以直接用冻的，不用解冻。'
+    effect:
+      text: '过一晚，鲜味就准备好了——之后炒菜、煮汤、煮意面都可以直接用冻的，不用解冻。'
+      quote: '过一晚，鲜味就准备好了——之后炒菜、煮汤、煮意面都可以直接用冻的，不用解冻。'
+    steps:
+      - id: cut-mushrooms
+        text: '切成便于使用的大小。'
+        quote: '切成便于使用的大小。'
+      - id: bag-mushrooms
+        text: '放进密封袋，尽量不接触空气。'
+        quote: '放进密封袋，尽量不接触空气。'
+      - id: freeze-mushrooms-step
+        text: '放进冷冻室。'
+        quote: '放进冷冻室。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 9c335ab2434524d4
+
+  - id: clam-chowder
+    status: reviewed
+    name: "蛤蜊浓汤"
+    source:
+      anchor: '食谱一：蛤蜊浓汤（クラムチャウダー）'
+    slot: anytime
+    remind:
+      text: '凉爽的初秋可以做蛤蜊浓汤，先把蛤蜊吐沙并冷冻，再按步骤烹调。'
+      quote:
+        - '凉爽的初秋最合适的一锅。'
+        - '把蛤蜊吐沙后装进密封袋，在冷冻室冻一晚以上。'
+    dose:
+      - value: 150
+        unit: 'g'
+        what: '冷冻蛤蜊用量'
+        quote: '冷冻蛤蜊（しじみ）150g'
+      - value: 0.5
+        unit: '小勺'
+        what: '大蒜用量'
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: '大蒜 1/2 小勺（切碎）'
+      - value: 10
+        unit: 'g'
+        what: '黄油用量'
+        quote: '黄油 10g'
+      - value: 400
+        unit: 'mL'
+        what: '牛奶用量'
+        quote: '牛奶 400mL'
+      - value: 100
+        unit: 'mL'
+        what: '水用量'
+        quote: '水 100mL'
+      - value: 1
+        unit: '大勺'
+        what: '玉米淀粉用量'
+        quote: '玉米淀粉 1 大勺（用 1 大勺牛奶溶解）'
+      - value: 3
+        unit: 'g'
+        what: '盐用量'
+        quote: '盐 3g'
+      - value: 1
+        unit: '分钟'
+        what: '强火快炒时长'
+        quote: '强火快炒约 1 分钟（略不足 1 分钟）'
+    steps:
+      - id: purge-and-freeze-clams
+        text: '把蛤蜊吐沙后装进密封袋，在冷冻室冻一晚以上。'
+        quote: '把蛤蜊吐沙后装进密封袋，在冷冻室冻一晚以上。'
+      - id: saute-aromatics
+        text: '锅中放入蒜末和黄油，小火炒出香气。'
+        quote: '锅中放入蒜末和黄油，小火炒出香气。'
+      - id: stir-fry-clams
+        text: '加入冻蛤蜊，强火快炒约 1 分钟（略不足 1 分钟）。注意：口还没合上的蛤蜊不能吃。'
+        quote: '加入冻蛤蜊，强火快炒约 1 分钟（略不足 1 分钟）。注意：口还没合上的蛤蜊不能吃。'
+      - id: simmer-milk-and-water
+        text: '加入水和牛奶，中火煮 3～4 分钟。'
+        quote: '加入水和牛奶，中火煮 3～4 分钟。'
+      - id: thicken-chowder
+        text: '用牛奶溶开的玉米淀粉勾芡，再加盐调味。'
+        quote: '用牛奶溶开的玉米淀粉勾芡，再加盐调味。'
+      - id: garnish-chowder
+        text: '上桌前撒莳萝粉或红椒粉，色彩立刻丰富起来。'
+        quote: '上桌前撒莳萝粉或红椒粉，色彩立刻丰富起来。'
+    cautions:
+      - level: stop
+        text: '口还没合上的蛤蜊不能吃。'
+        quote: '口还没合上的蛤蜊不能吃。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 06fafb8532f60690
+
+  - id: fragrant-pasta
+    status: reviewed
+    source:
+      anchor: '食谱二：香气爆发意面'
+    slot: anytime
+    remind:
+      text: '把意面煮到恰好没煮透，拌匀后趁冷吃，让香气爆发。'
+      quote:
+        - '把意面煮到恰好没煮透，拌入一半的橄榄油和调味汁摊开——关键是不要泡在酱汁里泡软。'
+        - '拌匀后即可，盐留到最后再调。'
+        - '趁还冷着吃——这是「香气爆发」的关键，冷冻过的食材擦成末后香气成分最容易集中释放。'
+    dose:
+      - value: 100
+        unit: 'g'
+        what: '意面用量'
+        quote: '意面 100g'
+      - value: 1.5
+        unit: '大勺'
+        what: '橄榄油用量'
+        quote: '橄榄油 1.5 大勺'
+      - value: 1.5
+        unit: '大勺'
+        what: '日式汤面调味汁用量'
+        derived:
+          formula: 1 又 1/2 大勺 = 1.5 大勺
+        quote: '日式汤面调味汁 1 又 1/2 大勺'
+      - value: 2
+        unit: '撮'
+        what: '盐用量'
+        quote: '盐 2 撮'
+    effect:
+      text: '冷冻过的食材擦成末后香气成分最容易集中释放。'
+      quote: '冷冻过的食材擦成末后香气成分最容易集中释放。'
+    steps:
+      - id: cook-pasta
+        text: '把意面煮到恰好没煮透，拌入一半的橄榄油和调味汁摊开——关键是不要泡在酱汁里泡软。'
+        quote: '把意面煮到恰好没煮透，拌入一半的橄榄油和调味汁摊开——关键是不要泡在酱汁里泡软。'
+      - id: season-pasta
+        text: '拌匀后即可，盐留到最后再调。'
+        quote: '拌匀后即可，盐留到最后再调。'
+      - id: grate-cold-ingredients
+        text: '把喜欢的食材擦成蓉，趁还冷着吃——这是「香气爆发」的关键，冷冻过的食材擦成末后香气成分最容易集中释放。'
+        quote: '把喜欢的食材擦成蓉，趁还冷着吃——这是「香气爆发」的关键，冷冻过的食材擦成末后香气成分最容易集中释放。'
+      - id: choose-pasta-pairings
+        text: '香醋荞麦面：生姜、姜芽（茗荷）、小葱、番茄、牛油果、柠檬。卡尔帕乔：生姜、葱头、柠檬、青柠，浇盐和橄榄油。烤肉类：大葱、洋葱、柠檬。'
+        quote:
+          - '香醋荞麦面：生姜、姜芽（茗荷）、小葱、番茄、牛油果、柠檬。'
+          - '卡尔帕乔：生姜、葱头、柠檬、青柠，浇盐和橄榄油。'
+          - '烤肉类：大葱、洋葱、柠檬。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cbef251e81d6b11b
+    name: 做香气爆发意面
+
+  - id: umami-by-freezing
+    status: reviewed
+    source:
+      anchor: '冷冻为什么能提升鲜味'
+    slot: anytime
+    remind:
+      text: '产地收来的鱿鱼可先冷冻再料理，菌菇和蛤蜊也能通过冷冻提升鲜味。'
+      quote:
+        - '产地收来的不新鲜鱿鱼，先冷冻再料理'
+        - '冷冻同样能让它们的鲜味上升。'
+    effect:
+      text: '硬度只剩原来的 2/3鲜味大幅提升原因在于细胞里的肌原纤维被冻坏，酶趁机从细胞内部跑到外面来，分解蛋白质，生成鲜味成分。'
+      quote:
+        - '硬度只剩原来的 2/3'
+        - '鲜味大幅提升'
+        - '原因在于细胞里的肌原纤维被冻坏，酶趁机从细胞内部跑到外面来，分解蛋白质，生成鲜味成分。'
+    steps:
+      - id: freeze-squid
+        text: '产地收来的不新鲜鱿鱼，先冷冻再料理'
+        quote: '产地收来的不新鲜鱿鱼，先冷冻再料理'
+      - id: freeze-umami-ingredients
+        text: '所以提升鲜味的并不只是鱿鱼——菌菇蛤蜊（しじみ）冷冻同样能让它们的鲜味上升。'
+        quote:
+          - '所以提升鲜味的并不只是鱿鱼——'
+          - '菌菇'
+          - '蛤蜊（しじみ）'
+          - '冷冻同样能让它们的鲜味上升。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 219806eff869507f
+    name: 冷冻海鲜菌菇提鲜
+
+  - id: aroma-by-freezing
+    status: reviewed
+    source:
+      anchor: '冷冻为什么能让香气爆发'
+    slot: anytime
+    remind:
+      text: '把冻得很硬的松露擦成细屑冻蔬菜、冻水果同样适用。'
+      quote:
+        - '把冻得很硬的松露擦成细屑'
+        - '冻蔬菜、冻水果同样适用。'
+    effect:
+      text: '香气成分在低温下变得不容易挥发，但细胞被冻坏了，香气成分反而更容易跑到外面来。这时候再放进温热的嘴里，香气成分一口气涌出来。入口那一刻的爆炸感，比直接切片强烈得多。'
+      quote:
+        - '香气成分在低温下变得不容易挥发，但细胞被冻坏了，香气成分反而更容易跑到外面来。'
+        - '这时候再放进温热的嘴里，香气成分一口气涌出来。'
+        - '入口那一刻的爆炸感，比直接切片强烈得多。'
+    steps:
+      - id: grate-frozen-truffle
+        text: '把冻得很硬的松露擦成细屑'
+        quote: '把冻得很硬的松露擦成细屑'
+      - id: grate-frozen-produce
+        text: '冻蔬菜、冻水果同样适用。'
+        quote: '冻蔬菜、冻水果同样适用。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: a9607472858f3848
+    name: 冻硬后擦成细屑

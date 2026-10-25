@@ -1,0 +1,130 @@
+article: the-savvy-life-manual/life-hacks/mold.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: mold-safety-triage
+    status: reviewed
+    name: "先判断霉斑能不能自己处理"
+    source:
+      anchor: '墙上发霉怎么办？先判断能不能自己处理'
+    slot: anytime
+    remind:
+      text: '先判断霉斑性质，再决定怎么处理。'
+      quote:
+        - 先判断霉斑性质，再决定怎么处理。
+        - 建议顺序：① 先通风——关窗喷酒精等于把孢子锁在屋里，必须开窗对流；② 戴 N95 或以上口罩、护目镜和手套操作，酒精刺激皮肤、霉孢子吸入伤肺；③ 霉斑面积很大（如整面墙或一整块天花板）、呈黑色或绿色、反复在同一位置复发、墙体松软开裂、或霉味扩散到相邻房间的，直接找专业人员，不要自行处理。
+    steps:
+      - id: assess-mold
+        text: '先判断霉斑性质，再决定怎么处理。'
+        quote: '先判断霉斑性质，再决定怎么处理。'
+      - id: ventilate-before-cleaning
+        text: '关窗喷酒精等于把孢子锁在屋里，必须开窗对流'
+        quote: '关窗喷酒精等于把孢子锁在屋里，必须开窗对流'
+      - id: wear-respiratory-protection
+        text: '戴 N95 或以上口罩、护目镜和手套操作'
+        quote: '戴 N95 或以上口罩、护目镜和手套操作'
+      - id: professional-mold-handling
+        text: '霉斑面积很大（如整面墙或一整块天花板）、呈黑色或绿色、反复在同一位置复发、墙体松软开裂、或霉味扩散到相邻房间的，直接找专业人员，不要自行处理。'
+        quote: '霉斑面积很大（如整面墙或一整块天花板）、呈黑色或绿色、反复在同一位置复发、墙体松软开裂、或霉味扩散到相邻房间的，直接找专业人员，不要自行处理。'
+    cautions:
+      - level: stop
+        text: '酒精要在周围没有明火的状态下使用，并保持换气、戴口罩'
+        quote: '酒精要在周围没有明火的状态下使用，并保持换气、戴口罩'
+      - level: with-doctor
+        text: '有肺部疾病、哮喘或过敏体质的人，请先咨询自己的医生再动手'
+        quote: '有肺部疾病、哮喘或过敏体质的人，请先咨询自己的医生再动手'
+      - level: info
+        text: '材质不同可能出现污渍或褪色，请先在不显眼的地方试用'
+        quote: '材质不同可能出现污渍或褪色，请先在不显眼的地方试用'
+      - level: info
+        text: '（第 条的具体尺寸与面积标准是通行的一般性判断，说明书本身没有给出；说明书支持的是「快擦擦不干净、过一阵又会再长出来」这个判断。）'
+        quote: '（第 ③ 条的具体尺寸与面积标准是通行的一般性判断，说明书本身没有给出；说明书支持的是「快擦擦不干净、过一阵又会再长出来」这个判断。）'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 9198350802ff1451
+  - id: mold-alcohol-removal
+    status: reviewed
+    source:
+      anchor: '除霉方法：酒精消毒四步'
+    slot: anytime
+    remind:
+      text: '用约 70% 的酒精喷洒发霉区域，用湿透的抹布或毛巾压住或包上保鲜膜，放置至少 1 分钟再擦拭。'
+      quote: '除霉用浓度约 70% 的酒精喷洒，用湿透的抹布或毛巾压住、或包上保鲜膜放置 1 分钟以上再擦拭——按压等待才是让霉菌连根除掉的那一步'
+    dose:
+      - value: 70
+        unit: '%'
+        what: '酒精浓度'
+        quote: '使用浓度约 70% 的酒精喷洒在发霉区域。'
+      - value: 1
+        unit: '分钟'
+        what: '酒精按压后的最短放置时间'
+        quote: '放置 1 分钟以上再擦拭。'
+    duration:
+      basis: derived
+      sec: 60
+      formula: '1 分钟 × 60 秒/分钟 = 60 秒'
+    steps:
+      - id: alcohol-open-window
+        text: '先开窗通风，保持空气流通——密闭空间里喷酒精只会让孢子弥漫全屋。'
+        quote: '先开窗通风，保持空气流通——密闭空间里喷酒精只会让孢子弥漫全屋。'
+      - id: alcohol-wear-protection
+        text: '戴手套和口罩，使用浓度约 70% 的酒精喷洒在发霉区域。'
+        quote: '戴手套和口罩，使用浓度约 70% 的酒精喷洒在发霉区域。'
+      - id: alcohol-press-cloth
+        text: '用湿透的抹布或毛巾压在上面，以防止酒精过快挥发。'
+        quote: '用湿透的抹布或毛巾压在上面，以防止酒精过快挥发。'
+      - id: alcohol-wait-before-wiping
+        text: '放置 1 分钟以上再擦拭。'
+        quote: '放置 1 分钟以上再擦拭。'
+    cautions:
+      - level: info
+        text: '以上是轻中度霉斑的做法。'
+        quote: '以上是轻中度霉斑的做法。'
+      - level: stop
+        text: '如果霉斑呈黑色或绿色、或反复在同一位置复发，材料很可能已经大面积受侵，应请专业机构处理或更换受潮部分'
+        quote: '如果霉斑呈黑色或绿色、或反复在同一位置复发，材料很可能已经大面积受侵，应请专业机构处理或更换受潮部分'
+      - level: info
+        text: '对于顽固的霉菌，可以重复以上步骤多次。'
+        quote: '对于顽固的霉菌，可以重复以上步骤多次。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 2477c81ee949d984
+  - id: mold-furniture-gap
+    status: reviewed
+    source:
+      anchor: '家具发霉：留一道缝防复发'
+    slot: anytime
+    remind:
+      text: '在家具与墙壁、地板之间留出至少 4 厘米的缝隙。'
+      quote: '结论是4 厘米以上，家具背面的温度就不会降下来，湿度也不容易上去；留到 2 厘米就明显反弹了。'
+    dose:
+      - value: 4
+        unit: '厘米'
+        what: '家具与墙壁、地板之间的最小缝隙'
+        quote: '结论是4 厘米以上，家具背面的温度就不会降下来，湿度也不容易上去；留到 2 厘米就明显反弹了。'
+    steps:
+      - id: furniture-leave-gap
+        text: '为防止霉菌生长，建议在家具与墙壁、地板之间留出缝隙。'
+        quote: '为防止霉菌生长，建议在家具与墙壁、地板之间留出缝隙。'
+      - id: furniture-watch-humidity
+        text: '室内湿度 80% 以上就容易长霉'
+        quote: '室内湿度 80% 以上就容易长霉'
+      - id: furniture-watch-condensation
+        text: '在雨季和气温较低的日子，家具背面容易因轻微的温差引起凝露现象，从而增加发霉的风险。'
+        quote: '在雨季和气温较低的日子，家具背面容易因轻微的温差引起凝露现象，从而增加发霉的风险。'
+      - id: furniture-use-wall-gap
+        text: '如果无法在家具和地板之间留出间隙，家具与墙壁之间的间隙同样有效。'
+        quote: '如果无法在家具和地板之间留出间隙，家具与墙壁之间的间隙同样有效。'
+    cautions:
+      - level: info
+        text: '家具背后积的霉会同时成为异味来源，还会沾到衣物上。'
+        quote: '家具背后积的霉会同时成为异味来源，还会沾到衣物上。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c1dbeedf92087fa4

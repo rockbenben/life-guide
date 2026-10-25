@@ -1,0 +1,225 @@
+article: the-savvy-life-manual/food/canned-food.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '六道用罐头做的快手食谱'
+      reason: '本节未能完整抽卡：受全篇最多六张卡限制，只保留步骤较直接的鲭鱼清汤、鲭鱼卷心菜和鲭鱼茶泡涮；土豆泥焖饭、卡尔马坦风炖菜、油浸沙丁鱼黄油抹面包未另作卡片。'
+    - anchor: '另一面：水果罐头与旧罐头'
+      reason: '本节仅抽出水果罐头糖浆拌酸奶；关于油浸鱼罐头熟成和旧罐头风味的说明未另作卡片。'
+    - anchor: '罐头汁为什么比浓缩高汤还鲜'
+      reason: '本节是鲜味浓缩与密封杀菌原理的知识性说明，相关稀释使用原则已合并进“罐头：把汤汁当高汤用，别倒掉”卡片。'
+  images: []
+cards:
+  - id: dilute-canned-stock
+    status: reviewed
+    source:
+      anchor: '罐头：把汤汁当高汤用，别倒掉'
+    slot: anytime
+    remind:
+      text: '把罐头汁稀释后当高汤用，不要直接当汤喝。'
+      quote: '罐头最该留住的是汤汁：它是「超浓缩高汤」，日本料理人野崎洋光的用法是稀释后当高汤用，而不是直接当汤喝——鲭鱼罐头汁只放 15ml，其余用水补足。'
+    dose:
+      - value: 15
+        unit: ml
+        what: '鲭鱼罐头汁用量'
+        quote: '鲭鱼罐头汁只放 15ml，其余用水补足。'
+    steps:
+      - id: transfer-after-opening
+        text: '开罐当天就要倒进别的容器并尽快吃完。'
+        quote: '开罐当天就要倒进别的容器并尽快吃完。'
+      - id: dilute-canned-stock
+        text: '把罐头汁「稀释」后使用。'
+        quote:
+          - 把罐头汁「稀释」后使用。
+          - 而更关键的一点是加的水比普通煮鱼少得多——普通煮鱼的水最后大半都被倒掉了，罐头的液体却留在了罐内。溶进汤里的鲜味成分因此被浓缩。
+    cautions:
+      - level: info
+        text: '被浓缩过的美味如果直接拿来做菜，反而会让菜变咸发涩。'
+        quote: '被浓缩过的美味如果直接拿来做菜，反而会让菜变咸发涩。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5f966209dd6fe61b
+
+  - id: opened-can-two-rules
+    status: reviewed
+    source:
+      anchor: '开罐后的两条规则'
+    slot: anytime
+    remind:
+      text: '开罐当天就要倒进别的容器并尽快吃完。'
+      quote:
+        - 开罐当天就要倒进别的容器并尽快吃完。
+        - 转移到别的容器。即使内容物还剩很多，也请立刻倒进别的容器。
+    steps:
+      - id: move-to-container
+        text: '即使内容物还剩很多，也请立刻倒进别的容器。'
+        quote: '即使内容物还剩很多，也请立刻倒进别的容器。'
+      - id: eat-after-opening
+        text: '开罐后外气会进入，罐体本身也会随之劣化。'
+        quote:
+          - 开罐后外气会进入，罐体本身也会随之劣化。
+          - 尽快吃掉。开罐后外气会进入，罐体本身也会随之劣化。
+    cautions:
+      - level: stop
+        text: '厚生劳动省认为对成年人没有影响，但面向孕妇和婴幼儿家长发出提醒：应回避每餐都以罐头为中心的饮食。'
+        quote: '厚生劳动省认为对成年人没有影响，但面向孕妇和婴幼儿家长发出提醒：应回避每餐都以罐头为中心的饮食。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 26783bd5a1746b7e
+    name: 开罐当天倒出尽快吃
+
+  - id: mackerel-clear-soup
+    status: reviewed
+    source:
+      anchor: '六道用罐头做的快手食谱'
+    slot: anytime
+    remind:
+      text: '把罐头汁稀释成清汤汤底，加热后加入酱油和药味。'
+      quote:
+        - 器具里先把汤加热，趁热加入罐头汁，加入酱油拌匀，撒上药味即可。
+        - 罐头最该留住的是汤汁：它是「超浓缩高汤」，日本料理人野崎洋光的用法是稀释后当高汤用，而不是直接当汤喝——鲭鱼罐头汁只放 15ml，其余用水补足。开罐当天就要倒进别的容器并尽快吃完。下面是开罐后的规则和六道用罐头汁做的快手食谱。^[「缶詰」のトリセツ]
+    dose:
+      - value: 15
+        unit: ml
+        what: '鲭鱼罐头汁用量'
+        quote: '罐头汁只放 15ml，其余用水补足。'
+      - value: 100
+        unit: ml
+        what: '补足用水量'
+        quote: '水（不含罐头汁）100ml'
+    steps:
+      - id: dilute-clear-soup
+        text: '器具里先把汤加热，趁热加入罐头汁，加入酱油拌匀，撒上药味即可。'
+        quote: '器具里先把汤加热，趁热加入罐头汁，加入酱油拌匀，撒上药味即可。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 8546cf1a2adf04e5
+    name: 用鲭鱼罐头做清汤
+
+  - id: mackerel-cabbage-rolls
+    status: reviewed
+    source:
+      anchor: '六道用罐头做的快手食谱'
+    slot: anytime
+    remind:
+      text: '用卷心菜叶包住鲭鱼罐头肉，再加入汤汁煮。'
+      quote:
+        - '卷心菜叶铺开，中央放葫芦巴和葱，骑上鲭鱼罐头肉，把菜叶折起包住，最后用牙签固定。'
+        - '小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。'
+    dose:
+      - value: 200
+        unit: g
+        what: '鲭鱼水煮罐头用量'
+        quote: '鲭鱼水煮罐头 1 罐（200g）'
+      - value: 4
+        unit: 片
+        what: '卷心菜叶用量'
+        quote: '卷心菜叶（大）4 片'
+      - value: 400
+        unit: ml
+        what: '水量'
+        quote: '水（不含罐头汁）400ml'
+    duration:
+      basis: derived
+      sec: 600
+      quote: '小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。'
+      formula: '10 分钟 × 60 秒/分钟 = 600 秒'
+    steps:
+      - id: soften-cabbage
+        text: '卷心菜叶不切，整片用微波炉加热到变软，挤掉水分。'
+        quote: '卷心菜叶不切，整片用微波炉加热到变软，挤掉水分。'
+      - id: wrap-cabbage
+        text: '卷心菜叶铺开，中央放葫芦巴和葱，骑上鲭鱼罐头肉，把菜叶折起包住，最后用牙签固定。同样材料做 4 个。'
+        quote: '卷心菜叶铺开，中央放葫芦巴和葱，骑上鲭鱼罐头肉，把菜叶折起包住，最后用牙签固定。同样材料做 4 个。'
+      - id: simmer-cabbage
+        text: '小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。'
+        quote: '小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: f18ff9d028aa7f9e
+    name: 做鲭鱼罐头卷
+
+  - id: mackerel-tebo-nabe
+    status: reviewed
+    source:
+      anchor: '六道用罐头做的快手食谱'
+    slot: anytime
+    remind:
+      text: '用鲭鱼罐头煮茶泡涮，先煮主体材料，再加入韭菜和芝麻油。'
+      quote: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+    dose:
+      - value: 200
+        unit: g
+        what: '鲭鱼罐头用量'
+        quote: '鲭鱼罐头（连汤汁）1 罐（200g）'
+      - value: 80
+        unit: g
+        what: '酿造春雨用量'
+        quote: '酿造春雨（干）80g'
+      - value: 500
+        unit: ml
+        what: '水量'
+        quote: '水（不含罐头汁）500ml'
+    duration:
+      basis: derived
+      sec: 480
+      quote: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+      formula: '约 7 分钟 × 60 秒/分钟 + 1 分钟 × 60 秒/分钟 = 约 480 秒'
+    steps:
+      - id: cook-nabe-body
+        text: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+        quote: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+      - id: add-chives-and-oil
+        text: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+        quote: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: f82bb6414e0d7ec8
+    name: 做鲭鱼罐头涮锅
+
+  - id: fruit-syrup-yogurt
+    status: reviewed
+    source:
+      anchor: '另一面：水果罐头与旧罐头'
+    slot: anytime
+    remind:
+      text: '把水果罐头糖浆倒进酸奶，充分搅拌后按喜好加果肉。'
+      quote: '只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。想加果肉也好吃。'
+    dose:
+      - value: 60
+        valueMax: 90
+        unit: g
+        what: '糖浆建议用量'
+        quote: '水果罐头糖浆 适量（60～90g 为宜）'
+      - value: 120
+        unit: g
+        what: '酸奶用量'
+        quote: '酸奶 120g'
+    duration:
+      basis: quote
+      sec: 10
+      quote: '只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。'
+    steps:
+      - id: judge-syrup-sweetness
+        text: '糖浆甜度怎么判断：看罐头名称栏里横线的位置（从甜到淡）：'
+        quote: '糖浆甜度怎么判断：看罐头名称栏里横线的位置（从甜到淡）：'
+      - id: mix-yogurt
+        text: '只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。'
+        quote: '只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。'
+      - id: add-fruit
+        text: '想加果肉也好吃。'
+        quote: '想加果肉也好吃。'
+    cautions:
+      - level: info
+        text: '横线越靠左（''extaヘビー''）越甜，超浓糖浆最甜这件事很多人会搞反。'
+        quote: '横线越靠左（''extaヘビー''）越甜，超浓糖浆最甜这件事很多人会搞反。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: b4d320ccf020f044

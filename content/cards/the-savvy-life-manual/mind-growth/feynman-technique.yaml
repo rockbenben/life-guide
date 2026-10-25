@@ -1,0 +1,169 @@
+article: the-savvy-life-manual/mind-growth/feynman-technique.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: feynman-technique-overview
+    status: reviewed
+    name: "用费曼法讲给别人听"
+    source:
+      anchor: 学了很久还是讲不清楚？用费曼学习法讲给别人听
+    slot: anytime
+    images:
+      - 'https://img.newzone.top/202204192027831.png?imageMogr2/format/webp'
+    remind:
+      text: 用能不能讲给别人听来检验是否真正理解
+      quote: 费曼学习法不是某个具体工具，而是一套以「能不能讲给别人听」为验收标准的自学流程
+    steps:
+      - id: overview-select-concept
+        text: 选定概念
+        quote: 选定概念
+      - id: overview-explain-concept
+        text: 假装讲给完全不懂的人听
+        quote: 假装讲给完全不懂的人听
+      - id: overview-research-gap
+        text: 卡壳就回头查资料
+        quote: 卡壳就回头查资料
+      - id: overview-simplify
+        text: 用通俗表达讲到非专业人士也能听懂
+        quote: 用通俗表达讲到非专业人士也能听懂
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: d6d8b060dc90e934
+  - id: feynman-select-concept
+    status: reviewed
+    source:
+      anchor: 1. 选定概念
+    slot: anytime
+    remind:
+      text: 把概念写在一张纸的顶端
+      quote: 把概念写在一张纸的顶端
+    steps:
+      - id: select-what-to-learn
+        text: 先明确这次要学什么。把概念写在一张纸的顶端
+        quote: 先明确这次要学什么。把概念写在一张纸的顶端
+      - id: narrow-learning-goal
+        text: 把「系统学完这个领域」这种无边界的目标，收敛成一个可以被检验的具体命题。
+        quote: 把「系统学完这个领域」这种无边界的目标，收敛成一个可以被检验的具体命题。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 0850ad4a5554279e
+    name: 费曼法第 1 步选概念
+  - id: feynman-explain-concept
+    status: reviewed
+    source:
+      anchor: 2. 讲解
+    slot: anytime
+    remind:
+      text: 假装讲给完全不懂的人听
+      quote: 假装讲给一个完全不懂的人听。
+    steps:
+      - id: explain-layperson
+        text: 如果能真实地一对一或一对多地教当然最好
+        quote: 如果能真实地一对一或一对多地教当然最好
+      - id: rehearse-alternatively
+        text: 做不到的话，通过写作、录制教学视频、对着手机录音、实际动手等方式来演练。
+        quote: 做不到的话，通过写作、录制教学视频、对着手机录音、实际动手等方式来演练。
+      - id: find-breakpoints
+        text: 任何一个需要「呃……就是那种……」才能接上的地方，都是理解上的断点。
+        quote: 任何一个需要「呃……就是那种……」才能接上的地方，都是理解上的断点。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7202ff3b17d49621
+    name: 费曼法第 2 步讲一遍
+  - id: feynman-research-gaps
+    status: reviewed
+    source:
+      anchor: 3. 卡壳就回头查资料
+    slot: anytime
+    remind:
+      text: 卡壳后查资料并回到讲解步骤反复验证
+      quote:
+        - 反复查资料、学习、强化记忆，再回到第 2 步验证，直到能够顺利地讲授相应的知识。
+        - 书看了、笔记也做了，一开口给别人讲还是只能「呃……就是那种……」地卡壳？这种「我好像懂了」的感觉没法自证。
+    steps:
+      - id: research-materials
+        text: 反复查资料、学习、强化记忆
+        quote: 反复查资料、学习、强化记忆
+      - id: return-to-explanation
+        text: 再回到第 2 步验证，直到能够顺利地讲授相应的知识。
+        quote: 再回到第 2 步验证，直到能够顺利地讲授相应的知识。
+      - id: expose-hidden-gap
+        text: 糊过去的代价是那个缺口从此留在脑子里，只是被叙述的流畅掩盖住了。
+        quote:
+          - 糊过去的代价是那个缺口从此留在脑子里，只是被叙述的流畅掩盖住了。
+          - 反复查资料、学习、强化记忆，再回到第 2 步验证，直到能够顺利地讲授相应的知识。
+    cautions:
+      - level: info
+        text: 卡壳了 → 凭印象糊过去 → 继续往下讲。
+        quote: 卡壳了 → 凭印象糊过去 → 继续往下讲。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: d16427bf9c07aa25
+    name: 费曼法第 3 步查资料
+  - id: feynman-simplify-analogy
+    status: reviewed
+    source:
+      anchor: 4. 简化与类比
+    slot: anytime
+    remind:
+      text: 用通俗表达简化到非专业人士能听懂
+      quote: 最终简化到能让一个非专业人士听懂
+    steps:
+      - id: simplify-content
+        text: 把内容提炼、简化，去掉非必要的和多余的信息
+        quote: 把内容提炼、简化，去掉非必要的和多余的信息
+      - id: use-own-words
+        text: 用自己的语言通俗易懂地表达出来，而不是照本宣科。
+        quote: 用自己的语言通俗易懂地表达出来，而不是照本宣科。
+      - id: build-analogy
+        text: 你必须找到类比、理清因果、剔除掉那些只有专家才懂的术语。
+        quote: 你必须找到类比、理清因果、剔除掉那些只有专家才懂的术语。
+    cautions:
+      - level: info
+        text: 照本宣科的能力，恰恰是理解不深的表现。
+        quote: 照本宣科的能力，恰恰是理解不深的表现。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 45dfc85d9783a2da
+    name: 费曼法第 4 步简化类比
+  - id: feynman-acceptance-check
+    status: reviewed
+    source:
+      anchor: 验收标准
+    slot: anytime
+    remind:
+      text: 用试讲一遍检验是否真正掌握
+      quote: 不是「我看懂了」，而是「我试着讲一遍」
+    steps:
+      - id: try-explanation
+        text: 我试着讲一遍
+        quote: 我试着讲一遍
+      - id: use-fluency-signal
+        text: 讲得顺是一个有用的自检信号
+        quote: 讲得顺是一个有用的自检信号
+      - id: check-fluency-limit
+        text: 讲得流畅也可能只是叙述熟练。
+        quote: 讲得流畅也可能只是叙述熟练。
+      - id: pair-with-smart
+        text: 费曼学习法和 SMART 计划是一对。
+        quote: 费曼学习法和 SMART 计划是一对。
+      - id: assign-smart-and-feynman-roles
+        text: SMART 原则（具体、可测量、对你有意义、在一定期限内完成）解决的是「做不做得下去」，费曼学习法解决的是「是不是真懂了」。
+        quote: SMART 原则（具体、可测量、对你有意义、在一定期限内完成）解决的是「做不做得下去」，费曼学习法解决的是「是不是真懂了」。
+    cautions:
+      - level: info
+        text: 它确实能加深理解，但并不是检验理解的充分条件
+        quote: 它确实能加深理解，但并不是检验理解的充分条件
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9fb827ad7f94e933
+    name: 用试讲检验是否掌握

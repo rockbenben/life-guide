@@ -1,0 +1,379 @@
+article: 'the-savvy-life-manual/food/okara.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '为什么豆渣会「干」'
+      reason: '解释豆渣吸水和失水的结构原理，没有形成可独立执行的日常动作。'
+    - anchor: '健康数据：豆渣粉属于发酵性膳食纤维'
+      reason: '内容是研究数据、成分与功能方向，属于知识性信息而非可执行动作，未抽成卡。'
+    - anchor: '四道「鲜豆渣或豆渣粉都行」的快手菜'
+      reason: '包含四道彼此独立的食谱，需要分别建卡；受本篇最多六张卡限制，未抽成卡。'
+  images: []
+cards:
+  - id: okara-hydrate-before-cooking
+    status: reviewed
+    name: "豆渣先泡水"
+    source:
+      anchor: '豆渣：泡水炒过才蓬松，8 道食谱照做'
+    slot: anytime
+    remind:
+      text: '让豆渣吸够水，改善口感。'
+      quote: '豆渣吸水性极强，只要让它吸够水，口感会彻底翻面'
+    steps:
+      - id: soak-okara
+        text: '豆渣吸水性极强，只要让它吸够水，口感会彻底翻面'
+        quote: '豆渣吸水性极强，只要让它吸够水，口感会彻底翻面'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4f3af74cce95de67
+
+  - id: okara-moisture-lock
+    status: reviewed
+    source:
+      anchor: '保湿招数：把水锁住'
+    slot: anytime
+    remind:
+      text: '先让豆渣充分吸水，再拌入油锁住水分。'
+      quote:
+        - '让豆渣充分吸水'
+        - '拌入油'
+        - '形成的乳化液在豆渣表面成膜，内部的水就不容易流失'
+    steps:
+      - id: absorb-water
+        text: '第一步：让豆渣充分吸水'
+        quote: '第一步：让豆渣充分吸水'
+      - id: mix-with-oil
+        text: '拌入油——渗出来的水和油乳化'
+        quote: '拌入油——渗出来的水和油乳化'
+      - id: form-emulsion-film
+        text: '形成的乳化液在豆渣表面成膜，内部的水就不容易流失'
+        quote: '形成的乳化液在豆渣表面成膜，内部的水就不容易流失'
+      - id: mix-with-cornstarch
+        text: '豆渣和玉米淀粉先拌匀'
+        quote: '豆渣和玉米淀粉先拌匀'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: cfcee0f4c1b487ec
+
+  - id: okara-vegetable-stew
+    status: reviewed
+    name: "豆渣炖菜"
+    source:
+      anchor: '食谱一：松软多汁豆渣炖菜（4 人份）'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '按基础食谱制作豆渣炖菜，用量以鲜豆渣为准。'
+      quote: '这是说明书开篇的基础食谱，所有用量都以鲜豆渣为准。'
+    dose:
+      - value: 200
+        unit: 'g'
+        what: '鲜豆渣用量'
+        quote: '鲜豆渣 200g'
+      - value: 0.5
+        unit: '小勺'
+        what: '玉米淀粉用量'
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: '玉米淀粉 1/2 小勺'
+      - value: 80
+        unit: 'g'
+        what: '鸡肉用量'
+        quote: '鸡肉 80g'
+      - value: 30
+        unit: 'g'
+        what: '香菇用量'
+        quote: '香菇、胡萝卜、金针菇 各 30g'
+      - value: 30
+        unit: 'g'
+        what: '胡萝卜用量'
+        quote: '香菇、胡萝卜、金针菇 各 30g'
+      - value: 30
+        unit: 'g'
+        what: '金针菇用量'
+        quote: '香菇、胡萝卜、金针菇 各 30g'
+      - value: 50
+        unit: 'g'
+        what: '油豆腐用量'
+        quote: '油豆腐、蒟蒻、鱼饼 各 50g'
+      - value: 50
+        unit: 'g'
+        what: '蒟蒻用量'
+        quote: '油豆腐、蒟蒻、鱼饼 各 50g'
+      - value: 50
+        unit: 'g'
+        what: '鱼饼用量'
+        quote: '油豆腐、蒟蒻、鱼饼 各 50g'
+      - value: 2
+        unit: '大勺'
+        what: '淡口酱油用量'
+        quote: '淡口酱油 2 大勺'
+      - value: 1
+        unit: '大勺'
+        what: '砂糖用量'
+        quote: '砂糖 1 大勺'
+      - value: 500
+        unit: 'mL'
+        what: '高汤用量'
+        quote: '高汤 500mL'
+      - value: 1
+        unit: '大勺'
+        what: '油用量'
+        quote: '油 1 大勺'
+    steps:
+      - id: mix-okara-starch
+        text: '碗里放豆渣和玉米淀粉，拌匀。'
+        quote: '碗里放豆渣和玉米淀粉，拌匀。'
+      - id: cut-ingredients
+        text: '鸡肉切成小口块；香菇切薄片；胡萝卜切成火柴棒粗细；金针菇拆成小朵。油豆腐和蒟蒻切细一点的短册条，鱼饼切成 5mm 左右的圈。'
+        quote: '鸡肉切成小口块；香菇切薄片；胡萝卜切成火柴棒粗细；金针菇拆成小朵。油豆腐和蒟蒻切细一点的短册条，鱼饼切成 5mm 左右的圈。'
+      - id: simmer-stock
+        text: '锅里放高汤、淡口酱油、砂糖、盐，加入 A，煮到配料变软。'
+        quote: '锅里放高汤、淡口酱油、砂糖、盐，加入 A，煮到配料变软。'
+      - id: stir-fry-okara
+        text: '平底锅热油，放入豆渣，中火略炒。'
+        quote: '平底锅热油，放入豆渣，中火略炒。'
+      - id: combine-and-absorb
+        text: '一起煮，搅拌约 30 秒，等豆渣把水全部吸完就完成。'
+        quote: '一起煮，搅拌约 30 秒，等豆渣把水全部吸完就完成。'
+    cautions:
+      - level: info
+        text: '建议用鲜豆渣做；配料完全可以按自己的喜好替换。'
+        quote: '建议用鲜豆渣做；配料完全可以按自己的喜好替换。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 14bdd9b4ec95579e
+
+  - id: okara-meat-sauce
+    status: reviewed
+    name: "用豆渣做仿肉酱意面酱"
+    source:
+      anchor: '食谱二：仿肉酱意面酱（2 人份）'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '用豆渣制作仿肉酱意面酱。'
+      quote:
+        - '加入豆渣拌匀'
+        - '收汁煮约 5 分钟'
+        - '加入按包装标示煮好的意面和收尾用的橄榄油，拌到均匀'
+    dose:
+      - value: 100
+        unit: 'g'
+        what: '鲜豆渣用量'
+        quote: '鲜豆渣 100g'
+      - value: 70
+        unit: 'g'
+        what: '洋葱用量'
+        quote: '洋葱 70g'
+      - value: 60
+        unit: 'g'
+        what: '胡萝卜用量'
+        quote: '胡萝卜 60g'
+      - value: 60
+        unit: 'g'
+        what: '芹菜用量'
+        quote: '芹菜 60g'
+      - value: 1
+        unit: '小勺'
+        what: '蒜用量'
+        quote: '蒜（切末） 1 小勺'
+      - value: 1
+        unit: '大勺'
+        what: '烹调用橄榄油用量'
+        quote: '橄榄油 1 大勺'
+      - value: 1.5
+        unit: '大勺'
+        what: '红葡萄酒用量'
+        derived: { formula: '1 大勺半 = 1.5 大勺' }
+        quote: '红葡萄酒 1 大勺半'
+      - value: 15
+        unit: 'g'
+        what: '黄油用量'
+        quote: '黄油 15g'
+      - value: 250
+        unit: 'mL'
+        what: '水用量'
+        quote: '水 250mL'
+      - value: 40
+        unit: 'g'
+        what: '番茄膏用量'
+        quote: '番茄膏 40g'
+      - value: 1
+        unit: '大勺'
+        what: '番茄酱用量'
+        quote: '番茄酱、中浓酱 各 1 大勺'
+      - value: 1
+        unit: '大勺'
+        what: '中浓酱用量'
+        quote: '番茄酱、中浓酱 各 1 大勺'
+      - value: 2
+        unit: '小勺'
+        what: '颗粒浓汤用量'
+        quote: '颗粒浓汤 2 小勺'
+      - value: 1
+        unit: '小勺'
+        what: '砂糖用量'
+        quote: '砂糖 1 小勺'
+      - value: 200
+        unit: 'g'
+        what: '意面用量'
+        quote: '意面 200g'
+      - value: 1
+        unit: '大勺'
+        what: '收尾用橄榄油用量'
+        quote: '橄榄油（收尾用） 1 大勺'
+    steps:
+      - id: chop-vegetables
+        text: '洋葱、胡萝卜、芹菜切粗末，蒜切末。'
+        quote: '洋葱、胡萝卜、芹菜切粗末，蒜切末。'
+      - id: saute-vegetables
+        text: '平底锅放橄榄油和蒜开火，香味出来后加入洋葱、胡萝卜、芹菜，中火炒约 2 分钟。'
+        quote: '平底锅放橄榄油和蒜开火，香味出来后加入洋葱、胡萝卜、芹菜，中火炒约 2 分钟。'
+      - id: simmer-sauce
+        text: '加入豆渣拌匀，倒入红葡萄酒把酒精挥发掉；再加入 A，收汁煮约 5 分钟。'
+        quote: '加入豆渣拌匀，倒入红葡萄酒把酒精挥发掉；再加入 A，收汁煮约 5 分钟。'
+      - id: season-sauce
+        text: '加黄油，用盐和砂糖调整酱汁味道。'
+        quote: '加黄油，用盐和砂糖调整酱汁味道。'
+      - id: combine-pasta
+        text: '加入按包装标示煮好的意面和收尾用的橄榄油，拌到均匀。'
+        quote: '加入按包装标示煮好的意面和收尾用的橄榄油，拌到均匀。'
+      - id: add-parsley
+        text: '最后撒欧芹完成。'
+        quote: '最后撒欧芹完成。'
+    cautions:
+      - level: info
+        text: '建议用鲜豆渣；这份酱不只用于意面，做笔尖面或千层面的酱汁也可以'
+        quote: '建议用鲜豆渣；这份酱不只用于意面，做笔尖面或千层面的酱汁也可以'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: d400d62d0b6fdbb3
+
+  - id: okara-bonito-style-flakes
+    status: reviewed
+    name: "豆渣鲣鱼松"
+    source:
+      anchor: '食谱三：豆渣「鲣鱼松」（石原里美设计，2～3 人份）'
+    # 食谱 —— 原文没给时段。
+    slot: anytime
+    remind:
+      text: '直到豆渣变得松散干燥'
+      quote: '直到豆渣变得松散干燥'
+    dose:
+      - value: 100
+        unit: 'g'
+        what: '鲜豆渣用量'
+        quote: '鲜豆渣 100g'
+      - value: 2
+        unit: '大勺'
+        what: '油用量'
+        quote: '油 2 大勺'
+      - value: 1
+        unit: '大勺'
+        what: '高汤用量'
+        quote: '高汤 1 大勺'
+      - value: 1.5
+        unit: '小勺'
+        what: '鱼露用量'
+        derived:
+          formula: 1 小勺半 小勺 = 1.5 小勺
+        quote: '鱼露 1 小勺半'
+      - value: 0.5
+        unit: '小勺'
+        what: '盐用量'
+        derived:
+          formula: 1/2 小勺 = 0.5 小勺
+        quote: '盐 1/2 小勺'
+    steps:
+      - id: add-seasonings
+        text: '豆渣里加入红椒粉、姜黄粉，拌匀。'
+        quote: '豆渣里加入红椒粉、姜黄粉，拌匀。'
+      - id: fry-until-dry
+        text: '平底锅热油，放入，弱火偏中炒约 4 分钟，直到豆渣变得松散干燥。'
+        quote: '平底锅热油，放入①，弱火偏中炒约 4 分钟，直到豆渣变得松散干燥。'
+      - id: add-liquid-seasonings
+        text: '加入 A，再炒约 3 分钟让它混合均匀。'
+        quote: '加入 A，再炒约 3 分钟让它混合均匀。'
+      - id: strain-flakes
+        text: '用滤网过滤。'
+        quote: '用滤网过滤④。'
+    cautions:
+      - level: info
+        text: '撒在喜欢的意面上像帕玛森芝士那样拌沙拉、撒在荞麦面或年糕上也都不错'
+        quote:
+          - '撒在喜欢的意面上'
+          - '像帕玛森芝士那样拌沙拉、撒在荞麦面或年糕上也都不错'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: c92a457b94658c34
+
+  - id: okara-crepe
+    status: reviewed
+    name: "用豆渣粉做可丽饼"
+    source:
+      anchor: '两道甜点'
+    slot: anytime
+    remind:
+      text: '用豆渣粉制作可丽饼。'
+      quote:
+        - '豆渣粉和玉米淀粉先拌匀'
+        - '舀一勺②的面糊，弱火煎 1～2 分钟，然后翻面再煎约 1 分钟'
+    dose:
+      - value: 40
+        unit: 'g'
+        what: '豆渣粉用量'
+        quote: '豆渣粉 40g'
+      - value: 60
+        unit: 'g'
+        what: '玉米淀粉用量'
+        quote: '玉米淀粉 60g'
+      - value: 2
+        unit: '个'
+        what: '鸡蛋用量'
+        quote: '鸡蛋 2 个'
+      - value: 400
+        unit: 'mL'
+        what: '水用量'
+        quote: '水 400mL'
+      - value: 40
+        unit: 'g'
+        what: '砂糖用量'
+        quote: '砂糖 40g'
+      - value: 40
+        unit: 'g'
+        what: '黄油用量'
+        quote: '黄油 40g'
+    steps:
+      - id: melt-butter
+        text: '黄油用600W 微波炉加热 20 秒做成融化黄油。'
+        quote: '黄油用600W 微波炉加热 20 秒做成融化黄油。'
+      - id: mix-batter
+        text: '碗里把豆渣粉和玉米淀粉先拌匀，再加入鸡蛋、水、砂糖和融化黄油，拌匀。'
+        quote: '碗里把豆渣粉和玉米淀粉先拌匀，再加入鸡蛋、水、砂糖和融化黄油，拌匀。'
+      - id: heat-pan
+        text: '平底锅大火烧热，薄薄抹一层油，看到冒一点烟就先用湿抹布垫一下。'
+        quote: '平底锅大火烧热，薄薄抹一层油，看到冒一点烟就先用湿抹布垫一下。'
+      - id: cook-crepe
+        text: '舀一勺的面糊，弱火煎 1～2 分钟，然后翻面再煎约 1 分钟。'
+        quote: '舀一勺②的面糊，弱火煎 1～2 分钟，然后翻面再煎约 1 分钟。'
+      - id: fill-and-roll
+        text: '配上喜欢的配料卷起来就完成。'
+        quote: '配上喜欢的配料卷起来就完成。'
+    cautions:
+      - level: info
+        text: '可丽饼煎制时的热锅防烫'
+        quote: '可丽饼煎制时的热锅防烫'
+      - level: info
+        text: '说明书建议可丽饼用豆渣粉做；除了水果，夹鸡肉、金枪鱼等咸味配料也很好吃。'
+        quote: '说明书建议可丽饼用豆渣粉做；除了水果，夹鸡肉、金枪鱼等咸味配料也很好吃。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: b5d5ebe8b90d7875

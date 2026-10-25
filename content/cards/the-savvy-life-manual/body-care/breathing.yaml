@@ -1,0 +1,98 @@
+article: the-savvy-life-manual/body-care/breathing.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "呼吸又浅又快？4 个动作每天 3 次"
+      reason: "属于导言与训练概览，没有独立动作步骤；训练目标、频次和时长已并入主卡，不另设卡。"
+    - anchor: "为什么不是「深呼吸」，而是「呼吸伸展」"
+      reason: "主要解释呼吸伸展的概念与作用机制，没有新增独立动作；其中关于练习时长的效果已并入主卡。"
+    - anchor: "慢呼吸和深呼吸，分别在做什么"
+      reason: "主要说明快呼吸与深慢呼吸的生理机制，没有可独立执行的步骤；相关效果边界已并入主卡提示。"
+    - anchor: "很多「容易不适」的人，其实没在用肺"
+      reason: "属于调查数据与功能残气量的背景知识，不构成保健动作步骤，不另设卡。"
+  images: []
+cards:
+  - id: four-action-breathing-stretch-routine
+    status: reviewed
+    source:
+      anchor: "4 个动作构成 1 套"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016065629012.jpeg?imageMogr2/format/webp"
+      - "https://img.newzone.top/20261016065629451.jpeg?imageMogr2/format/webp"
+      - "https://img.newzone.top/20261016065629829.jpeg?imageMogr2/format/webp"
+    remind:
+      text: "双脚打开与肩同宽，完成整套呼吸伸展，每天早、中、晚各做 1 次"
+      quote: "总原则：把双脚打开与肩同宽。4 种动作各做一套算 5 分钟，每天早、中、晚各 1 次（即每天 3 回），建议先坚持 1 个月。"
+    effect:
+      text: "所以更实际的做法是呼吸伸展（呼吸ストレッチ）：一次 5 分钟，就有机会换来长时间的深长呼吸。"
+      quote: "所以更实际的做法是呼吸伸展（呼吸ストレッチ）：一次 5 分钟，就有机会换来长时间的深长呼吸。"
+    dose:
+      - value: 4
+        unit: 个
+        what: 整套动作数量
+        quote: "总原则：把双脚打开与肩同宽。4 种动作各做一套算 5 分钟，每天早、中、晚各 1 次（即每天 3 回），建议先坚持 1 个月。"
+      - value: 5
+        unit: 分钟
+        what: 每次整套时长
+        quote: "总原则：把双脚打开与肩同宽。4 种动作各做一套算 5 分钟，每天早、中、晚各 1 次（即每天 3 回），建议先坚持 1 个月。"
+      - value: 3
+        unit: 回
+        what: 每天练习频次
+        quote: "总原则：把双脚打开与肩同宽。4 种动作各做一套算 5 分钟，每天早、中、晚各 1 次（即每天 3 回），建议先坚持 1 个月。"
+      - value: 1
+        unit: 个月
+        what: 建议坚持时长
+        quote: "总原则：把双脚打开与肩同宽。4 种动作各做一套算 5 分钟，每天早、中、晚各 1 次（即每天 3 回），建议先坚持 1 个月。"
+    duration:
+      basis: quote
+      sec: 300
+      quote: "总原则：把双脚打开与肩同宽。4 种动作各做一套算 5 分钟，每天早、中、晚各 1 次（即每天 3 回），建议先坚持 1 个月。"
+      formula: "5 分钟 × 60 秒/分钟 = 300 秒"
+    steps:
+      - id: shoulder-circle-lift
+        text: "双脚打开与肩同宽。吸气：抬起双肩，用鼻子深深吸气。呼气：放下双肩，用嘴缓缓呼气。要点：像画圆一样转动肩膀（大幅回转）。"
+        quote:
+          - "双脚打开与肩同宽。"
+          - "①吸气：抬起双肩，用鼻子深深吸气。"
+          - "②呼气：放下双肩，用嘴缓缓呼气。"
+          - "要点：像画圆一样转动肩膀（大幅回转）。"
+        images:
+          - "https://img.newzone.top/20261016065629012.jpeg?imageMogr2/format/webp"
+      - id: inhale-stretch-left-right
+        text: "双脚打开与肩同宽。吸气：头向一侧倒，对侧的手朝斜下方伸展，同时深深吸气。呼气：缓缓吐气，同时回到原位。要点：这个动作左右两边都要做。"
+        quote:
+          - "双脚打开与肩同宽。"
+          - "①吸气：头向一侧倒，对侧的手朝斜下方伸展，同时深深吸气。"
+          - "②呼气：缓缓吐气，同时回到原位。"
+          - "要点：这个动作左右两边都要做。"
+        images:
+          - "https://img.newzone.top/20261016065629451.jpeg?imageMogr2/format/webp"
+      - id: inhale-stretch-rounded-back
+        text: "双脚打开与肩同宽。吸气：双手在身前十指交叉，边把背部弓成圆形边深深吸气。呼气：缓缓吐气，同时回到原位。"
+        quote:
+          - "双脚打开与肩同宽。"
+          - "①吸气：双手在身前十指交叉，边把背部弓成圆形边深深吸气。"
+          - "②呼气：缓缓吐气，同时回到原位。"
+      - id: exhale-stretch-chest-open
+        text: "双脚打开与肩同宽。呼气：双手在腰后交叉伸展，边挺起胸膛边缓缓呼气。吸气：缓缓吸气，同时回到原位。要点：让肩胛骨向身体中线靠拢。"
+        quote:
+          - "双脚打开与肩同宽。"
+          - "①呼气：双手在腰后交叉伸展，边挺起胸膛边缓缓呼气。"
+          - "②吸气：缓缓吸气，同时回到原位。"
+          - "要点：让肩胛骨向身体中线靠拢。"
+        images:
+          - "https://img.newzone.top/20261016065629829.jpeg?imageMogr2/format/webp"
+    cautions:
+      - level: with-doctor
+        text: "有整形外科疾病或呼吸系统疾病的人，请先向就诊医生咨询。"
+        quote: "有整形外科疾病或呼吸系统疾病的人，请先向就诊医生咨询。"
+      - level: info
+        text: "不过说明书也提醒：焦虑和身体不适的成因很多，减少呼吸次数并不能保证解决这些问题。"
+        quote: "不过说明书也提醒：焦虑和身体不适的成因很多，减少呼吸次数并不能保证解决这些问题。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 00769813d399b6e1
+    name: 每天 3 次 5 分钟呼吸伸展

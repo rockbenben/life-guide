@@ -1,0 +1,279 @@
+article: 'the-savvy-life-manual/food/coffee.md'
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '咖啡：豆子是果核，香气要靠热水「泡开」'
+      reason: '开篇导语汇总了每日饮用量、冠军冲法、咖啡油和生咖啡奶油，相关内容已分别制成卡，不另作重复卡。'
+    - anchor: '豆子不是豆子，果核才刚出生'
+      reason: '本节解释咖啡豆的来源、烘焙反应和分段萃取原理，没有可独立执行的日常动作。'
+  images: []
+cards:
+  - id: coffee-intake-timing
+    status: reviewed
+    name: "控制咖啡量与饮用时间"
+    source:
+      anchor: '健康力：绿原酸、肝功能，以及「3 杯」这个数字'
+    slot: anytime
+    remind:
+      text: '按建议控制黑咖啡的饮用量和饮用时机'
+      quote:
+        - '一天黑咖啡 3 杯左右。'
+        - '喝下之后，体内咖啡因减到一半需要大约 4 小时。'
+    dose:
+      - value: 3
+        unit: '杯'
+        what: '每日黑咖啡饮用量'
+        quote: '一天黑咖啡 3 杯左右。'
+    steps:
+      - id: set-daily-amount
+        text: '一天黑咖啡 3 杯左右。'
+        quote: '一天黑咖啡 3 杯左右。'
+      - id: account-for-caffeine-half-life
+        text: '喝下之后，体内咖啡因减到一半需要大约 4 小时。'
+        quote: '喝下之后，体内咖啡因减到一半需要大约 4 小时。'
+      - id: reduce-late-coffee
+        text: '为免影响睡眠，夜间以后要少喝或改喝低因（デカフェ）咖啡；'
+        quote: '为免影响睡眠，夜间以后要少喝或改喝低因（デカフェ）咖啡；'
+      - id: drink-after-meal
+        text: '胃酸容易分泌、反酸烧心的人，建议饭后饮用。'
+        quote: '胃酸容易分泌、反酸烧心的人，建议饭后饮用。'
+    cautions:
+      - level: info
+        text: '高血压（重症为收缩压 160 以上或舒张压 100mmHg 以上）——咖啡因有短暂升高血压的作用，同样建议压到一天 1 杯。'
+        quote: '高血压（重症为收缩压 160 以上或舒张压 100mmHg 以上）——咖啡因有短暂升高血压的作用，同样建议压到一天 1 杯。'
+    segments:
+      - id: child-or-pregnancy
+        when: [ 'age:child', 'pregnant' ]
+        action:
+          text: '将黑咖啡饮用量压到一天 1 杯'
+          quote: '中学生以下、孕妇——咖啡因影响大，建议压到一天 1 杯；'
+        dose:
+          text: '一天 1 杯'
+          quote: '中学生以下、孕妇——咖啡因影响大，建议压到一天 1 杯；'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 184034cf289d7d0c
+    variants:
+      busy:
+        include:
+          - set-daily-amount
+          - reduce-late-coffee
+
+  - id: champion-home-brew
+    status: reviewed
+    source:
+      anchor: '世界冠军的家用冲煮法'
+    slot: anytime
+    remind:
+      text: '按冠军家用冲法冲咖啡：豆与水 1:15，水温 90℃，分 4 次注水'
+      quote:
+        - 豆与水 1:15、水温 90℃，分 4 次注水，比例 2:4:2:2，第 1 次注完蒸 30 秒。
+        - 家用手冲总是一杯苦，问题出在没把豆子泡开。世界咖啡师大赛第 3 名石谷贵之的家用冲法是：豆与水 1:15、水温 90℃，分 4 次注水，比例 2:4:2:2，第 1 次注完蒸 30 秒。每天的量是黑咖啡 3 杯左右。下面是每日量、冠军冲法，以及咖啡油和生咖啡奶油的做法。^[「コーヒー」のトリセツ]
+    dose:
+      - value: 90
+        unit: '℃'
+        what: '冲煮水温'
+        quote: '水温 90℃。'
+      - value: 4
+        unit: '次'
+        what: '注水次数'
+        quote: '分 4 次注入，各次水量比例 2 : 4 : 2 : 2：'
+      - value: 30
+        unit: '秒'
+        what: '首次注水后的蒸制时长'
+        quote: '第 1 次：注入热水后蒸 30 秒。'
+      - value: 10
+        unit: '秒'
+        what: '第 2 次注完后的等待时间'
+        quote: '第 3 次：在第 2 次注完约 10 秒后开始注。'
+      - value: 5
+        unit: '秒'
+        what: '第 3 次注完后的等待时间'
+        quote: '第 4 次：在第 3 次注完约 5 秒后开始注。'
+    steps:
+      - id: prepare-bean-water-ratio
+        text: '咖啡豆 : 热水 = 1 : 15（按重量）；水温 90℃。'
+        quote:
+          - '咖啡豆 : 热水 = 1 : 15（按重量）；'
+          - '水温 90℃。'
+      - id: split-water-for-four-pours
+        text: '分 4 次注入，各次水量比例 2 : 4 : 2 : 2：'
+        quote: '分 4 次注入，各次水量比例 2 : 4 : 2 : 2：'
+      - id: bloom-after-first-pour
+        text: '第 1 次：注入热水后蒸 30 秒。'
+        quote: '第 1 次：注入热水后蒸 30 秒。'
+      - id: make-second-pour
+        text: '第 2 次：多注一些，把咖啡成分充分萃取出来。'
+        quote: '第 2 次：多注一些，把咖啡成分充分萃取出来。'
+      - id: make-third-pour
+        text: '第 3 次：在第 2 次注完约 10 秒后开始注。'
+        quote: '第 3 次：在第 2 次注完约 10 秒后开始注。'
+      - id: make-fourth-pour
+        text: '第 4 次：在第 3 次注完约 5 秒后开始注。'
+        quote: '第 4 次：在第 3 次注完约 5 秒后开始注。'
+      - id: use-pouring-pattern
+        text: '第 1～3 次画圈注入，第 4 次直接朝正中间冲下去。'
+        quote: '第 1～3 次画圈注入，第 4 次直接朝正中间冲下去。'
+      - id: adjust-bitterness
+        text: '喜欢更苦的人，延长最初的蒸制时间，苦味会更容易被抽出来。'
+        quote: '喜欢更苦的人，延长最初的蒸制时间，苦味会更容易被抽出来。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: ea9f4f7f9a556ee6
+
+  - id: coffee-oil
+    status: reviewed
+    source:
+      anchor: '咖啡油：把香气搬进油里'
+    slot: anytime
+    remind:
+      text: '把咖啡油淋在日常做的菜里增添香气'
+      quote: '只把香气搬进油里，日常做菜时淋一点，香气变厚、高级感立刻上来。'
+    dose:
+      - value: 2
+        unit: '大勺'
+        what: '研磨咖啡豆用量'
+        quote: '研磨咖啡豆 2 大勺'
+      - value: 100
+        unit: 'mL'
+        what: '沙拉油用量'
+        quote: '沙拉油 100mL'
+      - value: 500
+        unit: 'W'
+        what: '微波炉加热功率'
+        quote: '微波炉 500W 加热 1 分钟。'
+      - value: 1
+        unit: '分钟'
+        what: '每次微波加热时长'
+        quote: '微波炉 500W 加热 1 分钟。'
+      - value: 1
+        unit: '分钟'
+        what: '静置时长'
+        quote: '取出后轻轻搅动，静置 1 分钟。'
+      - value: 1
+        unit: '小勺'
+        what: '每日咖啡油用量'
+        quote: '注意别浇过头：一天控制在 1 小勺以内。'
+      - value: 1
+        unit: '周'
+        what: '冷藏保存时限'
+        quote: '冷藏保存，约 1 周内用完。'
+    steps:
+      - id: choose-ground-coffee
+        text: '必须用研磨咖啡豆，速溶咖啡做不了。'
+        quote: '必须用研磨咖啡豆，速溶咖啡做不了。'
+      - id: choose-mild-oil
+        text: '用白芝麻油等气味较弱的油也成立，但建议选香气不那么强的油。'
+        quote: '用白芝麻油等气味较弱的油也成立，但建议选香气不那么强的油。'
+      - id: mix-coffee-and-oil
+        text: '沙拉油里加入研磨咖啡豆，充分拌匀。'
+        quote: '沙拉油里加入研磨咖啡豆，充分拌匀。'
+      - id: heat-in-microwave
+        text: '微波炉 500W 加热 1 分钟。'
+        quote: '微波炉 500W 加热 1 分钟。'
+      - id: stir-and-rest
+        text: '取出后轻轻搅动，静置 1 分钟。'
+        quote: '取出后轻轻搅动，静置 1 分钟。'
+      - id: filter-with-tea-filter
+        text: '用茶滤（茶的滤网）过滤，即完成。不要用咖啡滤纸：油要滤很久才漏得下去，茶用滤器更合适。'
+        quote:
+          - '用茶滤（茶的滤网）过滤，即完成。'
+          - '不要用咖啡滤纸：油要滤很久才漏得下去，茶用滤器更合适。'
+      - id: chill-and-use
+        text: '冷藏保存，约 1 周内用完。'
+        quote: '冷藏保存，约 1 周内用完。'
+      - id: serve-on-food
+        text: '在平时做的菜里淋一点；海鲜、肉类、面条类菜肴最合适，香草冰淇淋也很搭；'
+        quote:
+          - '在平时做的菜里淋一点；'
+          - '海鲜、肉类、面条类菜肴最合适，香草冰淇淋也很搭；'
+    cautions:
+      - level: stop
+        text: '必须用研磨咖啡豆，速溶咖啡做不了。'
+        quote: '必须用研磨咖啡豆，速溶咖啡做不了。'
+      - level: stop
+        text: '不要用咖啡滤纸：油要滤很久才漏得下去，茶用滤器更合适。'
+        quote: '不要用咖啡滤纸：油要滤很久才漏得下去，茶用滤器更合适。'
+      - level: info
+        text: '（小心烫伤）'
+        quote: '（小心烫伤）'
+      - level: info
+        text: '注意别浇过头：一天控制在 1 小勺以内。'
+        quote: '注意别浇过头：一天控制在 1 小勺以内。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: cea69a702d0c3776
+    name: 用咖啡油给菜添香
+
+  - id: raw-coffee-cream
+    status: reviewed
+    source:
+      anchor: '生咖啡奶油：咸甜两用'
+    slot: anytime
+    remind:
+      text: '用整颗咖啡豆冷藏生奶油并打发成咖啡奶油'
+      quote:
+        - 这一款不能用研磨咖啡豆（速溶咖啡也不行），要用整颗的咖啡豆。
+        - 生奶油里放入咖啡豆，冷藏一晚。
+        - 按口味加盐或加糖，打发即完成。
+    dose:
+      - value: 2
+        unit: '大勺'
+        what: '咖啡豆用量'
+        quote: '咖啡豆 2 大勺'
+      - value: 200
+        unit: 'mL'
+        what: '生奶油用量'
+        quote: '生奶油 200mL'
+      - value: 2
+        unit: '天'
+        what: '成品使用期限'
+        quote: '约 2 天内用完。'
+      - value: 1
+        unit: '大勺'
+        what: '每日食用量参考'
+        quote: '注意别舀太多：一天以 1 大勺为参考。'
+    steps:
+      - id: choose-whole-beans
+        text: '这一款不能用研磨咖啡豆（速溶咖啡也不行），要用整颗的咖啡豆。'
+        quote: '这一款不能用研磨咖啡豆（速溶咖啡也不行），要用整颗的咖啡豆。'
+      - id: steep-in-cream
+        text: '生奶油里放入咖啡豆，冷藏一晚。'
+        quote: '生奶油里放入咖啡豆，冷藏一晚。'
+      - id: remove-beans
+        text: '取出咖啡豆（留在里面会越泡越苦）。'
+        quote: '取出咖啡豆（留在里面会越泡越苦）。'
+      - id: season-and-whip
+        text: '按口味加盐或加糖，打发即完成。'
+        quote: '按口味加盐或加糖，打发即完成。'
+      - id: use-within-two-days
+        text: '约 2 天内用完。'
+        quote: '约 2 天内用完。'
+      - id: choose-salt-or-sugar
+        text: '加盐的奶油适合香煎鸡排、小点托（カナッペ）这类咸味菜；加糖的奶油适合松饼等甜点。'
+        quote:
+          - '加盐的奶油适合香煎鸡排、小点托（カナッペ）这类咸味菜；'
+          - '加糖的奶油适合松饼等甜点。'
+      - id: serve-by-spoon
+        text: '打发的奶油直接铺在菜上即可；注意别舀太多：一天以 1 大勺为参考。'
+        quote:
+          - '打发的奶油直接铺在菜上即可；'
+          - '注意别舀太多：一天以 1 大勺为参考。'
+    cautions:
+      - level: stop
+        text: '这一款不能用研磨咖啡豆（速溶咖啡也不行），要用整颗的咖啡豆。'
+        quote: '这一款不能用研磨咖啡豆（速溶咖啡也不行），要用整颗的咖啡豆。'
+      - level: info
+        text: '取出咖啡豆（留在里面会越泡越苦）。'
+        quote: '取出咖啡豆（留在里面会越泡越苦）。'
+      - level: info
+        text: '注意别舀太多：一天以 1 大勺为参考。'
+        quote: '注意别舀太多：一天以 1 大勺为参考。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 0db988fca3f4c7f0

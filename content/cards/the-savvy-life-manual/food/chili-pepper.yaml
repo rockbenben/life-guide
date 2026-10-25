@@ -1,0 +1,258 @@
+article: the-savvy-life-manual/food/chili-pepper.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: '一味辣椒：炒出甜香，辛味还能放大咸味'
+      reason: '本节是全文摘要，制作、食用和减盐液用法已分别收入后续卡片，单列会重复。'
+    - anchor: '辣在种子上，甜在果肉上'
+      reason: '本节主要解释辣椒的种子、果肉结构及加热增香机制，相关加热结论已并入做法卡，没有独立的可执行步骤。'
+  images: []
+cards:
+  - id: chili-oil-dry-stir
+    status: reviewed
+    name: "干炒辣椒做辣油"
+    source:
+      anchor: '做法一：干炒型辣椒油（基础版）'
+    slot: anytime
+    remind:
+      text: '将15g一味辣椒强火干炒1分钟，加入150g常温油浸泡并冷藏一晚。'
+      quote:
+        - '一味辣椒 15g'
+        - '油 150g'
+        - '一味辣椒下锅，强火干炒 1 分钟。'
+        - '倒入常温的油浸泡。'
+        - '冷藏一晚，完成。'
+    effect:
+      text: '颜色变深，就是甜香出来的信号，别炒过头。'
+      quote: '颜色变深，就是甜香出来的信号，别炒过头。'
+    dose:
+      - value: 15
+        unit: g
+        what: '一味辣椒用量'
+        quote: '一味辣椒 15g'
+      - value: 150
+        unit: g
+        what: '食用油用量'
+        quote: '油 150g'
+    duration:
+      basis: quote
+      sec: 60
+      quote: '强火干炒 1 分钟'
+    steps:
+      - id: dry-stir-chili
+        text: '一味辣椒下锅，强火干炒 1 分钟。'
+        quote: '一味辣椒下锅，强火干炒 1 分钟。'
+      - id: stop-when-color-darkens
+        text: '颜色变深，就是甜香出来的信号，别炒过头。'
+        quote: '颜色变深，就是甜香出来的信号，别炒过头。'
+      - id: add-room-temperature-oil
+        text: '倒入常温的油浸泡。'
+        quote: '倒入常温的油浸泡。'
+      - id: chill-overnight
+        text: '冷藏一晚，完成。'
+        quote: '冷藏一晚，完成。'
+    cautions:
+      - level: info
+        text: '干炒时会冒大量烟，在意的话戴口罩'
+        quote: '干炒时会冒大量烟，在意的话戴口罩'
+      - level: stop
+        text: '油会氧化，1 周内用完。'
+        quote: '油会氧化，1 周内用完。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b9e7ab51f42b6927
+
+  - id: chili-oil-hot-oil
+    status: reviewed
+    name: "泼热油做辣椒油"
+    source:
+      anchor: '做法二：泼油型，甜香更明显'
+    slot: anytime
+    remind:
+      text: '将15g一味辣椒与1小勺水拌匀，浇上150g的160℃热油，晾到常温后冷藏一晚。'
+      quote:
+        - 一味辣椒 15g
+        - 油 150g
+        - 加 1 小勺水拌匀
+        - 另起锅把油加热到 160℃。
+        - 晾到常温，再冷藏一晚，完成。
+        - 一味辣椒的甜香必须加热才出得来：15g 下锅强火干炒 1 分钟（颜色变深就是甜香出来的信号），倒入 150g 常温油浸泡、冷藏一晚；想更甜就先加 1 小勺水拌匀，再浇上 160℃ 的热油。菜做好后只淋 1～2 大勺即可。下面是两个做法和四个「只淋油」的吃法。^[「一味とうがらし」のトリセツ]
+    effect:
+      text: '同样的辣椒和油，只多一步水，香气被拉得更满加热之后甜香成分增加'
+      quote:
+        - '同样的辣椒和油，只多一步水，香气被拉得更满'
+        - '加热之后甜香成分增加'
+    dose:
+      - value: 15
+        unit: g
+        what: '一味辣椒用量'
+        quote: '一味辣椒 15g'
+      - value: 150
+        unit: g
+        what: '食用油用量'
+        quote: '油 150g'
+      - value: 1
+        unit: 小勺
+        what: '加入的水量'
+        quote: '水 1 小勺'
+    steps:
+      - id: mix-chili-and-water
+        text: '一味辣椒放进耐热碗，加 1 小勺水拌匀。'
+        quote: '一味辣椒放进耐热碗，加 1 小勺水拌匀。'
+      - id: check-small-bubbles
+        text: '插一根筷子进去，冒出细小气泡就可以了。'
+        quote: '插一根筷子进去，冒出细小气泡就可以了。'
+      - id: heat-oil
+        text: '另起锅把油加热到 160℃。'
+        quote: '另起锅把油加热到 160℃。'
+      - id: pour-hot-oil
+        text: '热油直接浇进盛辣椒的碗里。'
+        quote: '热油直接浇进盛辣椒的碗里。'
+      - id: cool-and-chill
+        text: '晾到常温，再冷藏一晚，完成。'
+        quote: '晾到常温，再冷藏一晚，完成。'
+    cautions:
+      - level: stop
+        text: '浇热油这一步会溅油、冒烟，务必在周围没有任何东西、通风良好的地方操作。'
+        quote: '浇热油这一步会溅油、冒烟，务必在周围没有任何东西、通风良好的地方操作。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 8d49bb8bf8255e3a
+
+  - id: chili-oil-four-uses
+    status: reviewed
+    name: "菜做好后淋辣椒油"
+    source:
+      anchor: '怎么用：四个「只淋油」的做法'
+    slot: anytime
+    remind:
+      text: '菜做好后每道菜淋1～2大勺辣椒油。'
+      quote:
+        - '菜本身怎么烧都行，最后淋一勺油就成立'
+        - '每道菜 1～2 大勺为宜'
+    dose:
+      - value: 1
+        valueMax: 2
+        unit: 大勺
+        what: '每道菜用量'
+        quote: '每道菜 1～2 大勺为宜'
+    steps:
+      - id: serve-with-shrimp
+        text: '香辣虾（エビチリ）：现成的熟虾浇淋上辣椒油，醇厚感和香气一起上去，味道立刻变成正经中餐馆的水平；'
+        quote: '香辣虾（エビチリ）：现成的熟虾浇淋上辣椒油，醇厚感和香气一起上去，味道立刻变成正经中餐馆的水平；'
+      - id: serve-with-chicken
+        text: '口水鸡（よだれ鶏）：蒸熟的鸡腿肉加盐，淋油即可，把甜香吃得最完整的一个吃法；'
+        quote: '口水鸡（よだれ鶏）：蒸熟的鸡腿肉加盐，淋油即可，把甜香吃得最完整的一个吃法；'
+      - id: serve-with-sashimi
+        text: '薄切拼盘（カルパッチョ）：超市买的刺身加盐后淋油，白身鱼、章鱼都合适；'
+        quote: '薄切拼盘（カルパッチョ）：超市买的刺身加盐后淋油，白身鱼、章鱼都合适；'
+      - id: serve-with-ice-cream
+        text: '香草冰淇淋：淋在冰淇淋上，甜香相遇，香草本来的甜更突出，还有一点回味上来的辣，是新奇体验。'
+        quote: '香草冰淇淋：淋在冰淇淋上，甜香相遇，香草本来的甜更突出，还有一点回味上来的辣，是新奇体验。'
+    cautions:
+      - level: info
+        text: '用量提醒：因为是真的辣，每道菜 1～2 大勺为宜，别手抖。'
+        quote: '用量提醒：因为是真的辣，每道菜 1～2 大勺为宜，别手抖。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 6e6060305f8fd5bc
+
+  - id: magic-salt-liquid-prep
+    status: reviewed
+    name: "泡辣椒做减盐调味液"
+    source:
+      anchor: '辛味能让大脑把咸味判得更咸'
+    slot: anytime
+    remind:
+      text: '将1小勺一味辣椒放入150mL白色利口酒，冷藏一晚后过滤辣椒再保存。'
+      quote:
+        - '把1 小勺一味辣椒放进 150mL 白色利口酒'
+        - '冷藏一晚，完成。'
+        - '泡过一整夜后要把辣椒过滤掉再保存'
+    effect:
+      text: '加了辣椒素的盐水被更多人评为「更咸」节目中靠这瓶液体做到了减盐 30%'
+      quote:
+        - '加了辣椒素的盐水被更多人评为「更咸」'
+        - '节目中靠这瓶液体做到了减盐 30%'
+    dose:
+      - value: 1
+        unit: 小勺
+        what: '一味辣椒用量'
+        quote: '一味辣椒 1 小勺'
+      - value: 150
+        unit: mL
+        what: '白色利口酒用量'
+        quote: '白色利口酒 150mL'
+    steps:
+      - id: steep-chili-in-liqueur
+        text: '把1 小勺一味辣椒放进 150mL 白色利口酒'
+        quote: '把1 小勺一味辣椒放进 150mL 白色利口酒'
+      - id: chill-liquid-overnight
+        text: '冷藏一晚，完成。'
+        quote: '冷藏一晚，完成。'
+      - id: filter-chili
+        text: '泡过一整夜后要把辣椒过滤掉再保存，否则辣味会持续增加。'
+        quote: '泡过一整夜后要把辣椒过滤掉再保存，否则辣味会持续增加。'
+    cautions:
+      - level: stop
+        text: '泡过一整夜后要把辣椒过滤掉再保存，否则辣味会持续增加。'
+        quote: '泡过一整夜后要把辣椒过滤掉再保存，否则辣味会持续增加。'
+      - level: info
+        text: '建议1 个月内用完。'
+        quote: '建议1 个月内用完。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 402d121e09e655b6
+
+  - id: magic-salt-liquid-use
+    status: reviewed
+    source:
+      anchor: '辛味能让大脑把咸味判得更咸'
+    slot: anytime
+    remind:
+      text: '每500mL做菜水放1小勺减盐液，所有调味料加完后再放，随后煮3～5分钟。'
+      quote:
+        - '做菜用水的 500mL 对 1 小勺'
+        - '所有调味料加完之后再放减盐液'
+        - '放完之后 3～5 分钟煮一下'
+    effect:
+      text: '盐和酱油最能体现咸味增强的效果节目中靠这瓶液体做到了减盐 30%'
+      quote:
+        - '盐和酱油最能体现咸味增强的效果'
+        - '节目中靠这瓶液体做到了减盐 30%'
+    dose:
+      - value: 500
+        unit: mL
+        what: '配比中的做菜水量'
+        quote: '做菜用水的 500mL 对 1 小勺'
+      - value: 1
+        unit: 小勺
+        what: '配比中的减盐液用量'
+        quote: '做菜用水的 500mL 对 1 小勺'
+    steps:
+      - id: add-liquid-to-cooking-water
+        text: '做菜用水的 500mL 对 1 小勺。'
+        quote: '做菜用水的 500mL 对 1 小勺。'
+      - id: add-after-seasoning
+        text: '所有调味料加完之后再放减盐液，效果最容易感觉到'
+        quote: '所有调味料加完之后再放减盐液，效果最容易感觉到'
+      - id: simmer-after-adding
+        text: '放完之后 3～5 分钟煮一下可以把酒精挥发掉'
+        quote: '放完之后 3～5 分钟煮一下可以把酒精挥发掉'
+    cautions:
+      - level: info
+        text: '和味噌一起使用时效果会减弱'
+        quote: '和味噌一起使用时效果会减弱'
+      - level: stop
+        text: '再多就会直接尝到辣味。'
+        quote: '再多就会直接尝到辣味。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7f10ea48e86c5b31
+    name: 做菜水加 1 小勺减盐液

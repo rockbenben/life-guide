@@ -1,0 +1,78 @@
+/**
+ * 「发现」：今天轮到的那几张 —— 手册里还没进你日常的动作。
+ *
+ * 一天给三张（不是一张）：候选池有几百张，一天一张的话一个月才看过 12%。
+ */
+import { useState } from "preact/hooks";
+
+import { CardView } from "./Card.tsx";
+import type { Card, Mode } from "../domain/routine.ts";
+
+export interface DiscoverPanelProps {
+  /** 今天轮到的几张 */
+  picks: Card[];
+  /** 屏上叫什么 */
+  names: Map<string, string>;
+  /** 手册里还有多少个动作没进日常 */
+  pool: number;
+  mode: Mode;
+  tags: string[];
+  onOpenArticle?: (path: string) => void;
+  onAdd: (card: Card) => void;
+  onNext: () => void;
+}
+
+export function DiscoverPanel({
+  picks,
+  names,
+  pool,
+  mode,
+  tags,
+  onOpenArticle,
+  onAdd,
+  onNext,
+}: DiscoverPanelProps) {
+  if (!picks.length) return null;
+  // 「发现」里这些卡的标题是可以点的（指针、悬停变色都在说它能点）——
+  // 以前给的是个空回调，按下去什么也不发生，读者以为坏了。展开看看做法是对的。
+  const [expanded, setExpanded] = useState<string | null>(null);
+  return (
+    <section class="lg-discover">
+      <h2>发现</h2>
+      <p class="lg-do">
+        手册里有 <span class="tabular">{pool}</span> 个动作还没进你的日常。
+        今天轮到这 {picks.length} 张：
+      </p>
+      {picks.map((c) => (
+        <div class="lg-discover-item" key={c.id}>
+          <div class="lg-log">
+            <CardView
+              card={c}
+              mode={mode}
+              userTags={tags}
+              done={false}
+              streakDays={0}
+              expanded={expanded === c.id}
+              onExpand={() => setExpanded(expanded === c.id ? null : c.id)}
+              onToggle={() => {}}
+              readOnly
+              displayName={names.get(c.id)}
+              onOpenArticle={onOpenArticle}
+            />
+          </div>
+          <div class="lg-btn-row">
+            <button class="lg-btn" onClick={() => onAdd(c)}>
+              放进今天
+            </button>
+          </div>
+        </div>
+      ))}
+      <div class="lg-btn-row" style="margin-top:14px">
+        <button class="lg-btn lg-btn-ghost" onClick={onNext}>
+          换一批
+        </button>
+      </div>
+      <p class="lg-pool">也可以到「手册」里按篇翻 —— 每篇都标了哪几个动作能照着做。</p>
+    </section>
+  );
+}

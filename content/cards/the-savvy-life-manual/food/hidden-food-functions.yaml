@@ -1,0 +1,37 @@
+article: the-savvy-life-manual/food/hidden-food-functions.md
+kind: practice
+coverage: partial
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: four-ingredient-activation-switches
+    status: reviewed
+    name: "四种食材各有一招"
+    source:
+      anchor: "四种食材的隐藏用法：整根烤、擦泥、几滴醋、泡水"
+    slot: anytime
+    remind:
+      text: "四种食材分别整根烤、先擦泥、按菜品总量的 0.5%～1% 加醋并从 3～4 滴起步、切片后泡进沸水。"
+      quote:
+        - "杏鲍菇整根烤（整根 200℃ 烤 10 分钟，或切大块裹培根 200℃ 烤面包机 / 220℃ 烤箱烤 15～20 分钟）"
+        - "土豆先用擦泥器擦泥再下锅"
+        - "醋按菜品总量的 0.5%～1%，从 3～4 滴起步"
+        - "大蒜切片后泡进沸水——汤用 500mL 水＋蒜片 3g 煮 5 分钟以上，炒菜用 100mL 水＋蒜片 9g＋盐 2 撮 煮 5 分钟。"
+    steps:
+      - id: roast-king-oyster-whole
+        text: "杏鲍菇整根烤（整根 200℃ 烤 10 分钟，或切大块裹培根 200℃ 烤面包机 / 220℃ 烤箱烤 15～20 分钟）"
+        quote: "杏鲍菇整根烤（整根 200℃ 烤 10 分钟，或切大块裹培根 200℃ 烤面包机 / 220℃ 烤箱烤 15～20 分钟）"
+      - id: grate-potato-first
+        text: "土豆先用擦泥器擦泥再下锅"
+        quote: "土豆先用擦泥器擦泥再下锅"
+      - id: start-vinegar-drops
+        text: "醋按菜品总量的 0.5%～1%，从 3～4 滴起步"
+        quote: "醋按菜品总量的 0.5%～1%，从 3～4 滴起步"
+      - id: soak-sliced-garlic
+        text: "大蒜切片后泡进沸水——汤用 500mL 水＋蒜片 3g 煮 5 分钟以上，炒菜用 100mL 水＋蒜片 9g＋盐 2 撮 煮 5 分钟。"
+        quote: "大蒜切片后泡进沸水——汤用 500mL 水＋蒜片 3g 煮 5 分钟以上，炒菜用 100mL 水＋蒜片 9g＋盐 2 撮 煮 5 分钟。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 229f461d3a0bfaef

@@ -1,0 +1,354 @@
+article: "the-savvy-life-manual/body-care/food-allergy.md"
+kind: condition
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: food-allergy-not-always-oral
+    status: reviewed
+    name: "过敏不一定来自吃"
+    source:
+      anchor: "食物过敏：让你发作的，常常不是吃下去的那口"
+    remind:
+      text: "食物过敏的起因未必是「吃」。"
+      quote: "食物过敏的起因，未必是「吃」"
+    steps:
+      - id: recognize-tick-route
+        text: "明明是吃了牛肉才发作，可被蜱虫叮咬过"
+        quote:
+          - 明明是吃了牛肉才发作，可被蜱虫叮咬过
+          - 牛肉、猪肉
+      - id: recognize-jellyfish-route
+        text: "明明是吃了纳豆才出事，可曾被水母蜇过"
+        quote: "明明是吃了纳豆才出事，可曾被水母蜇过"
+      - id: recognize-latex-route
+        text: "明明是吃了香蕉、牛油果才难受，可天天戴着乳胶手套上班"
+        quote: "明明是吃了香蕉、牛油果才难受，可天天戴着乳胶手套上班"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: bf20227b857f55d1
+
+  - id: pollen-food-cross-reactivity
+    status: reviewed
+    source:
+      anchor: "躲开花粉，同时也是躲开食物过敏"
+    remind:
+      text: "食物过敏可能由花粉引起；花粉和果蔬的蛋白质有相似片段，免疫系统会把两者混淆。"
+      quote: "元凶是食物过敏由花粉引起。原因在于花粉和果蔬的蛋白质有相似片段，免疫系统两边都会误判。"
+    steps:
+      - id: tree-pollen-foods
+        text: "苹果、桃、樱桃、大豆、猕猴桃 ← 4～6 月与1～6 月开花树木的花粉"
+        quote: "苹果、桃、樱桃、大豆、猕猴桃 ← 4～6 月与1～6 月开花树木的花粉"
+      - id: grass-pollen-foods
+        text: "甜瓜、西瓜 ← 一种禾本科杂草（5～6 月）的花粉"
+        quote: "甜瓜、西瓜 ← 一种禾本科杂草（5～6 月）的花粉"
+      - id: ragweed-pollen-foods
+        text: "甜瓜、西瓜 ← 豚草（8～10 月）的花粉"
+        quote: "甜瓜、西瓜 ← 豚草（8～10 月）的花粉"
+      - id: mugwort-pollen-foods
+        text: "芹菜、芒果 ← 艾草（8～10 月）的花粉"
+        quote: "芹菜、芒果 ← 艾草（8～10 月）的花粉"
+      - id: cedar-pollen-foods
+        text: "番茄 ← 柳杉、丝杉（2～4 月）的花粉"
+        quote: "番茄 ← 柳杉、丝杉（2～4 月）的花粉"
+    cautions:
+      - level: info
+        text: "柳杉、丝杉花粉过敏的人，吃番茄可能出事"
+        quote: "柳杉、丝杉花粉过敏的人，吃番茄可能出事"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: bedb56891d4b75da
+    name: 花粉和食物会交叉过敏
+
+  - id: pollen-season-prevention
+    status: reviewed
+    source:
+      anchor: "躲开花粉，同时也是躲开食物过敏"
+    remind:
+      text: "别把房间的窗户一直开着认真戴口罩"
+      quote:
+        - 别把房间的窗户一直开着
+        - 认真戴口罩
+        - 这份说明书的主线只有一句：食物过敏的起因，未必是「吃」。能直接照做的有三件：花粉季别把房间的窗户一直开着、认真戴口罩；饭后要运动就别吃小麦，不运动就照常吃（危险窗口在饭后 2～4 小时）；以及日本专门的过敏专科医生检索网站和一份不含蛋、奶、小麦粉的玛德琳风蛋糕配方。^[「食物アレルギー」のトリセツ]
+    effect:
+      text: "由花粉引起的食物过敏，有可能通过不碰花粉、不吸入花粉来不让症状恶化目前还没有食物过敏的人，也可能因此得到预防"
+      quote:
+        - "由花粉引起的食物过敏，有可能通过不碰花粉、不吸入花粉来不让症状恶化"
+        - "目前还没有食物过敏的人，也可能因此得到预防"
+    steps:
+      - id: keep-window-closed
+        text: "别把房间的窗户一直开着"
+        quote:
+          - 别把房间的窗户一直开着
+          - 这份说明书的主线只有一句：食物过敏的起因，未必是「吃」。能直接照做的有三件：花粉季别把房间的窗户一直开着、认真戴口罩；饭后要运动就别吃小麦，不运动就照常吃（危险窗口在饭后 2～4 小时）；以及日本专门的过敏专科医生检索网站和一份不含蛋、奶、小麦粉的玛德琳风蛋糕配方。^[「食物アレルギー」のトリセツ]
+      - id: wear-mask
+        text: "认真戴口罩"
+        quote: "认真戴口罩"
+    notices:
+      - level: with-doctor
+        text: "症状改善存在个人差异，务必遵过敏专科医生的指导。"
+        quote: "症状改善存在个人差异，务必遵过敏专科医生的指导。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9a1c8f172f872b11
+    name: 花粉季关窗戴口罩
+
+  - id: allergen-avoidance-reintroduction
+    status: reviewed
+    source:
+      anchor: "躲开花粉，同时也是躲开食物过敏"
+    remind:
+      text: "继续不接触过敏原，体内抗体可能减少，也有可能重新吃回曾经喜欢的食物。"
+      quote:
+        - "继续过不接触过敏原的生活，体内的抗体就会减少"
+        - "慢慢有可能重新吃回曾经喜欢的食物"
+    effect:
+      text: "说明书中一位经营面包咖啡馆的读者，在被判断为小麦接触过多导致过敏后，坚持了约 3 年不接触小麦，之后又能吃面包了。"
+      quote: "说明书中一位经营面包咖啡馆的读者，在被判断为小麦接触过多导致过敏后，坚持了约 3 年不接触小麦，之后又能吃面包了。"
+    steps:
+      - id: avoid-allergen
+        text: "继续过不接触过敏原的生活"
+        quote: "继续过不接触过敏原的生活"
+    notices:
+      - level: with-doctor
+        text: "症状改善存在个人差异，务必遵过敏专科医生的指导。"
+        quote: "症状改善存在个人差异，务必遵过敏专科医生的指导。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 1f9148778572fd11
+    name: 长期避食后可能吃回来
+
+  - id: exercise-triggered-food-allergy
+    status: reviewed
+    name: "饭后运动的危险窗口"
+    source:
+      anchor: "饭后 2～4 小时：运动的危险窗口"
+    remind:
+      text: "饭后要运动就不要吃小麦；饭后不运动，小麦可以照常吃。"
+      quote:
+        - "如果饭后要运动 → 不要吃小麦"
+        - "如果饭后不运动 → 小麦可以照常吃"
+    steps:
+      - id: recognize-exercise-trigger
+        text: "光吃了没事，一运动就发病食物依赖性运动诱发过敏性休克"
+        quote:
+          - "光吃了没事，一运动就发病"
+          - "食物依赖性运动诱发过敏性休克"
+      - id: exercise-load-test
+        text: "一种是在跑步机上进行的运动负荷试验，先吃下作为过敏原的食物，再真的动起来，确认会不会出现症状"
+        quote: "一种是在跑步机上进行的运动负荷试验，先吃下作为过敏原的食物，再真的动起来，确认会不会出现症状"
+      - id: note-other-triggers
+        text: "这些因素同样容易诱发过敏：压力、疲劳、酒精、止痛药、睡眠不足、洗澡"
+        quote: "这些因素同样容易诱发过敏：压力、疲劳、酒精、止痛药、睡眠不足、洗澡"
+    cautions:
+      - level: info
+        text: "饭后 2～4 小时内运动，可能会出现症状"
+        quote: "饭后 2～4 小时内运动，可能会出现症状"
+    notices:
+      - level: with-doctor
+        text: "担心的话请直接咨询过敏专科医生"
+        quote: "担心的话请直接咨询过敏专科医生"
+      - level: info
+        text: "它需要多名能随时应急处置的医生在场，能做这个检查的机构很少"
+        quote: "它需要多名能随时应急处置的医生在场，能做这个检查的机构很少"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 4fce5a9daa4d1a86
+
+  - id: allergy-specialist-directory
+    status: reviewed
+    source:
+      anchor: "找专科医生，和一份无蛋奶面粉的甜点"
+    remind:
+      text: "通过过敏门户检索过敏专科医生。"
+      quote:
+        - "日本有一个专门的过敏专科医生检索网站"
+        - "过敏门户"
+    steps:
+      - id: open-allergy-portal
+        text: "医疗机构信息 → 过敏专科医生 → 搜索过敏专科医生"
+        quote: "医疗机构信息 → 过敏专科医生 → 搜索过敏专科医生"
+      - id: search-japanese-allergy-society
+        text: "跳转到日本过敏学会（日本アレルギー学会）网站 → 从一览中检索"
+        quote: "跳转到日本过敏学会（日本アレルギー学会）网站 → 从一览中检索"
+      - id: narrow-search
+        text: "也可指定所在市町村和专科科室来检索"
+        quote: "也可指定所在市町村和专科科室来检索"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 0c8f44c2bf0d8adc
+    name: 查过敏专科医生名录
+
+  - id: egg-milk-wheat-free-madeleine
+    status: reviewed
+    source:
+      anchor: "找专科医生，和一份无蛋奶面粉的甜点"
+    remind:
+      text: "不含蛋、牛奶、小麦粉玛德琳风蛋糕"
+      quote:
+        - "不含蛋、牛奶、小麦粉"
+        - "玛德琳风蛋糕"
+    dose:
+      - value: 9
+        unit: "个"
+        what: "玛德琳模具份数"
+        quote: "玛德琳模具 9 个份"
+      - value: 100
+        unit: "g"
+        what: "米粉"
+        quote: "米粉 100g"
+      - value: 6
+        unit: "g"
+        what: "泡打粉"
+        quote: "泡打粉 6g"
+      - value: 120
+        unit: "g"
+        what: "豆奶"
+        quote: "豆奶 120g"
+      - value: 30
+        unit: "g"
+        what: "米油"
+        quote: "米油（其他植物油亦可）30g"
+      - value: 30
+        unit: "g"
+        what: "砂糖"
+        quote: "砂糖 30g"
+      - value: 20
+        unit: "g"
+        what: "蜂蜜"
+        quote: "蜂蜜 20g"
+      - value: 600
+        unit: "W"
+        what: "电子炉功率"
+        quote: "电子炉 600W 加热约 50 秒"
+      - value: 50
+        unit: "秒"
+        what: "豆奶加热时长"
+        quote: "电子炉 600W 加热约 50 秒"
+    steps:
+      - id: preheat-oven
+        text: "烤箱预热到 180℃"
+        quote: "烤箱预热到 180℃"
+      - id: warm-soy-milk
+        text: "豆奶放进耐热容器，用电子炉 600W 加热约 50 秒"
+        quote: "豆奶放进耐热容器，用电子炉 600W 加热约 50 秒"
+      - id: mix-dry-ingredients
+        text: "米粉和泡打粉过筛，或用打蛋器充分混合"
+        quote: "米粉和泡打粉过筛，或用打蛋器充分混合"
+      - id: whip-soy-milk
+        text: "用手持搅拌器把 A（温热的豆奶）打发出细密气泡"
+        quote: "用手持搅拌器把 A（温热的豆奶）打发出细密气泡"
+      - id: emulsify-mixture
+        text: "A打好后加入米油、砂糖、蜂蜜，充分混合，让油和豆奶乳化"
+        quote: "A打好后加入米油、砂糖、蜂蜜，充分混合，让油和豆奶乳化"
+      - id: add-dry-mixture
+        text: "向 中一点点加入 B，用打蛋器混合到没有结块"
+        quote: "向 ② 中一点点加入 B，用打蛋器混合到没有结块"
+      - id: bake-madeleine
+        text: "把面糊倒入模具，180℃ 烤 15～17 分钟至表面上色"
+        quote: "把面糊倒入模具，180℃ 烤 15～17 分钟至表面上色"
+      - id: adjust-heat
+        text: "不上色时可把温度提高到 190℃"
+        quote: "不上色时可把温度提高到 190℃"
+    cautions:
+      - level: info
+        text: "确认材料表的标示，注意过敏原混入"
+        quote: "确认材料表的标示，注意过敏原混入"
+      - level: stop
+        text: "蜂蜜不要给未满 1 岁的孩子"
+        quote: "蜂蜜不要给未满 1 岁的孩子"
+      - level: info
+        text: "也可用砂糖 25g 代替，蜂蜜做出的口感更湿润"
+        quote: "也可用砂糖 25g 代替，蜂蜜做出的口感更湿润"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 7f952d1f126de7b1
+    name: 做无蛋奶面粉的蛋糕
+
+  - id: adult-food-allergy-pattern
+    status: reviewed
+    source:
+      anchor: "大人的过敏，一半是果蔬"
+    remind:
+      text: "近年大人的食物过敏在增加，而且发作的食物大约一半是水果和蔬菜"
+      quote: "近年大人的食物过敏在增加，而且发作的食物大约一半是水果和蔬菜"
+    steps:
+      - id: fruit-vegetable-share
+        text: "水果与蔬菜 48.4%"
+        quote: "水果与蔬菜 48.4%"
+      - id: wheat-share
+        text: "小麦 15.7%"
+        quote: "小麦 15.7%"
+      - id: shellfish-share
+        text: "甲壳类 7.2%"
+        quote: "甲壳类 7.2%"
+      - id: spice-share
+        text: "香辛料 5.9%"
+        quote: "香辛料 5.9%"
+      - id: nut-share
+        text: "坚果 5.2%"
+        quote: "坚果 5.2%"
+      - id: other-share
+        text: "其他 17.6%"
+        quote: "其他 17.6%"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 7057cc6499195a29
+
+  - id: non-oral-allergy-routes
+    status: reviewed
+    name: "不经口的过敏通路"
+    source:
+      anchor: "四种「不是吃了」的过敏通路"
+    remind:
+      text: "致敏原来自肌肉和黏膜的接触，而不是消化道"
+      quote: "致敏原来自肌肉和黏膜的接触，而不是消化道"
+    steps:
+      - id: tick-and-meat
+        text: "牛肉、猪肉被蜱虫叮咬养狗的人"
+        quote:
+          - "牛肉、猪肉"
+          - "被蜱虫叮咬"
+          - "养狗的人"
+      - id: feather-and-poultry
+        text: "鸡肉、鸡蛋吸入了羽毛养鹦鹉的人"
+        quote:
+          - "鸡肉、鸡蛋"
+          - "吸入了羽毛"
+          - "养鹦鹉的人"
+      - id: latex-and-fruit
+        text: "牛油果、香蕉使用乳胶手套医护人员"
+        quote:
+          - "牛油果、香蕉"
+          - "使用乳胶手套"
+          - "医护人员"
+      - id: jellyfish-and-natto
+        text: "纳豆被水母蜇到冲浪者、潜水者"
+        quote:
+          - "纳豆"
+          - "被水母蜇到"
+          - "冲浪者、潜水者"
+    notices:
+      - level: info
+        text: "蜱虫唾液里的过敏原与牛猪肉的过敏原有相似结构羽毛里的过敏原与蛋、鸡肉的过敏原同理天然乳胶手套里的过敏原与香蕉、牛油果的过敏原形似水母的毒刺里含有聚γ-谷氨酸，而纳豆黏滑的主要成分也是聚γ-谷氨酸——所以被蜇过一次的人，之后吃纳豆免疫就会误判"
+        quote:
+          - "蜱虫唾液里的过敏原与牛猪肉的过敏原有相似结构"
+          - "羽毛里的过敏原与蛋、鸡肉的过敏原同理"
+          - "天然乳胶手套里的过敏原与香蕉、牛油果的过敏原形似"
+          - "水母的毒刺里含有聚γ-谷氨酸，而纳豆黏滑的主要成分也是聚γ-谷氨酸——所以被蜇过一次的人，之后吃纳豆免疫就会误判"
+      - level: info
+        text: "上表列的原因不必然导致过敏，表中的食物也只是代表品，实际情况可能不同"
+        quote: "上表列的原因不必然导致过敏，表中的食物也只是代表品，实际情况可能不同"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 0ebd98e923660249

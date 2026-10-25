@@ -1,0 +1,205 @@
+article: the-savvy-life-manual/food/broccoli.md
+kind: practice
+coverage: complete
+ignore:
+  sections:
+    - anchor: '西兰花：烤着香、梗更甜、焯水能回鲜'
+      reason: '本节是全文概览并预告各项做法；具体操作已分别收入后文卡片，重复抽卡没有必要。'
+  images: []
+cards:
+  - id: roast-broccoli-florets
+    status: reviewed
+    name: "烤西兰花花球"
+    source:
+      anchor: '魅力一：烤过之后，房间里会飘起肉香'
+    slot: anytime
+    remind:
+      text: '把西兰花花球切成小朵，和奶酪一起烤到表面焦黄。'
+      quote:
+        - '把西兰花切成小朵（大的对半切）。'
+        - '切掉奶酪顶部，放在耐热盘中央，断面向下，西兰花围着它摆一圈。'
+        - '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+    effect:
+      text: '用高温烤到表面焦黄，房间里就会散发出类似烤肉的香气。'
+      quote: '用高温烤到表面焦黄，房间里就会散发出类似烤肉的香气。'
+    dose:
+      - value: 100
+        unit: g
+        what: 西兰花用量
+        quote: '西兰花 100g'
+      - value: 1
+        unit: 个
+        what: 卡芒贝尔奶酪用量
+        quote: '卡芒贝尔奶酪 1 个'
+      - value: 1.5
+        unit: 大勺
+        what: 橄榄油用量
+        quote: '橄榄油 1.5 大勺'
+      - value: 2
+        unit: 撮
+        what: 盐用量
+        quote: '盐 2 撮'
+      - value: 250
+        unit: ℃
+        what: 烤箱温度
+        quote: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+      - value: 15
+        unit: 分钟
+        what: 烤制时间
+        quote: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+      - value: 7
+        unit: 分钟
+        what: 鱼烤盘强火烤制时间
+        quote: '强火烤约 7 分钟'
+    steps:
+      - id: cut-florets
+        text: '把西兰花切成小朵（大的对半切）。'
+        quote: '把西兰花切成小朵（大的对半切）。'
+      - id: coat-florets
+        text: '加橄榄油和盐，从花的表面充分拌匀，让每朵都裹上油。'
+        quote: '加橄榄油和盐，从花的表面充分拌匀，让每朵都裹上油。'
+      - id: arrange-cheese
+        text: '切掉奶酪顶部，放在耐热盘中央，断面向下，西兰花围着它摆一圈。'
+        quote: '切掉奶酪顶部，放在耐热盘中央，断面向下，西兰花围着它摆一圈。'
+      - id: roast-florets
+        text: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+        quote: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+      - id: grill-florets
+        text: '用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。'
+        quote:
+          - 用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
+          - 没有烤箱（鱼烤盘）版：前两步不变，然后用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 598dacdf3f002b39
+
+  - id: roast-broccoli-stem
+    status: reviewed
+    name: "烤西兰花梗"
+    source:
+      anchor: '魅力二：扔掉梗太可惜，甜度差 2.5 倍'
+    slot: anytime
+    remind:
+      text: '把西兰花梗切成圆片，拌匀后烤制。'
+      quote:
+        - '把梗切成约 7mm 厚的圆片（皮不削、连皮一起也可以）。'
+        - '加橄榄油和盐，充分拌匀。'
+        - '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+    effect:
+      text: '茎的含糖量约为花球的 2.5 倍'
+      quote: '茎的含糖量约为花球的 2.5 倍'
+    dose:
+      - value: 1
+        unit: 根
+        what: 西兰花梗用量
+        quote: '西兰花梗 1 根（70～80g）'
+      - value: 1
+        unit: 大勺
+        what: 橄榄油用量
+        quote: '橄榄油 1 大勺'
+      - value: 1
+        unit: 小撮
+        what: 盐用量
+        quote: '盐 1 小撮'
+      - value: 7
+        unit: mm
+        what: 梗片厚度
+        quote: '约 7mm 厚的圆片'
+      - value: 250
+        unit: ℃
+        what: 烤箱温度
+        quote: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+      - value: 10
+        unit: 分钟
+        what: 烤制时间
+        quote: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+      - value: 7
+        unit: 分钟
+        what: 鱼烤盘强火烤制时间
+        quote: '强火烤约 7 分钟'
+    steps:
+      - id: cut-stem
+        text: '把梗切成约 7mm 厚的圆片（皮不削、连皮一起也可以）。'
+        quote: '把梗切成约 7mm 厚的圆片（皮不削、连皮一起也可以）。'
+      - id: season-stem
+        text: '加橄榄油和盐，充分拌匀。'
+        quote: '加橄榄油和盐，充分拌匀。'
+      - id: roast-stem
+        text: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+        quote: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+      - id: serve-stem
+        text: '烤好之后摆上自己喜欢的配料，就是一份西班牙小吃。'
+        quote: '烤好之后摆上自己喜欢的配料，就是一份西班牙小吃。'
+      - id: grill-stem
+        text: '前两步不变，鱼烤盘铺锡纸、把梗圆片并排摆好，强火烤约 7 分钟。'
+        quote:
+          - 前两步不变，鱼烤盘铺锡纸、把梗圆片并排摆好，强火烤约 7 分钟。
+          - 没有烤箱（鱼烤盘）版：前两步不变，然后用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 1d225d70f7467696
+
+  - id: blanch-broccoli-florets
+    status: reviewed
+    name: "烫焯法回鲜"
+    source:
+      anchor: '魅力三：「烫焯法」把不新鲜的花球救回来'
+    slot: anytime
+    remind:
+      text: '用「烫焯法」给不新鲜的花球回鲜。'
+      quote:
+        - '已经不太新鲜的花球也有救——烫焯法：'
+        - '方法叫「烫焯法」。'
+    effect:
+      text: '口感变回爽脆、水润度也提升'
+      quote: '口感变回爽脆、水润度也提升'
+    dose:
+      - value: 2
+        unit: mm
+        what: 茎末端切除长度
+        quote: '把茎的末端切掉约 2mm。'
+      - value: 20
+        unit: 秒
+        what: 热水浸泡时间
+        quote: '把切面朝下放进沸腾的热水里泡约 20 秒。'
+    steps:
+      - id: trim-stem-end
+        text: '把茎的末端切掉约 2mm。'
+        quote: '把茎的末端切掉约 2mm。'
+      - id: hot-soak
+        text: '把切面朝下放进沸腾的热水里泡约 20 秒。'
+        quote: '把切面朝下放进沸腾的热水里泡约 20 秒。'
+      - id: cool-soak
+        text: '一从水里取出，立刻浸入冷水——让茎充分吸水是这一招的核心。'
+        quote: '一从水里取出，立刻浸入冷水——让茎充分吸水是这一招的核心。'
+      - id: bag-and-chill
+        text: '为防止干燥，套上袋子放进冰箱冷藏。'
+        quote: '为防止干燥，套上袋子放进冰箱冷藏。'
+      - id: chill-half-day
+        text: '放置约半天，再从水里取出。'
+        quote: '放置约半天，再从水里取出。'
+      - id: salad-serve
+        text: '说明书推荐快速焯一下做沙拉，最能吃出那份爽脆。'
+        quote: '说明书推荐快速焯一下做沙拉，最能吃出那份爽脆。'
+    cautions:
+      - level: stop
+        text: '为免烫伤，请用夹子等工具夹住操作。'
+        quote: '为免烫伤，请用夹子等工具夹住操作。'
+      - level: stop
+        text: '室温放置会有细菌繁殖的风险。'
+        quote: '室温放置会有细菌繁殖的风险。'
+      - level: stop
+        text: '即使在冰箱里，一直泡在水里时间过长同样会繁殖细菌，所以以半天为限取出。'
+        quote: '即使在冰箱里，一直泡在水里时间过长同样会繁殖细菌，所以以半天为限取出。'
+      - level: info
+        text: '下锅前请充分冲洗，并加热后再食用。'
+        quote: '下锅前请充分冲洗，并加热后再食用。'
+      - level: info
+        text: '但要记住：「烤花球」和「烤梗」两道做法含水量高、不适合水煮，两者要分开用。'
+        quote: '但要记住：「烤花球」和「烤梗」两道做法含水量高、不适合水煮，两者要分开用。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: a237f71c100c56ae

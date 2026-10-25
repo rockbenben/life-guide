@@ -1,0 +1,64 @@
+article: the-savvy-life-manual/body-care/lips.md
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "润唇膏天天涂还干？唇纹要竖着涂进去"
+      reason: "开篇摘要中的竖涂、慢涂、频率和持续时间已并入完整做法卡，不另建重复卡。"
+    - anchor: "为什么唇是最容易干的部位"
+      reason: "属于唇部结构的背景解释，没有独立的可执行动作。"
+    - anchor: "干到什么程度：一天之内"
+      reason: "属于干燥实验和观察记录，没有独立的可执行动作。"
+    - anchor: "竖着涂：唇纹是主要战场"
+      reason: "竖着涂的动作及其理由已并入完整做法卡，不另建重复卡。"
+    - anchor: "慢慢地涂：为的是让成分化开"
+      reason: "慢慢涂的动作及其理由已并入完整做法卡，不另建重复卡。"
+    - anchor: "唇膏之外：这套做法的边界"
+      reason: "停止使用和转诊皮肤科的边界已并入完整做法卡的 cautions，不另建重复卡。"
+  images: []
+cards:
+  - id: vertical-slow-lip-balm-regimen
+    status: reviewed
+    name: "竖着涂润唇膏"
+    source:
+      anchor: "完整做法：一天 4 次以上、连做 2 周"
+    slot: anytime
+    remind:
+      text: "饭后（把嘴洗过之后）、护肤的时候，都涂一次，合计一天 4 次以上；按这个涂法实践 2 周。"
+      quote:
+        - "饭后（把嘴洗过之后）、护肤的时候，都涂一次"
+        - "合计一天 4 次以上"
+        - "按这个涂法实践 2 周"
+    effect:
+      text: "有人从第 2 天就开始感觉到变化。"
+      quote: "有人从第 2 天就开始感觉到变化。"
+    dose:
+      - value: 4
+        unit: 次
+        what: 每日润唇膏涂抹总次数
+        quote: "合计一天 4 次以上"
+    duration:
+      basis: derived
+      sec: 1209600
+      formula: "2 周 × 7 天/周 × 24 小时/天 × 60 分钟/小时 × 60 秒/分钟 = 1209600 秒"
+    steps:
+      - id: prepare-balm
+        text: "准备自己用惯的润唇膏。"
+        quote: "准备自己用惯的润唇膏。"
+      - id: apply-vertically-slowly
+        text: "一边想着唇纹，一边竖着、慢慢地涂。"
+        quote: "一边想着唇纹，一边竖着、慢慢地涂。"
+      - id: apply-after-meals-and-skincare
+        text: "饭后（把嘴洗过之后）、护肤的时候，都涂一次——合计一天 4 次以上。"
+        quote: "饭后（把嘴洗过之后）、护肤的时候，都涂一次——合计一天 4 次以上。"
+    cautions:
+      - level: stop
+        text: "有不适感，或者干皮一直不见好，要立刻停用并去看皮肤科。"
+        quote: "有不适感，或者干皮一直不见好，要立刻停用并去看皮肤科。"
+      - level: with-doctor
+        text: "如果按这个涂法坚持了一段时间，唇仍然起皮、甚至出现红肿疼痛，那就说明问题不在涂法上，而需要专业判断——这种情况建议到皮肤科就诊"
+        quote: "如果按这个涂法坚持了一段时间，唇仍然起皮、甚至出现红肿疼痛，那就说明问题不在涂法上，而需要专业判断——这种情况建议到皮肤科就诊"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: a644b86ecce74eb3

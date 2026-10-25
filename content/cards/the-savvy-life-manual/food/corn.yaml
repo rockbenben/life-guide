@@ -1,0 +1,447 @@
+article: the-savvy-life-manual/food/corn.md
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  # ⚠ 审阅提示（草稿自带的问题，机器查不出来）：这张卡的步骤与下面的 corn-after-purchase
+  # 重复了 —— 两者都讲「买回来先吃 / 冷藏 / 直立放」。审阅时二选一，别都留。
+  - id: keep-corn-sweet-cold
+    status: reviewed
+    name: "玉米冷藏保鲜"
+    source:
+      # 原稿把文章标题改写后当成了 anchor（「要甜」应为「才甜」），这里指回真实小节
+      anchor: '买了玉米后该怎么办'
+    slot: anytime
+    remind:
+      text: '在接近 0℃ 的条件下冷藏直立放进蔬菜抽屉减少糖分消耗'
+      quote:
+        - '在接近 0℃ 的条件下冷藏'
+        - '直立放进蔬菜抽屉减少糖分消耗'
+    effect:
+      text: '常温放 1 天甜味减 20%、3 天大约减半、6 天减 60%，而接近 0℃ 时甜度几乎是一条平线'
+      quote: '常温放 1 天甜味减 20%、3 天大约减半、6 天减 60%，而接近 0℃ 时甜度几乎是一条平线'
+    steps:
+      - id: keep-eat-immediately
+        text: '立即吃最甜'
+        quote: '立即吃最甜'
+      - id: keep-refrigerate
+        text: '在接近 0℃ 的条件下冷藏'
+        quote: '在接近 0℃ 的条件下冷藏'
+      - id: keep-store-upright
+        text: '直立放进蔬菜抽屉减少糖分消耗'
+        quote: '直立放进蔬菜抽屉减少糖分消耗'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 5f97458bf77fc61e
+
+  - id: corn-after-purchase
+    status: reviewed
+    source:
+      anchor: '买了玉米后该怎么办'
+    slot: anytime
+    remind:
+      text: '买回玉米后立即食用、冷藏保存并直立存放在蔬菜抽屉'
+      quote:
+        - '立即食用（最甜）'
+        - '冷藏保存（在接近 0℃的条件下保存）'
+        - '直立存放在蔬菜抽屉（减少糖分消耗）'
+    steps:
+      - id: purchase-eat-immediately
+        text: '立即食用（最甜）'
+        quote: '立即食用（最甜）'
+      - id: purchase-refrigerate
+        text: '冷藏保存（在接近 0℃的条件下保存）'
+        quote: '冷藏保存（在接近 0℃的条件下保存）'
+      - id: purchase-store-upright
+        text: '直立存放在蔬菜抽屉（减少糖分消耗）'
+        quote: '直立存放在蔬菜抽屉（减少糖分消耗）'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: bba9c44d7c636e85
+    name: 玉米买回马上冷藏
+
+  - id: corn-cob-golden-water
+    status: reviewed
+    source:
+      anchor: '玉米芯'
+    slot: anytime
+    images:
+      - 'https://img.newzone.top/2024-10-16-09-45-51.png?imageMogr2/format/webp'
+    remind:
+      text: '整根玉米下锅煮 35 分钟，芯从纯白变成透明后可把煮过的水当汤喝'
+      quote:
+        - '整根下锅煮 35 分钟，芯会从纯白变成透明'
+        - '这锅「黄金水」能直接当汤喝'
+    effect:
+      text: '煮玉米 35 分钟后，玉米芯会从纯白色变为透明，营养成分会溶解在水中'
+      quote: '煮玉米 35 分钟后，玉米芯会从纯白色变为透明，营养成分会溶解在水中'
+    duration:
+      basis: quote
+      sec: 2100
+      quote: '煮玉米 35 分钟后'
+    steps:
+      - id: cob-golden-boil
+        text: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
+        quote: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
+      - id: cob-observe-transparency
+        text: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
+        quote: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
+      - id: cob-use-water
+        text: '煮完的水可以用来煮面条'
+        quote: '煮完的水可以用来煮面条'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9c15c4a609ea36fc
+    name: 玉米芯煮 35 分钟
+
+  - id: corn-cob-microwave-quick
+    status: reviewed
+    source:
+      anchor: '玉米芯'
+    slot: anytime
+    remind:
+      text: '将玉米切成小段，加水至玉米高度的一半，盖上保鲜膜，用 600 瓦热 8 分钟'
+      quote:
+        - '将玉米切成小段，放入耐高温的盘子中，加入水至玉米高度的一半。'
+        - '盖上保鲜膜，放入微波炉中以 600 瓦热 8 分钟'
+    dose:
+      - value: 600
+        unit: 瓦
+        what: '微波炉功率'
+        quote: '以 600 瓦热 8 分钟'
+      - value: 8
+        unit: 分钟
+        what: '加热时长'
+        quote: '以 600 瓦热 8 分钟'
+      - value: 2
+        unit: g
+        what: '出锅前加盐量'
+        quote: '出锅前加盐 2g，约 1/3 小勺'
+    duration:
+      basis: quote
+      sec: 480
+      quote: '放入微波炉中以 600 瓦热 8 分钟'
+    steps:
+      - id: quick-cut
+        text: '将玉米切成小段，放入耐高温的盘子中'
+        quote: '将玉米切成小段，放入耐高温的盘子中'
+      - id: quick-add-water
+        text: '加入水至玉米高度的一半'
+        quote: '加入水至玉米高度的一半'
+      - id: quick-cover
+        text: '盖上保鲜膜'
+        quote: '盖上保鲜膜'
+      - id: quick-microwave
+        text: '放入微波炉中以 600 瓦热 8 分钟'
+        quote: '放入微波炉中以 600 瓦热 8 分钟'
+      - id: quick-season
+        text: '出锅前加盐 2g，约 1/3 小勺'
+        quote: '出锅前加盐 2g，约 1/3 小勺'
+      - id: quick-use-water
+        text: '煨好的水同样可用来煮面条'
+        quote: '煨好的水同样可用来煮面条'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 45fcabef1725febd
+    name: 玉米芯微波 8 分钟
+
+  - id: corn-pudding
+    status: reviewed
+    source:
+      anchor: '食谱'
+    slot: anytime
+    remind:
+      text: '把牛奶和新鲜玉米粒打碎、过滤并加热至粘稠，冷藏一个小时后即可食用；也可用玉米擦丝器直接擦下玉米粒'
+      quote:
+        - '将牛奶和新鲜玉米粒放入打汁机中打碎，过滤后加热至粘稠状，冷藏一个小时后即可食用'
+        - '用玉米擦丝器直接擦下玉米粒'
+    duration:
+      basis: quote
+      sec: 3600
+      quote: '冷藏一个小时后即可食用'
+    steps:
+      - id: pudding-blend
+        text: '将牛奶和新鲜玉米粒放入打汁机中打碎'
+        quote: '将牛奶和新鲜玉米粒放入打汁机中打碎'
+      - id: pudding-strain-heat
+        text: '过滤后加热至粘稠状'
+        quote: '过滤后加热至粘稠状'
+      - id: pudding-chill
+        text: '冷藏一个小时后即可食用'
+        quote: '冷藏一个小时后即可食用'
+      - id: pudding-grate-alternative
+        text: '用玉米擦丝器直接擦下玉米粒'
+        quote: '用玉米擦丝器直接擦下玉米粒'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: e206da1f6a18619d
+    name: 做玉米布丁
+
+  - id: golden-water-base
+    status: reviewed
+    name: "煮一锅玉米黄金水"
+    source:
+      anchor: '食谱'
+    slot: anytime
+    remind:
+      text: '煮黄金水时，用玉米 4 根、水 2L、盐 20g，整根煮 35 分钟'
+      quote:
+        - '玉米 4 根'
+        - '水 2L'
+        - '盐 20g'
+        - '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
+        - '这锅汤就是所谓的「黄金水」'
+    effect:
+      text: '北海道研究料理的村上智华主厨把煮的时间拉长到 35 分钟，芯里的甜味和鲜味才充分溶进水里。'
+      quote: '北海道研究料理的村上智华主厨把煮的时间拉长到 35 分钟，芯里的甜味和鲜味才充分溶进水里。'
+    dose:
+      - value: 4
+        unit: 根
+        what: '玉米用量'
+        quote: '玉米 4 根'
+      - value: 2
+        unit: L
+        what: '水量'
+        quote: '水 2L'
+      - value: 20
+        unit: g
+        what: '盐用量'
+        quote: '盐 20g'
+      - value: 1
+        unit: '%'
+        what: '按水量加盐比例'
+        quote: '说明书建议按水的 1% 加盐'
+    duration:
+      basis: quote
+      sec: 2100
+      quote: '把煮的时间拉长到 35 分钟'
+    steps:
+      - id: base-boil-salt
+        text: '锅中烧水，加入盐。说明书建议按水的 1% 加盐'
+        quote:
+          - '锅中烧水，加入盐。'
+          - '说明书建议按水的 1% 加盐'
+      - id: base-simmer
+        text: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
+        quote: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
+      - id: base-observe
+        text: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
+        quote: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
+      - id: base-use
+        text: '这锅汤就是所谓的「黄金水」，可以直接当汤喝，也可以拿来煮意面。'
+        quote: '这锅汤就是所谓的「黄金水」，可以直接当汤喝，也可以拿来煮意面。'
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 7fce50a238435ab2
+
+  - id: golden-water-onion-pasta
+    status: reviewed
+    name: "黄金水洋葱意面"
+    source:
+      anchor: '食谱'
+    slot: anytime
+    remind:
+      text: '玉米 4 根水 2L盐 20g意大利面 160g洋葱 1/4 个蒜 1 片'
+      quote:
+        - 玉米 4 根
+        - 水 2L
+        - 盐 20g
+        - 意大利面 160g
+        - 洋葱 1/4 个
+        - 蒜 1 片
+        - 提前准备：用玉米、水和盐煮 35 分钟做出黄金水，同时把这锅水用来煮意面。
+    effect:
+      text: '芯的鲜味牢牢裹住，每一根面条都吃得到。'
+      quote: '芯的鲜味牢牢裹住，每一根面条都吃得到。'
+    dose:
+      - value: 4
+        unit: 根
+        what: '玉米用量'
+        quote: '玉米 4 根'
+      - value: 2
+        unit: L
+        what: '水量'
+        quote: '水 2L'
+      - value: 20
+        unit: g
+        what: '盐用量'
+        quote: '盐 20g'
+      - value: 160
+        unit: g
+        what: '意面用量'
+        quote: '意大利面 160g'
+      - value: 1
+        unit: 片
+        what: '蒜用量'
+        quote: '蒜 1 片'
+      - value: 40
+        unit: mL
+        what: '炒制橄榄油用量'
+        quote: '橄榄油 40mL（约 2 大勺略多，炒用）'
+      - value: 40
+        unit: mL
+        what: '乳化用橄榄油用量'
+        quote: '橄榄油 40mL（约 2 大勺略多，乳化用）'
+      - value: 80
+        unit: mL
+        what: '黄金水用量'
+        quote: '80mL 黄金水'
+    duration:
+      basis: quote
+      sec: 2100
+      quote: '用玉米、水和盐煮 35 分钟做出黄金水'
+    steps:
+      - id: pasta-prepare
+        text: '提前准备：用玉米、水和盐煮 35 分钟做出黄金水，同时把这锅水用来煮意面。'
+        quote: '提前准备：用玉米、水和盐煮 35 分钟做出黄金水，同时把这锅水用来煮意面。'
+      - id: pasta-reserve-kernels
+        text: '玉米粒可另作它用'
+        quote:
+          - 玉米粒可另作它用
+          - 把炒好的配料盛出，在锅里倒入 80mL 黄金水。
+      - id: pasta-soar
+        text: '洋葱和蒜切细，用 2 大勺略多的橄榄油（约 40mL）炒香（辣椒可一起下）'
+        quote: '洋葱和蒜切细，用 2 大勺略多的橄榄油（约 40mL）炒香（辣椒可一起下）'
+      - id: pasta-corn
+        text: '洋葱变透明后，加入提前煮好的玉米粒炒匀。'
+        quote: '洋葱变透明后，加入提前煮好的玉米粒炒匀。'
+      - id: pasta-stock
+        text: '把炒好的配料盛出，在锅里倒入 80mL 黄金水。'
+        quote: '把炒好的配料盛出，在锅里倒入 80mL 黄金水。'
+      - id: pasta-emulsify
+        text: '加回意面和 2 大勺略多的橄榄油（约 40mL），充分搅拌乳化即可。'
+        quote: '加回意面和 2 大勺略多的橄榄油（约 40mL），充分搅拌乳化即可。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 43b0eb481087afed
+
+  - id: chilled-corn-rice-bowl
+    status: reviewed
+    name: "黄金水玉米饭"
+    source:
+      anchor: '食谱'
+    slot: anytime
+    remind:
+      text: '米饭 100g玉米粒 50g黄金水 150mL'
+      quote:
+        - 米饭 100g
+        - 玉米粒 50g
+        - 黄金水 150mL
+        - 最后加盐和橄榄油调味，酢橘香草可以多放。
+    dose:
+      - value: 100
+        unit: g
+        what: '米饭用量'
+        quote: '米饭 100g'
+      - value: 50
+        unit: g
+        what: '玉米粒用量'
+        quote: '玉米粒 50g'
+      - value: 150
+        unit: mL
+        what: '黄金水用量'
+        quote: '黄金水 150mL'
+    steps:
+      - id: rice-cool-stock
+        text: '提前做好黄金水并放凉。'
+        quote: '提前做好黄金水并放凉。'
+      - id: rice-rinse
+        text: '米饭用清水简单冲洗掉表面黏性，盛入碗中，铺上玉米粒。'
+        quote: '米饭用清水简单冲洗掉表面黏性，盛入碗中，铺上玉米粒。'
+      - id: rice-top
+        text: '淋上冰凉的黄金水。'
+        quote: '淋上冰凉的黄金水。'
+      - id: rice-season
+        text: '最后加盐和橄榄油调味，酢橘香草可以多放。'
+        quote: '最后加盐和橄榄油调味，酢橘香草可以多放。'
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 84b0ee13a5f21c08
+
+  - id: corn-dessert
+    status: reviewed
+    name: "做玉米甜点"
+    source:
+      anchor: '食谱'
+    slot: anytime
+    remind:
+      text: '用玉米 2 根和牛奶 125mL 制作甜点，擦成果泥后中火强火加热约 5 分钟至浓稠，再冷藏约 1 小时'
+      quote:
+        - '玉米 2 根'
+        - '牛奶 125mL'
+        - '把玉米粒擦成果泥，加入牛奶，中火强火加热约 5 分钟到浓稠'
+        - '倒进容器，冷藏约 1 小时。'
+    effect:
+      text: '玉米本身的甜味就足够，不用额外加很多糖'
+      quote: '玉米本身的甜味就足够，不用额外加很多糖'
+    dose:
+      - value: 2
+        unit: 根
+        what: '玉米用量'
+        quote: '玉米 2 根'
+      - value: 125
+        unit: mL
+        what: '牛奶用量'
+        quote: '牛奶 125mL'
+    steps:
+      - id: dessert-puree
+        text: '把玉米粒擦成果泥，加入牛奶'
+        quote: '把玉米粒擦成果泥，加入牛奶'
+      - id: dessert-heat
+        text: '中火强火加热约 5 分钟到浓稠'
+        quote: '中火强火加热约 5 分钟到浓稠'
+      - id: dessert-chill
+        text: '倒进容器，冷藏约 1 小时。'
+        quote: '倒进容器，冷藏约 1 小时。'
+      - id: dessert-optional-sugar
+        text: '砂糖可按口味少量添加'
+        quote: '砂糖可按口味少量添加'
+      - id: dessert-garnish
+        text: '表面加鲜奶油或香草点缀，玉米本身的甜味就足够，不用额外加很多糖。'
+        quote: '表面加鲜奶油或香草点缀，玉米本身的甜味就足够，不用额外加很多糖。'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 83c595eb5dcbfa43
+
+  - id: prevent-sweetness-loss
+    status: reviewed
+    source:
+      anchor: '甜度是怎么掉下去的'
+    slot: anytime
+    remind:
+      text: '摘下玉米后先冰水浸泡，并保持在接近 0℃，避免常温久放'
+      quote: '农民伯伯摘下玉米后第一件事是冰水浸泡，出货前也都保持着接近 0℃——「冷下来」本身就是保鲜手段。'
+    effect:
+      text: '玉米被摘下来之后并没有停止「呼吸」，还在持续把糖分当能量消耗，所以甜味会一路往下掉。常温放 1 天：甜度减少 20%常温放 3 天：大约减半常温放 6 天：甜度减少 60%而存在接近 0℃ 的条件下，甜度曲线几乎是一条平线'
+      quote:
+        - '玉米被摘下来之后并没有停止「呼吸」，还在持续把糖分当能量消耗，所以甜味会一路往下掉。'
+        - '常温放 1 天：甜度减少 20%'
+        - '常温放 3 天：大约减半'
+        - '常温放 6 天：甜度减少 60%'
+        - '而存在接近 0℃ 的条件下，甜度曲线几乎是一条平线'
+    steps:
+      - id: sweet-cool
+        text: '农民伯伯摘下玉米后第一件事是冰水浸泡，出货前也都保持着接近 0℃——「冷下来」本身就是保鲜手段。'
+        quote: '农民伯伯摘下玉米后第一件事是冰水浸泡，出货前也都保持着接近 0℃——「冷下来」本身就是保鲜手段。'
+      - id: sweet-avoid-room-temp
+        text: '常温放 1 天：甜度减少 20%常温放 3 天：大约减半常温放 6 天：甜度减少 60%'
+        quote:
+          - '常温放 1 天：甜度减少 20%'
+          - '常温放 3 天：大约减半'
+          - '常温放 6 天：甜度减少 60%'
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 9b516df2b1e4ba7c
+    name: 玉米先泡冰水保甜

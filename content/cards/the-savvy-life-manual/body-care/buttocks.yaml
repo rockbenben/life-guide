@@ -1,0 +1,315 @@
+article: "the-savvy-life-manual/body-care/buttocks.md"
+kind: practice
+coverage: complete
+ignore:
+  sections: []
+  images: []
+cards:
+  - id: buttocks-training-selection
+    status: reviewed
+    source:
+      anchor: "臀部下垂矫正：骨盆自检"
+    slot: anytime
+    remind:
+      text: "先判断骨盆前倾或后倾，再选择对应的臀部训练。"
+      quote: "先用对墙站立法分清自己是哪一种：背靠墙站，头、臀部和脚后跟都贴墙，腰后能塞进拳头是前倾、只能塞进手掌是后倾，照结果选对应的训练。"
+    dose:
+      - value: 2
+        unit: "组"
+        what: "所有训练早晚各做的组数"
+        quote: "所有训练都是早晚各 2 组"
+    steps:
+      - id: select-tilt
+        text: "先用对墙站立法分清自己是哪一种：背靠墙站，头、臀部和脚后跟都贴墙，腰后能塞进拳头是前倾、只能塞进手掌是后倾，照结果选对应的训练。"
+        quote: "先用对墙站立法分清自己是哪一种：背靠墙站，头、臀部和脚后跟都贴墙，腰后能塞进拳头是前倾、只能塞进手掌是后倾，照结果选对应的训练。"
+      - id: select-matching-routine
+        text: "前倾做提臀 20 下 + 腹肌锻炼 10 下，后倾做后弓步每侧 20 次、强化髂腰肌每侧 10 次、肩带拉伸 10 次；另外还有把目标步幅提到 65 厘米的大踏步走法。"
+        quote: "前倾做提臀 20 下 + 腹肌锻炼 10 下，后倾做后弓步每侧 20 次、强化髂腰肌每侧 10 次、肩带拉伸 10 次；另外还有把目标步幅提到 65 厘米的大踏步走法。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: c81edf5660b0a1b6
+    name: 按骨盆类型选训练
+
+  - id: pelvis-wall-self-check
+    status: reviewed
+    source:
+      anchor: "骨盆自检"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-18-07-17-13.png?imageMogr2/format/webp"
+    remind:
+      text: "背靠墙站立，先判断腰后能塞进拳头还是只能塞进手掌。"
+      quote:
+        - 你可以通过以下方法自检骨盆位置：
+        - 背靠墙站立，头、臀部和脚后跟均靠墙。
+        - 先用对墙站立法分清自己是哪一种：背靠墙站，头、臀部和脚后跟都贴墙，腰后能塞进拳头是前倾、只能塞进手掌是后倾，照结果选对应的训练。所有训练都是早晚各 2 组——前倾做提臀 20 下 + 腹肌锻炼 10 下，后倾做后弓步每侧 20 次、强化髂腰肌每侧 10 次、肩带拉伸 10 次；另外还有把目标步幅提到 65 厘米的大踏步走法。^[「お尻」のトリセツ（品番 TYMK-007）]
+    steps:
+      - id: wall-contact
+        text: "背靠墙站立，头、臀部和脚后跟均靠墙。"
+        quote: "背靠墙站立，头、臀部和脚后跟均靠墙。"
+      - id: read-anterior-tilt
+        text: "能塞进拳头：说明书说这指向骨盆前倾。"
+        quote: "能塞进拳头：说明书说这指向骨盆前倾。"
+      - id: read-posterior-tilt
+        text: "只能塞进手掌：说明指向骨盆后倾，建议进行骨盆后倾型“臀部训练”。"
+        quote: "只能塞进手掌：说明指向骨盆后倾，建议进行骨盆后倾型“臀部训练”。"
+      - id: train-without-diagnosis
+        text: "感觉腰后空、想改善体态，练臀部力量和核心确实有帮助，但不必先给自己「确诊」前倾。"
+        quote: "感觉腰后空、想改善体态，练臀部力量和核心确实有帮助，但不必先给自己「确诊」前倾。"
+    cautions:
+      - level: info
+        text: "但这是一种民间自测法，没有经过验证——腰后能塞进多少东西，受腰椎前凸度、体脂和臀肌厚度影响，不能据此判断骨盆倾角。"
+        quote: "但这是一种民间自测法，没有经过验证——腰后能塞进多少东西，受腰椎前凸度、体脂和臀肌厚度影响，不能据此判断骨盆倾角。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: c43ec17f40462a8c
+    name: 靠墙查骨盆前后倾
+
+  - id: posterior-reverse-lunge
+    status: reviewed
+    source:
+      anchor: "骨盆后倾式“臀部训练”"
+    # 原文：所有训练都是早晚各 2 组 —— 早晚都做，不固定到某一段。
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-18-07-18-46.png?imageMogr2/format/webp"
+    remind:
+      text: "早晚做后弓步，两腿交替完成。"
+      quote:
+        - "一只脚向后跨出一步，身体重心随之移动，前腿的膝盖保持与脚踝对齐，后腿的膝盖则下沉至几乎触地但不触碰地面。然后通过后脚用力推地，使身体重心前移，两腿交替进行。"
+        - "每侧 20 次，早晚各 2 组。"
+    dose:
+      - value: 20
+        unit: "次"
+        what: "后弓步每侧次数"
+        quote: "每侧 20 次，早晚各 2 组。"
+      - value: 2
+        unit: "组"
+        what: "后弓步早晚组数"
+        quote: "每侧 20 次，早晚各 2 组。"
+    steps:
+      - id: reverse-lunge-step-back
+        text: "一只脚向后跨出一步，身体重心随之移动，前腿的膝盖保持与脚踝对齐，后腿的膝盖则下沉至几乎触地但不触碰地面。"
+        quote: "一只脚向后跨出一步，身体重心随之移动，前腿的膝盖保持与脚踝对齐，后腿的膝盖则下沉至几乎触地但不触碰地面。"
+      - id: reverse-lunge-push-alternate
+        text: "然后通过后脚用力推地，使身体重心前移，两腿交替进行。"
+        quote: "然后通过后脚用力推地，使身体重心前移，两腿交替进行。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 4805308f7e5bad8a
+    name: 骨盆后倾做后弓步
+
+  - id: posterior-iliopsoas-strength
+    status: reviewed
+    source:
+      anchor: "骨盆后倾式“臀部训练”"
+    # 原文：所有训练都是早晚各 2 组 —— 早晚都做，不固定到某一段。
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-18-07-32-22.png?imageMogr2/format/webp"
+    remind:
+      text: "早晚做强化髂腰肌：坐在椅子上，抬起一条腿的膝盖。"
+      quote:
+        - "坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。"
+        - "每侧 10 次，早晚各 2 组。"
+    dose:
+      - value: 10
+        unit: "秒"
+        what: "强化髂腰肌每次保持时长"
+        quote: "坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。"
+      - value: 10
+        unit: "次"
+        what: "强化髂腰肌每侧次数"
+        quote: "每侧 10 次，早晚各 2 组。"
+      - value: 2
+        unit: "组"
+        what: "强化髂腰肌早晚组数"
+        quote: "每侧 10 次，早晚各 2 组。"
+    steps:
+      - id: iliopsoas-lift-hold
+        text: "坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。"
+        quote: "坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 4439575544afe28e
+    name: 骨盆后倾练髂腰肌
+
+  - id: posterior-shoulder-band-stretch
+    status: reviewed
+    source:
+      anchor: "骨盆后倾式“臀部训练”"
+    # 原文：所有训练都是早晚各 2 组 —— 早晚都做，不固定到某一段。
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-29-17-12-01.png?imageMogr2/format/webp"
+      - "https://img.newzone.top/2024-10-29-17-12-29.png?imageMogr2/format/webp"
+    remind:
+      text: "早晚做肩带拉伸：双手握住毛巾，抬起双臂，放下后也保持拉伸姿势。"
+      quote:
+        - "双手握住毛巾，抬起双臂，保持 10 秒后放下。放下姿势也保持 10 秒。"
+        - "早晚各 10 次，2 组。"
+    dose:
+      - value: 10
+        unit: "秒"
+        what: "肩带拉伸抬起姿势保持时长"
+        quote: "双手握住毛巾，抬起双臂，保持 10 秒后放下。"
+      - value: 10
+        unit: "秒"
+        what: "肩带拉伸放下姿势保持时长"
+        quote: "放下姿势也保持 10 秒。"
+      - value: 10
+        unit: "次"
+        what: "肩带拉伸次数"
+        quote: "早晚各 10 次，2 组。"
+      - value: 2
+        unit: "组"
+        what: "肩带拉伸组数"
+        quote: "早晚各 10 次，2 组。"
+    steps:
+      - id: shoulder-band-raise
+        text: "双手握住毛巾，抬起双臂，保持 10 秒后放下。"
+        quote: "双手握住毛巾，抬起双臂，保持 10 秒后放下。"
+      - id: shoulder-band-lower
+        text: "放下姿势也保持 10 秒。"
+        quote: "放下姿势也保持 10 秒。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: b9a44925ae373401
+    name: 骨盆后倾拉肩带
+
+  - id: anterior-glute-bridge
+    status: reviewed
+    source:
+      anchor: "骨盆前倾式“臀部训练”"
+    # 原文：所有训练都是早晚各 2 组 —— 早晚都做，不固定到某一段。
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-29-17-13-45.png?imageMogr2/format/webp"
+      - "https://img.newzone.top/2024-10-29-17-14-06.png?imageMogr2/format/webp"
+    remind:
+      text: "早晚做提臀：仰卧抬起膝盖，抬起臀部后放回。"
+      quote:
+        - "仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。"
+        - "20 次，早晚各 2 组。"
+    dose:
+      - value: 3
+        unit: "秒"
+        what: "提臀抬起保持时长"
+        quote: "仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。"
+      - value: 20
+        unit: "次"
+        what: "提臀次数"
+        quote: "20 次，早晚各 2 组。"
+      - value: 2
+        unit: "组"
+        what: "提臀早晚组数"
+        quote: "20 次，早晚各 2 组。"
+    steps:
+      - id: glute-bridge-lift-release
+        text: "仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。"
+        quote: "仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 980f1f33c9be03d5
+    name: 骨盆前倾做提臀
+
+  - id: anterior-abdominal-core
+    status: reviewed
+    source:
+      anchor: "骨盆前倾式“臀部训练”"
+    # 原文：所有训练都是早晚各 2 组 —— 早晚都做，不固定到某一段。
+    slot: anytime
+    images:
+      - "https://img.newzone.top/2024-10-29-17-14-51.png?imageMogr2/format/webp"
+    remind:
+      text: "早晚做腹肌锻炼：仰卧并抬起膝盖，抬起上半身并稍微抬起臀部后恢复。"
+      quote:
+        - "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+        - "10 次，早晚各 2 组。"
+    dose:
+      - value: 5
+        unit: "秒"
+        what: "腹肌锻炼保持时长"
+        quote: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+      - value: 10
+        unit: "次"
+        what: "腹肌锻炼次数"
+        quote: "10 次，早晚各 2 组。"
+      - value: 2
+        unit: "组"
+        what: "腹肌锻炼早晚组数"
+        quote: "10 次，早晚各 2 组。"
+    steps:
+      - id: abdominal-lift-core
+        text: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+        quote: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+      - id: abdominal-press-lift
+        text: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+        quote: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: ea9668c14e34691c
+    name: 骨盆前倾练腹肌
+
+  - id: wide-step-walking
+    status: reviewed
+    source:
+      anchor: "大踏步防止臀部下垂"
+    slot: anytime
+    remind:
+      text: "把步幅放大到 65 厘米，收紧臀部并缩肘。"
+      quote:
+        - "目标步幅为 65 厘米——说明书给的参照物是「大致不踩到人行横道白线的宽度」，比抽象数字好把握："
+        - "收紧臀部：骨盆稳定，更容易迈出更大的步幅。"
+        - "缩肘：手臂的摆动变得更容易向前迈出，你的步幅也变得更宽。"
+    dose:
+      - value: 65
+        unit: "厘米"
+        what: "目标步幅"
+        quote: "目标步幅为 65 厘米——说明书给的参照物是「大致不踩到人行横道白线的宽度」，比抽象数字好把握："
+    steps:
+      - id: wide-step-tighten-glutes
+        text: "收紧臀部：骨盆稳定，更容易迈出更大的步幅。"
+        quote: "收紧臀部：骨盆稳定，更容易迈出更大的步幅。"
+      - id: wide-step-bend-elbows
+        text: "缩肘：手臂的摆动变得更容易向前迈出，你的步幅也变得更宽。"
+        quote: "缩肘：手臂的摆动变得更容易向前迈出，你的步幅也变得更宽。"
+    cautions:
+      - level: stop
+        text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+        quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: 7939d30bb464633b

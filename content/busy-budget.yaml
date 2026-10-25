@@ -1,0 +1,35 @@
+# 忙档预算（AGENTS.md §5.3）
+#
+# 「五分钟」是手册作者的估算，不是物理上限。所以超时和耗时未知走**同一个机制**：
+# 不拦截，但必须有人签字写明理由。签字里记下当时的状态（成员、总时长、unknown
+# 列表），任一项变了旧签字就失效，R7 会重新报错 —— 签一次永久有效等于没这道闸门。
+#
+# 忙档成员取自手册 README「时间紧的日子：这几件优先」：
+# 睑缘清洗、3T 保湿、睡前鼻腔冲洗。
+#
+# 原文自己算过账：「这五件加起来不止五分钟——血管拉伸一轮就有 7 分钟，晨光那
+# 15 分钟还得出门。真正『五分钟能做完』的只有第 2、4、5 件」。
+# 血管拉伸与晨光因此不在忙档里。
+
+members: [eyelid-clean, moisturize-3t, nasal-rinse]
+
+# acknowledged 的格式（由人工确认后写入，不要手填）：
+#
+# acknowledged:
+#   - snapshot: { total_sec: null, unknown: [moisturize-3t, nasal-rinse] }
+#     by: benson
+#     date: 2026-10-19
+#     note: "为什么这几张卡仍留在忙档"
+
+acknowledged:
+  - snapshot:
+      total_sec: null
+      unknown: [moisturize-3t, nasal-rinse]
+    by: benson
+    date: 2026-10-19
+    note: >-
+      睑缘清洗原文给了「每天 10 秒」，耗时可知。
+      3T 保湿与睡前鼻腔冲洗的原文都没给耗时（涂多少面积、多大水流都因人而异），
+      按 D7「不知道就写不知道」不编数字。
+      手册作者判断这三件「五分钟能做完」，这个估算沿用；
+      界面上遇到 unknown 时不显示总时长，只显示各卡自己的量。

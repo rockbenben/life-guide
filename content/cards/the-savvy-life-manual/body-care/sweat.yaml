@@ -1,0 +1,257 @@
+article: "the-savvy-life-manual/body-care/sweat.md"
+kind: practice
+coverage: partial
+ignore:
+  sections:
+    - anchor: "变化的第一原因：汗腺被年龄磨薄"
+      reason: "说明年龄增长、汗腺萎缩与汗液盐分浓度差异的机制，属于背景知识，没有可独立执行的动作。"
+    - anchor: "变化的第二原因：越不出汗，越出不来"
+      reason: "解释汗腺回收功能衰退与汗质改变的关系，属于机制说明，不另设操作卡。"
+    - anchor: "盐分浓度直接决定三种麻烦"
+      reason: "主要解释盐分浓度与怕热、汗黏、汗臭的关系；其中并非全由盐分造成的提示已并入自查卡。"
+    - anchor: "暑热适应：把汗「调回去」的正路"
+      reason: "暑热适应的定义及各地开始推行时间属于概念和地区背景信息，核心训练已由方法卡提炼。"
+  images: []
+cards:
+  - id: sweat-heat-adaptation-plan
+    status: reviewed
+    name: "运动加温浴一起做 2 周"
+    source:
+      anchor: "出汗与暑热适应：把汗「变回清爽」"
+    slot: anytime
+    remind:
+      text: "把运动和手足温浴混合着做，坚持 2 周。"
+      quote:
+        - "① 运动——在略热的环境下做略吃力的运动，每天 30 分钟左右"
+        - "② 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟"
+        - "两种混合着做、坚持 2 周"
+    effect:
+      text: "实测汗的盐分浓度下降 30～45%，回收功能改善后汗的气味和黏腻感都会消失。"
+      quote: "实测汗的盐分浓度下降 30～45%，回收功能改善后汗的气味和黏腻感都会消失。"
+    dose:
+      - value: 2
+        unit: 周
+        what: 练习计划的坚持时长
+        quote: "两种混合着做、坚持 2 周"
+    steps:
+      - id: select-methods
+        text: "运动——在略热的环境下做略吃力的运动，每天 30 分钟左右42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟"
+        quote:
+          - "① 运动——在略热的环境下做略吃力的运动，每天 30 分钟左右"
+          - "② 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟"
+      - id: mix-and-persist
+        text: "两种混合着做、坚持 2 周"
+        quote: "两种混合着做、坚持 2 周"
+    review:
+      by: benson
+      date: 2026-10-22
+      hash: 65de9680cfb790b1
+
+  - id: sweat-self-check
+    status: reviewed
+    name: "对照检查表看汗是否变咸"
+    source:
+      anchor: "先自查：你的汗变了没有"
+    slot: anytime
+    remind:
+      text: "对照「汗」检查表勾选；符合 5 项以上时，汗很可能已经发生变化。"
+      quote:
+        - "说明书开篇就是一张「汗」检查表，请对照勾选："
+        - "符合 5 项以上的人，汗很可能已经发生变化了。"
+    steps:
+      - id: check-sweat-changes
+        text: "待在开空调的室内的时间多久坐的时间多运动的机会少总在意汗的气味一出汗皮肤就发黏一热就心率升高身体是暖的，皮肤却觉得凉"
+        quote:
+          - "待在开空调的室内的时间多"
+          - "久坐的时间多"
+          - "运动的机会少"
+          - "总在意汗的气味"
+          - "一出汗皮肤就发黏"
+          - "一热就心率升高"
+          - "身体是暖的，皮肤却觉得凉"
+      - id: interpret-check-results
+        text: "符合 5 项以上的人，汗很可能已经发生变化了。"
+        quote: "符合 5 项以上的人，汗很可能已经发生变化了。"
+    cautions:
+      - level: info
+        text: "出汗烦恼的原因还包括皮肤本身的状况和其他疾病，并不全是盐分浓度造成的。"
+        quote: "出汗烦恼的原因还包括皮肤本身的状况和其他疾病，并不全是盐分浓度造成的。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 6a093111c93416cb
+
+  - id: exercise-heat-adaptation
+    status: reviewed
+    name: "在略热环境运动"
+    source:
+      anchor: "方法一：运动"
+    slot: anytime
+    remind:
+      text: "在略热环境下做略吃力的运动，每天 30 分钟左右。"
+      quote:
+        - "做任何暑热适应，最有效的方法都是运动"
+        - "在略热的环境下"
+        - "做略吃力的运动"
+        - "每天 30 分钟左右"
+    dose:
+      - value: 30
+        unit: 分钟
+        what: 每天运动时长
+        quote: "每天 30 分钟左右"
+    duration:
+      basis: quote
+      sec: 1800
+      quote: "每天 30 分钟左右"
+    steps:
+      - id: choose-slightly-warm-environment
+        text: "在略热的环境下"
+        quote: "在略热的环境下"
+      - id: do-moderately-strenuous-exercise
+        text: "做略吃力的运动"
+        quote: "做略吃力的运动"
+      - id: exercise-daily
+        text: "每天 30 分钟左右"
+        quote: "每天 30 分钟左右"
+    cautions:
+      - level: stop
+        text: "如果感觉身体状况变差，请停止运动。"
+        quote: "如果感觉身体状况变差，请停止运动。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 83a07e6d398818a9
+    variants:
+      sick:
+        skip: true
+
+  - id: hand-foot-warm-bath
+    status: reviewed
+    name: "42℃ 手足温浴"
+    source:
+      anchor: "方法二：42℃ 手足温浴"
+    slot: anytime
+    images:
+      - "https://img.newzone.top/20261016070430075.png?imageMogr2/format/webp"
+    remind:
+      text: "不能运动或不爱运动时，可把手腕和脚踝浸入约 42℃ 的热水，温浴 30 分钟。"
+      quote:
+        - "不能运动、或不爱运动的人，有另一条路：手足温浴"
+        - "准备约 42℃ 的热水"
+        - "把手腕和脚踝浸入热水"
+        - "温浴 30 分钟"
+    effect:
+      text: "连续做了 2 周的两人，汗的盐分浓度下降了 30～45%（两人分别约为 30% 和 45%）。回收功能得到改善后，汗的气味和黏腻感都消失了。"
+      quote: "连续做了 2 周的两人，汗的盐分浓度下降了 30～45%（两人分别约为 30% 和 45%）。回收功能得到改善后，汗的气味和黏腻感都消失了。"
+    dose:
+      - value: 42
+        unit: ℃
+        what: 热水温度
+        quote: "准备约 42℃ 的热水。"
+      - value: 30
+        unit: 分钟
+        what: 每次温浴时长
+        quote: "温浴 30 分钟。"
+      - value: 2
+        unit: 周
+        what: 混合练习的坚持时长
+        quote: "运动和温浴法两种方法混合着做，坚持 2 周，才更有希望提升汗腺的功能。"
+    duration:
+      basis: quote
+      sec: 1800
+      quote: "温浴 30 分钟。"
+    steps:
+      - id: prepare-warm-water
+        text: "准备约 42℃ 的热水。"
+        quote: "准备约 42℃ 的热水。"
+      - id: immerse-wrists-and-ankles
+        text: "把手腕和脚踝浸入热水。"
+        quote: "把手腕和脚踝浸入热水。"
+      - id: soak-for-thirty-minutes
+        text: "温浴 30 分钟。"
+        quote: "温浴 30 分钟。"
+      - id: mix-with-exercise
+        text: "运动和温浴法两种方法混合着做，坚持 2 周，才更有希望提升汗腺的功能。"
+        quote: "运动和温浴法两种方法混合着做，坚持 2 周，才更有希望提升汗腺的功能。"
+    cautions:
+      - level: stop
+        text: "如果出现头晕、贫血等症状，请立即中止温浴。"
+        quote: "如果出现头晕、贫血等症状，请立即中止温浴。"
+    review:
+      by: benson
+      date: 2026-10-21
+      hash: f7df4ba298353ebc
+
+  - id: gradual-sweat-introduction
+    status: reviewed
+    source:
+      anchor: "注意事项"
+    slot: anytime
+    remind:
+      text: "平时几乎不出汗时，避免一开始就剧烈出汗，把汗量一点点加上去。"
+      quote:
+        - "平时几乎不出汗的人，不要一上来就猛出。"
+        - "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+    steps:
+      - id: avoid-intense-sweating-at-first
+        text: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+        quote: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+      - id: increase-sweat-gradually
+        text: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+        quote: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 622c45a796fe7199
+    name: 不出汗的人从少量开始
+
+  - id: post-sweat-skin-care
+    status: reviewed
+    source:
+      anchor: "注意事项"
+    slot: anytime
+    remind:
+      text: "出汗后尽快用淋浴冲洗，或用毛巾擦干。"
+      quote: "出汗之后应尽快用淋浴冲洗，或用毛巾擦干。"
+    effect:
+      text: "汗在身上放着不管，就是皮肤发炎和发痒的原因。"
+      quote: "汗在身上放着不管，就是皮肤发炎和发痒的原因。"
+    steps:
+      - id: rinse-or-dry-skin
+        text: "出汗之后应尽快用淋浴冲洗，或用毛巾擦干。"
+        quote: "出汗之后应尽快用淋浴冲洗，或用毛巾擦干。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 813a9f2f0536ad86
+    name: 出汗后尽快冲洗擦干
+
+  - id: heatstroke-prevention
+    status: reviewed
+    source:
+      anchor: "注意事项"
+    slot: anytime
+    remind:
+      text: "运动或温浴时一旦感觉身体不适，请立即中止；补水时同步补充盐分。"
+      quote:
+        - "运动或温浴过程中一旦感觉身体不适，请立即中止。"
+        - "在进行暑热适应训练时，除了补水，别忘了同步补充盐分。"
+    steps:
+      - id: stop-if-unwell
+        text: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
+        quote: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
+      - id: replenish-water-and-salt
+        text: "在进行暑热适应训练时，除了补水，别忘了同步补充盐分。"
+        quote: "在进行暑热适应训练时，除了补水，别忘了同步补充盐分。"
+    cautions:
+      - level: stop
+        text: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
+        quote: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
+      - level: info
+        text: "出汗时务必提防热中暑。"
+        quote: "出汗时务必提防热中暑。"
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-24
+      hash: 510e3b68875dc967
+    name: 运动温浴时补水补盐
