@@ -244,6 +244,8 @@ push tag vX.Y.Z
   不把「有新版本」伪装成能一键装。Windows 的自动更新照旧。
 - **`latest*.yml` 是四份，不是一份**：`latest.yml`（Windows）、`latest-mac.yml`（macOS，含两个架构的 zip）、
   `latest-linux.yml` / `latest-linux-arm64.yml`（Linux 两个架构）。publish 会逐份核对版本与它指向的文件。
+- **发 tag 前先确认审批闸门真的生效**：`release` environment 的 Required reviewers 在 GitHub Free
+  私有仓库不支持（2026-10-25 实测 422）；没有它时 publish 会直接跑。仓库保持私有时不要推 tag。
 
 - **tag 是唯一版本源**：发版提交先改版本再打 tag，`validate` 断言一致，不一致即失败。
   一条命令改到位：`node scripts/set-version.mjs 0.1.1`
