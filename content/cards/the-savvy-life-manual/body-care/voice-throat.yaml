@@ -151,6 +151,7 @@ cards:
         unit: cm
         what: 起始吸管深度
         quote: "把水放进矿泉水瓶之类的容器，插入吸管，一边吹气一边发「呜——」。因为吸管深度不同，喉咙承受的负荷也不同，说明书建议从约 1～2cm 的深度开始。"
+        approximate: true
       - value: 5
         unit: 秒
         what: 每次发声时长
@@ -187,8 +188,8 @@ cards:
           - "误吸性肺炎在日本死因中排第 6 位，而声带萎缩是其中一个原因。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: d79485e6921c9164
+      date: 2026-10-28
+      hash: c8beba5710808c36
     name: 用吸管发声练嗓音
 
   - id: throat-decline-check

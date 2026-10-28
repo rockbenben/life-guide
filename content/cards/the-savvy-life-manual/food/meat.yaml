@@ -99,14 +99,17 @@ cards:
         unit: '℃'
         what: '浸肉温水温度'
         quote: '肉先在约 50℃ 的温水里泡到变白、捞出沥干'
+        approximate: true
       - value: 5
         unit: '分钟'
         what: '转小火后的烹煮时间'
         quote: '再次沸腾前转小火，约 5 分钟'
+        approximate: true
       - value: 5
         unit: '分钟'
         what: '捞出后的续煮时间'
         quote: '到时间后捞出绞肉，再煮约 5 分钟完成。'
+        approximate: true
       - value: 1
         unit: '大勺'
         what: '万能肉末拌蚝油用量'
@@ -133,9 +136,9 @@ cards:
         text: '不沸腾，就不会把肉煮散，也不会让汤起浑浊。'
         quote: '不沸腾，就不会把肉煮散，也不会让汤起浑浊。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 34d197af25e5e628
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: b350e052be0bfada
 
   - id: lemon-ramen
     status: reviewed
@@ -331,6 +334,7 @@ cards:
         unit: '分钟'
         what: '强火煎制时间'
         quote: '强火烧约 2 分钟'
+        approximate: true
       - value: 1
         unit: '大勺'
         what: '焖制加水量'
@@ -354,6 +358,6 @@ cards:
         quote: '一定要充分加热：中心 75℃ 保持 1 分钟。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 9346025b23bdaeb8
+      date: 2026-10-28
+      hash: 1237febc871adb1f
     name: 用大豆肉做汉堡饼

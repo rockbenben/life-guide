@@ -25,6 +25,7 @@ cards:
         unit: '杯'
         what: '每日黑咖啡饮用量'
         quote: '一天黑咖啡 3 杯左右。'
+        approximate: true
     steps:
       - id: set-daily-amount
         text: '一天黑咖啡 3 杯左右。'
@@ -53,8 +54,8 @@ cards:
           quote: '中学生以下、孕妇——咖啡因影响大，建议压到一天 1 杯；'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 184034cf289d7d0c
+      date: 2026-10-28
+      hash: 97c7aaea7458a11e
     variants:
       busy:
         include:
@@ -88,10 +89,12 @@ cards:
         unit: '秒'
         what: '第 2 次注完后的等待时间'
         quote: '第 3 次：在第 2 次注完约 10 秒后开始注。'
+        approximate: true
       - value: 5
         unit: '秒'
         what: '第 3 次注完后的等待时间'
         quote: '第 4 次：在第 3 次注完约 5 秒后开始注。'
+        approximate: true
     steps:
       - id: prepare-bean-water-ratio
         text: '咖啡豆 : 热水 = 1 : 15（按重量）；水温 90℃。'
@@ -120,9 +123,9 @@ cards:
         text: '喜欢更苦的人，延长最初的蒸制时间，苦味会更容易被抽出来。'
         quote: '喜欢更苦的人，延长最初的蒸制时间，苦味会更容易被抽出来。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: ea9f4f7f9a556ee6
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: ae19b5a215edb9b7
 
   - id: coffee-oil
     status: reviewed
@@ -161,6 +164,7 @@ cards:
         unit: '周'
         what: '冷藏保存时限'
         quote: '冷藏保存，约 1 周内用完。'
+        approximate: true
     steps:
       - id: choose-ground-coffee
         text: '必须用研磨咖啡豆，速溶咖啡做不了。'
@@ -205,8 +209,8 @@ cards:
         quote: '注意别浇过头：一天控制在 1 小勺以内。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: cea69a702d0c3776
+      date: 2026-10-28
+      hash: 08426039e9b1c0f0
     name: 用咖啡油给菜添香
 
   - id: raw-coffee-cream
@@ -233,6 +237,7 @@ cards:
         unit: '天'
         what: '成品使用期限'
         quote: '约 2 天内用完。'
+        approximate: true
       - value: 1
         unit: '大勺'
         what: '每日食用量参考'
@@ -274,6 +279,6 @@ cards:
         text: '注意别舀太多：一天以 1 大勺为参考。'
         quote: '注意别舀太多：一天以 1 大勺为参考。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 0db988fca3f4c7f0
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 3b7d369e8f52be1b

@@ -171,6 +171,7 @@ cards:
         unit: '个'
         what: '馅料制作份数'
         quote: '馅是白菜猪肉（约 25 个份）'
+        approximate: true
       - value: 200
         unit: g
         what: '猪绞肉用量'
@@ -199,6 +200,7 @@ cards:
         unit: '小勺'
         what: '酱油用量'
         quote: '酱油 半大勺（约 1.5 小勺）'
+        approximate: true
       - value: 1
         unit: '小勺'
         what: '砂糖用量'
@@ -231,6 +233,6 @@ cards:
         text: '用皮包入适量馅料。'
         quote: '用皮包入适量馅料。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 99048b9a8a4abaf9
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 36db851fb697d363

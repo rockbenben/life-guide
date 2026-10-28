@@ -21,14 +21,15 @@ cards:
         unit: 'mm'
         what: '形成层连皮削切厚度'
         quote: '厚厚削掉约 5mm'
+        approximate: true
     steps:
       - id: trim-formation-layer
         text: '轮切好的萝卜连形成层一起厚厚削掉约 5mm'
         quote: '轮切好的萝卜连形成层一起厚厚削掉约 5mm'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 68085c61ad9c2584
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 39aaf9fc5781396c
 
   - id: lightly-dry-radish
     status: reviewed

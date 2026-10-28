@@ -972,8 +972,11 @@ function cmdApproxCheck(): number {
   let cards = 0;
 
   for (const l of loaded) {
-    const lines: string[] = [];
     for (const c of l.data.cards) {
+      // 每张卡一张自己的表：lines 必须开在卡片循环里面 ——
+      // 放在外面的话，后面那张卡的表里会混进前面那张卡的行
+      // （实测：同一篇里第二张卡会列出第一张卡的剂量行，看着像它自己也有那些行）。
+      const lines: string[] = [];
       let hit = 0;
       for (const [i, d] of (c.dose ?? []).entries()) {
         const quotes = Array.isArray(d.quote) ? d.quote : [d.quote];

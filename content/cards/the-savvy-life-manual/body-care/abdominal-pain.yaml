@@ -38,6 +38,7 @@ cards:
         unit: "月"
         what: "连续练习周期"
         quote: "连续 1 个月左右"
+        approximate: true
     duration:
       basis: derived
       sec: 900
@@ -68,8 +69,8 @@ cards:
         quote: "闭着眼睛大幅度伸懒腰，再反复用力握拳、松开，让身体回到日常状态。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 5c48e38d28ebd1df
+      date: 2026-10-28
+      hash: b5d5fc539936da9c
     name: 每天两次自律训练缓解腹痛
     variants:
       busy:

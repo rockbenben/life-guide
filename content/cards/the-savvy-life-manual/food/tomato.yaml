@@ -19,10 +19,12 @@ cards:
         unit: 分钟
         what: "蒜片开始变色的等待时间"
         quote: "1 分钟左右蒜开始变色时保持中火"
+        approximate: true
       - value: 3
         unit: 分钟
         what: "番茄翻炒时长"
         quote: "炒 3 分钟左右"
+        approximate: true
     duration:
       basis: quote
       sec: 180
@@ -38,9 +40,9 @@ cards:
         text: "转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
         quote: "转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 72fe883a71423c47
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 12a964d61a94dc0b
   - id: make-okuda-tomato-sauce
     status: reviewed
     source:

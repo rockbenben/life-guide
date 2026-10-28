@@ -46,10 +46,12 @@ cards:
         unit: 秒
         what: "每次保持"
         quote: "共 5 个动作，两足各 2 回、每次 30 秒，动作之间休息约 30 秒，每天早晚各做一轮。"
+        approximate: true
       - value: 30
         unit: 秒
         what: "动作之间休息"
         quote: "动作之间休息约 30 秒是诀窍所在，不要连着做。"
+        approximate: true
       - value: 1
         unit: 轮
         what: "每天早晚各做"
@@ -135,5 +137,5 @@ cards:
         quote: "除了这套拉伸，每天做 30 分钟有氧运动（如快走）同样能促进血液循环。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: c1d5dfd4a14318ff
+      date: 2026-10-28
+      hash: 528de10e7e7ba2d6

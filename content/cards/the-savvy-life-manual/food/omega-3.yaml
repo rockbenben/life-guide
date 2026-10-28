@@ -94,6 +94,7 @@ cards:
         unit: 天
         what: 香味类冷浸时间
         quote: 柑橘、生姜等香味类：切成片后浸 3 天左右。
+        approximate: true
     duration:
       basis: derived
       sec: 259200
@@ -110,9 +111,9 @@ cards:
         text: 建议用气味小的色拉油或米油，免得和原本想萃取的香气打架。
         quote: 建议用气味小的色拉油或米油，免得和原本想萃取的香气打架。
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 3e1f83afc0a30409
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 0d79990fda613719
 
   - id: oil-cooking-and-omega-3-effects
     status: reviewed

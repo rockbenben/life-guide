@@ -107,6 +107,7 @@ cards:
         unit: mg
         what: '15～49 岁女性每日铁推荐量'
         quote: '15～49 岁女性的铁推荐量约 10.5mg。'
+        approximate: true
     steps:
       - id: check-intake-table
         text: '日本铁推荐摄入量（mg）（日本人膳食营养素参考摄入量 2020 年版，厚生劳动省）'
@@ -147,8 +148,8 @@ cards:
             quote: '一旦被诊断为贫血，请咨询医生'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: afc9a9367c3068f9
+      date: 2026-10-28
+      hash: 71d93f53d5162294
     name: 按年龄查每日铁推荐量
 
   - id: iron-overload-liver-safety

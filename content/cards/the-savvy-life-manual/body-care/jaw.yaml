@@ -97,6 +97,7 @@ cards:
         unit: "厘米"
         what: "橡胶球直径"
         quote: "建议选择直径约 10 厘米且弹力良好的橡胶球。"
+        approximate: true
     duration:
       basis: derived
       sec: 150
@@ -138,6 +139,6 @@ cards:
         quote: "7 名高龄者做了半年训练，平均肌力提升了 75%。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: b7723d23fc72a73d
+      date: 2026-10-28
+      hash: 8c37d5d3b2f97926
     name: 呼气时压球练下巴

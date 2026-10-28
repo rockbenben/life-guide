@@ -19,6 +19,7 @@ cards:
         unit: L
         what: '自动设定水量之外的增加量'
         quote: '自动设定的水量 +10L 左右'
+        approximate: true
     remind:
       text: '立式机洗毛巾时，用标准程序定好水量后暂停，再追加约 10L 水'
       quote:

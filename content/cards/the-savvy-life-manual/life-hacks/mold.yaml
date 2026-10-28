@@ -59,6 +59,7 @@ cards:
         unit: '%'
         what: '酒精浓度'
         quote: '使用浓度约 70% 的酒精喷洒在发霉区域。'
+        approximate: true
       - value: 1
         unit: '分钟'
         what: '酒精按压后的最短放置时间'
@@ -91,9 +92,9 @@ cards:
         text: '对于顽固的霉菌，可以重复以上步骤多次。'
         quote: '对于顽固的霉菌，可以重复以上步骤多次。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 2477c81ee949d984
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: fac9268d7addb6ba
   - id: mold-furniture-gap
     status: reviewed
     source:

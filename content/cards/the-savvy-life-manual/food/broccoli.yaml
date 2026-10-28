@@ -47,10 +47,12 @@ cards:
         unit: 分钟
         what: 烤制时间
         quote: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+        approximate: true
       - value: 7
         unit: 分钟
         what: 鱼烤盘强火烤制时间
         quote: '强火烤约 7 分钟'
+        approximate: true
     steps:
       - id: cut-florets
         text: '把西兰花切成小朵（大的对半切）。'
@@ -70,9 +72,9 @@ cards:
           - 用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
           - 没有烤箱（鱼烤盘）版：前两步不变，然后用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 598dacdf3f002b39
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 3fc5a100d555e70f
 
   - id: roast-broccoli-stem
     status: reviewed
@@ -106,6 +108,7 @@ cards:
         unit: mm
         what: 梗片厚度
         quote: '约 7mm 厚的圆片'
+        approximate: true
       - value: 250
         unit: ℃
         what: 烤箱温度
@@ -114,10 +117,12 @@ cards:
         unit: 分钟
         what: 烤制时间
         quote: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+        approximate: true
       - value: 7
         unit: 分钟
         what: 鱼烤盘强火烤制时间
         quote: '强火烤约 7 分钟'
+        approximate: true
     steps:
       - id: cut-stem
         text: '把梗切成约 7mm 厚的圆片（皮不削、连皮一起也可以）。'
@@ -137,9 +142,9 @@ cards:
           - 前两步不变，鱼烤盘铺锡纸、把梗圆片并排摆好，强火烤约 7 分钟。
           - 没有烤箱（鱼烤盘）版：前两步不变，然后用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 1d225d70f7467696
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: efbde4e7ef7c3f16
 
   - id: blanch-broccoli-florets
     status: reviewed
@@ -160,10 +165,12 @@ cards:
         unit: mm
         what: 茎末端切除长度
         quote: '把茎的末端切掉约 2mm。'
+        approximate: true
       - value: 20
         unit: 秒
         what: 热水浸泡时间
         quote: '把切面朝下放进沸腾的热水里泡约 20 秒。'
+        approximate: true
     steps:
       - id: trim-stem-end
         text: '把茎的末端切掉约 2mm。'
@@ -200,6 +207,6 @@ cards:
         text: '但要记住：「烤花球」和「烤梗」两道做法含水量高、不适合水煮，两者要分开用。'
         quote: '但要记住：「烤花球」和「烤梗」两道做法含水量高、不适合水煮，两者要分开用。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: a237f71c100c56ae
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 7121c514dd3ea62f

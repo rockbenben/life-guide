@@ -232,6 +232,7 @@ cards:
         unit: "秒"
         what: "豆奶加热时长"
         quote: "电子炉 600W 加热约 50 秒"
+        approximate: true
     steps:
       - id: preheat-oven
         text: "烤箱预热到 180℃"
@@ -269,8 +270,8 @@ cards:
         quote: "也可用砂糖 25g 代替，蜂蜜做出的口感更湿润"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 7f952d1f126de7b1
+      date: 2026-10-28
+      hash: 7ac3c9c42edecfd4
     name: 做无蛋奶面粉的蛋糕
 
   - id: adult-food-allergy-pattern

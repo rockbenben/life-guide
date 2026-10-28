@@ -175,10 +175,12 @@ cards:
         unit: 周
         what: 每周期服药时长
         quote: 周期给药：约服用 3 周，停药约 1 周，如此循环；
+        approximate: true
       - value: 1
         unit: 周
         what: 每周期停药时长
         quote: 周期给药：约服用 3 周，停药约 1 周，如此循环；
+        approximate: true
     effect:
       text: 经期相关症状的改善与出血量减少，约 1 个月就能感受到
       quote: 经期相关症状的改善与出血量减少，约 1 个月就能感受到
@@ -198,8 +200,8 @@ cards:
         quote: 两种方式都需与医生商讨，由医生控制出血时期。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 3684c9a2a69dbc8d
+      date: 2026-10-28
+      hash: 9ba3306fb12cee48
     name: 避孕药的服法与费用
   - id: intrauterine-hormonal-system
     status: reviewed

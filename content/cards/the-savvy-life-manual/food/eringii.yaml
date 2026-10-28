@@ -157,6 +157,7 @@ cards:
         unit: g
         what: '杏鲍菇重量'
         quote: '四种刀法切好的杏鲍菇 2 根（约 100g）'
+        approximate: true
       - value: 20
         valueMax: 30
         unit: g
@@ -189,9 +190,9 @@ cards:
         text: '煎到接触面变成漂亮的棕褐色之前都不要翻动——中途来回翻会影响上色。'
         quote: '煎到接触面变成漂亮的棕褐色之前都不要翻动——中途来回翻会影响上色。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 64870d5e3bce1abc
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 258c33e026c5547c
   - id: four-texture-eringii-risotto
     status: reviewed
     name: "四种口感炖饭"
@@ -212,6 +213,7 @@ cards:
         unit: g
         what: '杏鲍菇重量'
         quote: '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+        approximate: true
       - value: 1
         unit: 杯
         what: '米饭用量'
@@ -220,6 +222,7 @@ cards:
         unit: g
         what: '生米重量'
         quote: '米 1 杯（约 150g，生米）'
+        approximate: true
       - value: 700
         unit: mL
         what: '高汤用量'
@@ -269,9 +272,9 @@ cards:
         text: '千万不要煮到烧干。'
         quote: '千万不要煮到烧干。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 60e23d893c030d2f
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 21de0f69f6b78560
   - id: potato-soft-egg-eringii-salad
     status: reviewed
     name: "土豆溏心蛋拌杏鲍菇"
@@ -293,6 +296,7 @@ cards:
         unit: g
         what: '杏鲍菇重量'
         quote: '四种刀法切好的杏鲍菇 2 根的分量（约 100g，先按「食谱二」黄油煎好）'
+        approximate: true
       - value: 2
         unit: 个
         what: '土豆个数'
@@ -301,6 +305,7 @@ cards:
         unit: g
         what: '土豆重量'
         quote: '土豆 2 个（约 300g）'
+        approximate: true
       - value: 40
         unit: g
         what: '洋葱重量'
@@ -341,9 +346,9 @@ cards:
         text: '在 里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。'
         quote: '在 ②里加入醋、盐、胡椒调好味，然后放凉到温热不烫手再拌。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 193e964b76ea1893
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: f0492ed660d35616
   - id: whole-eringii-water-retention
     status: reviewed
     name: "整根烤不用加油"

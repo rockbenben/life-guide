@@ -119,10 +119,12 @@ cards:
         unit: "周"
         what: "睡前坚持"
         quote: "睡前坚持约 2 周"
+        approximate: true
       - value: 2
         unit: "克"
         what: "食盐用量"
         quote: "将约 2 克食盐溶解在 250 毫升温水中"
+        approximate: true
       - value: 250
         unit: "毫升"
         what: "温水用量"
@@ -131,6 +133,7 @@ cards:
         unit: "℃"
         what: "水温"
         quote: "水温约为 38℃"
+        approximate: true
 
     # 原文没有说一次冲洗要花多久，只给了每步的量（盐 2 克、水 250 毫升、38℃）。
     # 推算耗时就是编数字，所以 basis=unknown，不写 sec。
@@ -164,6 +167,6 @@ cards:
           - "坚持约 1 个月仍不见改善"
           - "建议到精神科、心疗内科或内科就诊"
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 3ffe58c121c1f246
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: d98d9171c58fe509

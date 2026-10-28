@@ -250,6 +250,7 @@ cards:
         unit: 小时
         what: 酸奶滤水时间
         quote: '放冰箱约 5 小时滤掉水分'
+        approximate: true
       - value: 2
         unit: 个
         what: 鸡蛋用量
@@ -262,6 +263,7 @@ cards:
         unit: 分钟
         what: 烘烤时间
         quote: '烤 35 分钟左右'
+        approximate: true
     duration:
       basis: quote
       sec: 2100
@@ -303,6 +305,6 @@ cards:
         text: 说明书没有给这份蛋糕标注热量或营养成分数据，只以「超ヘルシー（超低负担）」作为定性说法；也没有提到无麸质、糖醇等替代方案。
         quote: '说明书没有给这份蛋糕标注热量或营养成分数据，只以「超ヘルシー（超低负担）」作为定性说法；也没有提到无麸质、糖醇等替代方案。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: fea56ccdb5fe95bd
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 62b067195d49ff84

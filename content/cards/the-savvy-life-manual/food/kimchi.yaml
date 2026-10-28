@@ -114,10 +114,12 @@ cards:
         unit: 'g'
         what: '细香菜用量'
         quote: '细香菜（切碎）约 10g'
+        approximate: true
       - value: 4
         unit: 'g'
         what: '鲣鱼末用量'
         quote: '鲣鱼末（磨成粉）约 4g'
+        approximate: true
       - value: 1
         unit: '小勺'
         what: '一味辣椒用量'
@@ -143,9 +145,9 @@ cards:
         text: '冷藏保存约 1 周。'
         quote: '冷藏保存约 1 周。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 31d748244e6b56e6
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 54c271ad9ad42eb2
   - id: kimchi-vegetable-marinade
     status: reviewed
     source:

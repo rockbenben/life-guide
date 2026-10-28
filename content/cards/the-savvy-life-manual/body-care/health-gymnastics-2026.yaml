@@ -29,6 +29,7 @@ cards:
         unit: 'cm'
         what: '抬脚高度'
         quote: '把一只脚抬高约 5 cm'
+        approximate: true
       # 「30 秒到 1 分钟」是**一条**范围，不拆成下限/上限两条（AGENTS.md §5.2）。
       # 换算成同一单位（1 分钟 = 60 秒）要写出算式。
       - value: 30
@@ -56,8 +57,8 @@ cards:
         quote: '撑不住单脚站的人，就在椅子等处轻轻搭着手练习'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: f0f6d38156860465
+      date: 2026-10-28
+      hash: 74892b5542a3c44f
     name: 扶稳单脚站立
   - id: calf-raise
     status: reviewed
@@ -132,6 +133,7 @@ cards:
         unit: '度'
         what: '中等负荷时的膝盖弯曲角度'
         quote: '中等负荷时把膝盖弯到约 90 度'
+        approximate: true
       - value: 10
         unit: '秒'
         what: '椅式深蹲保持时长'
@@ -167,8 +169,8 @@ cards:
         quote: '以不勉强的次数进行'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: e96bde699bccd5f6
+      date: 2026-10-28
+      hash: b8648a5eb2deefc5
     name: 做深蹲
   - id: three-step-preparation
     status: reviewed

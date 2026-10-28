@@ -113,6 +113,7 @@ cards:
         unit: "大勺"
         what: "煮面水用量"
         quote: "约 2 大勺"
+        approximate: true
     steps:
       - id: mix-minced-meat
         text: "碗里放绞肉和盐苹果轻轻拌匀"
@@ -140,9 +141,9 @@ cards:
         text: "提前拌这一步很关键"
         quote: "提前拌这一步很关键"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 44a6a78f1d97a4c5
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 8d9cef6bd110b288
 
   - id: make-tender-chicken-breast
     status: reviewed
@@ -169,6 +170,7 @@ cards:
         unit: "g"
         what: "鸡胸肉重量"
         quote: "约 300g"
+        approximate: true
       - value: 3
         unit: "大勺"
         what: "盐苹果用量"
@@ -217,9 +219,9 @@ cards:
         text: "腌得久一点更好。"
         quote: "腌得久一点更好。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 7f15452a2142170f
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: bdbed7fa8cc8e613
 
   - id: store-whole-apple
     status: reviewed
@@ -242,6 +244,7 @@ cards:
         unit: "圈"
         what: "橡皮筋圈数"
         quote: "大约绕 2～4 圈"
+        approximate: true
     steps:
       - id: wrap-apple
         text: "微微沾湿的报纸或厨房纸把苹果包起来——保湿是第一步。"
@@ -278,8 +281,8 @@ cards:
           - "可以放 2～3 周"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: fb6d402873664fc9
+      date: 2026-10-28
+      hash: 910b0819dd8f94d6
     name: 用湿纸包苹果冷藏
 
   - id: use-leftover-salt-apple

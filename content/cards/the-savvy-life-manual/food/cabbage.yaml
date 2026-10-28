@@ -234,6 +234,7 @@ cards:
         unit: 'g'
         what: '盐用量'
         quote: '盐 1 小勺弱（约 4g）'
+        approximate: true
     duration:
       basis: derived
       sec: 1380
@@ -257,6 +258,6 @@ cards:
         quote: '怕焦的话自行调整火候或时间。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: cb3c15004606eb0c
+      date: 2026-10-28
+      hash: 96fcd08c445f6ba3
     name: 烤焦卷心菜煮高汤

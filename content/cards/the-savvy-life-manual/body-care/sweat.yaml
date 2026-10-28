@@ -99,6 +99,7 @@ cards:
         unit: 分钟
         what: 每天运动时长
         quote: "每天 30 分钟左右"
+        approximate: true
     duration:
       basis: quote
       sec: 1800
@@ -119,8 +120,8 @@ cards:
         quote: "如果感觉身体状况变差，请停止运动。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 83a07e6d398818a9
+      date: 2026-10-28
+      hash: 560f4d62aaafed0c
     variants:
       sick:
         skip: true
@@ -148,6 +149,7 @@ cards:
         unit: ℃
         what: 热水温度
         quote: "准备约 42℃ 的热水。"
+        approximate: true
       - value: 30
         unit: 分钟
         what: 每次温浴时长
@@ -178,9 +180,9 @@ cards:
         text: "如果出现头晕、贫血等症状，请立即中止温浴。"
         quote: "如果出现头晕、贫血等症状，请立即中止温浴。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: f7df4ba298353ebc
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: 95d13ef9e42c7dc9
 
   - id: gradual-sweat-introduction
     status: reviewed

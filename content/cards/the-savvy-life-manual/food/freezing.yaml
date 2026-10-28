@@ -139,6 +139,7 @@ cards:
         unit: '分钟'
         what: '强火快炒时长'
         quote: '强火快炒约 1 分钟（略不足 1 分钟）'
+        approximate: true
     steps:
       - id: purge-and-freeze-clams
         text: '把蛤蜊吐沙后装进密封袋，在冷冻室冻一晚以上。'
@@ -163,9 +164,9 @@ cards:
         text: '口还没合上的蛤蜊不能吃。'
         quote: '口还没合上的蛤蜊不能吃。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 06fafb8532f60690
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: c3c748a626723b69
 
   - id: fragrant-pasta
     status: reviewed

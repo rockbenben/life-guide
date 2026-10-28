@@ -67,6 +67,7 @@ cards:
         unit: "次"
         what: "来回轻洗"
         quote: "来回轻柔地洗约 5 次"
+        approximate: true
 
     # 原文直接给了「每天 10 秒」，不用换算。
     duration:
@@ -98,8 +99,8 @@ cards:
         quote: "觉得还是干涩，就再加50℃ 热敷"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: cc6e8ddcee5aaaee
+      date: 2026-10-28
+      hash: faca5f7bd1f5daf3
     variants:
       busy:
         include:

@@ -98,6 +98,7 @@ cards:
         unit: 分钟
         what: '整个慢慢眨眼的控制时长'
         quote: '整个「慢慢眨眼」控制在 1 分钟左右就收。'
+        approximate: true
     duration:
       basis: quote
       sec: 60
@@ -134,9 +135,9 @@ cards:
           - '不要一边眨眼一边死盯着猫的眼睛看，它可能把这理解成威吓。'
           - '书里提到，确实有猫会因此哈气、抓人、甚至扑上来咬人。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: b1ffb6a5de0ad7b4
+      by: AI（作者授权代签）
+      date: 2026-10-28
+      hash: bcf41b18d9b6b508
 
   - id: keep-cat-fully-indoors
     status: reviewed
