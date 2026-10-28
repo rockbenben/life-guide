@@ -43,7 +43,7 @@ export interface CardsBundle {
  *
  * 引文是内容层的证据 —— R1/R2 逐字校验读的是 yaml，不是这个产物。
  * App 一次都不读它：屏上摆的就是原文的话，要对质就点「出自〈哪一篇〉」去看原文。
- * 留着它就是每次启动白传 399 KB（实测占 cards.json 的 40% —— 同一段原文存了两遍）。
+ * 留着它就是每次启动白传 351 KB（实测占 cards.json 的 40% —— 同一段原文存了两遍）。
  *
  * articlePath / articleKind 来自文章级别：疾病信息要单独处理，
  * App 靠 articleKind 决定这张卡是不是进不了今日清单（AGENTS.md §5.4）。
@@ -176,7 +176,8 @@ function localizeMarkdown(
  *
  * 只留「屏上要显示的话」：引文、签字指纹（review）、status、卡级图片
  * 都是内容层或校验层的证据，App 一次都不读 —— 实测它们合计约 40 KB。
- * 这一步（连同引文）把 cards.json 从 1007 KB 压到 600 KB 以下。
+ * 这一步（连同引文）把 cards.json 从约 886 KB 压到 535 KB：
+ * 引文本身 351 KB，占剥之前那份的 40%（同一段原文存了两遍）。
  */
 function stripQuotes(card: Card): BuiltCard {
   const { quote: _q1, ...remind } = card.remind;

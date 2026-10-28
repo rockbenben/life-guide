@@ -94,7 +94,9 @@ function clampPercent(n) {
 export function friendlyUpdateError(err) {
   const code = typeof err?.statusCode === "number" ? err.statusCode : err?.status;
   if (code === 404) {
-    return "找不到更新源（仓库是私有的，或者还没有发过版本）";
+    // 仓库已公开（2026-10-28），所以 404 更可能是「这个版本还没发过」
+    // 或更新地址不对，而不是「仓库是私有的」。
+    return "找不到更新源（还没有发过版本，或更新地址不对）";
   }
   if (typeof code === "number") {
     return `更新源返回了 ${code}`;

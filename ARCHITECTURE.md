@@ -122,7 +122,9 @@ life-guide/
 │   └── README.md             改设计改这里，重跑渲染命令出图
 ├── docs/                     使用指南 · 部署 · 发布说明 · README 用的截图
 ├── scripts/                  acceptance/（浏览器级验收）· set-version · release-draft
+│                             · release-assets · check-workflows · check-desktop-metadata
 │                             · decision-gate · desktop-smoke · screenshot 等
+│                             · test/（发版校验脚本的纯逻辑单测）
 ├── .desktop-policy.json      桌面端已登记的取舍（带 reason + revisitWhen）
 └── .github/workflows/        ci.yml（校验）/ deploy.yml（PWA 发布）/ release.yml（tag 发版）
 ```
@@ -236,7 +238,7 @@ type DoneEvent = {
 ## 6. 开发顺序（对应 AGENTS.md §7）
 
 - **P0**：`git init` → 根 `package.json` + workspaces → `schema/` 空壳 → `content import`（正文 + 图片 + 两份 lock，先用 fixture 测试再跑真实 blog）→ `ci.yml` 空跑（`npm test`、`content:check` 为绿）→ 用真 README 替换模板。
-- **P1**：`content/source` 解析 → `rules` R1–R12 + fixtures（R2 先写数字归一化的表驱动测试）→ `coverage` / `budget` / `review` → 12 张卡 → `build`；迁移原型的图片校验用例。后来补了 R13–R16。
+- **P1**：`content/source` 解析 → `rules` R1–R12 + fixtures（R2 先写数字归一化的表驱动测试）→ `coverage` / `budget` / `review` → 12 张卡 → `build`；迁移原型的图片校验用例。后来补了 R13–R17。
   - 解析必须**单遍遍历**。写成 visit(heading) + visit(paragraph) 两遍是错的：heading 那遍先跑完，`current` 已经停在最后一个标题上，于是所有段落都算进最后一个小节，前面的全空（实测 `bone.md` 5 个小节有 4 个是空的）。
   - 抽卡时**引文只能照抄原文**。原文里夹着日文括注（`每天 50 次（「1日50回が目安」）`）就不能跳过它，否则引文不是逐字子串，R1 会拦下。
   - 归一化要剥掉**成对的加粗标记**：源文是 `**每天 50 次**`，解析出的纯文本没有 `**`，而人复制引文时带的正是 `**`。不剥掉的话每条含加粗的引文都误报 R1。

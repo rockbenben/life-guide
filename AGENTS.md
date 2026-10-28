@@ -18,7 +18,7 @@
 
 ## 2. 现状
 
-已经是独立仓库并跑起来了：内容管线 + PWA 都在，484 个单元测试 + 32 个桌面逻辑测试、内容校验、类型检查、CI 全绿。
+已经是独立仓库并跑起来了：内容管线 + PWA 都在，496 个单元测试 + 32 个桌面逻辑测试、内容校验、类型检查、CI 全绿。
 
 ```
 life-guide/
@@ -56,8 +56,10 @@ life-guide/
 │   └── README.md             改设计改这里，重跑渲染命令出图（别直接改 PNG）
 ├── docs/                     使用指南 · 部署 · 发布说明 · README 用的截图
 ├── scripts/                  acceptance/（浏览器级验收，Playwright 驱动本机 Chrome）
-│                             · set-version · release-draft · decision-gate
-│                             · desktop-smoke · screenshot 等
+│                             · set-version · release-draft · release-assets
+│                             · check-workflows · check-desktop-metadata
+│                             · decision-gate · desktop-smoke · screenshot 等
+│                             · test/（发版校验脚本的纯逻辑单测）
 ├── .desktop-policy.json      桌面端已登记的取舍（带 reason + revisitWhen）
 └── .github/workflows/        ci.yml（校验）/ deploy.yml（PWA 发布）/ release.yml（tag 发版）
 ```
@@ -231,6 +233,11 @@ content/
    **这不是把签字改成机器行为**：事实字段仍由 R1/R2/R12 看守，以后改事实仍要人逐条看。
    这一轮为什么值得改：同一篇里曾出现 5 张同名「各部位对应的穴位位置」、5 张「全部 41 张
    卡片对照」、4 张「注意事项」—— 新用户在手册里看到这些名字，不知道点进去做什么。
+9. **2026-10-28 的近似值补齐也是作者授权代签**（签名同样写作 `AI（作者授权代签）`）：
+   39 张卡 · 56 行剂量的引文写的是「约 / 大约 / 左右」，卡上没标 `approximate`，
+   屏上把近似说成了定值（其中一张是服药周期）。这一轮**只加 `approximate: true` 这个
+   事实标志，不改任何一句话**，然后重签。顺带把一张原本的 draft 卡退回了 draft ——
+   签名不该顺带把新卡带进产品（见 §2 的说明）。
 
 > 为什么不用「PR approvals」：这是个人项目，GitHub 不允许自己批准自己的 PR。签字 + 内容指纹在单人和多人下都成立，而且与忙档预算（§5.3）是同一套机制。
 
@@ -549,6 +556,7 @@ cards:
 
 原文写「来回轻柔地洗**约** 5 次」，屏上写「5 次」—— 这是把近似说成定值，
 在剂量这种地方是要出事的（实测 39 张卡、56 行剂量这样，其中一张是服药周期）。
+**2026-10-28 已全部补齐**（56 行标上 `approximate: true` 并重签，`content approx-check` 现在是 0 行）。
 
 **App 判不出来**：它手里只有剂量行与那句提醒，而提醒与剂量引文往往不是同一句话
 （实测 56 处里只有 7 处能从提醒里看出那个「约」）。所以这件事只能由内容层记下来：
@@ -1003,6 +1011,10 @@ npm test                                                      # 单元测试
 npm run test:desktop                                          # 桌面端纯逻辑的 node --test
 npm run typecheck                                             # tsc --noEmit
 npm run lint                                                   # markdownlint
+npm run lint:workflows                                         # 工作流文件：YAML 解析 + shell 语法 + 两条 GitHub 特有的坑
+node scripts/check-desktop-metadata.mjs                       # 桌面端打包元数据（homepage / 作者邮箱，Linux 打包要）
+node scripts/release-assets.mjs                               # 校验发布草稿的资产并生成 SHA256SUMS（流水线里跑）
+node scripts/release-draft.mjs <目录>                          # 建/找发布草稿并把产物传上去（按 release id 传）
 ```
 
 内容管线在 `content/`（Node CLI，无 UI），App 在 `app/`（Preact + Vite + PWA）。
@@ -1058,10 +1070,10 @@ Android Studio 自带的 JBR（它就是 21）。
 | 阶段 | 内容 | 退出条件 | 状态 |
 | --- | --- | --- | --- |
 | **P0 仓库** | `git init`；npm workspaces 骨架；`content import` 导入快照；一条 CI 空跑通过 | `npm test` 与 `content:check` 在 CI 上为绿 | **已完成** |
-| **P1 内容层** | schema 定稿；校验器 R1–R10；手工抽 12 张卡；生成 `cards.json` 与校验报告 | 12 张卡 0 error；R7 已有确认记录 | **已完成**（R1–R16 都有实现，见 §5.2） |
+| **P1 内容层** | schema 定稿；校验器 R1–R10；手工抽 12 张卡；生成 `cards.json` 与校验报告 | 12 张卡 0 error；R7 已有确认记录 | **已完成**（R1–R17 都有实现，见 §5.2） |
 | **P2 PWA MVP** | 今天视图、时段、模式、事件日志、`.ics`、离线、导出；原型校验迁移为测试 | 技术清单全过：iOS / Android 安装成功；断网可完整使用一天；`.ics` 在 iOS 日历与 Google 日历导入后按时提醒；导出 → 清空 → 导入后事件日志逐条一致；R11 组件级测试通过 | **代码完成，浏览器能验的都已自动化**：离线预缓存、`.ics` 定时事件（早/晚 + 卡片提醒）与闹钟、导出→清空→导入逐条一致、卡上设的提醒存得住也删得掉，由 `npm run acceptance` 在真浏览器里验（8 项全过：离线可完整使用一天、断网也能翻手册、`.ics`、导出→清空→导入、卡上提醒、提醒生命周期与周期撤销、今天不做/撤销/次日回来、导航；生命周期检查含取消/只移卡/一起删、放回默认、周期撤销、批量撤销）。**三种形态已就位**：浏览器 PWA、桌面 Electron（构建目标覆盖 Windows / macOS / Linux 各 x64 + arm64；只有 Windows 做过真启动与更新链验证）、手机 Capacitor（Android 的 debug APK 已构建出来；iOS 需 macOS）。**真机安装与两个日历 App 的实际提醒仍需人工**，清单见 §7.1 |
 | **决策门** | 作者本人连续使用 14 天后，看事件日志 | 第 2 周打开 ≥ 4 天，且早晚两个时段都有记录，才进 P3；否则先改交互。试用者反馈只作定性参考，不作门槛 | **未开始**：P3 的工具链已经建好（不占着门），但 `reviewed` 数量与「作者自己会不会用」仍要等这 14 天的数据 |
-| **P3 批量抽取** | LLM 起草流水线；审阅工具；手册浏览；今日一篇；疾病类分级 | ≥ 60 篇 `reviewed`；人工审阅 ≤ 10 分钟 / 篇（目标值，按 P1 实测校准） | **工具链完成，审阅基本收工**：`content draft` 流水线已用真实 LLM 跑通（自检不过就不写盘）；`content audit` 审阅辅助已跑通全量 94 篇；手册浏览 / 今日一篇 / 疾病类分级已实现；**104 篇卡文件、553 张卡已产出，全部通过校验**；其中 **518 张已签字**（机器没挑出毛病的 289 张于 2026-10-21 批量签字，之后逐篇补签；2026-10-22 又给 135 张改过名字/合并过的卡重签）；剩下 **35 张 draft**（23 张保健 + 12 张疾病类）—— 逐张看过：多数是「表格/自测/清单」型（记分卡对照、钾卡、31 分自测、危险度检查表），手册原文里本来就有，做成卡只是重复；**那几张「一个动作一张卡」的才值得签**。**签字与审阅是人的活**（唯一例外见 §4.3 第 8 条：2026-10-24 的纯改名由作者授权代签） |
+| **P3 批量抽取** | LLM 起草流水线；审阅工具；手册浏览；今日一篇；疾病类分级 | ≥ 60 篇 `reviewed`；人工审阅 ≤ 10 分钟 / 篇（目标值，按 P1 实测校准） | **工具链完成，审阅基本收工**：`content draft` 流水线已用真实 LLM 跑通（自检不过就不写盘）；`content audit` 审阅辅助已跑通全量 94 篇；手册浏览 / 今日一篇 / 疾病类分级已实现；**104 篇卡文件、553 张卡已产出，全部通过校验**；其中 **518 张已签字**（机器没挑出毛病的 289 张于 2026-10-21 批量签字，之后逐篇补签；2026-10-22 又给 135 张改过名字/合并过的卡重签）；剩下 **35 张 draft**（23 张保健 + 12 张疾病类）—— 逐张看过：多数是「表格/自测/清单」型（记分卡对照、钾卡、31 分自测、危险度检查表），手册原文里本来就有，做成卡只是重复；**那几张「一个动作一张卡」的才值得签**。**签字与审阅是人的活**（作者授权代签只有两处：§4.3 第 8 条的 2026-10-24 纯改名，以及 2026-10-28 给 56 行剂量补 `approximate` 标志并重签 —— 都是「按原文补事实标记」，不是改内容的意思） |
 | **P4 增强** | Web Push（可选）、趋势回看、季节性卡片 | 按需 | 未开始 |
 
 ### 7.1 设备端验收清单（只能人工做）
@@ -1134,13 +1146,18 @@ npm test                      # 全部单元测试
 **怎么发版**（桌面端安装包 + Android APK，tag 驱动，流水线自动跑）：
 
 ```bash
-node scripts/set-version.mjs 0.1.1     # 版本一次改到位（含 Android versionCode）
-git commit -am "chore(release): 0.1.1" && git push origin main
-git tag v0.1.1 && git push origin v0.1.1   # 这一推才触发流水线
+node scripts/set-version.mjs 0.1.2     # 版本一次改到位（含 Android versionCode）
+git commit -am "chore(release): 0.1.2" && git push origin main
+git tag v0.1.2 && git push origin v0.1.2   # 这一推才触发流水线
 ```
 
 流水线在 `publish` 那一步会停住等人放行（`release` environment）——
 放行之前是草稿，确认发布说明再放。
+
+**v0.1.1 已于 2026-10-28 发布**（第一版公开分发，24 个资产 + 校验和 + 来源证明）。
+再发一版要升版本号并带上新 tag：`set-version.mjs` 会把 5 个 package.json
+与 Android 的 `versionCode` 一起改掉，而 `versionCode` 只增不减 ——
+不涨的话新包装不上。
 
 **怎么发布浏览器那条路**（产物、域名、EdgeOne Pages 的三条发布路径、发完要验的四件事）：
 见 `docs/部署.md`。域名建议 `life.newzone.top`。

@@ -42,7 +42,8 @@ export async function optimizeMediaFiles(dir: string): Promise<MediaOptimizeStat
     stats.before += before;
     try {
       // 从 Buffer 读：直接从文件读时 sharp 会一直握着源文件句柄，
-      // Windows 上紧接着写回同一路径会报 UNKNOWN open（实测 54/106 张失败）。
+      // Windows 上紧接着写回同一路径会报 UNKNOWN open
+      //（改之前实测 106 张里有 54 张这样失败；改后正是这 54 张被重编码成功）。
       const original = fs.readFileSync(file);
       const image = sharp(original, { failOn: "none" });
       const meta = await image.metadata();
