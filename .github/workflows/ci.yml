@@ -99,6 +99,12 @@ jobs:
       - name: Build web assets
         run: npm run app:build
 
+      - name: Check desktop packaging metadata
+        # Linux 的 deb / rpm 要 homepage 与作者邮箱，而这个 job 只在 Windows 上
+        # 打包（只打 dir），所以这类问题本来要等真发版的 Linux runner 才炸
+        # （2026-10-28 实测：少一个 homepage，Linux 打包直接失败，整条流水线停住）。
+        run: node scripts/check-desktop-metadata.mjs
+
       - name: Package desktop app
         # electron-builder 要**写死**的 electron 版本（package.json 里已经是写死的），
         # 版本写范围它会直接报错 —— 这条坑当初就踩过。

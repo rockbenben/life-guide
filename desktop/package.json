@@ -6,6 +6,11 @@
   "type": "module",
   "description": "桌面端：Electron 壳，跑的是同一份 PWA 构建产物",
   "author": "benson",
+  "homepage": "https://github.com/rockbenben/life-guide",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rockbenben/life-guide.git"
+  },
   "main": "main.mjs",
   "scripts": {
     "start": "electron .",
