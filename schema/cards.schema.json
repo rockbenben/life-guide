@@ -167,6 +167,10 @@
               "valueMax": { "type": "number" },
               "unit": { "type": "string", "minLength": 1 },
               "what": { "type": "string", "minLength": 1 },
+              "approximate": {
+                "type": "boolean",
+                "description": "原文写的是「约 / 大约 / 左右」这一类近似值 —— 屏上要显示「约」，不许把近似说成定值"
+              },
               "derived": {
                 "type": "object",
                 "required": ["formula"],

@@ -74,6 +74,8 @@ export type BuiltCard = Omit<
     valueMax?: number;
     unit: string;
     what: string;
+    /** 原文是近似值（「约 5 次」）—— 屏上要显示「约」 */
+    approximate?: boolean;
     derived?: { formula: string };
   }[];
   steps: { id?: string; text: string; images?: string[] }[];
@@ -240,7 +242,7 @@ function stripQuotes(card: Card): BuiltCard {
 /**
  * 文章的篇名（frontmatter 里的 title）。
  *
- * 只读文件头那一段，不用 remark 解析整篇 —— 构建要为 104 篇文章各问一次，
+ * 只读文件头那一段，不用 remark 解析整篇 —— 构建要为抽过卡的 104 篇文章各问一次，
  * 全文解析太贵。引号照 frontmatter 的写法剥掉（与 parseMarkdown 同一口径）。
  */
 export function articleTitleOf(contentDir: string, article: string): string {

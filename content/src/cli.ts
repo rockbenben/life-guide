@@ -11,6 +11,7 @@
  *   content draft <article> [--all] [--dry-run]
  *   content audit [--article <path>] [--no-llm] [--report-only] [--resume]
  *   content slot-check
+ *   content approx-check
  *   content repair-quotes
  *
  * CI 只跑 check 与 build，两者都只读不写（见 AGENTS.md §4.3）。
@@ -25,6 +26,7 @@ import { checkBusyBudget, checkReviewSignature, type BusyBudget } from "./budget
 import { ALL_RULES, type Finding } from "./rules/index.ts";
 import { runImport } from "./source/import.ts";
 import { parseMarkdown } from "./source/parse.ts";
+import { approximationAttached } from "./source/normalize.ts";
 import { checkSnapshotIntegrity } from "./source/errata.ts";
 import { checkDefaultRoutine } from "./default-routine.ts";
 import { r12Check } from "./review.ts";
@@ -555,7 +557,7 @@ async function cmdDraft(): Promise<number> {
   let skipped = 0;
   let cardCount = 0;
 
-  // 一篇要 100～200 秒，103 篇串行是 3～6 小时 —— 太慢，没人会等。
+  // 一篇要 100～200 秒，上百篇串行是几小时 —— 太慢，没人会等。
   // 并发跑：worker + cursor，与 import.ts 里下载图片同一个写法。
   const concurrency = parseConcurrency();
   if (concurrency === null) {
@@ -940,6 +942,74 @@ function cmdSlotCheck(): number {
   return 0;
 }
 
+// ---------------------------------------------------------------- 近似检查
+
+/**
+ * 把「原文写了约、卡上没标」的剂量行列成待办。
+ *
+ * 原文写「来回轻柔地洗**约** 5 次」，屏上写「5 次」—— 把近似说成定值，
+ * 是内容层最要紧的一类失真（实测 33 张卡、47 行剂量这样，其中一张是服药周期）。
+ *
+ * App 判不出来：它手里只有剂量行与那句提醒，而提醒与剂量引文往往不是同一句话
+ * （实测 47 处里只有 7 处能从提醒里看出那个「约」）。所以要内容层把这件事记下来：
+ * 剂量行加 `approximate: true`，屏上就显示「约」。
+ *
+ * 这个命令只列待办，不改卡 —— 改卡要重签（R12），签字是人的活。
+ * 报告：content/approx-report.md。
+ */
+function cmdApproxCheck(): number {
+  const loaded = loadAllCards(CARDS_DIR);
+  const out: string[] = [
+    "# 近似值检查报告",
+    "",
+    `生成时间：${new Date().toISOString()}`,
+    "",
+    "原文写「约 / 大约 / 左右」而卡上没标 `approximate` 的剂量行。",
+    "屏上现在把近似说成定值 —— 在那行 dose 上加 `approximate: true` 即可。",
+    "",
+  ];
+  let rows = 0;
+  let cards = 0;
+
+  for (const l of loaded) {
+    const lines: string[] = [];
+    for (const c of l.data.cards) {
+      let hit = 0;
+      for (const [i, d] of (c.dose ?? []).entries()) {
+        const quotes = Array.isArray(d.quote) ? d.quote : [d.quote];
+        const has = quotes.some((q) => approximationAttached(q, d.value, d.valueMax));
+        if (!has || d.approximate) continue;
+        // what 里已经带了近似词 —— 屏上已经是对的了，不进待办
+        if (/约|大约|左右|上下|前后|差不多/.test(d.what)) continue;
+        hit++;
+        rows++;
+        lines.push(
+          `| \`dose[${i}]\` | ${d.value}${d.valueMax !== undefined ? "～" + d.valueMax : ""} ${d.unit} | ${d.what} | ${quotes.join(" / ")} |`,
+        );
+      }
+      if (!hit) continue;
+      cards++;
+      out.push(`## ${c.id}`);
+      out.push("");
+      out.push(
+        `卡文件：\`${path.relative(ROOT, l.file).replace(/\\/g, "/")}\`（改动后要重签：\`npm run content:review ${c.id} --by <名字> --resign\`）`,
+      );
+      out.push("");
+      out.push("| 位置 | 屏上现在显示 | 这一行是什么 | 原文引文 |");
+      out.push("| --- | --- | --- | --- |");
+      out.push(...lines);
+      out.push("");
+    }
+  }
+
+  const reportPath = path.join(CONTENT, "approx-report.md");
+  fs.writeFileSync(reportPath, out.join("\n") + "\n", "utf8");
+  console.log(`\n近似值检查：${cards} 张卡 · ${rows} 行剂量`);
+  console.log("  那些行在屏上把「约」说成了定值；加 approximate: true 即可（改完要重签）。");
+  console.log(`报告：${path.relative(ROOT, reportPath).replace(/\\/g, "/")}`);
+  return 0;
+}
+
 // -------------------------------------------------------------------- main
 
 const cmd = process.argv[2];
@@ -972,6 +1042,9 @@ switch (cmd) {
   case "slot-check":
     code = cmdSlotCheck();
     break;
+  case "approx-check":
+    code = cmdApproxCheck();
+    break;
   default:
     console.log(`内容管线 CLI
 
@@ -984,6 +1057,7 @@ switch (cmd) {
   content draft <文章路径> [--all] [--dry-run]
   content audit [--article <文章路径>] [--no-llm] [--report-only] [--resume]
   content slot-check                           # 逐篇检查时段标注
+  content approx-check                          # 列出「原文写了约、卡上没标」的剂量行
   content repair-quotes                        # 给 draft 卡补全漏掉的引文
 `);
     code = cmd ? 2 : 0;

@@ -9,13 +9,14 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  approximationAttached,
   extractNumbers,
   findVagueTerms,
   isVerbatimSubstring,
   normalizeQuote,
   numbersCovered,
 } from "../src/source/normalize.ts";
-import { r01QuoteVerbatim, r02NumbersInQuote, r03NoVagueTerms, r04ImageExists, r05VariantsValid, r09Coverage, r14SegmentsValid, r16SlotGrounded } from "../src/rules/index.ts";
+import { r01QuoteVerbatim, r02NumbersInQuote, r03NoVagueTerms, r04ImageExists, r05VariantsValid, r09Coverage, r14SegmentsValid, r16SlotGrounded, r17ApproximateGrounded } from "../src/rules/index.ts";
 import { parseMarkdown, splitFrontmatter } from "../src/source/parse.ts";
 import { fingerprint } from "../src/cards/fingerprint.ts";
 import { checkBusyBudget, checkReviewSignature } from "../src/budget.ts";
@@ -355,6 +356,62 @@ describe("R4 图片", () => {
       makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }),
     );
     expect(f.some((x) => x.rule === "R4")).toBe(true);
+  });
+});
+
+describe("近似值检测", () => {
+  it("「约 5 次」是近似", () => {
+    expect(approximationAttached("来回轻柔地洗约 5 次", 5)).toBe(true);
+  });
+
+  it("「左右各 5 次」的左右是「两边」，不是近似", () => {
+    expect(approximationAttached("左右各 5 次 × 1 组。", 5)).toBe(false);
+  });
+
+  it("「5 分钟左右」是近似", () => {
+    expect(approximationAttached("每次 5 分钟左右", 5)).toBe(true);
+  });
+
+  it("范围不是近似（30 秒到 1 分钟）", () => {
+    expect(approximationAttached("保持 30 秒到 1 分钟", 30, 60)).toBe(false);
+  });
+
+  it("中文数字也算数（约五次）", () => {
+    expect(approximationAttached("约五次", 5)).toBe(true);
+  });
+});
+
+describe("R17 剂量里的约", () => {
+  const withDose = (dose: Card["dose"]): Card => ({ ...baseCard, dose });
+
+  it("标了 approximate 却找不到近似词 —— 这个标志在说谎", () => {
+    const card = withDose([
+      { value: 5, unit: "次", what: "来回轻洗", approximate: true, quote: "来回轻柔地洗 5 次" },
+    ]);
+    const f = r17ApproximateGrounded(
+      makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }),
+    );
+    expect(f.some((x) => x.rule === "R17")).toBe(true);
+  });
+
+  it("引文里有「约」，标了 approximate 就通过", () => {
+    const card = withDose([
+      { value: 5, unit: "次", what: "来回轻洗", approximate: true, quote: "来回轻柔地洗约 5 次" },
+    ]);
+    const f = r17ApproximateGrounded(
+      makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }),
+    );
+    expect(f.filter((x) => x.rule === "R17")).toEqual([]);
+  });
+
+  it("没标 approximate 的行不报（那是待办，不是错）", () => {
+    const card = withDose([
+      { value: 5, unit: "次", what: "来回轻洗", quote: "来回轻柔地洗约 5 次" },
+    ]);
+    const f = r17ApproximateGrounded(
+      makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }),
+    );
+    expect(f.filter((x) => x.rule === "R17")).toEqual([]);
   });
 });
 

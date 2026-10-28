@@ -17,6 +17,7 @@
     "content:review": "node content/src/cli.ts review",
     "content:signing-list": "node content/src/cli.ts signing-list",
     "content:slot-check": "node content/src/cli.ts slot-check",
+    "content:approx-check": "node content/src/cli.ts approx-check",
     "content:audit": "node content/src/cli.ts audit",
     "content:repair-quotes": "node content/src/cli.ts repair-quotes",
     "content:draft": "node content/src/cli.ts draft",

@@ -24,6 +24,9 @@ content/signing-list.md
 content/slot-report.md
 content/slot-resign.md
 
+# 近似值检查报告：每次跑都会变
+content/approx-report.md
+
 # 布局截图（scripts/screenshot.mjs 的产物，随看随生）
 tmp-shots/
 
@@ -31,6 +34,7 @@ tmp-shots/
 desktop/release/
 # 打包时的临时输出目录（清自己的产物会被占用时，改打到旁边再搬回来）
 desktop/release-new/
+desktop/release-local/
 
 # 别的工具留下的中间产物（Qoder 的 design preview 报告等），不是本项目的内容
 .qoder-credits/

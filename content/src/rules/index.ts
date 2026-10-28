@@ -5,6 +5,8 @@
  *   R1 保证**引文**没被改写 —— 改通顺后的句子不是原文子串，会被拦下。
  *   R2 保证**卡片自己的文字**没有偏离引文 —— 这才是 LLM 起草最容易失真的地方：
  *       引文抄对了，text 里却写成了另一个数。
+ *   R17 保证**标了「约」就有着落** —— 屏上要显示「约」的那个标志，
+ *       得在引文里找得到贴着那个数的近似词。
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -13,6 +15,7 @@ import type { ArticleCards, Card } from "../cards/load.ts";
 import type { SourceIndex } from "../source/parse.ts";
 import { hasBandEvidence, SLOT_LABELS } from "../slot.ts";
 import {
+  approximationAttached,
   findVagueTerms,
   isVerbatimSubstring,
   normalizeQuote,
@@ -550,6 +553,42 @@ export const r16SlotGrounded: Rule = (ctx) => {
   return out;
 };
 
+/**
+ * R17：标了「约」的剂量行，得在原文里找得到那个近似词。
+ *
+ * 原文写「来回轻柔地洗**约** 5 次」，屏上写「5 次」—— 把近似说成定值，
+ * 是内容层最要紧的一类失真（实测 33 张卡、47 行剂量这样，其中一张是服药周期）。
+ *
+ * 这条只查**一个方向**：卡上标了 approximate，引文里却没有贴着那个数的近似词。
+ * 那是这个标志在说谎 —— error，拦下来。
+ *
+ * 反过来（引文里有约、卡上没标）不是 error：那要人改卡并重签，
+ * 由 `content approx-check` 把待办列出来，不在每次 check 里刷屏。
+ */
+export const r17ApproximateGrounded: Rule = (ctx) => {
+  const out: Finding[] = [];
+  for (const card of ctx.article.cards) {
+    for (const [i, d] of (card.dose ?? []).entries()) {
+      if (!d.approximate) continue;
+      const quotes = quotesOf(d.quote);
+      const evidence = [...quotes, card.remind?.text ?? ""];
+      const ok = evidence.some((t) =>
+        approximationAttached(t, d.value, d.valueMax),
+      );
+      if (ok) continue;
+      out.push({
+        rule: "R17",
+        level: "error",
+        file: ctx.file,
+        cardId: card.id,
+        path: `dose[${i}]`,
+        message: `标了 approximate（屏上会显示「约」），但引文里找不到贴着 ${d.value} ${d.unit} 的近似词 —— 标志要有着落`,
+      });
+    }
+  }
+  return out;
+};
+
 export const ALL_RULES: { id: string; rule: Rule }[] = [
   { id: "R1", rule: r01QuoteVerbatim },
   { id: "R2", rule: r02NumbersInQuote },
@@ -562,4 +601,5 @@ export const ALL_RULES: { id: string; rule: Rule }[] = [
   { id: "R10", rule: r10ConditionClean },
   { id: "R14", rule: r14SegmentsValid },
   { id: "R16", rule: r16SlotGrounded },
+  { id: "R17", rule: r17ApproximateGrounded },
 ];

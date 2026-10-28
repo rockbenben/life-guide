@@ -49,6 +49,8 @@ export interface Card {
     valueMax?: number;
     unit: string;
     what: string;
+    /** 原文写的是「约 / 大约 / 左右」这一类近似值 —— 屏上要显示「约」 */
+    approximate?: boolean;
     /** 这一行的数是换算来的（1/2 勺 → 0.5 勺）—— 记算式，界面标「推算」 */
     derived?: { formula: string };
     quote: string | string[];

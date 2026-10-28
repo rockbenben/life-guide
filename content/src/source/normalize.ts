@@ -10,6 +10,9 @@
  *
  * 明确不做：单位换算（1 小时 ≠ 60 分钟）、同义改写、近似词。
  * 「做不了就改用 derived」是 R2 的出路，不要在归一化里放宽。
+ *
+ * 近似词是另一回事：归一化不碰它，但要知道原文有没有写「约」——
+ * 那是 R17 的判据，见本文件末尾的 approximationAttached。
  */
 
 /** 全角 → 半角，覆盖 ASCII 可见字符那一段。 */
@@ -171,6 +174,47 @@ export function numbersCovered(
   const missing: string[] = [];
   for (const n of textNumbers) if (!quoteNumbers.has(normNumber(n))) missing.push(n);
   return { missing, all: textNumbers };
+}
+
+/**
+ * 近似限定词（「约 / 大约 / 左右」）是不是就贴在这个数上。
+ *
+ * 两件事必须分清：
+ *   · 「约 5 次」「5 分钟左右」—— 近似，屏上要写「约」。
+ *   · 「左右各 5 次」「左右手」—— 这里的「左右」是「两边」，不是近似。
+ *     分不清就会把一半带「左右各」的卡都误判成近似值。
+ *
+ * 数用 `extractNumbers` 比，中文数字（"约五次"）也算数 —— 窗口取限定词旁边那几个字。
+ */
+export function approximationAttached(
+  text: string,
+  value: number,
+  valueMax?: number,
+): boolean {
+  // 「两边」的那种左右先换掉，免得它冒充近似
+  const s = toHalfWidth(text).replace(/左右(各|手|侧|两|边|脚|臂|腿)/g, "两边");
+  const wanted = [value, valueMax].filter((v): v is number => typeof v === "number");
+  if (!wanted.length) return false;
+  const hit = (window: string): boolean => {
+    const got = extractNumbers(window);
+    return wanted.some((v) => got.has(String(v)));
+  };
+  // 窗口要含空格（「5 分钟左右」中间有空格），但不能跨过句子标点 ——
+  // 「约 5 次，10 分钟」里的 10 不是那个 5 的同伴。
+  const SEG = 8;
+  // 限定词在前：约 5 次 / 大约 5 次
+  for (const m of s.matchAll(/(?:约|大约|差不多)/g)) {
+    const start = m.index + m[0].length;
+    const seg = s.slice(start, Math.min(s.length, start + SEG)).split(/[，,。；;、]/)[0];
+    if (hit(seg)) return true;
+  }
+  // 限定词在后：5 次左右 / 5 上下
+  for (const m of s.matchAll(/(?:左右|上下|前后)/g)) {
+    const start = Math.max(0, m.index - SEG);
+    const seg = s.slice(start, m.index).split(/[，,。；;、]/).pop() ?? "";
+    if (hit(seg)) return true;
+  }
+  return false;
 }
 
 /** R3：模糊词。命中即 error —— 这些词对使用者等于零信息量。 */
