@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![365 开源计划 #045](https://img.shields.io/badge/365%20%E5%BC%80%E6%BA%90%E8%AE%A1%E5%88%92-%23045-1f6feb)](https://github.com/rockbenben/365opensource)
 
-[**⬇ 下载**](https://github.com/rockbenben/life-guide/releases/latest) · Windows / macOS / Linux 桌面版 · Android APK · [**📖 使用指南**](docs/使用指南.md)
+[**▶ 在线试用**](https://life.newzone.top/) · [**⬇ 下载**](https://github.com/rockbenben/life-guide/releases/latest) · [**📖 使用指南**](docs/使用指南.md)
 
 ![今天页](docs/images/today.png)
 
@@ -21,9 +21,10 @@
 
 | 方面 | 支持情况 |
 | --- | --- |
-| 形态 | **Windows / macOS / Linux 桌面版**、**Android APK**（[Releases 下载](https://github.com/rockbenben/life-guide/releases/latest)），同一份构建，各处跑。浏览器 PWA：**<https://life.newzone.top/>**（可装到桌面与手机；镜像站 <https://rockbenben.github.io/life-guide/>） |
+| 形态 | **Windows / macOS / Linux 桌面版**、**Android APK**、**浏览器 PWA**（可装到桌面与手机）—— 同一份构建，各处跑 |
 | 内容 | 《生活手册》（NHK 说明书系列）的一次快照：**113 篇全文可读**，已签 **518 张卡**（423 张动作 + 95 张疾病知识） |
-| 系统 | Windows 10 及以上（x64 / arm64）；macOS（Intel / Apple Silicon）；Linux（x64 / arm64，AppImage / deb / rpm）；Android 7.0 及以上（minSdk 24）；现代浏览器（Chrome / Edge / Safari） |
+| 系统 | Windows 10+（x64 / arm64）；macOS（Intel / Apple Silicon）；Linux（x64 / arm64）；Android 7.0+ |
+| 浏览器 | Chrome / Edge / Safari |
 | 联网 | 只有第一次加载需要网络，之后**完全离线可用**（卡片、步骤图、手册全文都预缓存） |
 | 提醒 | 早 7:00、晚 21:00 各一条，可改成每周某几天、每隔 N 天、只一次，也能给单张卡单独设 |
 | 语言 | 界面与卡片内容均为中文；卡片文字照抄中文手册快照的原文 |
@@ -69,11 +70,9 @@ npm run dev
 浏览器打开终端里给的地址即可。打包桌面版与 Android 版见 [使用指南](docs/使用指南.md)。
 
 - [AGENTS.md](AGENTS.md)——设计约定与决策记录（内容层怎么保证「卡里每句话都是原文」）
-- 源码在 [GitHub](https://github.com/rockbenben/life-guide) —— 应用里也能一键跳过去（设置 → 关于）
 - [ARCHITECTURE.md](ARCHITECTURE.md)——目录结构、数据流、快照与校验器
 - [使用指南](docs/使用指南.md)——怎么装、怎么用
 - [部署](docs/部署.md)——浏览器 / PWA 那条路的发布步骤
-- 常用命令：`npm run content:check`（内容校验）/ `npm test`（496 个单测）/ `npm run test:desktop`（32 个桌面逻辑测试）/ `npm run acceptance`（浏览器级验收）/ `npm run desktop:build`（当前系统的桌面安装包）/ `npm run mobile:sync`（同步进 Android 工程）
 
 ## 关于 365 开源计划
 
