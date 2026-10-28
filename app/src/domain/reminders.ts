@@ -19,7 +19,7 @@
  */
 import type { Card } from "./routine.ts";
 import type { Cadence } from "./cadence.ts";
-import { localDate } from "./day.ts";
+import { dayOf, localDate } from "./day.ts";
 import { cardName, displayNames } from "./lines.ts";
 
 export type ReminderMode = "daily" | "weekly" | "interval" | "once";
@@ -55,6 +55,14 @@ export interface ReminderSpec {
   rule: Reminder;
   /** 再往后几次（ISO）：桌面端主进程在渲染层不在时靠它续着响 */
   after: string[];
+  /**
+   * 这一次（at 那一次）被「今天不做」跳掉了。
+   *
+   * 手机端的系统排程靠 rule 表达重复，**表达不了「今天不算」** ——
+   * 系统那条「每天 08:00」一旦排上，今天 08:00 就会响。
+   * 知道这件事，手机端才能退成一串一次性通知：今天不响，明天起照常。
+   */
+  firstSkipped?: boolean;
 }
 
 export const MODE_LABELS: Record<ReminderMode, string> = {
@@ -199,6 +207,22 @@ export function nextOccurrence(reminder: Reminder, from: Date): Date | null {
 }
 
 /**
+ * 「下一次是哪一刻」的人话（编辑器里用）。
+ *
+ * 改了模式或时刻却看不到结果，用户只能先存下来、再回卡片上看 ——
+ * 这句话把结果直接摆在设置旁边。排不出下一次时返回空串，
+ * 由调用方去说「不会响」（两种语气不同，别混成一句）。
+ */
+export function nextOccurrenceText(reminder: Reminder, now: Date = new Date()): string {
+  const d = nextOccurrence(reminder, now);
+  if (!d) return "";
+  const week = WEEKDAY_LABELS[d.getDay()];
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mi = String(d.getMinutes()).padStart(2, "0");
+  return `${d.getMonth() + 1} 月 ${d.getDate()} 日（周${week}）${hh}:${mi}`;
+}
+
+/**
  * 连着几次的触发时刻。
  *
  * 桌面端主进程是常驻的，但渲染层未必在（窗口关掉）。给它备上后几次，
@@ -227,17 +251,27 @@ export function reminderSuggestion(
   cards: Card[],
   routine: string[],
   slot: string,
+  skippedIds: ReadonlySet<string> = new Set(),
 ): string {
   const byId = new Map(cards.map((c) => [c.id, c]));
   const names = displayNames(cards);
   const out: string[] = [];
+  let skippedHere = 0;
   for (const id of routine) {
     const c = byId.get(id);
     if (!c) continue;
     if (c.slot && c.slot !== "anytime" && c.slot !== slot) continue;
+    if (skippedIds.has(id)) {
+      skippedHere++;
+      continue;
+    }
     out.push(shortName(names.get(c.id) ?? cardName(c)));
   }
-  if (!out.length) return "这一段没有安排动作 —— 打开看看";
+  if (!out.length) {
+    return skippedHere
+      ? "这一段今天都标了不做"
+      : "这一段没有安排动作 —— 打开看看";
+  }
   const head = out.slice(0, 3).join("、");
   return out.length > 3
     ? `该做 ${out.length} 件：${head} 等`
@@ -352,6 +386,7 @@ export function buildSpecs(
   routine: string[],
   reminders: Reminder[],
   now: Date,
+  skipped: Record<string, string> = {},
 ): ReminderSpec[] {
   const out: ReminderSpec[] = [];
   const names = displayNames(cards);
@@ -359,11 +394,47 @@ export function buildSpecs(
     if (!r.on) continue;
     const card = r.cardId ? cards.find((c) => c.id === r.cardId) : null;
     if (r.cardId && !card) continue;
-    const times = occurrences(r, now, 3);
+
+    /** 整段提醒落在哪一段；绑在卡上的提醒不用它。 */
+    const slot = r.slot ?? "morning";
+    /** 这一段（含「随时」）在日常里的卡。 */
+    const slotIds = card
+      ? []
+      : routine.filter((id) => {
+          const c = cards.find((x) => x.id === id);
+          return c && (!c.slot || c.slot === "anytime" || c.slot === slot);
+        });
+
+    /**
+     * 这一次要不要跳：
+     *   · 卡级提醒 —— 这张卡当天标了「今天不做」；
+     *   · 整段提醒 —— 这一天这一段的卡**全**被跳过了（还有别的可做就不跳）。
+     *
+     * **只跳这一次，不跳整条**：整段提醒是每天重复的，跳过今天之后明天照常。
+     * （早先的写法是把整条丢掉，结果这一段在本次会话里就没了。）
+     */
+    const isSkippedAt = (d: Date): boolean => {
+      const day = dayOf(d.getTime());
+      if (card) return skipped[card.id] === day;
+      if (!slotIds.length) return false;
+      return slotIds.every((id) => skipped[id] === day);
+    };
+
+    const raw = occurrences(r, now, 3);
+    // 原本的下一次被跳掉了 —— 手机端要知道，才能把系统重复退成一次性串
+    const firstSkipped = raw.length > 0 && isSkippedAt(raw[0]);
+    const times = raw.filter((d) => !isSkippedAt(d));
     if (!times.length) continue;
+    // 建议说的是**这一次**（下一次）该做哪几件；跳过只作用于它自己那一天。
+    const occurrenceDay = dayOf(times[0].getTime());
+    const skippedForOccurrence = new Set(
+      Object.entries(skipped)
+        .filter(([, date]) => date === occurrenceDay)
+        .map(([id]) => id),
+    );
     const body = card
       ? `该做了：${names.get(card.id) ?? cardName(card)}`
-      : reminderSuggestion(cards, routine, r.slot ?? "morning");
+      : reminderSuggestion(cards, routine, slot, skippedForOccurrence);
     out.push({
       id: r.id,
       at: times[0].toISOString(),
@@ -374,6 +445,7 @@ export function buildSpecs(
       body,
       rule: r,
       after: times.slice(1).map((d) => d.toISOString()),
+      firstSkipped,
     });
   }
   return out;

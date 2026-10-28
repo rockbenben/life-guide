@@ -15,6 +15,7 @@
  * 「我的日常」与用户自己加的习惯在 data/useRoutine.ts —— 清单只有那一份，
  * 今天页显示它、提醒的「建议」也按它算。
  */
+import type { ComponentChildren } from "preact";
 import { lazy, Suspense } from "preact/compat";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 
@@ -42,6 +43,7 @@ import {
   todaysCards,
 } from "../domain/daily.ts";
 import { dayOf, slotOf, SLOT_LABELS, SWITCHABLE_SLOTS, type Slot } from "../domain/day.ts";
+import { isSkippedToday } from "../domain/skip.ts";
 import { daysDone, recentActivity, totalActiveDays } from "../domain/progress.ts";
 import type { RoutineStore } from "../data/useRoutine.ts";
 
@@ -65,11 +67,73 @@ export interface TodayProps {
 const DOT_DAYS = 14;
 /** 那条提示自己待多久（毫秒）。屏幕上的每一句话都得有个期限。 */
 const FLASH_MS = 6000;
+/** 又窄又矮的屏幕：首启两块说明收成一行，否则第一张卡进不了首屏。 */
+const FOLD_ONBOARDING = "(max-width: 380px) and (max-height: 640px)";
 
 // 拖拽排序只在「调顺序」时用：dnd-kit 不该跟着首屏一起下载。
 const SortPanel = lazy(() =>
   import("./SortPanel.tsx").then((m) => ({ default: m.SortPanel })),
 );
+
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() =>
+    typeof window !== "undefined" && typeof window.matchMedia === "function"
+      ? window.matchMedia(query).matches
+      : false,
+  );
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+    const mq = window.matchMedia(query);
+    const sync = () => setMatches(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, [query]);
+  return matches;
+}
+
+/** 首启说明在小屏收成一行；宽屏保持原样，summary 由 CSS 隐藏。 */
+function OnboardingFold({
+  class: className,
+  open,
+  onToggle,
+  summary,
+  fold,
+  children,
+}: {
+  class: string;
+  open: boolean;
+  onToggle: (open: boolean) => void;
+  summary: string;
+  fold: boolean;
+  children: ComponentChildren;
+}) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  return (
+    <details
+      ref={ref}
+      class={className}
+      open={open}
+      onToggle={(e) => {
+        const next = (e.currentTarget as HTMLDetailsElement).open;
+        onToggle(next);
+        if (next && fold) {
+          // 展开后整块送到顶部，否则第二排选项会被底部导航盖住。
+          requestAnimationFrame(() => {
+            if (ref.current?.open) {
+              ref.current.scrollIntoView({ block: "start" });
+            }
+          });
+        }
+      }}
+    >
+      <summary class="lg-fold-sum">{summary}</summary>
+      <div class="lg-fold-body">{children}</div>
+    </details>
+  );
+}
 
 export function Today({
   cards,
@@ -98,6 +162,9 @@ export function Today({
   const pickDay = useRef("");
   const [flash, setFlash] = useState("");
   const [sorting, setSorting] = useState(false);
+  const foldOnboarding = useMediaQuery(FOLD_ONBOARDING);
+  const [ageOpen, setAgeOpen] = useState(false);
+  const [introOpen, setIntroOpen] = useState(false);
   /**
    * 自定义习惯的表单：null = 不开；new = 新加一条；edit = 改某一条。
    *
@@ -154,11 +221,18 @@ export function Today({
   // 每周/每月的卡：本周期做完就收进「本周期已完成」，下周期再出来。
   const mine = useMemo(
     () =>
-      mineToday.filter((c) => {
-        const cadence = routine.cadenceOf(c.id);
-        return cadence === "daily" || !doneInPeriod(events, c.id, today, cadence);
-      }),
+      mineToday
+        .filter((c) => !isSkippedToday(routine.skipped, c.id, today))
+        .filter((c) => {
+          const cadence = routine.cadenceOf(c.id);
+          return cadence === "daily" || !doneInPeriod(events, c.id, today, cadence);
+        }),
     [mineToday, events, today, routine],
+  );
+  // 这一段里被用户标成「今天不做」的卡（只影响今天；明天自动回来）
+  const skippedInSlot = useMemo(
+    () => mineToday.filter((c) => isSkippedToday(routine.skipped, c.id, today)),
+    [mineToday, routine.skipped, today],
   );
   const periodDone = useMemo(
     () =>
@@ -185,6 +259,11 @@ export function Today({
   const names = useMemo(() => displayNames(cards), [cards]);
   // 调顺序那一屏看的是**全部**日常里的卡（不分时段）—— 否则挪动时看不到自己挪到了哪
   const mineAll = useMemo(() => routineCards(cards, routine.ids), [cards, routine.ids]);
+  // 撤销区看全部日常（不分时段）：早上跳过的卡，晚上切回来仍然能撤销
+  const skippedCards = useMemo(
+    () => mineAll.filter((c) => isSkippedToday(routine.skipped, c.id, today)),
+    [mineAll, routine.skipped, today],
+  );
   const pool = useMemo(
     () => dailyCandidates(cards, routine.ids).length,
     [cards, routine.ids],
@@ -291,7 +370,7 @@ export function Today({
   async function addToMyRoutine(card: Card) {
     await routine.add(card.id);
     // 不重置 packOffset：加走一张只该补那一格，不该把另外两张也换掉。
-    setFlash(`「${cardNameOf(card)}」已放进今天。断几天不清零。`);
+    setFlash(`「${cardNameOf(card)}」已放进日常。`);
   }
 
   function nextPicks() {
@@ -309,9 +388,21 @@ export function Today({
     await routine.takeOut(card.id);
     setFlash(
       keepReminder
-        ? `已把「${cardNameOf(card)}」移出今天；它的提醒还留着，可在设置里删。`
-        : `已把「${cardNameOf(card)}」移出今天 —— 盖过的印还在。`,
+        ? `已把「${cardNameOf(card)}」移出日常；它的提醒还留着，可在设置里删。`
+        : `已把「${cardNameOf(card)}」移出日常 —— 以后不再出现，盖过的印还在。`,
     );
+  }
+
+  /** 今天不做：只跳过这一天，日常不动；过了逻辑日界线自然回来。 */
+  async function skipForToday(card: Card) {
+    await routine.skipToday(card.id, today);
+    setExpanded(null);
+    setFlash(`「${cardNameOf(card)}」今天不做，明天会回来。`);
+  }
+
+  async function undoSkip(card: Card) {
+    await routine.unskip(card.id);
+    setFlash(`「${cardNameOf(card)}」放回今天了。`);
   }
 
   /* -------------------------------------------------------- 自定义习惯 */
@@ -320,7 +411,7 @@ export function Today({
   async function addHabit(name: string, text: string, slot: HabitSlot) {
     await routine.addHabit(name, text, slot);
     setHabitForm(null);
-    setFlash(`「${name}」已放进今天。`);
+    setFlash(`「${name}」已放进日常。`);
   }
 
   /** 改一条自己的习惯。 */
@@ -383,9 +474,9 @@ export function Today({
     }
     let text =
       dropped > 0
-        ? `放了 ${routine.restoreIds.length} 张默认的，你挑的 ${dropped} 张被换掉了`
-        : `放了 ${routine.restoreIds.length} 张，随时加减`;
-    if (dropped > 0 && mine) text += `；你自己加的 ${mine} 条还在`;
+        ? `放回 ${routine.restoreIds.length} 张默认的；你挑的 ${dropped} 张被换掉了`
+        : `放回 ${routine.restoreIds.length} 张，随时加减`;
+    if (dropped > 0 && mine) text += `；自己加的 ${mine} 条还在`;
     if (droppedReminders.length) text += `；${droppedReminders.length} 条提醒也删了`;
     setFlash(`${text}。`);
   }
@@ -423,42 +514,78 @@ export function Today({
         {/* 年龄档只影响少数分档卡，但默认成人不等于用户选过。
             先问一次（可跳过），否则 70+ 用户会在不知情时拿到成人动作。 */}
         {!loading && routine.ready && ageKnown === false ? (
-          <div class="lg-firstrun lg-ageask" role="region" aria-label="先选年龄段">
+          <OnboardingFold
+            class="lg-firstrun lg-ageask"
+            open={!foldOnboarding || ageOpen}
+            onToggle={setAgeOpen}
+            summary="先选年龄段（默认成年人）"
+            fold={foldOnboarding}
+          >
             <p>
               <b class="lg-nb">先选年龄段。</b>
-              手册里有些动作会按年龄换一套；选一次，之后可在
+              手册里有几个动作会按年龄换一套。选一个；以后可在
               <span class="lg-nb">「条件」</span>里改。
             </p>
-            <div class="lg-btn-row">
+            <div class="lg-cats" role="group" aria-label="年龄段">
               {AGE_TAGS.map((t) => (
                 <button
                   key={t}
-                  class="lg-btn lg-btn-ghost"
+                  class="lg-cat"
                   onClick={() => onTag(t)}
                 >
                   {TAG_LABELS[t] ?? t}
                 </button>
               ))}
-              <button class="lg-linkbtn" onClick={onSkipAgePrompt}>
-                先按成年人显示
-              </button>
             </div>
-          </div>
+            <button class="lg-linkbtn lg-ageask-skip" onClick={onSkipAgePrompt}>
+              先按成年人显示
+            </button>
+          </OnboardingFold>
         ) : null}
         {/* 首启说明：清单是 App 替你放的，得说清能怎么改。
             放在主栏而不是侧栏 —— 侧栏只有 232px 宽，两段话会被压成八行。 */}
         {routine.firstRun ? (
-          <div class="lg-firstrun">
+          <OnboardingFold
+            class="lg-firstrun"
+            open={!foldOnboarding || introOpen}
+            onToggle={setIntroOpen}
+            summary="第一次用？看怎么改"
+            fold={foldOnboarding}
+          >
             <p>
-              App 按手册里<span class="lg-nb">「每天固定做的几件事」</span>那几节，替你放了几张在今天。
-              做完了点右边的方格<span class="lg-nb">盖个印</span>；不想要的那张，展开它、末尾点
-              <span class="lg-nb">「移出今天」</span>。
+              这几张是按手册里<span class="lg-nb">「每天固定做的几件事」</span>替你放的。
+              做完点右边的方格<span class="lg-nb">盖个印</span>；不想做的，展开卡片点
+              <span class="lg-nb">「今天不做」</span>只跳过今天，点
+              <span class="lg-nb">「移出日常」</span>以后都不出现。
             </p>
             <p>
-              次序不对点<span class="lg-nb">「调顺序」</span>；某张卡要单独提醒，展开它点
-              <span class="lg-nb">「设提醒」</span>。早、晚各一条的整段提醒在设置里
-              （先在那儿<span class="lg-nb">允许通知</span>，不然它不会响）。
+              次序用<span class="lg-nb">「调顺序」</span>改。某张卡要单独提醒，展开点
+              <span class="lg-nb">「设提醒」</span>；早晚两条整段提醒在设置里 ——
+              先允许通知，它才会响。
             </p>
+          </OnboardingFold>
+        ) : null}
+        {/* 今天不做放在清单上方：跳过一张后它就在眼前，撤销不用翻到页尾。
+            只在今天页显示；调顺序时让位给清单本身。 */}
+        {!sorting && !loading && routine.ready && skippedCards.length ? (
+          <div class="lg-perioddone lg-skipped">
+            <p class="lg-pool">今天不做</p>
+            <p class="lg-note-soft">只跳过今天，明天自己回来。</p>
+            <div class="lg-btn-row">
+              {/* 卡名留作纯文字：「撤销」单独成一颗键。
+                 原来把卡名做成撤销键 —— 全 App 里点头像都是展开这张卡，
+                 在这里点头像却是撤销跳过，误触就把卡悄悄放回清单。
+                 名字与「撤销」必须成对挨着：跳过两张以上时，
+                 名字一排、撤销一排，谁对不上哪张就说不清了。 */}
+              {skippedCards.map((c) => (
+                <span key={c.id} class="lg-skipitem">
+                  <span class="lg-skipname">{names.get(c.id) ?? cardNameOf(c)}</span>
+                  <button class="lg-linkbtn" onClick={() => void undoSkip(c)}>
+                    撤销
+                  </button>
+                </span>
+              ))}
+            </div>
           </div>
         ) : null}
         {/* 展开卡里的小节标题是 h3；这里补一个给读屏的 h2，别让 h1 直接跳到 h3。 */}
@@ -470,10 +597,11 @@ export function Today({
           // 日常空了（不是「这一段没有卡」）：给放回去的路。
           // 调顺序那一屏里把卡全移掉也会走到这里 —— 否则用户会停在一个空面板里。
           <div class="lg-empty">
-            <h2>今天没有安排动作</h2>
+            <h2>今天还没有动作</h2>
             <p>
-              你把动作都移出去了。手册里有 <span class="tabular">{pool}</span> 个能照着做的动作 ——
-              放回几张，或者在下面「发现」里自己挑。
+              手册里{" "}
+              <span class="tabular">{pool}</span>
+              {" 个动作都能照着做。放回默认的几张，或者从下面「发现」里挑。"}
             </p>
             <div class="lg-btn-row">
               <button
@@ -481,10 +609,12 @@ export function Today({
                 onClick={() => void restoreDefault()}
                 disabled={!routine.restoreIds.length}
               >
-                放回默认
+                {routine.restoreIds.length
+                  ? `放回默认的 ${routine.restoreIds.length} 张`
+                  : "放回默认"}
               </button>
             </div>
-            <p class="lg-pool">随时能加减。断几天不清零 —— 盖过的印还在。</p>
+            <p class="lg-pool">断几天不清零 —— 盖过的印还在。</p>
           </div>
         ) : sorting ? (
           <Suspense fallback={<p class="lg-do">加载中…</p>}>
@@ -505,14 +635,22 @@ export function Today({
               }}
             />
           </Suspense>
+        ) : mine.length === 0 && periodDone.length === 0 && skippedInSlot.length > 0 ? (
+          <div class="lg-empty">
+            <h2>{SLOT_LABELS[slot]}这一段今天都不做</h2>
+            <p>
+              明天会自己回来；可在上面撤销，也可以看看别的时段。
+            </p>
+            <SlotSwitch slot={slot} onPick={setSlotPick} />
+          </div>
         ) : mine.length === 0 && periodDone.length === 0 ? (
           // 日常里有卡，但都不属于这一段 —— 说清是「这一段」的事，不是「你移光了」
           <div class="lg-empty">
-            <h2>这一段没有安排动作</h2>
+            <h2>{SLOT_LABELS[slot]}没有安排动作</h2>
             <p>
-              日常里还有 <span class="tabular">{mineAll.length}</span> 张，都不属于「
-              {SLOT_LABELS[slot]}」这一段。换个时段看看，或者调一下日常。
+              日常里还有 <span class="tabular">{mineAll.length}</span> 张，都在别的时段。
             </p>
+            <SlotSwitch slot={slot} onPick={setSlotPick} />
           </div>
         ) : (
           <TodayLog
@@ -531,6 +669,7 @@ export function Today({
             onOpenArticle={onOpenArticle}
             onEditHabit={setHabitForm}
             onRemoveHabit={(c) => void removeHabit(c)}
+            onSkipToday={(c) => void skipForToday(c)}
             onTakeOut={(c, keepReminder) => void takeOut(c, keepReminder)}
             cadenceOf={routine.cadenceOf}
             onCadenceChange={(id, cadence) => void routine.setCadence(id, cadence)}
@@ -540,15 +679,16 @@ export function Today({
         {!sorting && !loading && routine.ready && periodDone.length ? (
           <div class="lg-perioddone">
             <p class="lg-pool">本周期已完成</p>
+            <p class="lg-note-soft">下个周期会自己回来。</p>
             <div class="lg-btn-row">
               {periodDone.map((c) => (
                 <button
                   key={c.id}
                   class="lg-linkbtn"
+                  title="撤销这次周期完成"
                   onClick={() => void toggle(c)}
                 >
-                  {names.get(c.id) ?? cardNameOf(c)}（
-                  {periodDoneText(routine.cadenceOf(c.id))}，撤销）
+                  {names.get(c.id) ?? cardNameOf(c)}（撤销）
                 </button>
               ))}
             </div>
@@ -594,4 +734,23 @@ function cardNameOf(card: Card): string {
 function actionLine(card: Card): string {
   const t = card.remind.text.replace(/\s+/g, " ").trim();
   return t.length > 22 ? t.slice(0, 22) + "…" : t;
+}
+
+/** 空时段里给两颗换段键 —— 停在「这一段没动作」不如直接带人去看别段。 */
+function SlotSwitch({
+  slot,
+  onPick,
+}: {
+  slot: Slot;
+  onPick: (slot: Slot | null) => void;
+}) {
+  return (
+    <div class="lg-btn-row" style="margin-top:12px">
+      {SWITCHABLE_SLOTS.filter((s) => s !== slot).map((s) => (
+        <button key={s} class="lg-btn lg-btn-ghost" onClick={() => onPick(s)}>
+          看「{SLOT_LABELS[s]}」
+        </button>
+      ))}
+    </div>
+  );
 }

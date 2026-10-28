@@ -18,6 +18,7 @@ import {
   defaultTimeForSlot,
   describeReminder,
   nextOccurrence,
+  nextOccurrenceText,
   normalizeReminders,
   occurrences,
   parseTime,
@@ -193,6 +194,15 @@ describe("提醒里的建议", () => {
     expect(reminderSuggestion(cards, ["d"], "morning")).toBe("这一段没有安排动作 —— 打开看看");
   });
 
+  it("今天不做的卡不进提醒建议", () => {
+    expect(reminderSuggestion(cards, routine, "morning", new Set(["a"]))).toBe(
+      "该做 2 件：刷牙步骤、睑缘清洗",
+    );
+    expect(reminderSuggestion(cards, ["a"], "morning", new Set(["a"]))).toBe(
+      "这一段今天都标了不做",
+    );
+  });
+
   it("标题说清是哪一段", () => {
     expect(reminderTitle(global({ id: "morning", label: "早晨" }))).toBe("生活指南 · 早晨");
     expect(reminderTitle(global({ id: "evening", label: "晚间" }))).toBe("生活指南 · 晚间");
@@ -360,6 +370,41 @@ describe("卡片上的提醒", () => {
     );
     expect(specs).toHaveLength(0);
   });
+
+  it("今天不做：整段全跳过只跳今天这一次（明天照常），部分跳过时排除它并让卡提醒顺延", () => {
+    const now = new Date("2026-10-21T06:00:00");
+    // 整段只有一张卡，它今天不做 —— 今天这一次不响，明天照常
+    const allSkipped = buildSpecs(
+      cards,
+      ["a"],
+      [global({ id: "morning", time: "07:00" })],
+      now,
+      { a: "2026-10-21" },
+    );
+    expect(allSkipped).toHaveLength(1);
+    expect(allSkipped[0].at).toBe(new Date("2026-10-22T07:00:00").toISOString());
+    // 手机端靠它知道「系统的每日重复表达不了今天不算，要退成一次性串」
+    expect(allSkipped[0].firstSkipped).toBe(true);
+
+    const partial = buildSpecs(
+      [...cards, card("b", { slot: "morning", source: { anchor: "刷牙步骤" } })],
+      ["a", "b"],
+      [
+        global({ id: "morning", time: "07:00" }),
+        global({ id: "card:a", cardId: "a", label: "光照建议", time: "09:00" }),
+      ],
+      now,
+      { a: "2026-10-21" },
+    );
+    expect(partial).toHaveLength(2);
+    expect(partial[0].body).toBe("该做 1 件：刷牙步骤");
+    // 这一段还有别的可做 → 整段提醒今天照常响
+    expect(partial[0].at).toBe(new Date("2026-10-21T07:00:00").toISOString());
+    expect(partial[0].firstSkipped).toBe(false);
+    // 卡上的提醒：今天这次顺延到明天
+    expect(partial[1].at).toBe(new Date("2026-10-22T09:00:00").toISOString());
+    expect(partial[1].firstSkipped).toBe(true);
+  });
 });
 
 describe("提醒的显示文案", () => {
@@ -372,5 +417,25 @@ describe("提醒的显示文案", () => {
   it("「就一次」没选日期时，要说清楚它不会响", () => {
     // 同上：date 为空 → 排不出时刻，但开关是开的。
     expect(describeReminder(global({ mode: "once", date: "", time: "09:00" }))).toContain("不会响");
+  });
+});
+
+describe("下一次的显示（编辑器里的反馈）", () => {
+  it("每天：给出下一次的月日、星期与时刻", () => {
+    const now = new Date("2026-10-21T08:00:00");
+    expect(nextOccurrenceText(global({ time: "09:30" }), now)).toBe(
+      "10 月 21 日（周三）09:30",
+    );
+    // 已经过了今天的点 → 明天
+    expect(nextOccurrenceText(global({ time: "07:00" }), now)).toBe(
+      "10 月 22 日（周四）07:00",
+    );
+  });
+
+  it("排不出下一次时返回空串（由界面去说「不会响」）", () => {
+    expect(nextOccurrenceText(global({ mode: "weekly", days: [], time: "07:00" }))).toBe("");
+    expect(
+      nextOccurrenceText(global({ mode: "once", date: "2000-01-01", time: "09:00" })),
+    ).toBe("");
   });
 });

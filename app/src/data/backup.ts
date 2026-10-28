@@ -9,7 +9,14 @@ import { allEvents, clearEvents, addEvent, getSetting, setSetting, allCustomHabi
 import type { DoneEvent, Settings, CustomHabit } from "./db.ts";
 import type { Reminder } from "../domain/reminders.ts";
 
-export const BACKUP_VERSION = 4;
+/**
+ * v5 起：设置里带 skipToday（「今天不做」）。
+ *
+ * 备份格式每加一个字段就升一版：旧备份照常能导进来（各版本该带的东西由
+ * backup.ts 负责补齐），新备份被旧版 App 挡住时会说清楚「请先升级应用」，
+ * 而不是悄悄丢掉它不认识的字段。
+ */
+export const BACKUP_VERSION = 5;
 
 export interface Backup {
   schemaVersion: number;
@@ -32,12 +39,13 @@ export interface Backup {
 }
 
 export async function buildBackup(): Promise<Backup> {
-  const [events, tags, mode, myRoutine, cadence, custom, reminders] = await Promise.all([
+  const [events, tags, mode, myRoutine, cadence, skipToday, custom, reminders] = await Promise.all([
     allEvents(),
     getSetting<string[]>("tags", []),
     getSetting<string>("mode", "normal"),
     getSetting<string[]>("myRoutine", []),
     getSetting<Record<string, string>>("cadence", {}),
+    getSetting<Record<string, string>>("skipToday", {}),
     allCustomHabits(),
     getSetting<Reminder[]>("reminders", []),
   ]);
@@ -45,7 +53,7 @@ export async function buildBackup(): Promise<Backup> {
     schemaVersion: BACKUP_VERSION,
     exportedAt: new Date().toISOString(),
     events,
-    settings: { tags, mode, myRoutine, cadence },
+    settings: { tags, mode, myRoutine, cadence, skipToday },
     custom,
     reminders,
   };
@@ -80,6 +88,7 @@ export async function restoreBackup(backup: Backup): Promise<number> {
     await setSetting("myRoutine", backup.settings.myRoutine);
   }
   await setSetting("cadence", backup.settings?.cadence ?? {});
+  await setSetting("skipToday", backup.settings?.skipToday ?? {});
   // 导进来的是用户自己的数据，不是「App 刚替新用户放好的清单」——
   // 别让首启说明在换设备后重新冒出来。
   await setSetting("firstRunPending", false);

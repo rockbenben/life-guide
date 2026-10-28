@@ -11,6 +11,7 @@
 
 import type { Card } from "./routine.ts";
 import { cardName } from "./lines.ts";
+import { dayOf } from "./day.ts";
 import {
   describeReminder,
   nextOccurrence,
@@ -34,8 +35,12 @@ export interface IcsOptions {
   eveningMinute?: number;
   /** 绑在卡上的提醒（可选）：一起导出，网页端也能用系统日历响 */
   cardReminders?: Reminder[];
-  /** 用来把 cardId 换成名字 */
-  cards?: Pick<Card, "id" | "source" | "remind" | "customName" | "name">[];
+  /** 今天不做的卡（cardId → 日期）：导出时给当天那次加 EXDATE */
+  skipped?: Record<string, string>;
+  /** 日常清单（整天跳过判断：某一段的卡全跳过时，整段事件也排除当天） */
+  routine?: string[];
+  /** 用来把 cardId 换成名字；判断整段是否全跳过时也看 slot */
+  cards?: Pick<Card, "id" | "source" | "remind" | "customName" | "name" | "slot">[];
 }
 
 function pad(n: number): string {
@@ -107,6 +112,8 @@ export function buildIcs(opts: IcsOptions): string {
     url: string;
     start: Date;
     rrule?: string;
+    /** 当天跳过的那一次：写进 EXDATE，日历不会在今天响 */
+    exdate?: Date;
     alarmMinutes?: number;
   }[] = [
     {
@@ -130,6 +137,22 @@ export function buildIcs(opts: IcsOptions): string {
   ];
 
   const cardsById = new Map((opts.cards ?? []).map((c) => [c.id, c]));
+
+  /** 这一段（含「随时」）的卡是否全部标了当天的「今天不做」。 */
+  const allSlotSkipped = (slot: string, start: Date) => {
+    const day = dayOf(start.getTime());
+    const ids = (opts.routine ?? []).filter((id) => {
+      const c = cardsById.get(id);
+      return c && (!c.slot || c.slot === "anytime" || c.slot === slot);
+    });
+    return (
+      ids.length > 0 &&
+      ids.every((id) => opts.skipped?.[id] === day)
+    );
+  };
+  if (allSlotSkipped("morning", events[0].start)) events[0].exdate = events[0].start;
+  if (allSlotSkipped("evening", events[1].start)) events[1].exdate = events[1].start;
+
   for (const r of opts.cardReminders ?? []) {
     if (!r.on || !r.cardId) continue;
     const card = cardsById.get(r.cardId);
@@ -149,6 +172,7 @@ export function buildIcs(opts: IcsOptions): string {
     }
     if (r.mode === "once" && !r.date) continue;
     const label = cardName(card);
+    const skippedThisTime = opts.skipped?.[card.id] === dayOf(start.getTime());
     events.push({
       uid: `life-guide-card-${r.cardId}@newzone.top`,
       summary: `${name} · ${label}`,
@@ -156,6 +180,7 @@ export function buildIcs(opts: IcsOptions): string {
       url: `${opts.urlBase}#today`,
       start: new Date(start.getTime()),
       rrule,
+      exdate: skippedThisTime ? new Date(start.getTime()) : undefined,
       alarmMinutes: 0,
     });
   }
@@ -178,6 +203,7 @@ export function buildIcs(opts: IcsOptions): string {
       "DTSTART:" + utcStamp(e.start),
       "DTEND:" + utcStamp(new Date(e.start.getTime() + 30 * 60000)),
       ...(e.rrule ? [`RRULE:${e.rrule}`] : []),
+      ...(e.exdate ? [`EXDATE:${utcStamp(e.exdate)}`] : []),
       fold(`SUMMARY:${e.summary}`),
       fold(`DESCRIPTION:${e.desc}`),
       fold(`URL:${e.url}`),

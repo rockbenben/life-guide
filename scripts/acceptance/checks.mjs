@@ -1,13 +1,14 @@
 /**
- * 浏览器级验收（共 7 项）：
+ * 浏览器级验收（共 8 项）：
  *
  *   1. 断网可完整使用一天        → checkOffline
  *   2. .ics 导入后按时提醒        → checkIcs（真机导入没法自动化，只能验文件本身对不对）
  *   3. 导出 → 清空 → 导入逐条一致 → checkEventsRoundTrip
  *   4. 卡片上设的提醒存得住       → checkCardReminder
  *   5. 移出/放回默认/周期撤销/批量撤销 → checkReminderLifecycle
- *   6. 导航去哪一页              → checkNavigation
- *   7. 导入备份后清单跟着换       → checkImportRefreshesRoutine
+ *   6. 今天不做只跳过当天，可撤销，移出日常才是永久 → checkSkipToday
+ *   7. 导航去哪一页              → checkNavigation
+ *   8. 导入备份后清单跟着换       → checkImportRefreshesRoutine
  *
  * 每项检查都用自己的浏览器 context，互不污染（事件日志存在 IndexedDB 里）。
  */
@@ -604,7 +605,7 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
     await page.getByRole("button", { name: "调顺序" }).click();
     await page.locator(".lg-sort").waitFor({ timeout: 10000 });
     let row = page.locator(".lg-sortlist li").filter({ hasText: a.name }).first();
-    await row.getByRole("button", { name: /移出今天/ }).click();
+    await row.getByRole("button", { name: /移出日常/ }).click();
     let ask = row.locator(".lg-sort-ask");
     await ask.waitFor({ timeout: 5000 });
     if (!/这张卡有提醒/.test(await ask.innerText())) fail("调顺序移出时没有显示提醒询问");
@@ -614,7 +615,7 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
       fail("调顺序取消后卡片或提醒被改动");
     }
     row = page.locator(".lg-sortlist li").filter({ hasText: a.name }).first();
-    await row.getByRole("button", { name: /移出今天/ }).click();
+    await row.getByRole("button", { name: /移出日常/ }).click();
     await row.getByRole("button", { name: "只移卡" }).click();
     await page.waitForTimeout(150);
     s = await readSettings(page, ["myRoutine", "reminders"]);
@@ -622,7 +623,7 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
       fail("只移卡后：卡应移出、提醒应保留");
     }
     row = page.locator(".lg-sortlist li").filter({ hasText: b.name }).first();
-    await row.getByRole("button", { name: /移出今天/ }).click();
+    await row.getByRole("button", { name: /移出日常/ }).click();
     await row.getByRole("button", { name: "一起删" }).click();
     await page.waitForTimeout(150);
     s = await readSettings(page, ["reminders"]);
@@ -764,10 +765,10 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
       const art = page.locator(".lg-art").filter({ hasText: topArticle.title }).first();
       await art.waitFor({ timeout: 15000 });
       await art.click();
-      const bulk = page.getByRole("button", { name: new RegExp(`把这一篇的 ${newIds.length} 个动作一起加入`) });
+      const bulk = page.getByRole("button", { name: new RegExp(`把这一篇的 ${newIds.length} 个动作一起放进日常`) });
       await bulk.waitFor({ timeout: 15000 });
       await bulk.click();
-      const note = page.locator("p[role=status]").filter({ hasText: "一起加入今天" }).first();
+      const note = page.locator("p[role=status]").filter({ hasText: "一起放进日常" }).first();
       await note.waitFor({ timeout: 5000 });
       await page.waitForTimeout(250); // setSetting 是异步的，别在写库前读
       const afterBulk = await readSettings(page, ["myRoutine"]);
@@ -791,6 +792,105 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
   return {
     id: "reminder-lifecycle",
     title: "移出/放回默认/周期撤销/批量撤销的提醒生命周期",
+    details,
+    failures,
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* 5b. 今天不做：只跳过当天，不改日常；可撤销，次日自动回来              */
+/* ------------------------------------------------------------------ */
+
+export async function checkSkipToday({ browser, baseURL }) {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const details = [];
+  const failures = [];
+  const fail = (m) => failures.push(m);
+
+  try {
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    const bundle = await page.evaluate(async () => await (await fetch("cards.json")).json());
+
+    await writeSettings(page, {
+      myRoutine: bundle.defaultRoutine,
+      tags: ["age:adult"],
+      firstRunPending: false,
+      reminders: CARD_REMINDER_BASES,
+      cadence: {},
+      skipToday: {},
+    });
+    await page.reload({ waitUntil: "load" });
+    await waitForCards(page);
+    await gotoTab(page, "今天");
+
+    const article = page.getByRole("article").first();
+    await article.waitFor({ timeout: 10000 });
+    const name = normalize(await article.locator(".lg-name").innerText());
+    await expandCard(article);
+    // 「跳到本卡末尾（今天不做 · 移出日常）」也是一个按钮，名字里含这几个字；
+    // 要点的是展开态页脚里的那颗，exact 必须开。
+    await page
+      .locator(".lg-rowfoot")
+      .getByRole("button", { name: "今天不做", exact: true })
+      .click();
+    await page.waitForTimeout(300);
+
+    if ((await page.getByRole("article").filter({ hasText: name }).count()) !== 0) {
+      fail(`点「今天不做」后「${name}」还在今天清单里`);
+    }
+    const s1 = await readSettings(page, ["skipToday", "myRoutine"]);
+    const cardId = Object.keys(s1.skipToday ?? {})[0];
+    if (!cardId) fail("「今天不做」没有写入 skipToday");
+    if (!s1.myRoutine.includes(cardId)) fail("「今天不做」不该改动 myRoutine");
+    const undo = page
+      .locator(".lg-skipped .lg-skipitem")
+      .filter({ hasText: name })
+      .getByRole("button", { name: "撤销", exact: true });
+    if ((await undo.count()) !== 1) fail("没有出现「今天不做」的撤销入口");
+    details.push(`「${name}」今天不做：从清单消失，日常未动`);
+
+    await undo.click();
+    await page.waitForTimeout(300);
+    if ((await page.getByRole("article").filter({ hasText: name }).count()) < 1) {
+      fail("撤销后卡没有回到今天");
+    }
+    const s2 = await readSettings(page, ["skipToday"]);
+    if (Object.keys(s2.skipToday ?? {}).length) fail("撤销后 skipToday 没有清空");
+    details.push("撤销后回到今天");
+
+    // 模拟「昨天跳过」：日期对不上，今天必须自然回来
+    await writeSettings(page, { skipToday: { [cardId]: "2000-01-01" } });
+    await page.reload({ waitUntil: "load" });
+    await waitForCards(page);
+    await gotoTab(page, "今天");
+    if ((await page.getByRole("article").filter({ hasText: name }).count()) < 1) {
+      fail("昨天的跳过记录把今天的卡藏掉了");
+    }
+    details.push("跨天后旧跳过记录不生效");
+
+    // 永久移出：从日常消失，并清掉这张卡的跳过记录
+    const back = page.getByRole("article").filter({ hasText: name }).first();
+    await expandCard(back);
+    await page
+      .locator(".lg-rowfoot")
+      .getByRole("button", { name: "移出日常", exact: true })
+      .click();
+    await page.waitForTimeout(300);
+    const s3 = await readSettings(page, ["skipToday", "myRoutine"]);
+    if (s3.myRoutine.includes(cardId)) fail("「移出日常」后卡还在 myRoutine 里");
+    if (cardId in (s3.skipToday ?? {})) fail("「移出日常」后 skipToday 里还留着旧记录");
+    details.push("永久移出会清掉跳过记录");
+  } catch (err) {
+    failures.push(String(err?.message ?? err).split("\n")[0]);
+  } finally {
+    await context.close();
+  }
+
+  return {
+    id: "skip-today",
+    title: "今天不做只跳过当天，可撤销，移出日常才是永久",
     details,
     failures,
   };

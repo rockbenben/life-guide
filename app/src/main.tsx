@@ -225,9 +225,9 @@ export function App() {
   // 排程：内容变了（换了卡、改了次序、改了时刻）就重排一次
   useEffect(() => {
     if (!allCards.length) return;
-    const specs = buildSpecs(allCards, routine.ids, reminders, new Date());
+    const specs = buildSpecs(allCards, routine.ids, reminders, new Date(), routine.skipped);
     void schedule(specs, () => setTick((t) => t + 1));
-  }, [allCards, routine.ids, reminders, tick]);
+  }, [allCards, routine.ids, routine.skipped, reminders, tick]);
 
   /** 改了提醒：存起来 + 立刻重排 */
   async function changeReminders(next: Reminder[]) {
@@ -391,6 +391,8 @@ export function App() {
               onRefreshSchedule={() => setTick((t) => t + 1)}
               refreshKey={dataEpoch}
               onDataImported={() => setDataEpoch((e) => e + 1)}
+              skipped={routine.skipped}
+              routine={routine.ids}
             />
           )}
           </Suspense>

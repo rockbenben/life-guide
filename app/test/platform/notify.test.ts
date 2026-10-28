@@ -24,9 +24,11 @@ function spec(rule: Partial<Reminder>, index = 0): ReminderSpec {
     on: true,
     ...rule,
   };
+  // at 要跟规则的时刻一致：平台层拿它当「这一条该响的那一次」
+  const [h, m] = r.time.split(":").map(Number);
   return {
     id: r.id,
-    at: new Date("2026-10-22T07:00:00").toISOString(),
+    at: new Date(2026, 9, 22, h, m, 0, 0).toISOString(),
     title: "生活指南 · 早晨",
     body: "该做 3 件",
     rule: r,
@@ -86,6 +88,43 @@ describe("手机端的排程形状", () => {
     const ids = all.map((n) => n.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(all).toHaveLength(7);
+  });
+
+  /**
+   * 「今天不做」的那一次：系统的重复规则用不了。
+   *
+   * 系统的「每天 08:00」一旦排上，今天 08:00 就会响 —— 表达不了「今天不算」。
+   * 所以被跳过的那一次要退成一串一次性通知：今天不响，明天起照常。
+   */
+  it("被「今天不做」跳过的这一次：退成一串一次性通知，不排系统的每日重复", () => {
+    const s = spec({ mode: "daily", time: "08:00" });
+    const skipped: ReminderSpec = {
+      ...s,
+      // domain 已经把这次顺延到明天，并标出「这一次是被跳过的」
+      at: new Date(2026, 9, 23, 8, 0, 0).toISOString(),
+      firstSkipped: true,
+    };
+    const list = nativeNotifications(skipped, 0);
+    expect(list.length).toBeGreaterThan(1);
+    // 不是 repeats —— 那条系统重复今天照样会响
+    expect(list.every((n) => n.schedule.repeats !== true)).toBe(true);
+    expect(list.every((n) => n.schedule.at instanceof Date)).toBe(true);
+    // 第一次是明天 08:00，今天不响
+    const first = list[0].schedule.at as Date;
+    expect(first.getDate()).toBe(23);
+    expect(first.getHours()).toBe(8);
+    // 往后每天一次
+    const second = list[1].schedule.at as Date;
+    expect(second.getDate()).toBe(24);
+    expect(second.getHours()).toBe(8);
+  });
+
+  it("没有被跳过时：照旧排系统的每日重复", () => {
+    const list = nativeNotifications(spec({ mode: "daily", time: "08:00" }), 0);
+    expect(list[0].schedule).toEqual({
+      on: { hour: 8, minute: 0, second: 0 },
+      repeats: true,
+    });
   });
 });
 

@@ -13,7 +13,7 @@ import {
   MODE_LABELS,
   WEEKDAY_LABELS,
   describeReminder,
-  nextOccurrence,
+  nextOccurrenceText,
   parseTime,
   type Reminder,
   type ReminderMode,
@@ -88,21 +88,25 @@ export function ReminderEditor({
   const [everyDays, setEveryDays] = useState(reminder?.everyDays ?? defaults.everyDays ?? 2);
   const [date, setDate] = useState(reminder?.date ?? defaults.date ?? tomorrow());
 
+  /** 正在编辑的这条 —— 存盘与「下次提醒」读的是同一份，不会各说各话 */
+  const draft: Reminder = {
+    id: reminder?.id ?? defaults.id,
+    // 绑在哪张卡上：新建时由外面给（defaults.cardId）——
+    // 少了它，这条提醒就成了整段提醒，卡上那一行再也匹配不上
+    cardId: reminder?.cardId ?? defaults.cardId,
+    label: reminder?.label ?? defaults.label,
+    mode,
+    time,
+    slot: reminder?.slot,
+    days: mode === "weekly" ? days : undefined,
+    everyDays: mode === "interval" ? everyDays : undefined,
+    date: mode === "once" || mode === "interval" ? date : undefined,
+    on: true,
+  };
+  const nextText = nextOccurrenceText(draft);
+
   function save() {
-    onSave({
-      id: reminder?.id ?? defaults.id,
-      // 绑在哪张卡上：新建时由外面给（defaults.cardId）——
-      // 少了它，这条提醒就成了整段提醒，卡上那一行再也匹配不上
-      cardId: reminder?.cardId ?? defaults.cardId,
-      label: reminder?.label ?? defaults.label,
-      mode,
-      time,
-      slot: reminder?.slot,
-      days: mode === "weekly" ? days : undefined,
-      everyDays: mode === "interval" ? everyDays : undefined,
-      date: mode === "once" || mode === "interval" ? date : undefined,
-      on: true,
-    });
+    onSave(draft);
   }
 
   return (
@@ -198,6 +202,14 @@ export function ReminderEditor({
         </label>
       ) : null}
 
+      {nextText ? (
+        <p class="lg-next">下次提醒：{nextText}</p>
+      ) : (
+        <p class="lg-hint">
+          这个提醒排不出下一次，不会响 —— 换个时间/日期，或至少选一天。
+        </p>
+      )}
+
       <div class="lg-btn-row">
         <button class="lg-btn" onClick={save}>
           保存
@@ -278,7 +290,9 @@ export function ReminderRow({
   return (
     <>
       <div class="lg-remrow">
-        <span class="lg-remval">{reminder ? describeReminder(reminder) : "没设"}</span>
+        <span class="lg-remval">
+          {reminder ? (reminder.on ? describeReminder(reminder) : "已关闭") : "还没设"}
+        </span>
         <button class="lg-linkbtn lg-rembtn" onClick={() => setEditing(true)}>
           {reminder ? "改" : "设提醒"}
         </button>
@@ -301,6 +315,7 @@ export function ReminderModePicker({
   onChange: (mode: ReminderMode, extra: Partial<Reminder>) => void;
 }) {
   const days = reminder.days ?? [1, 2, 3, 4, 5];
+  const nextText = nextOccurrenceText(reminder);
   return (
     <div class="lg-rempicker">
       <div class="lg-remedit-modes" role="radiogroup" aria-label={`${reminder.label}提醒方式`}>
@@ -378,12 +393,17 @@ export function ReminderModePicker({
           />
         </label>
       ) : null}
-      {/* 设置页里这两条是即时保存的，没有保存按钮可以拦 —— 排不出下一次就直接说。 */}
-      {!nextOccurrence(reminder, new Date()) ? (
+      {/* 设置页里这几条是即时保存的，没有保存按钮可以拦 —— 结果直接摆出来：
+          下一次什么时候响，排不出来就明说；关掉的那条不许还写着「下次」。 */}
+      {!reminder.on ? (
+        <p class="lg-next">已关闭，不会响。</p>
+      ) : nextText ? (
+        <p class="lg-next">下次提醒：{nextText}</p>
+      ) : (
         <p class="lg-hint">
           这个提醒排不出下一次，不会响 —— 换个时间/日期，或至少选一天。
         </p>
-      ) : null}
+      )}
     </div>
   );
 }

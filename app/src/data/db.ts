@@ -39,6 +39,8 @@ export interface Settings {
   myRoutine: string[];
   /** 用户改过的「多久做一次」；没写的按卡片自己的提醒语判断 */
   cadence?: Record<string, string>;
+  /** 今天不做的卡：cardId → 逻辑日期（YYYY-MM-DD）。只影响那一天，不改日常 */
+  skipToday?: Record<string, string>;
 }
 
 interface LifeDB extends DBSchema {

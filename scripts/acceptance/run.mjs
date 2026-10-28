@@ -35,6 +35,7 @@ import {
   checkNavigation,
   checkOffline,
   checkReminderLifecycle,
+  checkSkipToday,
 } from "./checks.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -130,6 +131,7 @@ async function main() {
     results.push(await checkEventsRoundTrip({ browser, baseURL }));
     results.push(await checkCardReminder({ browser, baseURL }));
     results.push(await checkReminderLifecycle({ browser, baseURL }));
+    results.push(await checkSkipToday({ browser, baseURL }));
     results.push(await checkNavigation({ browser, baseURL }));
     results.push(await checkImportRefreshesRoutine({ browser, baseURL }));
   } finally {

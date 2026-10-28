@@ -36,6 +36,12 @@ import {
 } from "../domain/daily.ts";
 import type { Card } from "../domain/routine.ts";
 import { defaultCadenceOf, type Cadence } from "../domain/cadence.ts";
+import {
+  markSkipped,
+  pruneSkips,
+  removeSkip,
+  type Skips,
+} from "../domain/skip.ts";
 
 export interface RoutineStore {
   /** 清单里的卡 id —— 次序即显示次序 */
@@ -75,6 +81,12 @@ export interface RoutineStore {
   /** 这张卡多久做一次：用户改过的优先，否则按卡片自己的提醒语判断 */
   cadenceOf: (cardId: string) => Cadence;
   setCadence: (cardId: string, cadence: Cadence) => Promise<void>;
+  /** 今天不做的卡：cardId → 逻辑日期；只在当天生效 */
+  skipped: Skips;
+  /** 今天不做（不改日常，明天会回来） */
+  skipToday: (cardId: string, date: string) => Promise<void>;
+  /** 撤销今天不做 */
+  unskip: (cardId: string) => Promise<void>;
 }
 
 export interface UseRoutineOptions {
@@ -106,6 +118,8 @@ export function useRoutine({
   const [habits, setHabits] = useState<Card[]>([]);
   /** 用户改过的频率；没改过的走 defaultCadenceOf（不把默认值写进库） */
   const [cadenceOverrides, setCadenceOverrides] = useState<Record<string, Cadence>>({});
+  /** 今天不做的卡；过了逻辑日界线自然失效 */
+  const [skipped, setSkipped] = useState<Skips>({});
 
   /** 「放回默认」放哪几张：内容层的默认清单优先，空了才回落到起步包 */
   const restoreIds = useMemo(
@@ -113,33 +127,26 @@ export function useRoutine({
     [defaultRoutine, cards],
   );
 
-  // 自定义习惯与频率覆盖：读回来
-  // （refreshKey 变了也要重读：导入备份会换掉习惯，跟清单一样）
-  useEffect(() => {
-    void (async () => {
-      const [list, cadence] = await Promise.all([
-        allCustomHabits(),
-        getSetting<Record<string, Cadence>>("cadence", {}),
-      ]);
-      setHabits(list.map(habitToCard));
-      setCadenceOverrides(cadence ?? {});
-    })();
-  }, [refreshKey]);
-
   /**
-   * 清单：等卡片到了再读。
+   * 读回来：清单、自定义习惯、频率覆盖、今天不做。
    *
-   * 「没设置过」与「自己清空过」要分得开（domain/daily.ts 的 initialRoutine）：
-   * 前者给默认的那几张，后者尊重用户，不自动塞回去。
+   * **读在一起是有原因的**：「今天不做」的裁剪要用同一批读出来的清单。
+   * 拆成两个 effect 时它们并发跑 —— 导入备份后可能先读到新的跳过记录、
+   * 旧的日常清单，拿旧清单去裁新记录就把刚导入的东西删掉了。
    *
-   * 为什么等卡片到了再做：卡片数据是异步取来的，cards 还是空数组时
+   * 清单要等卡片到了才读：卡片数据是异步取来的，cards 还是空数组时，
    * 起步包也是空的 —— 那时候把空数组写进设置，首启就永远空着了。
    */
   useEffect(() => {
     if (loading) return;
     void (async () => {
-      const saved = await getSetting<string[] | undefined>("myRoutine", undefined);
-      const pending = await getSetting<boolean>("firstRunPending", false);
+      const [saved, pending, list, cadence, skips] = await Promise.all([
+        getSetting<string[] | undefined>("myRoutine", undefined),
+        getSetting<boolean>("firstRunPending", false),
+        allCustomHabits(),
+        getSetting<Record<string, Cadence>>("cadence", {}),
+        getSetting<Skips>("skipToday", {}),
+      ]);
       const next = initialRoutine(saved, defaultRoutine, cards);
       // 只在真的放得出东西时写设置：卡片还没到（空数组）就别把「空」定成用户的意愿。
       // pending 只在「App 刚替新用户放好清单」时写；它跨刷新活着，用户一动手就清掉。
@@ -149,6 +156,15 @@ export function useRoutine({
         setFirstRun(true);
       } else {
         setFirstRun(firstRunOnLoad(saved, pending));
+      }
+      setHabits(list.map(habitToCard));
+      setCadenceOverrides(cadence ?? {});
+      // 不在日常里的跳过记录要清掉（导入的旧备份里可能有）——
+      // 裁剪用的是同一批读出来的 next，不能拿上一份清单去裁。
+      const kept = pruneSkips(skips ?? {}, next);
+      setSkipped(kept);
+      if (Object.keys(kept).length !== Object.keys(skips ?? {}).length) {
+        await setSetting("skipToday", kept);
       }
       setIds(next);
       setReady(true);
@@ -165,6 +181,12 @@ export function useRoutine({
     setIds(next);
     await acknowledgeFirstRun();
     await setSetting("myRoutine", next);
+    // 永久移出的卡不该留着「今天不做」：否则以后再加回来，当天会被那条旧记录藏掉。
+    const kept = pruneSkips(skipped, next);
+    if (Object.keys(kept).length !== Object.keys(skipped).length) {
+      setSkipped(kept);
+      await setSetting("skipToday", kept);
+    }
   }
 
   async function add(cardId: string): Promise<void> {
@@ -255,6 +277,20 @@ export function useRoutine({
     await acknowledgeFirstRun();
   }
 
+  async function skipToday(cardId: string, date: string): Promise<void> {
+    if (!ids.includes(cardId)) return;
+    const next = markSkipped(skipped, cardId, date, ids);
+    setSkipped(next);
+    await setSetting("skipToday", next);
+    await acknowledgeFirstRun();
+  }
+
+  async function unskip(cardId: string): Promise<void> {
+    const next = removeSkip(skipped, cardId);
+    setSkipped(next);
+    await setSetting("skipToday", next);
+  }
+
   return {
     ids,
     ready,
@@ -273,5 +309,8 @@ export function useRoutine({
     removeHabit,
     cadenceOf,
     setCadence,
+    skipped,
+    skipToday,
+    unskip,
   };
 }

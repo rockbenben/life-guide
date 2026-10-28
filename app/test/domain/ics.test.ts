@@ -119,6 +119,55 @@ describe("buildIcs", () => {
     expect(withCard).toContain("URL:https://newzone.top/life-guide/#today");
     expect(withCard).toContain("TRIGGER:-PT0M");
     expect(withCard).toContain("该做了：轻洗睫毛根部给眼睛补油");
+    expect(withCard).not.toContain("EXDATE:");
+  });
+
+  it("今天不做的卡：日历当天那次用 EXDATE 排除", () => {
+    const withSkip = buildIcs({
+      urlBase: "https://newzone.top/life-guide/",
+      name: "生活指南",
+      now: new Date(2026, 9, 20, 8, 0, 0).toISOString(),
+      cards: [
+        {
+          id: "eyelid-clean",
+          name: "轻洗睫毛根部给眼睛补油",
+          source: { anchor: "睑缘清洗" },
+          remind: { text: "每天 10 秒" },
+        },
+      ],
+      cardReminders: [
+        {
+          id: "card:eyelid-clean",
+          cardId: "eyelid-clean",
+          label: "轻洗睫毛根部给眼睛补油",
+          mode: "daily",
+          time: "09:00",
+          on: true,
+        },
+      ],
+      skipped: { "eyelid-clean": "2026-10-20" },
+    });
+    expect(withSkip).toContain("EXDATE:");
+  });
+
+  it("整段的卡全部今天不做时，整段日历事件也排除当天", () => {
+    const withSlotSkip = buildIcs({
+      urlBase: "https://newzone.top/life-guide/",
+      name: "生活指南",
+      now: new Date(2026, 9, 20, 6, 0, 0).toISOString(),
+      cards: [
+        {
+          id: "a",
+          name: "晨光",
+          source: { anchor: "晨光" },
+          slot: "morning",
+          remind: { text: "晒 15 分钟" },
+        },
+      ],
+      routine: ["a"],
+      skipped: { a: "2026-10-20" },
+    });
+    expect(withSlotSkip).toContain("EXDATE:");
   });
 
   it("每行不超过 75 字节（ICS 规范）", () => {

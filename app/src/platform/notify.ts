@@ -12,9 +12,15 @@
  *
  * 上层只跟 `status / requestPermission / schedule / showNow` 说话；
  * 「什么时候响」由 domain/reminders.ts 算好，这里只管「怎么响」。
+ *
+ * **「今天不做」怎么落**：跳过的是**那一次**，不是整条提醒 ——
+ * 桌面与浏览器照 `spec.at` 定时，那一次自然就不响了；
+ * 手机端的系统重复规则表达不了「今天不算」，所以 domain 会把
+ * `spec.firstSkipped` 带下来，被跳过的那一次退成一串一次性通知
+ * （见下面的 nativeNotifications）。
  */
 import type { ReminderSpec } from "../domain/reminders.ts";
-import { occurrences, parseTime } from "../domain/reminders.ts";
+import { nextOccurrence, parseTime } from "../domain/reminders.ts";
 
 export type NotifyKind = "desktop" | "native" | "web" | "none";
 export type NotifyPermission = "granted" | "denied" | "default" | "unsupported";
@@ -122,7 +128,7 @@ export function notifyKind(): NotifyKind {
 const NOTES: Record<NotifyKind, string> = {
   desktop: "桌面端：App 开着就会响（窗口关了也行）",
   native: "手机端：系统排程，关掉 App 也会响",
-  web: "浏览器：App 在前台才会响（后台标签页会被浏览器节流），日历导出的闹钟更稳",
+  web: "浏览器：App 在前台才会响（后台标签页会被浏览器压住通知，可能晚几分钟），日历导出的闹钟更稳",
   none: "这个环境不支持通知",
 };
 
@@ -143,14 +149,14 @@ export async function status(): Promise<NotifyStatus> {
       return {
         kind,
         permission: "unsupported",
-        note: "手机端还没装本地通知插件（跑一次 npm run mobile:sync）。",
+        note: "这个安装包没带通知组件，提醒不会响 —— 换正式安装包。",
       };
     }
     try {
       const res = await plugin.checkPermissions();
       return { kind, permission: normalizePermission(res.display), note: NOTES.native };
     } catch {
-      return { kind, permission: "unsupported", note: "本地通知插件没响应。" };
+      return { kind, permission: "unsupported", note: "手机的通知服务没响应。" };
     }
   }
   if (kind === "web") {
@@ -444,6 +450,24 @@ export function nativeNotifications(
     return [{ id: base, ...common, schedule: { at } }];
   }
 
+  /**
+   * 「今天不做」把这一次跳掉了。
+   *
+   * 系统的重复规则**表达不了「今天不算」**——那条「每天 08:00」一旦排上，
+   * 今天 08:00 就会响。所以退成一串一次性通知：从 spec.at（下一个该响的时刻）
+   * 往后排，今天不响、明天起照常。App 每次打开都会重排，链不会断
+   * （跟「每隔 N 天」同一条路）。跳过过了期、firstSkipped 变回 false 时，
+   * 它就自己回到系统的每日重复。
+   */
+  if (spec.firstSkipped) {
+    const count = r.mode === "daily" ? SKIPPED_CHAIN_DAILY : SKIPPED_CHAIN_WEEKLY;
+    return chainFrom(spec, count).map((at, k) => ({
+      id: base + k,
+      ...common,
+      schedule: { at },
+    }));
+  }
+
   if (r.mode === "weekly") {
     const days = (r.days ?? []).filter((d) => d >= 0 && d <= 6);
     // 一条提醒排几天：系统一个通知只认一个 weekday，所以拆成几条
@@ -461,7 +485,8 @@ export function nativeNotifications(
   }
 
   if (r.mode === "interval") {
-    return occurrences(r, new Date(), 5).map((at, k) => ({
+    // 系统的重复规则没有「每隔 N 天」，只能排成一串一次性通知
+    return chainFrom(spec, 5).map((at, k) => ({
       id: base + k,
       ...common,
       schedule: { at },
@@ -475,4 +500,30 @@ export function nativeNotifications(
       schedule: { on: { hour: t.hour, minute: t.minute, second: 0 }, repeats: true },
     },
   ];
+}
+
+/** 被「今天不做」跳过后退成一次性串时排几次：每天一次 → 两周；每周一次 → 五周。 */
+const SKIPPED_CHAIN_DAILY = 14;
+const SKIPPED_CHAIN_WEEKLY = 5;
+
+/**
+ * 从 spec.at 那一次开始，往后排 count 次（每次一个准确时刻）。
+ *
+ * 为什么从 spec.at 起、而不是从「现在」起：spec.at 是**这一条该响的那一次**
+ * ——「今天不做」跳过的那一次已经不在里面了。从「现在」起排会把被跳过的那次
+ * 又排回去，手机上就会照样响。
+ */
+function chainFrom(spec: ReminderSpec, count: number): Date[] {
+  const out: Date[] = [];
+  const first = new Date(Date.parse(spec.at));
+  if (Number.isNaN(first.getTime())) return out;
+  out.push(first);
+  let cursor = first;
+  for (let i = 1; i < count; i++) {
+    const d = nextOccurrence(spec.rule, new Date(cursor.getTime() + 1000));
+    if (!d) break;
+    out.push(d);
+    cursor = d;
+  }
+  return out;
 }
