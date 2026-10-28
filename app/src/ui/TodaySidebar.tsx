@@ -58,7 +58,7 @@ export interface TodaySidebarProps {
   activeDays: number;
   dots: boolean[];
   loading?: boolean;
-  /** 当前清单里被模式标记为「今天不做」的卡数 */
+  /** 当前清单里被模式（生病等）标记为不做的卡数 */
   skippedCount?: number;
 }
 
@@ -89,17 +89,16 @@ export function TodaySidebar({
   skippedCount = 0,
 }: TodaySidebarProps) {
   const restoreIds = routine.restoreIds;
+  const dayDate = new Date(`${today}T00:00:00`);
   return (
     <div class="lg-aside">
       <div class="lg-topbar">
         <h1 class="lg-h1">今天</h1>
         <span class="lg-dateline">
-          {new Date(`${today}T00:00:00`).toLocaleDateString("zh-CN", {
-            month: "long",
-            day: "numeric",
-            weekday: "long",
-          })}{" "}
-          · {SLOT_LABELS[slot]}
+          {dayDate.toLocaleDateString("zh-CN", { month: "long", day: "numeric" })}{" "}
+          {dayDate.toLocaleDateString("zh-CN", { weekday: "long" })}
+          {" · "}
+          {SLOT_LABELS[slot]}
         </span>
       </div>
 
@@ -118,9 +117,33 @@ export function TodaySidebar({
         ))}
       </div>
 
-      <p class="lg-pool" data-dp="slothint">
-        这里看的是「{SLOT_LABELS[slot]}」这一段要做的动作；标着「随时」的一直在。
-      </p>
+      {/* 账目放在时段下面：这是这一屏最在意的事（断签不清零），
+          藏到工具按钮底下就等于没有。数字大、名目小，像手帖页边的一行记数。 */}
+      {loading || !routine.ready || !(mineCount || doneToday || activeDays) ? null : (
+        <div class="lg-overview">
+          <span class="lg-stat">
+            这一段 <b class="tabular">{mineCount}</b> 个动作
+          </span>
+          <span class="lg-stat">
+            今天已盖 <b class="tabular">{doneToday}</b> 印
+          </span>
+          {activeDays > 0 ? (
+            <span class="lg-stat">
+              累计 <b class="tabular">{activeDays}</b> 天
+              <span class="lg-dots" aria-hidden="true">
+                {dots.map((on, i) => (
+                  <i key={i} class="lg-dot" data-on={on ? "1" : undefined} />
+                ))}
+              </span>
+            </span>
+          ) : null}
+          {skippedCount > 0 ? (
+            <span class="lg-stat-note">
+              <span class="tabular">{skippedCount}</span> 个动作按当前模式不做
+            </span>
+          ) : null}
+        </div>
+      )}
 
       <ConditionBar
         mode={cond.mode}
@@ -136,13 +159,18 @@ export function TodaySidebar({
       />
 
       {/* 挑（筛选）与排序是用户的两种自由：挑在卡片上，排序在这里。
-          「重置为默认」是第三件：把日常恢复成 App 给的初始清单，用户改乱了能一键回来。
-          「加自己的习惯」是第四件：手册里没有的习惯，用户自己能加。 */}
+          「放回默认」把日常恢复成 App 给的初始清单，改乱了能一键回来。
+          「加自己的习惯」给的是手册里没有的那部分。 */}
       {!sorting ? (
         <div class="lg-setuprow">
           <button
             class="lg-btn lg-btn-ghost lg-sortbtn"
             disabled={routine.ids.length <= 1}
+            title={
+              routine.ids.length <= 1
+                ? "日常里至少有两张才能调次序"
+                : "拖动或用 ↑↓ 调整次序"
+            }
             onClick={onSorting}
           >
             调顺序
@@ -150,7 +178,11 @@ export function TodaySidebar({
           <button
             class="lg-btn lg-btn-ghost lg-sortbtn"
             disabled={!restoreIds.length}
-            title="放回 App 给的那张默认清单 —— 你自己挑的那几张会被换掉"
+            title={
+              restoreIds.length
+                ? "放回 App 给的那份默认清单 —— 你自己挑的那几张会被换掉"
+                : "没有可放回的默认清单"
+            }
             onClick={onRestoreDefault}
           >
             放回默认
@@ -186,33 +218,6 @@ export function TodaySidebar({
           />
         )
       ) : null}
-
-      {loading || !mineCount ? null : (
-        <p class="lg-overview">
-          <span class="lg-big tabular">{mineCount}</span>
-          <span>个动作</span>
-          {skippedCount > 0 ? (
-            <span>
-              · <span class="tabular">{skippedCount}</span> 个今天不做
-            </span>
-          ) : null}
-          <span>
-            今天盖了 <span class="tabular">{doneToday}</span> 印
-          </span>
-          {activeDays > 0 ? (
-            <>
-              <span>
-                · 累计 <span class="tabular">{activeDays}</span> 天
-              </span>
-              <span class="lg-dots" aria-hidden="true">
-                {dots.map((on, i) => (
-                  <i key={i} class="lg-dot" data-on={on ? "1" : undefined} />
-                ))}
-              </span>
-            </>
-          ) : null}
-        </p>
-      )}
     </div>
   );
 }

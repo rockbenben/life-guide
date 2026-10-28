@@ -73,7 +73,14 @@ export function SortableRow({
         aria-label={`拖动「${name}」调整次序`}
         title="拖动调整次序"
       >
-        ⠿
+        {/* 六点抓握记号：⠿ 这个盲文字符在不同系统上字宽与位置都不一样 */}
+        <svg viewBox="0 0 12 18" aria-hidden="true" focusable="false">
+          {[3, 9].map((x) =>
+            [3, 9, 15].map((y) => (
+              <circle key={`${x}-${y}`} cx={x} cy={y} r="1.4" fill="currentColor" />
+            )),
+          )}
+        </svg>
       </button>
       <span class="lg-sort-when">{slotLabel(card.slot ?? "anytime")}</span>
       <span class="lg-sort-name">
@@ -101,7 +108,8 @@ export function SortableRow({
         </button>
         <button
           class="lg-move"
-          aria-label={`把「${name}」${custom ? "删掉" : "移出今天"}`}
+          aria-label={`把「${name}」${custom ? "删掉" : "移出日常"}`}
+          title={custom ? "删掉这条自定义习惯" : "以后都不出现；手册里还能再加回来"}
           onClick={() => {
             if (custom || !reminder) {
               onTakeOut(card);
@@ -114,7 +122,7 @@ export function SortableRow({
         </button>
       </span>
       {ask && reminder ? (
-        <div class="lg-sort-ask" role="group" aria-label="移出时怎么处理提醒">
+        <div class="lg-sort-ask" role="group" aria-label="移出日常时怎么处理提醒">
           <span>这张卡有提醒（{describeReminder(reminder)}）。</span>
           <button class="lg-linkbtn" onClick={() => onTakeOut(card)}>
             一起删

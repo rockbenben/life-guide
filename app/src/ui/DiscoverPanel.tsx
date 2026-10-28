@@ -32,16 +32,21 @@ export function DiscoverPanel({
   onAdd,
   onNext,
 }: DiscoverPanelProps) {
+  // hooks 要在任何 return 之前：picks 可能在用完最后一张后变空，
+  // 把 useState 放在 early return 之后会让同一实例的 hook 数变化（条件调用）。
+  const [expanded, setExpanded] = useState<string | null>(null);
   if (!picks.length) return null;
   // 「发现」里这些卡的标题是可以点的（指针、悬停变色都在说它能点）——
   // 以前给的是个空回调，按下去什么也不发生，读者以为坏了。展开看看做法是对的。
-  const [expanded, setExpanded] = useState<string | null>(null);
   return (
     <section class="lg-discover">
       <h2>发现</h2>
       <p class="lg-do">
-        手册里有 <span class="tabular">{pool}</span> 个动作还没进你的日常。
-        今天轮到这 {picks.length} 张：
+        手册里还有{" "}
+        <span class="tabular">{pool}</span>
+        {" 个动作没进日常，今天先看这 "}
+        <span class="tabular">{picks.length}</span>
+        {" 张："}
       </p>
       {picks.map((c) => (
         <div class="lg-discover-item" key={c.id}>
@@ -61,8 +66,8 @@ export function DiscoverPanel({
             />
           </div>
           <div class="lg-btn-row">
-            <button class="lg-btn" onClick={() => onAdd(c)}>
-              放进今天
+            <button class="lg-btn lg-btn-ghost" onClick={() => onAdd(c)}>
+              放进日常
             </button>
           </div>
         </div>
@@ -72,7 +77,7 @@ export function DiscoverPanel({
           换一批
         </button>
       </div>
-      <p class="lg-pool">也可以到「手册」里按篇翻 —— 每篇都标了哪几个动作能照着做。</p>
+      <p class="lg-pool">也可以到「手册」里按篇翻 —— 每篇都标着能照着做几个动作。</p>
     </section>
   );
 }

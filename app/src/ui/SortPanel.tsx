@@ -74,13 +74,13 @@ export function SortPanel({
   return (
     <div class="lg-sort">
       <div class="lg-sort-h">
-        <h2>你的日常 · 次序</h2>
+        <h2>日常的次序</h2>
         <button class="lg-btn lg-btn-ghost" onClick={onClose}>
           回到今天
         </button>
       </div>
       <p class="lg-pool">
-        这里是你日常里的全部动作（不分时段）。拖一下手柄就能挪位置；也可以用 ↑↓（键盘与读屏走的是那条路）。
+        这里是你日常里的全部动作（不分时段）。拖手柄就能挪位置；键盘或读屏用 ↑↓。
         默认按时间排，挪过之后按你摆的来。
       </p>
       <DndContext

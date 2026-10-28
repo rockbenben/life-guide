@@ -45,6 +45,38 @@ import {
 /** 屏幕上的每一句话都得有个期限 —— 与 Today 页那条提示同一个时限。 */
 const NOTICE_MS = 6000;
 
+/**
+ * 源码仓库。设置页「关于」里那一条链到这里。
+ *
+ * 仓库公开之后，这个地址就是陌生人能看到的第一个入口 —— 看说明、提 issue、给星标都从这儿走。
+ */
+const REPO_URL = "https://github.com/rockbenben/life-guide";
+
+/**
+ * GitHub 标记（官方 octicon 的 mark-github-16，MIT）。
+ *
+ * 为什么用官方的而不是自己画：这是第三方的商标，自制的「像 GitHub 的圆猫」反而是侵权风险；
+ * 官方标记在 GitHub 的标志使用规范里就是给「链到 GitHub」用的。
+ * 用 currentColor，跟着主题走（暗色下也是同一个图形，只换颜色）。
+ */
+function GithubMark() {
+  return (
+    <svg
+      class="lg-ghmark"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        fill="currentColor"
+        d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"
+      />
+    </svg>
+  );
+}
+
 type Notice = { text: string; kind: "ok" | "error" };
 
 export function Settings({
@@ -54,6 +86,8 @@ export function Settings({
   onRefreshSchedule,
   refreshKey = 0,
   onDataImported,
+  skipped,
+  routine,
 }: {
   cards?: Card[];
   /** 提醒：整段那两条 + 绑在卡上的那些 */
@@ -66,10 +100,16 @@ export function Settings({
   refreshKey?: number;
   /** 导入成功：告诉 App 重新读清单与条件（不然界面还摆着导入前的旧值） */
   onDataImported?: () => void;
+  /** 今天不做的卡：导出日历时给当天那次加 EXDATE */
+  skipped?: Record<string, string>;
+  /** 日常清单：某一段全跳过时，整段日历事件也排除当天 */
+  routine?: string[];
 }) {
   const cond = useConditions(refreshKey);
   // 提醒由 App 持有（它要排程），这里只用来看与改
   const reminderList = reminders ?? [];
+  /** 按时段响的那两条（早晨 / 晚间）：模式与时刻都在这页改 */
+  const slotReminders = reminderList.filter((r) => !r.cardId);
   /** 绑在卡上的那几条：卡片里改时间，这里只看得见、也删得掉 */
   const cardReminders = reminderList.filter((r) => r.cardId);
   const [count, setCount] = useState(0);
@@ -149,7 +189,9 @@ export function Settings({
     if (s.permission === "granted") {
       showNotice("可以了，App 到点会自己提醒。");
     } else if (s.permission === "denied") {
-      showNotice("通知被拒了。浏览器里要自己去站点设置里放行。", "error");
+      // 同一个「被拒绝」，浏览器 / 桌面 / 手机要去的地方不一样 —— 别在手机上
+      // 叫用户改浏览器设置（这里原来写死了一句「浏览器里」）。
+      showNotice(deniedNotice, "error");
     } else {
       showNotice("这个环境暂时拿不到通知权限。", "error");
     }
@@ -159,18 +201,16 @@ export function Settings({
   }
 
   return (
-    <main class="lg-shell">
+    <main class="lg-shell lg-settings">
       <div class="lg-topbar">
         <h1 class="lg-h1">设置</h1>
-        <span class="lg-dateline">
-          条件 · 提醒{updaterOn ? " · 更新" : ""} · 数据
-        </span>
+        <span class="lg-dateline">只在本机，不上传</span>
       </div>
 
       <section class="lg-set">
         <h2>条件</h2>
         <p>
-          决定今天看哪些动作、哪些卡会换成你该做的那一版。
+          决定今天出现哪些动作、哪些卡按你的情况换一版。
           今天页顶部的「条件」改的是同一份。
         </p>
         <ConditionPanel
@@ -185,62 +225,65 @@ export function Settings({
       <section class="lg-set">
         <h2>提醒</h2>
         <p>
-          App 自己到点提醒，响的时候直接告诉你这一段该做哪几件。
-          某一张卡要单独提醒，展开那张卡点「设提醒」。
+          到点 App 自己响，响的时候告诉你这一段该做哪几件。
+          某张卡要单独提醒，把它放进日常，展开后点「设提醒」。
         </p>
         {notify?.note ? <p class="lg-pool">{notify.note}</p> : null}
 
-        <div class="lg-remrows">
-          {reminderList
-            .filter((r) => !r.cardId)
-            .map((r) => (
-              <div class="lg-remblock" key={r.id}>
-                <div class="lg-remrow">
-                  <label class="lg-remcheck">
+        {slotReminders.length ? (
+          <>
+            <p class="lg-grouphint">按时段提醒</p>
+            <div class="lg-remrows">
+              {slotReminders.map((r) => (
+                <div class="lg-remblock" key={r.id}>
+                  <div class="lg-remrow">
+                    <label class="lg-remcheck">
+                      <input
+                        type="checkbox"
+                        checked={r.on}
+                        onChange={(e) =>
+                          void saveReminders(
+                            reminderList.map((x) =>
+                              x.id === r.id ? { ...x, on: (e.target as HTMLInputElement).checked } : x,
+                            ),
+                          )
+                        }
+                      />
+                      <span>{r.label}</span>
+                    </label>
                     <input
-                      type="checkbox"
-                      checked={r.on}
-                      onChange={(e) =>
+                      class="lg-remtime"
+                      type="time"
+                      value={r.time}
+                      aria-label={`${r.label}提醒时刻`}
+                      onChange={(e) => {
+                        const v = (e.target as HTMLInputElement).value;
+                        // 清空输入框 ≠ 删掉这条提醒。
+                        // 时刻不合法时 normalizeReminders 会把整条丢掉 —— 那用户只是
+                        // 清了一下时间框，早晨提醒就整条没了（界面上还没有加回来的入口）。
+                        if (!parseTime(v)) return;
                         void saveReminders(
-                          reminderList.map((x) =>
-                            x.id === r.id ? { ...x, on: (e.target as HTMLInputElement).checked } : x,
-                          ),
-                        )
-                      }
+                          reminderList.map((x) => (x.id === r.id ? { ...x, time: v } : x)),
+                        );
+                      }}
                     />
-                    <span>{r.label}</span>
-                  </label>
-                  <input
-                    class="lg-remtime"
-                    type="time"
-                    value={r.time}
-                    aria-label={`${r.label}提醒时刻`}
-                    onChange={(e) => {
-                      const v = (e.target as HTMLInputElement).value;
-                      // 清空输入框 ≠ 删掉这条提醒。
-                      // 时刻不合法时 normalizeReminders 会把整条丢掉 —— 那用户只是
-                      // 清了一下时间框，早晨提醒就整条没了（界面上还没有加回来的入口）。
-                      if (!parseTime(v)) return;
-                      void saveReminders(
-                        reminderList.map((x) => (x.id === r.id ? { ...x, time: v } : x)),
-                      );
-                    }}
+                  </div>
+                  <ReminderModePicker
+                    reminder={r}
+                    onChange={(mode, extra) =>
+                      void saveReminders(reminderList.map((x) => (x.id === r.id ? { ...x, ...extra, mode } : x)))
+                    }
                   />
                 </div>
-                <ReminderModePicker
-                  reminder={r}
-                  onChange={(mode, extra) =>
-                    void saveReminders(reminderList.map((x) => (x.id === r.id ? { ...x, ...extra, mode } : x)))
-                  }
-                />
-              </div>
-            ))}
-        </div>
+              ))}
+            </div>
+          </>
+        ) : null}
 
         {/* 绑在卡上的提醒：时间在卡片里改，这里只列出来 —— 一处看得见全部 */}
         {cardReminders.length ? (
           <div class="lg-remcards">
-            <p class="lg-pool">绑在卡上的提醒（时间在卡片里改）：</p>
+            <p class="lg-grouphint">绑在卡上的提醒（时间在卡片里改）</p>
             {cardReminders.map((r) => {
               const card = cards?.find((c) => c.id === r.cardId);
               const name = card
@@ -249,7 +292,9 @@ export function Settings({
               return (
                 <div class="lg-remcard" key={r.id}>
                   <span class="lg-remcardname">{name}</span>
-                  <span class="lg-remval">{describeReminder(r)}</span>
+                  <span class="lg-remval">
+                    {r.on ? describeReminder(r) : "已关闭"}
+                  </span>
                   <button
                     class="lg-linkbtn"
                     onClick={() =>
@@ -264,12 +309,16 @@ export function Settings({
           </div>
         ) : null}
 
+        {!slotReminders.length && !cardReminders.length ? (
+          <p class="lg-pool">还没有提醒。把一张卡放进日常，展开它就能设一条。</p>
+        ) : null}
+
         {/* Android 12+：不给精确闹钟权限，系统就把闹钟攒着一起发 —— 实测晚了一分钟 */}
         {exact?.needed && !exact.granted ? (
           <div class="lg-pool" data-dp="exact">
             <p>
-              提醒会晚几分钟才到：Android 不让这个 App 准点响铃，它把闹钟攒着一起发。
-              允许之后准点响。
+              Android 会把提醒攒着一起发，所以会晚几分钟。
+              允许「闹钟和提醒」之后准点响。
             </p>
             <button
               class="lg-btn lg-btn-ghost"
@@ -317,12 +366,12 @@ export function Settings({
             disabled={notify?.permission !== "granted"}
             onClick={() =>
               void showNow(
-                "生活指南 · 试一下",
+                "生活指南 · 测试提醒",
                 "到了这个点，App 就这样提醒你 —— 带上这一段该做的那几件。",
               )
             }
           >
-            试一下
+            发一条测试提醒
           </button>
         </div>
 
@@ -349,21 +398,22 @@ export function Settings({
                 eveningHour: e.hour,
                 eveningMinute: e.minute,
                 cardReminders: reminderList.filter((r) => r.cardId),
+                skipped,
+                routine,
                 cards,
               }),
             );
           }}
         >
-          导出日历（.ics，含卡片提醒）
+          导出日历（含卡片提醒）
         </button>
       </section>
 
       <section class="lg-set">
         <h2>数据</h2>
         <p>
-          只存在这台设备上：没有服务器，也不会上传。
-          未「添加到主屏幕」的 Safari 站点长期不访问可能被系统回收本地数据，
-          所以定期导出一份。
+          记录只存在这台设备，没有服务器，也不会上传。
+          没装到主屏幕的话（尤其是 iOS），系统可能回收本地数据，所以定期导出一份。
         </p>
         <div class="lg-btn-row">
           <button
@@ -420,23 +470,12 @@ export function Settings({
             }}
           />
         </div>
-        {/* 成功与失败分开：失败那条不能带「✓」 */}
-        {notice ? (
-          <p
-            class="lg-flash"
-            data-kind={notice.kind}
-            role="status"
-            aria-live="polite"
-          >
-            {notice.text}
-          </p>
-        ) : null}
 
         {/* 危险操作单独隔开：清空是不可撤销的，不该跟导出挤在一排 */}
         <div class="lg-danger">
           <p class="lg-pool">
             当前记录 <span class="tabular">{count}</span> 条。
-            清空之后只能靠导入备份恢复。
+            清空后只能靠导入备份恢复。
           </p>
           <button
             class="lg-btn lg-btn-ghost"
@@ -468,7 +507,7 @@ export function Settings({
           <h2>装到主屏幕</h2>
           <p>
             iOS：分享 → 添加到主屏幕。Android：浏览器菜单 → 安装应用。
-            装上之后数据才不会被系统回收。
+            装上以后，被系统回收的概率小很多。
           </p>
         </section>
       ) : null}
@@ -477,8 +516,8 @@ export function Settings({
         <section class="lg-set">
           <h2>更新</h2>
           <p>
-            有新版本时这里会写清楚。下载要一百多兆，所以不自动下 ——
-            你点了才下，下完重启一下装上。
+            有新版本会写在这里。安装包一百多兆，不自动下载 —— 你点了才下，
+            下完重启装上。
           </p>
           <p class="lg-pool">{update ? describeUpdate(update) : "正在查…"}</p>
           <div class="lg-btn-row">
@@ -512,12 +551,40 @@ export function Settings({
       <section class="lg-set">
         <h2>关于</h2>
         <p>
-          生活指南 —— 把《生活手册》变成能照着做的卡片。
-          卡里的每一步、每条禁忌都是原文的话，数字都对着原文逐字核过。
+          生活指南：把《生活手册》变成能照着做的卡片。
+          卡片上的每一步、每条禁忌都是原文的话，数字对过原文；换算是推算，屏上会标出来。
         </p>
         <p>换设备时用「导出数据 / 导入数据」搬家。</p>
+        {/*
+          源码入口。target=_blank：浏览器开新标签、桌面端被 setWindowOpenHandler
+          交给系统浏览器（手机端与手册页的外链同一条路）。
+        */}
+        <p>
+          <a
+            class="lg-linkbtn lg-ghlink"
+            href={REPO_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <GithubMark />
+            源码在 GitHub
+          </a>
+        </p>
         <Disclaimer />
       </section>
+
+      {/* 提示条：导出、导入、清空、改提醒都往这里报（浮在页底，不绑在某一段里）。
+          成功与失败分开：失败那条不能带「✓」。 */}
+      {notice ? (
+        <p
+          class="lg-flash"
+          data-kind={notice.kind}
+          role="status"
+          aria-live="polite"
+        >
+          {notice.text}
+        </p>
+      ) : null}
     </main>
   );
 }

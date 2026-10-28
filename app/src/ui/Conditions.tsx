@@ -134,7 +134,10 @@ function Editor({
         </p>
       ) : null}
 
-      {/* 年龄档是单选：同时选中「未成年人」和「70 岁以上」没有意义 */}
+      {/* 两排片要看得懂：上面是年龄段（只能选一个），下面是身体情况（可以多选）。
+          原来两排样式一模一样，也没有可见的组标题 —— 视力正常的人只能猜，
+          读屏才分得清（aria-label）。 */}
+      <p class="lg-grouphint">年龄段（只能选一个）</p>
       <div class="lg-cats" role="radiogroup" aria-label="年龄段">
         {AGE_TAGS.map((t) => (
           <button
@@ -149,6 +152,7 @@ function Editor({
         ))}
       </div>
 
+      <p class="lg-grouphint">我的情况（可以多选）</p>
       <div class="lg-cats" role="group" aria-label="我的情况">
         {STATE_TAGS.map((t) => (
           <button

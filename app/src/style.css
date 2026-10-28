@@ -204,8 +204,13 @@
   .page-fade {
     animation: none;
   }
+  /* 印章的斜角是静态的（它是盖上去的样子），不是动效 —— 别为了减少动效把印摆正。
+     要去掉的是过渡与按下的缩放。 */
   .lg-seal i {
-    transform: none;
+    transition: none;
+  }
+  .lg-seal:active i {
+    transform: rotate(-7deg);
   }
 }
 
@@ -299,19 +304,39 @@
   font-weight: 600;
 }
 
+/* 页边的一行记数：今天几件、盖了几印、累计几天。
+   数字用墨色与正文同族字重，名目是 13px 的注；不分栏、不成卡片 ——
+   它读起来该是一行账，不是一排数据看板。 */
 .lg-overview {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 6px 10px;
-  margin: 14px 0 2px;
+  gap: 2px 16px;
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--lg-rule-soft);
   font-size: var(--lg-t2);
   color: var(--lg-ink-2);
+  line-height: 1.55;
 }
-.lg-overview .lg-big {
+.lg-overview .lg-stat {
+  white-space: nowrap;
+}
+.lg-overview b {
+  margin: 0 1px;
   font-size: var(--lg-t4);
   font-weight: 650;
+  letter-spacing: -0.01em;
   color: var(--lg-ink);
+}
+.lg-overview .lg-dots {
+  margin-left: 7px;
+}
+.lg-stat-note {
+  flex: 1 0 100%;
+  margin-top: 2px;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
 }
 /* 断签不清零：14 格印迹，做过的天留色；撤销的周期完成不算这一天 */
 .lg-dots {
@@ -339,7 +364,7 @@
 }
 .lg-row {
   display: grid;
-  grid-template-columns: 76px 1fr 44px;
+  grid-template-columns: 82px 1fr 44px;
   gap: 0 10px;
   align-items: start;
   padding: 14px 0;
@@ -347,11 +372,15 @@
 .lg-card[data-open="true"] .lg-row {
   padding-bottom: 6px;
 }
+/* 只读的卡（手册 / 发现）没有印章那一栏：把第三列收掉，
+   名字与剂量多用 54px —— 窄屏上常常就是「一行」与「两行」的差别。 */
+.lg-card[data-readonly="true"] .lg-row {
+  grid-template-columns: 82px minmax(0, 1fr);
+}
+/* 做过的行不再铺整块底色：右边那颗日期印章已经说明完成。
+   暗色主题下这层底色会在行首形成一条硬边，像被裁掉一半。 */
 .lg-guide {
   margin: 0 0 14px;
-}
-.lg-row[data-done="true"] {
-  background: linear-gradient(90deg, var(--lg-rule-soft), transparent 46%);
 }
 .lg-when {
   font-size: var(--lg-t2);
@@ -364,7 +393,9 @@
   font-size: var(--lg-t1);
   color: var(--lg-ink-3);
   letter-spacing: 0.02em;
-  white-space: nowrap;
+  /* 82px 的标签列放不下「推算 约 15 分钟」这种长句时换行，不许挤进正文 */
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .lg-when .lg-dur[data-state="derived"],
 .lg-when .lg-dur[data-state="unknown"],
@@ -422,6 +453,9 @@
      朱色留给印章、红留给禁忌 —— 两者色相几乎一样（#a82a24 / #9e2b1e），
      数字若也用朱红，扫一眼会与「不要做」的那行红混在一起。 */
   color: var(--lg-ink);
+  /* 「3 小时内」「32～34 ℃」是一个整体：窄屏（320px）上不许拆成
+     「3 小 / 时内」—— 数字与单位分开读就是另一个剂量了。 */
+  white-space: nowrap;
 }
 /* R11：stop 级禁忌必须在收起态。全文留在 DOM 里，只是不再一人一块粉底 */
 .lg-stop {
@@ -454,7 +488,9 @@
   color: var(--lg-ink-2);
 }
 
-/* 印章：完成态不画勾，盖一枚日付印。断签不清零，印子留在纸上 */
+/* 印章：完成态不画勾，盖一枚日付印。断签不清零，印子留在纸上。
+   空印框要像「等着盖章的格子」而不是一个复选框 —— 里面压一枚浅灰的「印」，
+   鼠标悬停时才回到朱红（那是「当前这一件」）。 */
 .lg-seal {
   width: 44px;
   height: 44px;
@@ -467,10 +503,10 @@
   cursor: pointer;
 }
 .lg-seal i {
-  width: 30px;
-  height: 30px;
+  width: 31px;
+  height: 31px;
   border: 2px solid var(--lg-zhu);
-  border-radius: 4px;
+  border-radius: 3px;
   color: var(--lg-zhu);
   background: var(--lg-zhu-soft);
   display: grid;
@@ -481,13 +517,33 @@
   line-height: 1;
   transform: rotate(-7deg);
   opacity: 0.92;
+  transition: transform 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 .lg-seal[data-empty="true"] i {
   background: transparent;
-  border-color: var(--lg-rule);
+  /* 空印框是今天页的主操作：原来用 --lg-rule（浅色 1.27:1 / 暗色 1.40:1），
+     几乎看不见 —— 首启说明却让人「点右边的方格盖个印」。
+     换成 ink-3：浅色 4.3:1、暗色 5.4:1，看得见又不抢标题的戏。
+     hover 仍然是朱红（那是「当前这一件」）。 */
+  border-color: var(--lg-ink-3);
+  border-width: 1.5px;
+  color: var(--lg-ink-3);
+}
+.lg-seal[data-empty="true"] i::before {
+  content: "印";
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.55;
 }
 .lg-seal[data-empty="true"]:hover i {
   border-color: var(--lg-zhu);
+  color: var(--lg-zhu);
+}
+.lg-seal:active i {
+  transform: rotate(-7deg) scale(0.9);
+  background: var(--lg-zhu);
+  color: var(--lg-sheet);
 }
 
 /* 行本身可点开展开（button 里只放 span，h3/p 是 flow content，不许嵌进 button） */
@@ -505,7 +561,8 @@
 .lg-slot:focus-visible,
 .lg-cond:focus-visible,
 .lg-btn:focus-visible,
-.lg-cat:focus-visible {
+.lg-cat:focus-visible,
+.lg-fold-sum:focus-visible {
   outline: 2px solid var(--lg-zhu);
   outline-offset: 2px;
 }
@@ -562,6 +619,7 @@
   color: var(--lg-ink);
   font-weight: 650;
   margin-right: 5px;
+  white-space: nowrap;
 }
 .lg-linkbtn {
   display: inline-flex;
@@ -576,6 +634,14 @@
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+/* 链到 GitHub 的那一条：图标本身已经是记号，文字不用再带下划线 */
+.lg-ghlink {
+  gap: 6px;
+  text-decoration: none;
+}
+.lg-ghmark {
+  flex: 0 0 auto;
 }
 .lg-streak {
   font-size: var(--lg-t1);
@@ -666,12 +732,69 @@
 .lg-firstrun p + p {
   margin-top: 4px;
 }
+.lg-fold-sum {
+  display: none;
+}
 .lg-ageask {
   margin: 12px 0 0;
-  border-left-color: var(--lg-moss);
+  border-left-color: var(--lg-indigo);
 }
-.lg-ageask .lg-btn-row {
+.lg-ageask .lg-cats {
   margin-top: 8px;
+}
+.lg-ageask-skip {
+  margin-top: 4px;
+}
+/* 小屏首启：年龄块和说明叠在一起会把第一张卡顶出首屏。
+   年龄块还在时先不显示说明，选完或跳过以后它自然回来。 */
+@media (max-width: 420px) {
+  /* 390 是最常见机型（iPhone 12 以后基本都是），原来这道闸只挡到 380px，
+     于是 390 下年龄块与首启说明同屏，第一张卡被顶出首屏。 */
+  .lg-ageask + .lg-firstrun {
+    display: none;
+  }
+}
+/* 又窄又矮时，两块说明各收成一行；点开才铺原文。
+   否则年龄块、说明、底部导航叠在一起，第一张卡仍然进不了首屏。 */
+@media (max-width: 380px) and (max-height: 640px) {
+  .lg-fold-sum {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: var(--lg-tap);
+    list-style: none;
+    white-space: nowrap;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .lg-fold-sum::-webkit-details-marker {
+    display: none;
+  }
+  .lg-fold-sum:hover {
+    color: var(--lg-zhu);
+  }
+  .lg-fold-sum::after {
+    color: var(--lg-zhu);
+    font-size: var(--lg-t2);
+    font-weight: 400;
+  }
+  .lg-ageask > .lg-fold-sum::after {
+    content: "选择";
+  }
+  .lg-ageask[open] > .lg-fold-sum::after {
+    content: "收起";
+  }
+  .lg-firstrun:not(.lg-ageask) > .lg-fold-sum::after {
+    content: "展开";
+  }
+  .lg-firstrun:not(.lg-ageask)[open] > .lg-fold-sum::after {
+    content: "收起";
+  }
+  .lg-setuprow .lg-sortbtn {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 /* 短标签不许被拆到两行（「调顺序」断成「调 / 顺序」很难看） */
 .lg-nb {
@@ -747,7 +870,9 @@
 }
 /* 小圆片：模式与周几 */
 .lg-chip {
-  min-height: 34px;
+  /* 触控下限 44px（--lg-tap）：这是提醒方式与周几的挑选键，
+     原来 34px 在手机上偏小。 */
+  min-height: var(--lg-tap);
   padding: 0 14px;
   border: 1px solid var(--lg-rule);
   border-radius: 999px;
@@ -781,6 +906,11 @@
   gap: 8px;
   color: var(--lg-ink-2);
   font-size: var(--lg-t3);
+}
+/* 「几点提醒」四个字不能被挤成两行：窄屏下它断成「几点 / 提醒」，
+   旁边又摆着时间框，看着像坏了。 */
+.lg-remrow2 > span {
+  white-space: nowrap;
 }
 .lg-remrow2 input {
   min-height: 38px;
@@ -833,9 +963,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 10px;
 }
 .lg-setuprow .lg-sortbtn {
-  margin: 8px 0 0;
+  margin: 0;
 }
 .lg-sort-h {
   display: flex;
@@ -854,8 +985,8 @@
   list-style: none;
 }
 .lg-sortlist li {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
   padding: 8px 0;
@@ -865,7 +996,6 @@
   border-top: 0;
 }
 .lg-sort-when {
-  flex: 0 0 auto;
   min-width: 3.2em;
   color: var(--lg-ink-3);
   font-size: var(--lg-t1);
@@ -875,8 +1005,8 @@
    touch-action: none 是必须的 —— 触屏上不跟页面一起滚，拖才拖得动。 */
 .lg-grip {
   flex: 0 0 auto;
-  min-width: 26px;
-  min-height: 34px;
+  min-width: var(--lg-tap);
+  min-height: var(--lg-tap);
   padding: 0 4px;
   border: 0;
   border-radius: 6px;
@@ -898,12 +1028,18 @@
   outline: 2px solid var(--lg-zhu);
   outline-offset: 2px;
 }
+.lg-grip svg {
+  display: block;
+  width: 12px;
+  height: 18px;
+  margin: 0 auto;
+}
 .lg-sortlist li[data-dragging="true"] {
   background: var(--lg-sheet);
   box-shadow: 0 6px 18px rgba(36, 31, 26, 0.1);
 }
 .lg-sort-name {
-  flex: 1 1 auto;
+  min-width: 0;
   font-size: var(--lg-t3);
   color: var(--lg-ink);
 }
@@ -917,11 +1053,11 @@
 .lg-sort-ops {
   display: flex;
   gap: 4px;
-  flex: 0 0 auto;
+  justify-self: end;
 }
 /* 有提醒的卡移出前先问：单独占一行，别把 320px 上的三个键挤没 */
 .lg-sort-ask {
-  flex: 1 0 100%;
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1168,10 +1304,73 @@
   margin-top: 0;
 }
 .lg-habitform .lg-cat {
-  min-height: 34px;
+  min-height: var(--lg-tap);
 }
 
 /* ---------------------------------------------------------------- 手册 */
+/* 搜索框：浏览器自带的清除键是 9×7px 的小字形，颜色 #3E6AB1 不在令牌表里
+   （一屏暖纸中间一块饱和蓝）。关掉它，用自绘的那颗。 */
+.lg-search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+.lg-searchwrap {
+  position: relative;
+}
+.lg-searchclear {
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  transform: translateY(-50%);
+  width: var(--lg-tap);
+  height: var(--lg-tap);
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--lg-ink-2);
+  font: inherit;
+  font-size: var(--lg-t3);
+  line-height: 1;
+  cursor: pointer;
+}
+.lg-searchclear:hover {
+  color: var(--lg-ink);
+}
+.lg-searchclear:active {
+  transform: translateY(-50%) scale(0.94);
+}
+.lg-searchclear:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 2px;
+}
+/* 「今天不做」撤销区：卡名是纯文字（点头像=展开那张卡，全 App 都这样），
+   「撤销」单独成键 —— 原来把卡名做成撤销键，误触就把卡悄悄放回清单。 */
+.lg-skipname {
+  color: var(--lg-ink-2);
+}
+/* 名字与它的「撤销」挨成一对：跳过两张以上时，
+   名字一排、撤销一排，谁对不上哪张就说不清了。 */
+.lg-skipitem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+.lg-skipitem .lg-skipname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 条件面板的组标题：年龄段（单选）与我的情况（多选）要看得懂 */
+.lg-grouphint {
+  margin: 10px 0 4px;
+  color: var(--lg-ink-3);
+  font-size: var(--lg-t1);
+}
+
 .lg-search {
   width: 100%;
   min-height: var(--lg-tap);
@@ -1434,7 +1633,8 @@
   margin-left: 2px;
   font-size: var(--lg-t1);
   font-weight: 400;
-  white-space: nowrap;
+  /* 脚注标题可能是一整句：320px 下放不下时要换行，不能把正文撑出屏幕 */
+  white-space: normal;
 }
 /* 脚注链接的命中区要够大（脚注是上标的 11px 小字，直接点只有 15px 高）。
    inline-block + 上下 padding 把命中区撑到 30px 以上，负 margin 把行距还回去 ——
@@ -1443,6 +1643,8 @@
    会把内联块的内容盒压成 0（那样撑大命中区也没用）。 */
 .lg-md .lg-fn a {
   display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   line-height: 1.6;
   padding: 8px 0;
   margin: -8px 0;
@@ -1471,12 +1673,24 @@
 
 /* 设置 */
 .lg-set {
-  margin-top: 22px;
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid var(--lg-rule-soft);
 }
 .lg-set > h2 {
   margin: 0 0 4px;
   font-size: var(--lg-t3);
   font-weight: 650;
+}
+/* 「已在日常」是状态，不是按钮：安静的一枚标签，不是一颗按不动的键 */
+.lg-added {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border: 1px solid color-mix(in srgb, var(--lg-moss) 45%, var(--lg-rule));
+  border-radius: 8px;
+  color: var(--lg-moss);
+  font-size: var(--lg-t2);
 }
 .lg-set > p {
   margin: 0 0 10px;
@@ -1493,6 +1707,13 @@
   color: var(--lg-warn);
   font-size: var(--lg-t2);
   line-height: 1.6;
+}
+/* 提醒编辑器里的结果一行：「下次提醒：10 月 29 日（周三）09:00」 */
+.lg-next {
+  margin: 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  font-variant-numeric: tabular-nums;
 }
 .lg-danger {
   margin-top: 14px;
@@ -1521,6 +1742,20 @@
 }
 
 /* ---------------------------------------------------------------- 导航 */
+/* 悬浮导航上方压一段渐隐：内容不是被切掉，而是淡出。
+   不加的话，一行禁忌正好落在药丸后面会整段看不见 —— 最容易误读成「没有禁忌」。 */
+.lg-nav::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 26px;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--lg-paper), transparent);
+}
+
 .lg-nav {
   position: fixed;
   left: 50%;
@@ -1597,11 +1832,21 @@
   .lg-slot:last-child {
     border-bottom: 0;
   }
+  /* 页边只有 232px：记数竖着排，一行一件事，比挤成两列好读 */
   .lg-overview {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .lg-overview .lg-dots {
+    margin-left: 6px;
+  }
+  .lg-setuprow {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2px 8px;
-    align-items: baseline;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .lg-setuprow .lg-addhabit {
+    grid-column: 1 / -1;
   }
   .lg-main {
     min-width: 0;
@@ -1624,6 +1869,9 @@
      三颗键**靠左**：四种排法实测比较过（居中 / 左对齐 / 贴正文列 / 居中药丸），
      左对齐最顺——眼睛本来就从左上角进，切换器紧贴页面左缘，
      跟下面那列侧栏是一条竖线；居中那条顶上会空掉一大块。 */
+  .lg-nav::before {
+    display: none; /* 宽屏是吸顶条，下面没有药丸要遮 */
+  }
   .lg-nav {
     position: sticky;
     top: 0;
@@ -1655,6 +1903,19 @@
   .lg-shell {
     padding-top: 0;
   }
+  /* 设置页是一列要读的文字：收窄到正文栏的宽度，别让面板横跨整页
+     而段落只有一半宽（右边空出四五百像素，看着像没排完）。 */
+  .lg-shell.lg-settings {
+    max-width: calc(var(--lg-col) + 64px);
+  }
+}
+
+/* 文章顶部的「能照着做的动作」与正文之间要有一道界：
+   动作区是可点的一排，下面是读的东西 —— 不分开会像卡片属于正文第一段。 */
+.lg-actions {
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--lg-rule);
 }
 
 /* ---------------------------------------------------------------- 补上的几处 */
@@ -1676,7 +1937,7 @@
   display: block;
 }
 /* 反馈条：浮在底部（导航之上），别沉在列表下面 ——
-   手机上列表一屏放不完，「已把 X 移出今天」沉在末尾根本看不见。 */
+   手机上列表一屏放不完，「已把 X 移出日常」沉在末尾根本看不见。 */
 .lg-flash {
   position: fixed;
   left: 50%;
@@ -1693,6 +1954,23 @@
   font-size: var(--lg-t2);
   color: var(--lg-ink);
   text-align: center;
+  animation: lg-toast-in 0.16s ease-out;
+}
+/* 提示条从下方轻轻升上来：它是对刚才那个动作的回答，值得有一下反馈 */
+@keyframes lg-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-flash {
+    animation: none;
+  }
 }
 .lg-flash::before {
   content: "✓";
@@ -1737,7 +2015,18 @@
   border-radius: 10px;
 }
 .lg-perioddone .lg-pool {
-  margin: 0 0 6px;
+  margin: 0 0 2px;
+}
+.lg-perioddone .lg-note-soft {
+  margin: 0 0 8px;
+}
+/* 区块下面的一句小注（「只跳过今天」「下个周期会回来」）：
+   是规则，不是正文 —— 11px、ink-3，不参与层级。 */
+.lg-note-soft {
+  margin: 0 0 8px;
+  font-size: var(--lg-t1);
+  color: var(--lg-ink-3);
+  letter-spacing: 0.02em;
 }
 .lg-perioddone .lg-btn-row {
   gap: 4px 12px;
@@ -1757,6 +2046,18 @@
   color: var(--lg-ink-2);
   font-size: var(--lg-t2);
   cursor: pointer;
+}
+
+/* 窄屏的调顺序：拖动柄 / 时段 / 姓名占一行，操作键单独靠右一行。
+   flex-wrap 会把姓名甩到下一行最左边，跟拖动柄错位。 */
+@media (max-width: 560px) {
+  .lg-sortlist li {
+    grid-template-columns: var(--lg-tap) auto minmax(0, 1fr);
+  }
+  .lg-sort-ops {
+    grid-column: 3;
+    justify-self: end;
+  }
 }
 
 /* ---------------------------------------------------------------- 交互态成套性
@@ -1800,8 +2101,17 @@
 .lg-name-btn:hover {
   color: var(--lg-zhu);
 }
+.lg-seal:hover {
+  background: none;
+}
 .lg-seal:hover i {
   border-color: var(--lg-zhu);
+  color: var(--lg-zhu);
+}
+/* 跳转键是一行字，不是一块按钮：hover 只换字色 */
+.lg-jump:hover {
+  border-color: transparent;
+  background: none;
   color: var(--lg-zhu);
 }
 .lg-btn:active,
@@ -1819,10 +2129,6 @@
 .lg-seal:active {
   transform: translateY(1px);
   filter: saturate(1.2);
-}
-.lg-seal:active i {
-  background: var(--lg-zhu);
-  color: var(--lg-sheet);
 }
 /* 「开着」态：aria-expanded / aria-pressed 反白之外的键也要看得出来 */
 .lg-more[aria-expanded="true"],
@@ -1869,16 +2175,22 @@
   outline: 2px solid var(--lg-zhu);
   outline-offset: 2px;
 }
-/* 键盘通路：展开态顶部的跳转键，让人不用 Tab 过 15 个同名按钮 */
+/* 键盘通路：展开态顶部的跳转键，让人不用 Tab 过 15 个同名按钮。
+   它是一件工具，不是卡的内容 —— 右对齐的一行小字，别做成又一颗虚线大钮。 */
 .lg-jump {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
   min-height: var(--lg-tap);
-  margin: 10px 0 0;
-  padding: 0 14px;
-  border: 1px dashed var(--lg-rule);
-  border-radius: 10px;
+  margin: 4px 0 0;
+  padding: 0 2px;
+  border: 0;
   background: none;
-  color: var(--lg-ink-2);
+  color: var(--lg-ink-3);
   font-size: var(--lg-t2);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
   cursor: pointer;
 }
 /* 截断兜底：被截掉的那半句要在展开态读得到 */
