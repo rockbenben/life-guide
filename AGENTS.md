@@ -1163,9 +1163,9 @@ git tag v0.1.2 && git push origin v0.1.2   # 这一推才触发流水线
 不涨的话新包装不上。
 
 **怎么发布浏览器那条路**（产物、域名、EdgeOne Pages 的三条发布路径、发完要验的四件事）：
-见 `docs/部署.md`。**已经上线的是 GitHub Pages：<https://rockbenben.github.io/life-guide/>**
-（站点源 = `gh-pages` 分支，`deploy.yml` 每次 push 到 main 重新部署）；
-自定义域名 `life.newzone.top` 还差 DNS 那一步。
+见 `docs/部署.md`。**主地址是 <https://life.newzone.top/>**（EdgeOne Pages + 自定义域名，
+2026-10-28 配好；GitHub Pages 的 `rockbenben.github.io/life-guide/` 是镜像，
+两个地址伺服同一份 `gh-pages` 分支的内容）。
 
 原型的校验用例已迁移成单元测试（`app/test/domain/` 与 `content/test/rules.test.ts`），
 原型本体在 2026-10-27 删掉了 —— 它不被任何构建或测试引用，只是一份只读参考，

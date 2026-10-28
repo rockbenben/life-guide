@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://newzone.top/life-guide/cards.schema.json",
+  "$id": "https://life.newzone.top/cards.schema.json",
   "title": "生活指南卡片文件",
   "description": "每篇手册文章一个 yaml。content 管线与 app 共用本 schema。",
   "type": "object",

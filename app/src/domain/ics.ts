@@ -19,7 +19,7 @@ import {
 } from "./reminders.ts";
 
 export interface IcsOptions {
-  /** 事件链接前缀，例如 https://newzone.top/life-guide/ */
+  /** 事件链接前缀，例如 https://life.newzone.top/ */
   urlBase: string;
   /** 站点名 */
   name?: string;
@@ -117,6 +117,10 @@ export function buildIcs(opts: IcsOptions): string {
     alarmMinutes?: number;
   }[] = [
     {
+      // **uid 里的域名不再跟着站点域名改**（站点是 life.newzone.top，uid 仍是
+      // @newzone.top）：uid 是事件的身份证，日历靠它判断「同一条事件」才做更新。
+      // 改了 uid，已经导入过 v0.1.1 日历的人会多出一份重复的早晨提醒 ——
+      // 旧事件 uid 对不上了，就成了新事件。uid 只要全局唯一，不必能解析。
       uid: "life-guide-morning@newzone.top",
       summary: `${name} · 早晨`,
       desc: "打开看看今天该做的几件事",

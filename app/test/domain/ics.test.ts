@@ -10,7 +10,7 @@ import { describe, expect, it } from "vitest";
 import { buildIcs } from "../../src/domain/ics.ts";
 
 const ics = buildIcs({
-  urlBase: "https://newzone.top/life-guide/",
+  urlBase: "https://life.newzone.top/",
   name: "生活指南",
   now: "2026-10-20T00:00:00.000Z",
 });
@@ -42,14 +42,14 @@ describe("buildIcs", () => {
   });
 
   it("链接带时段参数，打开 App 落到对应时段", () => {
-    expect(ics).toContain("URL:https://newzone.top/life-guide/?slot=morning");
-    expect(ics).toContain("URL:https://newzone.top/life-guide/?slot=evening");
+    expect(ics).toContain("URL:https://life.newzone.top/?slot=morning");
+    expect(ics).toContain("URL:https://life.newzone.top/?slot=evening");
   });
 
   it("事件日期跟着传入的 now，而不是机器当前日期", () => {
     const localNow = new Date(2026, 9, 20, 12, 0, 0);
     const withDate = buildIcs({
-      urlBase: "https://newzone.top/life-guide/",
+      urlBase: "https://life.newzone.top/",
       name: "生活指南",
       now: localNow.toISOString(),
     });
@@ -70,7 +70,7 @@ describe("buildIcs", () => {
 
   it("用户设的分钟要带上（07:30 的提醒不能导成 07:00）", () => {
     const withMin = buildIcs({
-      urlBase: "https://newzone.top/life-guide/",
+      urlBase: "https://life.newzone.top/",
       name: "生活指南",
       morningHour: 7,
       morningMinute: 30,
@@ -90,7 +90,7 @@ describe("buildIcs", () => {
 
   it("绑在卡上的提醒也写进日历，并且按它的重复规则", () => {
     const withCard = buildIcs({
-      urlBase: "https://newzone.top/life-guide/",
+      urlBase: "https://life.newzone.top/",
       name: "生活指南",
       now: "2026-10-20T00:00:00.000Z",
       cards: [
@@ -116,7 +116,7 @@ describe("buildIcs", () => {
     expect(withCard.match(/BEGIN:VEVENT/g)).toHaveLength(3);
     expect(withCard).toContain("SUMMARY:生活指南 · 轻洗睫毛根部给眼睛补油");
     expect(withCard).toContain("RRULE:FREQ=WEEKLY;BYDAY=MO,WE");
-    expect(withCard).toContain("URL:https://newzone.top/life-guide/#today");
+    expect(withCard).toContain("URL:https://life.newzone.top/#today");
     expect(withCard).toContain("TRIGGER:-PT0M");
     expect(withCard).toContain("该做了：轻洗睫毛根部给眼睛补油");
     expect(withCard).not.toContain("EXDATE:");
@@ -124,7 +124,7 @@ describe("buildIcs", () => {
 
   it("今天不做的卡：日历当天那次用 EXDATE 排除", () => {
     const withSkip = buildIcs({
-      urlBase: "https://newzone.top/life-guide/",
+      urlBase: "https://life.newzone.top/",
       name: "生活指南",
       now: new Date(2026, 9, 20, 8, 0, 0).toISOString(),
       cards: [
@@ -152,7 +152,7 @@ describe("buildIcs", () => {
 
   it("整段的卡全部今天不做时，整段日历事件也排除当天", () => {
     const withSlotSkip = buildIcs({
-      urlBase: "https://newzone.top/life-guide/",
+      urlBase: "https://life.newzone.top/",
       name: "生活指南",
       now: new Date(2026, 9, 20, 6, 0, 0).toISOString(),
       cards: [
