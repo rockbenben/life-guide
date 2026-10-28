@@ -108,7 +108,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          TAG: ${{ env.TAG }}
 
   # 每个 OS 一个 job：同一 OS 的 x64 / arm64 必须在同一次 electron-builder
   # 调用里打，否则 latest*.yml 会互相覆盖。全部 --publish never，由 publish 统一放行。
@@ -147,7 +146,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          TAG: ${{ env.TAG }}
           RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   build-desktop-mac:
@@ -186,7 +184,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          TAG: ${{ env.TAG }}
           RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   build-desktop-linux:
@@ -223,7 +220,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          TAG: ${{ env.TAG }}
           RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   build-android:
@@ -271,7 +267,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          TAG: ${{ env.TAG }}
           RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   publish:
@@ -289,7 +284,6 @@ jobs:
       REPO: ${{ github.repository }}
       VERSION: ${{ needs.validate.outputs.version }}
       RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
-      TAG: ${{ env.TAG }}
     steps:
       # 建草稿与传附件要跑仓库里的脚本（scripts/release-draft.mjs）
       - uses: actions/checkout@v7

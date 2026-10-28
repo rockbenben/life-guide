@@ -9,6 +9,13 @@
  *
  * shell 那一半同样重要：写错了要等跑到那一步才炸 —— 那是发版的时候，不是现在。
  *
+ * 还有一条 GitHub 特有的语义：**env 里某个键引用自己**（`TAG: ${{ env.TAG }}`）
+ * 是循环引用，GitHub 会**整个文件拒绝**——症状和 YAML 语法错误一模一样，
+ * 只说一句「likely failed because of a workflow file issue」，一个 job 都不跑。
+ * 本地 YAML 解析器不报这个（2026-10-28 实测踩过一次）。
+ * 正确写法是别重复定义：workflow 级 `env.TAG` 本来就在每个 step 的环境里，
+ * 下游直接用 `$TAG` 就行。
+ *
  * 用法：node scripts/check-workflows.mjs
  */
 import fs from "node:fs";
@@ -71,6 +78,33 @@ for (const file of fs.readdirSync(dir).filter((f) => f.endsWith(".yml") || f.end
     }
   }
   if (n) console.log(`  ${n} 段 shell 语法正常`);
+
+  // env 里的键引用自己 = 循环引用，GitHub 会拒绝整个文件。
+  for (const [where, scope] of envScopes(doc)) {
+    for (const [key, value] of Object.entries(scope)) {
+      if (typeof value !== "string") continue;
+      if (!value.includes(`env.${key}`)) continue;
+      bad++;
+      console.error(
+        `✗ ${rel} / ${where}：env.${key} 引用了自己（"${value}"）—— 循环引用，GitHub 会拒绝整个文件。`,
+      );
+    }
+  }
+}
+
+/**
+ * 找出所有 env 映射：workflow 级、job 级、step 级。
+ * 返回 [说明, 映射] 的列表。
+ */
+function envScopes(doc) {
+  const out = [["workflow", doc.env]];
+  for (const [jobName, job] of Object.entries(doc.jobs ?? {})) {
+    if (job?.env) out.push([`job ${jobName}`, job.env]);
+    for (const [i, step] of (job?.steps ?? []).entries()) {
+      if (step?.env) out.push([`job ${jobName} / step ${i + 1}（${step.name ?? "无名"}）`, step.env]);
+    }
+  }
+  return out.filter(([, m]) => m && typeof m === "object");
 }
 
 if (bad) {
