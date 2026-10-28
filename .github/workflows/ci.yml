@@ -72,6 +72,12 @@ jobs:
             content/report.md
             content/report.json
           if-no-files-found: ignore
+          retention-days: 7
+          # **上传失败不算这一步失败**：报告只是给人看的附赠品，
+          # 而 artifact 存储是账户级共享的配额（GitHub Free 500 MB）——
+          # 配额满了不该让整个校验判红（2026-10-28 实测：账户已用 11.5 GB，
+          # 连 157 MB 都传不上去，CI 因此红过一次）。
+          continue-on-error: true
 
   # 桌面端打包：打包配置坏掉是很安静的事（本地不打包就没人发现），
   # 所以单独一个 job 在 Windows 上打一次包 —— 只打 dir（免安装版），
@@ -107,6 +113,11 @@ jobs:
           name: life-guide-desktop
           path: desktop/release/win-unpacked
           if-no-files-found: error
+          retention-days: 7
+          # 同样：这一步只是把打好的东西留下来给人看。
+          # 真正的判定是上面那次真启动 —— 打包成功 ≠ 起得来，
+          # 而上传失败只说明账户的 artifact 配额满了，不代表应用坏了。
+          continue-on-error: true
 
   # 浏览器级验收：断网后还能用、.ics 是定时事件、导出→清空→导入后记录逐条一致、
   # 卡上设的提醒存得住。单元测试验不了，单独一个 job 跑。
