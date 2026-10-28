@@ -229,3 +229,35 @@ export async function readCacheEntries(page) {
     return urls;
   });
 }
+
+/**
+ * 等一条绑在卡上的提醒**真的落进 IndexedDB**。
+ *
+ * 为什么不能只看界面：设置是异步写的（setState 先更新界面，setSetting 随后落库），
+ * 界面上出现「每周… 08:30」只说明内存里的状态改了，**不代表已经存下来了**。
+ * 刷新太快，落库还没完成，那条提醒就没了 —— 2026-10-28 实测在 CI 上偶发一次
+ * （「重开 App 后那条提醒没了」），本地跑十几次都不出。
+ * 所以这里直接去读库：settings store 里的 "reminders" 键。
+ */
+export async function waitForStoredReminder(page, time, { timeout = 10000 } = {}) {
+  const deadline = Date.now() + timeout;
+  for (;;) {
+    const hit = await page.evaluate(async (t) => {
+      const db = await new Promise((resolve, reject) => {
+        const req = indexedDB.open("life-guide");
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+      const row = await new Promise((resolve) => {
+        const get = db.transaction("settings", "readonly").objectStore("settings").get("reminders");
+        get.onsuccess = () => resolve(get.result);
+        get.onerror = () => resolve(null);
+      });
+      const list = Array.isArray(row?.value) ? row.value : [];
+      return list.some((r) => r && r.cardId && r.time === t);
+    }, time);
+    if (hit) return true;
+    if (Date.now() > deadline) return false;
+    await page.waitForTimeout(200);
+  }
+}

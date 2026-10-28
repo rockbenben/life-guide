@@ -27,6 +27,7 @@ import {
   seedToday,
   settleImages,
   waitForCards,
+  waitForStoredReminder,
 } from "./helpers.mjs";
 
 /* ------------------------------------------------------------------ */
@@ -424,6 +425,15 @@ export async function checkCardReminder({ browser, baseURL }) {
       failures.push(`保存之后卡上那一行没显示时间（当前文字：${row.slice(0, 400)}）`);
     } else {
       details.push("卡上那一行显示了：每周… 08:30");
+    }
+
+    // 等它真的落进 IndexedDB 再刷新：界面变了不等于存下来了，
+    // 刷新太快会把还没落库的那次写丢掉（CI 上偶发过，见 waitForStoredReminder）。
+    const stored = await waitForStoredReminder(page, "08:30");
+    if (!stored) {
+      failures.push("点了保存之后，提醒没落进 IndexedDB（存不住）");
+    } else {
+      details.push("提醒已落进 IndexedDB");
     }
 
     // 重开 App：提醒得还在（存在 IndexedDB 里）
