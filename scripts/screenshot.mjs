@@ -33,6 +33,25 @@ for (const s of shots) {
   await page.goto(server.origin, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: s.tab, exact: true }).click();
   await page.waitForTimeout(600);
+  // 首启引导要先走完：新profile 会在今天页顶部挂一块「先选年龄段」，
+  // README 里那张图要的是**用户已经用了一阵子**的样子，不是第一次打开的样子。
+  const skip = page.locator(".lg-ageask-skip");
+  if (await skip.count()) {
+    await skip.first().click();
+    await page.waitForTimeout(400);
+  }
+  // 首启说明（清单是 App 替你放的……）在「用户动手」后撤掉。盖一次印又取消，
+  // 就等于「用过一阵子但今天还没盖印」的样子 —— 画面干净，说明也不在了。
+  const stamp = page.locator(".lg-seal").first();
+  if (await stamp.count()) {
+    await stamp.click();
+    await page.waitForTimeout(300);
+    await stamp.click();
+    await page.waitForTimeout(300);
+  }
+  // 鼠标要移开：刚才点过印，鼠标还停在那儿，截出来会带着 hover 高亮。
+  await page.mouse.move(2, 2);
+  await page.waitForTimeout(200);
   const file = path.join(outDir, `${s.name}.png`);
   await page.screenshot({ path: file });
   console.log(`已保存 ${file}`);
