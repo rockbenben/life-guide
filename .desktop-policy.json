@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "status": "house-style-default",
-  "verifiedOn": "2026-10-26",
+  "verifiedOn": "2026-10-28",
   "framework": "electron",
   "channel": "stable",
   "platforms": [
@@ -27,7 +27,7 @@
   "signing": {
     "windows": "未签名 —— 还没有 Azure Artifact Signing 凭据；未签名期间 release 说明会写明 SmartScreen「未知发布者」提示（scripts/release-draft.mjs 的 STANDING_NOTICES 每版都附上，不靠人记得写）",
     "macos": "未签名、未公证 —— 还没有 Developer ID；macOS 版因此不能自动更新，界面如实写「请手动下载新版」",
-    "linux": "无 OS 签名；SHA256SUMS（Linux 上生成，LF）+ provenance attestation（仓库公开后自动生效）"
+    "linux": "无 OS 签名；SHA256SUMS（Linux 上生成，LF）+ provenance attestation（仓库已公开，attestation 自动生效）"
   },
   "versionSource": "git tag vX.Y.Z；release.yml 的 validate job 断言 tag 与 5 个 package.json 的版本一致",
   "release": "单一草稿 → 校验四份 updater feed 与全部资产 → LF SHA256SUMS → attestation → release environment → PATCH draft=false make_latest=true → API 断言 releases/latest 指向本 tag",
@@ -48,11 +48,6 @@
       "rule": "updater-linux-unverified",
       "reason": "Linux 的 AppImage 自动更新已接上（electron-updater 的 AppImage 更新器，清单 latest-linux.yml / latest-linux-arm64.yml 一直在发；deb / rpm 装的没有 APPIMAGE，硬跑会把应用装到别处，所以那两种仍写「请手动换新包」）。接上了但**还没有在一台 Linux 机器上实测过 N→N+1** —— 这条是验证缺口，不是 house style 差距。",
       "revisitWhen": "有一台 Linux 机器能实测 N→N+1 时（不晚于 2026-12-31）"
-    },
-    {
-      "rule": "release-approval-gate",
-      "reason": "release environment 还没配 required reviewers。**公开仓库在所有现行套餐上都能配**（私有不支持 —— GitHub Free 私有仓库实测 422）；在那之前 publish 会直接跑，审批只是流程性的。",
-      "revisitWhen": "仓库转公开后在 Settings → Environments → release 配好 required reviewers 时（当天）"
     }
   ],
   "notes": "audit.mjs 只读 platforms 与 deviations[]：rule == 'platforms' 缩小平台矩阵；rule == 发现 id（如 windows-unsigned）把该发现变成「已接受的偏离」，不计入 P0/P1/P2；缺 reason 或 revisitWhen 的偏离会报 policy-deviation-undocumented。其余字段是给人看的说明。巡检命令：node <aishort-skills>/skills/desktop-app-standard/scripts/audit.mjs <repo> --out audit.json。"
