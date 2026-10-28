@@ -22,6 +22,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { STANDING_NOTICES } from "./release-notices.mjs";
 
 const repo = process.env.REPO;
 const tag = process.env.TAG;
@@ -47,19 +48,15 @@ const api = (p, init = {}) =>
   });
 
 /**
- * 每次发布都要写清的几条。
+ * 每次发布都要写清的那几条固定告知 —— 常量在 scripts/release-notices.mjs。
+ * 为什么要固定附在正文后面：未签名 → 用户会看到 SmartScreen「未知发布者」；
+ * macOS 未公证 → Gatekeeper 拦一下。这些是**一直如此**的事实，不该指望每一版
+ * 都有人记得抄一遍 —— 兜底那条只有一行占位，忘了写就等于没告知用户为什么会有
+ * 那个提示。house style 也是这么要求的：未签名时在 release 说明里提前告知。
  *
- * **为什么放在这儿、不放在某一版的发布说明里**：
- * 未签名 → 用户会看到 SmartScreen「未知发布者」；macOS 未公证 → Gatekeeper 拦一下。
- * 这些是**一直如此**的事实，不该指望每一版都有人记得抄一遍 ——
- * 兜底那条只有一行占位，忘了写就等于没告知用户为什么会有那个提示。
- * house style 也是这么要求的：未签名时在 release 说明里提前告知。
+ * 放在单独的文件里，是为了让「改已发布的那一版正文」也能用同一份 ——
+ * 两处拼法必须一致，否则改一次就对不齐。
  */
-const STANDING_NOTICES = `> **三件要知道的事**
->
-> - **安装包还没签名**：Windows 版首次运行会显示「未知发布者」，SmartScreen 可能拦一下 —— 点「更多信息 → 仍要运行」；macOS 版未签名未公证，首次打开要右键 →「打开」。
-> - **自动更新**：Windows 安装版与 Linux 的 AppImage 版支持（在「设置 → 更新」里查，点了才下载）；macOS 版、Linux 的 deb / rpm 版、Windows 的免安装版请手动换新包。
-> - **关窗口只是收进托盘**，进程还在，提醒照样响。`;
 
 /** 发布说明：docs/发布说明/<tag>.md，没有就一句占位。 */
 function releaseBody() {
