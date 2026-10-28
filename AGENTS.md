@@ -1010,6 +1010,7 @@ node scripts/decision-gate.mjs <备份.json>                    # 决策门：�
 npm run dev                                                    # 起 PWA（先 build 一次）
 npm run app:build                                             # 构建 PWA
 npm run acceptance                                             # 浏览器级验收（离线 / .ics / 导入导出 / 提醒生命周期 / 今天不做）
+ACCEPTANCE_URL=https://life.newzone.top npm run acceptance:url  # 同一套验收跑在真实部署上（根路径部署）
 npm test                                                      # 单元测试
 npm run test:desktop                                          # 桌面端纯逻辑的 node --test
 npm run typecheck                                             # tsc --noEmit
@@ -1125,10 +1126,12 @@ Android Studio 自带的 JBR（它就是 21）。
   所以本项目的钩子类名一律带 `lg-` 前缀，`app/test/ui/classes.test.ts` 守着这条。
 - **两边分叉。** blog 的修订不会进入 App；045 的勘误不会回到 blog。按 §4.1 的勘误流程处理，`ERRATA.md` 中 `upstream: pending` 的条目定期清一次。
 - **证书不对 = 离线功能没有。** 自定义域名的证书没签发时，页面在忽略证书的情况下照样渲染得出来，
-  但 Chrome 会拒绝带证书错误的 Service Worker 脚本 → PWA 装不上、离线不可用（2026-10-28 实测）。
+  但 Chrome 会拒绝带证书错误的 Service Worker 脚本 → PWA 装不上、离线不可用（2026-10-28 实测；
+  2026-10-29 证书已签发，这条留作坑）。
   **验域名必须等 `navigator.serviceWorker.ready` 到 `activated`，不能只看 200**；
   而且 DNS 指过去 ≠ 域名绑上了，EdgeOne 控制台里没绑就不会签这张域名的证书。
-- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次过了 2 小时没跟上；
+  最省事的验法：`ACCEPTANCE_URL=<地址> npm run acceptance:url`（整套验收跑在真实域名上）。
+- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次过了 8 小时没跟上；
   线上给的是旧构建。判据：对比线上 `index.html` 与 `gh-pages` HEAD 的 sha256。
   **但分支往往是对的**：实测 EdgeOne 那份与 `gh-pages` 12:02 的产物逐字一致（哈希相同）、
   与 HEAD 不同 —— 卡的是同步本身（webhook / 集成停了），
@@ -1174,15 +1177,13 @@ git tag v0.1.2 && git push origin v0.1.2   # 这一推才触发流水线
 不涨的话新包装不上。
 
 **怎么发布浏览器那条路**（产物、域名、EdgeOne Pages 的三条发布路径、发完要验的四件事）：
-见 `docs/部署.md`。**主地址是 <https://life.newzone.top/>**（EdgeOne Pages + 自定义域名；
-GitHub Pages 的 `rockbenben.github.io/life-guide/` 是镜像，
-两个地址伺服同一份 `gh-pages` 分支的内容）。
+见 `docs/部署.md`。**主地址是 <https://life.newzone.top/>**（EdgeOne Pages + 自定义域名，
+2026-10-29 证书签发、8 项验收在真实地址上全过；GitHub Pages 的
+`rockbenben.github.io/life-guide/` 是镜像，两个地址伺服同一份 `gh-pages` 分支的内容）。
 
-**2026-10-28 22:00 实测：自定义域名的证书还没签发**（EdgeOne 递的是默认共享证书
-`*.cdn.myqcloud.com`，SAN 里没有 `life.newzone.top`）→ 真实浏览器会报证书错误，
-且 Service Worker 注册不上、离线不可用；镜像站是现在能用的那个。
-另外 EdgeOne 还在伺服 12:02 那次构建（Git 同步没跟上 13:19 那次推送）。
-这两件都要在 EdgeOne 控制台里处理：**绑定自定义域名 + 触发一次重新部署**。
+**待办**：EdgeOne 线上那份还停在 12:02 的构建（Git 同步停了），
+要在控制台触发一次重新部署 —— 判据是线上 `index.html` 的 sha256
+要与 `gh-pages` HEAD 那份一致。
 
 原型的校验用例已迁移成单元测试（`app/test/domain/` 与 `content/test/rules.test.ts`），
 原型本体在 2026-10-27 删掉了 —— 它不被任何构建或测试引用，只是一份只读参考，

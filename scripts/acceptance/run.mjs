@@ -18,6 +18,13 @@
  * 直接跑 node scripts/acceptance/run.mjs --rebuild --port=5200 也行。
  * （注意：npm 11 不把 `--` 后面的参数转给脚本，所以走 npm 时用环境变量。）
  *
+ * **验收真实部署**（发到自定义域名后用这个）：
+ *   ACCEPTANCE_URL=https://life.newzone.top npm run acceptance:url
+ *   node scripts/acceptance/run.mjs --url=https://life.newzone.top
+ * 同一套检查直接跑在那个地址上，不起本地服务器 —— 「断网可完整使用一天」
+ * 这种只有真域名才说得清的（证书、SW scope、预缓存）才能验到。
+ * 注意：**要填根路径部署的地址**（子路径部署会让检查里的路径断言对不上）。
+ *
  * 退出码：有检查失败则非零。
  */
 import { spawnSync } from "node:child_process";
@@ -54,6 +61,12 @@ const PORT = Number(
     ? portArg.slice("--port=".length)
     : (process.env.ACCEPTANCE_PORT ?? 5199),
 );
+/**
+ * 验收真实部署时要用的地址（根路径部署）。
+ * 给了就不起本地服务器，直接拿它当 baseURL。
+ */
+const urlArg = argv.find((a) => a.startsWith("--url="));
+const TARGET_URL = (urlArg ? urlArg.slice("--url=".length) : process.env.ACCEPTANCE_URL) || null;
 
 function ensureBuild() {
   const indexHtml = path.join(distDir, "index.html");
@@ -98,15 +111,20 @@ async function main() {
   console.log("P2 验收（AGENTS.md §7）");
   console.log("──────────────────────────────");
 
-  ensureBuild();
-
-  const server = await startServer(distDir, PORT).catch((err) => {
-    throw new Error(
-      `静态服务器起不来（端口 ${PORT}）：${err?.message ?? err}\n` +
-        `换一个端口：ACCEPTANCE_PORT=5200 npm run acceptance`,
-    );
-  });
-  console.log(`· 静态服务器：${server.origin}（伺服 app/dist）`);
+  // 验真实部署：不需要本地产物，也不起服务器。
+  let server = null;
+  if (TARGET_URL) {
+    console.log(`· 验收真实部署：${TARGET_URL}`);
+  } else {
+    ensureBuild();
+    server = await startServer(distDir, PORT).catch((err) => {
+      throw new Error(
+        `静态服务器起不来（端口 ${PORT}）：${err?.message ?? err}\n` +
+          `换一个端口：ACCEPTANCE_PORT=5200 npm run acceptance`,
+      );
+    });
+    console.log(`· 静态服务器：${server.origin}（伺服 app/dist）`);
+  }
 
   if (installBrowser) {
     console.log("· 下载 Playwright 自带的 chromium（体积较大）…");
@@ -123,7 +141,7 @@ async function main() {
   const { browser, via } = await launchBrowser();
   console.log(`· 浏览器：${via}`);
 
-  const baseURL = server.origin;
+  const baseURL = TARGET_URL ?? server.origin;
   const results = [];
   try {
     results.push(await checkOffline({ browser, baseURL }));
@@ -136,7 +154,7 @@ async function main() {
     results.push(await checkImportRefreshesRoutine({ browser, baseURL }));
   } finally {
     await browser.close();
-    await server.close();
+    await server?.close();
   }
 
   console.log("──────────────────────────────");
