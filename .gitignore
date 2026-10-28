@@ -31,7 +31,9 @@ content/approx-report.md
 tmp-shots/
 
 # 桌面端打包产物（desktop/build/ 里的图标是源，要入库）
-desktop/release/
+# 一律 release* 开头：本地试打包会另起目录（release-local / release-smoke …），
+# 逐个列容易漏，漏了就变成工作树里的未跟踪目录。
+desktop/release*/
 # 打包时的临时输出目录（清自己的产物会被占用时，改打到旁边再搬回来）
 desktop/release-new/
 desktop/release-local/

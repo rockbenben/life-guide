@@ -45,11 +45,21 @@ page.on("console", (m) => {
 });
 
 await page.waitForLoadState("domcontentloaded");
-await page.waitForTimeout(2500);
+
+// **等卡片出现，而不是死等一个固定时长**：卡片要走 app:// 协议取 cards.json
+// 再渲染，CI 的 runner 慢一点就可能超过固定等待 —— 那样会误判成
+// 「窗口起来了但没有卡片」（2026-10-28 实测踩过一次：同一份代码重跑就过了）。
+// 这里改成轮询：最多等 20 秒，出现了就收工。
+// 按语义定位，不靠 CSS 类名：类名随时可能改，<article> 才是「一张卡」这件事本身
+const deadline = Date.now() + 20000;
+let cards = 0;
+while (Date.now() < deadline) {
+  cards = await page.locator("article").count();
+  if (cards > 0) break;
+  await page.waitForTimeout(500);
+}
 
 const title = await page.title();
-// 按语义定位，不靠 CSS 类名：类名随时可能改，<article> 才是「一张卡」这件事本身
-const cards = await page.locator("article").count();
 
 console.log(`模式：${packaged ? "打包产物" : "源码"}`);
 console.log(`窗口标题：${title}`);
