@@ -10,6 +10,7 @@
  */
 
 import { mdToPlain, renderMarkdown } from "./markdown.ts";
+import { displayNames } from "./lines.ts";
 import type { Card } from "./routine.ts";
 
 export interface ManualSection {
@@ -93,13 +94,52 @@ export function filterByCategory<T extends { path: string }>(
 }
 
 /**
- * 一篇文章摊开后的可搜索文本：标题 + 各小节标题与正文。
+ * 一篇文章的卡名索引：手册相对路径 → 这一篇的卡名。
+ *
+ * 卡名是内容层起的**策展名**（原文里未必有那个词），但它就是 App 屏上显示的那行 ——
+ * 用户照着自己刚看到的词来搜，手册里也得搜得到。
+ * 键用手册里的相对路径（body-care/sleep.md），与 manual.json 的 path 同一套写法。
+ */
+export type CardNameIndex = Map<string, string[]>;
+
+/**
+ * 从全部卡里造出「路径 → 卡名」的索引。
+ *
+ * 显示名用 displayNames —— 与屏上看到的完全一致（同名相撞时的回落也一致）。
+ */
+export function buildCardNameIndex(cards: Card[]): CardNameIndex {
+  const shown = displayNames(cards);
+  const index: CardNameIndex = new Map();
+  for (const c of cards) {
+    const p = (c.articlePath ?? "").replace(/\\/g, "/");
+    if (!p) continue;
+    // cards.json 的 articlePath 带 the-savvy-life-manual/ 前缀，手册里的 path 不带
+    const marker = "the-savvy-life-manual/";
+    const rel = p.includes(marker) ? p.slice(p.indexOf(marker) + marker.length) : p;
+    const label = (shown.get(c.id) ?? "").trim();
+    if (!label) continue;
+    const list = index.get(rel) ?? [];
+    if (!list.includes(label)) list.push(label);
+    index.set(rel, list);
+  }
+  return index;
+}
+
+/** 某篇文章的卡名（索引里没有就是没有）。 */
+export function cardNamesOf(index: CardNameIndex | undefined, path: string): string[] {
+  if (!index) return [];
+  return index.get(path.replace(/\\/g, "/")) ?? [];
+}
+
+/**
+ * 一篇文章摊开后的可搜索文本：标题 + 各小节标题与正文 + 这一篇的卡名。
  *
  * 正文是 markdown，检索前先剥成纯文本 —— 否则「涂**两**遍」这种会被记号切断。
  */
-function searchText(a: ManualArticle): string {
+function searchText(a: ManualArticle, names: string[] = []): string {
   const parts: string[] = [a.title];
   for (const s of a.sections) parts.push(s.heading, mdToPlain(s.md));
+  parts.push(...names);
   return parts.join("\n").toLowerCase();
 }
 
@@ -109,10 +149,14 @@ function searchText(a: ManualArticle): string {
  * 空格分词后要求全部命中（AND）—— 中文正文很长，
  * 只命中标题里没有的词就当命中，会搜出一堆不相干的文章。
  */
-export function articleMatches(a: ManualArticle, query: string): boolean {
+export function articleMatches(
+  a: ManualArticle,
+  query: string,
+  names: string[] = [],
+): boolean {
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   if (!terms.length) return true;
-  const hay = searchText(a);
+  const hay = searchText(a, names);
   return terms.every((t) => hay.includes(t));
 }
 
@@ -136,20 +180,25 @@ function titleHit(a: ManualArticle, terms: string[]): boolean {
 export function searchIndexByTitle(
   index: ManualIndexEntry[],
   query: string,
+  names?: CardNameIndex,
 ): ManualIndexEntry[] {
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   if (!terms.length) return index;
-  return index.filter((a) => terms.every((t) => a.title.toLowerCase().includes(t)));
+  return index.filter((a) => {
+    const hay = [a.title, ...cardNamesOf(names, a.path)].join("\n").toLowerCase();
+    return terms.every((t) => hay.includes(t));
+  });
 }
 
 export function searchArticles(
   articles: ManualArticle[],
   query: string,
+  names?: CardNameIndex,
 ): ManualArticle[] {
   const q = query.trim();
   if (!q) return articles;
   const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
-  const hits = articles.filter((a) => articleMatches(a, q));
+  const hits = articles.filter((a) => articleMatches(a, q, cardNamesOf(names, a.path)));
   // 命中标题的排 0（在前），只命中正文的排 1；同一档里保持原来的次序（sort 是稳定的）
   const rank = (a: ManualArticle) => (titleHit(a, terms) ? 0 : 1);
   return hits.sort((a, b) => rank(a) - rank(b));

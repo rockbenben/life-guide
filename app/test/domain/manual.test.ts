@@ -7,13 +7,16 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  buildCardNameIndex,
   findArticle,
   listableArticles,
+  searchArticles,
   searchIndexByTitle,
   searchSummary,
   type ManualArticle,
 } from "../../src/domain/manual.ts";
 import { plainText } from "../../src/domain/notices.ts";
+import type { Card } from "../../src/domain/routine.ts";
 
 function a(path: string, title = path): ManualArticle {
   return { path, title, sections: [] };
@@ -82,6 +85,45 @@ describe("全文没到时的标题搜索", () => {
 
   it("空查询原样返回", () => {
     expect(searchIndexByTitle(index, "  ")).toEqual(index);
+  });
+});
+
+describe("按卡名也能搜到那一篇", () => {
+  // 实测：卡名是内容层起的策展名，原文里未必有那个词 ——
+  // 「晨光」在快照正文里一次都没出现，只在目录页。
+  // 用户在「今天」页看到它，到手册里却搜不到：搜索在自己的词汇表上失灵了。
+  const cards = [
+    {
+      id: "morning-light",
+      name: "起床后晒 15 分钟晨光",
+      articlePath: "the-savvy-life-manual/body-care/sleep.md",
+    },
+  ] as unknown as Card[];
+  const article: ManualArticle = {
+    path: "body-care/sleep.md",
+    title: "睡不好？强光 + 睡前洗鼻",
+    sections: [{ heading: "强光", md: "照够 2500 Lux。" }],
+  };
+
+  it("索引里带上这一篇的卡名", () => {
+    const index = buildCardNameIndex(cards);
+    expect(index.get("body-care/sleep.md")).toEqual(["起床后晒 15 分钟晨光"]);
+  });
+
+  it("全文没到时也能按卡名搜到", () => {
+    const index = buildCardNameIndex(cards);
+    const hits = searchIndexByTitle([article], "晨光", index);
+    expect(hits.map((x) => x.path)).toEqual(["body-care/sleep.md"]);
+  });
+
+  it("全文到了也一样能搜到", () => {
+    const index = buildCardNameIndex(cards);
+    const hits = searchArticles([article], "晨光", index);
+    expect(hits.map((x) => x.path)).toEqual(["body-care/sleep.md"]);
+  });
+
+  it("没给索引时行为不变（只搜标题与正文）", () => {
+    expect(searchIndexByTitle([article], "晨光")).toHaveLength(0);
   });
 });
 

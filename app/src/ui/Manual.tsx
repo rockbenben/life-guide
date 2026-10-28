@@ -17,6 +17,7 @@ import { displayNames } from "../domain/lines.ts";
 import { isConditionCard } from "../domain/notices.ts";
 import {
   CATEGORIES,
+  buildCardNameIndex,
   cardsOfArticle,
   categoryOf,
   filterByCategory,
@@ -49,7 +50,7 @@ export interface ManualProps {
   onArticleBack?: () => void;
   /** 有没有上一篇可回 —— 返回键据此写「上一篇」还是「手册」 */
   hasArticleHistory?: boolean;
-  /** 「我的日常」里已有的卡 id —— 手册里那些卡要标出「已在今天」 */
+  /** 「我的日常」里已有的卡 id —— 手册里那些卡要标出「已在日常」 */
   routineIds?: string[];
   /** 把一张卡放进「我的日常」 */
   onAddToRoutine?: (cardId: string) => void;
@@ -86,7 +87,7 @@ export function Manual({
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   // 文章里的动作卡也要用同一套人群标签：否则读者在手册里看到「踮脚」，
-  // 加入今天却变成「深蹲」，同一张卡两种动作。
+  // 加入日常却变成「深蹲」，同一张卡两种动作。
   const cond = useConditions();
 
   // 快照根下的 README 是目录页，不当文章铺出来。
@@ -96,14 +97,22 @@ export function Manual({
     [index, articles],
   );
   const fullLoaded = articles.length > 0;
+  // 卡名索引：用户在「今天」页看到的词，手册里也要搜得到
+  // （卡名是内容层起的策展名，原文里未必有那个词）
+  const nameIndex = useMemo(() => buildCardNameIndex(cards), [cards]);
   const found = useMemo(
     () =>
       filterByCategory(
-        fullLoaded ? searchArticles(listableArticles(articles), query) : searchIndexByTitle(pieces, query),
+        fullLoaded
+          ? searchArticles(listableArticles(articles), query, nameIndex)
+          : searchIndexByTitle(pieces, query, nameIndex),
         category,
       ),
-    [fullLoaded, articles, pieces, query, category],
+    [fullLoaded, articles, pieces, query, category, nameIndex],
   );
+  // 全文还在路上：标题没命中不等于「没有这篇文章」，别先报空结果。
+  const awaitingBody =
+    !fullLoaded && (manualState === "loading" || manualState === "idle");
   const open = path ? findArticle(articles, path) : null;
   const openIndex = path
     ? (index ?? articles).find(
@@ -248,15 +257,28 @@ export function Manual({
         </span>
       </div>
 
-      <input
-        class="lg-search"
-        type="search"
-        placeholder="搜标题或正文"
-        aria-label="搜索手册"
-        value={query}
-        onFocus={() => onNeedManual?.()}
-        onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
-      />
+      <div class="lg-searchwrap">
+        <input
+          class="lg-search"
+          type="search"
+          placeholder="搜标题或正文，也可搜动作名"
+          aria-label="搜索手册"
+          value={query}
+          onFocus={() => onNeedManual?.()}
+          onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
+        />
+        {/* 自己画清除键：浏览器原生那颗只有 9×7px，颜色还不算令牌表里的。 */}
+        {query ? (
+          <button
+            class="lg-searchclear"
+            onClick={() => setQuery("")}
+            aria-label="清空搜索"
+            title="清空搜索"
+          >
+            ×
+          </button>
+        ) : null}
+      </div>
 
       {query.trim() && !fullLoaded ? (
         <p class="lg-pool" role="status">
@@ -286,21 +308,23 @@ export function Manual({
       </div>
 
       {found.length === 0 ? (
-        <div class="lg-empty">
-          <h2>没有匹配的文章</h2>
-          <p>换个词试试，或者点上面的分类翻。</p>
-          <div class="lg-btn-row">
-            <button
-              class="lg-btn lg-btn-ghost"
-              onClick={() => {
-                setQuery("");
-                setCategory("all");
-              }}
-            >
-              清掉筛选
-            </button>
+        awaitingBody ? null : (
+          <div class="lg-empty">
+            <h2>没有匹配的文章</h2>
+            <p>换个词试试，或者点上面的分类翻。</p>
+            <div class="lg-btn-row">
+              <button
+                class="lg-btn lg-btn-ghost"
+                onClick={() => {
+                  setQuery("");
+                  setCategory("all");
+                }}
+              >
+                {category === "all" ? "清空搜索" : "清掉筛选"}
+              </button>
+            </div>
           </div>
-        </div>
+        )
       ) : (
         <ul class="lg-arts">
           {found.map((a) => (
@@ -337,7 +361,7 @@ export interface ArticleViewProps {
   hasPrevious?: boolean;
   onBack: () => void;
   onOpenArticle?: (path: string, anchor?: string) => void;
-  /** 「我的日常」里已有的卡 id —— 标出「已在今天」 */
+  /** 「我的日常」里已有的卡 id —— 标出「已在日常」 */
   routineIds?: string[];
   /** 把一张卡放进「我的日常」 */
   onAddToRoutine?: (cardId: string) => void;
@@ -437,13 +461,13 @@ export function ArticleView({
         ) : null}
 
         {practiceCards.length ? (
-          <div class="lg-log" style="margin-top:18px">
+          <div class="lg-log lg-actions" style="margin-top:18px">
             {/* 展开卡里的小节标题是 h3；这里补一个给读屏的 h2，别让 h1 直接跳到 h3。 */}
             <h2 class="lg-sr-only">能照着做的动作</h2>
             {/* 这一排是什么，得说清楚 —— 不然它像文章的一部分，而不是「能做的事」 */}
             <p class="lg-pool" style="margin:0 0 2px">
-              这一篇里能照着做的动作（{practiceCards.length} 个）—— 想要的点
-              <span class="lg-nb">「放进今天」</span>，就进你的清单。
+              这一篇能照着做 {practiceCards.length} 个动作。点
+              <span class="lg-nb">「放进日常」</span>，以后它就在今天页里。
             </p>
             {bulkIds.length >= 2 && onAddManyToRoutine ? (
               <div class="lg-btn-row" style="margin:8px 0 4px">
@@ -452,10 +476,10 @@ export function ArticleView({
                   onClick={() => {
                     onAddManyToRoutine(bulkIds);
                     setBulkAdded(bulkIds);
-                    setBulkNote(`已把 ${bulkIds.length} 个动作一起加入今天。`);
+                    setBulkNote(`已把 ${bulkIds.length} 个动作一起放进日常。`);
                   }}
                 >
-                  把这一篇的 {bulkIds.length} 个动作一起加入
+                  把这一篇的 {bulkIds.length} 个动作一起放进日常
                 </button>
               </div>
             ) : null}
@@ -469,7 +493,7 @@ export function ArticleView({
                     onClick={() => {
                       onRemoveManyFromRoutine(bulkAdded);
                       setBulkAdded([]);
-                      setBulkNote("已撤销，刚才加入的动作已移出今天。");
+                      setBulkNote("已撤销，刚才加入的动作已移出日常。");
                     }}
                   >
                     撤销
@@ -499,15 +523,13 @@ export function ArticleView({
                 {onAddToRoutine ? (
                   <div class="lg-btn-row" style="margin:0 0 6px">
                     {routineIds?.includes(c.id) ? (
-                      <span class="lg-pool" style="margin:0">
-                        已在今天
-                      </span>
+                      <span class="lg-added">已在日常</span>
                     ) : (
                       <button
-                        class="lg-btn"
+                        class="lg-btn lg-btn-ghost"
                         onClick={() => onAddToRoutine(c.id)}
                       >
-                        放进今天
+                        放进日常
                       </button>
                     )}
                   </div>
@@ -518,7 +540,7 @@ export function ArticleView({
         ) : null}
 
         {conditionCards.length ? (
-          <div class="lg-log" style="margin-top:18px">
+          <div class="lg-log lg-actions" style="margin-top:18px">
             <h2 class="lg-sr-only">疾病知识卡片</h2>
             {conditionCards.map((c) => (
               <CardView

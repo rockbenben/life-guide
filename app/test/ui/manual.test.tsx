@@ -188,10 +188,13 @@ describe("文章页", () => {
         ]}
         routineIds={["a"]}
         onBack={() => {}}
+        onAddToRoutine={() => {}}
         onAddManyToRoutine={() => {}}
       />,
     );
-    expect(html).toContain("把这一篇的 2 个动作一起加入");
+    expect(html).toContain("把这一篇的 2 个动作一起放进日常");
+    expect(html).toContain("已在日常");
+    expect(html).toContain("放进日常");
   });
 
   it("文章标题只出现一次（第一小节标题与标题相同时不重复）", () => {
