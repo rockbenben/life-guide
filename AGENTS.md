@@ -1128,8 +1128,11 @@ Android Studio 自带的 JBR（它就是 21）。
   但 Chrome 会拒绝带证书错误的 Service Worker 脚本 → PWA 装不上、离线不可用（2026-10-28 实测）。
   **验域名必须等 `navigator.serviceWorker.ready` 到 `activated`，不能只看 200**；
   而且 DNS 指过去 ≠ 域名绑上了，EdgeOne 控制台里没绑就不会签这张域名的证书。
-- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次 40 分钟没跟上；
-  线上给的是旧构建。判据：对比线上 `index.html` 的 `assets/index-*.js` 与 `gh-pages` 是否一致。
+- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次过了 2 小时没跟上；
+  线上给的是旧构建。判据：对比线上 `index.html` 与 `gh-pages` HEAD 的 sha256。
+  **但分支往往是对的**：实测 EdgeOne 那份与 `gh-pages` 12:02 的产物逐字一致（哈希相同）、
+  与 HEAD 不同 —— 卡的是同步本身（webhook / 集成停了），
+  要的是**触发一次重新部署**，不是换分支。
 - **GitHub Pages 从国内慢 16 倍。** 同一批文件 EdgeOne 平均 0.16 s/件、GitHub Pages 2.66 s/件；
   PWA 首访预缓存 123 项，镜像站上 SW 要 98.7 s 才激活。主地址走 EdgeOne，镜像只当兜底。
 - **内容授权。** 对外公开发布前确认手册与图片的转载 / 改编授权。
