@@ -354,6 +354,8 @@ push tag vX.Y.Z
 | PATCH 草稿只带 `body` | 草稿的标签被打回 `untagged-xxx`，后面按 tag 找全落空 | 每次 PATCH 都显式带 `tag_name`，发布那一步用 release id |
 | 私有仓库的下载链接 | `releases/latest/download/latest*.yml` 匿名取不到（它认浏览器会话） | 四份清单逐一走 API 核验；仓库公开后自动切回匿名下载（用户那条路径） |
 | **artifact 存储配额是账户级的** | 2026-10-28：CI 两个 job 挂在最后的上传步骤上，错误是 `Artifact storage quota has been hit`，而校验本身全过 | 产物**不**走 artifact 中转：构建 job 直接传进发布草稿，release 资产不占这个配额；CI 的上传改 `continue-on-error`。账户级占用要自己清（本次 11.5 GB：`shiye` 6.1 GB、`md-publisher` 3.8 GB） |
+| Linux 的 deb / rpm 要 homepage 与作者邮箱 | 2026-10-28：第一轮发版 Windows / macOS / Android 都打好了，Linux 报 `Please specify project homepage`，整条流水线停在那儿 | `desktop/package.json` 写明 `homepage` 与 `repository`；`scripts/check-desktop-metadata.mjs` 在 CI 打包前查一遍（CI 只在 Windows 上打包，本来查不出来） |
+| `cp` 一次接多个通配符 | 有一个通配符没匹配到文件时，bash 把它当字面量传下去，cp 报 `No such file or directory`，整步崩 —— Linux **没有** `.blockmap`（那是 NSIS 与 macOS 才有的增量下载用） | 逐个文件拷，没匹配到的跳过；产物齐不齐由 publish 的资产校验管（它数着 15 个） |
 
 ---
 
