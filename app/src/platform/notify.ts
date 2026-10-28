@@ -364,13 +364,16 @@ export async function showNow(title: string, body: string): Promise<void> {
       if (reg) {
         await reg.showNotification(title, {
           body,
-          icon: "/icons/icon-192.png",
-          badge: "/icons/icon-192.png",
+          // **相对路径**：同一份产物可能跑在根路径（life.newzone.top/）
+          // 或子路径（rockbenben.github.io/life-guide/）——
+          // 绝对路径 "/icons/..." 在子路径下会 404，通知就只剩一个空图标。
+          icon: "icons/icon-192.png",
+          badge: "icons/icon-192.png",
           tag: "life-guide",
         });
         return;
       }
-      new Notification(title, { body, icon: "/icons/icon-192.png", tag: "life-guide" });
+      new Notification(title, { body, icon: "icons/icon-192.png", tag: "life-guide" });
     } catch {
       // 同上
     }
