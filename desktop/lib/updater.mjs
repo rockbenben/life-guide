@@ -16,11 +16,14 @@
  *   3. **签了名才验签**。app-update.yml 里没有 publisherName 时，
  *      electron-updater 会**跳过**签名校验（这正是未签名应用的正常路径）。
  *      完整性靠清单里的 sha512 核对下载到的文件。
+ *   4. **Linux 只放行 AppImage**。Linux 的更新器要替换 APPIMAGE 指到的那个文件；
+ *      deb / rpm 装的没有它，硬跑会把应用装到别处 —— 那两种老实说「请手动换新包」。
+ *      AppImage 运行时自己会设 APPIMAGE，靠它认出来。
  */
 import { app, Notification, ipcMain } from "electron";
 import { createRequire } from "node:module";
 
-import { initialUpdateStatus, reduceUpdate, friendlyUpdateError } from "./update-events.mjs";
+import { initialUpdateStatus, reduceUpdate, friendlyUpdateError, updateSupportFor } from "./update-events.mjs";
 
 /**
  * electron-updater 是 CommonJS 包，而 autoUpdater 是用 defineProperty 定义的 getter ——
@@ -34,24 +37,19 @@ const { autoUpdater } = require("electron-updater");
 /**
  * 这个形态能不能自动更新。不能的话给一句**照实说**的理由（界面上会显示）。
  *
+ * 判断本身是纯逻辑，放在 update-events.mjs 里（node --test 守着）；
+ * 这里只把 electron 与进程的环境喂给它。
+ *
  * @returns {{ ok: true } | { ok: false, note: string }}
  */
 export function updateSupport() {
-  if (!app.isPackaged) {
-    return { ok: false, note: "开发时不检查更新" };
-  }
-  if (process.env.PORTABLE_EXECUTABLE_DIR) {
-    return { ok: false, note: "免安装版不能自动更新，用安装版才有" };
-  }
-  // macOS 的 Squirrel.Mac 只接受签过名的应用；现在还没有 Developer ID，
-  // 所以构建出来的 macOS 版只能手动换新包。签名接上后再放开这里。
-  if (process.platform === "darwin") {
-    return { ok: false, note: "macOS 版还没签名，不能自动更新；请手动下载新版" };
-  }
-  if (process.platform !== "win32") {
-    return { ok: false, note: "这个平台暂时不能自动更新" };
-  }
-  return { ok: true };
+  return updateSupportFor({
+    platform: process.platform,
+    packaged: app.isPackaged,
+    portableDir: process.env.PORTABLE_EXECUTABLE_DIR,
+    // AppImage 运行时把这个变量指到 AppImage 文件本身 —— AppImage 更新器要靠它
+    appImage: process.env.APPIMAGE,
+  });
 }
 
 /**

@@ -31,7 +31,7 @@ export function hasUpdater(): boolean {
 export async function updateStatus(): Promise<UpdateStatus> {
   const b = bridge();
   if (!b?.updateStatus) {
-    return { state: "unsupported", note: "这个形态不自动更新" };
+    return { state: "unsupported", note: "这个版本不支持自动更新" };
   }
   try {
     return await b.updateStatus();

@@ -12,11 +12,47 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { initialUpdateStatus, reduceUpdate, friendlyUpdateError } from "./update-events.mjs";
+import { initialUpdateStatus, reduceUpdate, friendlyUpdateError, updateSupportFor } from "./update-events.mjs";
 
 test("一开始是「不支持」——形态没认出来之前不许说能更新", () => {
   assert.equal(initialUpdateStatus().state, "unsupported");
   assert.equal(initialUpdateStatus("免安装版不能自动更新").note, "免安装版不能自动更新");
+});
+
+/**
+ * 哪些形态能自动更新。
+ *
+ * 判据全在这里，所以每一档都要钉住：
+ * 免安装版没有安装目录、macOS 没签名、Linux 的更新器只认 AppImage。
+ */
+test("自动更新：Windows 安装版与 Linux AppImage 版能，别的都不能", () => {
+  // Windows：安装版能，免安装版不能（它没有安装目录）
+  assert.equal(updateSupportFor({ platform: "win32", packaged: true }).ok, true);
+  const portable = updateSupportFor({ platform: "win32", packaged: true, portableDir: "/tmp/x" });
+  assert.equal(portable.ok, false);
+  assert.match(portable.note, /免安装版/);
+
+  // macOS：Squirrel.Mac 只认签过名的应用
+  const mac = updateSupportFor({ platform: "darwin", packaged: true });
+  assert.equal(mac.ok, false);
+  assert.match(mac.note, /macOS/);
+
+  // Linux：AppImage 能（更新器要替换 APPIMAGE 指到的文件），deb / rpm 不能
+  assert.equal(
+    updateSupportFor({ platform: "linux", packaged: true, appImage: "/tmp/x.AppImage" }).ok,
+    true,
+  );
+  const deb = updateSupportFor({ platform: "linux", packaged: true });
+  assert.equal(deb.ok, false);
+  assert.match(deb.note, /AppImage/);
+
+  // 开发时不查更新
+  assert.equal(updateSupportFor({ platform: "win32", packaged: false }).ok, false);
+
+  // 不认识的平台：老实说不能
+  const other = updateSupportFor({ platform: "aix", packaged: true });
+  assert.equal(other.ok, false);
+  assert.ok(other.note.length > 0);
 });
 
 test("查 → 有新版本 → 下载 → 下好了", () => {

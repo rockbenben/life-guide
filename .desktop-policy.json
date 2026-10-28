@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "status": "house-style-default",
+  "verifiedOn": "2026-10-26",
+  "framework": "electron",
+  "channel": "stable",
+  "platforms": [
+    "windows-x64",
+    "windows-arm64",
+    "macos-arm64",
+    "macos-x64",
+    "linux-x64",
+    "linux-arm64"
+  ],
+  "packageManager": "npm（CI 用 npm ci，package-lock.json 入库；不装 Dependabot）",
+  "node": "26（.nvmrc / engines / CI 三处一致；Node 26 于 2026-10-28 转 Active LTS，v24 已于 2026-10-20 进 Maintenance LTS）",
+  "distribution": {
+    "primary": "github-releases",
+    "secondary": [
+      "winget（清单归 winget-manifests/apps.json，本仓不提交；仓库公开后再加）"
+    ],
+    "windows": "nsis（双架构合一安装包，正式可更新产物）+ 双架构免安装版（portable，不自更新）",
+    "macos": "dmg + zip（zip 是 Electron 更新载体）",
+    "linux": "AppImage（可更新）+ deb + rpm（deb / rpm 不自更新，请手动换新包）"
+  },
+  "updater": "in-app（electron-updater，随包内置）；放行 Windows 安装版与 Linux 的 AppImage 版（判断是纯逻辑 desktop/lib/update-events.mjs 的 updateSupportFor，node --test 守着）",
+  "signing": {
+    "windows": "未签名 —— 还没有 Azure Artifact Signing 凭据；未签名期间 release 说明会写明 SmartScreen「未知发布者」提示（scripts/release-draft.mjs 的 STANDING_NOTICES 每版都附上，不靠人记得写）",
+    "macos": "未签名、未公证 —— 还没有 Developer ID；macOS 版因此不能自动更新，界面如实写「请手动下载新版」",
+    "linux": "无 OS 签名；SHA256SUMS（Linux 上生成，LF）+ provenance attestation（仓库公开后自动生效）"
+  },
+  "versionSource": "git tag vX.Y.Z；release.yml 的 validate job 断言 tag 与 5 个 package.json 的版本一致",
+  "release": "单一草稿 → 校验四份 updater feed 与全部资产 → LF SHA256SUMS → attestation → release environment → PATCH draft=false make_latest=true → API 断言 releases/latest 指向本 tag",
+  "actionPins": "major tags（@v7）；不钉完整 SHA；不装 Dependabot",
+  "immutableReleases": "不开 —— 发布链一次都没跑过（0 tag / 0 release / release.yml 0 次运行）；跑通一次后再开，开之前所有资产必须在草稿阶段传完",
+  "deviations": [
+    {
+      "rule": "windows-unsigned",
+      "reason": "还没有 Azure Artifact Signing 凭据。仓库转公开后产物就会公开分发，Windows 用户首次运行会看到 SmartScreen「未知发布者」—— release 说明每次都带着这句提示（scripts/release-draft.mjs 的 STANDING_NOTICES），不是悄悄让人撞。",
+      "revisitWhen": "拿到 Azure Artifact Signing 凭据时（不晚于 2026-12-31）"
+    },
+    {
+      "rule": "macos-not-notarized",
+      "reason": "没有 Apple Developer 账号与 Developer ID 证书。公开分发后 macOS 用户首次打开会被 Gatekeeper 拦一下，要右键 →「打开」；macOS 版因此不能自动更新（electron.md：Squirrel.Mac 只接受签过名的应用），界面与 release 说明都如实写「请手动下载新版」。",
+      "revisitWhen": "拿到 Developer ID + 公证凭据时（不晚于 2026-12-31）"
+    },
+    {
+      "rule": "updater-linux-unverified",
+      "reason": "Linux 的 AppImage 自动更新已接上（electron-updater 的 AppImage 更新器，清单 latest-linux.yml / latest-linux-arm64.yml 一直在发；deb / rpm 装的没有 APPIMAGE，硬跑会把应用装到别处，所以那两种仍写「请手动换新包」）。接上了但**还没有在一台 Linux 机器上实测过 N→N+1** —— 这条是验证缺口，不是 house style 差距。",
+      "revisitWhen": "有一台 Linux 机器能实测 N→N+1 时（不晚于 2026-12-31）"
+    },
+    {
+      "rule": "release-approval-gate",
+      "reason": "release environment 还没配 required reviewers。**公开仓库在所有现行套餐上都能配**（私有不支持 —— GitHub Free 私有仓库实测 422）；在那之前 publish 会直接跑，审批只是流程性的。",
+      "revisitWhen": "仓库转公开后在 Settings → Environments → release 配好 required reviewers 时（当天）"
+    }
+  ],
+  "notes": "audit.mjs 只读 platforms 与 deviations[]：rule == 'platforms' 缩小平台矩阵；rule == 发现 id（如 windows-unsigned）把该发现变成「已接受的偏离」，不计入 P0/P1/P2；缺 reason 或 revisitWhen 的偏离会报 policy-deviation-undocumented。其余字段是给人看的说明。巡检命令：node <aishort-skills>/skills/desktop-app-standard/scripts/audit.mjs <repo> --out audit.json。"
+}

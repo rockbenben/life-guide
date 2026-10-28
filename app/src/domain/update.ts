@@ -47,7 +47,7 @@ export interface UpdateStatus {
 export function describeUpdate(s: UpdateStatus): string {
   switch (s.state) {
     case "unsupported":
-      return s.note || "这个形态不自动更新";
+      return s.note || "这个版本不支持自动更新";
     case "idle":
       return "还没检查过更新";
     case "checking":

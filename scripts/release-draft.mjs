@@ -41,15 +41,34 @@ const api = (p, init = {}) =>
     headers: { ...headers, ...(init.headers ?? {}) },
   });
 
+/**
+ * 每次发布都要写清的几条。
+ *
+ * **为什么放在这儿、不放在某一版的发布说明里**：
+ * 未签名 → 用户会看到 SmartScreen「未知发布者」；macOS 未公证 → Gatekeeper 拦一下。
+ * 这些是**一直如此**的事实，不该指望每一版都有人记得抄一遍 ——
+ * 兜底那条只有一行占位，忘了写就等于没告知用户为什么会有那个提示。
+ * house style 也是这么要求的：未签名时在 release 说明里提前告知。
+ */
+const STANDING_NOTICES = `> **三件要知道的事**
+>
+> - **安装包还没签名**：Windows 版首次运行会显示「未知发布者」，SmartScreen 可能拦一下 —— 点「更多信息 → 仍要运行」；macOS 版未签名未公证，首次打开要右键 →「打开」。
+> - **自动更新**：Windows 安装版与 Linux 的 AppImage 版支持（在「设置 → 更新」里查，点了才下载）；macOS 版、Linux 的 deb / rpm 版、Windows 的免安装版请手动换新包。
+> - **关窗口只是收进托盘**，进程还在，提醒照样响。`;
+
 /** 发布说明：docs/发布说明/<tag>.md，没有就一句占位。 */
 function releaseBody() {
   const file = path.join(repoRoot, "docs", "发布说明", `${tag}.md`);
+  let body;
   if (fs.existsSync(file)) {
     console.log(`发布说明：${file}`);
-    return fs.readFileSync(file, "utf8");
+    body = fs.readFileSync(file, "utf8").trimEnd();
+  } else {
+    console.log("发布说明：没有对应的文件，用占位（发布前补上）");
+    body = "草稿：确认发布说明后再放行审批。";
   }
-  console.log("发布说明：没有对应的文件，用占位（发布前补上）");
-  return "草稿：确认发布说明后再放行审批。";
+  // 固定的那几条每次都带着（上面那个文件只写这一版特有的内容）。
+  return `${body}\n\n${STANDING_NOTICES}\n`;
 }
 
 // 1. 找草稿

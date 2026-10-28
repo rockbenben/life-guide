@@ -40,6 +40,41 @@ export function initialUpdateStatus(note) {
   return { state: "unsupported", note: note ?? "" };
 }
 
+/**
+ * 这个形态能不能自动更新。不能的话给一句**照实说**的理由（界面上会显示）。
+ *
+ * 纯逻辑：不 import electron，起来就能跑（node --test 直接跑）。
+ *
+ * 各平台为什么这样：
+ *   · **Windows**：NSIS 安装版能自动更新。免安装版不行 —— 它没有安装目录，
+ *     安装动作会装到别处去。
+ *   · **macOS**：Squirrel.Mac 只接受签过名的应用；现在没有 Developer ID，
+ *     所以 macOS 版只能手动换新包。
+ *   · **Linux**：electron-updater 走 AppImage 更新器，**只认 AppImage 本身**
+ *     （它要替换 APPIMAGE 指的那个文件）。deb / rpm 装的没有那个文件，
+ *     硬跑会把应用装到别处 —— 所以只有 AppImage 版能自动更新。
+ *
+ * @param {{ platform: string, packaged: boolean, portableDir?: string, appImage?: string }} env
+ * @returns {{ ok: true } | { ok: false, note: string }}
+ */
+export function updateSupportFor(env) {
+  if (!env.packaged) return { ok: false, note: "开发时不检查更新" };
+  if (env.portableDir) {
+    return { ok: false, note: "免安装版不能自动更新，用安装版才有" };
+  }
+  if (env.platform === "darwin") {
+    return { ok: false, note: "macOS 版还没签名，不能自动更新；请手动下载新版" };
+  }
+  if (env.platform === "linux") {
+    if (!env.appImage) {
+      return { ok: false, note: "deb / rpm 装的版本不能自动更新，用 AppImage 版才有" };
+    }
+    return { ok: true };
+  }
+  if (env.platform !== "win32") return { ok: false, note: "这个平台暂时不能自动更新" };
+  return { ok: true };
+}
+
 function clampPercent(n) {
   if (!Number.isFinite(n)) return 0;
   return Math.max(0, Math.min(100, Math.round(n)));
