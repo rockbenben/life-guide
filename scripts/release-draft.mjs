@@ -15,6 +15,10 @@
  * 发布说明：优先取 `docs/发布说明/<tag>.md`，没有就用一句占位。
  *
  * 用法：REPO=owner/name TAG=v0.1.1 GH_TOKEN=... node scripts/release-draft.mjs dist
+ *
+ * **RELEASE_ID=...**：直接用这个 release，不按 tag 找，也不改发布说明。
+ * 构建 job 用这个 —— 几个 job 并行往同一个草稿传东西时，
+ * 「按 tag 找」会撞上草稿标签被 GitHub 改成 untagged-xxx 的老问题。
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -22,6 +26,7 @@ import path from "node:path";
 const repo = process.env.REPO;
 const tag = process.env.TAG;
 const token = process.env.GH_TOKEN;
+const releaseId = process.env.RELEASE_ID;
 const dir = path.resolve(process.argv[2] ?? "dist");
 const repoRoot = process.cwd();
 
@@ -72,8 +77,25 @@ function releaseBody() {
 }
 
 // 1. 找草稿
-const list = await api(`/repos/${repo}/releases?per_page=100`).then((r) => r.json());
-let release = list.find((r) => r.tag_name === tag);
+let release;
+if (releaseId) {
+  // 指定了 id：直接用它，不按 tag 找，也不碰发布说明
+  // （几个构建 job 并行传同一个草稿时，改发布说明会互相覆盖）。
+  const found = await api(`/repos/${repo}/releases/${releaseId}`).then((r) => r.json());
+  if (!found?.id) {
+    console.error(`找不到 release ${releaseId}`);
+    process.exit(1);
+  }
+  if (!found.draft) {
+    console.error(`${found.tag_name} 已经发布了；要再发一版请升版本`);
+    process.exit(1);
+  }
+  release = found;
+  console.log(`用指定的 release：${release.tag_name}（id ${release.id}）`);
+} else {
+  const list = await api(`/repos/${repo}/releases?per_page=100`).then((r) => r.json());
+  release = list.find((r) => r.tag_name === tag);
+}
 
 if (release && !release.draft) {
   console.error(`${tag} 已经发布了；要再发一版请升版本`);
@@ -102,7 +124,7 @@ if (!release) {
     console.error(`草稿的标签是 ${release.tag_name}，不是 ${tag} —— 停在这里，别发布出去。`);
     process.exit(1);
   }
-} else {
+} else if (!releaseId) {
   console.log(`用已有的草稿：${release.tag_name}（id ${release.id}）`);
   // 说明也更新一下（重跑时用最新的文件）。
   //

@@ -252,12 +252,32 @@ content/
 ```
 push tag vX.Y.Z
   └─ validate       tag 与 5 个 package.json 的版本对得上 + 内容校验 + 类型检查 + lint + 单测 + 桌面逻辑测试
+      ├─ prepare     建发布草稿（发布说明也在这时写上）→ 拿到 release id
       ├─ build-desktop-win     Windows x64+arm64：NSIS 合一安装包 + 双架构免安装版 + latest.yml
       ├─ build-desktop-mac     macOS x64+arm64：dmg + zip（zip 是更新载体）+ latest-mac.yml
       ├─ build-desktop-linux   Linux x64+arm64：AppImage + deb + rpm + latest-linux*.yml
       └─ build-android         Linux：APK
-          └─ publish   单一草稿 → 校验四条 latest*.yml 与全部资产 → SHA256SUMS → 上传 → 人工审批 → 发布 → 核验
+          └─ publish   单一草稿 → 校验资产 → SHA256SUMS → 人工审批 → 发布 → 核验
 ```
+
+- **产物不走 artifact 中转（2026-10-28 改）**：每个构建 job 把产物**直接传进
+  那个发布草稿**，publish 只读 API。
+  **为什么**：Actions 的 artifact 存储是**账户级共享**的配额 —— GitHub Free 只有
+  500 MB（而且与 GitHub Packages 共用同一个池），而这一版要发的产物约 1.6 GB。
+  2026-10-28 实测：账户已用 11.5 GB（`shiye` 6.1 GB、`md-publisher` 3.8 GB 等），
+  连 CI 那 157 MB 的桌面产物都传不上去 —— 「Artifact storage quota has been hit」
+  直接让两个 job 判红。**release 资产不占 artifact 配额**，所以绕开它是正路。
+  顺带把 CI 里两个 artifact 上传改成 `continue-on-error`：产物留不留是便利问题，
+  配额满了不该让构建判定失败（真正的判定是那次真启动）。
+- **校验和不用把 1.6 GB 再下一遍**：GitHub 的 release 资产 API 每个资产都带
+  `digest`（`sha256:…`），那是服务端算的，跟用户下载下来算的同一个值
+  （实测与本地 `sha256sum` 逐字一致）。`scripts/release-assets.mjs` 直接拿它拼
+  SHA256SUMS，格式与 `sha256sum` 一致（两格空格），用户的 `sha256sum -c` 能直接用。
+  校验的内容：15 个产物在不在、四条更新清单的版本对不对、清单指向的文件在不在、
+  清单指的是不是对的载体 —— 缺一条就退出非零，草稿不会被发出去。
+- **草稿只建一次**：几个构建 job 并行往同一个草稿传东西时，「按 tag 找草稿」会撞上
+  草稿标签被 GitHub 改成 `untagged-xxx` 的老问题，所以 `prepare` job 先把草稿建好，
+  后面全部按 **release id** 传（`scripts/release-draft.mjs` 的 `RELEASE_ID` 模式）。
 
 - **平台覆盖**：桌面三平台各 x64 + arm64；每个 OS 一个 job，同一 OS 的多架构必须在**同一次**
   electron-builder 调用里打 —— 分 job 打会各写同名 `latest*.yml`，谁后跑谁赢。
@@ -269,10 +289,12 @@ push tag vX.Y.Z
   deb / rpm 版仍写「请手动换新包」。
 - **`latest*.yml` 是四份，不是一份**：`latest.yml`（Windows）、`latest-mac.yml`（macOS，含两个架构的 zip）、
   `latest-linux.yml` / `latest-linux-arm64.yml`（Linux 两个架构）。publish 会逐份核对版本与它指向的文件。
-- **发 tag 前先确认审批闸门真的生效**：`release` environment 的 Required reviewers
-  **公开仓库在所有现行套餐上都能配**（私有不支持，2026-10-25 实测 422）——
-  仓库转公开后第一件事就是去 Settings → Environments → release 把它配起来，
-  在那之前 publish 会直接跑，闸门形同虚设。
+- **审批闸门现在真的生效**：`release` environment 的 Required reviewers
+  **公开仓库在所有现行套餐上都能配**（私有不支持 —— 2026-10-25 实测 422；
+  2026-10-28 仓库转公开后又实测了一次，同样是 422 的那句「billing plan 不支持」——
+  可见当初那条限制确实是套餐而不是仓库设置的问题）。
+  **2026-10-28 转公开后已配好 required reviewers**，publish 会停住等人放行。
+  以后换人或加审阅人：Settings → Environments → release → Required reviewers。
 
 - **tag 是唯一版本源**：发版提交先改版本再打 tag，`validate` 断言一致，不一致即失败。
   一条命令改到位：`node scripts/set-version.mjs 0.1.1`
@@ -300,8 +322,8 @@ push tag vX.Y.Z
   electron-updater **跳过**签名校验（未签名应用的正常路径）；
   完整性靠 `latest.yml` 里的 sha512 核对下载到的文件。
   macOS 的 Squirrel.Mac 没有这个退路 —— 未签名就不接更新，界面写「请手动下载新版」。
-- **前提是仓库公开**：更新清单从 `releases/latest/download/latest*.yml` 取，
-  私有仓库匿名取不到 → 自动更新要等仓库转公开后才真正可用。
+- **仓库已公开（2026-10-28）**：更新清单从 `releases/latest/download/latest*.yml` 取，
+  私有仓库匿名取不到 —— 转公开前自动更新是走不通的，现在这条用户路径才真正可用。
   **哪些形态能更新**的判断是纯逻辑（`desktop/lib/update-events.mjs` 的 `updateSupportFor`，
   `node --test` 守着）：免安装版没有安装目录、macOS 没签名、Linux 只认 AppImage，
   各有一条照实说的理由，界面显示的就是那句。
@@ -309,11 +331,10 @@ push tag vX.Y.Z
   状态机在 `desktop/lib/update-events.mjs`（纯逻辑，`node --test` 守着）。
 
 **已知取舍登记在 `.desktop-policy.json`**（desktop-app-standard 的 house style）：
-  仓库准备转公开、但还没有 Azure/Apple 凭据 → Windows 未签名、macOS 未签名/未公证、
+  仓库已转公开（2026-10-28），但还没有 Azure/Apple 凭据 → Windows 未签名、macOS 未签名/未公证、
   Linux 的 AppImage 自动更新已接上但**还没在一台 Linux 机器上实测过 N→N+1**、
-  release environment 还没配 required reviewers
-  （公开仓库在所有现行套餐上都能配，私有不支持 —— 2026-10-25 实测 422；
-  公开后配起来，闸门才是真的闸门）。
+  **release environment 的 required reviewers 已配好**（公开仓库才支持 —— 私有仓库实测 422；
+  2026-10-28 转公开后配上的，闸门从这一版起真的生效）。
   每条都带 reason + revisitWhen；巡检脚本按它把对应的发现算作「已接受的偏离」，
   不计入 P0/P1/P2。**没有登记的旧做法按 house style 算「漂移」** ——
   要报告、要给复查条件，不默认保留。
@@ -332,6 +353,7 @@ push tag vX.Y.Z
 | `gh release upload <tag>` | 草稿在 `GET /releases/tags/<tag>` 里查不到，gh 会把草稿的标签改成 `untagged-xxx`，再往那儿传 → 404 | 走 API，按 **release id** 传（`scripts/release-draft.mjs`） |
 | PATCH 草稿只带 `body` | 草稿的标签被打回 `untagged-xxx`，后面按 tag 找全落空 | 每次 PATCH 都显式带 `tag_name`，发布那一步用 release id |
 | 私有仓库的下载链接 | `releases/latest/download/latest*.yml` 匿名取不到（它认浏览器会话） | 四份清单逐一走 API 核验；仓库公开后自动切回匿名下载（用户那条路径） |
+| **artifact 存储配额是账户级的** | 2026-10-28：CI 两个 job 挂在最后的上传步骤上，错误是 `Artifact storage quota has been hit`，而校验本身全过 | 产物**不**走 artifact 中转：构建 job 直接传进发布草稿，release 资产不占这个配额；CI 的上传改 `continue-on-error`。账户级占用要自己清（本次 11.5 GB：`shiye` 6.1 GB、`md-publisher` 3.8 GB） |
 
 ---
 

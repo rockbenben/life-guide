@@ -1,7 +1,7 @@
 # 发版流水线：tag 是唯一的版本源。
 #
-# 流程：validate（tag⇄版本 + 测试）→ build（Windows / macOS / Linux 桌面 + Android）
-#       → publish（单一草稿 → 校验 → SHA256SUMS → 上传 → 人工审批 → 发布 → 核验）。
+# 流程：validate（tag⇄版本 + 测试）→ prepare（建草稿）→ build（Windows / macOS / Linux 桌面 + Android）
+#       → publish（校验资产 → SHA256SUMS → 人工审批 → 发布 → 核验）。
 #
 # 为什么这么排：
 #
@@ -15,6 +15,13 @@
 #     调用里 —— 分 job 打会各写同名 latest*.yml，谁后跑谁赢。
 #   · **打包一律 --publish never**：发布由唯一的 publish job 做，
 #     否则每个 job 各自抢着发，会发出半成品。
+#   · **产物不走 artifact 中转**（2026-10-28 改）：Actions 的 artifact 存储是
+#     **账户级共享**的配额（GitHub Free 500 MB，与 Packages 共用），而这一版要发的
+#     产物约 1.6 GB —— 走 artifact 中转必然撑爆配额（实测账户已用 11.5 GB，
+#     连 157 MB 都传不上去）。所以每个构建 job 直接把产物传到这个 release 草稿上，
+#     publish 只读 API。**release 资产不占 artifact 配额**，这是绕开它的正路。
+#     校验和也不再靠把 1.6 GB 下一遍 —— GitHub 的资产 API 每个资产都带
+#     `digest`（sha256:…），服务端算的，跟用户下载下来算的同一个值。
 #
 # 只维护在默认分支。tag 触发时跑的是**被打 tag 那个提交里的这份文件**，
 # 所以修了工作流要用包含修复的提交重新打 tag。
@@ -77,12 +84,40 @@ jobs:
       - run: npm test
       - run: npm run test:desktop
 
+  # 先把草稿建好，后面几个构建 job 往同一个草稿里传产物。
+  # 草稿只建一次：几个 job 并行时「按 tag 找」会撞上草稿标签被 GitHub
+  # 改成 untagged-xxx 的老问题，所以下面都按 release id 传。
+  prepare:
+    name: 建发布草稿
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      release_id: ${{ steps.draft.outputs.release_id }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: '${{ env.TAG }}'
+      - name: 建草稿（发布说明也在这一步写上）
+        id: draft
+        shell: bash
+        run: |
+          mkdir -p dist
+          node scripts/release-draft.mjs dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ env.TAG }}
+
   # 每个 OS 一个 job：同一 OS 的 x64 / arm64 必须在同一次 electron-builder
-  # 调用里打，否则 latest*.yml 会互相覆盖。全部 --publish never，由 publish 统一上传。
+  # 调用里打，否则 latest*.yml 会互相覆盖。全部 --publish never，由 publish 统一放行。
   build-desktop-win:
     name: 打包桌面端（Windows）
-    needs: validate
+    needs: [validate, prepare]
     runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -100,19 +135,27 @@ jobs:
         # GitHub 的附件名只吃 ASCII，中文会被换成 default.exe ——
         # 而且更新清单 latest*.yml 里记的就是这个文件名，对不上就更新不了。
         run: npx electron-builder --projectDir desktop --win nsis portable --x64 --arm64 --publish never
-      - uses: actions/upload-artifact@v7
-        with:
-          name: dist-desktop-win
-          if-no-files-found: error
-          path: |
-            desktop/release/*.exe
-            desktop/release/*.blockmap
-            desktop/release/latest.yml
+      - name: 收拢产物
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp desktop/release/*.exe desktop/release/*.blockmap desktop/release/latest.yml dist/
+          ls -l dist
+      - name: 传到发布草稿
+        shell: bash
+        run: node scripts/release-draft.mjs dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ env.TAG }}
+          RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   build-desktop-mac:
     name: 打包桌面端（macOS）
-    needs: validate
+    needs: [validate, prepare]
     runs-on: macos-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -131,21 +174,28 @@ jobs:
         run: npx electron-builder --projectDir desktop --mac dmg zip --x64 --arm64 --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-      - uses: actions/upload-artifact@v7
-        with:
-          name: dist-desktop-mac
-          if-no-files-found: error
-          path: |
-            desktop/release/*.dmg
-            desktop/release/*.zip
-            desktop/release/*.blockmap
-            desktop/release/latest-mac.yml
+      - name: 收拢产物
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp desktop/release/*.dmg desktop/release/*.zip desktop/release/*.blockmap desktop/release/latest-mac.yml dist/
+          ls -l dist
+      - name: 传到发布草稿
+        shell: bash
+        run: node scripts/release-draft.mjs dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ env.TAG }}
+          RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   build-desktop-linux:
     name: 打包桌面端（Linux）
-    needs: validate
+    needs: [validate, prepare]
     # 22.04 的 glibc 更老，兼容面更广（house style）
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -161,21 +211,27 @@ jobs:
       - name: 打包（AppImage 更新载体 + deb / rpm）
         # 没有原生模块，x64 runner 可以交叉打 arm64。
         run: npx electron-builder --projectDir desktop --linux AppImage deb rpm --x64 --arm64 --publish never
-      - uses: actions/upload-artifact@v7
-        with:
-          name: dist-desktop-linux
-          if-no-files-found: error
-          path: |
-            desktop/release/*.AppImage
-            desktop/release/*.deb
-            desktop/release/*.rpm
-            desktop/release/*.blockmap
-            desktop/release/latest-linux*.yml
+      - name: 收拢产物
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp desktop/release/*.AppImage desktop/release/*.deb desktop/release/*.rpm desktop/release/*.blockmap desktop/release/latest-linux*.yml dist/
+          ls -l dist
+      - name: 传到发布草稿
+        shell: bash
+        run: node scripts/release-draft.mjs dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ env.TAG }}
+          RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   build-android:
     name: 打包 Android
-    needs: validate
+    needs: [validate, prepare]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -202,15 +258,25 @@ jobs:
           # gradlew 在仓库里没有可执行位（Windows 上提交出来的）
           chmod +x gradlew
           ./gradlew assembleDebug
-      - uses: actions/upload-artifact@v7
-        with:
-          name: dist-android
-          if-no-files-found: error
-          path: mobile/android/app/build/outputs/apk/debug/*.apk
+      - name: 收拢产物
+        shell: bash
+        run: |
+          mkdir -p dist
+          # Gradle 出来的是 app-debug.apk；GitHub 的附件名只吃 ASCII
+          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk "dist/LifeGuide-${TAG#v}.apk"
+          ls -l dist
+      - name: 传到发布草稿
+        shell: bash
+        run: node scripts/release-draft.mjs dist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ env.TAG }}
+          RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
 
   publish:
     name: 发布
-    needs: [validate, build-desktop-win, build-desktop-mac, build-desktop-linux, build-android]
+    needs: [validate, prepare, build-desktop-win, build-desktop-mac, build-desktop-linux, build-android]
     runs-on: ubuntu-latest
     environment: release # 人工审批闸门：草稿改好了再放行
     permissions:
@@ -222,78 +288,21 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
       VERSION: ${{ needs.validate.outputs.version }}
+      RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
+      TAG: ${{ env.TAG }}
     steps:
       # 建草稿与传附件要跑仓库里的脚本（scripts/release-draft.mjs）
       - uses: actions/checkout@v7
         with:
           ref: '${{ env.TAG }}'
 
-      - uses: actions/download-artifact@v8
-        with:
-          pattern: 'dist-*'
-          merge-multiple: true
-          path: dist
+      - name: 校验资产并生成校验和
+        # 四条更新清单的版本与指向、15 个产物在不在、清单指的是不是对的载体，
+        # 全在这里查；SHA256SUMS 用 GitHub 资产 API 给的 sha256 拼（服务端算的）。
+        run: node scripts/release-assets.mjs checksums
 
-      - name: 附件名改成 ASCII
-        shell: bash
-        run: |
-          cd dist
-          # Gradle 出来的是 app-debug.apk；GitHub 的附件名只吃 ASCII
-          [ -f app-debug.apk ] && mv app-debug.apk "LifeGuide-$VERSION.apk"
-          ls -l
-
-      - name: 校验四条更新清单与全部资产
-        shell: bash
-        run: |
-          cd dist
-          # Windows latest.yml · macOS latest-mac.yml · Linux x64/arm64 各一条
-          for m in latest.yml latest-mac.yml latest-linux.yml latest-linux-arm64.yml; do
-            [ -f "$m" ] || { echo "::error::缺少 $m（打包时没产出？）"; exit 1; }
-            grep -q "^version: $VERSION$" "$m" || { echo "::error::$m 不是版本 $VERSION"; exit 1; }
-            while read -r u; do
-              [ -f "$u" ] || { echo "::error::$m 指向了不存在的 $u"; exit 1; }
-            done < <(grep -E '^\s*-?\s*url:' "$m" | awk '{print $NF}')
-          done
-
-          # 清单之外还要发出去的安装包 / 免安装版 / dmg / deb / rpm / APK。
-          # 少了任何一个平台，用户拿到的就是半套发布。
-          for f in \
-            "LifeGuide-Setup-$VERSION.exe" \
-            "LifeGuide-Setup-$VERSION.exe.blockmap" \
-            "LifeGuide-Portable-$VERSION-x64.exe" \
-            "LifeGuide-Portable-$VERSION-arm64.exe" \
-            "LifeGuide-$VERSION-x64.dmg" \
-            "LifeGuide-$VERSION-arm64.dmg" \
-            "LifeGuide-$VERSION-x64.zip" \
-            "LifeGuide-$VERSION-arm64.zip" \
-            "LifeGuide-$VERSION-x86_64.AppImage" \
-            "LifeGuide-$VERSION-arm64.AppImage" \
-            "LifeGuide-$VERSION-amd64.deb" \
-            "LifeGuide-$VERSION-arm64.deb" \
-            "LifeGuide-$VERSION-x86_64.rpm" \
-            "LifeGuide-$VERSION-aarch64.rpm" \
-            "LifeGuide-$VERSION.apk"; do
-            [ -f "$f" ] || { echo "::error::缺少 $f"; exit 1; }
-          done
-
-          # 清单得指向正确的载体：Windows 用 NSIS 安装包，macOS 两个架构的 zip 都要在，
-          # Linux 每条清单指向自己架构的 AppImage。
-          grep -q -- "url: LifeGuide-Setup-$VERSION.exe" latest.yml \
-            || { echo "::error::latest.yml 没指向 NSIS 安装包"; exit 1; }
-          grep -q -- "url: LifeGuide-$VERSION-x64.zip" latest-mac.yml \
-            || { echo "::error::latest-mac.yml 缺 x64 zip"; exit 1; }
-          grep -q -- "url: LifeGuide-$VERSION-arm64.zip" latest-mac.yml \
-            || { echo "::error::latest-mac.yml 缺 arm64 zip"; exit 1; }
-          grep -q -- "url: LifeGuide-$VERSION-x86_64.AppImage" latest-linux.yml \
-            || { echo "::error::latest-linux.yml 缺 x64 AppImage"; exit 1; }
-          grep -q -- "url: LifeGuide-$VERSION-arm64.AppImage" latest-linux-arm64.yml \
-            || { echo "::error::latest-linux-arm64.yml 缺 arm64 AppImage"; exit 1; }
-
-      - name: SHA256SUMS（Linux 上生成，行尾是 LF）
-        shell: bash
-        # 必须用 Linux 的 sha256sum 生成：PowerShell 的 Set-Content 写 CRLF，
-        # 用户的 sha256sum -c 会逐行失败（应用自己读没问题，用户那条命令炸）。
-        run: cd dist && sha256sum -- * > SHA256SUMS && cat SHA256SUMS
+      - name: 把校验和传上去
+        run: node scripts/release-draft.mjs checksums
 
       - id: plan
         name: 要不要做来源证明
@@ -315,19 +324,12 @@ jobs:
         if: steps.plan.outputs.attest == 'true'
         uses: actions/attest@v4
         with:
-          subject-checksums: dist/SHA256SUMS
-
-      - name: 建草稿并上传全部附件
-        id: draft
-        shell: bash
-        run: node scripts/release-draft.mjs dist
+          subject-checksums: checksums/SHA256SUMS
 
       - name: 发布并设为 latest
         shell: bash
-        env:
-          RELEASE_ID: ${{ steps.draft.outputs.release_id }}
         run: |
-          # 用上一步给的 release id，不按 tag 找：
+          # 用 release id，不按 tag 找：
           # 草稿的标签名在 GitHub 侧会变成 "untagged-xxx"，按 tag 找会落空。
           [ -n "$RELEASE_ID" ] || { echo "::error::没有拿到 release id"; exit 1; }
           gh api -X PATCH "repos/$REPO/releases/$RELEASE_ID" -F draft=false -f make_latest=true >/dev/null

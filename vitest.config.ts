@@ -9,6 +9,9 @@ export default defineConfig({
       "content/test/**/*.test.ts",
       "app/test/**/*.test.ts",
       "app/test/**/*.test.tsx",
+      // 发版校验脚本的纯逻辑（scripts/release-assets.mjs）——
+      // 它是发版的闸门，得有测试守着。
+      "scripts/test/**/*.test.mjs",
     ],
   },
 });
