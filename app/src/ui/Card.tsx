@@ -3,6 +3,8 @@
  *
  * 收起态（三行契约，判据在 domain/lines.ts）：
  *   名 / 做什么 / 剂量 —— 外加 stop 级禁忌与 seek-care 提示（安全信息不许折叠）
+ *   「做什么」与「名」重复时那一行不显示（同一句话说两遍看着像出了错），
+ *   展开态的「做什么」那一行仍然摆原文 —— 收起态省了，原文不许消失（D2）。
  * 展开态：剂量·时段·耗时·见效 成表，步骤逐条配图
  *   （卡里的事实就是原文的话，不再另摆引文；来源链接在页脚，跳到那一篇）
  *
@@ -19,12 +21,12 @@ import type { ComponentChildren } from "preact";
 
 import type { Card, Mode, ResolvedStep } from "../domain/routine.ts";
 import { filterByMode, skipped } from "../domain/routine.ts";
-import { cardLines, NAME_MAX } from "../domain/lines.ts";
+import { cardLines, doseValueText, NAME_MAX } from "../domain/lines.ts";
 import { matchSegments } from "../domain/segments.ts";
 import type { Segment } from "../domain/segments.ts";
 import { slotLabel } from "../domain/day.ts";
 import { tagText } from "../domain/conditions.ts";
-import { NOTICE_LABELS, plainText, sortNotices, urgentNotices } from "../domain/notices.ts";
+import { NOTICE_LABELS, isConditionCard, plainText, sortNotices, urgentNotices } from "../domain/notices.ts";
 import { cardName } from "../domain/lines.ts";
 import { isCustomCard } from "../domain/custom.ts";
 import type { Reminder } from "../domain/reminders.ts";
@@ -68,10 +70,10 @@ export interface CardProps {
   cadence?: Cadence;
   onCadenceChange?: (cadence: Cadence) => void;
   /**
-   * 本卡末尾除了「收起」还有哪颗键（如「移出今天」）。
+   * 本卡末尾除了「收起」还有哪颗键（如「今天不做 · 移出日常」）。
    *
-   * 手机上展开一张卡有 1200 多像素高，「移出今天」在末尾 —— 首屏里根本看不到，
-   * 而首启说明写着「展开卡片可移出」。跳到末尾的那颗键是唯一能把它带到眼前的
+   * 手机上展开一张卡有 1200 多像素高，末尾的键在首屏里根本看不到，
+   * 而首启说明写着「展开卡片可改」。跳到末尾的那颗键是唯一能把它带到眼前的
    * 入口，所以把末尾有什么写在这颗键上。
    */
   endExtra?: string;
@@ -168,7 +170,9 @@ export function CardView({
       ? null
       : mode === "busy"
         ? "忙档"
-        : "出差版";
+        : mode === "travel"
+          ? "出差版"
+          : "生病版";
 
   // Esc 收起，并把焦点还给触发它的那颗键
   useEffect(() => {
@@ -183,7 +187,7 @@ export function CardView({
     return () => document.removeEventListener("keydown", onKey);
   }, [expanded, onExpand]);
 
-  const lines = cardLines(card);
+  const lines = cardLines(card, displayName);
   const cautions = m.cautions;
   // 分档换的是**动作本身**：名用这一档给的动作，而 remind 描述的是被换掉的默认动作，
   // 一起显示等于给用户两句互相矛盾的话（§5.1b）。
@@ -193,20 +197,26 @@ export function CardView({
   const stopCautions = cautions.filter((c) => c.level === "stop");
   const notices = card.notices ?? [];
   const urgent = urgentNotices(notices);
-  const slotText = card.slot && card.slot !== "anytime" ? slotLabel(card.slot) : "";
+  // 疾病知识不是「今天要做的事」：左边那一栏写「知识」，不写时段 ——
+  // 「随时」挂在一条知识上读着像「随时可以做这条知识」。
+  const conditionCard = isConditionCard(card);
+  const slotText =
+    !conditionCard && card.slot && card.slot !== "anytime" ? slotLabel(card.slot) : "";
   // 新提醒的默认模式跟着这张卡的频率：周卡别一上来就每天响。
   const reminderDefaults = defaultReminderFor(cadence ?? "daily");
   // 被截断的半句要在展开态读得到（D2）
   const fullRemind = plainText(card.remind?.text ?? "");
   const truncated = doText.length > 0 && fullRemind.length > lines.doText.length;
+  // 收起态那一行与「名」重复、被整行删掉时，原文仍然要在展开态读得到（D2）
+  const showRemind = truncated || segAction || (!doText && !!fullRemind);
 
   return (
-    <article class="lg-card">
+    <article class="lg-card" data-readonly={readOnly ? "true" : undefined}>
       <div class="lg-row" data-done={done ? "true" : "false"}>
         <div class="lg-when">
-          {slotText || "随时"}
+          {conditionCard ? "知识" : slotText || "随时"}
           {/* 今天不做的卡不该再摆一个时长：那读起来像「要做 30 分钟」 */}
-          {isSkipped ? (
+          {conditionCard ? null : isSkipped ? (
             <span class="lg-dur" data-state="mode">
               今天不做
             </span>
@@ -242,9 +252,7 @@ export function CardView({
             <span class="lg-dose">
               {lines.doses.map((d, i) => (
                 <span key={i}>
-                  <b class="tabular">
-                    {d.valueMax !== undefined ? `${d.value}～${d.valueMax}` : d.value} {d.unit}
-                  </b>{" "}
+                  <b class="tabular">{doseValueText(d)}</b>{" "}
                   {d.what}
                 </span>
               ))}
@@ -298,21 +306,21 @@ export function CardView({
 
       {expanded ? (
         <div class="lg-guide">
-          <div class="lg-guide-h">
-            {/* 来源链接放在下面（页脚），上面只留「已做 N 天」—— 卡里的事实已经是原文的话，
-                顶上一句「出自〈哪一篇〉」只是把用户往别处赶 */}
-            {streakDays > 0 ? (
+          {/* 没盖过印的卡不摆一个空表头：一条 22px 的空条加一道横线，
+              看着像内容没加载出来。有记录时才出现。 */}
+          {streakDays > 0 ? (
+            <div class="lg-guide-h">
               <span class="lg-streak">
                 已做 <span class="tabular">{streakDays}</span> 天
               </span>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
 
           <button
             class="lg-jump"
             onClick={() => endRef.current?.querySelector("button")?.focus()}
           >
-            跳到本卡末尾（收起{endExtra ? ` · ${endExtra}` : ""}）
+            跳到卡末（收起{endExtra ? ` · ${endExtra}` : ""}）
           </button>
 
           <dl class="lg-kv">
@@ -324,8 +332,8 @@ export function CardView({
                     {card.dose!.map((d, i) => (
                       <span key={i}>
                         <b class="tabular">
-                          {/* 范围是一行，不拆成「下限/上限」两条 */}
-                          {d.valueMax !== undefined ? `${d.value}～${d.valueMax}` : d.value} {d.unit}
+                          {/* 范围是一行，不拆成「下限/上限」两条；原文是近似值时带「约」 */}
+                          {doseValueText(d)}
                         </b>
                         {d.what}
                         {/* 换算来的数（如 1/2 勺 → 0.5 勺）要写出算式，不能装作是原文（D7） */}
@@ -338,7 +346,7 @@ export function CardView({
                 </dd>
               </>
             ) : null}
-            {truncated || segAction ? (
+            {showRemind ? (
               <>
                 {/* 「做什么」是被截断的那句原文；下面「提醒」那一行是闹钟 —— 两件事，别混 */}
                 <dt>做什么</dt>
@@ -347,9 +355,12 @@ export function CardView({
                 </dd>
               </>
             ) : null}
-            <dt>时段</dt>
-            <dd>{slotText || "随时"}</dd>
-            {!readOnly && cadence && onCadenceChange ? (
+            {conditionCard ? null : (
+              <>
+                <dt>时段</dt>
+                <dd>{slotText || "随时"}</dd>
+              </>
+            )}            {!readOnly && cadence && onCadenceChange ? (
               <>
                 <dt>频率</dt>
                 <dd>

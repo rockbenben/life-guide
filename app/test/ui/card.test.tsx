@@ -140,6 +140,19 @@ describe("展开态标题层级", () => {
   });
 });
 
+describe("疾病知识卡的时间栏", () => {
+  it("左边写「知识」，不写「随时」——知识不是今天要做的事", () => {
+    const html = view(makeCard({ articleKind: "condition" }), false);
+    expect(html).toContain("知识");
+    expect(html).not.toContain("随时");
+  });
+
+  it("展开态没有「时段」那一行", () => {
+    const html = view(makeCard({ articleKind: "condition" }), true);
+    expect(html).not.toContain("时段");
+  });
+});
+
 describe("印章的可访问名称", () => {
   it("盖过印后，屏上的日期也要出现在可访问名称里", () => {
     const html = render(
@@ -373,6 +386,54 @@ describe("R11：stop 级禁忌在收起态可见", () => {
  * 收起的卡上不摆提醒那一行 —— 提醒是展开后才用的东西，
  * 收起态只留名 / 做什么 / 剂量三行（那条契约别破）。
  */
+describe("「做什么」与名重复时", () => {
+  const dup = {
+    id: "limit-alcohol",
+    name: "每天酒精不超过 20～25 克",
+    remind: { text: "每天酒精不超过 20～25 克", quote: "…" },
+  };
+
+  it("收起态不把同一句话说两遍", () => {
+    const html = view(makeCard(dup), false);
+    expect(html.match(/每天酒精不超过 20～25 克/g)).toHaveLength(1);
+  });
+
+  it("展开态仍然读得到原文（D2：收起态省了，原文不许消失）", () => {
+    const html = view(makeCard(dup), true);
+    expect(html).toContain("做什么");
+    expect(html).toContain("每天酒精不超过 20～25 克");
+  });
+});
+
+describe("剂量里的「约」", () => {
+  it("原文是近似值时，屏上写「约」而不是把近似说成定值", () => {
+    const html = view(
+      makeCard({
+        dose: [
+          {
+            value: 5,
+            unit: "次",
+            what: "来回轻洗",
+            approximate: true,
+            quote: "来回轻柔地洗约 5 次",
+          },
+        ],
+      }),
+      false,
+    );
+    expect(html).toContain("约 5 次");
+  });
+
+  it("没有标记的就不带「约」", () => {
+    const html = view(
+      makeCard({ dose: [{ value: 5, unit: "次", what: "来回轻洗", quote: "来回轻柔地洗 5 次" }] }),
+      false,
+    );
+    expect(html).toContain("5 次");
+    expect(html).not.toContain("约 5 次");
+  });
+});
+
 describe("卡上的提醒那一行", () => {
   function withReminders(reminders: Reminder[], expanded = true): string {
     return render(

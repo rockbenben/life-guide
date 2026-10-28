@@ -96,6 +96,8 @@ export interface Card {
     valueMax?: number;
     unit: string;
     what: string;
+    /** 原文写的是近似值（「约 5 次」）—— 屏上要显示「约」，不许把近似说成定值 */
+    approximate?: boolean;
     /** 这一行的数是换算来的（1/2 勺 → 0.5 勺）—— 记算式，界面标「推算」 */
     derived?: { formula: string };
     quote?: string | string[];

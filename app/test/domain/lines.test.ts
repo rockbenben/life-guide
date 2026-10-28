@@ -14,6 +14,7 @@ import {
   displayNames,
   doLine,
   doseLines,
+  doseValueText,
   durationLabel,
 } from "../../src/domain/lines.ts";
 import type { Card } from "../../src/domain/routine.ts";
@@ -152,6 +153,22 @@ describe("数字不重复：一行只说一件事", () => {
   });
 });
 
+describe("剂量那一行的数", () => {
+  it("普通值就是那个数", () => {
+    expect(doseValueText({ value: 5, unit: "次" })).toBe("5 次");
+  });
+
+  it("原文是近似值时带「约」", () => {
+    expect(doseValueText({ value: 5, unit: "次", approximate: true })).toBe("约 5 次");
+  });
+
+  it("范围仍是一行，「约」在前面", () => {
+    expect(doseValueText({ value: 30, valueMax: 60, unit: "秒", approximate: true })).toBe(
+      "约 30～60 秒",
+    );
+  });
+});
+
 describe("耗时三态如实（§5.3 + D7）", () => {
   it("没有 duration → 什么也不显示，不是 0 秒，也不是一句废话", () => {
     const d = durationLabel(card({ duration: undefined }));
@@ -212,6 +229,82 @@ describe("整卡收起来", () => {
     const l = cardLines(c);
     expect(l.doses.map((d) => d.value)).toEqual([30]);
     expect(l.doText).toContain("早晚各涂一次");
+  });
+});
+
+/**
+ * 「做什么」与「名」说的是同一句话时，那一行整个不显示。
+ *
+ * 实测 518 张卡里有 50 张两行重叠，其中 5 张一字不差
+ * （「每天酒精不超过 20～25 克」写两遍），有一张首启就能看见
+ * （「睡前用生理盐水冲鼻腔 / 睡前用生理盐水冲洗鼻腔」）。
+ *
+ * 夹具全是真卡的数据（content/cards 下原样），不是编的。
+ */
+describe("名与「做什么」重复时不做两遍", () => {
+  it("一字不差时，「做什么」这一行不显示", () => {
+    const c = card({
+      id: "limit-alcohol",
+      name: "每天酒精不超过 20～25 克",
+      remind: { text: "每天酒精不超过 20～25 克", quote: "…" },
+      dose: [{ value: 20, unit: "克", what: "每日酒精上限范围", quote: "…" }],
+    });
+    expect(cardLines(c).doText).toBe("");
+    expect(cardLines(c).name).toBe("每天酒精不超过 20～25 克");
+  });
+
+  it("只差一个「洗」字（同一件事的两种说法）也不显示", () => {
+    const c = card({
+      id: "nasal-rinse",
+      name: "睡前用生理盐水冲鼻腔",
+      remind: { text: "睡前用生理盐水冲洗鼻腔，坚持约 2 周", quote: "…" },
+      dose: [
+        { value: 2, unit: "次", what: "每个鼻孔", quote: "…" },
+        { value: 2, unit: "周", what: "睡前坚持", quote: "…" },
+      ],
+    });
+    expect(cardLines(c).doText).toBe("");
+  });
+
+  it("程度词不同就不是重复：晾透与晾一会儿差着强度", () => {
+    // 原文：「水分充足的萝卜，稍微晾一下」
+    const c = card({
+      id: "lightly-dry-radish",
+      name: "把切好的萝卜晾干",
+      remind: { text: "把切好的萝卜稍微晾干。", quote: "…" },
+    });
+    expect(cardLines(c).doText).toContain("稍微");
+  });
+
+  it("「名」里没有的新数字是信息，不当重复删掉", () => {
+    const c = card({
+      id: "wash-face",
+      name: "洗脸",
+      remind: { text: "洗脸 30 秒", quote: "…" },
+    });
+    expect(cardLines(c).doText).toContain("30 秒");
+  });
+
+  it("整行判据：前半句是理由时不能只留下半截话", () => {
+    const c = card({
+      id: "freeze-before-cooking",
+      name: "先冷冻再料理",
+      remind: { text: "想提升食材的鲜味和香气时，先冷冻再料理", quote: "…" },
+    });
+    expect(cardLines(c).doText).toContain("想提升食材的鲜味和香气时");
+    expect(cardLines(c).doText).toContain("先冷冻再料理");
+  });
+
+  it("对着屏上真正显示的那个名算：显示名回落后要重新判一次", () => {
+    const c = card({
+      id: "sunscreen-circle-application",
+      name: "打圈涂防晒霜两遍",
+      remind: { text: "打圈涂，涂两遍", quote: "…" },
+    });
+    // 显示名就是「打圈涂防晒霜两遍」→ 「打圈涂，涂两遍」是重复
+    expect(cardLines(c, "打圈涂防晒霜两遍").doText).toBe("");
+    // 换一个显示名（父组件回落成别的话）就不再是重复
+    expect(cardLines(c, "涂防晒霜").doText).toBe("打圈涂，涂两遍");
   });
 });
 
