@@ -212,7 +212,13 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
-          cp desktop/release/*.AppImage desktop/release/*.deb desktop/release/*.rpm desktop/release/*.blockmap desktop/release/latest-linux*.yml dist/
+          # 逐个拷而不是一次 cp 多个通配符：
+          # 某个通配符没匹配到文件时，bash 会把它当字面量传下去，cp 报
+          # "No such file or directory" 就把整步带崩 ——
+          # Linux 就没有 .blockmap（那是 NSIS 与 macOS 才有的增量下载用）。
+          for f in desktop/release/*.AppImage desktop/release/*.deb desktop/release/*.rpm desktop/release/latest-linux*.yml; do
+            [ -e "$f" ] && cp "$f" dist/
+          done
           ls -l dist
       - name: 传到发布草稿
         shell: bash
