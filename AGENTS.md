@@ -18,7 +18,7 @@
 
 ## 2. 现状
 
-已经是独立仓库并跑起来了：内容管线 + PWA 都在，479 个单元测试 + 32 个桌面逻辑测试、内容校验、类型检查、CI 全绿。
+已经是独立仓库并跑起来了：内容管线 + PWA 都在，484 个单元测试 + 32 个桌面逻辑测试、内容校验、类型检查、CI 全绿。
 
 ```
 life-guide/
@@ -66,9 +66,13 @@ life-guide/
 - 原型里的校验用例已迁移为 `app/test/domain/` 与 `content/test/rules.test.ts` 里的单元测试（原型本体 2026-10-27 已删 —— 不被任何构建或测试引用，只是一份只读参考；历史里能取回）。
 - **规则不是每条一个文件**：`content/src/rules/index.ts` 一个文件装 R1–R6、R8–R10、R14、R16、R17；R7、R12 在 `content/src/budget.ts` / `review.ts`；R13 在 `content/src/source/errata.ts`；R15 在 `content/src/default-routine.ts`；R11 是 UI 规则，由 `app/test/ui/card.test.tsx` 守住。
 - **没做的**：设备端验收（**Android 模拟器上已真机验过：装 APK、卡上设提醒、到点系统通知真弹**；还差 iOS 与实体手机、两个日历 App 的实际导入）、**卡片的签字**（35 张 draft 卡等人审）、14 天决策门。
-- **等作者补的**（管道已铺好，只差内容层点一下）：**39 张卡 · 56 行剂量**的引文写的是「约 / 大约 / 左右」，卡上没标 `approximate`，屏上把近似说成了定值（其中一张是服药周期）。
-  `npm run content:approx-check` 把这 56 行连位置、屏上现状、原文引文、重签命令一起列进 `content/approx-report.md`；
-  在那行 dose 上加 `approximate: true` 即可（改完要重签 —— 签字是人的活）。见 §5.1f。
+- **等作者补的**（管道已铺好，只差内容层点一下）：**无**。
+  原先是 **39 张卡 · 56 行剂量**的引文写的是「约 / 大约 / 左右」，卡上没标 `approximate`，屏上把近似说成了定值（其中一张是服药周期）；
+  **2026-10-28 已补齐**（作者授权代签，签名 `AI（作者授权代签）`）：56 行全部标上 `approximate: true` 并重签，
+  `npm run content:approx-check` 现在是 0 张卡 · 0 行。
+  这条命令仍然只列不改 —— 改卡要重签，签字是人的活。见 §5.1f。
+  （其中 `towel-water-top-loader` 原本是 draft 卡，补标志时顺带被签了；已退回 draft，
+  「多一张卡进产品」是内容决策，不该由签字带出来。要签就 `npm run content:review towel-water-top-loader --by <名字>`。）
 
 ---
 
@@ -313,8 +317,10 @@ push tag vX.Y.Z
   每条都带 reason + revisitWhen；巡检脚本按它把对应的发现算作「已接受的偏离」，
   不计入 P0/P1/P2。**没有登记的旧做法按 house style 算「漂移」** ——
   要报告、要给复查条件，不默认保留。
-  审阅基线 `.desktop-app-standard-review-20261026.json`：只标记已审阅的 release，
-  不表示已升级、已修复或通过验收。
+  审阅基线 `.desktop-app-standard-review-20261026.json`：**本机文件，不入库**
+  （`.gitignore` 里 `.desktop-app-standard-review-*.json` 排掉了，从未进过版本库）——
+  它只标记已审阅的 release，不表示已升级、已修复或通过验收。
+  换机器时它不在，巡检会把上游变更候选全算成「未审阅」——那是如实的结果，不是漏了。
   巡检命令：`node <aishort-skills>/skills/desktop-app-standard/scripts/audit.mjs <项目目录> --out audit.json`。
 
 **发版链路上踩过的坑（都写进代码注释了，这里汇总一下）**：

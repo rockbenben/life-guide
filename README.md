@@ -73,7 +73,7 @@ npm run dev
 - [ARCHITECTURE.md](ARCHITECTURE.md)——目录结构、数据流、快照与校验器
 - [使用指南](docs/使用指南.md)——怎么装、怎么用
 - [部署](docs/部署.md)——浏览器 / PWA 那条路的发布步骤
-- 常用命令：`npm run content:check`（内容校验）/ `npm test`（479 个单测）/ `npm run test:desktop`（32 个桌面逻辑测试）/ `npm run acceptance`（浏览器级验收）/ `npm run desktop:build`（当前系统的桌面安装包）/ `npm run mobile:sync`（同步进 Android 工程）
+- 常用命令：`npm run content:check`（内容校验）/ `npm test`（484 个单测）/ `npm run test:desktop`（32 个桌面逻辑测试）/ `npm run acceptance`（浏览器级验收）/ `npm run desktop:build`（当前系统的桌面安装包）/ `npm run mobile:sync`（同步进 Android 工程）
 
 ## 关于 365 开源计划
 
