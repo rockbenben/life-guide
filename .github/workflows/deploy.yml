@@ -1,9 +1,10 @@
-# push 即发布：构建产物推到 gh-pages 分支，EdgeOne Pages 从那个分支取。
+# push 即发布：构建产物推到 gh-pages 分支，GitHub Pages 与 EdgeOne 都从那个分支取。
 #
 # 跟 onepage 同一个模式（那边是 dist，这里是 app/dist）：
 #   · 构建产物推到 gh-pages 分支
-#   · EdgeOne Pages 的 Git 集成指向这个仓的这个分支
-#   · 绑自定义域名（life.newzone.top）
+#   · GitHub Pages 的站点源就是这个分支（已上线：rockbenben.github.io/life-guide/）
+#   · EdgeOne Pages 的 Git 集成也指向这个分支
+#   · 绑自定义域名（life.newzone.top，域名还没配）
 #
 # 首次跑完之后不用再动设置：以后每次推 main 都重新构建并覆盖 gh-pages。
 name: Deploy
@@ -33,10 +34,10 @@ jobs:
 
       - name: Build
         # OG_IMAGE_URL 是社交预览那张图的**绝对地址**（og:image 只认绝对 URL）。
-        # 在仓库的 Settings → Variables 里设成 OG_IMAGE_URL；
-        # 没设时用下面的默认值 —— 域名定下来后改这里或改变量都行。
+        # 仓库变量里已经设成 GitHub Pages 那个地址（仓库 → Settings → Variables）；
+        # 自定义域名配好之后把它改成新域名就行。这里给的值只是兜底。
         env:
-          OG_IMAGE_URL: ${{ vars.OG_IMAGE_URL || 'https://life.newzone.top/og.png' }}
+          OG_IMAGE_URL: ${{ vars.OG_IMAGE_URL || 'https://rockbenben.github.io/life-guide/og.png' }}
         run: npm run app:build
 
       - name: Push to gh-pages

@@ -363,7 +363,7 @@ push tag vX.Y.Z
 | `gh release upload <tag>` | 草稿在 `GET /releases/tags/<tag>` 里查不到，gh 会把草稿的标签改成 `untagged-xxx`，再往那儿传 → 404 | 走 API，按 **release id** 传（`scripts/release-draft.mjs`） |
 | PATCH 草稿只带 `body` | 草稿的标签被打回 `untagged-xxx`，后面按 tag 找全落空 | 每次 PATCH 都显式带 `tag_name`，发布那一步用 release id |
 | 私有仓库的下载链接 | `releases/latest/download/latest*.yml` 匿名取不到（它认浏览器会话） | 四份清单逐一走 API 核验；仓库公开后自动切回匿名下载（用户那条路径） |
-| **artifact 存储配额：私有仓才有，公开仓免费** | 2026-10-28：CI 两个 job 挂在最后的上传步骤上，错误是 `Artifact storage quota has been hit`，而校验本身全过。**根因是那时本仓还是私有的**：GitHub 的 500 MB 额度（GitHub Free，与 Packages 共用）只给私有仓用，账户里其它私有仓的产物已经堆到 11.5 GB（`shiye` 6.1 GB、`md-publisher` 3.8 GB），而没有付款方式时超额是**硬阻断**。转公开后同一个 CI 连传 6 份 157 MB 都没问题（公开仓的 artifact 存储免费，见 GitHub 文档） | 三件事一起做：① 产物**不走 artifact 中转** —— 构建 job 直接传进发布草稿（release 资产不占这个配额）；② CI 的上传改 `continue-on-error`（产物留不留是便利问题）；③ 保留期改 7 天 + 清掉旧产物。本仓已转公开，这条对本仓不再是隐患；**别的私有仓**（`shiye` / `md-publisher` / `zhengyin`）只要哪天在 CI 里传产物，同样会被卡住 |
+| **artifact 存储配额：私有仓才有，公开仓免费** | 2026-10-28：CI 两个 job 挂在最后的上传步骤上，错误是 `Artifact storage quota has been hit`，而校验本身全过。**根因是那时本仓还是私有的**：GitHub 的 500 MB 额度（GitHub Free）只给私有仓用（公开仓的 artifact 存储免费），而**没有付款方式时超额是硬阻断**。本仓自己就攒了 314 MB 旧产物（每次 CI 157 MB × 2），再来一份就顶到额度 | 三件事一起做：① 产物**不走 artifact 中转** —— 构建 job 直接传进发布草稿（release 资产不占这个配额）；② CI 的上传改 `continue-on-error`（产物留不留是便利问题）；③ 保留期改 7 天 + 清掉旧产物。本仓已转公开，这条对本仓不再是隐患。**账户里别的仓（`shiye` / `md-publisher` / `zhengyin`）都是公开仓，不受这个额度限制** |
 | Linux 的 deb / rpm 要 homepage 与作者邮箱 | 2026-10-28：第一轮发版 Windows / macOS / Android 都打好了，Linux 报 `Please specify project homepage`，整条流水线停在那儿 | `desktop/package.json` 写明 `homepage` 与 `repository`；`scripts/check-desktop-metadata.mjs` 在 CI 打包前查一遍（CI 只在 Windows 上打包，本来查不出来） |
 | `cp` 一次接多个通配符 | 有一个通配符没匹配到文件时，bash 把它当字面量传下去，cp 报 `No such file or directory`，整步崩 —— Linux **没有** `.blockmap`（那是 NSIS 与 macOS 才有的增量下载用） | 逐个文件拷，没匹配到的跳过；产物齐不齐由 publish 的资产校验管（它数着 15 个） |
 
@@ -1163,7 +1163,9 @@ git tag v0.1.2 && git push origin v0.1.2   # 这一推才触发流水线
 不涨的话新包装不上。
 
 **怎么发布浏览器那条路**（产物、域名、EdgeOne Pages 的三条发布路径、发完要验的四件事）：
-见 `docs/部署.md`。域名建议 `life.newzone.top`。
+见 `docs/部署.md`。**已经上线的是 GitHub Pages：<https://rockbenben.github.io/life-guide/>**
+（站点源 = `gh-pages` 分支，`deploy.yml` 每次 push 到 main 重新部署）；
+自定义域名 `life.newzone.top` 还差 DNS 那一步。
 
 原型的校验用例已迁移成单元测试（`app/test/domain/` 与 `content/test/rules.test.ts`），
 原型本体在 2026-10-27 删掉了 —— 它不被任何构建或测试引用，只是一份只读参考，

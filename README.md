@@ -21,7 +21,7 @@
 
 | 方面 | 支持情况 |
 | --- | --- |
-| 形态 | **Windows / macOS / Linux 桌面版**、**Android APK**（[Releases 下载](https://github.com/rockbenben/life-guide/releases)），同一份构建，各处跑。浏览器 PWA **暂未对外托管**（域名还没配好），可自行构建 |
+| 形态 | **Windows / macOS / Linux 桌面版**、**Android APK**（[Releases 下载](https://github.com/rockbenben/life-guide/releases/latest)），同一份构建，各处跑。浏览器 PWA：**<https://rockbenben.github.io/life-guide/>**（可装到桌面与手机） |
 | 内容 | 《生活手册》（NHK 说明书系列）的一次快照：**113 篇全文可读**，已签 **518 张卡**（423 张动作 + 95 张疾病知识） |
 | 系统 | Windows 10 及以上（x64 / arm64）；macOS（Intel / Apple Silicon）；Linux（x64 / arm64，AppImage / deb / rpm）；Android 7.0 及以上（minSdk 24）；现代浏览器（Chrome / Edge / Safari） |
 | 联网 | 只有第一次加载需要网络，之后**完全离线可用**（卡片、步骤图、手册全文都预缓存） |
