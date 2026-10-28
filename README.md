@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![365 开源计划 #045](https://img.shields.io/badge/365%20%E5%BC%80%E6%BA%90%E8%AE%A1%E5%88%92-%23045-1f6feb)](https://github.com/rockbenben/365opensource)
 
-[**⬇ 下载**](https://github.com/rockbenben/life-guide/releases) · Windows / macOS / Linux 桌面版 · Android APK · [**📖 使用指南**](docs/使用指南.md)
+[**⬇ 下载**](https://github.com/rockbenben/life-guide/releases/latest) · Windows / macOS / Linux 桌面版 · Android APK · [**📖 使用指南**](docs/使用指南.md)
 
 ![今天页](docs/images/today.png)
 
@@ -21,9 +21,9 @@
 
 | 方面 | 支持情况 |
 | --- | --- |
-| 形态 | 浏览器 PWA（可装到桌面与手机）、**Windows / macOS / Linux 桌面版**、**Android APK**。同一份构建，各处跑 |
+| 形态 | **Windows / macOS / Linux 桌面版**、**Android APK**（[Releases 下载](https://github.com/rockbenben/life-guide/releases)），同一份构建，各处跑。浏览器 PWA **暂未对外托管**（域名还没配好），可自行构建 |
 | 内容 | 《生活手册》（NHK 说明书系列）的一次快照：**113 篇全文可读**，已签 **518 张卡**（423 张动作 + 95 张疾病知识） |
-| 系统 | Windows 10 及以上（x64 / arm64）；macOS（Intel / Apple Silicon）；Linux（x64 / arm64，AppImage / deb / rpm）；Android 8 及以上；现代浏览器（Chrome / Edge / Safari） |
+| 系统 | Windows 10 及以上（x64 / arm64）；macOS（Intel / Apple Silicon）；Linux（x64 / arm64，AppImage / deb / rpm）；Android 7.0 及以上（minSdk 24）；现代浏览器（Chrome / Edge / Safari） |
 | 联网 | 只有第一次加载需要网络，之后**完全离线可用**（卡片、步骤图、手册全文都预缓存） |
 | 提醒 | 早 7:00、晚 21:00 各一条，可改成每周某几天、每隔 N 天、只一次，也能给单张卡单独设 |
 | 语言 | 界面与卡片内容均为中文；卡片文字照抄中文手册快照的原文 |
@@ -50,7 +50,7 @@
 ## 限制
 
 - 只覆盖《生活手册》这一本书的快照，**不是通用健康建议**，也不能替代医生
-- **代码是 MIT；手册正文与图片不是** —— 它们来自 NHK 节目与说明书，版权归原权利人，公开再分发前需取得许可（见 [NOTICE.md](NOTICE.md)）
+- **代码是 MIT；手册正文与图片不是** —— 它们来自 NHK 节目与说明书，版权归原权利人，不在 MIT 授权范围内。本仓库与安装包自 2026-10-28 起公开分发；再分发请先取得许可（见 [NOTICE.md](NOTICE.md)）
 - 界面只做了中文；桌面版有 Windows / macOS / Linux 构建（x64 + arm64），但只实机验过 Windows；macOS / Linux 还没在真机跑过完整流程
 - **桌面安装包还没签名**：Windows 首次运行会有 SmartScreen 提示；macOS 版未签名 / 未公证，需要右键「打开」，且不接自动更新；Linux 的 AppImage 版接自动更新，deb / rpm 版请手动换新包
 - **浏览器版的后台提醒会被浏览器压住，可能晚几分钟**，要准点响请用桌面版或手机版

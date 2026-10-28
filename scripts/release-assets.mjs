@@ -2,9 +2,11 @@
  * 校验发版草稿里的资产，并生成 SHA256SUMS。
  *
  * **为什么不用 artifact 中转**：
- * Actions 的 artifact 存储是**账户级共享**的配额（GitHub Free 500 MB，与
- * Packages 共用），而这一版要发的产物约 1.6 GB —— 走 artifact 中转必然撑爆配额
- * （2026-10-28 实测：账户已用 11.5 GB，CI 连 157 MB 都传不上去）。
+ * Actions 的 artifact 存储有配额 —— GitHub Free 只有 500 MB（与 Packages 共用），
+ * 而且**只给私有仓用**（公开仓免费）。2026-10-28 实测：本仓那时还是私有的，
+ * 账户里其它私有仓的产物已堆到 11.5 GB，连 CI 那 157 MB 都传不上去 ——
+ * 「Artifact storage quota has been hit」直接让两个 job 判红。
+ * 这一版要发的产物约 1.6 GB，走 artifact 中转要多传一遍再下回来。
  * 所以构建 job 直接把产物传到这个 release 草稿上，publish 只读 API。
  *
  * **为什么校验和不用再下一遍文件**：

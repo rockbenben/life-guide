@@ -269,11 +269,14 @@ push tag vX.Y.Z
 
 - **产物不走 artifact 中转（2026-10-28 改）**：每个构建 job 把产物**直接传进
   那个发布草稿**，publish 只读 API。
-  **为什么**：Actions 的 artifact 存储是**账户级共享**的配额 —— GitHub Free 只有
-  500 MB（而且与 GitHub Packages 共用同一个池），而这一版要发的产物约 1.6 GB。
-  2026-10-28 实测：账户已用 11.5 GB（`shiye` 6.1 GB、`md-publisher` 3.8 GB 等），
-  连 CI 那 157 MB 的桌面产物都传不上去 —— 「Artifact storage quota has been hit」
-  直接让两个 job 判红。**release 资产不占 artifact 配额**，所以绕开它是正路。
+  **为什么**：Actions 的 artifact 存储有配额 —— GitHub Free 只有 500 MB
+  （与 GitHub Packages 共用同一个池），而且**只给私有仓用**（公开仓的 artifact
+  存储免费，见 GitHub 文档）；账户里其它私有仓的产物已堆到 11.5 GB
+  （`shiye` 6.1 GB、`md-publisher` 3.8 GB 等），没有付款方式时超额是**硬阻断**。
+  2026-10-28 实测：本仓那时还是私有的，连 CI 那 157 MB 的桌面产物都传不上去 ——
+  「Artifact storage quota has been hit」直接让两个 job 判红。
+  **release 资产不占 artifact 配额**，所以绕开它是正路；转公开之后这条路更稳
+  （1.6 GB 的产物走 artifact 中转要多传一遍再下回来，直接进草稿省两趟）。
   顺带把 CI 里两个 artifact 上传改成 `continue-on-error`：产物留不留是便利问题，
   配额满了不该让构建判定失败（真正的判定是那次真启动）。
 - **校验和不用把 1.6 GB 再下一遍**：GitHub 的 release 资产 API 每个资产都带
@@ -360,7 +363,7 @@ push tag vX.Y.Z
 | `gh release upload <tag>` | 草稿在 `GET /releases/tags/<tag>` 里查不到，gh 会把草稿的标签改成 `untagged-xxx`，再往那儿传 → 404 | 走 API，按 **release id** 传（`scripts/release-draft.mjs`） |
 | PATCH 草稿只带 `body` | 草稿的标签被打回 `untagged-xxx`，后面按 tag 找全落空 | 每次 PATCH 都显式带 `tag_name`，发布那一步用 release id |
 | 私有仓库的下载链接 | `releases/latest/download/latest*.yml` 匿名取不到（它认浏览器会话） | 四份清单逐一走 API 核验；仓库公开后自动切回匿名下载（用户那条路径） |
-| **artifact 存储配额是账户级的** | 2026-10-28：CI 两个 job 挂在最后的上传步骤上，错误是 `Artifact storage quota has been hit`，而校验本身全过 | 产物**不**走 artifact 中转：构建 job 直接传进发布草稿，release 资产不占这个配额；CI 的上传改 `continue-on-error`。账户级占用要自己清（本次 11.5 GB：`shiye` 6.1 GB、`md-publisher` 3.8 GB） |
+| **artifact 存储配额：私有仓才有，公开仓免费** | 2026-10-28：CI 两个 job 挂在最后的上传步骤上，错误是 `Artifact storage quota has been hit`，而校验本身全过。**根因是那时本仓还是私有的**：GitHub 的 500 MB 额度（GitHub Free，与 Packages 共用）只给私有仓用，账户里其它私有仓的产物已经堆到 11.5 GB（`shiye` 6.1 GB、`md-publisher` 3.8 GB），而没有付款方式时超额是**硬阻断**。转公开后同一个 CI 连传 6 份 157 MB 都没问题（公开仓的 artifact 存储免费，见 GitHub 文档） | 三件事一起做：① 产物**不走 artifact 中转** —— 构建 job 直接传进发布草稿（release 资产不占这个配额）；② CI 的上传改 `continue-on-error`（产物留不留是便利问题）；③ 保留期改 7 天 + 清掉旧产物。本仓已转公开，这条对本仓不再是隐患；**别的私有仓**（`shiye` / `md-publisher` / `zhengyin`）只要哪天在 CI 里传产物，同样会被卡住 |
 | Linux 的 deb / rpm 要 homepage 与作者邮箱 | 2026-10-28：第一轮发版 Windows / macOS / Android 都打好了，Linux 报 `Please specify project homepage`，整条流水线停在那儿 | `desktop/package.json` 写明 `homepage` 与 `repository`；`scripts/check-desktop-metadata.mjs` 在 CI 打包前查一遍（CI 只在 Windows 上打包，本来查不出来） |
 | `cp` 一次接多个通配符 | 有一个通配符没匹配到文件时，bash 把它当字面量传下去，cp 报 `No such file or directory`，整步崩 —— Linux **没有** `.blockmap`（那是 NSIS 与 macOS 才有的增量下载用） | 逐个文件拷，没匹配到的跳过；产物齐不齐由 publish 的资产校验管（它数着 15 个） |
 

@@ -67,9 +67,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         # **上传失败不算这一步失败**：报告只是给人看的附赠品，
-        # 而 artifact 存储是账户级共享的配额（GitHub Free 500 MB）——
-        # 配额满了不该让整个校验判红（2026-10-28 实测：账户已用 11.5 GB，
-        # 连 157 MB 都传不上去，CI 因此红过一次）。
+        # 而 artifact 存储有配额（GitHub Free 500 MB，私有仓才吃这个额度）——
+        # 配额满了不该让整个校验判红（2026-10-28 实测：那时本仓还是私有的，
+        # 账户里别的私有仓已堆到 11.5 GB，连 157 MB 都传不上去，CI 因此红过）。
         # continue-on-error 是**步骤级**属性，要与 uses 同级，不能塞在 with 里
         # （塞进去只会得到一条 warning，设置根本没生效 —— 实测踩过）。
         continue-on-error: true
@@ -119,7 +119,7 @@ jobs:
         uses: actions/upload-artifact@v7
         # 同样：这一步只是把打好的东西留下来给人看。
         # 真正的判定是上面那次真启动 —— 打包成功 ≠ 起得来，
-        # 而上传失败只说明账户的 artifact 配额满了，不代表应用坏了。
+        # 而上传失败只说明 artifact 配额满了，不代表应用坏了。
         continue-on-error: true
         with:
           name: life-guide-desktop
