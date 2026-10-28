@@ -43,6 +43,14 @@ const bash = [
   "C:\\Program Files\\Git\\usr\\bin\\bash.exe",
 ].find((p) => fs.existsSync(p));
 
+/**
+ * 这些是步骤级关键字，不是 action 的输入。
+ *
+ * 只收「确定不是任何 action 的输入」的两个 —— `name` / `path` 之类是
+ * 真的 action 输入（upload-artifact 的 `name` 就是），不能一刀切。
+ */
+const STEP_KEYWORDS = new Set(["continue-on-error", "if"]);
+
 let bad = 0;
 
 for (const file of fs.readdirSync(dir).filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"))) {
@@ -88,6 +96,22 @@ for (const file of fs.readdirSync(dir).filter((f) => f.endsWith(".yml") || f.end
       console.error(
         `✗ ${rel} / ${where}：env.${key} 引用了自己（"${value}"）—— 循环引用，GitHub 会拒绝整个文件。`,
       );
+    }
+  }
+
+  // 步骤级关键字塞进了 with: 里 —— GitHub 只给一条 warning 就把它忽略了，
+  // 于是「上传失败不算失败」这种设置根本没生效（2026-10-28 实测：
+  // continue-on-error 写在 with 里，CI 照样因为 artifact 配额满而判红）。
+  for (const [jobName, job] of Object.entries(doc.jobs ?? {})) {
+    for (const [i, step] of (job?.steps ?? []).entries()) {
+      for (const key of Object.keys(step?.with ?? {})) {
+        if (!STEP_KEYWORDS.has(key)) continue;
+        bad++;
+        console.error(
+          `✗ ${rel} / job ${jobName} / step ${i + 1}（${step.name ?? "无名"}）：` +
+            `with 里的 "${key}" 是步骤级关键字，要写在 with 外面（与 uses 同级）`,
+        );
+      }
     }
   }
 }
