@@ -26,7 +26,7 @@ app/dist/                同一份构建产物，三处复用
 life-guide/
 ├── AGENTS.md                 项目约定（先读）
 ├── ARCHITECTURE.md           本文件
-├── package.json              npm workspaces: ["content", "app"]
+├── package.json              npm workspaces: ["content", "app", "desktop", "mobile"]
 ├── tsconfig.json / vitest.config.ts
 ├── schema/
 │   └── cards.schema.json     JSON Schema；content 与 app 共用
@@ -34,7 +34,7 @@ life-guide/
 │   ├── source/               blog 正文快照（由 import 生成；只允许勘误修改）
 │   │   ├── SOURCE.lock       commit、日期、每个文件的 sha256
 │   │   ├── ERRATA.md         对快照的修改记录
-│   │   └── the-savvy-life-manual/*.md   114 篇
+│   │   └── the-savvy-life-manual/*.md   113 篇（+ 目录页 README，不算一篇）
 │   ├── media/                快照引用的全部图片，<sha256>.<ext>
 │   │   └── media.lock        原 URL → 文件、sha256、bytes、fetchedAt
 │   ├── cards/                每篇文章一个 yaml（104 个文件，一个文件可含多张卡）
@@ -48,7 +48,7 @@ life-guide/
 │   │   ├── cards/
 │   │   │   ├── load.ts       读 yaml，按 schema 校验结构
 │   │   │   └── fingerprint.ts 卡片内容指纹（排除 review 字段本身）
-│   │   ├── rules/index.ts    R1–R6、R8–R10、R14、R16 都在这一个文件里
+│   │   ├── rules/index.ts    R1–R6、R8–R10、R14、R16、R17 都在这一个文件里
 │   │   ├── budget.ts         R7 忙档预算 + R12 审阅签字
 │   │   ├── review.ts         人工签字：写入 { by, date, hash }（用 Document API，保留注释）
 │   │   ├── default-routine.ts R15 默认清单：卡在、已签字、不重复
@@ -61,7 +61,7 @@ life-guide/
 │   │   ├── extract/          P3：LLM 起草（只产出 draft）—— llm.ts / prompt.ts / parse.ts / draft.ts
 │   │   ├── audit/            审阅辅助：机械检查 + 语义检查 + 报告/状态
 │   │   └── cli.ts            import | check | build | review | draft | audit | signing-list |
-│   │                         slot-check | repair-quotes
+│   │                         slot-check | approx-check | repair-quotes
 │   └── test/                 rules · build · errata · extract · audit · default-routine ·
 │                             signing-list · repair-quotes · media-optimize 的单元测试
 ├── app/                      PWA
@@ -85,13 +85,14 @@ life-guide/
 │   │   │   ├── manual.ts     手册搜索 / 分类 / 内链与文章索引
 │   │   │   ├── markdown.ts   markdown 渲染 + 内链解析
 │   │   │   ├── notices.ts    疾病卡判定与提示分级
-│   │   │   ├── reminders.ts  提醒规则、下一次时刻、默认模式
+│   │   │   ├── reminders.ts  提醒规则、下一次时刻、默认模式、「今天不做」只跳这一次
 │   │   │   ├── daily.ts      今天只放自己挑的（todaysCards / starterPack / 轮换一张）
+│   │   │   ├── skip.ts        「今天不做」：只跳当天，可撤销，次日自然回来
 │   │   │   ├── lines.ts      收起态三行契约：名取内容层动作名、数字不重复、耗时四态如实
 │   │   │   ├── custom.ts     用户自己加的习惯 → 一张卡
 │   │   │   ├── progress.ts   事件日志 → 累计天数与页边的 14 格印迹
 │   │   │   ├── update.ts     更新状态 → 人话
-│   │   │   └── ics.ts        生成日历文件（定时事件 + 卡片提醒 + VALARM）
+│   │   │   └── ics.ts        生成日历文件（定时事件 + 卡片提醒 + VALARM + EXDATE）
 │   │   ├── data/
 │   │   │   ├── db.ts         IndexedDB：events、settings、custom
 │   │   │   ├── useRoutine.ts 「我的日常」与习惯（清单只有这一份）
@@ -101,21 +102,39 @@ life-guide/
 │   │   │                     Conditions / DiscoverPanel / SortPanel / SortableRow / Reminder /
 │   │   │                     HabitForm / Disclaimer（手帖行 + 用法用量表）
 │   │   └── style.css         设计令牌（和紙 / 夜紙）+ 自写的组件层（lg- 前缀）
-│   └── test/domain/*.test.ts
-│       test/platform/*.test.ts
-│       test/ui/*.test.tsx    组件渲染 / 对比度 / 可访问性 / R11（收起态的 stop 禁忌）
-├── scripts/acceptance/       浏览器级验收：Playwright 驱动本机 Chrome
-├── prototype/                冻结，只读参考
+│   └── test/
+│       ├── domain/*.test.ts   纯函数
+│       ├── platform/*.test.ts
+│       ├── data/*.test.ts
+│       └── ui/*.test.tsx      组件渲染 / 对比度 / 可访问性 / R11（收起态的 stop 禁忌）
+├── desktop/                  桌面端：Electron 壳（跑同一份 app/dist）
+│   ├── main.mjs              生命周期、窗口、托盘、导航守卫
+│   ├── preload.cjs           页面与 Node 之间那条极窄的缝
+│   ├── lib/                  protocol · navigation · reminders · updater · tray · menu
+│   │                         （reminder-timing / update-events / window-state 是纯逻辑，可单测）
+│   ├── lib/*.test.mjs        纯逻辑的 node --test（npm run test:desktop）
+│   └── build/                打包与托盘用的图标
+├── mobile/                   手机端：Capacitor 壳（跑同一份 app/dist）
+│   ├── capacitor.config.ts
+│   ├── android/ · ios/       原生工程（cap add 生成）
+│   └── assets/               图标与启动图的源
+├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
+│   └── README.md             改设计改这里，重跑渲染命令出图
+├── docs/                     使用指南 · 部署 · 发布说明 · README 用的截图
+├── scripts/                  acceptance/（浏览器级验收）· set-version · release-draft
+│                             · decision-gate · desktop-smoke · screenshot 等
+├── .desktop-policy.json      桌面端已登记的取舍（带 reason + revisitWhen）
 └── .github/workflows/        ci.yml（校验）/ deploy.yml（PWA 发布）/ release.yml（tag 发版）
 ```
 
 PWA 的 `manifest.webmanifest` 由 vite-plugin-pwa 在构建时生成，不在 `public/` 里。
-R11、R13、R15、R16 都已实现：R11 在 `app/test/ui/card.test.tsx`，R13 在
-`content/src/source/errata.ts`，R15 在 `content/src/default-routine.ts`，R16 在
+R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`，R13 在
+`content/src/source/errata.ts`，R15 在 `content/src/default-routine.ts`，R16 与 R17 在
 `content/src/rules/index.ts`。R11 是**组件渲染级**测试，不需要浏览器；浏览器能验的那几条由
 `npm run acceptance` 覆盖，真实设备上的 e2e 验收仍未做（见 AGENTS.md §7.1）。
 
-原型 `verify.js` 的 22 项按性质拆开迁移：**2 项状态逻辑（勾选切换、再点取消）→ `app/test/domain/`；20 项数据形状与图片校验 → `content/test/rules/`**。工作量主要在后者。
+原型 `verify.js` 的 22 项按性质拆开迁移：**2 项状态逻辑（勾选切换、再点取消）→ `app/test/domain/`；20 项数据形状与图片校验 → `content/test/rules.test.ts`**。工作量主要在后者。
+（原型本体在 2026-10-27 删掉了 —— 它不被任何构建或测试引用，只是一份只读参考；历史里还能取回。）
 
 ## 2. 技术选择
 
@@ -128,7 +147,7 @@ R11、R13、R15、R16 都已实现：R11 在 `app/test/ui/card.test.tsx`，R13 �
 | UI | Preact + Vite | 交互只有列表 / 展开 / 勾选 |
 | 样式 | Tailwind CSS v4 + daisyUI 5（只用它的主题令牌机制）+ 自写组件层 | 组件与主题都是**构建期**产物（daisyUI 是纯 CSS 插件，不注 JS、不装 Provider）—— 产物里没有运行时，PWA / Electron / Capacitor 三处跑同一份 CSS。界面不再用 daisyUI 的组件类：形状语言是「一页手帖」（细横线分栏 + 用法用量表），而那套组件给的是「一叠带阴影的圆角卡 + 粉色提示块」。响应式靠断点，桌面与手机不是两套界面 |
 | PWA | vite-plugin-pwa（Workbox） | 浏览器形态：可装可离线 |
-| 桌面端 | Electron（`desktop/`） | 自定义 `app://` 协议伺服 `app/dist`。**不能用 `file://`** —— 渲染层要 `fetch("cards.json")`，file:// 下会被拦；协议注册成 standard + secure 之后 origin 稳定，IndexedDB 里的记录才留得住。构建目标为 Windows / macOS / Linux 各 x64 + arm64；渲染层带 CSP、导航守卫与 IPC sender 校验。**只有 Windows 接自动更新**（macOS 未签名、Linux 没接客户端更新）。主进程只管生命周期；协议 / 提醒 / 菜单 / 导航 / IPC 信任在 `desktop/lib/` 各一块 |
+| 桌面端 | Electron（`desktop/`） | 自定义 `app://` 协议伺服 `app/dist`。**不能用 `file://`** —— 渲染层要 `fetch("cards.json")`，file:// 下会被拦；协议注册成 standard + secure 之后 origin 稳定，IndexedDB 里的记录才留得住。构建目标为 Windows / macOS / Linux 各 x64 + arm64；渲染层带 CSP、导航守卫与 IPC sender 校验。**Windows 安装版与 Linux 的 AppImage 版接自动更新**（macOS 没签名接不了；Linux 的 deb / rpm 装的没有 AppImage 那个文件，硬跑会把应用装到别处，所以那两种仍手动换包）。主进程只管生命周期；协议 / 提醒 / 菜单 / 导航 / IPC 信任在 `desktop/lib/` 各一块 |
 | 手机端 | Capacitor（`mobile/`） | 同一份 `app/dist` 装进原生 WebView，生成 Android / iOS 工程。界面不重写 |
 | 存储 | IndexedDB（idb 薄封装） | 事件日志不适合 localStorage |
 | 测试 | Vitest + Playwright + node:test | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright；主进程 / 导航 / 协议的纯逻辑用 `node --test` |
@@ -140,14 +159,14 @@ R11、R13、R15、R16 都已实现：R11 在 `app/test/ui/card.test.tsx`，R13 �
 运行时零成本，也不接管任何行为（不注 Provider、不加全局 JS）——
 与「不引入状态管理库」这种会接管应用结构的库不是一回事。
 主题是 CSS 变量（`@plugin "daisyui/theme"`），暖纸色与暗色各配了一套，
-不套默认皮。Tailwind 只扫 `app/` 下的源码，`content/` 与 `prototype/` 不参与。
+不套默认皮。Tailwind 只扫 `app/` 下的源码，`content/` 不参与。
 
 **三种形态的关系**：界面只写一遍（`app/src`），构建产物 `app/dist` 三处复用 ——
 浏览器里是 PWA，桌面上是 Electron 壳，手机上是 Capacitor 壳。
 **各自的数据是分开的**（IndexedDB 按 origin / 应用 id 存），要合并用设置页的导出 / 导入。
 
 桌面壳的发布目标覆盖 Windows / macOS / Linux 各 x64 + arm64，同一份 `app/dist` 在三个系统上跑；
-差异只在安装包格式与更新通道：Windows 接 electron-updater，macOS / Linux 目前手动换包。
+差异只在安装包格式与更新通道：Windows 与 Linux 的 AppImage 版接 electron-updater，macOS 与 Linux 的 deb / rpm 版目前手动换包。
 
 ## 3. 关键接口
 
@@ -193,6 +212,9 @@ type DoneEvent = {
   /** 完成时按哪种周期算：改频率后旧完成不冒充新频率 */
   periodCadence?: "weekly" | "monthly";
 };
+
+// 设置里另有 skipToday: { [cardId]: "YYYY-MM-DD" } —— 「今天不做」只跳过当天，
+// 不进事件日志、不改 myRoutine；过了 04:00 日界线自然失效。
 ```
 
 ## 4. 数据流

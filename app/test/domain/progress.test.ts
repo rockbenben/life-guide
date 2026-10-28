@@ -2,7 +2,8 @@
  * 原型 verify.js 的状态逻辑用例迁到这里（AGENTS.md/ARCHITECTURE.md §6）。
  *
  * 这里是 P0 唯一迁过来的那 2 项：勾选可切换、再点一次取消。
- * 剩下的 20 项是数据形状与图片校验，落在 content/test/rules/。
+ * 剩下的 20 项是数据形状与图片校验，落在 content/test/rules.test.ts
+ * （原型本体 2026-10-27 已删 —— 它不被任何构建或测试引用，只是一份只读参考）。
  */
 import { describe, expect, it } from "vitest";
 
