@@ -1189,6 +1189,12 @@ node scripts/release-assets.mjs                               # 校验发布草�
 node scripts/release-draft.mjs <目录>                          # 建/找发布草稿并把产物传上去（按 release id 传）
 ```
 
+**提交信息用英文**（标题与正文都是）。
+这是本仓历史里的惯例，不是新规矩：最近 30 条提交里 29 条英文标题，
+22 段有正文的提交里 22 段是英文正文。格式照 Conventional Commits：
+`type(scope): what changed`，正文写清**改了什么、为什么、验过什么、还开着什么**。
+一次提交只做一件事 —— 不同功能域分开提交（内容层 / App / 品牌 / 文档各一条）。
+
 内容管线在 `content/`（Node CLI，无 UI），App 在 `app/`（Preact + Vite + PWA）。
 两者之间只隔两个 json：`cards.json`（结构化卡片）与 `manual.json`（手册全文，供「手册」页浏览）。
 App 不认识 markdown。
