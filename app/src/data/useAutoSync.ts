@@ -81,6 +81,21 @@ export function useAutoSync(onSynced: () => void): void {
     void run();
 
     /**
+     * App 开着的时候也定期看一眼。
+     *
+     * **为什么需要**：点「完成」只写本地，不联网；同步择机发生。
+     * 如果只靠「打开 App / 回到前台」这两个时机，那么**一直开着不切走**的时候，
+     * 上午记的东西要等到下次切前台才上得去 —— 那种情况下"记了但另一台看不到"很难查。
+     *
+     * 这个定时器只是"到点看一眼有没有要传的"：`run()` 自己也过节流，
+     * 没改动时指纹相同 → 不传东西（见 sync.ts 的 needPush）。
+     */
+    const timer = setInterval(() => {
+      if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
+      void run();
+    }, MIN_INTERVAL);
+
+    /**
      * 回到前台时再同步一次。
      *
      * 手机端 App 切到后台会被系统挂起，回来的那一刻正是数据可能已经
@@ -91,6 +106,9 @@ export function useAutoSync(onSynced: () => void): void {
       if (document.visibilityState === "visible") void run();
     };
     document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, []);
 }

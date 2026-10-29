@@ -113,6 +113,8 @@ const KEY_PASSPHRASE = "syncPassphrase";
 const KEY_LAST_AT = "syncLastAt";
 /** 上次传上去的那份内容的指纹 —— 用来判断"这次要不要真传" */
 const KEY_PUSHED_HASH = "syncPushedHash";
+/** 上次同步时本地那份的指纹 —— 用来判断"本地变了吗" */
+const KEY_LOCAL_HASH = "syncLocalHash";
 /** 上次同步用的是哪个位置（落点 + 地址 + 空间 id） */
 const KEY_LAST_SPACE = "syncLastSpace";
 
@@ -209,6 +211,14 @@ export interface RemoteRecord {
   /** 版本标识：用来发现「别人刚写过」 */
   rev: string;
   updatedAt: number;
+  /**
+   * 远端**没变**（服务端回了 304，body 都没发）。
+   *
+   * 这一条是省流量的关键：每次同步本来都要把整份载荷拉下来，
+   * 一天几十次就是几十 MB 下载 —— 网盘的下载流量是按月算的。
+   * 带上 `If-None-Match` 问一句「还是那一版吗」，没变就只花几百字节。
+   */
+  unchanged?: boolean;
 }
 
 /**
@@ -500,7 +510,28 @@ async function syncOnce(
   }
 
   let remotePayload: SyncPayload | null = null;
-  if (remote) {
+  if (remote && remote.unchanged) {
+    /*
+     * 远端没变（服务端回了 304，body 都没发）—— 省下的是**下载流量**，
+     * 网盘的下载额度是按月算的，不省就是白花。
+     *
+     * 远端还是上次那份 → 本地已经含了它 → 合并结果就是本地这份。
+     * 于是只剩一个问题：**本地变了吗？**
+     */
+    const localFp = await payloadFingerprint(local);
+    const lastLocal = await getSetting<string>(KEY_LOCAL_HASH, "");
+    if (localFp === lastLocal) {
+      // 两边都没变 → 什么都不用做（连 PUT 都省了）
+      await setSetting(KEY_LAST_AT, Date.now());
+      await saveClock();
+      return {
+        ok: true,
+        message: "同步完成：没有要传的改动。",
+        added: 0, updated: 0, removed: 0, settingsChanged: 0, pushed: false, pulled: false,
+      };
+    }
+    await setSetting(KEY_LOCAL_HASH, localFp);
+  } else if (remote) {
     try {
       remotePayload = await decryptPayload(secret.key, remote.blob);
     } catch (err) {
@@ -605,6 +636,8 @@ async function syncOnce(
   await saveClock();
   // 记下"这次传上去的是哪一份" —— 下次好判断还需不需要传
   if (pushed) await setSetting(KEY_PUSHED_HASH, fingerprint);
+  // 记下本地那份的指纹 —— 下次远端说"没变"时，靠它判断本地要不要传
+  await setSetting(KEY_LOCAL_HASH, await payloadFingerprint(local));
   // 记下"上次同步用的是哪个位置" —— 下次能看出"这次换了个地方"
   await setSetting(KEY_LAST_SPACE, spaceKeyOf(conf, secret.spaceId));
 

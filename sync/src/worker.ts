@@ -103,7 +103,17 @@ export async function handleRequest(
   if (request.method === "GET") {
     const raw = await kv.get(spaceId);
     if (!raw) return json({ error: "还没有这一份" }, 404, cors);
-    return json(JSON.parse(raw) as StoredBlob, 200, cors);
+    const record = JSON.parse(raw) as StoredBlob;
+    /*
+     * 条件请求：客户端问「还是那一版吗」。
+     * 没变就回 304，**body 都不发** —— 省的是下载流量
+     * （客户端每隔几分钟就问一次，全量回一次是白花流量）。
+     */
+    const asked = request.headers.get("if-none-match");
+    if (asked && asked === String(record.rev)) {
+      return new Response(null, { status: 304, headers: cors });
+    }
+    return json(record, 200, cors);
   }
 
   if (request.method === "PUT") {

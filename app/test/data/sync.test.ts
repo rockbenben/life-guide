@@ -31,7 +31,11 @@ import {
   deriveSecret,
   encryptPayload,
 } from "../../src/data/sync-crypto.ts";
-import { SYNC_PAYLOAD_VERSION, type SyncPayload } from "../../src/domain/sync.ts";
+import {
+  mergePayloads,
+  SYNC_PAYLOAD_VERSION,
+  type SyncPayload,
+} from "../../src/domain/sync.ts";
 
 /** 一个「远端」：内存里的一个格子。 */
 function memoryTransport(store: Map<string, RemoteRecord> = new Map()): SyncTransport {
@@ -52,6 +56,23 @@ function memoryTransport(store: Map<string, RemoteRecord> = new Map()): SyncTran
 }
 
 const PASS = "一句不会忘的话-2026";
+
+/** 造一份载荷（测试用）。 */
+function payloadOf(
+  deviceId: string,
+  over: Partial<SyncPayload> = {},
+): SyncPayload {
+  return {
+    v: SYNC_PAYLOAD_VERSION,
+    deviceId,
+    updatedAt: 1,
+    events: [],
+    tombstones: [],
+    settings: [],
+    custom: [],
+    ...over,
+  };
+}
 
 /** 同步配置：把新加的落点字段补齐，测试里只写关心的那几项。 */
 function cfg(over: Partial<SyncConfig> = {}): SyncConfig {
@@ -300,6 +321,43 @@ describe("一轮同步", () => {
     expect(pushed.tombstones.some((t) => t.id === "900")).toBe(true);
   });
 
+  it("远端没变（304）→ 只花一次「问一句」的流量，不拉全量", async () => {
+    const store = new Map<string, RemoteRecord>();
+    let pushes = 0;
+    let fetches = 0;
+    const transport: SyncTransport = {
+      async fetch(id) {
+        fetches++;
+        // 远端说"还是那一版吗" → 没变
+        return {
+          blob: { v: 1, iv: "", ciphertext: "" },
+          rev: "1",
+          updatedAt: Date.now(),
+          unchanged: true,
+        };
+      },
+      async push(id, blob) {
+        pushes++;
+        store.set(id, { blob, rev: "2", updatedAt: Date.now() });
+        return { ok: true };
+      },
+    };
+
+    const conf = cfg({ enabled: true, serverUrl: "https://x.dev" });
+    const first = await syncNow(transport, conf);
+    expect(first.ok).toBe(true);
+    // 本地没改 → 什么都不用做（连 PUT 都省了）
+    expect(pushes).toBe(0);
+    expect(first.message).toContain("没有要传的改动");
+
+    // 本地改了 → 只推本地那份（远端没变，合起来就是本地这份）
+    await setSetting("cadence", { "card-x": "weekly" });
+    const second = await syncNow(transport, conf);
+    expect(second.ok).toBe(true);
+    expect(pushes).toBe(1);
+    expect(fetches).toBe(2);
+  });
+
   it("本地没改就不重传（网盘按流量算钱，没必要每次开 App 都传一遍）", async () => {
     const { key, spaceId } = await deriveSecret(PASS);
     const store = new Map<string, RemoteRecord>();
@@ -505,6 +563,26 @@ describe("一轮同步", () => {
     await setSetting("cadence", { "card-x": "weekly" });
     const local = await getSettingMeta<Record<string, string>>("cadence");
     expect(local.updatedAt).toBeGreaterThan(future);
+  });
+
+  it("两台设备同时改不同的东西（一台盖章、一台排序）→ 互不踩", async () => {
+    // 设备 A 刚盖了一个章；设备 B 刚把清单换了次序。两边几乎同时同步。
+    const a = payloadOf("dev-a", {
+      events: [
+        { date: "2026-10-29", cardId: "stamped", variant: "normal", ts: 501, updatedAt: 100 },
+      ],
+      settings: [{ key: "myRoutine", value: ["a", "b"], updatedAt: 100 }],
+    });
+    const b = payloadOf("dev-b", {
+      events: [],
+      settings: [{ key: "myRoutine", value: ["b", "a"], updatedAt: 200 }],
+    });
+
+    const merged = mergePayloads(a, b);
+    // 盖章保住了（记录按条合，不会被清单的改动挤掉）
+    expect(merged.payload.events.map((e) => e.cardId)).toEqual(["stamped"]);
+    // 清单是一个整体，按"谁新谁赢"：B 的次序更新 → 赢
+    expect(merged.payload.settings.find((s) => s.key === "myRoutine")?.value).toEqual(["b", "a"]);
   });
 
   it("同步设置存进去再读出来是一样的", async () => {    await saveSyncConfig({

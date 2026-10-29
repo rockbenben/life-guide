@@ -36,18 +36,39 @@ export function normalizeServerUrl(url: string): string {
 export function httpTransport(serverUrl: string): SyncTransport {
   const base = normalizeServerUrl(serverUrl);
   const url = (spaceId: string) => `${base}/blob/${encodeURIComponent(spaceId)}`;
+  /** 每个空间上次看到的版本（用来问「还是那一版吗」）。 */
+  const revs = new Map<string, string>();
 
   return {
     async fetch(spaceId: string): Promise<RemoteRecord | null> {
+      // 问一句「还是那一版吗」——没变就只回 304，不发 body（省流量）
+      const known = revs.get(spaceId);
       const res = await fetch(url(spaceId), {
         method: "GET",
-        headers: { accept: "application/json" },
+        headers: {
+          accept: "application/json",
+          ...(known ? { "if-none-match": known } : {}),
+        },
         cache: "no-store",
       });
       // 远端还没有这一份 —— 不是错，是"第一次同步"
-      if (res.status === 404) return null;
+      if (res.status === 404) {
+        revs.delete(spaceId);
+        return null;
+      }
+      // 304 = 没变
+      if (res.status === 304) {
+        return {
+          blob: { v: 1, iv: "", ciphertext: "" },
+          rev: known ?? "",
+          updatedAt: Date.now(),
+          unchanged: true,
+        };
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return toRecord((await res.json()) as WireRecord);
+      const rec = toRecord((await res.json()) as WireRecord);
+      revs.set(spaceId, rec.rev);
+      return rec;
     },
 
     async push(spaceId, blob: EncryptedBlob, baseRev: string | null) {

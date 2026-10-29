@@ -61,12 +61,31 @@ export function githubTransport(opts: GithubOptions): SyncTransport {
     ...extra,
   });
 
+  /** 每个空间上次看到的 blob sha（用来问「还是那一版吗」）。 */
+  const shas = new Map<string, string>();
+
   const transport: SyncTransport = {
     async fetch(spaceId: string): Promise<RemoteRecord | null> {
       const url = `${urlOf(spaceId)}${opts.branch ? `?ref=${encodeURIComponent(opts.branch)}` : ""}`;
-      const res = await fetch(url, { headers: headers() });
+      const known = shas.get(spaceId);
+      const reqHeaders: Record<string, string> = headers();
+      // 问一句「还是那一版吗」——没变就只回 304，不发 body（省流量）
+      if (known) reqHeaders["if-none-match"] = known;
+      const res = await fetch(url, { headers: reqHeaders });
       // 404 = 仓库里还没有这一份（第一次同步，不是错）
-      if (res.status === 404) return null;
+      if (res.status === 404) {
+        shas.delete(spaceId);
+        return null;
+      }
+      // 304 = 没变
+      if (res.status === 304) {
+        return {
+          blob: { v: 1, iv: "", ciphertext: "" },
+          rev: known ?? "",
+          updatedAt: Date.now(),
+          unchanged: true,
+        };
+      }
       if (!res.ok) throw new Error(`GitHub 取不到数据（HTTP ${res.status}）`);
       const data = (await res.json()) as {
         content?: string;
@@ -74,6 +93,7 @@ export function githubTransport(opts: GithubOptions): SyncTransport {
         encoding?: string;
       };
       if (!data.content) return null;
+      if (data.sha) shas.set(spaceId, data.sha);
       const blob = JSON.parse(decodeBase64(data.content)) as EncryptedBlob;
       return {
         blob,

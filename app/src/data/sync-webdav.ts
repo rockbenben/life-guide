@@ -46,13 +46,29 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
 
   const transport: SyncTransport = {
     async fetch(spaceId: string): Promise<RemoteRecord | null> {
-      const res = await fetch(urlOf(spaceId), {
-        headers: { authorization: auth, accept: "application/json" },
-      });
+      const known = seen.get(spaceId);
+      const headers: Record<string, string> = {
+        authorization: auth,
+        accept: "application/json",
+      };
+      // 问一句「还是那一版吗」——没变就只回 304，body 都不发。
+      // 这一句是省下载流量的关键：每次同步都拉全量，一天几十次就是几十 MB。
+      if (known?.strong && known.etag) headers["if-none-match"] = known.etag;
+
+      const res = await fetch(urlOf(spaceId), { headers });
       // 404 = 网盘里还没有这一份（第一次同步，不是错）
       if (res.status === 404) {
         seen.delete(spaceId);
         return null;
+      }
+      // 304 = 没变（条件头对上了）
+      if (res.status === 304) {
+        return {
+          blob: { v: 1, iv: "", ciphertext: "" },
+          rev: known?.etag ?? "",
+          updatedAt: Date.now(),
+          unchanged: true,
+        };
       }
       if (!res.ok) throw new Error(`网盘取不到数据（HTTP ${res.status}）`);
       const text = await res.text();

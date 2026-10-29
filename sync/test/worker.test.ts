@@ -42,8 +42,7 @@ describe("同步服务", () => {
     expect(res.status).toBe(404);
   });
 
-  it("写进去再读出来是同一份密文", async () => {
-    const store = kv();
+  it("写进去再读出来是同一份密文", async () => {    const store = kv();
     const w = await handleRequest(
       putReq({ iv: "iv1", ciphertext: "ct1", baseRev: null }),
       store,
@@ -57,6 +56,25 @@ describe("同步服务", () => {
     expect(body.iv).toBe("iv1");
     expect(body.ciphertext).toBe("ct1");
     expect(body.rev).toBe(1);
+  });
+
+  it("条件请求：还是那一版吗 → 304，body 都不发（省下载流量）", async () => {
+    const store = kv();
+    await handleRequest(
+      new Request(`${base}/blob/${SPACE}`, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ iv: "iv1", ciphertext: "ct1", baseRev: null }),
+      }),
+      store,
+    );
+    // 问「还是第 1 版吗」
+    const res = await handleRequest(
+      new Request(`${base}/blob/${SPACE}`, { headers: { "if-none-match": "1" } }),
+      store,
+    );
+    expect(res.status).toBe(304);
+    expect(await res.text()).toBe("");
   });
 
   it("版本对不上（别人刚写过）→ 409 + 当前那份，让客户端合完再推", async () => {
