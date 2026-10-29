@@ -187,6 +187,37 @@ export function CardView({
     return () => document.removeEventListener("keydown", onKey);
   }, [expanded, onExpand]);
 
+  /**
+   * 点别处就收起。
+   *
+   * **怎么算「这张卡」**：按 data-card-unit 往上找最近的那一层。
+   * 为什么不用 cardRef.contains：末尾那排键（「今天不做」「移出日常」）
+   * 画在卡片外面（TodayLog 里是 article 的兄弟节点），只查 article 会把
+   * 它们当成「别处」—— 点「移出日常」时那张确认行会先被收掉。
+   * 整张卡（含末尾那排键）挂同一个 data-card-unit，找最近的那层就对了。
+   *
+   * **为什么用 click 而不是 pointerdown**：手指按下就收起，会在**滑动**列表时
+   * 也收起来 —— 拇指按在屏幕上想往下翻，卡却先合上了。click 要等抬手，
+   * 而抬手前没挪动过才算「点」，滑动不会触发它。
+   *
+   * **为什么用 capture**：capture 先于被点的那颗键自己的 handler 跑。
+   * 点另一张卡的名字时，顺序必须是「先收起旧的、再展开新的」——
+   * 反过来的话，旧卡那句「点了别处就收」会在新卡展开之后才执行，
+   * 两张卡一起收掉（点谁都没反应）。这个顺序靠 capture 定住。
+   */
+  useEffect(() => {
+    if (!expanded) return;
+    const onClick = (e: MouseEvent) => {
+      const target = e.target;
+      const unit =
+        target instanceof Element ? target.closest("[data-card-unit]") : null;
+      if (unit?.getAttribute("data-card-unit") === card.id) return;
+      onExpand();
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, [expanded, onExpand, card.id]);
+
   const lines = cardLines(card, displayName);
   const cautions = m.cautions;
   // 分档换的是**动作本身**：名用这一档给的动作，而 remind 描述的是被换掉的默认动作，
@@ -211,7 +242,7 @@ export function CardView({
   const showRemind = truncated || segAction || (!doText && !!fullRemind);
 
   return (
-    <article class="lg-card" data-readonly={readOnly ? "true" : undefined}>
+    <article class="lg-card" data-card-unit={card.id} data-readonly={readOnly ? "true" : undefined}>
       <div class="lg-row" data-done={done ? "true" : "false"}>
         <div class="lg-when">
           {conditionCard ? "知识" : slotText || "随时"}
@@ -297,7 +328,13 @@ export function CardView({
             title={
               isSkipped ? "今天不做" : done ? "取消今天这一格" : "盖个印：记下今天做过了"
             }
-            onClick={onToggle}
+            onClick={() => {
+              onToggle();
+              // 盖完印就收起：这一件做完了，展开的那一大张没有理由继续占着屏。
+              // 收起时卡还没盖过印（collapsed），onExpand 是「开合」的意思，
+              // 所以只有正开着才收 —— 否则点一下会把卡打开。
+              if (expanded) onExpand();
+            }}
           >
             <i>{done ? dayOfMonth ?? "印" : ""}</i>
           </button>

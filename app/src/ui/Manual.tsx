@@ -502,7 +502,9 @@ export function ArticleView({
               </p>
             ) : null}
             {practiceCards.map((c) => (
-              <div key={c.id}>
+              // data-card-unit：这一张卡的范围连着下面那颗「放进日常」——
+              // 点它不算「点了别处」，否则正看着卡却被收起来。
+              <div key={c.id} data-card-unit={c.id}>
                 <CardView
                   card={c}
                   mode="normal"

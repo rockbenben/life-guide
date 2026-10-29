@@ -49,7 +49,9 @@ export function DiscoverPanel({
         {" 张："}
       </p>
       {picks.map((c) => (
-        <div class="lg-discover-item" key={c.id}>
+        // data-card-unit：这一张卡连着旁边那颗「放进日常」——
+        // 点它不算「点了别处」，否则正看着卡却被收起来。
+        <div class="lg-discover-item" key={c.id} data-card-unit={c.id}>
           <div class="lg-log">
             <CardView
               card={c}

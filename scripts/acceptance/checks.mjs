@@ -1,5 +1,5 @@
 /**
- * 浏览器级验收（共 8 项）：
+ * 浏览器级验收（共 9 项）：
  *
  *   1. 断网可完整使用一天        → checkOffline
  *   2. .ics 导入后按时提醒        → checkIcs（真机导入没法自动化，只能验文件本身对不对）
@@ -9,6 +9,7 @@
  *   6. 今天不做只跳过当天，可撤销，移出日常才是永久 → checkSkipToday
  *   7. 导航去哪一页              → checkNavigation
  *   8. 导入备份后清单跟着换       → checkImportRefreshesRoutine
+ *   9. 展开的卡点别处就收起        → checkCardCollapse
  *
  * 每项检查都用自己的浏览器 context，互不污染（事件日志存在 IndexedDB 里）。
  */
@@ -971,6 +972,100 @@ export async function checkNavigation({ browser, baseURL }) {
   }
 
   return { id: "navigation", title: "点导航就到该去的地方", details, failures };
+}
+
+/* ------------------------------------------------------------------ */
+/* 9. 展开的卡：点别处就收起，盖印也收起                                */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 这条盯的是「收起」的三条路：
+ *   1. 点卡外面的空白 → 收起
+ *   2. 点那颗印 → 盖上印，同时收起
+ *   3. 点卡里的别处（剂量表、步骤图）→ **不能**收起
+ *
+ * 第 3 条是最容易写错的一条：把「点卡外」写成「点了就收」，
+ * 那在卡里点剂量、点步骤图都会把卡收起来 —— 正在读步骤，
+ * 一点字卡就没了。这条把三件事钉在一起。
+ */
+export async function checkCardCollapse({ browser, baseURL }) {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const details = [];
+  const failures = [];
+
+  /** 这张卡现在是展开的还是收起的？ */
+  const isOpen = async (card) =>
+    await card.evaluate((el) => !!el.querySelector(".lg-guide"));
+
+  try {
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    await seedToday(page);
+
+    const card = page.getByRole("article").first();
+
+    // 1. 展开
+    await expandCard(card);
+    if (!(await isOpen(card))) {
+      failures.push("点了卡名，展开态没出来（.lg-guide 不在）");
+    } else {
+      details.push("卡展开着");
+    }
+
+    // 2. 点卡里面的别处 → 不该收起
+    const dose = card.locator(".lg-kv").first();
+    if ((await dose.count()) > 0) {
+      await dose.click({ position: { x: 4, y: 4 } });
+      await page.waitForTimeout(250);
+      if (!(await isOpen(card))) {
+        failures.push("点了卡里的剂量表，卡被收起来了 —— 卡内的操作不该收起自己");
+      } else {
+        details.push("点卡里的剂量表，卡没有收起");
+      }
+    }
+
+    // 3. 点卡外面 → 该收起
+    // 点页面顶上的导航（「今天」那颗键）—— 那是确定在卡外面、又不会改数据的地方。
+    await page.getByRole("button", { name: "今天", exact: true }).click();
+    await page.waitForTimeout(300);
+    if (await isOpen(card)) {
+      failures.push("点了卡外面（导航键），卡没收起来");
+    } else {
+      details.push("点卡外面，卡收起来了");
+    }
+
+    // 4. 再展开 → 点那颗印 → 盖上印 + 收起
+    await expandCard(card);
+    if (!(await isOpen(card))) {
+      failures.push("第二次点卡名，没展开（第一条就断了，后面的没法验）");
+    } else {
+      const seal = card.getByRole("button", { name: /盖上今天这一格|取消今天这一格/ }).first();
+      if ((await seal.count()) === 0) {
+        failures.push("卡上没有那颗印 —— 没法验「盖章也收起」");
+      } else {
+        await seal.click();
+        await page.waitForTimeout(350);
+        const stamped = await card
+          .getByRole("button", { name: /盖上今天这一格|取消今天这一格/ })
+          .count();
+        if (stamped === 0) {
+          failures.push("点了印，那颗印不见了（印没了 = 这条卡是只读的）");
+        }
+        if (await isOpen(card)) {
+          failures.push("点了印，卡没收起来 —— 盖完印就该收起");
+        } else {
+          details.push("点那颗印：盖上印 + 收起");
+        }
+      }
+    }
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+
+  return { id: "card-collapse", title: "展开的卡：点别处收起，盖印也收起", details, failures };
 }
 
 /* ------------------------------------------------------------------ */

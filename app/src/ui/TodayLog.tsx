@@ -128,7 +128,10 @@ export function TodayLog({
         );
         const custom = isCustomCard(c);
         return (
-          <div key={c.id} data-open={expanded === c.id ? "true" : undefined}>
+          // data-card-unit 标出「这一张卡」的全部范围：末尾那排键
+          // （今天不做 / 移出日常 / 改 / 删掉）画在 article 之外，
+          // 点它们不算「点了别处」，否则那张确认行会跟着卡一起被收掉。
+          <div key={c.id} data-card-unit={c.id} data-open={expanded === c.id ? "true" : undefined}>
             <CardView
               card={c}
               mode={mode}

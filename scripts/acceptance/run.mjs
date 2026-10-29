@@ -35,6 +35,7 @@ import { fileURLToPath } from "node:url";
 import { startServer } from "./server.mjs";
 import { launchBrowser } from "./helpers.mjs";
 import {
+  checkCardCollapse,
   checkCardReminder,
   checkEventsRoundTrip,
   checkIcs,
@@ -150,6 +151,7 @@ async function main() {
     results.push(await checkCardReminder({ browser, baseURL }));
     results.push(await checkReminderLifecycle({ browser, baseURL }));
     results.push(await checkSkipToday({ browser, baseURL }));
+    results.push(await checkCardCollapse({ browser, baseURL }));
     results.push(await checkNavigation({ browser, baseURL }));
     results.push(await checkImportRefreshesRoutine({ browser, baseURL }));
   } finally {
