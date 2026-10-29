@@ -110,101 +110,77 @@ cards:
       by: benson
       date: 2026-10-21
       hash: 9325a17dc8cd05e3
-  - id: knee-weight-reduction
+  # 2026-10-29 合并：knee-weight-reduction、knee-low-load-strength、knee-wedge-insoles 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: knee-pain-three-ways
     status: reviewed
     source:
-      anchor: '医生亲测的膝痛改善三招'
+      anchor: 医生亲测的膝痛改善三招
     slot: anytime
     remind:
-      text: '减重：把体重往下减 1 成'
-      quote: '体重减 1 成，疼痛就会缓和。'
+      text: 减重一成、每天 1 组缓负荷练膝、鞋里加外侧中垫。
+      quote:
+        - 体重减 1 成，疼痛就会缓和。
+        - 抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。次数是每侧 10 次，每天至少做 1 组。
+        - O 型腿的人，膝内侧受负担、软骨更容易磨损。放进外侧偏高的中垫可以减少膝上负担，走路也更顺。
     effect:
-      text: '体重减 1 成，疼痛就会缓和。'
-      quote: '体重减 1 成，疼痛就会缓和。'
+      text: 体重减 1 成，疼痛就会缓和。
+      quote: 体重减 1 成，疼痛就会缓和。
     steps:
       - id: reduce-weight
-        text: '所以对膝盖来说，减重才是最直接的近路——体重减 1 成，疼痛就会缓和。'
-        quote: '所以对膝盖来说，减重才是最直接的近路——体重减 1 成，疼痛就会缓和。'
+        text: 所以对膝盖来说，减重才是最直接的近路——体重减 1 成，疼痛就会缓和。
+        quote: 所以对膝盖来说，减重才是最直接的近路——体重减 1 成，疼痛就会缓和。
+      - id: strength-lift-leg
+        text: 抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。
+        quote: 抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。
+      - id: strength-rest
+        text: 放下休息 3 秒
+        quote: 放下休息 3 秒
+      - id: strength-repeat
+        text: 次数是每侧 10 次，每天至少做 1 组。
+        quote: 次数是每侧 10 次，每天至少做 1 组。
+      - id: add-wedge-insole
+        text: 放进外侧偏高的中垫可以减少膝上负担，走路也更顺。
+        quote: 放进外侧偏高的中垫可以减少膝上负担，走路也更顺。
+      - id: make-insured-insole
+        text: 这种鞋垫可以在医疗机构用保险制作。
+        quote: 这种鞋垫可以在医疗机构用保险制作。
     cautions:
       - level: with-doctor
-        text: '疼得厉害时请先到整形外科就诊。'
-        quote: '疼得厉害时请先到整形外科就诊。'
+        text: 疼得厉害时请先到整形外科就诊。
+        quote: 疼得厉害时请先到整形外科就诊。
+      - level: stop
+        text: 膝盖发热或疼痛明显时不要做。
+        quote: 膝盖发热或疼痛明显时不要做。
+      - level: with-doctor
+        text: 疼得厉害时请先到整形外科就诊。
+        quote: 疼得厉害时请先到整形外科就诊。
+      - level: with-doctor
+        text: 疼得厉害时请先到整形外科就诊。
+        quote: 疼得厉害时请先到整形外科就诊。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 678c42f50bef2135
-    name: 减重一成缓解膝痛
-  - id: knee-low-load-strength
-    status: reviewed
-    source:
-      anchor: '医生亲测的膝痛改善三招'
-    slot: anytime
-    remind:
-      text: '做缓负荷力量训练：单脚保持 10 秒，放下休息 3 秒，每侧 10 次，每天至少 1 组'
-      quote: '抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。次数是每侧 10 次，每天至少做 1 组。'
+      date: 2026-10-29
+      hash: 14001038ddc9b4ed
+    name: 膝痛改善三招
     dose:
       - value: 10
-        unit: '秒'
-        what: '单脚抬起保持时长'
-        quote: '单脚保持 10 秒'
+        unit: 秒
+        what: 单脚抬起保持时长
+        quote: 单脚保持 10 秒
       - value: 3
-        unit: '秒'
-        what: '放下后的休息时长'
-        quote: '放下休息 3 秒'
+        unit: 秒
+        what: 放下后的休息时长
+        quote: 放下休息 3 秒
       - value: 10
-        unit: '次'
-        what: '每侧动作次数'
-        quote: '每侧 10 次'
+        unit: 次
+        what: 每侧动作次数
+        quote: 每侧 10 次
       - value: 1
-        unit: '组'
-        what: '每日至少训练组数'
-        quote: '每天至少做 1 组'
-    steps:
-      - id: strength-lift-leg
-        text: '抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。'
-        quote: '抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。'
-      - id: strength-rest
-        text: '放下休息 3 秒'
-        quote: '放下休息 3 秒'
-      - id: strength-repeat
-        text: '次数是每侧 10 次，每天至少做 1 组。'
-        quote: '次数是每侧 10 次，每天至少做 1 组。'
-    cautions:
-      - level: stop
-        text: '膝盖发热或疼痛明显时不要做。'
-        quote: '膝盖发热或疼痛明显时不要做。'
-      - level: with-doctor
-        text: '疼得厉害时请先到整形外科就诊。'
-        quote: '疼得厉害时请先到整形外科就诊。'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 35490b42522cde07
-    name: 每天 1 组缓负荷练膝
-  - id: knee-wedge-insoles
-    status: reviewed
-    name: "鞋里加外侧中垫"
-    source:
-      anchor: '医生亲测的膝痛改善三招'
-    slot: anytime
-    remind:
-      text: 'O 型腿的人在鞋里加外侧偏高的中垫'
-      quote: 'O 型腿的人，膝内侧受负担、软骨更容易磨损。放进外侧偏高的中垫可以减少膝上负担，走路也更顺。'
-    effect:
-      text: '放进外侧偏高的中垫可以减少膝上负担，走路也更顺。'
-      quote: '放进外侧偏高的中垫可以减少膝上负担，走路也更顺。'
-    steps:
-      - id: add-wedge-insole
-        text: '放进外侧偏高的中垫可以减少膝上负担，走路也更顺。'
-        quote: '放进外侧偏高的中垫可以减少膝上负担，走路也更顺。'
-      - id: make-insured-insole
-        text: '这种鞋垫可以在医疗机构用保险制作。'
-        quote: '这种鞋垫可以在医疗机构用保险制作。'
-    cautions:
-      - level: with-doctor
-        text: '疼得厉害时请先到整形外科就诊。'
-        quote: '疼得厉害时请先到整形外科就诊。'
-    review:
-      by: benson
-      date: 2026-10-21
-      hash: 24be4cf52ffb5b7f
+        unit: 组
+        what: 每日至少训练组数
+        quote: 每天至少做 1 组
+    formerIds:
+      - knee-weight-reduction
+      - knee-low-load-strength
+      - knee-wedge-insoles

@@ -152,134 +152,84 @@ cards:
       date: 2026-10-24
       hash: 7e842597ce46ef7e
     name: 每天吃樱桃
-
-  - id: limit-red-meat-and-offal
+  # 2026-10-29 合并：limit-red-meat-and-offal、limit-seafood、limit-alcohol、limit-fructose 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: limit-these-intakes
     status: reviewed
     source:
-      anchor: '建议限制的摄入'
+      anchor: 建议限制的摄入
     slot: anytime
     remind:
-      text: '今天减少红肉、内脏和香肠制品'
+      text: 要少吃的几样：红肉、内脏和香肠制品；甲壳类和贻贝；酒精；含果糖饮料与高果糖食品。
       quote:
-        - '红肉、内脏和香肠制品'
-        - '食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险'
+        - 红肉、内脏和香肠制品
+        - 食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险
+        - 海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。
+        - 每天酒精不超过 20～25 克
+        - 含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。
     steps:
       - id: reduce-red-meat
-        text: '食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险'
-        quote: '食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险'
+        text: 食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险
+        quote: 食用红肉 (牛肉、羊肉、猪肉) 会带来更高的痛风风险
       - id: keep-plant-purines
-        text: '在任何情况下都应该鼓励食用，也就是说不用担心植物嘌呤。'
-        quote: '在任何情况下都应该鼓励食用，也就是说不用担心植物嘌呤。'
+        text: 在任何情况下都应该鼓励食用，也就是说不用担心植物嘌呤。
+        quote: 在任何情况下都应该鼓励食用，也就是说不用担心植物嘌呤。
+      - id: reduce-shellfish
+        text: 海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。
+        quote: 海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。
+      - id: eat-fish-regularly
+        text: 建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。
+        quote: 建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。
+      - id: choose-oily-fish
+        text: 包括脂肪较多的鱼类，如鲭鱼和沙丁鱼以及所有的鱼皮，从血管健康的角度来看是可以吃的。
+        quote: 包括脂肪较多的鱼类，如鲭鱼和沙丁鱼以及所有的鱼皮，从血管健康的角度来看是可以吃的。
+      - id: avoid-beer-and-spirits
+        text: 啤酒和烈酒尤其应该避免，而红葡萄酒增加痛风风险的可能性最小。
+        quote: 啤酒和烈酒尤其应该避免，而红葡萄酒增加痛风风险的可能性最小。
+      - id: keep-to-one-glass
+        text: 换算成酒大约是一杯（「オールワンの法則」）
+        quote: 换算成酒大约是一杯（「オールワンの法則」）
+      - id: sip-first-glass-slowly
+        text: 第一杯用 30 分钟慢慢喝完
+        quote: 第一杯用 30 分钟慢慢喝完
+      - id: avoid-sugary-drinks
+        text: 含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。
+        quote: 含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。
+      - id: avoid-fructose-rich-foods
+        text: 还应特别避免摄入富含果糖的果汁 (尤其是橙汁) 和富含果糖的甜水果 (如橙子或甜苹果)。
+        quote: 还应特别避免摄入富含果糖的果汁 (尤其是橙汁) 和富含果糖的甜水果 (如橙子或甜苹果)。
+      - id: choose-fresh-fruit
+        text: 新鲜水果中含有的天然果糖风险较低，适量摄入是安全的。
+        quote: 新鲜水果中含有的天然果糖风险较低，适量摄入是安全的。
     notices:
       - level: info
-        text: '其富含膳食纤维、维生素和矿物质，不影响血尿酸水平'
-        quote: '其富含膳食纤维、维生素和矿物质，不影响血尿酸水平'
+        text: 其富含膳食纤维、维生素和矿物质，不影响血尿酸水平
+        quote: 其富含膳食纤维、维生素和矿物质，不影响血尿酸水平
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 144c88f1e15e1088
-    name: 少吃红肉内脏和香肠
-
-  - id: limit-seafood
-    status: reviewed
-    source:
-      anchor: '建议限制的摄入'
-    slot: anytime
-    remind:
-      text: '今天减少海鲜，尤其是甲壳类和贻贝'
-      quote: '海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。'
+      date: 2026-10-29
+      hash: 6e5204db748379df
+    name: 痛风要限制的摄入
     dose:
       - value: 1
         valueMax: 2
         unit: 次/周
         what: 建议鱼类食用频次范围
-        quote: '建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。'
-    steps:
-      - id: reduce-shellfish
-        text: '海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。'
-        quote: '海鲜 (特别是甲壳类和贻贝) 会增加血尿酸水平，从而增加痛风的风险，因此应少吃。'
-      - id: eat-fish-regularly
-        text: '建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。'
-        quote: '建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。'
-      - id: choose-oily-fish
-        text: '包括脂肪较多的鱼类，如鲭鱼和沙丁鱼以及所有的鱼皮，从血管健康的角度来看是可以吃的。'
-        quote: '包括脂肪较多的鱼类，如鲭鱼和沙丁鱼以及所有的鱼皮，从血管健康的角度来看是可以吃的。'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 6b163161d524c79b
-    name: 少吃甲壳类和贻贝
-
-  - id: limit-alcohol
-    status: reviewed
-    source:
-      anchor: '建议限制的摄入'
-    slot: anytime
-    remind:
-      text: '每天酒精不超过 20～25 克'
-      quote: '每天酒精不超过 20～25 克'
-    dose:
+        quote: 建议定期食用鱼类 (每周 1 - 2 次) 作为健康饮食的一部分，也有助于避免心血管疾病。
       - value: 20
         valueMax: 25
         unit: 克
         what: 每日酒精上限范围
-        quote: '每天酒精不超过 20～25 克'
-    duration:
-      basis: derived
-      sec: 1800
-      quote: '第一杯用 30 分钟慢慢喝完'
-      formula: '30 分钟 × 60 秒 = 1800 秒'
-    steps:
-      - id: avoid-beer-and-spirits
-        text: '啤酒和烈酒尤其应该避免，而红葡萄酒增加痛风风险的可能性最小。'
-        quote: '啤酒和烈酒尤其应该避免，而红葡萄酒增加痛风风险的可能性最小。'
-      - id: keep-to-one-glass
-        text: '换算成酒大约是一杯（「オールワンの法則」）'
-        quote: '换算成酒大约是一杯（「オールワンの法則」）'
-      - id: sip-first-glass-slowly
-        text: '第一杯用 30 分钟慢慢喝完'
-        quote: '第一杯用 30 分钟慢慢喝完'
-    notices:
-      - level: info
-        text: '痛风的风险随着酒精摄入量的增加而增加；'
-        quote: '痛风的风险随着酒精摄入量的增加而增加；'
+        quote: 每天酒精不超过 20～25 克
     cautions:
       - level: stop
-        text: '不必靠多喝凑感觉。'
-        quote: '不必靠多喝凑感觉。'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: caa429392587cc64
-    name: 每天酒精不超过 20～25 克
-
-  - id: limit-fructose
-    status: reviewed
-    source:
-      anchor: '建议限制的摄入'
-    slot: anytime
-    remind:
-      text: '今天避开含果糖饮料与高果糖食品'
-      quote: '含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。'
-    steps:
-      - id: avoid-sugary-drinks
-        text: '含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。'
-        quote: '含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。'
-      - id: avoid-fructose-rich-foods
-        text: '还应特别避免摄入富含果糖的果汁 (尤其是橙汁) 和富含果糖的甜水果 (如橙子或甜苹果)。'
-        quote: '还应特别避免摄入富含果糖的果汁 (尤其是橙汁) 和富含果糖的甜水果 (如橙子或甜苹果)。'
-      - id: choose-fresh-fruit
-        text: '新鲜水果中含有的天然果糖风险较低，适量摄入是安全的。'
-        quote: '新鲜水果中含有的天然果糖风险较低，适量摄入是安全的。'
-    notices:
-      - level: info
-        text: '目前添加果糖食品几乎无处不在，方便食品尤其具有潜在的高风险；'
-        quote: '目前添加果糖食品几乎无处不在，方便食品尤其具有潜在的高风险；'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 55185a649fc54b6d
-    name: 避开含果糖饮料食品
+        text: 不必靠多喝凑感觉。
+        quote: 不必靠多喝凑感觉。
+    formerIds:
+      - limit-red-meat-and-offal
+      - limit-seafood
+      - limit-alcohol
+      - limit-fructose
 
   - id: three-control-methods
     status: reviewed

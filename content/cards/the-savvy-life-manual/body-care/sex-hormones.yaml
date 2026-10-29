@@ -42,13 +42,21 @@ cards:
       by: benson
       date: 2026-10-21
       hash: bdc0c6f6b1675669
-  - id: common-side-effects
+  # 2026-10-29 合并：common-side-effects、clot-risk、cancer-risk、future-pregnancy 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: contraceptive-risks
     status: reviewed
     source:
       anchor: 低剂量避孕药的副作用与风险
     remind:
-      text: 了解开始服药时可能出现的副作用及消退时间
-      quote: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+      text: 开始服药时约 3 成会出现恶心、浮肿、头痛、异常出血，多数几周至 3 个月内消退；另要留意血栓、癌症风险与将来怀孕。
+      quote:
+        - 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
+        - 服用者每万人 3～9 人，未服用者为 1～5 人。
+        - ⚠️ 年龄提示：血栓风险随年龄上升。因此40 岁以上需与医生商讨（慎重投药），50 岁以上原则上不使用。不受年龄限制的替代选项是**「黄体激素制剂」**。
+        - 但说明书引述的数据是，停药 5 年以后会回到与未服药者相同的水平。
+        - 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
+        - 说明书认为激素制剂的服用不影响将来的怀孕，并给出两项调查：
     effect:
       text: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
       quote: 开始服用时，约3 成会出现恶心、浮肿、头痛、异常出血等，但多数会在几天至 3 个月内消退；
@@ -65,88 +73,25 @@ cards:
       - id: weight-gain-evidence
         text: 体重增加与服药之间的因果关系，目前并未获认可。
         quote: 体重增加与服药之间的因果关系，目前并未获认可。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 74ef52b64b03997a
-    name: 低剂量避孕药初期副作用
-  - id: clot-risk
-    status: reviewed
-    source:
-      anchor: 低剂量避孕药的副作用与风险
-    remind:
-      text: 了解血栓风险及需要咨询医生的症状
-      quote:
-        - 服用者每万人 3～9 人，未服用者为 1～5 人。
-        - ⚠️ 年龄提示：血栓风险随年龄上升。因此40 岁以上需与医生商讨（慎重投药），50 岁以上原则上不使用。不受年龄限制的替代选项是**「黄体激素制剂」**。
-    steps:
       - id: compare-clot-risk
         text: 服用者每万人 3～9 人，未服用者为 1～5 人。
         quote: 服用者每万人 3～9 人，未服用者为 1～5 人。
       - id: identify-risk-factors
         text: 肥胖、吸烟、遗传等因素会使风险进一步升高。
         quote: 肥胖、吸烟、遗传等因素会使风险进一步升高。
-    notices:
-      - level: with-doctor
-        text: 若出现腿部疼痛、肿胀等症状，应咨询主治医生。
-        quote: 若出现腿部疼痛、肿胀等症状，应咨询主治医生。
-      - level: with-doctor
-        text: 40 岁以上需与医生商讨（慎重投药）
-        quote: 40 岁以上需与医生商讨（慎重投药）
-      - level: with-doctor
-        text: 50 岁以上原则上不使用
-        quote: 50 岁以上原则上不使用
-      - level: info
-        text: 不受年龄限制的替代选项是「黄体激素制剂」
-        quote: 不受年龄限制的替代选项是「黄体激素制剂」
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: c4c6e44442336e1d
-    name: 避孕药的血栓风险
-  - id: cancer-risk
-    status: reviewed
-    source:
-      anchor: 低剂量避孕药的副作用与风险
-    remind:
-      text: 了解低剂量避孕药相关癌症风险与停药后的变化
-      quote:
-        - 但说明书引述的数据是，停药 5 年以后会回到与未服药者相同的水平。
-        - 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
-    effect:
-      text: 停药 5 年以后会回到与未服药者相同的水平
-      quote: 停药 5 年以后会回到与未服药者相同的水平
-    steps:
       - id: review-breast-cancer-risk
-        text: '乳腺癌可能性为 1.24 倍'
+        text: 乳腺癌可能性为 1.24 倍
         quote:
           - 乳腺癌
           - 可能性为 1.24 倍
       - id: review-cervical-cancer-risk
-        text: '宫颈癌连续服用 5 年以上为 1.9 倍'
+        text: 宫颈癌连续服用 5 年以上为 1.9 倍
         quote:
           - 宫颈癌
           - 连续服用 5 年以上为 1.9 倍
       - id: arrange-screening
         text: 自治体的定期体检也有助于早期发现。
         quote: 自治体的定期体检也有助于早期发现。
-    notices:
-      - level: with-doctor
-        text: 治疗需权衡「效果」与「风险」后再作选择。
-        quote: 治疗需权衡「效果」与「风险」后再作选择。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: f763503c6c4e823c
-    name: 避孕药与癌症风险
-  - id: future-pregnancy
-    status: reviewed
-    source:
-      anchor: 低剂量避孕药的副作用与风险
-    remind:
-      text: 了解低剂量避孕药对将来怀孕的影响
-      quote: 说明书认为激素制剂的服用不影响将来的怀孕，并给出两项调查：
-    steps:
       - id: compare-pregnancy-1
         text: 停药后 1 年内怀孕的比例为 79.4%（平均服药 7.2 年；欧洲 7 国调查）
         quote: 停药后 1 年内怀孕的比例为 79.4%（平均服药 7.2 年；欧洲 7 国调查）
@@ -158,18 +103,31 @@ cards:
         quote: 两个比例几乎一样——这正是说明书给出「不影响」的依据。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: e44e3bc95bd4db5c
-    name: 避孕药对将来怀孕的影响
-  - id: medication-administration
+      date: 2026-10-29
+      hash: f786d261863fa028
+    name: 避孕药：副作用与风险
+    dose: []
+    cautions: []
+    formerIds:
+      - common-side-effects
+      - clot-risk
+      - cancer-risk
+      - future-pregnancy
+  # 2026-10-29 合并：medication-administration、intrauterine-hormonal-system、insurance-coverage、starting-low-dose-contraceptive 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: contraceptive-usage
     status: reviewed
     source:
       anchor: 用法与费用
     remind:
-      text: 了解周期给药与连续给药的服用方式
+      text: 周期给药与连续给药都要与医生商讨；除药物外还有宫内黄体激素释放系统；确诊月经困难症后适用医保。
       quote:
         - 周期给药：约服用 3 周，停药约 1 周，如此循环；
         - 连续服用 5 年以上为 1.9 倍
+        - 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
+        - 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
+        - 原则上，初潮来潮后即可服用。
+        - 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
     dose:
       - value: 3
         unit: 周
@@ -194,42 +152,9 @@ cards:
       - id: discuss-regimen
         text: 两种方式都需与医生商讨，由医生控制出血时期。
         quote: 两种方式都需与医生商讨，由医生控制出血时期。
-    notices:
-      - level: with-doctor
-        text: 两种方式都需与医生商讨，由医生控制出血时期。
-        quote: 两种方式都需与医生商讨，由医生控制出血时期。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 9ba3306fb12cee48
-    name: 避孕药的服法与费用
-  - id: intrauterine-hormonal-system
-    status: reviewed
-    source:
-      anchor: 用法与费用
-    remind:
-      text: 了解宫内黄体激素释放系统最长可放置 5 年及预期效果
-      quote: 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
-    effect:
-      text: 经血量减少与痛经减轻
-      quote: 经血量减少与痛经减轻
-    steps:
       - id: place-system
         text: 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
         quote: 除药物外，还有「宫内黄体激素释放系统」——放入子宫内的器具，最长可放置 5 年，可期待经血量减少与痛经减轻。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 099ad4904e2ca5d7
-    name: 宫内激素系统放 5 年
-  - id: insurance-coverage
-    status: reviewed
-    source:
-      anchor: 用法与费用
-    remind:
-      text: 确认月经困难症诊断后的医保适用情况
-      quote: 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
-    steps:
       - id: confirm-diagnosis
         text: 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
         quote: 一经诊断为「月经困难症」，即可适用医保每月 1100 日元起。
@@ -239,21 +164,6 @@ cards:
       - id: check-eligibility
         text: 若仅为调整经期时间或作为避孕用途，则不适用医保。
         quote: 若仅为调整经期时间或作为避孕用途，则不适用医保。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: b8ff7b02f93e9fd4
-    name: 月经困难症的医保
-  - id: starting-low-dose-contraceptive
-    status: reviewed
-    source:
-      anchor: 用法与费用
-    remind:
-      text: 原则上，初潮来潮后即可服用。
-      quote:
-        - 原则上，初潮来潮后即可服用。
-        - 低剂量避孕药的问答由东京齿科大学市川综合医院妇产科准教小川真理子医师担任监修。
-    steps:
       - id: review-start
         text: 原则上，初潮来潮后即可服用。
         quote: 原则上，初潮来潮后即可服用。
@@ -265,13 +175,19 @@ cards:
         quote: 说明书特别强调家人的理解也很重要：有人是和母亲一起去妇产科听取说明，在自己和母亲都认可之后才开始服用低剂量避孕药的。
     notices:
       - level: with-doctor
-        text: （初潮之后考虑到对骨骼的影响，请先咨询主治医生。）
-        quote: （初潮之后考虑到对骨骼的影响，请先咨询主治医生。）
+        text: 两种方式都需与医生商讨，由医生控制出血时期。
+        quote: 两种方式都需与医生商讨，由医生控制出血时期。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 6958d976a68bfe04
-    name: 初潮后即可开始服药
+      date: 2026-10-29
+      hash: ab11d26c35020c18
+    name: 避孕药：怎么用
+    cautions: []
+    formerIds:
+      - medication-administration
+      - intrauterine-hormonal-system
+      - insurance-coverage
+      - starting-low-dose-contraceptive
   - id: finding-gynecologist
     status: reviewed
     source:

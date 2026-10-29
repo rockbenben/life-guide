@@ -93,6 +93,89 @@ describe("auditCardMechanically", () => {
     expect(issuesB.filter((i) => i.verdict === "duplicate")).toHaveLength(0);
   });
 
+  it("「子集型」重复：一张卡的每一步都在另一张卡里 → 标出来（相似度抓不到这一类）", () => {
+    // 实测的例子：出汗那篇里，「方法一：运动」那张的每一步都原样出现在
+    // 「运动加温浴一起做」那张的步骤里 —— 两边长度差得远，相似度上不去。
+    const small = cardOf({
+      id: "exercise-only",
+      remind: { text: "在略热环境下做略吃力的运动，每天 30 分钟左右", quote: "在略热的环境下" },
+      steps: [
+        { id: "s1", text: "在略热的环境下", quote: "在略热的环境下" },
+        { id: "s2", text: "做略吃力的运动", quote: "做略吃力的运动" },
+        { id: "s3", text: "每天 30 分钟左右", quote: "每天 30 分钟左右" },
+      ],
+    });
+    const big = cardOf({
+      id: "exercise-and-bath",
+      remind: { text: "把运动和手足温浴混合着做，坚持 2 周", quote: "两种混合着做、坚持 2 周" },
+      steps: [
+        {
+          id: "s1",
+          text: "运动——在略热的环境下做略吃力的运动，每天 30 分钟左右",
+          quote: "① 运动",
+        },
+        { id: "s2", text: "两种混合着做、坚持 2 周", quote: "两种混合着做、坚持 2 周" },
+      ],
+    });
+    const article = articleOf([small, big]);
+    // 这一对只在 id 较大的那张身上被检查（机械检查「只报一次」的口径），
+    // 所以两张都跑一遍，把结果合起来看。
+    const dups = [small, big]
+      .flatMap((c) => auditCardMechanically(c, article, source))
+      .filter((i) => i.verdict === "duplicate");
+    expect(dups).toHaveLength(1);
+    // 报的是「多出来」的那张（该删的是它）
+    expect(dups[0].cardId).toBe("exercise-only");
+    expect(dups[0].reason).toContain("exercise-and-bath");
+  });
+
+  it("改写过也算：同一件事换个说法（每一步的字八成以上对得上）", () => {
+    const a = cardOf({
+      id: "keep-cold",
+      remind: { text: "在接近 0℃ 的条件下冷藏直立放进蔬菜抽屉减少糖分消耗", quote: "在接近 0℃ 的条件下冷藏" },
+      steps: [
+        { id: "s1", text: "立即吃最甜", quote: "立即吃最甜" },
+        { id: "s2", text: "在接近 0℃ 的条件下冷藏", quote: "在接近 0℃ 的条件下冷藏" },
+        { id: "s3", text: "直立放进蔬菜抽屉减少糖分消耗", quote: "直立放进蔬菜抽屉减少糖分消耗" },
+      ],
+    });
+    const b = cardOf({
+      id: "buy-and-store",
+      remind: { text: "买回玉米后立即食用、冷藏保存并直立存放在蔬菜抽屉", quote: "冷藏保存" },
+      steps: [
+        { id: "s1", text: "立即食用（最甜）", quote: "立即食用（最甜）" },
+        { id: "s2", text: "冷藏保存（在接近 0℃的条件下保存）", quote: "冷藏保存" },
+        { id: "s3", text: "直立存放在蔬菜抽屉（减少糖分消耗）", quote: "直立存放在蔬菜抽屉" },
+      ],
+    });
+    const article = articleOf([a, b]);
+    const dups = [a, b]
+      .flatMap((c) => auditCardMechanically(c, article, source))
+      .filter((i) => i.verdict === "duplicate");
+    expect(dups.length).toBeGreaterThan(0);
+  });
+
+  it("单步撞词不算重复（护栏：至少两步）", () => {
+    const a = cardOf({
+      id: "one-step",
+      remind: { text: "把食材放入锅中翻炒", quote: "放入锅中翻炒" },
+      steps: [{ id: "s1", text: "把食材放入锅中翻炒", quote: "放入锅中翻炒" }],
+    });
+    const b = cardOf({
+      id: "another",
+      remind: { text: "把番茄切块之后下锅炒", quote: "下锅炒" },
+      steps: [
+        { id: "s1", text: "把番茄切块之后下锅炒", quote: "下锅炒" },
+        { id: "s2", text: "加一点盐调味", quote: "加一点盐调味" },
+      ],
+    });
+    const article = articleOf([a, b]);
+    const dups = auditCardMechanically(a, article, source).filter(
+      (i) => i.verdict === "duplicate",
+    );
+    expect(dups).toHaveLength(0);
+  });
+
   it("卡片文字远长于引文 → 标出来（多半加了原文没有的话）", () => {
     const card = cardOf({
       remind: {

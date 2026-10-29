@@ -11,97 +11,73 @@ ignore:
       reason: "菌斑形成及全身疾病关联属于机制背景；其中去除菌斑的可执行部分已在刷牙、牙线和专业检查卡中抽取。"
   images: []
 cards:
-  - id: gentle-fine-brushing
+  # 2026-10-29 合并：gentle-fine-brushing、floss-before-brushing、regular-professional-periodontal-check 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: plaque-removal-three-ways
     status: reviewed
-    name: "轻握牙刷小幅颤动"
+    name: 打掉菌斑的三条做法
     source:
-      anchor: "三条做法：把菌斑打掉"
+      anchor: 三条做法：把菌斑打掉
     slot: anytime
     remind:
-      text: "轻握牙刷，对准牙缝和牙周袋小幅颤动"
+      text: 先用牙线（牙缝明显张大的局部并用牙间刷），再轻握牙刷小幅颤动，最后定期请专业的人检查牙周。
       quote:
-        - "像握铅笔那样捏着"
-        - "把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动"
-    steps:
-      - id: pencil-grip
-        text: "不是使劲攥像握铅笔那样捏着"
-        quote:
-          - "不是使劲攥"
-          - "像握铅笔那样捏着"
-      - id: guide-brush-in
-        text: "把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动"
-        quote: "把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动"
-      - id: target-plaque-sites
-        text: "瞄准容易积菌斑的位置"
-        quote: "瞄准容易积菌斑的位置"
-    cautions:
-      - level: info
-        text: "不是用力来回刷"
-        quote: "不是用力来回刷"
-    review:
-      by: benson
-      date: 2026-10-21
-      hash: 5ab399a9b94c26da
-
-  - id: floss-before-brushing
-    status: reviewed
-    name: "先用牙线和牙间刷"
-    source:
-      anchor: "三条做法：把菌斑打掉"
-    slot: anytime
-    remind:
-      text: "先用牙线牙缝明显张大的人局部并用牙间刷"
-      quote:
-        - "先用牙线"
-        - "牙缝明显张大的人"
-        - "局部并用牙间刷"
+        - 像握铅笔那样捏着
+        - 把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动
+        - 先用牙线
+        - 牙缝明显张大的人
+        - 局部并用牙间刷
+        - 定期让专业的人用眼睛检查
     steps:
       - id: floss-first
-        text: "先用牙线"
-        quote: "先用牙线"
+        text: 先用牙线
+        quote: 先用牙线
       - id: add-interdental-brush
-        text: "牙缝明显张大的人在牙线之外局部并用牙间刷"
+        text: 牙缝明显张大的人在牙线之外局部并用牙间刷
         quote:
-          - "牙缝明显张大的人"
-          - "在牙线之外"
-          - "局部并用牙间刷"
+          - 牙缝明显张大的人
+          - 在牙线之外
+          - 局部并用牙间刷
       - id: angle-and-move
-        text: "斜着送进去前后移动"
+        text: 斜着送进去前后移动
         quote:
-          - "斜着送进去"
-          - "前后移动"
-    review:
-      by: benson
-      date: 2026-10-21
-      hash: ff33bb1ad2362b3d
-
-  - id: regular-professional-periodontal-check
-    status: reviewed
-    name: "定期请人检查牙周"
-    source:
-      anchor: "三条做法：把菌斑打掉"
-    slot: anytime
-    remind:
-      text: "定期让专业的人用眼睛检查"
-      quote: "定期让专业的人用眼睛检查"
-    steps:
+          - 斜着送进去
+          - 前后移动
+      - id: pencil-grip
+        text: 不是使劲攥像握铅笔那样捏着
+        quote:
+          - 不是使劲攥
+          - 像握铅笔那样捏着
+      - id: guide-brush-in
+        text: 把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动
+        quote: 把刷头对准牙缝和牙周袋送进去，再细细地小幅颤动
+      - id: target-plaque-sites
+        text: 瞄准容易积菌斑的位置
+        quote: 瞄准容易积菌斑的位置
       - id: professional-eye-check
-        text: "定期让专业的人用眼睛检查"
-        quote: "定期让专业的人用眼睛检查"
+        text: 定期让专业的人用眼睛检查
+        quote: 定期让专业的人用眼睛检查
       - id: check-frequency
-        text: "每 3 个月 1 次，至少每半年 1 次"
-        quote: "每 3 个月 1 次，至少每半年 1 次"
+        text: 每 3 个月 1 次，至少每半年 1 次
+        quote: 每 3 个月 1 次，至少每半年 1 次
       - id: confirm-insurance
-        text: "是否适用保险请直接问医疗机构"
-        quote: "是否适用保险请直接问医疗机构"
+        text: 是否适用保险请直接问医疗机构
+        quote: 是否适用保险请直接问医疗机构
     cautions:
       - level: info
-        text: "保险适用下约 3000～5000 日元"
-        quote: "保险适用下约 3000～5000 日元"
+        text: 不是用力来回刷
+        quote: 不是用力来回刷
+      - level: info
+        text: 保险适用下约 3000～5000 日元
+        quote: 保险适用下约 3000～5000 日元
     review:
-      by: benson
-      date: 2026-10-21
-      hash: c1bfc08766db5dba
+      by: AI（作者授权代签）
+      date: 2026-10-29
+      hash: 7e64e938ffc74df7
+    formerIds:
+      - gentle-fine-brushing
+      - floss-before-brushing
+      - regular-professional-periodontal-check
 
   - id: check-gums-without-pain
     status: reviewed

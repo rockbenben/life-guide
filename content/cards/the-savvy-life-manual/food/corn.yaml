@@ -7,6 +7,8 @@ ignore:
 cards:
   # ⚠ 审阅提示（草稿自带的问题，机器查不出来）：这张卡的步骤与下面的 corn-after-purchase
   # 重复了 —— 两者都讲「买回来先吃 / 冷藏 / 直立放」。审阅时二选一，别都留。
+  #2026-10-29 合并：corn-after-purchase 并进这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
   - id: keep-corn-sweet-cold
     status: reviewed
     name: "玉米冷藏保鲜"
@@ -15,10 +17,13 @@ cards:
       anchor: '买了玉米后该怎么办'
     slot: anytime
     remind:
-      text: '在接近 0℃ 的条件下冷藏直立放进蔬菜抽屉减少糖分消耗'
+      text: 在接近 0℃ 的条件下冷藏直立放进蔬菜抽屉减少糖分消耗
       quote:
-        - '在接近 0℃ 的条件下冷藏'
-        - '直立放进蔬菜抽屉减少糖分消耗'
+        - 在接近 0℃ 的条件下冷藏
+        - 直立放进蔬菜抽屉减少糖分消耗
+        - 立即食用（最甜）
+        - 冷藏保存（在接近 0℃的条件下保存）
+        - 直立存放在蔬菜抽屉（减少糖分消耗）
     effect:
       text: '常温放 1 天甜味减 20%、3 天大约减半、6 天减 60%，而接近 0℃ 时甜度几乎是一条平线'
       quote: '常温放 1 天甜味减 20%、3 天大约减半、6 天减 60%，而接近 0℃ 时甜度几乎是一条平线'
@@ -33,71 +38,11 @@ cards:
         text: '直立放进蔬菜抽屉减少糖分消耗'
         quote: '直立放进蔬菜抽屉减少糖分消耗'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 5f97458bf77fc61e
-
-  - id: corn-after-purchase
-    status: reviewed
-    source:
-      anchor: '买了玉米后该怎么办'
-    slot: anytime
-    remind:
-      text: '买回玉米后立即食用、冷藏保存并直立存放在蔬菜抽屉'
-      quote:
-        - '立即食用（最甜）'
-        - '冷藏保存（在接近 0℃的条件下保存）'
-        - '直立存放在蔬菜抽屉（减少糖分消耗）'
-    steps:
-      - id: purchase-eat-immediately
-        text: '立即食用（最甜）'
-        quote: '立即食用（最甜）'
-      - id: purchase-refrigerate
-        text: '冷藏保存（在接近 0℃的条件下保存）'
-        quote: '冷藏保存（在接近 0℃的条件下保存）'
-      - id: purchase-store-upright
-        text: '直立存放在蔬菜抽屉（减少糖分消耗）'
-        quote: '直立存放在蔬菜抽屉（减少糖分消耗）'
-    review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: bba9c44d7c636e85
-    name: 玉米买回马上冷藏
-
-  - id: corn-cob-golden-water
-    status: reviewed
-    source:
-      anchor: '玉米芯'
-    slot: anytime
-    images:
-      - 'https://img.newzone.top/2024-10-16-09-45-51.png?imageMogr2/format/webp'
-    remind:
-      text: '整根玉米下锅煮 35 分钟，芯从纯白变成透明后可把煮过的水当汤喝'
-      quote:
-        - '整根下锅煮 35 分钟，芯会从纯白变成透明'
-        - '这锅「黄金水」能直接当汤喝'
-    effect:
-      text: '煮玉米 35 分钟后，玉米芯会从纯白色变为透明，营养成分会溶解在水中'
-      quote: '煮玉米 35 分钟后，玉米芯会从纯白色变为透明，营养成分会溶解在水中'
-    duration:
-      basis: quote
-      sec: 2100
-      quote: '煮玉米 35 分钟后'
-    steps:
-      - id: cob-golden-boil
-        text: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
-        quote: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
-      - id: cob-observe-transparency
-        text: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
-        quote: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
-      - id: cob-use-water
-        text: '煮完的水可以用来煮面条'
-        quote: '煮完的水可以用来煮面条'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 9c15c4a609ea36fc
-    name: 玉米芯煮 35 分钟
+      date: 2026-10-29
+      hash: dd46744405334005
+    formerIds:
+      - corn-after-purchase
 
   - id: corn-cob-microwave-quick
     status: reviewed
@@ -184,6 +129,8 @@ cards:
       hash: e206da1f6a18619d
     name: 做玉米布丁
 
+  #2026-10-29 合并：corn-cob-golden-water 并进这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
   - id: golden-water-base
     status: reviewed
     name: "煮一锅玉米黄金水"
@@ -191,16 +138,18 @@ cards:
       anchor: '食谱'
     slot: anytime
     remind:
-      text: '煮黄金水时，用玉米 4 根、水 2L、盐 20g，整根煮 35 分钟'
+      text: 煮黄金水时，用玉米 4 根、水 2L、盐 20g，整根煮 35 分钟
       quote:
-        - '玉米 4 根'
-        - '水 2L'
-        - '盐 20g'
-        - '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
-        - '这锅汤就是所谓的「黄金水」'
+        - 玉米 4 根
+        - 水 2L
+        - 盐 20g
+        - 放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟
+        - 这锅汤就是所谓的「黄金水」
+        - 整根下锅煮 35 分钟，芯会从纯白变成透明
+        - 这锅「黄金水」能直接当汤喝
     effect:
-      text: '北海道研究料理的村上智华主厨把煮的时间拉长到 35 分钟，芯里的甜味和鲜味才充分溶进水里。'
-      quote: '北海道研究料理的村上智华主厨把煮的时间拉长到 35 分钟，芯里的甜味和鲜味才充分溶进水里。'
+      text: 煮玉米 35 分钟后，玉米芯会从纯白色变为透明，营养成分会溶解在水中
+      quote: 煮玉米 35 分钟后，玉米芯会从纯白色变为透明，营养成分会溶解在水中
     dose:
       - value: 4
         unit: 根
@@ -238,9 +187,13 @@ cards:
         text: '这锅汤就是所谓的「黄金水」，可以直接当汤喝，也可以拿来煮意面。'
         quote: '这锅汤就是所谓的「黄金水」，可以直接当汤喝，也可以拿来煮意面。'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 7fce50a238435ab2
+      by: AI（作者授权代签）
+      date: 2026-10-29
+      hash: 0f23f886b7d01624
+    images:
+      - https://img.newzone.top/2024-10-16-09-45-51.png?imageMogr2/format/webp
+    formerIds:
+      - corn-cob-golden-water
 
   - id: golden-water-onion-pasta
     status: reviewed

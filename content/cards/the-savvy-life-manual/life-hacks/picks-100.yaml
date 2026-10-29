@@ -222,178 +222,140 @@ cards:
       by: benson
       date: 2026-10-21
       hash: 8632e0953cca28f8
-
-  - id: shake-chicken-breast
+  # 2026-10-29 合并：shake-chicken-breast、bag-knead-vs-shake、bag-seasoning-menu 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: marinate-chicken-breast
     status: reviewed
     source:
-      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
+      anchor: 鸡胸肉：袋揉的损耗，以及更好的办法
     slot: anytime
     remind:
-      text: '用沙沙摇腌鸡胸肉，牛奶和盐先混匀，装袋灌满空气后摇，再加热'
+      text: 把鸡胸肉与腌料放进密封袋，用摇代替袋揉；调味一次做完，别反复开袋。
       quote:
-        - '沙沙摇（摇动）鸡胸肉'
-        - '先把牛奶和盐放进袋子里混匀'
-        - '鸡肉放进袋中，把空气尽量灌满，然后封好袋口'
-        - '沙沙摇 1 分钟'
-        - '摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。'
+        - 沙沙摇（摇动）鸡胸肉
+        - 先把牛奶和盐放进袋子里混匀
+        - 鸡肉放进袋中，把空气尽量灌满，然后封好袋口
+        - 沙沙摇 1 分钟
+        - 摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。
+        - 袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去
+        - 「沙沙摇（摇动）鸡胸肉」
+        - 做法就是往袋里灌满空气，然后晃。仅此而已。
+        - 调味也能在袋子里一次做完
+        - 固定四步
+        - 先做沙沙摇
+        - 往袋里加调味料摇匀
+        - 再加 1 大勺玉米淀粉摇匀
+        - 取出加热
     effect:
-      text: '全程不揉水分和鲜味成分不会被挤出去牛奶能均匀地走遍全身'
+      text: 袋揉比手揉少 13%。每 100g 鸡胸肉吸收的牛奶量手揉9.1g袋揉7.9g相对手揉的吸收量沙沙摇94%
       quote:
-        - '全程不揉'
-        - '水分和鲜味成分不会被挤出去'
-        - '牛奶能均匀地走遍全身'
+        - 袋揉比手揉少 13%。
+        - 每 100g 鸡胸肉吸收的牛奶量
+        - 手揉
+        - 9.1g
+        - 袋揉
+        - 7.9g
+        - 相对手揉的吸收量
+        - 沙沙摇
+        - 94%
     dose:
       - value: 300
-        unit: '克'
-        what: '鸡胸肉每盒约用量'
-        quote: '鸡胸肉 1 盒（约 300g）'
+        unit: 克
+        what: 鸡胸肉每盒约用量
+        quote: 鸡胸肉 1 盒（约 300g）
       - value: 3
-        unit: '大勺'
-        what: '牛奶用量'
-        quote: '牛奶 3 大勺'
+        unit: 大勺
+        what: 牛奶用量
+        quote: 牛奶 3 大勺
       - value: 1.5
         valueMax: 3
-        unit: '克'
-        what: '盐用量'
-        quote: '盐 1.5～3g'
-    duration:
-      basis: derived
-      sec: 60
-      quote: '沙沙摇 1 分钟'
-      formula: '1 分钟 × 60 秒/分钟 = 60 秒'
+        unit: 克
+        what: 盐用量
+        quote: 盐 1.5～3g
+      - value: 300
+        unit: 克
+        what: 每份鸡胸肉约用量
+        quote: 鸡胸肉 1 盒（约 300g）
+      - value: 1
+        unit: 大勺
+        what: 玉米淀粉用量
+        quote: 再加 1 大勺玉米淀粉摇匀
     steps:
       - id: prepare-ingredients
-        text: '鸡胸肉 1 盒（约 300g）牛奶 3 大勺盐 1.5～3g'
+        text: 鸡胸肉 1 盒（约 300g）牛奶 3 大勺盐 1.5～3g
         quote:
-          - '鸡胸肉 1 盒（约 300g）'
-          - '牛奶 3 大勺'
-          - '盐 1.5～3g'
+          - 鸡胸肉 1 盒（约 300g）
+          - 牛奶 3 大勺
+          - 盐 1.5～3g
       - id: mix-milk-and-salt
-        text: '先把牛奶和盐放进袋子里混匀'
-        quote: '先把牛奶和盐放进袋子里混匀'
+        text: 先把牛奶和盐放进袋子里混匀
+        quote: 先把牛奶和盐放进袋子里混匀
       - id: add-chicken-and-air
-        text: '鸡肉放进袋中，把空气尽量灌满，然后封好袋口'
-        quote: '鸡肉放进袋中，把空气尽量灌满，然后封好袋口'
+        text: 鸡肉放进袋中，把空气尽量灌满，然后封好袋口
+        quote: 鸡肉放进袋中，把空气尽量灌满，然后封好袋口
       - id: shake-one-minute
-        text: '沙沙摇 1 分钟'
-        quote: '沙沙摇 1 分钟'
+        text: 沙沙摇 1 分钟
+        quote: 沙沙摇 1 分钟
       - id: cook-thoroughly
-        text: '摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。'
-        quote: '摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。'
-    cautions:
-      - level: info
-        text: '盐同时负责调味，按自己口味调整'
-        quote: '盐同时负责调味，按自己口味调整'
-      - level: info
-        text: '想更嫩就先彻底加热熟透'
-        quote: '想更嫩就先彻底加热熟透'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 6ecdc40d026551a5
-    name: 摇匀腌鸡胸肉
-
-  - id: bag-knead-vs-shake
-    status: reviewed
-    source:
-      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
-    slot: anytime
-    remind:
-      text: '鸡胸肉用晃而不是袋揉，避免把肉里的汁水挤出去'
-      quote:
-        - '袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去'
-        - '「沙沙摇（摇动）鸡胸肉」'
-        - '做法就是往袋里灌满空气，然后晃。仅此而已。'
-    effect:
-      text: '袋揉比手揉少 13%。每 100g 鸡胸肉吸收的牛奶量手揉9.1g袋揉7.9g相对手揉的吸收量沙沙摇94%'
-      quote:
-        - '袋揉比手揉少 13%。'
-        - '每 100g 鸡胸肉吸收的牛奶量'
-        - '手揉'
-        - '9.1g'
-        - '袋揉'
-        - '7.9g'
-        - '相对手揉的吸收量'
-        - '沙沙摇'
-        - '94%'
-    steps:
+        text: 摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。
+        quote: 摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。
       - id: avoid-bag-kneading
-        text: '袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去'
-        quote: '袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去'
+        text: 袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去
+        quote: 袋揉相当于在揉肉，会施加力量，把肉里的汁水挤出去
       - id: shake-without-kneading
-        text: '做法就是往袋里灌满空气，然后晃。仅此而已。全程不揉'
+        text: 做法就是往袋里灌满空气，然后晃。仅此而已。全程不揉
         quote:
-          - '做法就是往袋里灌满空气，然后晃。仅此而已。'
-          - '全程不揉'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 889d57f0f8b4e3eb
-    name: 用摇代替袋揉
-
-  - id: bag-seasoning-menu
-    status: reviewed
-    source:
-      anchor: '鸡胸肉：袋揉的损耗，以及更好的办法'
-    slot: anytime
-    remind:
-      text: '调味也在袋子里一次完成，按固定步骤操作'
-      quote:
-        - '调味也能在袋子里一次做完'
-        - '固定四步'
-        - '先做沙沙摇'
-        - '往袋里加调味料摇匀'
-        - '再加 1 大勺玉米淀粉摇匀'
-        - '取出加热'
-    dose:
-      - value: 300
-        unit: '克'
-        what: '每份鸡胸肉约用量'
-        quote: '鸡胸肉 1 盒（约 300g）'
-      - value: 1
-        unit: '大勺'
-        what: '玉米淀粉用量'
-        quote: '再加 1 大勺玉米淀粉摇匀'
-    steps:
+          - 做法就是往袋里灌满空气，然后晃。仅此而已。
+          - 全程不揉
       - id: choose-seasoning-menu
-        text: 'A 辣酱B 紫苏粉C 青海苔D 橘子酱E 蒜香蛋黄酱'
+        text: A 辣酱B 紫苏粉C 青海苔D 橘子酱E 蒜香蛋黄酱
         quote:
-          - 'A 辣酱'
-          - 'B 紫苏粉'
-          - 'C 青海苔'
-          - 'D 橘子酱'
-          - 'E 蒜香蛋黄酱'
+          - A 辣酱
+          - B 紫苏粉
+          - C 青海苔
+          - D 橘子酱
+          - E 蒜香蛋黄酱
       - id: add-menu-seasoning
-        text: '辣酱 2 小勺、蒜蓉 1 小勺、酱油 1 小勺紫苏粉 1 小勺、姜蓉 1 小勺、紫苏粉少许（加热后按口味加）青海苔 2 小勺、酱油 1 小勺橘子酱 1 大勺半、酱油 2 小勺蛋黄酱 1 大勺、蒜蓉 1 小勺、酱油 1 小勺'
+        text: 辣酱 2 小勺、蒜蓉 1 小勺、酱油 1 小勺紫苏粉 1 小勺、姜蓉 1 小勺、紫苏粉少许（加热后按口味加）青海苔 2 小勺、酱油 1 小勺橘子酱 1 大勺半、酱油 2 小勺蛋黄酱 1 大勺、蒜蓉 1 小勺、酱油 1 小勺
         quote:
-          - '辣酱 2 小勺、蒜蓉 1 小勺、酱油 1 小勺'
-          - '紫苏粉 1 小勺、姜蓉 1 小勺、紫苏粉少许（加热后按口味加）'
-          - '青海苔 2 小勺、酱油 1 小勺'
-          - '橘子酱 1 大勺半、酱油 2 小勺'
-          - '蛋黄酱 1 大勺、蒜蓉 1 小勺、酱油 1 小勺'
+          - 辣酱 2 小勺、蒜蓉 1 小勺、酱油 1 小勺
+          - 紫苏粉 1 小勺、姜蓉 1 小勺、紫苏粉少许（加热后按口味加）
+          - 青海苔 2 小勺、酱油 1 小勺
+          - 橘子酱 1 大勺半、酱油 2 小勺
+          - 蛋黄酱 1 大勺、蒜蓉 1 小勺、酱油 1 小勺
       - id: shake-before-seasoning
-        text: '先做沙沙摇'
-        quote: '先做沙沙摇'
+        text: 先做沙沙摇
+        quote: 先做沙沙摇
       - id: shake-seasoning
-        text: '往袋里加调味料摇匀'
-        quote: '往袋里加调味料摇匀'
+        text: 往袋里加调味料摇匀
+        quote: 往袋里加调味料摇匀
       - id: add-cornstarch
-        text: '再加 1 大勺玉米淀粉摇匀'
-        quote: '再加 1 大勺玉米淀粉摇匀'
+        text: 再加 1 大勺玉米淀粉摇匀
+        quote: 再加 1 大勺玉米淀粉摇匀
       - id: remove-and-heat
-        text: '取出加热（烤、炸都行）'
+        text: 取出加热（烤、炸都行）
         quote:
-          - '取出加热'
-          - '（烤、炸都行）'
+          - 取出加热
+          - （烤、炸都行）
     cautions:
       - level: info
-        text: '盐同时负责调味，按自己口味调整'
-        quote: '盐同时负责调味，按自己口味调整'
+        text: 盐同时负责调味，按自己口味调整
+        quote: 盐同时负责调味，按自己口味调整
+      - level: info
+        text: 想更嫩就先彻底加热熟透
+        quote: 想更嫩就先彻底加热熟透
+      - level: info
+        text: 盐同时负责调味，按自己口味调整
+        quote: 盐同时负责调味，按自己口味调整
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: adc51b806c768ebb
-    name: 在袋子里一次调味
+      date: 2026-10-29
+      hash: a9a48a58ce08e43f
+    name: 腌鸡胸肉：用摇的
+    formerIds:
+      - shake-chicken-breast
+      - bag-knead-vs-shake
+      - bag-seasoning-menu
 
   - id: milk-meat-substitutions
     status: reviewed

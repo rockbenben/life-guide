@@ -13,119 +13,77 @@ ignore:
       reason: 月牙外观解释与异常着色就医提示属于一般疾病知识，没有可独立执行的保健动作。
   images: []
 cards:
-  - id: correct-nail-length-and-toe-corner
-    status: reviewed
-    name: "指甲剪到齐平别太短"
-    source:
-      anchor: 指甲剪太短，指尖发粗？剪到齐平才对
-    slot: anytime
-    remind:
-      text: 把指甲剪到与指尖齐平，不要剪得过短
-      quote:
-        - 剪得过短，指尖就难以发力，皮肤也容易变得粗糙。
-        - 专家认可的正确长度，是与指尖齐平。
-    effect:
-      text: 剪得过短，指尖就难以发力，皮肤也容易变得粗糙。
-      quote: 剪得过短，指尖就难以发力，皮肤也容易变得粗糙。
-    steps:
-      - id: trim-to-fingertip-level
-        text: 专家认可的正确长度，是与指尖齐平。
-        quote: 专家认可的正确长度，是与指尖齐平。
-      - id: round-toe-corners-slightly
-        text: '脚趾甲先水平修剪，边角再稍微磨圆。第四条的原因是「角不要修过头」：角修得太平，指甲的角就会嵌进肉里。'
-        quote:
-          - 脚趾甲先水平修剪，边角再稍微磨圆。
-          - 第四条的原因是「角不要修过头」：角修得太平，指甲的角就会嵌进肉里。
-    cautions:
-      - level: info
-        text: 第四条的原因是「角不要修过头」：角修得太平，指甲的角就会嵌进肉里。
-        quote: 第四条的原因是「角不要修过头」：角修得太平，指甲的角就会嵌进肉里。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 682338d3ac3967f0
-  - id: trim-nails-safely
+  # 2026-10-29 合并：trim-nails-safely、correct-nail-length-and-toe-corner、preserve-fingertip-support、leave-nails-longer-for-rough-skin 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: trim-nails-right
     status: reviewed
     source:
       anchor: 剪指甲的正确方法
     slot: anytime
     remind:
-      text: 与指尖齐平，分段慢慢剪，剪后用锉刀打磨；脚趾甲先水平修剪，再稍微磨圆
+      text: 与指尖齐平，不要剪得过短；分段慢慢剪，剪后用锉刀打磨；脚趾甲先水平修剪、边角稍磨圆。
       quote:
         - 指甲应与指尖齐平，不要剪得过短。
         - 不要一次性剪掉太多。
         - 所以要用剪口前端一点一点往前推，从指甲的弯曲部分慢慢剪。
         - 剪完指甲后，用锉刀把切口打磨平滑；剪刀越锋利越不容易撕裂甲面。
         - 建议先水平修剪，然后将边角稍微打磨圆滑。
+        - 剪得过短，指尖就难以发力，皮肤也容易变得粗糙。
+        - 专家认可的正确长度，是与指尖齐平。
+        - 指甲的主要功能之一是为指尖提供支撑，帮助更好地发力。如果指甲剪得过短，指尖就难以发力。
+        - 如果你发现指尖持续粗糙，请检查是否因为指甲过短所致。
     images:
-      - "https://img.newzone.top/2024-10-16-13-37-03.png?imageMogr2/format/webp"
+      - https://img.newzone.top/2024-10-16-13-37-03.png?imageMogr2/format/webp
     steps:
       - id: trim-to-fingertip-level
-        text: 指甲应与指尖齐平，不要剪得过短。
+        text: 指甲应与指尖齐平，不要剪得过短
         quote: 指甲应与指尖齐平，不要剪得过短。
       - id: trim-gradually
-        text: 所以要用剪口前端一点一点往前推，从指甲的弯曲部分慢慢剪。
+        text: 用剪口前端一点一点往前推，从指甲的弯曲部分慢慢剪
         quote: 所以要用剪口前端一点一点往前推，从指甲的弯曲部分慢慢剪。
       - id: file-nail-edges
-        text: 剪完指甲后，用锉刀把切口打磨平滑；剪刀越锋利越不容易撕裂甲面。
+        text: 剪完后用锉刀把切口打磨平滑；剪刀越锋利越不容易撕裂甲面
         quote: 剪完指甲后，用锉刀把切口打磨平滑；剪刀越锋利越不容易撕裂甲面。
       - id: trim-toenails-horizontal
-        text: 建议先水平修剪，然后将边角稍微打磨圆滑。
-        quote: 建议先水平修剪，然后将边角稍微打磨圆滑。
+        text: 脚趾甲先水平修剪，然后将边角稍微打磨圆滑
+        quote:
+          - 脚趾甲先水平修剪，边角再稍微磨圆。
+          - 建议先水平修剪，然后将边角稍微打磨圆滑。
+      - id: not-too-short
+        text: 剪得过短，指尖就难以发力，皮肤也容易变得粗糙
+        quote: 剪得过短，指尖就难以发力，皮肤也容易变得粗糙。
+        images:
+          - https://img.newzone.top/2024-10-17-04-12-16.png?imageMogr2/format/webp
+      - id: leave-longer-if-rough
+        text: 指尖持续粗糙时检查是否因为指甲过短；曾有人适度留长，五周后明显改善
+        quote:
+          - 如果你发现指尖持续粗糙，请检查是否因为指甲过短所致。
+          - 曾有四位指尖皮肤粗糙的人把指甲适度留长，五周后症状明显改善。
     cautions:
       - level: info
         text: 不要一次性剪掉太多。指甲由三层叠成，一次剪得过大，弧度会被压扁、剪口瞬间受力，上层随即剥离
         quote: 不要一次性剪掉太多。指甲由三层叠成，一次剪得过大，弧度会被压扁、剪口瞬间受力，上层随即剥离
-    review:
-      by: benson
-      date: 2026-10-21
-      hash: 9e7adbf575842c45
-  - id: preserve-fingertip-support
-    status: reviewed
-    source:
-      anchor: 指甲的作用
-    slot: anytime
-    remind:
-      text: 不要把指甲剪得过短，让指甲为指尖提供支撑
-      quote: 指甲的主要功能之一是为指尖提供支撑，帮助更好地发力。如果指甲剪得过短，指尖就难以发力。
-    effect:
-      text: 如果指甲剪得过短，指尖就难以发力。
-      quote: 如果指甲剪得过短，指尖就难以发力。
-    images:
-      - "https://img.newzone.top/2024-10-17-04-12-16.png?imageMogr2/format/webp"
-    steps:
-      - id: check-nail-length
-        text: 如果指甲剪得过短，指尖就难以发力。
-        quote: 如果指甲剪得过短，指尖就难以发力。
-    cautions:
+      - level: info
+        text: 第四条的原因是「角不要修过头」：角修得太平，指甲的角就会嵌进肉里。
+        quote: 第四条的原因是「角不要修过头」：角修得太平，指甲的角就会嵌进肉里。
       - level: with-doctor
         text: 嵌甲一旦发作，行走平衡会变差，跌倒的风险随之升高，说明书特别提醒老年人。已经有症状的，请到皮肤科就诊。
         quote: 嵌甲一旦发作，行走平衡会变差，跌倒的风险随之升高，说明书特别提醒老年人。已经有症状的，请到皮肤科就诊。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: b3803793ef173955
-    name: 别把指甲剪太短
-  - id: leave-nails-longer-for-rough-skin
-    status: reviewed
-    source:
-      anchor: 指甲的作用
-    slot: anytime
-    remind:
-      text: 指尖持续粗糙时，检查是否因为指甲过短
-      quote: 如果你发现指尖持续粗糙，请检查是否因为指甲过短所致。
+      date: 2026-10-29
+      hash: f5ababa4c854b509
+    name: 剪指甲：齐平分段剪
     effect:
-      text: 曾有四位指尖皮肤粗糙的人把指甲适度留长，五周后症状明显改善。
-      quote: 曾有四位指尖皮肤粗糙的人把指甲适度留长，五周后症状明显改善。
-    steps:
-      - id: leave-nails-longer
-        text: 曾有四位指尖皮肤粗糙的人把指甲适度留长，五周后症状明显改善。
-        quote: 曾有四位指尖皮肤粗糙的人把指甲适度留长，五周后症状明显改善。
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 34e50a43ddc2a56e
-    name: 指尖粗糙时留长指甲
+      text: 剪得过短，指尖就难以发力，皮肤也容易变得粗糙；把指甲适度留长，五周后指尖粗糙明显改善。
+      quote:
+        - 剪得过短，指尖就难以发力，皮肤也容易变得粗糙。
+        - 曾有四位指尖皮肤粗糙的人把指甲适度留长，五周后症状明显改善。
+    formerIds:
+      - trim-nails-safely
+      - correct-nail-length-and-toe-corner
+      - preserve-fingertip-support
+      - leave-nails-longer-for-rough-skin
   - id: use-nail-polish-for-mood
     status: reviewed
     source:

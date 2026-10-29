@@ -95,6 +95,11 @@
           "description": "全局唯一、稳定，发布后不改名"
         },
         "status": { "enum": ["draft", "reviewed"] },
+        "formerIds": {
+          "type": "array",
+          "description": "这张卡用过的旧 id（合并或改名之前叫这个）。用户的盖章记录、日常清单里存的是旧 id，靠它认回来 —— 不写这一项，改名就等于丢历史。",
+          "items": { "type": "string", "minLength": 1 }
+        },
         "source": {
           "type": "object",
           "required": ["anchor"],

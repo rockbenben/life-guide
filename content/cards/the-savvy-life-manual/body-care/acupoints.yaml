@@ -78,153 +78,57 @@ cards:
       date: 2026-10-24
       hash: 245da8b31989ff6a
     name: 按穴位：找点加力保持
-
-  - id: fatigue-zusanli
+  # 2026-10-29 合并：fatigue-zusanli、lower-back-shenshu-weizhong、shoulder-stiffness-points、stress-points、cold-sensitivity-points 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: acupressure-by-symptom
     status: reviewed
     source:
-      anchor: '各部位对应的穴位位置'
+      anchor: 各部位对应的穴位位置
     slot: anytime
     remind:
-      text: '疲劳时找足三里：膝盖骨下方、外侧凹陷往下四指宽处。'
-      quote: '疲劳：足三里——膝盖骨下方、外侧凹陷往下四指宽处，被称为万能、长寿之穴。'
+      text: 疲劳按足三里、腰痛按肾俞和委中、肩僵按肩井和合谷、压力大按内关百会、畏寒按三阴交。
+      quote:
+        - 疲劳：足三里——膝盖骨下方、外侧凹陷往下四指宽处，被称为万能、长寿之穴。
+        - 腰痛：肾俞——沿腰线，在脊椎两侧两指处；不好按的时候，可以在地板上放个网球之类，躺上去压。委中——膝关节背面正中附近。
+        - 肩部僵硬：肩井——脖子根部与肩端的中点附近。合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷。
+        - 压力：内关——手腕横纹往里约三指处。百会——两耳最高点连成的线，与鼻梁中线交汇处。
+        - 畏寒：三阴交——内脚踝上方四指、紧贴粗骨的后方。
     dose:
       - value: 3
-        unit: '秒'
-        what: '每次按压的保持时长'
-        quote: '保持 3 秒'
+        unit: 秒
+        what: 每次按压的保持时长
+        quote: 保持 3 秒
     steps:
-      - id: locate-zusanli
-        text: '足三里——膝盖骨下方、外侧凹陷往下四指宽处'
-        quote: '足三里——膝盖骨下方、外侧凹陷往下四指宽处'
+      - id: fatigue
+        text: 疲劳：足三里——膝盖骨下方、外侧凹陷往下四指宽处，被称为万能、长寿之穴。
+        quote: 疲劳：足三里——膝盖骨下方、外侧凹陷往下四指宽处，被称为万能、长寿之穴。
+      - id: lower-back
+        text: 腰痛：肾俞——沿腰线，在脊椎两侧两指处；不好按的时候，可以在地板上放个网球之类，躺上去压。委中——膝关节背面正中附近。
+        quote: 腰痛：肾俞——沿腰线，在脊椎两侧两指处；不好按的时候，可以在地板上放个网球之类，躺上去压。委中——膝关节背面正中附近。
+      - id: shoulder-stiffness
+        text: 肩部僵硬：肩井——脖子根部与肩端的中点附近。合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷。
+        quote: 肩部僵硬：肩井——脖子根部与肩端的中点附近。合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷。
+      - id: stress
+        text: 压力：内关——手腕横纹往里约三指处。百会——两耳最高点连成的线，与鼻梁中线交汇处。
+        quote: 压力：内关——手腕横纹往里约三指处。百会——两耳最高点连成的线，与鼻梁中线交汇处。
+      - id: cold-sensitivity
+        text: 畏寒：三阴交——内脚踝上方四指、紧贴粗骨的后方。
+        quote: 畏寒：三阴交——内脚踝上方四指、紧贴粗骨的后方。
     cautions:
       - level: stop
-        text: '用力过度反而会引起炎症'
-        quote: '用力过度反而会引起炎症'
+        text: 用力过度反而会引起炎症
+        quote: 用力过度反而会引起炎症
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 486d2591636bfe99
-    name: 疲劳时按足三里
-
-  - id: lower-back-shenshu-weizhong
-    status: reviewed
-    source:
-      anchor: '各部位对应的穴位位置'
-    slot: anytime
-    remind:
-      text: '腰痛时找肾俞和委中：肾俞在脊椎两侧两指处，委中在膝关节背面正中附近。'
-      quote: '腰痛：肾俞——沿腰线，在脊椎两侧两指处；不好按的时候，可以在地板上放个网球之类，躺上去压。委中——膝关节背面正中附近。'
-    dose:
-      - value: 3
-        unit: '秒'
-        what: '每次按压的保持时长'
-        quote: '保持 3 秒'
-    steps:
-      - id: locate-shenshu
-        text: '肾俞——沿腰线，在脊椎两侧两指处'
-        quote: '肾俞——沿腰线，在脊椎两侧两指处'
-      - id: use-ball-for-shenshu
-        text: '不好按的时候，可以在地板上放个网球之类，躺上去压'
-        quote: '不好按的时候，可以在地板上放个网球之类，躺上去压'
-      - id: locate-weizhong
-        text: '委中——膝关节背面正中附近'
-        quote: '委中——膝关节背面正中附近'
-    cautions:
-      - level: stop
-        text: '用力过度反而会引起炎症'
-        quote: '用力过度反而会引起炎症'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: cac416cc3adedd45
-    name: 腰痛时按肾俞和委中
-
-  - id: shoulder-stiffness-points
-    status: reviewed
-    source:
-      anchor: '各部位对应的穴位位置'
-    slot: anytime
-    remind:
-      text: '肩部僵硬时找肩井和合谷：肩井在脖子根部与肩端的中点附近，合谷在拇指与食指的手骨交叉处、偏向食指的那个凹陷。'
-      quote: '肩部僵硬：肩井——脖子根部与肩端的中点附近。合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷。'
-    dose:
-      - value: 3
-        unit: '秒'
-        what: '每次按压的保持时长'
-        quote: '保持 3 秒'
-    steps:
-      - id: locate-jianjing
-        text: '肩井——脖子根部与肩端的中点附近'
-        quote: '肩井——脖子根部与肩端的中点附近'
-      - id: locate-hegu
-        text: '合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷'
-        quote: '合谷——拇指与食指的手骨交叉处、偏向食指的那个凹陷'
-    cautions:
-      - level: stop
-        text: '用力过度反而会引起炎症'
-        quote: '用力过度反而会引起炎症'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 200ef7c957053add
-    name: 肩僵时按肩井和合谷
-
-  - id: stress-points
-    status: reviewed
-    source:
-      anchor: '各部位对应的穴位位置'
-    slot: anytime
-    remind:
-      text: '压力时找内关和百会：内关在手腕横纹往里约三指处，百会在两耳最高点连成的线与鼻梁中线交汇处。'
-      quote: '压力：内关——手腕横纹往里约三指处。百会——两耳最高点连成的线，与鼻梁中线交汇处。'
-    dose:
-      - value: 3
-        unit: '秒'
-        what: '每次按压的保持时长'
-        quote: '保持 3 秒'
-    steps:
-      - id: locate-neiguan
-        text: '内关——手腕横纹往里约三指处'
-        quote: '内关——手腕横纹往里约三指处'
-      - id: locate-baihui
-        text: '百会——两耳最高点连成的线，与鼻梁中线交汇处'
-        quote: '百会——两耳最高点连成的线，与鼻梁中线交汇处'
-    cautions:
-      - level: stop
-        text: '用力过度反而会引起炎症'
-        quote: '用力过度反而会引起炎症'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 32bef7e96d1301a5
-    name: 压力大时按内关百会
-
-  - id: cold-sensitivity-points
-    status: reviewed
-    source:
-      anchor: '各部位对应的穴位位置'
-    slot: anytime
-    remind:
-      text: '畏寒时找三阴交：内脚踝上方四指、紧贴粗骨的后方。'
-      quote: '畏寒：三阴交——内脚踝上方四指、紧贴粗骨的后方。'
-    dose:
-      - value: 3
-        unit: '秒'
-        what: '每次按压的保持时长'
-        quote: '保持 3 秒'
-    steps:
-      - id: locate-sanyinjiao
-        text: '三阴交——内脚踝上方四指、紧贴粗骨的后方'
-        quote: '三阴交——内脚踝上方四指、紧贴粗骨的后方'
-    cautions:
-      - level: stop
-        text: '用力过度反而会引起炎症'
-        quote: '用力过度反而会引起炎症'
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 3171aa525c85a075
-    name: 畏寒时按三阴交
+      date: 2026-10-29
+      hash: cd9f8d54c2f97047
+    name: 按不适找穴：五个场景
+    formerIds:
+      - fatigue-zusanli
+      - lower-back-shenshu-weizhong
+      - shoulder-stiffness-points
+      - stress-points
+      - cold-sensitivity-points
 
   - id: beauty-basic-four
     status: reviewed

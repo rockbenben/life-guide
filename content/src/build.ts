@@ -186,6 +186,8 @@ function stripQuotes(card: Card): BuiltCard {
     : card.effect;
   return {
     id: card.id,
+    // 旧 id 留着：用户的盖章记录存的是旧 id，App 靠它认回来（AGENTS.md §5）
+    formerIds: card.formerIds,
     source: card.source,
     // 屏上显示的动作名（没有就让它在 App 里回落到小节名）
     name: card.name,

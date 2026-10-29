@@ -36,6 +36,13 @@ export interface Notice {
 export interface Card {
   id: string;
   status: "draft" | "reviewed";
+  /**
+   * 这张卡用过的旧 id。
+   *
+   * 合并或改名时写在这里：用户的盖章记录、日常清单里存的是旧 id，
+   * App 靠这一项认回来 —— 不写就等于丢历史（AGENTS.md §5）。
+   */
+  formerIds?: string[];
   source: { anchor: string };
   /** 屏上显示的动作名（≤16 字）。不填就用原文小节名 */
   name?: string;

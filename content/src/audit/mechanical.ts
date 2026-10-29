@@ -47,6 +47,75 @@ export function similarity(a: string, b: string): number {
   return (2 * hit) / (ga.size + gb.size);
 }
 
+/**
+ * 一个字（或一句话）在另一段文字里能被认出来的程度。
+ *
+ * 按**不同的字**算（不按出现次数）：中文里同一个字反复出现不代表更相关。
+ * 用字符覆盖而不是二元组：抽取时同一件事常被改写（「立即吃最甜」→「立即食用（最甜）」），
+ * 二元组对改写不友好，字符覆盖友好一些。
+ */
+function charCoverage(text: string, haystack: string): number {
+  const clean = text.replace(/\s+/g, "");
+  const chars = [...new Set(clean)];
+  if (!chars.length) return 0;
+  let hit = 0;
+  for (const ch of chars) if (haystack.includes(ch)) hit++;
+  return hit / chars.length;
+}
+
+/** 一步算「被另一张卡覆盖」的下限。 */
+const STEP_COVERAGE_MIN = 0.8;
+
+/** 两张卡之间的「子集型重复」判定结果。 */
+export interface SubsetHit {
+  /** 多出来的那张（该删/该并的是它） */
+  dupId: string;
+  /** 包含方 */
+  hostId: string;
+  /** 判据：原样出现，还是改写过也认 */
+  how: "exact" | "paraphrase";
+}
+
+/**
+ * 「子集型」重复：A 的每一步都出现在 B 里。
+ *
+ * **相似度抓不到这一类**：A 是 B 的一部分时，两边差得很远，
+ * Dice 系数上不去（子集再像，分母也大）——
+ * 实测 5 对真重复里有 3 对是这种，审阅一条都没报。
+ *
+ * 两档判据：
+ *   · **原样**：A 的每一步都是 B 的原文子串 —— 硬证据，不用多说。
+ *   · **改写过**：每一步的字八成以上出现在 B 里（同一件事换个说法）。
+ *
+ * 两条护栏，免得把巧合当成重复：
+ *   · 至少两步（单步撞词是常事）；
+ *   · A 的字数不能太小（太小的是碎片，不是"同一件事"）。
+ *
+ * **会误报**：同一套系统的几个选项（三色蛋白卡：黄色主食系 / 绿色植物系 /
+ * 红色动物系，步骤是同一个模板）也会命中。这是有意接受的 ——
+ * 这个检查的定位是「值得人看一眼」，不是「确定有问题」
+ * （见本文件开头）。三张卡一眼就能看出是一套，不会误伤人。
+ */
+export function findStepSubset(
+  a: { id: string; remind: string; steps: string[] },
+  b: { id: string; remind: string; steps: string[] },
+): SubsetHit | null {
+  const steps = a.steps.map((s) => s.replace(/\s+/g, "")).filter((s) => s.length >= 4);
+  if (steps.length < 2) return null;
+  const big = b.steps.join("").replace(/\s+/g, "");
+  if (!big) return null;
+  const total = steps.reduce((n, s) => n + s.length, 0);
+  if (total < 20) return null;
+
+  if (steps.every((s) => big.includes(s))) {
+    return { dupId: a.id, hostId: b.id, how: "exact" };
+  }
+  if (steps.every((s) => charCoverage(s, big) >= STEP_COVERAGE_MIN)) {
+    return { dupId: a.id, hostId: b.id, how: "paraphrase" };
+  }
+  return null;
+}
+
 /** 一篇文章里，原文有没有讲「禁忌 / 注意」的内容。 */
 export function sourceHasCautionContent(source: SourceIndex): boolean {
   return cautionSections(source).length > 0;
@@ -133,12 +202,32 @@ export function auditCardMechanically(
   for (const other of article.cards) {
     if (other.id === card.id) continue;
     if (other.id < card.id) continue; // 只报一次
+    const mySteps = card.steps.map((s) => s.text);
+    const otherSteps = other.steps.map((s) => s.text);
+
+    // 先看「子集型」：每一步都出现在另一张卡里 —— 这是硬证据，
+    // 相似度反而抓不到（两边长度差得远）。
+    const mine = { id: card.id, remind: card.remind.text, steps: mySteps };
+    const theirs = { id: other.id, remind: other.remind.text, steps: otherSteps };
+    const hit = findStepSubset(mine, theirs) ?? findStepSubset(theirs, mine);
+    if (hit) {
+      issues.push({
+        cardId: hit.dupId,
+        verdict: "duplicate",
+        path: "steps",
+        reason:
+          hit.how === "exact"
+            ? `卡片 ${hit.dupId} 的每一步都原样出现在卡片 ${hit.hostId} 里（多半是同一件事抽了两次）`
+            : `卡片 ${hit.dupId} 的每一步在卡片 ${hit.hostId} 里都能对上（同一件事说了两遍）`,
+        text: card.remind.text,
+        quote: card.remind.quote,
+      });
+      continue;
+    }
+
     const sim = Math.max(
       similarity(card.remind.text, other.remind.text),
-      similarity(
-        card.steps.map((s) => s.text).join(" "),
-        other.steps.map((s) => s.text).join(" "),
-      ),
+      similarity(mySteps.join(" "), otherSteps.join(" ")),
     );
     if (sim > 0.6) {
       issues.push({

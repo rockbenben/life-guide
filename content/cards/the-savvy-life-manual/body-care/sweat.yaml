@@ -13,6 +13,8 @@ ignore:
       reason: "暑热适应的定义及各地开始推行时间属于概念和地区背景信息，核心训练已由方法卡提炼。"
   images: []
 cards:
+  #2026-10-29 合并：exercise-heat-adaptation 并进这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
   - id: sweat-heat-adaptation-plan
     status: reviewed
     name: "运动加温浴一起做 2 周"
@@ -20,11 +22,15 @@ cards:
       anchor: "出汗与暑热适应：把汗「变回清爽」"
     slot: anytime
     remind:
-      text: "把运动和手足温浴混合着做，坚持 2 周。"
+      text: 把运动和手足温浴混合着做，坚持 2 周。
       quote:
-        - "① 运动——在略热的环境下做略吃力的运动，每天 30 分钟左右"
-        - "② 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟"
-        - "两种混合着做、坚持 2 周"
+        - ① 运动——在略热的环境下做略吃力的运动，每天 30 分钟左右
+        - ② 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟
+        - 两种混合着做、坚持 2 周
+        - 做任何暑热适应，最有效的方法都是运动
+        - 在略热的环境下
+        - 做略吃力的运动
+        - 每天 30 分钟左右
     effect:
       text: "实测汗的盐分浓度下降 30～45%，回收功能改善后汗的气味和黏腻感都会消失。"
       quote: "实测汗的盐分浓度下降 30～45%，回收功能改善后汗的气味和黏腻感都会消失。"
@@ -32,20 +38,38 @@ cards:
       - value: 2
         unit: 周
         what: 练习计划的坚持时长
-        quote: "两种混合着做、坚持 2 周"
+        quote: 两种混合着做、坚持 2 周
+      - value: 30
+        unit: 分钟
+        what: 每天运动时长
+        quote: 每天 30 分钟左右
+        approximate: true
     steps:
-      - id: select-methods
-        text: "运动——在略热的环境下做略吃力的运动，每天 30 分钟左右42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟"
-        quote:
-          - "① 运动——在略热的环境下做略吃力的运动，每天 30 分钟左右"
-          - "② 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟"
+      - id: warm-environment
+        text: 在略热的环境下
+        quote: 在略热的环境下
+      - id: moderately-strenuous
+        text: 做略吃力的运动
+        quote: 做略吃力的运动
+      - id: exercise-duration
+        text: 每天 30 分钟左右
+        quote: 每天 30 分钟左右
+      - id: warm-bath
+        text: 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟
+        quote: 42℃ 手足温浴——把手腕和脚踝浸入约 42℃ 的热水里泡 30 分钟
       - id: mix-and-persist
-        text: "两种混合着做、坚持 2 周"
-        quote: "两种混合着做、坚持 2 周"
+        text: 两种混合着做、坚持 2 周
+        quote: 两种混合着做、坚持 2 周
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 65de9680cfb790b1
+      by: AI（作者授权代签）
+      date: 2026-10-29
+      hash: dcb445055ab1d937
+    cautions:
+      - level: stop
+        text: 如果感觉身体状况变差，请停止运动。
+        quote: 如果感觉身体状况变差，请停止运动。
+    formerIds:
+      - exercise-heat-adaptation
 
   - id: sweat-self-check
     status: reviewed
@@ -80,51 +104,6 @@ cards:
       by: AI（作者授权代签）
       date: 2026-10-24
       hash: 6a093111c93416cb
-
-  - id: exercise-heat-adaptation
-    status: reviewed
-    name: "在略热环境运动"
-    source:
-      anchor: "方法一：运动"
-    slot: anytime
-    remind:
-      text: "在略热环境下做略吃力的运动，每天 30 分钟左右。"
-      quote:
-        - "做任何暑热适应，最有效的方法都是运动"
-        - "在略热的环境下"
-        - "做略吃力的运动"
-        - "每天 30 分钟左右"
-    dose:
-      - value: 30
-        unit: 分钟
-        what: 每天运动时长
-        quote: "每天 30 分钟左右"
-        approximate: true
-    duration:
-      basis: quote
-      sec: 1800
-      quote: "每天 30 分钟左右"
-    steps:
-      - id: choose-slightly-warm-environment
-        text: "在略热的环境下"
-        quote: "在略热的环境下"
-      - id: do-moderately-strenuous-exercise
-        text: "做略吃力的运动"
-        quote: "做略吃力的运动"
-      - id: exercise-daily
-        text: "每天 30 分钟左右"
-        quote: "每天 30 分钟左右"
-    cautions:
-      - level: stop
-        text: "如果感觉身体状况变差，请停止运动。"
-        quote: "如果感觉身体状况变差，请停止运动。"
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 560f4d62aaafed0c
-    variants:
-      sick:
-        skip: true
 
   - id: hand-foot-warm-bath
     status: reviewed
@@ -183,77 +162,54 @@ cards:
       by: AI（作者授权代签）
       date: 2026-10-28
       hash: 95d13ef9e42c7dc9
-
-  - id: gradual-sweat-introduction
+  # 2026-10-29 合并：gradual-sweat-introduction、post-sweat-skin-care、heatstroke-prevention 并成这张卡。
+  # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
+  - id: sweat-precautions
     status: reviewed
     source:
-      anchor: "注意事项"
+      anchor: 注意事项
     slot: anytime
     remind:
-      text: "平时几乎不出汗时，避免一开始就剧烈出汗，把汗量一点点加上去。"
+      text: 平时几乎不出汗的人避免一开始就剧烈出汗，把汗量一点点加上去；出汗后尽快冲洗擦干；运动或温浴时补水并同步补盐。
       quote:
-        - "平时几乎不出汗的人，不要一上来就猛出。"
-        - "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+        - 平时几乎不出汗的人，不要一上来就猛出。
+        - 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
+        - 出汗之后应尽快用淋浴冲洗，或用毛巾擦干。
+        - 运动或温浴过程中一旦感觉身体不适，请立即中止。
+        - 在进行暑热适应训练时，除了补水，别忘了同步补充盐分。
     steps:
       - id: avoid-intense-sweating-at-first
-        text: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
-        quote: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
+        text: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
+        quote: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
       - id: increase-sweat-gradually
-        text: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
-        quote: "没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。"
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 622c45a796fe7199
-    name: 不出汗的人从少量开始
-
-  - id: post-sweat-skin-care
-    status: reviewed
-    source:
-      anchor: "注意事项"
-    slot: anytime
-    remind:
-      text: "出汗后尽快用淋浴冲洗，或用毛巾擦干。"
-      quote: "出汗之后应尽快用淋浴冲洗，或用毛巾擦干。"
-    effect:
-      text: "汗在身上放着不管，就是皮肤发炎和发痒的原因。"
-      quote: "汗在身上放着不管，就是皮肤发炎和发痒的原因。"
-    steps:
+        text: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
+        quote: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
       - id: rinse-or-dry-skin
-        text: "出汗之后应尽快用淋浴冲洗，或用毛巾擦干。"
-        quote: "出汗之后应尽快用淋浴冲洗，或用毛巾擦干。"
+        text: 出汗之后应尽快用淋浴冲洗，或用毛巾擦干。
+        quote: 出汗之后应尽快用淋浴冲洗，或用毛巾擦干。
+      - id: stop-if-unwell
+        text: 运动或温浴过程中一旦感觉身体不适，请立即中止。
+        quote: 运动或温浴过程中一旦感觉身体不适，请立即中止。
+      - id: replenish-water-and-salt
+        text: 在进行暑热适应训练时，除了补水，别忘了同步补充盐分。
+        quote: 在进行暑热适应训练时，除了补水，别忘了同步补充盐分。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 813a9f2f0536ad86
-    name: 出汗后尽快冲洗擦干
-
-  - id: heatstroke-prevention
-    status: reviewed
-    source:
-      anchor: "注意事项"
-    slot: anytime
-    remind:
-      text: "运动或温浴时一旦感觉身体不适，请立即中止；补水时同步补充盐分。"
-      quote:
-        - "运动或温浴过程中一旦感觉身体不适，请立即中止。"
-        - "在进行暑热适应训练时，除了补水，别忘了同步补充盐分。"
-    steps:
-      - id: stop-if-unwell
-        text: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
-        quote: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
-      - id: replenish-water-and-salt
-        text: "在进行暑热适应训练时，除了补水，别忘了同步补充盐分。"
-        quote: "在进行暑热适应训练时，除了补水，别忘了同步补充盐分。"
+      date: 2026-10-29
+      hash: f153a4e19b8d1799
+    name: 出汗的三个注意点
+    dose: []
     cautions:
       - level: stop
-        text: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
-        quote: "运动或温浴过程中一旦感觉身体不适，请立即中止。"
+        text: 运动或温浴过程中一旦感觉身体不适，请立即中止。
+        quote: 运动或温浴过程中一旦感觉身体不适，请立即中止。
       - level: info
-        text: "出汗时务必提防热中暑。"
-        quote: "出汗时务必提防热中暑。"
-    review:
-      by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 510e3b68875dc967
-    name: 运动温浴时补水补盐
+        text: 出汗时务必提防热中暑。
+        quote: 出汗时务必提防热中暑。
+    effect:
+      text: 汗在身上放着不管，就是皮肤发炎和发痒的原因。
+      quote: 汗在身上放着不管，就是皮肤发炎和发痒的原因。
+    formerIds:
+      - gradual-sweat-introduction
+      - post-sweat-skin-care
+      - heatstroke-prevention
