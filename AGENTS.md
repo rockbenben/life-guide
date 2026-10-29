@@ -1131,15 +1131,19 @@ Android Studio 自带的 JBR（它就是 21）。
   **验域名必须等 `navigator.serviceWorker.ready` 到 `activated`，不能只看 200**；
   而且 DNS 指过去 ≠ 域名绑上了，EdgeOne 控制台里没绑就不会签这张域名的证书。
   最省事的验法：`ACCEPTANCE_URL=<地址> npm run acceptance:url`（整套验收跑在真实域名上）。
-- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次过了 10 个小时没跟上；
-  线上给的是旧构建。判据：对比线上 `index.html` 与 `gh-pages` HEAD 的 sha256。
-  **但分支往往是对的**：实测 EdgeOne 那份与 `gh-pages` 12:02 的产物逐字一致（哈希相同）、
-  与 HEAD 不同 —— 卡的是同步本身（webhook / 集成停了），
-  要的是**触发一次重新部署**，不是换分支。
-  **2026-10-29 查清了机制**（`docs/部署.md` §三 有完整记录）：
-  EdgeOne **不重新构建**，伺服的就是分支里的那份文件树（线上 `sw.js` 与 `gh-pages@ccdcb67:sw.js`
-  逐字节相同）；加随机 query 拿到的还是旧的、新资源 404 ⇒ 不是 CDN 缓存；
-  再推一个**空提交**（树不变）也激不动它 ⇒ **是 EdgeOne 取分支那一步停了**，只能去控制台点重新部署。
+- **EdgeOne 的 Git 同步可能整个停掉，而且只能靠人去控制台救。**
+  2026-10-29 实测：12:02 那次推送 2.5 分钟内跟上了，**13:19 那次过了 10 个小时没跟上**，
+  线上一直是旧构建；**去控制台点一次「重新部署」当场就好了**（08:40 恢复，
+  线上 sha256 从 `BEC9A130…` 变 `45CBC3C6…`，og:image 也从镜像站地址改成了
+  `https://life.newzone.top/og.png`）。**而且同步是真恢复了**：点完之后 5 分钟内，
+  `gh-pages` 上一个新提交被 EdgeOne **自动跟上**（线上 sha256 变 `88D2DD48…`，
+  与 HEAD 逐字相同）⇒ Git 集成回到常态，往后 push 不用再手动点。
+  判据：对比线上 `index.html` 与 `gh-pages` HEAD 的 sha256。
+  **三个已排除的猜测**（别再重查一遍）：① 不是它自己 build 失败 —— 它**根本不 build**，
+  伺服的就是分支里那份文件树（线上 `sw.js` 与分支那个提交逐字节相同）；
+  ② 不是 CDN 缓存压着旧文件 —— 加随机 query 拿到的还是旧的、新资源在源站直接 404；
+  ③ 不是「没推送所以没触发」 —— 推一个**空提交**（树不变）也激不动它。
+  ⇒ 卡的是它**取分支那一步**。
   另有一个容易误判的坑：**`deploy.yml` 打出 `There is nothing to commit` 时其实没推任何东西**
   （产物与分支上已有的逐字相同），所以「分支最近有没有更新」不能只看 commit 时间。
 - **GitHub Pages 从国内慢 16 倍。** 同一批文件 EdgeOne 平均 0.16 s/件、GitHub Pages 2.66 s/件；
@@ -1183,15 +1187,10 @@ git tag v0.1.2 && git push origin v0.1.2   # 这一推才触发流水线
 不涨的话新包装不上。
 
 **怎么发布浏览器那条路**（产物、域名、EdgeOne Pages 的三条发布路径、发完要验的四件事）：
-见 `docs/部署.md`。**主地址是 <https://life.newzone.top/>**（EdgeOne Pages + 自定义域名，
-2026-10-29 证书签发、8 项验收在真实地址上全过；GitHub Pages 的
-`rockbenben.github.io/life-guide/` 是镜像，两个地址伺服同一份 `gh-pages` 分支的内容）。
-
-**待办**：EdgeOne 线上那份还停在 12:02 的构建（**取分支那一步停了**，2026-10-29 已查清机制，
-见 §8 与 `docs/部署.md` §三），要在控制台触发一次重新部署 —— 判据是线上 `index.html`
-的 sha256 要与 `gh-pages` HEAD 那份一致。
-**镜像站（`rockbenben.github.io/life-guide/`）已经是新构建**（`index-D647rtlj.js`、
-og:image 指向 `https://life.newzone.top/og.png`），兜底可用。
+见 `docs/部署.md`。**主地址 <https://life.newzone.top/> 已同步**（2026-10-29 08:40 控制台点了一次重新部署后恢复，
+8 项验收在真实地址上重跑 8 通过 0 失败）；GitHub Pages 的
+`rockbenben.github.io/life-guide/` 是镜像，两个地址伺服同一份 `gh-pages` 分支的内容。
+**主站与镜像不同步时的处置见 §8**（卡在 EdgeOne 取分支那一步，去控制台点重新部署）。
 
 原型的校验用例已迁移成单元测试（`app/test/domain/` 与 `content/test/rules.test.ts`），
 原型本体在 2026-10-27 删掉了 —— 它不被任何构建或测试引用，只是一份只读参考，
