@@ -26,6 +26,14 @@ const MIME = {
  *
  * `style-src` 需要 `'unsafe-inline'`：Preact 里有几处 `style="…"` 属性，
  * 不是脚本注入面；`script-src` 没有这一项。
+ *
+ * **`connect-src` 多放了 `https:`**：多设备同步要连用户自己的同步服务
+ * （AGENTS.md §4.6），那个地址是用户在设置页里填的，不可能是固定的。
+ * 放行 https 不等于放行远程内容 —— 渲染层不加载任何远程脚本
+ * （`script-src 'self'`），跑的就是我们自己构建出来的那份代码；
+ * 同步上去的又只有密文。
+ *
+ * 没放行 `http:`：局域网里的明文服务连不上（要连就自己套一层 https）。
  */
 export const CSP = [
   "default-src 'self'",
@@ -33,7 +41,7 @@ export const CSP = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self'",
-  "connect-src 'self'",
+  "connect-src 'self' https:",
   "media-src 'self'",
   "worker-src 'self'",
   "manifest-src 'self'",
