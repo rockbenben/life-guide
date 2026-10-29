@@ -94,9 +94,13 @@ life-guide/
 │   │   │   ├── update.ts     更新状态 → 人话
 │   │   │   └── ics.ts        生成日历文件（定时事件 + 卡片提醒 + VALARM + EXDATE）
 │   │   ├── data/
-│   │   │   ├── db.ts         IndexedDB：events、settings、custom
+│   │   │   ├── db.ts         IndexedDB：events、settings、custom、tombstones
 │   │   │   ├── useRoutine.ts 「我的日常」与习惯（清单只有这一份）
-│   │   │   └── backup.ts     JSON 导出 / 导入（带版本号）
+│   │   │   ├── backup.ts     JSON 导出 / 导入（带版本号）
+│   │   │   ├── sync.ts       同步客户端：读本地 → 拉远端 → 合并 → 写回 → 推上去
+│   │   │   ├── sync-crypto.ts 口令 → 空间 id + AES-GCM 密钥；密文的加解密
+│   │   │   ├── sync-http.ts  走 HTTP 的传输层（SyncTransport 的一个实现）
+│   │   │   └── useAutoSync.ts 打开 App / 回到前台时自动同步一次
 │   │   ├── platform/         notify.ts（三端通知）/ update.ts（桌面更新桥）
 │   │   ├── ui/               Today / TodaySidebar / TodayLog / Card / Manual / Settings /
 │   │   │                     Conditions / DiscoverPanel / SortPanel / SortableRow / Reminder /
@@ -118,6 +122,12 @@ life-guide/
 │   ├── capacitor.config.ts
 │   ├── android/ · ios/       原生工程（cap add 生成）
 │   └── assets/               图标与启动图的源
+├── sync/                     同步服务（Cloudflare Worker + KV）：只存密文
+│   ├── src/worker.ts         取一份 / 写一份密文 + 版本号（纯逻辑，可单测）
+│   ├── src/index.ts          Worker 入口（把 env 递进去）
+│   ├── wrangler.toml         部署配置（KV 绑定 + 允许的来源）
+│   ├── test/worker.test.ts   协议的单测
+│   └── README.md             怎么部署（wrangler 三条命令）
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图
 ├── docs/                     使用指南 · 部署 · README 用的截图
@@ -153,9 +163,9 @@ R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`�
 | 手机端 | Capacitor（`mobile/`） | 同一份 `app/dist` 装进原生 WebView，生成 Android / iOS 工程。界面不重写 |
 | 存储 | IndexedDB（idb 薄封装） | 事件日志不适合 localStorage |
 | 测试 | Vitest + Playwright + node:test | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright；主进程 / 导航 / 协议的纯逻辑用 `node --test` |
-| 部署 | 任意静态托管 | 无后端 |
+| 部署 | 任意静态托管 | App 本身没有后端（静态托管即可）。**多设备同步的服务端是另一件独立的事**（`sync/`，Cloudflare Worker + KV），且只存密文 —— 见 §4.6 |
 
-不引入：状态管理库、路由库（hash 路由即可）、后端。
+不引入：状态管理库、路由库（hash 路由即可）、后端（`sync/` 那个服务是可选的同步落点，`app/` 自己不依赖它 —— 传输层是接口 `SyncTransport`，HTTP 只是其中一个实现）。
 
 **为什么样式层可以引框架而别的不引**：daisyUI 只是 Tailwind 插件，编译进 CSS，
 运行时零成本，也不接管任何行为（不注 Provider、不加全局 JS）——
@@ -165,7 +175,9 @@ R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`�
 
 **三种形态的关系**：界面只写一遍（`app/src`），构建产物 `app/dist` 三处复用 ——
 浏览器里是 PWA，桌面上是 Electron 壳，手机上是 Capacitor 壳。
-**各自的数据是分开的**（IndexedDB 按 origin / 应用 id 存），要合并用设置页的导出 / 导入。
+**各自的数据是分开的**（IndexedDB 按 origin / 应用 id 存）。要合并有两条路：
+手动用设置页的导出 / 导入；或者打开**多设备同步**（§4.6）—— 各端把密文放到同一个地方，
+收到之后各自合并。**同步默认是关的**：不开就一个字节都不出去。
 
 桌面壳的发布目标覆盖 Windows / macOS / Linux 各 x64 + arm64，同一份 `app/dist` 在三个系统上跑；
 差异只在安装包格式与更新通道：Windows 与 Linux 的 AppImage 版接 electron-updater，macOS 与 Linux 的 deb / rpm 版目前手动换包。
@@ -234,6 +246,10 @@ type DoneEvent = {
 - `cards.schema.json` 带版本；破坏性变更走 ADR，升主版本。
 - 备份文件带 `schemaVersion`；`backup.ts` 负责迁移。
 - 卡片 `id` 与步骤 `id` 发布后不改名；确需改名时写 `formerIds`，事件日志靠它关联。
+  **2026-10-29 已实现**：`formerIds` 在 schema 里（`schema/cards.schema.json`），
+  构建时带进 `cards.json`，App 侧 `app/src/domain/former.ts`（纯函数）解链、
+  `app/src/data/migrate.ts` 把用户数据里的旧 id 换成新 id ——
+  盖章记录、日常清单、频率覆盖、「今天不做」都会认领回来，**合并不丢历史**。
 
 ## 6. 开发顺序（对应 AGENTS.md §7）
 
