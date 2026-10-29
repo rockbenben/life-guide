@@ -1,7 +1,7 @@
 {
   "name": "@life-guide/desktop",
   "productName": "生活指南",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "桌面端：Electron 壳，跑的是同一份 PWA 构建产物",

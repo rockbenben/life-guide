@@ -1,6 +1,6 @@
 {
   "name": "@life-guide/mobile",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "手机端：Capacitor 壳，WebView 里跑的是同一份构建产物",
