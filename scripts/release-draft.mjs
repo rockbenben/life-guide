@@ -12,7 +12,7 @@
  * 所以这里全程走 API：自己按 tag 找草稿，没有就用 POST 建一个
  * （tag 存在时 GitHub 会照用），再按 release id 传附件。
  *
- * 发布说明：优先取 `docs/发布说明/<tag>.md`，没有就用一句占位。
+ * 发布说明：草稿里先放一句占位，**这一版特有的说明在放行审批前直接写在草稿页上**。
  *
  * 用法：REPO=owner/name TAG=v0.1.1 GH_TOKEN=... node scripts/release-draft.mjs dist
  *
@@ -29,7 +29,10 @@ const tag = process.env.TAG;
 const token = process.env.GH_TOKEN;
 const releaseId = process.env.RELEASE_ID;
 const dir = path.resolve(process.argv[2] ?? "dist");
-const repoRoot = process.cwd();
+
+/** 草稿正文里的占位 —— 人放行前把它改成这一版真正的说明。 */
+const PLACEHOLDER =
+  "这一版特有的说明待补 —— 放行审批前请写上这一版改了什么、有什么产物。";
 
 if (!repo || !tag || !token) {
   console.error("需要 REPO / TAG / GH_TOKEN 三个环境变量");
@@ -58,19 +61,21 @@ const api = (p, init = {}) =>
  * 两处拼法必须一致，否则改一次就对不齐。
  */
 
-/** 发布说明：docs/发布说明/<tag>.md，没有就一句占位。 */
+/**
+ * 发布说明的正文。
+ *
+ * **这一版特有的说明直接写在发布草稿上**（放行审批前改好）——
+ * 仓库里不再留 `docs/发布说明/<tag>.md` 那样的文件：版本说明的归属地就是发布页本身，
+ * 仓库里再存一份只是重复；而且真出过「那份文件是在 tag 推上去之后才提交的，
+ * 发布页上只剩一句占位」（v0.2.0）—— 说明写在仓库里，靠的是记得先提交。
+ *
+ * 下面那几条一直如此的事实（未签名、哪些形态能自动更新）由
+ * scripts/release-notices.mjs 的 STANDING_NOTICES 每次附上：那是必须每次都在的，
+ * 不能指望人记得抄一遍。
+ */
 function releaseBody() {
-  const file = path.join(repoRoot, "docs", "发布说明", `${tag}.md`);
-  let body;
-  if (fs.existsSync(file)) {
-    console.log(`发布说明：${file}`);
-    body = fs.readFileSync(file, "utf8").trimEnd();
-  } else {
-    console.log("发布说明：没有对应的文件，用占位（发布前补上）");
-    body = "草稿：确认发布说明后再放行审批。";
-  }
-  // 固定的那几条每次都带着（上面那个文件只写这一版特有的内容）。
-  return `${body}\n\n${STANDING_NOTICES}\n`;
+  console.log("发布说明：草稿里先放占位，这一版特有的说明在放行审批前补");
+  return `${PLACEHOLDER}\n\n${STANDING_NOTICES}\n`;
 }
 
 // 1. 找草稿

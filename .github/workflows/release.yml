@@ -99,7 +99,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: '${{ env.TAG }}'
-      - name: 建草稿（发布说明也在这一步写上）
+      - name: 建草稿（正文先放占位，这一版特有的说明在放行审批前补）
         id: draft
         shell: bash
         run: |

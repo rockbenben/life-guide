@@ -120,7 +120,7 @@ life-guide/
 │   └── assets/               图标与启动图的源
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图
-├── docs/                     使用指南 · 部署 · 发布说明 · README 用的截图
+├── docs/                     使用指南 · 部署 · README 用的截图
 ├── scripts/                  acceptance/（浏览器级验收）· set-version · release-draft
 │                             · release-assets · check-workflows · check-desktop-metadata
 │                             · decision-gate · desktop-smoke · screenshot 等

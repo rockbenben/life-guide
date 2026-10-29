@@ -54,7 +54,7 @@ life-guide/
 │   ├── assets/               图标与启动图的源（Capacitor 资源生成器读这里）
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图（别直接改 PNG）
-├── docs/                     使用指南 · 部署 · 发布说明 · README 用的截图
+├── docs/                     使用指南 · 部署 · README 用的截图
 ├── scripts/                  acceptance/（浏览器级验收，Playwright 驱动本机 Chrome）
 │                             · set-version · release-draft · release-assets
 │                             · check-workflows · check-desktop-metadata
@@ -259,7 +259,7 @@ content/
 ```
 push tag vX.Y.Z
   └─ validate       tag 与 5 个 package.json 的版本对得上 + 内容校验 + 类型检查 + lint + 单测 + 桌面逻辑测试
-      ├─ prepare     建发布草稿（发布说明也在这时写上）→ 拿到 release id
+      ├─ prepare     建发布草稿（正文先放占位 + 固定告知；这一版特有的说明在放行前写在草稿页上）→ 拿到 release id
       ├─ build-desktop-win     Windows x64+arm64：NSIS 合一安装包 + 双架构免安装版 + latest.yml
       ├─ build-desktop-mac     macOS x64+arm64：dmg + zip（zip 是更新载体）+ latest-mac.yml
       ├─ build-desktop-linux   Linux x64+arm64：AppImage + deb + rpm + latest-linux*.yml
