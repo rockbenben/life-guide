@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    候选 C · 卡里的人
+    保留原来的纸卡（产品的隐喻），卡里站着一个人形（主体是身体）。
+  -->
+  <rect width="1024" height="1024" rx="224" fill="#a82a24"/>
+
+  <!-- 纸卡 -->
+  <rect x="225" y="287" width="574" height="451" rx="51" fill="#fbf6ec"/>
+
+  <!-- 卡里的人：头 + 肩 -->
+  <circle cx="512" cy="410" r="62" fill="#a82a24"/>
+  <path d="M382 664 V630 A130 130 0 0 1 642 630 V664 Z" fill="#a82a24"/>
+</svg>

@@ -4,11 +4,8 @@
     手机桌面的圆角/形状由系统切，所以这里不画圆角 —— 画了会被再切一次。
   -->
   <rect width="1024" height="1024" fill="#a82a24"/>
-  <g>
-    <rect x="225" y="287" width="574" height="451" rx="51" fill="#fbf6ec"/>
-    <rect x="307" y="358" width="369" height="37" rx="18.5" fill="#a82a24"/>
-    <rect x="307" y="461" width="266" height="37" rx="18.5" fill="#a82a24"/>
-    <rect x="307" y="563" width="184" height="37" rx="18.5" fill="#a82a24"/>
-    <rect x="573" y="512" width="205" height="205" rx="41" fill="#a82a24" stroke="#fbf6ec" stroke-width="32"/>
-  </g>
+  <circle cx="512" cy="286" r="106" fill="#fbf6ec"/>
+  <path d="M322 812 V640 A190 190 0 0 1 702 640 V812 Z" fill="#fbf6ec"/>
+  <rect x="427" y="560" width="170" height="170" rx="38" fill="#a82a24"
+        stroke="#fbf6ec" stroke-width="26"/>
 </svg>

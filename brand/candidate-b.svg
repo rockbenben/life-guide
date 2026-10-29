@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    候选 B · 脉搏
+    一条心电波形 —— 最直接的"身体 / 健康"信号，极简，小尺寸也认得出。
+    （代价：只说身体，不说"能照着做的 tips"，也不带 App 的仪式感。）
+  -->
+  <rect width="1024" height="1024" rx="224" fill="#a82a24"/>
+  <path d="M120 512 H320 L392 268 L474 764 L548 420 L604 512 H904"
+        fill="none" stroke="#fbf6ec" stroke-width="72"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
