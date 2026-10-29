@@ -1088,7 +1088,10 @@ export async function checkImportRefreshesRoutine({ browser, baseURL }) {
 
   const routineInDb = async () =>
     await page.evaluate(async () => {
-      const req = indexedDB.open("life-guide", 2);
+      // **不写版本号**：App 把库升到第 3 版之后，写死 2 会直接报
+      // "The requested version (2) is less than the existing version (3)"。
+      // 不带版本打开 = 打开当前那一版（App 已经建好库了）。
+      const req = indexedDB.open("life-guide");
       const db = await new Promise((res, rej) => {
         req.onsuccess = () => res(req.result);
         req.onerror = () => rej(req.error);

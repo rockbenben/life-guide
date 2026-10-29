@@ -25,6 +25,13 @@ export interface CustomHabit {
   text: string;
   slot: HabitSlot;
   createdAt: string;
+  /**
+   * 最后一次改动的时刻（毫秒）。
+   *
+   * 多设备合并时"谁新谁赢"看它。旧记录没有这个字段（undefined），
+   * 合并时按 0 算 —— 即"比有值的老"。
+   */
+  updatedAt?: number;
 }
 
 /** 名字最长多少字：收起态那行放得下的宽度（与内容层卡片同一个 NAME_MAX）。 */

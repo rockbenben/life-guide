@@ -3,7 +3,7 @@
  *
  * 这一屏只回答一个问题：现在做什么。
  * 所以它列的不是「手册里所有能做的动作」，而是**你自己挑进日常的那几张** ——
- * 实测过：全量 518 张卡里 95 张是疾病知识、423 张可做，其中 408 张是「随时」或没标时段；
+ * 实测过：全量 491 张卡里 89 张是疾病知识、402 张可做，其中 387 张是「随时」或没标时段；
  * 按「所有 practice 卡都进今天」排，早/日间/晚各约 413 / 411 / 415 张，仍是几十屏。
  * 那不是清单，是目录，而「需要翻」正是这个项目要否定的用法。
  *
@@ -28,7 +28,7 @@ import { useConditions } from "./Conditions.tsx";
 import { isCustomCard, type HabitSlot } from "../domain/custom.ts";
 import { AGE_TAGS, TAG_LABELS } from "../domain/conditions.ts";
 import { doneInPeriod, periodDoneText, periodKeyOf } from "../domain/cadence.ts";
-import { addEvent, allEvents, removeEvent, type DoneEvent } from "../data/db.ts";
+import { addEvent, allEvents, removeEvent, updateEvent, type DoneEvent } from "../data/db.ts";
 import type { Card, ModeCounts, ModeVariants } from "../domain/routine.ts";
 import { skipped } from "../domain/routine.ts";
 import type { Reminder } from "../domain/reminders.ts";
@@ -62,6 +62,11 @@ export interface TodayProps {
   modeVariants?: ModeVariants;
   /** 数据里有没有按人群分档的卡 —— 有的话条件那一栏要提一句 */
   hasSegments?: boolean;
+  /**
+   * 数据在别处被换掉时拧一下（导入备份、多设备同步）：
+   * 盖章记录要重新读一遍，不然界面还摆着旧的那一份。
+   */
+  refreshKey?: number;
 }
 
 const DOT_DAYS = 14;
@@ -144,6 +149,7 @@ export function Today({
   onOpenArticle,
   modeVariants,
   hasSegments,
+  refreshKey = 0,
 }: TodayProps) {
   const cond = useConditions();
   const { mode, tags, onTag, ageKnown, onSkipAgePrompt } = cond;
@@ -180,7 +186,7 @@ export function Today({
     void (async () => {
       setEvents(await allEvents());
     })();
-  }, []);
+  }, [refreshKey]);
 
   /**
    * 那条提示自己会走。
@@ -333,10 +339,13 @@ export function Today({
       } else {
         // 只降级真正的完成标记；旧日志没有标记时，把最近一天降级，
         // 更早的每日记录原样留在历史里。
+        //
+        // 用 updateEvent 而不是 addEvent：撤销是**改同一条**，
+        // 而且要刷新 updatedAt —— 否则多设备合并时对面设备看不到这次撤销。
         const completed = periodEvents.filter((e) => e.periodDone === true);
         if (completed.length) {
           for (const e of completed) {
-            await addEvent({ ...e, periodDone: false, periodCadence });
+            await updateEvent({ ...e, periodDone: false, periodCadence });
           }
         } else {
           const latest = [...periodEvents].sort(
@@ -345,7 +354,7 @@ export function Today({
           if (latest) {
             for (const e of periodEvents) {
               if (e.date === latest.date) {
-                await addEvent({ ...e, periodDone: false, periodCadence });
+                await updateEvent({ ...e, periodDone: false, periodCadence });
               }
             }
           }

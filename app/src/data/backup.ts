@@ -5,18 +5,31 @@
  * 所以必须提供导出（AGENTS.md §8），而且导出格式要带版本号，
  * 以后 schema 变了还能迁移（ARCHITECTURE.md §5）。
  */
-import { allEvents, clearEvents, addEvent, getSetting, setSetting, allCustomHabits, putCustomHabit, deleteCustomHabit } from "./db.ts";
-import type { DoneEvent, Settings, CustomHabit } from "./db.ts";
+import {
+  allEvents,
+  clearEvents,
+  addEvent,
+  getSetting,
+  setSetting,
+  allCustomHabits,
+  clearCustomHabits,
+  putCustomHabit,
+  allTombstones,
+  clearTombstones,
+  putTombstone,
+} from "./db.ts";
+import type { DoneEvent, Settings, CustomHabit, Tombstone } from "./db.ts";
 import type { Reminder } from "../domain/reminders.ts";
 
 /**
  * v5 起：设置里带 skipToday（「今天不做」）。
+ * v6 起：带删除标记（tombstones）—— 多设备同步时，删掉的东西不能在对面的设备上复活。
  *
  * 备份格式每加一个字段就升一版：旧备份照常能导进来（各版本该带的东西由
  * backup.ts 负责补齐），新备份被旧版 App 挡住时会说清楚「请先升级应用」，
  * 而不是悄悄丢掉它不认识的字段。
  */
-export const BACKUP_VERSION = 5;
+export const BACKUP_VERSION = 6;
 
 export interface Backup {
   schemaVersion: number;
@@ -36,19 +49,28 @@ export interface Backup {
    * 而设置页写的就是「换设备时用导出 / 导入搬家」—— 搬家得把闹钟也搬走。
    */
   reminders?: Reminder[];
+  /**
+   * 删除标记（v6 起）。
+   *
+   * 带走它，导进来的设备才知道哪些东西「已经被删掉了」——
+   * 不带走的话，对面设备会把这些又带回来。
+   */
+  tombstones?: Tombstone[];
 }
 
 export async function buildBackup(): Promise<Backup> {
-  const [events, tags, mode, myRoutine, cadence, skipToday, custom, reminders] = await Promise.all([
-    allEvents(),
-    getSetting<string[]>("tags", []),
-    getSetting<string>("mode", "normal"),
-    getSetting<string[]>("myRoutine", []),
-    getSetting<Record<string, string>>("cadence", {}),
-    getSetting<Record<string, string>>("skipToday", {}),
-    allCustomHabits(),
-    getSetting<Reminder[]>("reminders", []),
-  ]);
+  const [events, tags, mode, myRoutine, cadence, skipToday, custom, reminders, tombstones] =
+    await Promise.all([
+      allEvents(),
+      getSetting<string[]>("tags", []),
+      getSetting<string>("mode", "normal"),
+      getSetting<string[]>("myRoutine", []),
+      getSetting<Record<string, string>>("cadence", {}),
+      getSetting<Record<string, string>>("skipToday", {}),
+      allCustomHabits(),
+      getSetting<Reminder[]>("reminders", []),
+      allTombstones(),
+    ]);
   return {
     schemaVersion: BACKUP_VERSION,
     exportedAt: new Date().toISOString(),
@@ -56,6 +78,7 @@ export async function buildBackup(): Promise<Backup> {
     settings: { tags, mode, myRoutine, cadence, skipToday },
     custom,
     reminders,
+    tombstones,
   };
 }
 
@@ -92,11 +115,17 @@ export async function restoreBackup(backup: Backup): Promise<number> {
   // 导进来的是用户自己的数据，不是「App 刚替新用户放好的清单」——
   // 别让首启说明在换设备后重新冒出来。
   await setSetting("firstRunPending", false);
-  // 自定义习惯：先清掉现有的，再把备份里的放回去（id 相同则覆盖）
-  for (const h of await allCustomHabits()) await deleteCustomHabit(h.id);
+  // 自定义习惯：整份换掉（不逐条删 —— 逐条删会留下墓碑，
+  // 那些墓碑比备份里的习惯还新，下一次合并会把它们全删掉）
+  await clearCustomHabits();
   for (const h of backup.custom ?? []) await putCustomHabit(h);
   // 提醒：备份里有就换过去（v3 起才有；旧备份不动本地这一份）
   if (backup.reminders) await setSetting("reminders", backup.reminders);
+  // 删除标记：备份里带的才算数（v6 起；旧备份没有这一项，本地的照旧）
+  if (backup.tombstones) {
+    await clearTombstones();
+    for (const t of backup.tombstones) await putTombstone(t);
+  }
   return backup.events?.length ?? 0;
 }
 

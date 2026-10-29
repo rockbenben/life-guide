@@ -1,0 +1,14 @@
+name = "life-guide-sync"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# 存的是密文：服务端没有口令，也就没有密钥。
+[[kv_namespaces]]
+binding = "SYNC_KV"
+id = "<用 wrangler kv namespace create SYNC_KV 建出来的那串 id>"
+
+# 允许哪些来源来读写（逗号分隔）。
+# 不配 = 全放行。建议配上自己的地址：
+#   vars = { ALLOWED_ORIGINS = "https://life.newzone.top,http://localhost:5173" }
+[vars]
+ALLOWED_ORIGINS = ""

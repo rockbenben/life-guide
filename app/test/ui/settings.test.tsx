@@ -46,3 +46,25 @@ describe("设置页的源码入口", () => {
     expect(html).toContain("源码在 GitHub");
   });
 });
+
+describe("多设备同步（默认关着）", () => {
+  it("页首说的是「只在本机，不上传」—— 同步没开的时候这话是真的", () => {
+    const html = render(<Settings />);
+    expect(html).toContain("只在本机，不上传");
+  });
+
+  it("同步那一节在，但默认没开：不出现地址与口令的输入框", () => {
+    const html = render(<Settings />);
+    expect(html).toContain("多设备同步");
+    expect(html).toContain("开启同步");
+    // 没开 → 不该摆输入框（摆出来会让用户以为已经配好了）
+    expect(html).not.toContain("https://你的同步服务地址");
+    expect(html).not.toContain('type="password"');
+  });
+
+  it("说清楚上传的是密文、服务器读不到", () => {
+    const html = render(<Settings />);
+    expect(html).toContain("加密");
+    expect(html).toContain("密文");
+  });
+});

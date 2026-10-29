@@ -13,6 +13,16 @@ import {
   restoreBackup,
 } from "../data/backup.ts";
 import { allEvents, clearEvents, getSetting, setSetting } from "../data/db.ts";
+import {
+  createTransport,
+  lastSyncAt,
+  readSyncConfig,
+  saveSyncConfig,
+  syncConfigProblem,
+  syncNow,
+  type SyncConfig,
+  type SyncKind,
+} from "../data/sync.ts";
 import type { Card, ModeCounts } from "../domain/routine.ts";
 import { variantAvailability } from "../domain/routine.ts";
 import {
@@ -114,6 +124,19 @@ export function Settings({
   const cardReminders = reminderList.filter((r) => r.cardId);
   const [count, setCount] = useState(0);
   const [notice, setNotice] = useState<Notice | null>(null);
+  /* --- 多设备同步 --- */
+  const [syncOn, setSyncOn] = useState(false);
+  const [syncKind, setSyncKind] = useState<SyncKind>("webdav");
+  const [syncUrl, setSyncUrl] = useState("");
+  const [syncUser, setSyncUser] = useState("");
+  const [syncPassword, setSyncPassword] = useState("");
+  const [syncToken, setSyncToken] = useState("");
+  const [syncPath, setSyncPath] = useState("");
+  const [syncPass, setSyncPass] = useState("");
+  const [syncBusy, setSyncBusy] = useState(false);
+  /** 同步的结果（留在这一节里，别一闪而过） */
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
+  const [syncLast, setSyncLast] = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [installed, setInstalled] = useState(false);
   const [notify, setNotify] = useState<NotifyStatus | null>(null);
@@ -129,8 +152,7 @@ export function Settings({
       : notify?.kind === "desktop"
         ? "通知被系统拒绝了 —— 到系统的通知设置里允许生活指南，提醒才会响。"
         : "通知被浏览器拒绝了 —— 到浏览器的网站设置里把「通知」改成允许，提醒才会响。";
-  const modeVariants = useMemo(() => variantAvailability(cards ?? []), [cards]);
-  const coverage = useMemo<ModeCounts>(
+  const modeVariants = useMemo(() => variantAvailability(cards ?? []), [cards]);  const coverage = useMemo<ModeCounts>(
     () => ({
       busy: (cards ?? []).filter((c) => c.variants?.busy != null).length,
       travel: (cards ?? []).filter((c) => c.variants?.travel != null).length,
@@ -147,6 +169,19 @@ export function Settings({
     void allEvents().then((e) => setCount(e.length));
     void status().then(setNotify);
     void exactAlarmStatus().then(setExact);
+    // 同步的设置也读回来 —— 这一页可能是开同步之后第一次进来
+    void (async () => {
+      const cfg = await readSyncConfig();
+      setSyncOn(cfg.enabled);
+      setSyncKind(cfg.kind);
+      setSyncUrl(cfg.serverUrl);
+      setSyncUser(cfg.user);
+      setSyncPassword(cfg.password);
+      setSyncToken(cfg.token);
+      setSyncPath(cfg.path);
+      setSyncPass(cfg.passphrase);
+      setSyncLast(await lastSyncAt());
+    })();
     setInstalled(
       window.matchMedia("(display-mode: standalone)").matches ||
         (window.navigator as { standalone?: boolean }).standalone === true,
@@ -200,11 +235,52 @@ export function Settings({
     if (s.permission === "granted") onRefreshSchedule?.();
   }
 
+  /**
+   * 同步一轮。
+   *
+   * `save` 为真时先把地址与口令存下来 —— 用户填完就点「保存并同步」，
+   * 不该还要再点一次「保存」。
+   */
+  async function runSync(save: boolean) {
+    const conf: SyncConfig = {
+      enabled: syncOn,
+      kind: syncKind,
+      serverUrl: syncUrl.trim(),
+      user: syncUser.trim(),
+      password: syncPassword,
+      token: syncToken.trim(),
+      path: syncPath.trim(),
+      passphrase: syncPass,
+    };
+    if (save) await saveSyncConfig(conf);
+    const problem = syncConfigProblem(conf);
+    if (problem) {
+      setSyncMsg(problem);
+      return;
+    }
+    setSyncBusy(true);
+    try {
+      const report = await syncNow(createTransport(conf), conf);
+      setSyncMsg(report.message);
+      if (report.ok) {
+        setSyncLast(Date.now());
+        // 远端带来的记录、清单、提醒要重新读一遍，界面才不是旧的
+        onDataImported?.();
+      }
+    } catch (err) {
+      setSyncMsg(`同步失败：${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setSyncBusy(false);
+    }
+  }
+
   return (
     <main class="lg-shell lg-settings">
       <div class="lg-topbar">
         <h1 class="lg-h1">设置</h1>
-        <span class="lg-dateline">只在本机，不上传</span>
+        <span class="lg-dateline">
+          {syncOn ? "同步已开 · 只上传密文" : "只在本机，不上传"}
+        </span>
       </div>
 
       <section class="lg-set">
@@ -412,7 +488,7 @@ export function Settings({
       <section class="lg-set">
         <h2>数据</h2>
         <p>
-          记录只存在这台设备，没有服务器，也不会上传。
+          记录存在这台设备上。没开同步的话，什么都不会上传。
           没装到主屏幕的话（尤其是 iOS），系统可能回收本地数据，所以定期导出一份。
         </p>
         <div class="lg-btn-row">
@@ -500,6 +576,204 @@ export function Settings({
             清空记录
           </button>
         </div>
+      </section>
+
+      {/*
+        多设备同步。
+
+        **默认是关的**：关着的时候，什么都不上传（页首那句话是实话）。
+        打开之后也只有密文离开这台设备 —— 口令派生出密钥，
+        服务器拿到的是一串解不开的字节。
+
+        换设备时不用再导文件：在新设备上填同一个地址、同一个口令就行。
+      */}
+      <section class="lg-set">
+        <h2>多设备同步</h2>
+        <p>
+          默认关着 —— 关着的时候记录只在这台设备上，什么都不上传。
+          打开之后，每台设备填同一个同步口令，
+          盖章记录、日常清单、条件、提醒、自己加的习惯就能在设备之间来回走。
+        </p>
+        <p>
+          放在哪儿由你选：<strong>网盘</strong>或<strong>GitHub 私有仓库</strong>都不用自己搭服务器
+          （GitHub 那条浏览器里也能用，网盘那条只有桌面端与手机端能用）；
+          也可以指向你自己跑的中转服务。
+        </p>
+        <p>
+          上传的只有加密后的内容：口令只存在这台设备上，
+          服务器拿到的是解不开的密文。
+        </p>
+
+        <label class="lg-remcheck">
+          <input
+            type="checkbox"
+            checked={syncOn}
+            onChange={async (e) => {
+              const on = (e.target as HTMLInputElement).checked;
+              setSyncOn(on);
+              await saveSyncConfig({ enabled: on });
+              // 刚打开就同步一次：用户填过地址与口令的话，
+              // 这一下就能看到"另一台设备上的记录出现了"。
+              if (on) void runSync(false);
+            }}
+          />
+          <span>开启同步</span>
+        </label>
+
+        {syncOn ? (
+          <>
+            <label class="lg-synccfg">
+              <span>放在哪儿</span>
+              <select
+                class="lg-syncselect"
+                value={syncKind}
+                onChange={(e) =>
+                  setSyncKind((e.target as HTMLSelectElement).value as SyncKind)
+                }
+              >
+                <option value="webdav">网盘 WebDAV（坚果云 / Nextcloud / NAS；桌面与手机能用）</option>
+                <option value="github">GitHub 私有仓库（不用自己搭服务器，三端都能用）</option>
+                <option value="http">自己搭的中转服务（sync/ 那个 Worker）</option>
+              </select>
+            </label>
+
+            {syncKind === "github" ? (
+              <>
+                <label class="lg-synccfg">
+                  <span>
+                    仓库<small>（owner/repo，例如 rockbenben/life-guide）</small>
+                  </span>
+                  <input
+                    type="text"
+                    value={syncUrl}
+                    placeholder="owner/repo"
+                    autocomplete="off"
+                    spellcheck={false}
+                    onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
+                  />
+                </label>
+                <label class="lg-synccfg">
+                  <span>
+                    目录<small>（可空 → 放仓库根下）</small>
+                  </span>
+                  <input
+                    type="text"
+                    value={syncPath}
+                    placeholder="life-guide"
+                    autocomplete="off"
+                    spellcheck={false}
+                    onChange={(e) => setSyncPath((e.target as HTMLInputElement).value)}
+                  />
+                </label>
+                <label class="lg-synccfg">
+                  <span>
+                    Token<small>
+                      （Personal Access Token，只要 repo 权限；只存在这台设备）
+                    </small>
+                  </span>
+                  <input
+                    type="password"
+                    value={syncToken}
+                    placeholder="ghp_…"
+                    autocomplete="off"
+                    onChange={(e) => setSyncToken((e.target as HTMLInputElement).value)}
+                  />
+                </label>
+              </>
+            ) : null}
+
+            {syncKind === "webdav" ? (
+              <>
+                <label class="lg-synccfg">
+                  <span>
+                    网盘地址<small>（WebDAV 根地址）</small>
+                  </span>
+                  <input
+                    type="text"
+                    value={syncUrl}
+                    placeholder="https://dav.jianguoyun.com/dav/"
+                    autocomplete="off"
+                    spellcheck={false}
+                    onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
+                  />
+                </label>
+                <label class="lg-synccfg">
+                  <span>账号</span>
+                  <input
+                    type="text"
+                    value={syncUser}
+                    autocomplete="off"
+                    onChange={(e) => setSyncUser((e.target as HTMLInputElement).value)}
+                  />
+                </label>
+                <label class="lg-synccfg">
+                  <span>
+                    应用密码<small>（坚果云在「安全选项」里生成，不是登录密码）</small>
+                  </span>
+                  <input
+                    type="password"
+                    value={syncPassword}
+                    autocomplete="off"
+                    onChange={(e) => setSyncPassword((e.target as HTMLInputElement).value)}
+                  />
+                </label>
+                <p class="lg-pool">
+                  网盘这条路在浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）——
+                  桌面端与手机端能用。
+                </p>
+              </>
+            ) : null}
+
+            {syncKind === "http" ? (
+              <label class="lg-synccfg">
+                <span>同步服务地址</span>
+                <input
+                  type="text"
+                  value={syncUrl}
+                  placeholder="https://life-guide-sync.xxx.workers.dev"
+                  autocomplete="off"
+                  spellcheck={false}
+                  onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
+                />
+              </label>
+            ) : null}
+
+            <label class="lg-synccfg">
+              <span>
+                同步口令<small>（至少 8 个字，换设备时填同一个）</small>
+              </span>
+              <input
+                type="password"
+                value={syncPass}
+                placeholder="一句你不会忘的话"
+                autocomplete="off"
+                onChange={(e) => setSyncPass((e.target as HTMLInputElement).value)}
+              />
+            </label>
+            <div class="lg-btn-row" style="margin-top:10px">
+              <button
+                class="lg-btn"
+                disabled={syncBusy}
+                onClick={() => void runSync(true)}
+              >
+                {syncBusy ? "同步中…" : "保存并同步"}
+              </button>
+              <button
+                class="lg-btn lg-btn-ghost"
+                disabled={syncBusy || !syncOn}
+                onClick={() => void runSync(false)}
+              >
+                立即同步
+              </button>
+            </div>
+            {syncMsg ? <p class="lg-pool">{syncMsg}</p> : null}
+            <p class="lg-pool">
+              {syncLast
+                ? `上次同步：${new Date(syncLast).toLocaleString("zh-CN")}`
+                : "还没同步过。"}
+            </p>
+          </>
+        ) : null}
       </section>
 
       {!installed ? (

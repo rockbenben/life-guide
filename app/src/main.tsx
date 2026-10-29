@@ -6,8 +6,10 @@ import { Today } from "./ui/Today.tsx";
 import type { Card } from "./domain/routine.ts";
 import { variantAvailability } from "./domain/routine.ts";
 import type { ManualArticle, ManualIndexEntry } from "./domain/manual.ts";
-import { getSetting, setSetting } from "./data/db.ts";
+import { getSetting, setSetting, initClock } from "./data/db.ts";
 import { useRoutine } from "./data/useRoutine.ts";
+import { useAutoSync } from "./data/useAutoSync.ts";
+import { migrateUserData } from "./data/migrate.ts";
 import {
   DEFAULT_REMINDERS,
   buildSpecs,
@@ -128,12 +130,25 @@ export function App() {
   const routine = useRoutine({ cards, defaultRoutine, loading, refreshKey: dataEpoch });
 
   /**
+   * 多设备同步：打开 App 时同步一次，回到前台时再同步一次。
+   *
+   * 收到远端的数据就把 dataEpoch 拧一下 ——
+   * 清单、条件、提醒、盖章记录都要重新读一遍，界面才跟库里一致。
+   */
+  useAutoSync(() => setDataEpoch((e) => e + 1));
+
+  /**
    * 内容层的卡 + 用户自己的习惯。
    *
    * 合在一起给下游：自定义习惯在数据层就是一张卡，
    * 所以盖章、累计天数、提醒、次序全都白得（不用另做一套）。
    */
   const allCards = useMemo(() => [...cards, ...routine.habits], [cards, routine.habits]);
+
+  useEffect(() => {
+    // 本机时钟读回来（单调性跨重启也成立，见 domain/clock.ts）
+    void initClock();
+  }, []);
 
   useEffect(() => {
     void (async () => {
@@ -144,9 +159,22 @@ export function App() {
         const res = await fetch("cards.json", { credentials: "omit" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const bundle = await res.json();
-        setCards(bundle.cards ?? []);
+        const loaded: Card[] = bundle.cards ?? [];
+        setCards(loaded);
         setManualIndex(bundle.articles ?? []);
         setDefaultRoutine(bundle.defaultRoutine ?? []);
+        /**
+         * 内容层合并过卡 → 把用户数据里的旧 id 认领回来。
+         *
+         * 不做这一步，用户攒下的记录会指向已经不存在的卡 ——
+         * 「已做 38 天」会变成「已做 0 天」（AGENTS.md §5）。
+         */
+        void (async () => {
+          const moved = await migrateUserData(loaded);
+          if (moved.events || moved.routine || moved.cadence || moved.skipToday) {
+            setDataEpoch((e) => e + 1);
+          }
+        })();
       } catch (e) {
         setError(
           `读不到 cards.json（${e instanceof Error ? e.message : String(e)}）。`,
@@ -354,6 +382,7 @@ export function App() {
               onOpenArticle={openArticle}
               modeVariants={modeVariants}
               hasSegments={hasSegments}
+              refreshKey={dataEpoch}
             />
           ) : tab === "manual" ? (
             <Manual
@@ -374,6 +403,7 @@ export function App() {
               onArticleBack={backToArticleList}
               hasArticleHistory={manualHistory.length > 0}
               routineIds={routine.ids}
+              defaultRoutine={defaultRoutine}
               onAddToRoutine={(id) => void routine.add(id)}
               onAddManyToRoutine={(ids) => void routine.addMany(ids)}
               onRemoveManyFromRoutine={(ids) => {

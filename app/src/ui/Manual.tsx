@@ -13,7 +13,7 @@ import { CardView } from "./Card.tsx";
 import { useConditions } from "./Conditions.tsx";
 import type { Card } from "../domain/routine.ts";
 import type { ManualArticle, ManualIndexEntry } from "../domain/manual.ts";
-import { displayNames } from "../domain/lines.ts";
+import { cardName, displayNames } from "../domain/lines.ts";
 import { isConditionCard } from "../domain/notices.ts";
 import {
   CATEGORIES,
@@ -52,6 +52,13 @@ export interface ManualProps {
   hasArticleHistory?: boolean;
   /** 「我的日常」里已有的卡 id —— 手册里那些卡要标出「已在日常」 */
   routineIds?: string[];
+  /**
+   * 默认清单（内容层策展的那份「每天固定做的几件事」）。
+   *
+   * 手册页顶部用它摆「常用」入口：洗脸、刷牙、防晒这些天天做的，
+   * 点一下就能加进日常 —— 不用翻到某一篇去找。
+   */
+  defaultRoutine?: string[];
   /** 把一张卡放进「我的日常」 */
   onAddToRoutine?: (cardId: string) => void;
   /** 把这一篇里还没加入的动作一次加入 */
@@ -78,6 +85,7 @@ export function Manual({
   onArticleBack,
   hasArticleHistory,
   routineIds,
+  defaultRoutine,
   onAddToRoutine,
   onAddManyToRoutine,
   onRemoveManyFromRoutine,
@@ -100,6 +108,20 @@ export function Manual({
   // 卡名索引：用户在「今天」页看到的词，手册里也要搜得到
   // （卡名是内容层起的策展名，原文里未必有那个词）
   const nameIndex = useMemo(() => buildCardNameIndex(cards), [cards]);
+  /** 屏上显示的那个名字（与今天页完全一致） */
+  const shownNames = useMemo(() => displayNames(cards), [cards]);
+  /**
+   * 「常用」：默认清单里的那几张（内容层策展的「每天固定做的几件事」）。
+   *
+   * 手册页顶部摆一排小片，点一下就加进日常 ——
+   * 洗脸、刷牙、防晒这些天天做的，不用翻到某一篇里去找。
+   */
+  const common = useMemo(() => {
+    const byId = new Map(cards.map((c) => [c.id, c]));
+    return (defaultRoutine ?? [])
+      .map((id) => byId.get(id))
+      .filter((c): c is Card => Boolean(c));
+  }, [defaultRoutine, cards]);
   const found = useMemo(
     () =>
       filterByCategory(
@@ -256,6 +278,38 @@ export function Manual({
           {searchSummary(query, category, pieces.length, found.length)}
         </span>
       </div>
+
+      {common.length ? (
+        /*
+         * 「常用」入口：手册里每天固定做的几件事。
+         *
+         * 摆一排小片而不是一整块列表 —— 这一页的主事是「找文章」，
+         * 这一排只是让人一眼看到那些天天做的事，点一下就加进日常。
+         */
+        <div class="lg-common">
+          <p class="lg-commonhint">
+            <strong>常用</strong>
+            <span>：每天固定做的几件事，点一下加进日常。</span>
+          </p>
+          <div class="lg-commontags" role="group" aria-label="常用的动作">
+            {common.map((c) => {
+              const name = shownNames.get(c.id) ?? cardName(c);
+              const inRoutine = routineIds?.includes(c.id) ?? false;
+              return (
+                <button
+                  key={c.id}
+                  class="lg-commontag"
+                  aria-pressed={inRoutine}
+                  disabled={inRoutine}
+                  onClick={() => onAddToRoutine?.(c.id)}
+                >
+                  {name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
 
       <div class="lg-searchwrap">
         <input

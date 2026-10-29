@@ -249,6 +249,9 @@ export function useRoutine({
       name: (patch.name ?? prev.name).trim(),
       text: (patch.text ?? prev.text).trim(),
       slot: patch.slot ?? prev.slot,
+      // 改动要刷新时刻：多设备合并时"谁新谁赢"看的就是它。
+      // 不刷新的话，这次改名会输给另一台设备上那份旧的。
+      updatedAt: Date.now(),
     };
     await putCustomHabit(habit);
     setHabits((h) => h.map((c) => (c.id === id ? habitToCard(habit) : c)));

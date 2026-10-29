@@ -42,6 +42,56 @@ function makeCard(over: Partial<Card> = {}): Card {
   };
 }
 
+describe("手册顶部的「常用」入口", () => {
+  const cards = [
+    makeCard({ id: "face-wash", name: "用绵密泡沫洗脸", source: { anchor: "五步洗脸法与起泡方法" } }),
+    makeCard({ id: "brush-teeth", name: "轻握牙刷轻轻刷", source: { anchor: "刷牙步骤" } }),
+  ];
+
+  it("摆出默认清单里那几张，点一下能加进日常", () => {
+    const html = render(
+      <Manual
+        articles={[]}
+        cards={cards}
+        defaultRoutine={["face-wash", "brush-teeth"]}
+        routineIds={[]}
+        path={null}
+        onPath={() => {}}
+        onAddToRoutine={() => {}}
+      />,
+    );
+    expect(html).toContain("常用");
+    expect(html).toContain("用绵密泡沫洗脸");
+    expect(html).toContain("轻握牙刷轻轻刷");
+    // 不在日常里的那几张是可点的
+    expect(html).toContain("lg-commontag");
+    expect(html).not.toContain("disabled");
+  });
+
+  it("已经在日常里的那几张，摆出来但不让再点一次", () => {
+    const html = render(
+      <Manual
+        articles={[]}
+        cards={cards}
+        defaultRoutine={["face-wash", "brush-teeth"]}
+        routineIds={["face-wash"]}
+        path={null}
+        onPath={() => {}}
+        onAddToRoutine={() => {}}
+      />,
+    );
+    expect(html).toContain("用绵密泡沫洗脸");
+    expect(html).toContain("disabled");
+  });
+
+  it("没有默认清单时不摆这一节（不添乱）", () => {
+    const html = render(
+      <Manual articles={[]} cards={cards} path={null} onPath={() => {}} />,
+    );
+    expect(html).not.toContain("lg-common");
+  });
+});
+
 describe("手册列表", () => {
   it("列出全部文章", () => {
     const articles = [

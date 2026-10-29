@@ -839,6 +839,34 @@
   font-size: var(--lg-t3);
   font-variant-numeric: tabular-nums;
 }
+
+/* 同步设置：标签在上、输入框在下（手机上一行放不下地址） */
+.lg-synccfg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+}
+.lg-synccfg small {
+  color: var(--lg-ink-3);
+}
+.lg-synccfg input,
+.lg-syncselect {
+  min-height: var(--lg-tap);
+  padding: 6px 10px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 8px;
+  background: var(--lg-paper);
+  color: var(--lg-ink);
+  font-size: var(--lg-t3);
+}
+.lg-synccfg input:focus-visible,
+.lg-syncselect:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 1px;
+}
 .lg-note {
   color: var(--lg-ink-3);
 }
@@ -1317,6 +1345,53 @@
 }
 .lg-searchwrap {
   position: relative;
+}
+
+/* 手册页顶部的「常用」入口：一排小片，点一下加进日常 */
+.lg-common {
+  margin: 0 0 14px;
+}
+.lg-commonhint {
+  margin: 0 0 6px;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+}
+.lg-commonhint strong {
+  color: var(--lg-ink);
+  font-weight: 650;
+}
+.lg-commontags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lg-commontag {
+  min-height: var(--lg-tap);
+  padding: 4px 12px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 999px;
+  background: var(--lg-paper);
+  color: var(--lg-ink);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+.lg-commontag:hover:not(:disabled) {
+  border-color: var(--lg-zhu);
+  color: var(--lg-zhu);
+}
+.lg-commontag:active:not(:disabled) {
+  background: color-mix(in srgb, var(--lg-zhu) 9%, var(--lg-sheet));
+  border-color: var(--lg-zhu);
+}
+.lg-commontag:disabled {
+  /* 已在日常里的：看得见，但假装不了还能点 */
+  color: var(--lg-ink-3);
+  border-style: dashed;
+  cursor: not-allowed;
+}
+.lg-commontag:focus-visible {
+  outline: 2px solid var(--lg-zhu);
+  outline-offset: 1px;
 }
 .lg-searchclear {
   position: absolute;

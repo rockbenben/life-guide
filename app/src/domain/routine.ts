@@ -59,6 +59,13 @@ export interface Variant {
 export interface Card {
   id: string;
   status: string;
+  /**
+   * 这张卡用过的旧 id（内容层合并或改名时记下）。
+   *
+   * 用户的盖章记录、日常清单存的是旧 id，靠它认回来 ——
+   * 没有这一项，改名就等于丢历史（AGENTS.md §5）。
+   */
+  formerIds?: string[];
   source: { anchor: string };
   /**
    * 屏上显示的动作名（内容层策展）。
