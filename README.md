@@ -1,6 +1,6 @@
 # 生活指南
 
-> 把《生活手册》变成今天能照着做的卡片：每一步、每条禁忌都对着原文核过，离线可用。
+> 今天该做哪几件直接列给你，剂量、步骤、禁忌逐句对着原文核过，记录只留在本机
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![365 开源计划 #045](https://img.shields.io/badge/365%20%E5%BC%80%E6%BA%90%E8%AE%A1%E5%88%92-%23045-1f6feb)](https://github.com/rockbenben/365opensource)
 
