@@ -1131,11 +1131,17 @@ Android Studio 自带的 JBR（它就是 21）。
   **验域名必须等 `navigator.serviceWorker.ready` 到 `activated`，不能只看 200**；
   而且 DNS 指过去 ≠ 域名绑上了，EdgeOne 控制台里没绑就不会签这张域名的证书。
   最省事的验法：`ACCEPTANCE_URL=<地址> npm run acceptance:url`（整套验收跑在真实域名上）。
-- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次过了 8 小时没跟上；
+- **EdgeOne 的 Git 同步不实时。** 12:02 那次推送 2.5 分钟内跟上，13:19 那次过了 10 个小时没跟上；
   线上给的是旧构建。判据：对比线上 `index.html` 与 `gh-pages` HEAD 的 sha256。
   **但分支往往是对的**：实测 EdgeOne 那份与 `gh-pages` 12:02 的产物逐字一致（哈希相同）、
   与 HEAD 不同 —— 卡的是同步本身（webhook / 集成停了），
   要的是**触发一次重新部署**，不是换分支。
+  **2026-10-29 查清了机制**（`docs/部署.md` §三 有完整记录）：
+  EdgeOne **不重新构建**，伺服的就是分支里的那份文件树（线上 `sw.js` 与 `gh-pages@ccdcb67:sw.js`
+  逐字节相同）；加随机 query 拿到的还是旧的、新资源 404 ⇒ 不是 CDN 缓存；
+  再推一个**空提交**（树不变）也激不动它 ⇒ **是 EdgeOne 取分支那一步停了**，只能去控制台点重新部署。
+  另有一个容易误判的坑：**`deploy.yml` 打出 `There is nothing to commit` 时其实没推任何东西**
+  （产物与分支上已有的逐字相同），所以「分支最近有没有更新」不能只看 commit 时间。
 - **GitHub Pages 从国内慢 16 倍。** 同一批文件 EdgeOne 平均 0.16 s/件、GitHub Pages 2.66 s/件；
   PWA 首访预缓存 123 项，镜像站上 SW 要 98.7 s 才激活。主地址走 EdgeOne，镜像只当兜底。
 - **内容授权。** 对外公开发布前确认手册与图片的转载 / 改编授权。
@@ -1181,9 +1187,11 @@ git tag v0.1.2 && git push origin v0.1.2   # 这一推才触发流水线
 2026-10-29 证书签发、8 项验收在真实地址上全过；GitHub Pages 的
 `rockbenben.github.io/life-guide/` 是镜像，两个地址伺服同一份 `gh-pages` 分支的内容）。
 
-**待办**：EdgeOne 线上那份还停在 12:02 的构建（Git 同步停了），
-要在控制台触发一次重新部署 —— 判据是线上 `index.html` 的 sha256
-要与 `gh-pages` HEAD 那份一致。
+**待办**：EdgeOne 线上那份还停在 12:02 的构建（**取分支那一步停了**，2026-10-29 已查清机制，
+见 §8 与 `docs/部署.md` §三），要在控制台触发一次重新部署 —— 判据是线上 `index.html`
+的 sha256 要与 `gh-pages` HEAD 那份一致。
+**镜像站（`rockbenben.github.io/life-guide/`）已经是新构建**（`index-D647rtlj.js`、
+og:image 指向 `https://life.newzone.top/og.png`），兜底可用。
 
 原型的校验用例已迁移成单元测试（`app/test/domain/` 与 `content/test/rules.test.ts`），
 原型本体在 2026-10-27 删掉了 —— 它不被任何构建或测试引用，只是一份只读参考，
