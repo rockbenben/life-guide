@@ -119,6 +119,10 @@ cards:
       - id: move-duration
         text: 运动时间 1～2 分钟即可
         quote: 运动时间 1～2 分钟即可
+        duration:
+          basis: quote
+          sec: 120
+          quote: 运动时间 1～2 分钟即可
       - id: repeat-movement
         text: 饭后 2 小时之间，每 30 分钟做一次
         quote: 饭后 2 小时之间，每 30 分钟做一次
@@ -160,6 +164,6 @@ cards:
           - 要使用 24 小时血糖监测设备
           - 使用设备前请与主治医生或医疗机构商量
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 3e9aed93fe3100b4
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 187152cb83607a6c

@@ -88,6 +88,10 @@ cards:
           - '水 100mL'
           - '沸水中加入蒜片和盐 2 撮，煮 5 分钟。'
           - '加盐能让醇厚味物质抽取得更充分，味道会更好。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 沸水中加入蒜片和盐 2 撮，煮 5 分钟。
       - id: cook-garlic-water-with-ingredients
         text: '可以和食材一起煮，不必过滤。'
         quote:
@@ -101,9 +105,9 @@ cards:
         text: '大蒜吃多了会引起腹痛。参考用量是生食约 1 瓣、加热后 2～3 瓣为宜。'
         quote: '大蒜吃多了会引起腹痛。参考用量是生食约 1 瓣、加热后 2～3 瓣为宜。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: a62f5bcfb55f7daf
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: bf7f2759e7b552c7
   - id: garlic-water-vegetable-stir-fry
     status: reviewed
     source:
@@ -126,9 +130,18 @@ cards:
           - '五花肉（切 3～4cm 长）50g'
           - '油 1 大勺、盐・黑胡椒 各少许'
           - '50mL 沸水倒入耐热容器，放入蒜片和盐 1 撮，静置 5 分钟。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 50mL 沸水倒入耐热容器，放入蒜片和盐 1 撮，静置 5 分钟。
       - id: fry-vegetable-pork
         text: '平底锅放油，大火烧热，下五花肉炒约 1 分钟。'
         quote: '平底锅放油，大火烧热，下五花肉炒约 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 平底锅放油，大火烧热，下五花肉炒约 1 分钟。
+          approximate: true
       - id: add-vegetables-and-garlic-water
         text: '加入胡萝卜和卷心菜，倒入第 步的蒜水，炒到水分完全收干。'
         quote: '加入胡萝卜和卷心菜，倒入第 ① 步的蒜水，炒到水分完全收干。'
@@ -137,8 +150,8 @@ cards:
         quote: '用盐和黑胡椒调味，完成。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: c0427bd6cc1f997e
+      date: 2026-10-31
+      hash: ccc0287d2e93505a
     name: 做蒜水炒蔬菜
   - id: garlic-omelet
     status: reviewed
@@ -157,6 +170,10 @@ cards:
         quote:
           - '蒜水：蒜片 1 瓣、盐 2 撮、水 100mL'
           - '100mL 沸水中加入蒜片和盐 2 撮，煮 5 分钟做成蒜水。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 100mL 沸水中加入蒜片和盐 2 撮，煮 5 分钟做成蒜水。
       - id: mix-omelet-ingredients
         text: '鸡蛋 4 个葛粉 2 小勺盐 少许、油 2 小勺碗中放入鸡蛋、葛粉、盐和蒜水（蒜片本身也一起放进去），充分搅匀。'
         quote:
@@ -172,8 +189,8 @@ cards:
         quote: '吃法：盛在烤过的吐司上，撒黑胡椒和欧芹，就成了蒜部特制的「鸡蛋开放三明治」。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: fe2c57d8e6b1a670
+      date: 2026-10-31
+      hash: 7c44deed8c052f05
     name: 做蒜水炒蛋
   - id: garlic-tenjin-rice
     status: reviewed
@@ -192,6 +209,10 @@ cards:
       - id: make-tenjin-sauce
         text: '【浇汁】——蒜片 2 瓣、水 400mL、酱油 2½ 小勺、砂糖 2½ 小勺、醋 ½ 小勺、盐 1 小勺、葛粉 2 小勺 + 水 2 小勺：水烧开下蒜片和调料，中火煮 3～4 分钟，再用调好的葛粉水勾芡。'
         quote: '【浇汁】——蒜片 2 瓣、水 400mL、酱油 2½ 小勺、砂糖 2½ 小勺、醋 ½ 小勺、盐 1 小勺、葛粉 2 小勺 + 水 2 小勺：水烧开下蒜片和调料，中火煮 3～4 分钟，再用调好的葛粉水勾芡。'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 【浇汁】——蒜片 2 瓣、水 400mL、酱油 2½ 小勺、砂糖 2½ 小勺、醋 ½ 小勺、盐 1 小勺、葛粉 2 小勺 + 水 2 小勺：水烧开下蒜片和调料，中火煮 3～4 分钟，再用调好的葛粉水勾芡。
       - id: make-tenjin-egg-roll
         text: '【蛋卷】——同「炒蛋」（2 人份用鸡蛋 4 个）的蒜水做法，但改用芝麻油 2 小勺，同样半熟即停。'
         quote: '【蛋卷】——同「炒蛋」（2 人份用鸡蛋 4 个）的蒜水做法，但改用芝麻油 2 小勺，同样半熟即停。'
@@ -200,8 +221,8 @@ cards:
         quote: '组合：盘中盛米饭 → 放上蛋卷 → 浇汁 → 撒小葱。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 21ef057ceaea2f52
+      date: 2026-10-31
+      hash: fb15af7d0511c747
     name: 做蒜水天津饭
   - id: garlic-water-stew
     status: reviewed
@@ -223,11 +244,16 @@ cards:
       - id: simmer-garlic-stew
         text: '胡萝卜变软后加入土豆，再煮约 10 分钟至软。'
         quote: '胡萝卜变软后加入土豆，再煮约 10 分钟至软。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 胡萝卜变软后加入土豆，再煮约 10 分钟至软。
+          approximate: true
       - id: season-garlic-stew
         text: '用浓汤宝（コンソメ）和盐调味，完成。'
         quote: '用浓汤宝（コンソメ）和盐调味，完成。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 771513710b9a2a6a
+      date: 2026-10-31
+      hash: 9254ad8079a0d333
     name: 做蒜水炖汤

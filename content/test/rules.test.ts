@@ -15,6 +15,7 @@ import {
   isVerbatimSubstring,
   normalizeQuote,
   numbersCovered,
+  secondsGrounded,
 } from "../src/source/normalize.ts";
 import { r01QuoteVerbatim, r02NumbersInQuote, r03NoVagueTerms, r04ImageExists, r05VariantsValid, r09Coverage, r14SegmentsValid, r16SlotGrounded, r17ApproximateGrounded } from "../src/rules/index.ts";
 import { parseMarkdown, splitFrontmatter } from "../src/source/parse.ts";
@@ -261,6 +262,83 @@ describe("R2 数字一致", () => {
     const df = r02NumbersInQuote(makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [draft] }));
     expect(df.filter((x) => x.rule === "R2").every((x) => x.level === "warning")).toBe(true);
     expect(df.filter((x) => x.rule === "R2").length).toBeGreaterThan(0);
+  });
+});
+
+describe("secondsGrounded：这个秒数在引文里有没有着落", () => {
+  it("原文写秒，直接对得上", () => {
+    expect(secondsGrounded(30, "每次 30 秒")).toBe(true);
+  });
+
+  it("原文写分钟，换算后对得上", () => {
+    expect(secondsGrounded(60, "保持 1 分钟")).toBe(true);
+    expect(secondsGrounded(600, "泡 10 分钟")).toBe(true);
+  });
+
+  it("原文写小时，换算后对得上", () => {
+    expect(secondsGrounded(3600, "冷藏一个小时")).toBe(true);
+  });
+
+  it("「1 分半」= 90 秒", () => {
+    expect(secondsGrounded(90, "原样不动地煎约 1 分半")).toBe(true);
+  });
+
+  it("引文里是别的数 → 对不上", () => {
+    expect(secondsGrounded(100, "保持 10 秒")).toBe(false);
+    expect(secondsGrounded(180, "这篇给两件能立刻上手的事")).toBe(false);
+  });
+
+  it("引文是多句数组时，任意一句能换算到就算数", () => {
+    expect(secondsGrounded(600, ["前面一句没有时间", "泡 10 分钟"])).toBe(true);
+  });
+});
+
+describe("R2 也管时长里的秒值", () => {
+  it("卡级时长抄错数字 → 报错（把 10 秒说成 100 秒没人拦是不行的）", () => {
+    const card = {
+      ...baseCard,
+      duration: { basis: "quote" as const, sec: 100, quote: "保持 10 秒后放回" },
+    };
+    const f = r02NumbersInQuote(makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }));
+    expect(f.some((x) => x.rule === "R2" && x.path === "duration.sec")).toBe(true);
+  });
+
+  it("卡级时长的秒数对得上 → 通过", () => {
+    const card = {
+      ...baseCard,
+      duration: { basis: "quote" as const, sec: 10, quote: "保持 10 秒后放回" },
+    };
+    const f = r02NumbersInQuote(makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }));
+    expect(f.filter((x) => x.rule === "R2")).toEqual([]);
+  });
+
+  it("步级时长抄错数字 → 报错", () => {
+    const card = {
+      ...baseCard,
+      steps: [
+        { id: "a", text: "保持", quote: "保持 10 秒后放回", duration: { basis: "quote" as const, sec: 100, quote: "保持 10 秒后放回" } },
+      ],
+    };
+    const f = r02NumbersInQuote(makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }));
+    expect(f.some((x) => x.rule === "R2" && x.path === "steps.a.duration.sec")).toBe(true);
+  });
+
+  it("推算的时长：算式里没有这个秒数 → 报错", () => {
+    const card = {
+      ...baseCard,
+      duration: { basis: "derived" as const, sec: 420, formula: "5 个动作 × 2 回 × 30 秒 = 300 秒" },
+    };
+    const f = r02NumbersInQuote(makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }));
+    expect(f.some((x) => x.rule === "R2" && x.path === "duration.derived")).toBe(true);
+  });
+
+  it("推算的时长：算式里有这个秒数 → 通过", () => {
+    const card = {
+      ...baseCard,
+      duration: { basis: "derived" as const, sec: 300, formula: "5 个动作 × 2 回 × 30 秒 = 300 秒" },
+    };
+    const f = r02NumbersInQuote(makeCtx({ article: "x.md", kind: "practice", coverage: "partial", cards: [card] }));
+    expect(f.filter((x) => x.rule === "R2")).toEqual([]);
   });
 });
 

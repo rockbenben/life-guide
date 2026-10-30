@@ -109,6 +109,10 @@ cards:
         quote:
           - '速度：一次往返 3 秒。'
           - '从闭眼到重新睁开算一次、算 3 秒。'
+        duration:
+          basis: quote
+          sec: 3
+          quote: 速度：一次往返 3 秒。从闭眼到重新睁开算一次、算 3 秒。
       - id: draw-eyesight
         text: '先把视线引过来。让猫看着你，办法就是叫它的名字。'
         quote:
@@ -136,8 +140,8 @@ cards:
           - '书里提到，确实有猫会因此哈气、抓人、甚至扑上来咬人。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: bcf41b18d9b6b508
+      date: 2026-10-31
+      hash: 87489c8a19283ec8
 
   - id: keep-cat-fully-indoors
     status: reviewed

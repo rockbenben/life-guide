@@ -296,6 +296,10 @@ cards:
       - id: shake-one-minute
         text: 沙沙摇 1 分钟
         quote: 沙沙摇 1 分钟
+        duration:
+          basis: quote
+          sec: 60
+          quote: 沙沙摇 1 分钟
       - id: cook-thoroughly
         text: 摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。
         quote: 摇完就照平常烤或炸即可，想更嫩就先彻底加热熟透。
@@ -349,8 +353,8 @@ cards:
         quote: 盐同时负责调味，按自己口味调整
     review:
       by: AI（作者授权代签）
-      date: 2026-10-29
-      hash: a9a48a58ce08e43f
+      date: 2026-10-31
+      hash: 2795f49bffd8f2ae
     name: 腌鸡胸肉：用摇的
     formerIds:
       - shake-chicken-breast

@@ -50,15 +50,27 @@ cards:
       - id: steak-preheat
         text: '锅里放 2 大勺油，中火预热 1 分钟。肉要在烹饪前 20～30 分钟从冷藏取出回温。'
         quote: '锅里放 2 大勺油，中火预热 1 分钟。肉要在烹饪前 20～30 分钟从冷藏取出回温。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 锅里放 2 大勺油，中火预热 1 分钟。肉要在烹饪前 20～30 分钟从冷藏取出回温。
       - id: steak-adjust-heat
         text: '转弱火下肉，每 2 分钟翻一次面、总共烤 15 分钟。厚度不同时间不同：1cm 厚 → 每 1 分钟翻面，烤 4 分钟；2cm 厚 → 每半分钟翻面，烤 8 分钟。'
         quote: '转弱火下肉，每 2 分钟翻一次面、总共烤 15 分钟。厚度不同时间不同：1cm 厚 → 每 1 分钟翻面，烤 4 分钟；2cm 厚 → 每半分钟翻面，烤 8 分钟。'
       - id: steak-rest
         text: '取出肉，用铝箔包住静置 15 分钟（1cm 厚静置 4 分钟，2cm 厚静置 8 分钟）。'
         quote: '取出肉，用铝箔包住静置 15 分钟（1cm 厚静置 4 分钟，2cm 厚静置 8 分钟）。'
+        duration:
+          basis: quote
+          sec: 900
+          quote: 取出肉，用铝箔包住静置 15 分钟（1cm 厚静置 4 分钟，2cm 厚静置 8 分钟）。
       - id: steak-sear
         text: '加 1 大勺油，最后强火把两面各烤 30 秒～1 分钟，烤出你想要的香气，完成。'
         quote: '加 1 大勺油，最后强火把两面各烤 30 秒～1 分钟，烤出你想要的香气，完成。'
+        duration:
+          basis: quote
+          sec: 30
+          quote: 加 1 大勺油，最后强火把两面各烤 30 秒～1 分钟，烤出你想要的香气，完成。
       - id: steak-dip
         text: '蘸酱油时用碟子接着吃，可以防止油花四溅。'
         quote: '蘸酱油时用碟子接着吃，可以防止油花四溅。'
@@ -68,8 +80,8 @@ cards:
         quote: '问题出在加热过度。说明书直言：日本料理里常用薄切肉，是为了快；但一加热就短时间内冲破 70℃，细胞全体被破坏，汁液全部漏出来蒸发掉——金龙汁就这样白白流失。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: e8e382ac5f2a563e
+      date: 2026-10-31
+      hash: 0c2b270829f00816
 
   - id: minced-meat-stock
     status: reviewed
@@ -128,6 +140,11 @@ cards:
       - id: broth-simmer
         text: '再次沸腾前转小火，约 5 分钟；到时间后捞出绞肉，再煮约 5 分钟完成。'
         quote: '再次沸腾前转小火，约 5 分钟；到时间后捞出绞肉，再煮约 5 分钟完成。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 再次沸腾前转小火，约 5 分钟；到时间后捞出绞肉，再煮约 5 分钟完成。
+          approximate: true
       - id: broth-mix
         text: '捞出的绞肉趁还是温热的时候，和 1 大勺蚝油拌匀，就是可以直接下饭的「超万能肉末（そぼろ）」。剩下的汤就是一份现成高汤。'
         quote: '捞出的绞肉趁还是温热的时候，和 1 大勺蚝油拌匀，就是可以直接下饭的「超万能肉末（そぼろ）」。剩下的汤就是一份现成高汤。'
@@ -137,8 +154,8 @@ cards:
         quote: '不沸腾，就不会把肉煮散，也不会让汤起浑浊。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: b350e052be0bfada
+      date: 2026-10-31
+      hash: 151d7534d292fb22
 
   - id: lemon-ramen
     status: reviewed
@@ -220,6 +237,11 @@ cards:
       - id: tomato-rice-sear
         text: '平底锅放入 B，强火加热约 1 分钟，盛出备用。'
         quote: '平底锅放入 B，强火加热约 1 分钟，盛出备用。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 平底锅放入 B，强火加热约 1 分钟，盛出备用。
+          approximate: true
       - id: tomato-rice-cook
         text: '电饭煲放入 A，在锅底划十字放入番茄，放入第 1 步。'
         quote: '电饭煲放入 A，在锅底划十字放入番茄，放入第 1 步。'
@@ -228,8 +250,8 @@ cards:
         quote: '按正常程序煮饭；跳闸后压烂番茄、拌匀。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 5231b3c43670f56a
+      date: 2026-10-31
+      hash: 333119b98156627f
     name: 做番茄饭
 
   - id: mapo-tofu
@@ -279,6 +301,11 @@ cards:
       - id: mapo-tofu-simmer
         text: '第 1 步加入绞肉高汤、A 和豆腐，加热约 3 分钟。'
         quote: '第 1 步加入绞肉高汤、A 和豆腐，加热约 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 第 1 步加入绞肉高汤、A 和豆腐，加热约 3 分钟。
+          approximate: true
       - id: mapo-tofu-thicken
         text: '转小火，一边用锅铲小心不让豆腐碎掉一边搅拌，分次加入 B 的水溶淀粉收汁。'
         quote: '转小火，一边用锅铲小心不让豆腐碎掉一边搅拌，分次加入 B 的水溶淀粉收汁。'
@@ -291,8 +318,8 @@ cards:
         quote: '一边用锅铲小心不让豆腐碎掉一边搅拌'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: a11864d0382c6ea5
+      date: 2026-10-31
+      hash: 843d974db1378268
     name: 做麻婆豆腐
 
   - id: soy-meat-burger
@@ -346,6 +373,10 @@ cards:
       - id: soy-burger-portion
         text: '平底锅下油，把第 1 步分成 2 份，做成圆饼排入，一定要充分加热：中心 75℃ 保持 1 分钟。'
         quote: '平底锅下油，把第 1 步分成 2 份，做成圆饼排入，一定要充分加热：中心 75℃ 保持 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 平底锅下油，把第 1 步分成 2 份，做成圆饼排入，一定要充分加热：中心 75℃ 保持 1 分钟。
       - id: soy-burger-sear
         text: '强火烧约 2 分钟，翻面，加 1 大勺水，盖盖转中火，中途再翻一次，总共烧 7～8 分钟。'
         quote: '强火烧约 2 分钟，翻面，加 1 大勺水，盖盖转中火，中途再翻一次，总共烧 7～8 分钟。'
@@ -358,6 +389,6 @@ cards:
         quote: '一定要充分加热：中心 75℃ 保持 1 分钟。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 1237febc871adb1f
+      date: 2026-10-31
+      hash: c32ee71440c93122
     name: 用大豆肉做汉堡饼

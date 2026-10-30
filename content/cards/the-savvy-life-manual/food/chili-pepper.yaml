@@ -43,6 +43,10 @@ cards:
       - id: dry-stir-chili
         text: '一味辣椒下锅，强火干炒 1 分钟。'
         quote: '一味辣椒下锅，强火干炒 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 一味辣椒下锅，强火干炒 1 分钟。
       - id: stop-when-color-darkens
         text: '颜色变深，就是甜香出来的信号，别炒过头。'
         quote: '颜色变深，就是甜香出来的信号，别炒过头。'
@@ -61,8 +65,8 @@ cards:
         quote: '油会氧化，1 周内用完。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: b9e7ab51f42b6927
+      date: 2026-10-31
+      hash: 71cd9b80da1cca9b
 
   - id: chili-oil-hot-oil
     status: reviewed
@@ -244,6 +248,10 @@ cards:
       - id: simmer-after-adding
         text: '放完之后 3～5 分钟煮一下可以把酒精挥发掉'
         quote: '放完之后 3～5 分钟煮一下可以把酒精挥发掉'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 放完之后 3～5 分钟煮一下可以把酒精挥发掉
     cautions:
       - level: info
         text: '和味噌一起使用时效果会减弱'
@@ -253,6 +261,6 @@ cards:
         quote: '再多就会直接尝到辣味。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 7f10ea48e86c5b31
+      date: 2026-10-31
+      hash: 0adebff1e1ba3d9c
     name: 做菜水加 1 小勺减盐液

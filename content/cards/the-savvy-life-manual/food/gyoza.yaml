@@ -104,9 +104,17 @@ cards:
       - id: steam-covered
         text: '盖上铝箔，开大火加热 3 分钟。'
         quote: '盖上铝箔，开大火加热 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 盖上铝箔，开大火加热 3 分钟。
       - id: steam-with-lid-closed
         text: '关火，但锅盖不要动，原地再蒸 3 分钟。'
         quote: '关火，但锅盖不要动，原地再蒸 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 关火，但锅盖不要动，原地再蒸 3 分钟。
       - id: pan-fry-until-browned
         text: '揭掉锅盖和铝箔，用大火加热，煎到底面变成紧实的焦褐色。'
         quote: '揭掉锅盖和铝箔，用大火加热，煎到底面变成紧实的焦褐色。'
@@ -115,9 +123,9 @@ cards:
         text: '盖铝箔是为了高效利用蒸汽，别省。'
         quote: '盖铝箔是为了高效利用蒸汽，别省。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: b6bbd7befac72fdd
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 0b7b4559a0eb2dee
   - id: gyoza-few-pleats
     status: reviewed
     source:
@@ -229,10 +237,15 @@ cards:
       - id: rest-filling-before-wrapping
         text: '包之前在室温放约 5 分钟，肉汁会进一步增加——所以馅别一次包完。'
         quote: '包之前在室温放约 5 分钟，肉汁会进一步增加——所以馅别一次包完。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 包之前在室温放约 5 分钟，肉汁会进一步增加——所以馅别一次包完。
+          approximate: true
       - id: wrap-filling
         text: '用皮包入适量馅料。'
         quote: '用皮包入适量馅料。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 36db851fb697d363
+      date: 2026-10-31
+      hash: 0e06968011766be4

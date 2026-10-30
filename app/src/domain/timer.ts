@@ -248,6 +248,18 @@ export function stepTimings(
   return out;
 }
 
+/**
+ * 这一步该倒计时还是正计时。
+ *
+ * **上限跟卡级同一条线**（`TIMER_MAX_SEC`，一小时）：
+ * 步级时长里也有「冷藏 5 小时」「冷冻 1 小时」这类 —— 那是**等待**，
+ * 不是「做一件事要多久」。倒计时 5 小时没有意义，那种走正计时。
+ */
+export function stepTimerKind(timing: StepTiming | undefined): TimerKind {
+  if (!timing || timing.sec == null) return "countup";
+  return timing.sec <= TIMER_MAX_SEC ? "countdown" : "countup";
+}
+
 /** 这一串里有没有推算来的数。 */
 export function timingsDerived(timings: StepTiming[]): boolean {
   return timings.some((t) => t.derived);
@@ -297,6 +309,8 @@ export function stepRemaining(
 ): number | null {
   if (!timing) return null;
   if (timing.sec == null) return null;
+  // 超过上限的步走正计时（跟卡级同一条线）
+  if (stepTimerKind(timing) === "countup") return null;
   if (!state.running) {
     // 暂停着：剩下多少就还是多少（没开始过就是全部）
     if (state.frozen != null) return state.frozen;
@@ -337,6 +351,8 @@ export function stepFinished(
   timing: StepTiming | undefined,
 ): boolean {
   if (!timing || timing.sec == null) return false;
+  // 正计时的步没有「到点」
+  if (stepTimerKind(timing) === "countup") return false;
   if (!state.running || state.since == null) return false;
   return Math.floor((now - state.since) / 1000) >= timing.sec;
 }

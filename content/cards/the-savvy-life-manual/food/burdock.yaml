@@ -83,14 +83,19 @@ cards:
       - id: rice-steam
         text: '盖上盖子蒸约 3 分钟整体拌一次'
         quote: [ '盖上盖子蒸约 3 分钟', '整体拌一次' ]
+        duration:
+          basis: quote
+          sec: 180
+          quote: 盖上盖子蒸约 3 分钟
+          approximate: true
     duration:
       basis: quote
       sec: 180
       quote: '盖上盖子蒸约 3 分钟'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 47ae5aa3c15dc472
+      date: 2026-10-31
+      hash: f29fb1d3764b1967
     name: 牛蒡泥拌饭
 
   - id: burdock-beef-pasta
@@ -108,22 +113,34 @@ cards:
       - id: pasta-brown-beef
         text: '放入牛绞肉用大火翻炒 3～4 分钟炒到肉出油、表面微微焦黄为止'
         quote: [ '放入牛绞肉用大火翻炒 3～4 分钟', '炒到肉出油、表面微微焦黄', '为止' ]
+        duration:
+          basis: quote
+          sec: 240
+          quote: 放入牛绞肉用大火翻炒 3～4 分钟
       - id: pasta-add-sauce
         text: '加入继续用大火翻炒 1～2 分钟（A）再炒约 1 分钟'
         quote: [ '加入①', '继续用大火翻炒 1～2 分钟', '（A）', '再炒约 1 分钟' ]
+        duration:
+          basis: quote
+          sec: 120
+          quote: 加入①，继续用大火翻炒 1～2 分钟，再倒入 （A），再炒约 1 分钟；
       - id: pasta-combine
         text: '加入预先煮好的意大利面与 50mL 煮面水充分拌匀收汁'
         quote: [ '加入', '预先煮好的意大利面与 50mL 煮面水', '充分拌匀收汁' ]
       - id: pasta-pasta-timing
         text: '意面最好在包装标示时间提前 1 分钟捞出'
         quote: [ '意面最好在包装标示时间', '提前 1 分钟', '捞出' ]
+        duration:
+          basis: quote
+          sec: 60
+          quote: 提前 1 分钟
       - id: pasta-finish
         text: '起锅前淋上橄榄油也很出彩'
         quote: [ '起锅前淋上橄榄油', '也很出彩' ]
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: df7b3a7935cbbcba
+      date: 2026-10-31
+      hash: 349513ef109a8f1a
     name: 牛蒡牛肉意面
 
   - id: burdock-crepe
@@ -142,19 +159,29 @@ cards:
       - id: crepe-heat-spread
         text: '大火加热约 1 分钟约一杯面糊倾斜锅子，让面糊快速摊薄摊圆'
         quote: [ '大火加热约 1 分钟', '约一杯面糊', '倾斜锅子，让面糊快速摊薄摊圆' ]
+        duration:
+          basis: quote
+          sec: 60
+          quote: 大火加热约 1 分钟
+          approximate: true
       - id: crepe-first-side
         text: '转中大火，煎约 1 分半'
         quote: '转中大火，煎约 1 分半'
       - id: crepe-flip
         text: '面糊边缘出现焦色橡皮刮刀等从边缘慢慢伸入另一面再煎约 1 分钟'
         quote: [ '面糊边缘出现焦色', '橡皮刮刀等从边缘慢慢伸入', '另一面再煎约 1 分钟' ]
+        duration:
+          basis: quote
+          sec: 60
+          quote: 另一面再煎约 1 分钟
+          approximate: true
       - id: crepe-second-side
         text: '只要稍微上色即可'
         quote: [ '只要稍微上色', '即可' ]
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: e02ed1c472510e79
+      date: 2026-10-31
+      hash: c22b91384935b24a
 
   - id: burdock-chicken-meatballs
     status: reviewed
@@ -177,11 +204,15 @@ cards:
       - id: meatball-fry
         text: '薄薄刷油排入锅中大火煎 2 分半翻面后盖上锅盖转中小火再煎 3～4 分钟'
         quote: [ '薄薄刷油', '排入锅中', '大火煎 2 分半', '翻面后盖上锅盖', '转中小火再煎 3～4 分钟' ]
+        duration:
+          basis: quote
+          sec: 240
+          quote: 转中小火再煎 3～4 分钟
       - id: meatball-sauce
         text: '取下锅盖（B）让酱汁裹遍整颗肉丸'
         quote: [ '取下锅盖', '（B）', '让酱汁裹遍整颗肉丸' ]
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 37b85ef1aa223df5
+      date: 2026-10-31
+      hash: 1e2d37b48aadc176
     name: 牛蒡鸡肉丸

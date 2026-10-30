@@ -140,14 +140,18 @@ cards:
       - id: iliopsoas-lift-hold
         text: "坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。"
         quote: "坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。"
+        duration:
+          basis: quote
+          sec: 10
+          quote: 坐在椅子上，抬起一条腿的膝盖，保持 10 秒后放回。
     cautions:
       - level: stop
         text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
         quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 4439575544afe28e
+      date: 2026-10-31
+      hash: 2ad8a655dcd86a2f
     name: 骨盆后倾练髂腰肌
 
   - id: posterior-shoulder-band-stretch
@@ -185,17 +189,25 @@ cards:
       - id: shoulder-band-raise
         text: "双手握住毛巾，抬起双臂，保持 10 秒后放下。"
         quote: "双手握住毛巾，抬起双臂，保持 10 秒后放下。"
+        duration:
+          basis: quote
+          sec: 10
+          quote: 双手握住毛巾，抬起双臂，保持 10 秒后放下。
       - id: shoulder-band-lower
         text: "放下姿势也保持 10 秒。"
         quote: "放下姿势也保持 10 秒。"
+        duration:
+          basis: quote
+          sec: 10
+          quote: 放下姿势也保持 10 秒。
     cautions:
       - level: stop
         text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
         quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: b9a44925ae373401
+      date: 2026-10-31
+      hash: ffeabe28512d3ccb
     name: 骨盆后倾拉肩带
 
   - id: anterior-glute-bridge
@@ -229,14 +241,18 @@ cards:
       - id: glute-bridge-lift-release
         text: "仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。"
         quote: "仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。"
+        duration:
+          basis: quote
+          sec: 3
+          quote: 仰卧抬起膝盖，抬起臀部，抬起 3 秒后放回。
     cautions:
       - level: stop
         text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
         quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 980f1f33c9be03d5
+      date: 2026-10-31
+      hash: 526d18566dc1ff6e
     name: 骨盆前倾做提臀
 
   - id: anterior-abdominal-core
@@ -269,17 +285,25 @@ cards:
       - id: abdominal-lift-core
         text: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
         quote: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+        duration:
+          basis: quote
+          sec: 5
+          quote: 仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。
       - id: abdominal-press-lift
         text: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
         quote: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
+        duration:
+          basis: quote
+          sec: 5
+          quote: 仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。
     cautions:
       - level: stop
         text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
         quote: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: ea9668c14e34691c
+      date: 2026-10-31
+      hash: 20a48bf50afdacad
     name: 骨盆前倾练腹肌
 
   - id: wide-step-walking

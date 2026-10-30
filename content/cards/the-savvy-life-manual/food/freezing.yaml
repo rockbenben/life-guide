@@ -150,9 +150,18 @@ cards:
       - id: stir-fry-clams
         text: '加入冻蛤蜊，强火快炒约 1 分钟（略不足 1 分钟）。注意：口还没合上的蛤蜊不能吃。'
         quote: '加入冻蛤蜊，强火快炒约 1 分钟（略不足 1 分钟）。注意：口还没合上的蛤蜊不能吃。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 加入冻蛤蜊，强火快炒约 1 分钟（略不足 1 分钟）。注意：口还没合上的蛤蜊不能吃。
+          approximate: true
       - id: simmer-milk-and-water
         text: '加入水和牛奶，中火煮 3～4 分钟。'
         quote: '加入水和牛奶，中火煮 3～4 分钟。'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 加入水和牛奶，中火煮 3～4 分钟。
       - id: thicken-chowder
         text: '用牛奶溶开的玉米淀粉勾芡，再加盐调味。'
         quote: '用牛奶溶开的玉米淀粉勾芡，再加盐调味。'
@@ -165,8 +174,8 @@ cards:
         quote: '口还没合上的蛤蜊不能吃。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: c3c748a626723b69
+      date: 2026-10-31
+      hash: c0ec6d8183be2196
 
   - id: fragrant-pasta
     status: reviewed

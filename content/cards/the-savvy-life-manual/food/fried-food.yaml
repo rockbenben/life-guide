@@ -126,13 +126,18 @@ cards:
       - id: tempura-fry-to-target
         text: '炸制时间目标：蔬菜约 3 分钟，鱼贝类约 1 分～1 分 30 秒。'
         quote: '炸制时间目标：蔬菜约 3 分钟，鱼贝类约 1 分～1 分 30 秒。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 炸制时间目标：蔬菜约 3 分钟，鱼贝类约 1 分～1 分 30 秒。
+          approximate: true
       - id: tempura-fry-slightly-longer
         text: '比平时稍微多炸一会儿（时间略长一点），正是保持酥脆的要点。'
         quote: '比平时稍微多炸一会儿（时间略长一点），正是保持酥脆的要点。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 30e49e27fab02d42
+      date: 2026-10-31
+      hash: 7916ffed4d30bd32
     name: 炸物薄裹面衣再下锅
     variants:
       busy:
@@ -192,13 +197,23 @@ cards:
       - id: fried-chicken-first-fry
         text: '在的鸡肉上薄薄裹一层面粉，放入 160～170℃ 的油中炸约 4 分钟，先取出。'
         quote: '在②的鸡肉上薄薄裹一层面粉，放入 160～170℃ 的油中炸约 4 分钟，先取出。'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 在②的鸡肉上薄薄裹一层面粉，放入 160～170℃ 的油中炸约 4 分钟，先取出。
+          approximate: true
       - id: fried-chicken-second-fry
         text: '把油温升到 180℃，将再炸约 2 分钟。'
         quote: '把油温升到 180℃，将③再炸约 2 分钟。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 把油温升到 180℃，将③再炸约 2 分钟。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: eacbac5c8b0b58a3
+      date: 2026-10-31
+      hash: 50de92bb27c7bb34
     name: 做薄裹面衣炸鸡
 
   - id: onion-rings-recipe
@@ -257,10 +272,15 @@ cards:
       - id: onion-ring-fry
         text: '蘸上面衣，放入 170℃ 的油中，炸至面衣上色，约 3～4 分钟。'
         quote: '③蘸上面衣，放入 170℃ 的油中，炸至面衣上色，约 3～4 分钟。'
+        duration:
+          basis: quote
+          sec: 240
+          quote: ③蘸上面衣，放入 170℃ 的油中，炸至面衣上色，约 3～4 分钟。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 5dae9f6bc5ff5d9e
+      date: 2026-10-31
+      hash: 068f4b3115e2b180
     name: 做洋葱圈
 
   - id: crispy-potatoes
@@ -289,6 +309,10 @@ cards:
       - id: potato-microwave
         text: '铺在耐热盘上，轻轻盖上保鲜膜，用微波炉 600W 加热 4 分 30 秒。'
         quote: '铺在耐热盘上，轻轻盖上保鲜膜，用微波炉 600W 加热 4 分 30 秒。'
+        duration:
+          basis: quote
+          sec: 30
+          quote: 铺在耐热盘上，轻轻盖上保鲜膜，用微波炉 600W 加热 4 分 30 秒。
       - id: potato-cool
         text: '加热后取下保鲜膜，放至不烫手。'
         quote: '加热后取下保鲜膜，放至不烫手。'
@@ -298,18 +322,28 @@ cards:
       - id: potato-first-fry
         text: '油温调到常温，把冻结状态的土豆下锅，大火炸约 3 分钟。'
         quote: '油温调到常温，把冻结状态的土豆下锅，大火炸约 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 油温调到常温，把冻结状态的土豆下锅，大火炸约 3 分钟。
+          approximate: true
       - id: potato-second-fry
         text: '油面翻滚沸腾后，调到弱火与中火之间的火力，再炸 12 分钟。'
         quote: '油面翻滚沸腾后，调到弱火与中火之间的火力，再炸 12 分钟。'
       - id: potato-final-fry
         text: '捞出静置约 3 分钟，再回锅用大火炸约 1 分钟，完成。'
         quote: '捞出静置约 3 分钟，再回锅用大火炸约 1 分钟，完成。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 捞出静置约 3 分钟，再回锅用大火炸约 1 分钟，完成。
+          approximate: true
     cautions:
       - level: info
         text: '加热过程中粘在一起的土豆，要随时分开。'
         quote: '加热过程中粘在一起的土豆，要随时分开。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 99355e78e513063b
+      date: 2026-10-31
+      hash: 2991060f93695527
     name: 做外酥土豆

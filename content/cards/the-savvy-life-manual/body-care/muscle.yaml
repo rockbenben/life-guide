@@ -259,9 +259,17 @@ cards:
           - "数 4 秒，坐下"
           - "双手向前伸出再坐，膝盖就不容易前突，姿势会自然落到理想位置。"
           - "坐下时不要让膝盖往前顶"
+        duration:
+          basis: quote
+          sec: 4
+          quote: 数 4 秒，坐下
       - id: chair-squat-stand
         text: "数 4 秒，站起来"
         quote: "数 4 秒，站起来"
+        duration:
+          basis: quote
+          sec: 4
+          quote: 数 4 秒，站起来
     cautions:
       - level: stop
         text: "身体一旦出现疼痛，请立即停止"
@@ -270,6 +278,6 @@ cards:
           - "立即停止"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: ce89bcb4f4d3b694
+      date: 2026-10-31
+      hash: a6014c203b839cdd
     name: 雨天椅子静蹲 3 组

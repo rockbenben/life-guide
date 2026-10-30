@@ -51,6 +51,10 @@ cards:
       - id: jaw-open-hold
         text: "仰起脸，张大嘴并保持 5 秒。如果张大嘴有困难，可以选择撅起嘴唇代替。"
         quote: "仰起脸，张大嘴并保持 5 秒。如果张大嘴有困难，可以选择撅起嘴唇代替。"
+        duration:
+          basis: quote
+          sec: 5
+          quote: 仰起脸，张大嘴并保持 5 秒。如果张大嘴有困难，可以选择撅起嘴唇代替。
       - id: jaw-schedule
         text: "每组循环 3 次，建议早晚各做 3 组。"
         quote: "每组循环 3 次，建议早晚各做 3 组。"
@@ -62,9 +66,9 @@ cards:
         text: "如果不适或疼痛已经影响日常生活，建议到牙科或口腔外科就诊，其中也有日本颞下颌关节学会认定的指导医、专科医、认定医，多数都道府县都有，可以自行检索。"
         quote: "如果不适或疼痛已经影响日常生活，建议到牙科或口腔外科就诊，其中也有日本颞下颌关节学会认定的指导医、专科医、认定医，多数都道府县都有，可以自行检索。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: e14b1d2e58787a86
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 2709d5ab0b81433c
   - id: chin-ball-exhale-press
     status: reviewed
     source:
@@ -111,6 +115,10 @@ cards:
       - id: ball-exhale-press
         text: "在呼气的同时按压球，并保持 5 秒。"
         quote: "在呼气的同时按压球，并保持 5 秒。"
+        duration:
+          basis: quote
+          sec: 5
+          quote: 在呼气的同时按压球，并保持 5 秒。
       - id: ball-exhale-route
         text: "呼气时，可以通过鼻子或嘴巴进行，但通过鼻子呼气可以更有效地对目标肌肉施加负荷。"
         quote: "呼气时，可以通过鼻子或嘴巴进行，但通过鼻子呼气可以更有效地对目标肌肉施加负荷。"
@@ -139,6 +147,6 @@ cards:
         quote: "7 名高龄者做了半年训练，平均肌力提升了 75%。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 8c37d5d3b2f97926
+      date: 2026-10-31
+      hash: 56db9beb8c52fa5f
     name: 呼气时压球练下巴

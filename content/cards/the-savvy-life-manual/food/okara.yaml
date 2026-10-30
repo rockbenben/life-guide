@@ -139,14 +139,19 @@ cards:
       - id: combine-and-absorb
         text: '一起煮，搅拌约 30 秒，等豆渣把水全部吸完就完成。'
         quote: '一起煮，搅拌约 30 秒，等豆渣把水全部吸完就完成。'
+        duration:
+          basis: quote
+          sec: 30
+          quote: 一起煮，搅拌约 30 秒，等豆渣把水全部吸完就完成。
+          approximate: true
     cautions:
       - level: info
         text: '建议用鲜豆渣做；配料完全可以按自己的喜好替换。'
         quote: '建议用鲜豆渣做；配料完全可以按自己的喜好替换。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 14bdd9b4ec95579e
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: d6fa48fe7562a56c
 
   - id: okara-meat-sauce
     status: reviewed
@@ -234,9 +239,19 @@ cards:
       - id: saute-vegetables
         text: '平底锅放橄榄油和蒜开火，香味出来后加入洋葱、胡萝卜、芹菜，中火炒约 2 分钟。'
         quote: '平底锅放橄榄油和蒜开火，香味出来后加入洋葱、胡萝卜、芹菜，中火炒约 2 分钟。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 平底锅放橄榄油和蒜开火，香味出来后加入洋葱、胡萝卜、芹菜，中火炒约 2 分钟。
+          approximate: true
       - id: simmer-sauce
         text: '加入豆渣拌匀，倒入红葡萄酒把酒精挥发掉；再加入 A，收汁煮约 5 分钟。'
         quote: '加入豆渣拌匀，倒入红葡萄酒把酒精挥发掉；再加入 A，收汁煮约 5 分钟。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 加入豆渣拌匀，倒入红葡萄酒把酒精挥发掉；再加入 A，收汁煮约 5 分钟。
+          approximate: true
       - id: season-sauce
         text: '加黄油，用盐和砂糖调整酱汁味道。'
         quote: '加黄油，用盐和砂糖调整酱汁味道。'
@@ -251,9 +266,9 @@ cards:
         text: '建议用鲜豆渣；这份酱不只用于意面，做笔尖面或千层面的酱汁也可以'
         quote: '建议用鲜豆渣；这份酱不只用于意面，做笔尖面或千层面的酱汁也可以'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: d400d62d0b6fdbb3
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: ba3e367cab255962
 
   - id: okara-bonito-style-flakes
     status: reviewed
@@ -297,9 +312,19 @@ cards:
       - id: fry-until-dry
         text: '平底锅热油，放入，弱火偏中炒约 4 分钟，直到豆渣变得松散干燥。'
         quote: '平底锅热油，放入①，弱火偏中炒约 4 分钟，直到豆渣变得松散干燥。'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 平底锅热油，放入①，弱火偏中炒约 4 分钟，直到豆渣变得松散干燥。
+          approximate: true
       - id: add-liquid-seasonings
         text: '加入 A，再炒约 3 分钟让它混合均匀。'
         quote: '加入 A，再炒约 3 分钟让它混合均匀。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 加入 A，再炒约 3 分钟让它混合均匀。
+          approximate: true
       - id: strain-flakes
         text: '用滤网过滤。'
         quote: '用滤网过滤④。'
@@ -310,9 +335,9 @@ cards:
           - '撒在喜欢的意面上'
           - '像帕玛森芝士那样拌沙拉、撒在荞麦面或年糕上也都不错'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: c92a457b94658c34
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: c638a8c150e140b4
 
   - id: okara-crepe
     status: reviewed
@@ -354,6 +379,10 @@ cards:
       - id: melt-butter
         text: '黄油用600W 微波炉加热 20 秒做成融化黄油。'
         quote: '黄油用600W 微波炉加热 20 秒做成融化黄油。'
+        duration:
+          basis: quote
+          sec: 20
+          quote: 黄油用600W 微波炉加热 20 秒做成融化黄油。
       - id: mix-batter
         text: '碗里把豆渣粉和玉米淀粉先拌匀，再加入鸡蛋、水、砂糖和融化黄油，拌匀。'
         quote: '碗里把豆渣粉和玉米淀粉先拌匀，再加入鸡蛋、水、砂糖和融化黄油，拌匀。'
@@ -363,6 +392,10 @@ cards:
       - id: cook-crepe
         text: '舀一勺的面糊，弱火煎 1～2 分钟，然后翻面再煎约 1 分钟。'
         quote: '舀一勺②的面糊，弱火煎 1～2 分钟，然后翻面再煎约 1 分钟。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 弱火煎 1～2 分钟，然后翻面再煎约 1 分钟。
       - id: fill-and-roll
         text: '配上喜欢的配料卷起来就完成。'
         quote: '配上喜欢的配料卷起来就完成。'
@@ -374,6 +407,6 @@ cards:
         text: '说明书建议可丽饼用豆渣粉做；除了水果，夹鸡肉、金枪鱼等咸味配料也很好吃。'
         quote: '说明书建议可丽饼用豆渣粉做；除了水果，夹鸡肉、金枪鱼等咸味配料也很好吃。'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: b5d5ebe8b90d7875
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: fc9a9dc14a7c0b5e

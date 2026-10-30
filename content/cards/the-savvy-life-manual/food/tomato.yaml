@@ -36,13 +36,23 @@ cards:
       - id: add-tomato-to-pan
         text: "1 分钟左右蒜开始变色时保持中火，下一口大小的番茄块"
         quote: "1 分钟左右蒜开始变色时保持中火，下一口大小的番茄块"
+        duration:
+          basis: quote
+          sec: 60
+          quote: 1 分钟左右蒜开始变色时保持中火，下一口大小的番茄块
+          approximate: true
       - id: sear-tomato
         text: "转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
         quote: "转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。"
+        duration:
+          basis: quote
+          sec: 180
+          quote: 转强火交替切、颠勺、回火，炒 3 分钟左右到「咕嘟咕嘟」的浓稠状态。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 12a964d61a94dc0b
+      date: 2026-10-31
+      hash: 6ff59d1a32eb1255
   - id: make-okuda-tomato-sauce
     status: reviewed
     source:
@@ -89,6 +99,11 @@ cards:
         quote:
           - "1 分钟左右蒜开始变色时，保持中火，下一口大小的番茄块。"
           - "油会飞溅，下锅时盖上锅盖更安全。"
+        duration:
+          basis: quote
+          sec: 60
+          quote: 1 分钟左右蒜开始变色时，保持中火，下一口大小的番茄块。
+          approximate: true
       - id: toss-tomato
         text: "转强火交替操作：切、颠勺、转回火上，让油均匀走遍每一颗番茄。下锅的瞬间能听到「啾哇」的声音，这是关键；听不到就加大火。"
         quote:
@@ -99,6 +114,11 @@ cards:
         quote:
           - "炒 3 分钟左右，达到「咕嘟咕嘟」的浓稠状态。"
           - "不够浓稠：延长加热时间，或关火后前后各颠 20 秒。"
+        duration:
+          basis: quote
+          sec: 180
+          quote: 炒 3 分钟左右，达到「咕嘟咕嘟」的浓稠状态。不够浓稠：延长加热时间，或关火后前后各颠 20 秒。
+          approximate: true
       - id: season-sauce-alone
         text: "若不配面食单独当酱汁，加热中补 5g（1 小勺）盐"
         quote: "若不配面食单独当酱汁，加热中补 5g（1 小勺）盐"
@@ -116,9 +136,9 @@ cards:
         text: "面不要另外加盐"
         quote: "面不要另外加盐"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 40122deb0280164c
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: c2528d71465f15fd
   - id: use-tomato-paste
     status: reviewed
     source:
@@ -317,6 +337,11 @@ cards:
       - id: salt-pickle-daikon
         text: "装入塑料袋，加大根重量 1% 的盐，摇匀腌 5 分钟左右。"
         quote: "装入塑料袋，加大根重量 1% 的盐，摇匀腌 5 分钟左右。"
+        duration:
+          basis: quote
+          sec: 300
+          quote: 装入塑料袋，加大根重量 1% 的盐，摇匀腌 5 分钟左右。
+          approximate: true
       - id: mix-c-sauce
         text: "碗中放 C 组全部材料，充分搅拌。"
         quote: "碗中放 C 组全部材料，充分搅拌。"
@@ -328,8 +353,8 @@ cards:
         quote: "除了大根，黄瓜、花椰菜、白菜等各类蔬菜都能用。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 2937317e6afa2efd
+      date: 2026-10-31
+      hash: 0deaf4ceaff7f171
     name: 腌萝卜配番茄膏酱
   - id: choose-tomato-by-stem-star
     status: reviewed

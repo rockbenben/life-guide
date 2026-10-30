@@ -39,9 +39,17 @@ cards:
       - id: mix-and-heat
         text: '磨泥土豆和油放进耐热碗，轻轻拌匀，不要盖保鲜膜，用 500W 加热 4 分钟。'
         quote: '磨泥土豆和油放进耐热碗，轻轻拌匀，不要盖保鲜膜，用 500W 加热 4 分钟。'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 磨泥土豆和油放进耐热碗，轻轻拌匀，不要盖保鲜膜，用 500W 加热 4 分钟。
       - id: turn-and-gather
         text: '取出，用橡皮刮刀随意翻拌，再加热 3 分钟，搅到能聚拢成形。'
         quote: '取出，用橡皮刮刀随意翻拌，再加热 3 分钟，搅到能聚拢成形。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 取出，用橡皮刮刀随意翻拌，再加热 3 分钟，搅到能聚拢成形。
       - id: shape-and-cool
         text: '套上保鲜膜，捏成长条，放到一旁晾至温热不烫手。晾至温热不烫手后尽早掰成小块，等久了会粘手。'
         quote:
@@ -65,9 +73,9 @@ cards:
           - '磨好的土豆接触空气会氧化变色——在意颜色的，就动作快一点。'
           - '晾至温热不烫手后尽早掰成小块，等久了会粘手。'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: a2efbe9bae5ac6b8
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 6a10ba58cdab8591
   - id: make-resistant-starch-potato
     status: reviewed
     source:
@@ -100,13 +108,17 @@ cards:
       - id: microwave-and-cool
         text: '用微波炉 600W 加热 5 分钟，取出后粗略降温。'
         quote: '用微波炉 600W 加热 5 分钟，取出后粗略降温。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 用微波炉 600W 加热 5 分钟，取出后粗略降温。
       - id: chill-overnight
         text: '放进约 4℃ 的冰箱冷藏一晚。'
         quote: '放进约 4℃ 的冰箱冷藏一晚。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: c62fe611eee20e85
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 5a735dfe932e00fa
   - id: mash-potato-for-starch
     status: reviewed
     source:
@@ -214,15 +226,25 @@ cards:
         quote:
           - '把小圆子盛出，锅内补剩余橄榄油，下蒜片炒出香味，加培根和洋葱炒到洋葱变软。'
           - '倒入番茄汁，中火煮约 2 分钟。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 倒入番茄汁，中火煮约 2 分钟。
+          approximate: true
       - id: season-and-finish
         text: '加盐和糖，把小圆子倒回锅中。再煮约 1 分钟盛盘，按喜好撒奶酪粉和欧芹。'
         quote:
           - '加盐和糖，把小圆子倒回锅中。'
           - '再煮约 1 分钟盛盘，按喜好撒奶酪粉和欧芹。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 再煮约 1 分钟盛盘，按喜好撒奶酪粉和欧芹。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: fe8ac5f6b122f3a2
+      date: 2026-10-31
+      hash: 38f103186013fb7b
     name: 做番茄土豆团
   - id: make-potato-miso-soup
     status: reviewed
@@ -253,8 +275,13 @@ cards:
       - id: simmer-and-add-miso
         text: '加水和磨泥土豆，弱火煮约 10 分钟至根菜变软，最后加入味噌化开。'
         quote: '加水和磨泥土豆，弱火煮约 10 分钟至根菜变软，最后加入味噌化开。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 加水和磨泥土豆，弱火煮约 10 分钟至根菜变软，最后加入味噌化开。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 4035ff61263ccf42
+      date: 2026-10-31
+      hash: cf33629c89d895a0
     name: 做土豆味噌汤

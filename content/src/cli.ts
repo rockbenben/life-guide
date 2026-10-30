@@ -37,6 +37,11 @@ import { draftArticle, listArticles, resolveArticle, targetFor } from "./extract
 import { runAudit } from "./audit/run.ts";
 import { extendQuote } from "./repair-quotes.ts";
 import {
+  cardTakesStepTiming,
+  durationForStep,
+  writeStepDuration,
+} from "./step-duration.ts";
+import {
   SIGNING_LIST_FILE,
   buildSigningList,
   parseTickedIds,
@@ -1014,6 +1019,61 @@ function cmdApproxCheck(): number {
   return 0;
 }
 
+// -------------------------------------------------------------------- 步级时长
+
+/**
+ * 步级时长：列出（或写入）每一步该做多久。
+ *
+ * 默认只列不改 —— 认定时长是**内容判断**，机器只能给候选。
+ * `--apply` 才会写盘，且只写 confidence=sure 的那些（机器拿不准的留给��看）。
+ * 写完要重签：改过已签字的卡，R12 的指纹就失效了。
+ */
+function cmdStepDuration(): number {
+  const apply = has("apply");
+  const only = arg("card");
+  // --overwrite：改裁定后重写已有的值。默认不动已有的 ——
+  // 那样「先写盘、后改裁定」这条路走不通，得手工去 YAML 里删。
+  const overwrite = has("overwrite");
+  const loaded = loadAllCards(CARDS_DIR);
+
+  let sure = 0;
+  let unsure = 0;
+  const touchedFiles = new Set<string>();
+
+  for (const l of loaded) {
+    for (const c of l.data.cards) {
+      if (only && c.id !== only) continue;
+      const steps = c.steps ?? [];
+      if (!cardTakesStepTiming(steps, l.data.kind)) continue;
+      for (const s of steps) {
+        if (s.duration && !overwrite) continue;
+        const quotes = Array.isArray(s.quote) ? s.quote : s.quote ? [s.quote] : [];
+        const pick = durationForStep(s.text, quotes, c.id, s.id);
+        if (!pick) continue;
+        if (pick.confidence === "unsure") {
+          unsure++;
+          continue;
+        }
+        sure++;
+        if (!apply) continue;
+        if (writeStepDuration(l.file, c.id, s.id, pick)) {
+          touchedFiles.add(l.file);
+          console.log(`  ${c.id}/${s.id}  ${pick.sec} 秒${pick.approximate ? "（约）" : ""}`);
+        }
+      }
+    }
+  }
+
+  if (apply) {
+    console.log(`\n已写入 ${sure} 步，涉及 ${touchedFiles.size} 个卡文件。`);
+    console.log("改过的卡要重签：npm run content:review <cardId> --by <名字> --resign");
+  } else {
+    console.log(`\n步级时长候选：确定 ${sure} 步 · 待人工核对 ${unsure} 步`);
+    console.log("（只列不改。要写盘加 --apply —— 写完要重签。）");
+  }
+  return 0;
+}
+
 // -------------------------------------------------------------------- main
 
 const cmd = process.argv[2];
@@ -1049,6 +1109,9 @@ switch (cmd) {
   case "approx-check":
     code = cmdApproxCheck();
     break;
+  case "step-duration":
+    code = cmdStepDuration();
+    break;
   default:
     console.log(`内容管线 CLI
 
@@ -1063,6 +1126,7 @@ switch (cmd) {
   content slot-check                           # 逐篇检查时段标注
   content approx-check                          # 列出「原文写了约、卡上没标」的剂量行
   content repair-quotes                        # 给 draft 卡补全漏掉的引文
+  content step-duration [--apply] [--card <id>]  # 步级时长：列出候选 / 写盘
 `);
     code = cmd ? 2 : 0;
 }

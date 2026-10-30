@@ -126,6 +126,10 @@ cards:
       - id: meat-bake
         text: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟。'
         quote: '200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟。'
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 200℃ 的烤面包机或 220℃ 的烤箱，烤 15～20 分钟。
       - id: meat-basil
         text: '想吃得柔和一点，可以在芝士下面卷一片罗勒。'
         quote: '想吃得柔和一点，可以在芝士下面卷一片罗勒。'
@@ -134,9 +138,9 @@ cards:
         text: '注意：芝士一定会流出来，务必在下面垫铝箔。'
         quote: '注意：芝士一定会流出来，务必在下面垫铝箔。'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 62309fe888ee801d
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 3f8bf04fe5a050e9
   - id: butter-pan-fried-eringii
     status: reviewed
     name: "黄油煎杏鲍菇"
@@ -264,6 +268,11 @@ cards:
       - id: risotto-finish
         text: '重复上一步，直到米熟透、质地偏软——全程约 20 分钟，关火前拌入黄油 10g。'
         quote: '重复上一步，直到米熟透、质地偏软——全程约 20 分钟，关火前拌入黄油 10g。'
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 重复上一步，直到米熟透、质地偏软——全程约 20 分钟，关火前拌入黄油 10g。
+          approximate: true
       - id: risotto-plate
         text: '盛盘后铺上杏鲍菇黄油煎，最后浇橄榄油、撒胡椒。'
         quote: '盛盘后铺上杏鲍菇黄油煎，最后浇橄榄油、撒胡椒。'
@@ -273,8 +282,8 @@ cards:
         quote: '千万不要煮到烧干。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 21de0f69f6b78560
+      date: 2026-10-31
+      hash: 7cef5254b07c8d3c
   - id: potato-soft-egg-eringii-salad
     status: reviewed
     name: "土豆溏心蛋拌杏鲍菇"

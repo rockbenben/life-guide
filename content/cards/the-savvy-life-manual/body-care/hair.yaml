@@ -70,13 +70,18 @@ cards:
       - id: warm-water-pre-rinse
         text: "用温水充分冲洗 1～1.5 分钟左右，洗净附着的灰尘和油脂，泡沫才起得干净。"
         quote: "用温水充分冲洗 1～1.5 分钟左右，洗净附着的灰尘和油脂，泡沫才起得干净。"
+        duration:
+          basis: quote
+          sec: 90
+          quote: 用温水充分冲洗 1～1.5 分钟左右，洗净附着的灰尘和油脂，泡沫才起得干净。
+          approximate: true
       - id: wash-gently-with-foam
         text: "使用泡沫轻柔地洗发，避免来回搓洗，以减少对头发的摩擦。"
         quote: "使用泡沫轻柔地洗发，避免来回搓洗，以减少对头发的摩擦。"
     review:
-      by: benson
-      date: 2026-10-22
-      hash: e82d6901054e0619
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 4c696a3ab8316530
   - id: straighten-curly-hair
     status: reviewed
     source:

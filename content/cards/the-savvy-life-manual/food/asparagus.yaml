@@ -30,15 +30,24 @@ cards:
         quote:
           - 沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒
           - 处理芦笋是两个关键动作。留住甜味用整根裹油煎：油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒。保持脆度用短时间焯水：先从根部折断或削掉根部约 5cm 的硬筋，沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒，实测只需 24 秒。下面先给做法，甜味为什么埋在地下放在最后。
+        duration:
+          basis: quote
+          sec: 30
+          quote: 沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒
       - id: sear-whole
         text: "油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒"
         quote:
           - 油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒
           - 处理芦笋是两个关键动作。留住甜味用整根裹油煎：油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒。保持脆度用短时间焯水：先从根部折断或削掉根部约 5cm 的硬筋，沸水下锅——直径 1～1.5cm 焯 20～30 秒、直径 1.5～2cm 焯 30～40 秒，实测只需 24 秒。下面先给做法，甜味为什么埋在地下放在最后。
+        duration:
+          basis: quote
+          sec: 180
+          quote: 油盐裹满全身，冷锅下，大火约 3 分钟全程不上色不翻动，出锅前翻面再加热约 30 秒
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 46693961a4c8ef3a
+      date: 2026-10-31
+      hash: 429e82163201769d
 
   - id: asparagus-crisp-blanch
     status: reviewed
@@ -82,14 +91,18 @@ cards:
       - id: choose-time-by-diameter
         text: "直径 1～1.5cm → 20～30 秒；直径 1.5～2cm → 30～40 秒"
         quote: "直径 1～1.5cm → 20～30 秒；直径 1.5～2cm → 30～40 秒"
+        duration:
+          basis: quote
+          sec: 30
+          quote: 直径 1～1.5cm → 20～30 秒；直径 1.5～2cm → 30～40 秒
     cautions:
       - level: info
         text: "这段硬化的部分，无论煮多久都不会变软"
         quote: "这段硬化的部分，无论煮多久都不会变软"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: cc200751fa36ac24
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 9e11e6aebeaca09e
 
   - id: asparagus-snow-sauce
     status: reviewed
@@ -209,10 +222,15 @@ cards:
       - id: steam-rice
         text: "拌匀后盖盖蒸约 5 分钟即可"
         quote: "拌匀后盖盖蒸约 5 分钟即可"
+        duration:
+          basis: quote
+          sec: 300
+          quote: 拌匀后盖盖蒸约 5 分钟即可
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: d9d998a4742d7e92
+      date: 2026-10-31
+      hash: a722f67dd586d774
     name: 做芦笋拌饭
 
   - id: asparagus-whole-oil-sear
@@ -255,17 +273,27 @@ cards:
         quote:
           - "大火加热约 3 分钟"
           - "全程不要翻动芦笋——这样才能煎出焦香"
+        duration:
+          basis: quote
+          sec: 180
+          quote: 大火加热约 3 分钟
+          approximate: true
       - id: flip-and-finish
         text: "翻面，背面再加热约 30 秒即可出锅"
         quote: "翻面，背面再加热约 30 秒即可出锅"
+        duration:
+          basis: quote
+          sec: 30
+          quote: 翻面，背面再加热约 30 秒即可出锅
+          approximate: true
     cautions:
       - level: info
         text: "全程不要翻动芦笋——这样才能煎出焦香"
         quote: "全程不要翻动芦笋——这样才能煎出焦香"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 42b5bf581d44102a
+      date: 2026-10-31
+      hash: 2283c5e98a440a1f
     name: 整根裹油煎芦笋
 
   - id: asparagus-hotdog-sandwich

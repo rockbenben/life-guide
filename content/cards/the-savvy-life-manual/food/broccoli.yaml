@@ -66,15 +66,25 @@ cards:
       - id: roast-florets
         text: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
         quote: '烤箱调250℃，烤约 15 分钟，直到表面焦黄。'
+        duration:
+          basis: quote
+          sec: 900
+          quote: 烤箱调250℃，烤约 15 分钟，直到表面焦黄。
+          approximate: true
       - id: grill-florets
         text: '用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。'
         quote:
           - 用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
           - 没有烤箱（鱼烤盘）版：前两步不变，然后用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
+        duration:
+          basis: quote
+          sec: 420
+          quote: 用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 3fc5a100d555e70f
+      date: 2026-10-31
+      hash: c3f9d712959b0c16
 
   - id: roast-broccoli-stem
     status: reviewed
@@ -133,6 +143,11 @@ cards:
       - id: roast-stem
         text: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
         quote: '烤箱调250℃，放在耐热盘上烤约 10 分钟。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 烤箱调250℃，放在耐热盘上烤约 10 分钟。
+          approximate: true
       - id: serve-stem
         text: '烤好之后摆上自己喜欢的配料，就是一份西班牙小吃。'
         quote: '烤好之后摆上自己喜欢的配料，就是一份西班牙小吃。'
@@ -141,10 +156,15 @@ cards:
         quote:
           - 前两步不变，鱼烤盘铺锡纸、把梗圆片并排摆好，强火烤约 7 分钟。
           - 没有烤箱（鱼烤盘）版：前两步不变，然后用鱼烤盘烤盘铺上锡纸，奶酪断面向下放中间、西兰花围一圈，强火烤约 7 分钟。
+        duration:
+          basis: quote
+          sec: 420
+          quote: 前两步不变，鱼烤盘铺锡纸、把梗圆片并排摆好，强火烤约 7 分钟。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: efbde4e7ef7c3f16
+      date: 2026-10-31
+      hash: 1704a0e1609593b2
 
   - id: blanch-broccoli-florets
     status: reviewed
@@ -178,6 +198,11 @@ cards:
       - id: hot-soak
         text: '把切面朝下放进沸腾的热水里泡约 20 秒。'
         quote: '把切面朝下放进沸腾的热水里泡约 20 秒。'
+        duration:
+          basis: quote
+          sec: 20
+          quote: 把切面朝下放进沸腾的热水里泡约 20 秒。
+          approximate: true
       - id: cool-soak
         text: '一从水里取出，立刻浸入冷水——让茎充分吸水是这一招的核心。'
         quote: '一从水里取出，立刻浸入冷水——让茎充分吸水是这一招的核心。'
@@ -208,5 +233,5 @@ cards:
         quote: '但要记住：「烤花球」和「烤梗」两道做法含水量高、不适合水煮，两者要分开用。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 7121c514dd3ea62f
+      date: 2026-10-31
+      hash: 286a3543389fe572

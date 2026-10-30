@@ -126,19 +126,27 @@ cards:
       - id: blanch-two-minutes
         text: '焯满 2 分钟后，先取出外层叶放进装了水的碗里，余下部分边抖散叶片边继续焯。'
         quote: '焯满 2 分钟后，先取出外层叶放进装了水的碗里，余下部分边抖散叶片边继续焯。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 焯满 2 分钟后，先取出外层叶放进装了水的碗里，余下部分边抖散叶片边继续焯。
       - id: blanch-one-more-minute
         text: '再焯 1 分钟，把剩下的叶片也取出，放进 30 秒冷水里浸泡去咸。沥干即可上桌。'
         quote:
           - '再焯 1 分钟，把剩下的叶片也取出，放进 30 秒冷水里浸泡去咸。'
           - '沥干即可上桌。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 再焯 1 分钟，把剩下的叶片也取出，放进 30 秒冷水里浸泡去咸。沥干即可上桌。
     cautions:
       - level: info
         text: '若水量只有 1L，则用盐 25g（2.5% 盐水为最佳）'
         quote: '若水量只有 1L，则用盐 25g（2.5% 盐水为最佳）'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 768dc8a31dfa248c
+      date: 2026-10-31
+      hash: 7ebeb69268da92d5
     name: 焯出超甜卷心菜
   - id: sweet-cabbage-salad
     status: reviewed
@@ -249,6 +257,10 @@ cards:
       - id: simmer-broth
         text: '往锅里加入水与盐，中火煮 15 分钟——卷心菜高汤完成。'
         quote: '往锅里加入水与盐，中火煮 15 分钟——卷心菜高汤完成。'
+        duration:
+          basis: quote
+          sec: 900
+          quote: 往锅里加入水与盐，中火煮 15 分钟——卷心菜高汤完成。
       - id: store-broth
         text: '刚做好最好喝；要存的话冷藏，并尽量在 2～3 天内喝完。'
         quote: '刚做好最好喝；要存的话冷藏，并尽量在 2～3 天内喝完。'
@@ -258,6 +270,6 @@ cards:
         quote: '怕焦的话自行调整火候或时间。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 96fcd08c445f6ba3
+      date: 2026-10-31
+      hash: 09c731e836343d34
     name: 烤焦卷心菜煮高汤

@@ -82,6 +82,10 @@ cards:
           - '把 ① 用微波炉 500W 加热 1 分钟，轻轻搅拌。'
           - '再用微波炉 500W 加热 30 秒，搅拌至顺滑。'
           - '加热不足时追加 10 秒。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 把 ① 用微波炉 500W 加热 1 分钟，轻轻搅拌。
       - id: home-add-seeds
         text: '向 中每次加入一小块「魔法的种子」，搅拌至完全融化。'
         quote:
@@ -95,6 +99,10 @@ cards:
         quote:
           - '用勺子或裱花袋装入模具后，把模具上下轻敲几下排出空气，让表面平整。'
           - '常温放置 3～5 分钟，表面凝固就基本成功。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 常温放置 3～5 分钟，表面凝固就基本成功。
       - id: home-chill
         text: '放入蔬果保鲜室放 30 分钟以上固定成型。'
         quote:
@@ -104,9 +112,9 @@ cards:
         text: '也可能因室温而不易凝固，18～22℃ 是合适温度。'
         quote: '也可能因室温而不易凝固，18～22℃ 是合适温度。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 5aedb8f1ddce5602
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 7891114df8015297
   - id: chocolate-beef-stew
     status: reviewed
     source:
@@ -147,14 +155,19 @@ cards:
         text: '加水和酒，弱火煮约 20 分钟，加入土豆、高可可巧克力和 A 组，继续煮到土豆变软。'
         quote:
           - '加水和酒，弱火煮约 20 分钟，加入土豆、高可可巧克力和 A 组，继续煮到土豆变软。'
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 加水和酒，弱火煮约 20 分钟，加入土豆、高可可巧克力和 A 组，继续煮到土豆变软。
+          approximate: true
       - id: beef-thicken
         text: '把 B 组的水溶高粉勾芡，收浓即可。'
         quote:
           - '把 B 组的水溶高粉勾芡，收浓即可。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: c3ce3e2cd8c1c05d
+      date: 2026-10-31
+      hash: 1b5c5518e3df867b
     name: 做巧克力牛肉炖菜
   - id: chocolate-udon
     status: reviewed
@@ -184,14 +197,24 @@ cards:
         text: '锅中放高汤和豚五花肉，煮沸后放入小松菜和葱，中火煮约 3 分钟。'
         quote:
           - '锅中放高汤和豚五花肉，煮沸后放入小松菜和葱，中火煮约 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 锅中放高汤和豚五花肉，煮沸后放入小松菜和葱，中火煮约 3 分钟。
+          approximate: true
       - id: udon-finish
         text: '向 中加入高可可巧克力和 A 组拌匀，再放入乌冬，弱火煮约 15 分钟。'
         quote:
           - '向 ① 中加入高可可巧克力和 A 组拌匀，再放入乌冬，弱火煮约 15 分钟。'
+        duration:
+          basis: quote
+          sec: 900
+          quote: 向 ① 中加入高可可巧克力和 A 组拌匀，再放入乌冬，弱火煮约 15 分钟。
+          approximate: true
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: ef5e5b0e56e1f1ed
+      date: 2026-10-31
+      hash: 54d269bc6d3cb116
     name: 做巧克力煮乌冬
   - id: chocolate-ramen
     status: reviewed
@@ -225,14 +248,19 @@ cards:
         text: '向 中加水、高可可巧克力和 A 组，煮沸后转中火煮约 5 分钟。'
         quote:
           - '向 ① 中加水、高可可巧克力和 A 组，煮沸后转中火煮约 5 分钟。'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 向 ① 中加水、高可可巧克力和 A 组，煮沸后转中火煮约 5 分钟。
+          approximate: true
       - id: ramen-assemble
         text: '中华面另锅煮熟，捞出装碗；浇上 ，撒上葱花和一味唐辛子。按喜好淋辣油。'
         quote:
           - '中华面另锅煮熟，捞出装碗；浇上 ②，撒上葱花和一味唐辛子。按喜好淋辣油。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 0881593baba34037
+      date: 2026-10-31
+      hash: fcada6726231ecac
     name: 做巧克力拉面
   - id: chocolate-cabbage-stir-fry
     status: reviewed

@@ -39,6 +39,10 @@ cards:
       - id: simmer-in-milk
         text: '中火煮 10 分钟'
         quote: '中火煮 10 分钟'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 中火煮 10 分钟
       - id: soften-avocado
         text: '细胞间的果胶会被破坏甚至坚硬的牛油果也会迅速变软，口感更加奶油滑腻'
         quote:
@@ -47,10 +51,14 @@ cards:
       - id: chill-flesh
         text: '若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用'
         quote: '若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用'
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 若仅需使用果肉，捞出后可放入冰箱冷藏 20 分钟再用
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 9d78a0c9ebe21a56
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 89654973fa05fd18
 
   - id: avocado-versatile-seasoning
     status: reviewed
@@ -106,12 +114,22 @@ cards:
       - id: boil-avocado
         text: '锅中倒牛奶加热，沸腾后放入牛油果，中火煮约 10 分钟，期间不时搅拌并注意别溢锅。'
         quote: '锅中倒牛奶加热，沸腾后放入牛油果，中火煮约 10 分钟，期间不时搅拌并注意别溢锅。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 锅中倒牛奶加热，沸腾后放入牛油果，中火煮约 10 分钟，期间不时搅拌并注意别溢锅。
+          approximate: true
       - id: drain-and-plate
         text: '捞出牛油果，沥掉牛奶，摆入餐盘。'
         quote: '捞出牛油果，沥掉牛奶，摆入餐盘。'
       - id: chill-avocado
         text: '放入冰箱冷藏 约 20 分钟。'
         quote: '放入冰箱冷藏 约 20 分钟。'
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 放入冰箱冷藏 约 20 分钟。
+          approximate: true
       - id: season-salad
         text: '淋橄榄油、撒盐和柠檬汁，最后刨上柠檬皮屑；喜欢的话加点香草。'
         quote: '淋橄榄油、撒盐和柠檬汁，最后刨上柠檬皮屑；喜欢的话加点香草。'
@@ -121,8 +139,8 @@ cards:
         quote: '牛油果一煮过头就会发苦'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: d560680ccfa6ec8c
+      date: 2026-10-31
+      hash: 284751d63d467723
     name: 做牛油果牛奶沙拉
 
   - id: avocado-cream-soup
@@ -177,9 +195,18 @@ cards:
       - id: saute-onion-and-flour
         text: '平底锅中放橄榄油、洋葱和低筋面粉，中火炒 2 分钟。'
         quote: '平底锅中放橄榄油、洋葱和低筋面粉，中火炒 2 分钟。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 平底锅中放橄榄油、洋葱和低筋面粉，中火炒 2 分钟。
       - id: simmer-soup
         text: '加牛奶，煮沸后放入牛油果和通心粉；重新沸腾后加入浓汤块转小火，不时搅拌煮 约 15 分钟。'
         quote: '加牛奶，煮沸后放入牛油果和通心粉；重新沸腾后加入浓汤块转小火，不时搅拌煮 约 15 分钟。'
+        duration:
+          basis: quote
+          sec: 900
+          quote: 加牛奶，煮沸后放入牛油果和通心粉；重新沸腾后加入浓汤块转小火，不时搅拌煮 约 15 分钟。
+          approximate: true
       - id: season-soup
         text: '最后用盐和胡椒调味。'
         quote: '最后用盐和胡椒调味。'
@@ -256,6 +283,11 @@ cards:
       - id: soften-in-milk
         text: '锅中倒牛奶，沸腾后放入牛油果，中火煮约 10 分钟至变软。'
         quote: '锅中倒牛奶，沸腾后放入牛油果，中火煮约 10 分钟至变软。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 锅中倒牛奶，沸腾后放入牛油果，中火煮约 10 分钟至变软。
+          approximate: true
       - id: saute-seasonings
         text: '平底锅放芝麻油、蒜末、姜末，中火炒出香味后加豆瓣酱继续炒。'
         quote: '平底锅放芝麻油、蒜末、姜末，中火炒出香味后加豆瓣酱继续炒。'
@@ -268,8 +300,8 @@ cards:
         quote: '牛油果一煮过头就会发苦'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 9800ad7c7ee46625
+      date: 2026-10-31
+      hash: 3b1225037f70e11e
     name: 做牛油果担担面
 
   - id: avocado-hamburger-patty
@@ -330,17 +362,26 @@ cards:
       - id: sear-patties
         text: '平底锅倒油，摆入肉饼，中火煎约 3 分钟。'
         quote: '平底锅倒油，摆入肉饼，中火煎约 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 平底锅倒油，摆入肉饼，中火煎约 3 分钟。
+          approximate: true
       - id: finish-patties
         text: '煎出焦色后翻面，盖盖小火再煎 5～6 分钟。'
         quote: '煎出焦色后翻面，盖盖小火再煎 5～6 分钟。'
+        duration:
+          basis: quote
+          sec: 360
+          quote: 煎出焦色后翻面，盖盖小火再煎 5～6 分钟。
     cautions:
       - level: info
         text: '肉饼很软，翻面时动作要轻。'
         quote: '肉饼很软，翻面时动作要轻。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 498555d5563eb562
+      date: 2026-10-31
+      hash: a5f7457721f1eb53
     name: 做牛油果汉堡饼
 
   - id: avocado-meat-roll
@@ -400,9 +441,17 @@ cards:
       - id: bake-roll
         text: '放入带余温的 180℃ 烤箱下层烤 30 分钟。'
         quote: '放入带余温的 180℃ 烤箱下层烤 30 分钟。'
+        duration:
+          basis: quote
+          sec: 1800
+          quote: 放入带余温的 180℃ 烤箱下层烤 30 分钟。
       - id: brown-roll
         text: '为上色，先打开铝箔和烘焙纸的上部，再在 210℃ 烤 10 分钟。'
         quote: '为上色，先打开铝箔和烘焙纸的上部，再在 210℃ 烤 10 分钟。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 为上色，先打开铝箔和烘焙纸的上部，再在 210℃ 烤 10 分钟。
       - id: let-roll-set
         text: '取出后重新封上，晾到不烫手——成品很软，容易散，切的时候要等它彻底定形。'
         quote: '取出后重新封上，晾到不烫手——成品很软，容易散，切的时候要等它彻底定形。'
@@ -415,8 +464,8 @@ cards:
         quote: '成品很软，容易散，切的时候要等它彻底定形。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 548eb965e7359cf7
+      date: 2026-10-31
+      hash: 3b09316caf69aa8f
     name: 做牛油果肉饼卷
 
   - id: avocado-brown-smoothie

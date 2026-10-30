@@ -195,9 +195,27 @@ export function approximationAttached(
   const s = toHalfWidth(text).replace(/左右(各|手|侧|两|边|脚|臂|腿)/g, "两边");
   const wanted = [value, valueMax].filter((v): v is number => typeof v === "number");
   if (!wanted.length) return false;
+  // 卡上写秒、原文写分钟/小时时，近似词贴着的是**原文那个数**（「约 3 分钟」→
+  // 卡上 180 秒）。所以除了原值，还要试换算后的值（÷60、÷3600）与它们的倍数。
+  //
+  // 不要求整除：「1～1.5 分钟左右」对应 90 秒，90 / 60 = 1.5 —— 那个 1.5
+  // 就是引文里贴着近似词的数，整除判断会把它漏掉。
+  const alts = new Set<number>(wanted);
+  for (const v of wanted) {
+    alts.add(v / 60);
+    alts.add(v / 3600);
+    alts.add(v * 60);
+    alts.add(v * 3600);
+  }
   const hit = (window: string): boolean => {
     const got = extractNumbers(window);
-    return wanted.some((v) => got.has(String(v)));
+    if ([...alts].some((v) => got.has(String(v)))) return true;
+    // 归一化：1.5 与 1.50 是同一个数
+    for (const v of alts) {
+      const norm = String(Number(v.toFixed(4)));
+      if (got.has(norm)) return true;
+    }
+    return false;
   };
   // 窗口要含空格（「5 分钟左右」中间有空格），但不能跨过句子标点 ——
   // 「约 5 次，10 分钟」里的 10 不是那个 5 的同伴。
@@ -213,6 +231,51 @@ export function approximationAttached(
     const start = Math.max(0, m.index - SEG);
     const seg = s.slice(start, m.index).split(/[，,。；;、]/).pop() ?? "";
     if (hit(seg)) return true;
+  }
+  return false;
+}
+
+/**
+ * 这个秒数在引文里有没有着落（R2 用）。
+ *
+ * 为什么不能直接拿 sec 去比引文里的数：卡上统一用秒，原文的单位不统一 ——
+ * 「30 秒」「1 分钟」「1 分半」「0.5 小时」都能换算成同一个秒数。
+ * 所以判据是「引文里存在某个数 n，n 按某种单位换算后正好等于 sec」。
+ *
+ * 覆盖的单位：
+ *   秒（直接相等）、分钟（×60）、小时（×3600）
+ *   还有中文口语里的「分半」（90 秒）、「刻钟」（900 秒）—— 前者靠「分半」二字，
+ *   后者靠「刻」。
+ *
+ * 为什么要这条：完全不看就是另一个极端 —— 把「保持 10 秒」抄成「保持 100 秒」
+ * 没人拦，屏上直接把 10 倍的量说成定值（D7）。
+ */
+export function secondsGrounded(sec: number, quotes: string | string[]): boolean {
+  const list = Array.isArray(quotes) ? quotes : [quotes];
+  for (const q of list) {
+    const s = toHalfWidth(q);
+    // 「1 分半」「一分半」= 90 秒
+    if (/\d\s*分半|分半/.test(s)) {
+      const half = [...s.matchAll(/(\d+)\s*分半/g)];
+      for (const m of half) {
+        if (Number(m[1]) * 60 + 30 === sec) return true;
+      }
+      if (sec === 90) return true;
+    }
+    // 「一刻钟」「1 刻钟」= 900 秒
+    if (sec === 900 && /刻/.test(s)) return true;
+    for (const n of extractNumbers(s)) {
+      const v = Number(n);
+      if (!Number.isFinite(v)) continue;
+      if (v === sec) return true; // 秒
+      if (v * 60 === sec) return true; // 分钟
+      if (v * 3600 === sec) return true; // 小时
+      // 范围「15～17 分钟」：取下限与上限各试一次
+      if (v * 60 >= sec * 0.5 && v * 60 <= sec * 2) {
+        // 只在引文里真的写了范围时才放宽（避免把「20 分钟」放到「19 秒」上）
+        if (/[～\-~至到]/.test(s)) return true;
+      }
+    }
   }
   return false;
 }

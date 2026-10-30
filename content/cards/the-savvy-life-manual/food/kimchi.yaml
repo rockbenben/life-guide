@@ -220,10 +220,14 @@ cards:
       - id: heat-soup
         text: '轻轻盖上保鲜膜，600W 微波 3 分钟。'
         quote: '轻轻盖上保鲜膜，600W 微波 3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 轻轻盖上保鲜膜，600W 微波 3 分钟。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: d6dbb04ca3d65543
+      date: 2026-10-31
+      hash: a21ad091a7d79fa0
     name: 做微波泡菜汤
   - id: kimchi-tuna-rice-bowl
     status: reviewed

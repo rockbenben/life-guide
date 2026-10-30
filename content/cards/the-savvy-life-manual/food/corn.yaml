@@ -84,6 +84,10 @@ cards:
       - id: quick-microwave
         text: '放入微波炉中以 600 瓦热 8 分钟'
         quote: '放入微波炉中以 600 瓦热 8 分钟'
+        duration:
+          basis: quote
+          sec: 480
+          quote: 放入微波炉中以 600 瓦热 8 分钟
       - id: quick-season
         text: '出锅前加盐 2g，约 1/3 小勺'
         quote: '出锅前加盐 2g，约 1/3 小勺'
@@ -92,8 +96,8 @@ cards:
         quote: '煨好的水同样可用来煮面条'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 45fcabef1725febd
+      date: 2026-10-31
+      hash: e4b087182cbdab6a
     name: 玉米芯微波 8 分钟
 
   - id: corn-pudding
@@ -180,6 +184,10 @@ cards:
       - id: base-simmer
         text: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
         quote: '放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟'
+        duration:
+          basis: quote
+          sec: 2100
+          quote: 放入整根玉米，盖上锅盖，用泡腾状态的小火慢火减火煮 35 分钟
       - id: base-observe
         text: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
         quote: '期间可以看到玉米芯从纯白变成透明，营养已经溶进汤里'
@@ -188,8 +196,8 @@ cards:
         quote: '这锅汤就是所谓的「黄金水」，可以直接当汤喝，也可以拿来煮意面。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-29
-      hash: 0f23f886b7d01624
+      date: 2026-10-31
+      hash: 780c7df0e716c46f
     images:
       - https://img.newzone.top/2024-10-16-09-45-51.png?imageMogr2/format/webp
     formerIds:
@@ -255,6 +263,10 @@ cards:
       - id: pasta-prepare
         text: '提前准备：用玉米、水和盐煮 35 分钟做出黄金水，同时把这锅水用来煮意面。'
         quote: '提前准备：用玉米、水和盐煮 35 分钟做出黄金水，同时把这锅水用来煮意面。'
+        duration:
+          basis: quote
+          sec: 2100
+          quote: 提前准备：用玉米、水和盐煮 35 分钟做出黄金水，同时把这锅水用来煮意面。
       - id: pasta-reserve-kernels
         text: '玉米粒可另作它用'
         quote:
@@ -273,9 +285,9 @@ cards:
         text: '加回意面和 2 大勺略多的橄榄油（约 40mL），充分搅拌乳化即可。'
         quote: '加回意面和 2 大勺略多的橄榄油（约 40mL），充分搅拌乳化即可。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 43b0eb481087afed
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: bc00ca296a7fea9f
 
   - id: chilled-corn-rice-bowl
     status: reviewed
@@ -353,9 +365,19 @@ cards:
       - id: dessert-heat
         text: '中火强火加热约 5 分钟到浓稠'
         quote: '中火强火加热约 5 分钟到浓稠'
+        duration:
+          basis: quote
+          sec: 300
+          quote: 中火强火加热约 5 分钟到浓稠
+          approximate: true
       - id: dessert-chill
         text: '倒进容器，冷藏约 1 小时。'
         quote: '倒进容器，冷藏约 1 小时。'
+        duration:
+          basis: quote
+          sec: 3600
+          quote: 倒进容器，冷藏约 1 小时。
+          approximate: true
       - id: dessert-optional-sugar
         text: '砂糖可按口味少量添加'
         quote: '砂糖可按口味少量添加'
@@ -364,8 +386,8 @@ cards:
         quote: '表面加鲜奶油或香草点缀，玉米本身的甜味就足够，不用额外加很多糖。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 83c595eb5dcbfa43
+      date: 2026-10-31
+      hash: 627158db098f5a4b
 
   - id: prevent-sweetness-loss
     status: reviewed

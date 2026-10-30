@@ -52,13 +52,17 @@ cards:
       - id: single-leg-hold
         text: '保持 30 秒到 1 分钟，左右分别做'
         quote: '保持 30 秒到 1 分钟，左右分别做'
+        duration:
+          basis: quote
+          sec: 30
+          quote: 保持 30 秒到 1 分钟，左右分别做
       - id: single-leg-supported
         text: '撑不住单脚站的人，就在椅子等处轻轻搭着手练习'
         quote: '撑不住单脚站的人，就在椅子等处轻轻搭着手练习'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 74892b5542a3c44f
+      date: 2026-10-31
+      hash: 5e7b89cd35c002a9
     name: 扶稳单脚站立
   - id: calf-raise
     status: reviewed
@@ -100,6 +104,11 @@ cards:
       - id: calf-tempo
         text: '脚跟的上下以每侧约 3 秒的速度慢慢完成'
         quote: '脚跟的上下以每侧约 3 秒的速度慢慢完成'
+        duration:
+          basis: quote
+          sec: 3
+          quote: 脚跟的上下以每侧约 3 秒的速度慢慢完成
+          approximate: true
       - id: calf-set-count
         text: '次数以 10 次为 1 组，再按体力调整'
         quote: '次数以 10 次为 1 组，再按体力调整'
@@ -111,8 +120,8 @@ cards:
         quote: '想加强就利用台阶之类的高度差，把脚跟往更低的下面压，但此时同样要扶着扶手或墙以免跌倒'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 749d1e96e6b90ed2
+      date: 2026-10-31
+      hash: f43b2160d006e17b
   - id: squat
     status: reviewed
     source:
@@ -160,6 +169,10 @@ cards:
       - id: squat-chair
         text: '坐在椅子上做深蹲，臀部即将碰到椅面时保持 10 秒，保持 10 秒后站起来，重复深蹲'
         quote: '坐在椅子上做深蹲，臀部即将碰到椅面时保持 10 秒，保持 10 秒后站起来，重复深蹲'
+        duration:
+          basis: quote
+          sec: 10
+          quote: 坐在椅子上做深蹲，臀部即将碰到椅面时保持 10 秒，保持 10 秒后站起来，重复深蹲
     cautions:
       - level: info
         text: '体操过程中绝对不要憋住呼吸。'
@@ -169,8 +182,8 @@ cards:
         quote: '以不勉强的次数进行'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: b8648a5eb2deefc5
+      date: 2026-10-31
+      hash: fc456b562a8952df
     name: 做深蹲
   - id: three-step-preparation
     status: reviewed

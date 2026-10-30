@@ -52,6 +52,10 @@ cards:
         quote:
           - "4～5 分钟"
           - "熬到水分差不多挥发完、质地浓稠即可。"
+        duration:
+          basis: quote
+          sec: 300
+          quote: 4～5 分钟
       - id: cool-and-refrigerate
         text: "稍微放凉后进冰箱可保存 1～2 周"
         quote:
@@ -67,9 +71,9 @@ cards:
         text: "加热时间会因品种和季节不同而略有差别。"
         quote: "加热时间会因品种和季节不同而略有差别。"
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 30d8c89074a1f2a8
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: fe79d46b46488557
 
   - id: make-wet-meat-sauce
     status: reviewed
@@ -190,6 +194,10 @@ cards:
       - id: marinate-chicken
         text: "冷藏 20 分钟～1 小时"
         quote: "冷藏 20 分钟～1 小时"
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 冷藏 20 分钟～1 小时
       - id: sear-chicken
         text: "锅里放橄榄油，开中火把鸡胸两面煎到金黄上色"
         quote:
@@ -220,8 +228,8 @@ cards:
         quote: "腌得久一点更好。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: bdbed7fa8cc8e613
+      date: 2026-10-31
+      hash: 4220a792611f5d5f
 
   - id: store-whole-apple
     status: reviewed

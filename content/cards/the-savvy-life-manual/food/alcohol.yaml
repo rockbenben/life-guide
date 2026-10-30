@@ -58,9 +58,17 @@ cards:
       - id: drink-first-cup-slowly
         text: '第一杯用 30 分钟喝完'
         quote: '第一杯用 30 分钟喝完'
+        duration:
+          basis: quote
+          sec: 1800
+          quote: 第一杯用 30 分钟喝完
       - id: keep-one-bottle-pace
         text: '在醉意上来的这 30 分钟里按一瓶的节奏喝，既能少喝，也能舒服地醉。'
         quote: '在醉意上来的这 30 分钟里按一瓶的节奏喝，既能少喝，也能舒服地醉。'
+        duration:
+          basis: quote
+          sec: 1800
+          quote: 在醉意上来的这 30 分钟里按一瓶的节奏喝，既能少喝，也能舒服地醉。
       - id: drink-later-cups-normally
         text: '第一杯慢下来之后，第二杯以后正常喝就行'
         quote: '第一杯慢下来之后，第二杯以后正常喝就行'
@@ -70,8 +78,8 @@ cards:
         quote: '这不是「喝得更安全」，而是「喝得更少」'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 546c3d104e0c6713
+      date: 2026-10-31
+      hash: 8d8635e80da80726
     name: 第一杯用 30 分钟喝完
   - id: calculate-pure-alcohol-intake
     status: reviewed

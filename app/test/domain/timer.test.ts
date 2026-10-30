@@ -14,7 +14,9 @@ import {
   remainingSec,
   stepDisplay,
   stepFinished,
+  stepRemaining,
   stepTimings,
+  stepTimerKind,
   timerDisplay,
   timerDoneText,
   timerExhausted,
@@ -261,6 +263,31 @@ describe("stepTimings：每一步自己的时长", () => {
     ]);
     expect(timingsDerived(t)).toBe(true);
     expect(timingsDerived([t[1]])).toBe(false);
+  });
+});
+
+describe("stepTimerKind：这一步倒计时还是正计时", () => {
+  it("一小时以内倒计时", () => {
+    expect(stepTimerKind({ index: 0, text: "x", sec: 30, derived: false })).toBe("countdown");
+    expect(stepTimerKind({ index: 0, text: "x", sec: 3600, derived: false })).toBe("countdown");
+  });
+
+  it("超过一小时走正计时 —— 那是「等待」，不是「做一件事要多久」", () => {
+    // 步级时长里有「冷藏 5 小时」「冷冻 1 小时」这类
+    expect(stepTimerKind({ index: 0, text: "冷藏", sec: 18000, derived: false })).toBe("countup");
+  });
+
+  it("超过上限的步不报「到点」", () => {
+    const long = { index: 0, text: "冷藏", sec: 18000, derived: false };
+    const running = { at: 0, since: T0, frozen: null, running: true };
+    expect(stepFinished(running, T0 + 20_000_000, long)).toBe(false);
+    expect(stepRemaining(running, T0 + 20_000_000, long)).toBeNull();
+  });
+
+  it("超过上限的步显示的是已经过去多久（正计时）", () => {
+    const long = { index: 0, text: "冷藏", sec: 18000, derived: false };
+    const running = { at: 0, since: T0, frozen: null, running: true };
+    expect(stepDisplay(running, T0 + 60_000, long)).toBe("01:00");
   });
 });
 

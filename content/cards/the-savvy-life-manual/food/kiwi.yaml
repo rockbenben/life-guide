@@ -179,6 +179,10 @@ cards:
           - '材料放进碗里，'
           - '一边捏碎猕猴桃一边搅拌 1～2 分钟'
           - '直到稍微起黏，做成饼形。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 一边捏碎猕猴桃一边搅拌 1～2 分钟
       - id: season-with-salt-and-nutmeg
         text: '盐、肉豆蔻 少许'
         quote: '盐、肉豆蔻 少许'
@@ -192,11 +196,19 @@ cards:
         quote:
           - '平底锅热油，放入①，'
           - '弱火偏中烤 3 分钟'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 弱火偏中烤 3 分钟
       - id: flip-and-cook-second-side
         text: '再烤 2 分钟'
         quote:
           - 再烤 2 分钟
           - 平底锅热油，放入①，弱火偏中烤 3 分钟，翻面后再烤 2 分钟。
+        duration:
+          basis: quote
+          sec: 120
+          quote: 再烤 2 分钟
       - id: use-wooden-spatula
         text: '翻面时很容易散用木铲像翻炒一样整体加热'
         quote:
@@ -214,8 +226,8 @@ cards:
           - '在烤之前再拌'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 308af43d9bba4d88
+      date: 2026-10-31
+      hash: a88bb5bb5832452c
     name: 做猕猴桃肉饼
 
   - id: kiwi-tartare-and-sauce
@@ -321,6 +333,11 @@ cards:
           - '连袋子一起'
           - '放进冰箱，'
           - '冷冻约 1 小时'
+        duration:
+          basis: quote
+          sec: 3600
+          quote: 冷冻约 1 小时
+          approximate: true
       - id: squeeze-when-soft
         text: '冻到还留一点柔软度的程度就从冷冻室取出，剪开袋角挤到容器里'
         quote:
@@ -342,6 +359,6 @@ cards:
           - '柠檬汁 1 小勺'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: fde62fa578fc0dd4
+      date: 2026-10-31
+      hash: 49aacd0889288976
     name: 做猕猴桃刨冰

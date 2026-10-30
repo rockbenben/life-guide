@@ -192,6 +192,10 @@ cards:
       - id: sip-first-glass-slowly
         text: 第一杯用 30 分钟慢慢喝完
         quote: 第一杯用 30 分钟慢慢喝完
+        duration:
+          basis: quote
+          sec: 1800
+          quote: 第一杯用 30 分钟慢慢喝完
       - id: avoid-sugary-drinks
         text: 含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。
         quote: 含糖软饮料、果汁和高果糖食品会增加血尿酸水平，因此应尽量避免。
@@ -207,8 +211,8 @@ cards:
         quote: 其富含膳食纤维、维生素和矿物质，不影响血尿酸水平
     review:
       by: AI（作者授权代签）
-      date: 2026-10-29
-      hash: 6e5204db748379df
+      date: 2026-10-31
+      hash: fe42c0a7b312f7d6
     name: 痛风要限制的摄入
     dose:
       - value: 1

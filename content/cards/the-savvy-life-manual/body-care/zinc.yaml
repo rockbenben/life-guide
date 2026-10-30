@@ -181,9 +181,18 @@ cards:
       - id: saute-a
         text: '平底锅倒入米油，放入 A 组材料，开中火炒 2～3 分钟，炒到香味出来。'
         quote: '平底锅倒入米油，放入 A 组材料，开中火炒 2～3 分钟，炒到香味出来。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 平底锅倒入米油，放入 A 组材料，开中火炒 2～3 分钟，炒到香味出来。
       - id: simmer-b
         text: '加入 B 组材料煮沸，转小火再煮约 2 分钟——全程保持「小泡不断冒」的状态。'
         quote: '加入 B 组材料煮沸，转小火再煮约 2 分钟——全程保持「小泡不断冒」的状态。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 加入 B 组材料煮沸，转小火再煮约 2 分钟——全程保持「小泡不断冒」的状态。
+          approximate: true
       - id: add-nuts
         text: '关火后加入切碎的混合坚果。'
         quote: '关火后加入切碎的混合坚果。'
@@ -195,9 +204,9 @@ cards:
         text: '注意酱里也含盐分，介意的人别用过头。'
         quote: '注意酱里也含盐分，介意的人别用过头。'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: d6f3c7577e58094c
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 799faaf81b4e8f70
   - id: zinc-card-meal-selection
     status: reviewed
     source:

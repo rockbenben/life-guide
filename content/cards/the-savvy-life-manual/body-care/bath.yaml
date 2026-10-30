@@ -121,17 +121,25 @@ cards:
       - id: follow-safety-limit
         text: '汤温 41℃ 以下、泡到 10 分钟为止'
         quote: '汤温 41℃ 以下、泡到 10 分钟为止'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 汤温 41℃ 以下、泡到 10 分钟为止
       - id: avoid-42c-10min
         text: '42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大'
         quote: '42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大
     cautions:
       - level: stop
         text: '很多人泡到头晕才肯出来，其实早已泡过头。'
         quote: '很多人泡到头晕才肯出来，其实早已泡过头。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 6a1aa4fc43c21348
+      date: 2026-10-31
+      hash: 117de94b019b8329
     name: 泡澡水温和时长
 
   - id: bath-method-selection
@@ -172,6 +180,10 @@ cards:
           - '肚脐平齐'
           - '38-39℃'
           - '15-20 分钟'
+        duration:
+          basis: quote
+          sec: 1200
+          quote: 15-20 分钟
       - id: full-bath
         text: '全身浴覆盖肩膀用温水'
         quote:
@@ -185,6 +197,10 @@ cards:
           - '20 厘米高度的水平线'
           - '浸到腰椎、尾椎、臀部'
           - '15 分钟'
+        duration:
+          basis: quote
+          sec: 900
+          quote: 15 分钟
     cautions:
       - level: with-doctor
         text: '痔疮、肛裂的不适不是「治疗」尿路感染、生殖方面的问题要看医生，不是坐个澡就能解决'
@@ -199,8 +215,8 @@ cards:
           - '不是「治疗」'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 526b4663f13626a7
+      date: 2026-10-31
+      hash: 7e38d103bb0b1cfd
     name: 选全身浴半身浴或坐浴
 
   - id: bath-safety-basics
@@ -343,7 +359,11 @@ cards:
       - id: ten-minute-bath
         text: '短到 10 分钟'
         quote: '短到 10 分钟'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 短到 10 分钟
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 9e3c33a3e05fc694
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: f93e753fe13ce6a1

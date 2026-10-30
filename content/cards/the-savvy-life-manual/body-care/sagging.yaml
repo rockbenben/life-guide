@@ -49,16 +49,24 @@ cards:
       - id: lift-cheek
         text: "从下巴下方托起脸颊，向上提拉至覆盖眼周，保持 6 秒。"
         quote: "从下巴下方托起脸颊，向上提拉至覆盖眼周，保持 6 秒。"
+        duration:
+          basis: quote
+          sec: 6
+          quote: 从下巴下方托起脸颊，向上提拉至覆盖眼周，保持 6 秒。
       - id: press-temple
         text: "横向移动，改为按压颞部，保持 6 秒。"
         quote: "横向移动，改为按压颞部，保持 6 秒。"
+        duration:
+          basis: quote
+          sec: 6
+          quote: 横向移动，改为按压颞部，保持 6 秒。
       - id: lift-from-collarbone
         text: "从锁骨出发向上提拉至颞部，同时用另一只手向下延伸。"
         quote: "从锁骨出发向上提拉至颞部，同时用另一只手向下延伸。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 7431886ca975348d
+      date: 2026-10-31
+      hash: 128f130899ec3880
     name: 每天早晚各做一次面部提拉
   - id: stretch-safety-check
     status: reviewed

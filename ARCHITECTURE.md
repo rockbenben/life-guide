@@ -58,13 +58,15 @@ life-guide/
 │   │   │                     图片 URL 重写为本地路径，并只拷贝用到的图片到 app/public/media/
 │   │   ├── signing-list.ts   把「机器没挑出毛病」的卡排成待签字清单
 │   │   ├── repair-quotes.ts  把引文漏掉的原文段补进去（只动 draft）
+│   │   ├── step-duration.ts  步级时长：从步骤里认「这一步做多久」（纯逻辑）
+│   │   ├── step-duration-verdicts.ts  人工裁定：机器判不准的那些（带理由）
 │   │   ├── media-optimize.ts 构建时按显示尺寸重编码 app/public/media 副本
 │   │   ├── extract/          P3：LLM 起草（只产出 draft）—— llm.ts / prompt.ts / parse.ts / draft.ts
 │   │   ├── audit/            审阅辅助：机械检查 + 语义检查 + 报告/状态
 │   │   └── cli.ts            import | check | build | review | draft | audit | signing-list |
-│   │                         slot-check | approx-check | repair-quotes
+│   │                         slot-check | approx-check | step-duration | repair-quotes
 │   └── test/                 rules · build · errata · extract · audit · default-routine ·
-│                             signing-list · repair-quotes · media-optimize 的单元测试
+│                             signing-list · step-duration · repair-quotes · media-optimize 的单元测试
 ├── app/                      PWA
 │   ├── index.html            入口 HTML，指向 /src/index.tsx
 │   ├── vite.config.ts

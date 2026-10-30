@@ -52,9 +52,17 @@ cards:
         quote:
           - 三样材料放进碗里。
           - 鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟。
+        duration:
+          basis: quote
+          sec: 60
+          quote: 鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟。
       - id: knead-chicken
         text: '双手抓揉 1 分钟'
         quote: '双手抓揉 1 分钟'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 双手抓揉 1 分钟
       - id: confirm-completion
         text: '牛奶开始「唰」地渗进肉里肉把牛奶完全吸干、碗底的液体消失——这就是完成的信号'
         quote:
@@ -81,9 +89,9 @@ cards:
           - '处理生肉时'
           - '与其他食材和器具分开，注意防范食中毒。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 1fea8cde44911189
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: e4208e88915b9b7d
 
   - id: juicy-fried-chicken
     status: reviewed
@@ -129,11 +137,20 @@ cards:
         quote:
           - '鸡胸肉、牛奶、盐放入碗中，'
           - '双手抓揉 1 分钟'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 双手抓揉 1 分钟
       - id: coat-and-fry
         text: '裹上玉米淀粉，180℃ 的油温炸约 4 分钟'
         quote:
           - '裹上玉米淀粉，'
           - '180℃ 的油温炸约 4 分钟'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 180℃ 的油温炸约 4 分钟
+          approximate: true
       - id: drain-and-serve
         text: '充分沥油，最后配上生菜。'
         quote: '充分沥油，最后配上生菜。'
@@ -148,8 +165,8 @@ cards:
           - '与其他食材和器具分开，注意防范食中毒。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 06c484aa23b7c95a
+      date: 2026-10-31
+      hash: 89f085fec339af9c
     name: 做牛奶炸鸡
 
   - id: microwave-chicken-salad
@@ -190,23 +207,40 @@ cards:
           - '整块'
           - '鸡胸肉放入碗中，加牛奶和盐，'
           - '双手抓揉 1 分钟'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 双手抓揉 1 分钟
       - id: heat-salad-chicken-first
         text: '盖保鲜膜，微波炉 500W 加热 4 分钟'
         quote:
           - '盖保鲜膜，'
           - '微波炉 500W 加热 4 分钟'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 微波炉 500W 加热 4 分钟
       - id: heat-salad-chicken-again
         text: '取出翻面，再加热 2 分半～3 分钟确保彻底熟透。'
         quote:
           - '取出翻面，'
           - '再加热 2 分半～3 分钟'
           - '确保彻底熟透。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 再加热 2 分半～3 分钟
       - id: rest-and-shred
         text: '从微波炉取出后放置约 10 分钟再撕成细丝，配蔬菜和酱汁。'
         quote:
           - '从微波炉取出后'
           - '放置约 10 分钟'
           - '再撕成细丝，配蔬菜和酱汁。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 放置约 10 分钟
+          approximate: true
     cautions:
       - level: stop
         text: '牛奶过敏者请不要使用'
@@ -218,8 +252,8 @@ cards:
           - '与其他食材和器具分开，注意防范食中毒。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 6d065b935f0cdddf
+      date: 2026-10-31
+      hash: 43a4bd79383956c6
     name: 做微波鸡胸沙拉
 
   - id: grilled-chicken-skewers
@@ -275,6 +309,10 @@ cards:
           - '整块'
           - '鸡胸肉加牛奶和盐，'
           - '双手抓揉 1 分钟'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 双手抓揉 1 分钟
       - id: thread-skewers
         text: '串上 6 根竹签如果肉厚薄不均，把厚的地方稍微修掉，让厚薄一致'
         quote:
@@ -286,6 +324,10 @@ cards:
           - '皮朝下煎 3 分钟'
           - '上色后翻面'
           - '再煎 2 分钟'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 平底锅倒油，鸡胸皮朝下煎 3 分钟，上色后翻面再煎 2 分钟。
       - id: microwave-skewer-sauce
         text: '放入耐热盘，淋上混好的A盖保鲜膜，微波炉 500W 加热 3 分钟'
         quote:
@@ -293,12 +335,20 @@ cards:
           - 'A'
           - '盖保鲜膜，'
           - '微波炉 500W 加热 3 分钟'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 微波炉 500W 加热 3 分钟
       - id: reheat-skewers
         text: '取出翻面，盘底积的酱汁也再浇一遍，再微波 2 分钟确保熟透。'
         quote:
           - '取出翻面，盘底积的酱汁也再浇一遍，'
           - '再微波 2 分钟'
           - '确保熟透。'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 再微波 2 分钟
       - id: cut-skewers
         text: '顺着竹签切块。'
         quote: '顺着竹签切块。'
@@ -313,8 +363,8 @@ cards:
           - '与其他食材和器具分开，注意防范食中毒。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 428037738b78c3af
+      date: 2026-10-31
+      hash: 04c162d883d6a790
     name: 做烤鸡肉串
 
   - id: korean-grilled-chicken
@@ -359,6 +409,10 @@ cards:
         quote:
           - '鸡胸肉、牛奶、盐放入碗中，'
           - '双手抓揉 1 分钟'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 双手抓揉 1 分钟
       - id: mix-korean-marinade
         text: 'A番茄酱1 大勺中浓酱油1 大勺砂糖2 小勺咖喱粉2 小勺蒜蓉1 小勺橄榄油适量水2 大勺加入拌匀，再揉匀'
         quote:
@@ -386,6 +440,10 @@ cards:
           - '皮朝下中小火煎 3 分钟'
           - '翻面盖盖'
           - '再煎 3 分钟'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 平底锅倒橄榄油，鸡胸皮朝下中小火煎 3 分钟，翻面盖盖再煎 3 分钟。
       - id: reduce-korean-sauce
         text: '碗里剩下的腌料倒进锅里太稠就补一点水中小火边搅边加热 1～2 分钟收浓'
         quote:
@@ -393,6 +451,10 @@ cards:
           - '太稠就补一点水'
           - '中小火边搅边加热 1～2 分钟'
           - '收浓'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 中小火边搅边加热 1～2 分钟
       - id: plate-korean-chicken
         text: '煎好后切成适口大小，配蔬菜装盘。'
         quote: '煎好后切成适口大小，配蔬菜装盘。'
@@ -407,8 +469,8 @@ cards:
           - '与其他食材和器具分开，注意防范食中毒。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 76138b309548bac4
+      date: 2026-10-31
+      hash: d6b8b058ae953b14
     name: 做韩式煎鸡
 
   - id: chicken-broth-soup
@@ -472,11 +534,20 @@ cards:
         quote:
           - '加牛奶和盐，'
           - '双手抓揉 1 分钟'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 双手抓揉 1 分钟
       - id: boil-mushrooms
         text: '高汤煮开，加入秀珍菇煮约 2 分钟'
         quote:
           - '高汤煮开，'
           - '加入秀珍菇煮约 2 分钟'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 加入秀珍菇煮约 2 分钟
+          approximate: true
       - id: cook-soup-chicken
         text: '裹上玉米淀粉的鸡胸肉逐个下锅，煮约 3 分钟至熟。'
         quote:
@@ -485,6 +556,11 @@ cards:
           - '下锅，'
           - '煮约 3 分钟'
           - '至熟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 煮约 3 分钟
+          approximate: true
       - id: season-soup
         text: '用酱油、味醂和盐调味，盛入碗中，撒葱、三叶芹和柚子。'
         quote: '用酱油、味醂和盐调味，盛入碗中，撒葱、三叶芹和柚子。'
@@ -499,6 +575,6 @@ cards:
           - '与其他食材和器具分开，注意防范食中毒。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 9f332ed229145996
+      date: 2026-10-31
+      hash: e44567df69e344c2
     name: 做鸡胸汤

@@ -20,6 +20,7 @@ import {
   isVerbatimSubstring,
   normalizeQuote,
   numbersCovered,
+  secondsGrounded,
 } from "../source/normalize.ts";
 
 export type Level = "error" | "warning";
@@ -193,11 +194,58 @@ export const r02NumbersInQuote: Rule = (ctx) => {
         });
       }
     }
+    // 时长里的**秒值本身**也要对着引文核。
+    //
+    // 为什么单列一条：秒是换算过的单位（原文写「1 分半」，卡上写 90 秒），
+    // 数字对不上不一定是错 —— 要看引文里有没有一个能换算到这个秒数的数。
+    // 但完全不查就是另一个极端：把「保持 10 秒」抄成「保持 100 秒」没人拦，
+    // 屏上就直接把 10 倍的量说成定值（D7）。
+    //
+    // 判据：引文里存在某个数 n，使 n 秒 / n 分钟 / n 小时 换算后等于 sec。
+    // 换算关系都试一遍，覆盖「30 秒」「1 分钟」「1 分半」「0.5 小时」。
+    const durCheck = (
+      d:
+        | { basis: string; sec?: number; quote?: string | string[]; formula?: string }
+        | null
+        | undefined,
+      path: string,
+      cardId: string,
+    ) => {
+      if (!d || d.sec == null) return;
+      if (d.basis === "derived") {
+        // 推算值：算式里必须有这个秒数，且算式本身由 R1/R2 的引文规则看着
+        if (!d.formula) return;
+        const { missing } = numbersCovered(String(d.sec), d.formula);
+        if (missing.length) {
+          out.push({
+            rule: "R2",
+            level: card.status === "reviewed" ? "error" : "warning",
+            file: ctx.file,
+            cardId,
+            path: `${path}.derived`,
+            message: `推算的算式里没有这个秒数 ${missing.join("、")} —— 算式要能复核`,
+          });
+        }
+        return;
+      }
+      if (d.basis !== "quote") return;
+      const quotes = quotesOf(d.quote);
+      if (!quotes.length) return;
+      if (secondsGrounded(d.sec, quotes)) return;
+      out.push({
+        rule: "R2",
+        level: card.status === "reviewed" ? "error" : "warning",
+        file: ctx.file,
+        cardId,
+        path: `${path}.sec`,
+        message: `时长 ${d.sec} 秒在引文里找不到对应的数（引文里要有 ${d.sec} 秒，或能换算到它的分钟/小时数）—— 具体内容不许改`,
+      });
+    };
+    durCheck(card.duration, "duration", card.id);
+    for (const s of card.steps) durCheck(s.duration, `steps.${s.id}.duration`, card.id);
   }
   return out;
 };
-
-// ---------------------------------------------------------------- R3
 
 export const r03NoVagueTerms: Rule = (ctx) => {
   const out: Finding[] = [];

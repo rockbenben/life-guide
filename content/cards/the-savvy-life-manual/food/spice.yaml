@@ -38,6 +38,11 @@ cards:
       - id: sear-chicken
         text: 油烧热的平底锅中皮朝下放入鸡腿，小火煎到皮变脆，约 7～8 分钟，再翻面煎另一面。
         quote: '油烧热的平底锅中皮朝下放入鸡腿，小火煎到皮变脆，约 7～8 分钟，再翻面煎另一面。'
+        duration:
+          basis: quote
+          sec: 480
+          quote: 油烧热的平底锅中皮朝下放入鸡腿，小火煎到皮变脆，约 7～8 分钟，再翻面煎另一面。
+          approximate: true
       - id: coat-with-sauce
         text: 鸡腿肉熟透后，加入滤镜酱，和油一起裹匀后继续煎。
         quote: '鸡腿肉熟透后，加入滤镜酱，和油一起裹匀后继续煎。'
@@ -45,8 +50,8 @@ cards:
       - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 095a70a9f12c8ad1
+      date: 2026-10-31
+      hash: abc5cbc891ff1b91
     name: 做滤镜酱鸡腿排
 
   - id: filter-sauce-curry
@@ -88,12 +93,16 @@ cards:
       - id: add-extra-sauce
         text: 如果用了 ，就把它加进 的锅中，再煮 2～3 分钟。
         quote: '如果用了 ⑤，就把它加进 ④ 的锅中，再煮 2～3 分钟。'
+        duration:
+          basis: quote
+          sec: 180
+          quote: 如果用了 ⑤，就把它加进 ④ 的锅中，再煮 2～3 分钟。
     cautions:
       - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: abdd207e54b6ac4e
+      date: 2026-10-31
+      hash: 9d5c23aaeb8db134
     name: 做甜口咖喱
 
   - id: super-filter-sauce
@@ -130,13 +139,18 @@ cards:
       - id: stir-sauce
         text: 中小火搅拌着炒约 1 分钟。
         quote: '中小火搅拌着炒约 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 中小火搅拌着炒约 1 分钟。
+          approximate: true
     cautions:
       - { level: info, text: 冷藏保存，并在 3～4 天内用完。, quote: '冷藏保存，并在 3～4 天内用完。' }
       - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 7935f1e41e87c149
+      date: 2026-10-31
+      hash: c2072b9d43d934a0
     name: 做超级滤镜酱
 
   - id: super-filter-sauce-noodles
@@ -165,6 +179,11 @@ cards:
           - '平底锅中倒油和蒜末，小火炒到出香。'
           - '加入滤镜酱、盐、砂糖。'
           - '中小火搅拌着炒约 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 中小火搅拌着炒约 1 分钟。
+          approximate: true
       - id: cut-vegetables
         text: 黄瓜、紫苏切丝，嫩姜切薄片。
         quote: '黄瓜、紫苏切丝，嫩姜切薄片。'
@@ -178,8 +197,8 @@ cards:
       - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 657a5c5007173145
+      date: 2026-10-31
+      hash: 4c4b21164efe6521
     name: 做滤镜酱拌素面
 
   - id: spice-wine-ginger-pork
@@ -217,6 +236,10 @@ cards:
       - id: heat-spice-wine
         text: 500W 微波炉加热 6 分钟。
         quote: '500W 微波炉加热 6 分钟。'
+        duration:
+          basis: quote
+          sec: 360
+          quote: 500W 微波炉加热 6 分钟。
       - id: mix-marinade
         text: 'A：姜蓉 1 小勺、香料酒 2 小勺、水 4 大勺、酱油 1/2 小勺、砂糖 2g先把 A 混合好。'
         quote:
@@ -238,8 +261,8 @@ cards:
       - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 4c8b8f68f3b2b89c
+      date: 2026-10-31
+      hash: 89bfb15bd93179c2
     name: 做香料酒姜烧猪肉
 
   - id: spice-wine-oden
@@ -280,6 +303,10 @@ cards:
       - id: heat-spice-wine
         text: 500W 微波炉加热 6 分钟。
         quote: '500W 微波炉加热 6 分钟。'
+        duration:
+          basis: quote
+          sec: 360
+          quote: 500W 微波炉加热 6 分钟。
       - id: cut-ingredients
         text: 所有食材切成易入口的大小。
         quote: '所有食材切成易入口的大小。'
@@ -292,6 +319,10 @@ cards:
       - id: simmer-oden
         text: 加水、香料酒、高汤、砂糖、酱油，小火煮 20～25 分钟。
         quote: '加水、香料酒、高汤、砂糖、酱油，小火煮 20～25 分钟。'
+        duration:
+          basis: quote
+          sec: 1500
+          quote: 加水、香料酒、高汤、砂糖、酱油，小火煮 20～25 分钟。
     cautions:
       - { level: stop, text: 微波加热时为防溢出，请不要盖保鲜膜，使用开口较宽的容器。, quote: '微波加热时为防溢出，请不要盖保鲜膜，使用开口较宽的容器。' }
       - { level: info, text: 同上，请把咸味调料减到平时的一半左右。, quote: '同上，请把咸味调料减到平时的一半左右。' }
@@ -299,6 +330,6 @@ cards:
       - { level: info, text: 请注意不要吃过量香料。, quote: '请注意不要吃过量香料。' }
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: a634fb9f7b064f3a
+      date: 2026-10-31
+      hash: 75d1c11b3886d56d
     name: 做香料酒关东煮

@@ -117,6 +117,10 @@ cards:
       - id: stretch-latissimus-and-levator
         text: "一只手绕到对侧肩后，指尖摸到凸起的那块肩胛骨，另一只手把它往下按；再换手抓住对侧手肘，头向斜前方倒、身体同时侧倾，保持 20 秒。"
         quote: "一只手绕到对侧肩后，指尖摸到凸起的那块肩胛骨，另一只手把它往下按；再换手抓住对侧手肘，头向斜前方倒、身体同时侧倾，保持 20 秒。"
+        duration:
+          basis: quote
+          sec: 20
+          quote: 一只手绕到对侧肩后，指尖摸到凸起的那块肩胛骨，另一只手把它往下按；再换手抓住对侧手肘，头向斜前方倒、身体同时侧倾，保持 20 秒。
       - id: train-serratus-anterior
         text: "两肘在身体前方并拢，保持夹住的状态向上抬。肩膀不要用力，注意力放在腋下。"
         quote: "两肘在身体前方并拢，保持夹住的状态向上抬。肩膀不要用力，注意力放在腋下。"
@@ -131,9 +135,9 @@ cards:
         text: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
         quote: "检查二出现左右肩高度差：斜方肌下部纤维的练习要跳过。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 4e51701a4c5bacc2
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 09ff2758dca16be0
 
   - id: shoulder-cuff-training
     status: reviewed

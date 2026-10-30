@@ -163,6 +163,10 @@ cards:
       - id: soak-ten-minutes
         text: '就这么原样放置 10 分钟'
         quote: '就这么原样放置 10 分钟'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 就这么原样放置 10 分钟
       - id: drain-and-rewash
         text: '倒掉水，再照平常那样用洗衣机洗一遍'
         quote: '倒掉水，再照平常那样用洗衣机洗一遍'

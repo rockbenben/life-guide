@@ -59,6 +59,11 @@ cards:
       - id: strain-gently
         text: "以轻轻用力为度，如厕时间控制在 3 分钟左右。"
         quote: "以轻轻用力为度，如厕时间控制在 3 分钟左右。"
+        duration:
+          basis: quote
+          sec: 180
+          quote: 以轻轻用力为度，如厕时间控制在 3 分钟左右。
+          approximate: true
     cautions:
       - level: stop
         text: "千万别憋着使劲：会导致血压上升，也有脑卒中的风险。"
@@ -78,8 +83,8 @@ cards:
           quote: "孩子则可以放心用力——重要的是别让便子积在直肠里。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 784e1998ba82d625
+      date: 2026-10-31
+      hash: 56eb5921ee88bde7
     name: 每天定时去厕所 3 分钟
     variants:
       busy:

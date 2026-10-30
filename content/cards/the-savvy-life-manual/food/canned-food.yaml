@@ -138,10 +138,14 @@ cards:
       - id: simmer-cabbage
         text: '小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。'
         quote: '小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。'
+        duration:
+          basis: quote
+          sec: 600
+          quote: 小锅放入包好的卷心菜，加入水、罐头汁、薄口酱油和胡椒粉，盖盖煮 10 分钟。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: f18ff9d028aa7f9e
+      date: 2026-10-31
+      hash: 6ec3f7508653a761
     name: 做鲭鱼罐头卷
 
   - id: mackerel-tebo-nabe
@@ -174,13 +178,22 @@ cards:
       - id: cook-nabe-body
         text: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
         quote: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+        duration:
+          basis: quote
+          sec: 420
+          quote: 煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。
+          approximate: true
       - id: add-chives-and-oil
         text: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
         quote: '煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 煎锅里放入除韭菜和芝麻油以外的全部材料，中火煮约 7 分钟；加入韭菜再加热 1 分钟，关火后加芝麻油。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: f82bb6414e0d7ec8
+      date: 2026-10-31
+      hash: 3134b8b72ecdc43e
     name: 做鲭鱼罐头涮锅
 
   - id: fruit-syrup-yogurt
@@ -212,6 +225,10 @@ cards:
       - id: mix-yogurt
         text: '只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。'
         quote: '只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。'
+        duration:
+          basis: quote
+          sec: 10
+          quote: 只需把糖浆倒进酸奶充分搅拌即可，10 秒完成。
       - id: add-fruit
         text: '想加果肉也好吃。'
         quote: '想加果肉也好吃。'
@@ -220,6 +237,6 @@ cards:
         text: '横线越靠左（''extaヘビー''）越甜，超浓糖浆最甜这件事很多人会搞反。'
         quote: '横线越靠左（''extaヘビー''）越甜，超浓糖浆最甜这件事很多人会搞反。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: b4d320ccf020f044
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: f197c5478249ad67

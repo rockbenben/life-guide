@@ -178,9 +178,17 @@ cards:
       - id: heat-in-microwave
         text: '微波炉 500W 加热 1 分钟。'
         quote: '微波炉 500W 加热 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 微波炉 500W 加热 1 分钟。
       - id: stir-and-rest
         text: '取出后轻轻搅动，静置 1 分钟。'
         quote: '取出后轻轻搅动，静置 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 取出后轻轻搅动，静置 1 分钟。
       - id: filter-with-tea-filter
         text: '用茶滤（茶的滤网）过滤，即完成。不要用咖啡滤纸：油要滤很久才漏得下去，茶用滤器更合适。'
         quote:
@@ -209,8 +217,8 @@ cards:
         quote: '注意别浇过头：一天控制在 1 小勺以内。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 08426039e9b1c0f0
+      date: 2026-10-31
+      hash: 8ec4626a7683034c
     name: 用咖啡油给菜添香
 
   - id: raw-coffee-cream

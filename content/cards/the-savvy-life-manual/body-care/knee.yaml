@@ -46,9 +46,18 @@ cards:
         quote: '轻轻屈膝，不要弯到 90 度以上；一个来回大约 2～3 秒。'
         images:
           - 'https://img.newzone.top/20261016070624321.png?imageMogr2/format/webp'
+        duration:
+          basis: quote
+          sec: 3
+          quote: 轻轻屈膝，不要弯到 90 度以上；一个来回大约 2～3 秒。
+          approximate: true
       - id: stretch-hold
         text: '保持 1 分钟。'
         quote: '保持 1 分钟。'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 保持 1 分钟。
       - id: stretch-repeat
         text: '早、中、晚各做一次，一天 3 次。膝盖疼就停下来休息。'
         quote: '早、中、晚各做一次，一天 3 次。膝盖疼就停下来休息。'
@@ -61,8 +70,8 @@ cards:
         quote: '不要弯到 90 度以上；一个来回大约 2～3 秒。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: eab0915f51649d71
+      date: 2026-10-31
+      hash: f68721618407d259
     name: 每天 3 次屈膝伸展
   - id: knee-ankle-cross
     status: reviewed
@@ -107,7 +116,7 @@ cards:
         duration:
           basis: quote
           sec: 6
-          quote: '保持 6 秒。'
+          quote: 保持 6 秒。
       - id: ankle-switch
         text: '换边，同样 6 秒。超过 6 秒也没关系，但一天至少做 1 次。'
         quote: '换边，同样 6 秒。超过 6 秒也没关系，但一天至少做 1 次。'
@@ -142,9 +151,17 @@ cards:
       - id: strength-lift-leg
         text: 抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。
         quote: 抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。
+        duration:
+          basis: quote
+          sec: 10
+          quote: 抬起单脚保持 10 秒，然后放下休息 3 秒，注意让负荷落在大腿前侧。
       - id: strength-rest
         text: 放下休息 3 秒
         quote: 放下休息 3 秒
+        duration:
+          basis: quote
+          sec: 3
+          quote: 放下休息 3 秒
       - id: strength-repeat
         text: 次数是每侧 10 次，每天至少做 1 组。
         quote: 次数是每侧 10 次，每天至少做 1 组。
@@ -169,8 +186,8 @@ cards:
         quote: 疼得厉害时请先到整形外科就诊。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-29
-      hash: 14001038ddc9b4ed
+      date: 2026-10-31
+      hash: 7ff57709c0b926fb
     name: 膝痛改善三招
     dose:
       - value: 10

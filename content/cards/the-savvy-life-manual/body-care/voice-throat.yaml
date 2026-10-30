@@ -71,13 +71,17 @@ cards:
       - id: follow-reference-dose
         text: 说明书把量写得很具体：1 组 = 5 秒 × 10 次，一天 2～4 组，先连续做 2 周。
         quote: "说明书把量写得很具体：1 组 = 5 秒 × 10 次，一天 2～4 组，先连续做 2 周。"
+        duration:
+          basis: quote
+          sec: 5
+          quote: 说明书把量写得很具体：1 组 = 5 秒 × 10 次，一天 2～4 组，先连续做 2 周。
       - id: use-fragment-time
         text: 说明书图注写的是把它安排在工作间隙或吹头发时这类零碎时间里。
         quote: "说明书图注写的是把它安排在工作间隙或吹头发时这类零碎时间里。"
     review:
-      by: benson
-      date: 2026-10-22
-      hash: b24cb9779fca913d
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 1e3d58ebd700515d
 
   - id: good-humming-steps
     status: reviewed

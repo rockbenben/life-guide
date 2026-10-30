@@ -122,6 +122,10 @@ cards:
           - '蒸锅上汽后放入'
           - '大火 2 分钟，再转小火约 10 分钟'
           - '出锅撒上三之叶'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 蒸锅上汽后放入，大火 2 分钟，再转小火约 10 分钟，出锅撒上三之叶。
     cautions:
       - level: info
         text: '蛋液没能凝固的话延长小火的加热时间'
@@ -130,8 +134,8 @@ cards:
           - '延长小火的加热时间'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 2d59fc61f80e5e75
+      date: 2026-10-31
+      hash: 5bac5758027d6806
     name: 做枫糖浆茶碗蒸
   - id: 'maple-seasoning-oyakodon'
     status: reviewed
@@ -172,12 +176,21 @@ cards:
           - '小锅里放入 A 组和鸡肉、洋葱'
           - '中火加热 3～4 分钟'
           - '直到鸡肉完全熟透'
+        duration:
+          basis: quote
+          sec: 240
+          quote: 中火加热 3～4 分钟
       - id: 'add-egg'
         text: '一边搅拌一边倒入打散的鸡蛋回锅后中火再加热约 2 分钟达到半熟就关火'
         quote:
           - '一边搅拌一边倒入打散的鸡蛋'
           - '回锅后中火再加热约 2 分钟'
           - '达到半熟就关火'
+        duration:
+          basis: quote
+          sec: 120
+          quote: 回锅后中火再加热约 2 分钟
+          approximate: true
       - id: 'serve-oyakodon'
         text: '饭盛进碗里，把第 2 步淋在上面，撒上三之叶'
         quote: '饭盛进碗里，把第 2 步淋在上面，撒上三之叶'
@@ -186,9 +199,9 @@ cards:
         text: '锅小只做一人份的话，把 1～3 步重复一轮即可'
         quote: '锅小只做一人份的话，把 1～3 步重复一轮即可'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 5fe13ea086d5a81f
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 009433f2aac9b555
   - id: 'maple-seasoning-soba'
     status: reviewed
     source:

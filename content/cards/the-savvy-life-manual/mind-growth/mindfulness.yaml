@@ -140,10 +140,14 @@ cards:
       - id: one-minute-counts
         text: '一分钟也算数'
         quote: '一分钟也算数'
+        duration:
+          basis: quote
+          sec: 60
+          quote: 一分钟也算数
     review:
-      by: benson
-      date: 2026-10-21
-      hash: bab02b8acdfd2404
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 90ed9059ef98ceda
 
   - id: meditation-as-self-care
     status: reviewed

@@ -68,12 +68,20 @@ cards:
       - id: air-dry-radish
         text: '晾 2～3 小时'
         quote: '晾 2～3 小时'
+        duration:
+          basis: quote
+          sec: 10800
+          quote: 晾 2～3 小时
       - id: dry-in-sunlit-indoors
         text: '晾晒在室内日照好的地方同样可以'
         quote: '晾晒在室内日照好的地方同样可以'
       - id: oven-dry-radish
         text: '换烤箱也可以：110℃ 加热 45 分钟～1 小时'
         quote: '换烤箱也可以：110℃ 加热 45 分钟～1 小时'
+        duration:
+          basis: quote
+          sec: 2700
+          quote: 换烤箱也可以：110℃ 加热 45 分钟～1 小时
     cautions:
       - level: info
         text: '时间和加热时长要按季节和天气适当调整'
@@ -82,9 +90,9 @@ cards:
         text: '切「微微晾干」专用的萝卜前，记得把手好好洗干净'
         quote: '切「微微晾干」专用的萝卜前，记得把手好好洗干净'
     review:
-      by: benson
-      date: 2026-10-22
-      hash: 5c74d73d37dde1e4
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 6a80d785d4b0447d
 
   - id: microwave-sweet-root-ham-egg
     status: reviewed
@@ -109,6 +117,10 @@ cards:
       - id: microwave-sweet-root
         text: '甘根用保鲜膜包好，放进耐热盘，微波炉 600W 加热 6～7 分钟'
         quote: '甘根用保鲜膜包好，放进耐热盘，微波炉 600W 加热 6～7 分钟'
+        duration:
+          basis: quote
+          sec: 420
+          quote: 甘根用保鲜膜包好，放进耐热盘，微波炉 600W 加热 6～7 分钟
       - id: rest-after-heating
         text: '加热后先静置去掉余热'
         quote: '加热后先静置去掉余热'
@@ -118,15 +130,23 @@ cards:
       - id: heat-soft-boiled-egg
         text: '半熟蛋：用沸腾的热水加热 6 分钟'
         quote: '半熟蛋：用沸腾的热水加热 6 分钟'
+        duration:
+          basis: quote
+          sec: 360
+          quote: 半熟蛋：用沸腾的热水加热 6 分钟
       - id: use-cheese-instead
         text: '盖上一片可融化的芝士，微波炉 600W 加热 30 秒，再放火腿、淋酱汁'
         quote:
           - 盖上一片可融化的芝士，微波炉 600W 加热 30 秒，再放火腿、淋酱汁
           - 换烤箱也可以：110℃ 加热 45 分钟～1 小时。
+        duration:
+          basis: quote
+          sec: 30
+          quote: 盖上一片可融化的芝士，微波炉 600W 加热 30 秒，再放火腿、淋酱汁
     review:
-      by: benson
-      date: 2026-10-21
-      hash: eb5de4df295096fc
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 3a944d5bf49bf263
 
   - id: fried-spicy-root-chips
     status: reviewed
@@ -153,6 +173,10 @@ cards:
         quote:
           - 用 160℃ 的油炸 3～4 分钟
           - 把大根的皮连形成层一起厚厚削掉，分成甘根和辛根。
+        duration:
+          basis: quote
+          sec: 240
+          quote: 用 160℃ 的油炸 3～4 分钟
       - id: pan-roast-chips
         text: '切好的大根皮直接放在烧热的平底锅里烤，再按喜好调味'
         quote:
@@ -160,8 +184,8 @@ cards:
           - 更简单的版本：切好的大根皮直接放在烧热的平底锅里烤，再按喜好调味，同样能吃到萝卜皮的美味。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 0616f842bd90b94a
+      date: 2026-10-31
+      hash: c44f3cb781719e39
     name: 做辣根脆片
 
   - id: dried-radish-namuru
