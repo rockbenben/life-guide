@@ -1,20 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <!--
     生活指南 · 标记母版
-    一张卡（三行契约：名 / 做什么 / 剂量）+ 盖在末行旁的印。
+    一具站姿的人形（头 + 肩），胸口盖着 App 里每天盖的那颗印。
+
+    为什么是「人 + 印」：这个 App 讲的是**身体上的日常动作**（洗脸、刷牙、
+    拉伸、补铁……），主体是人；而「今天做了没有就盖一颗印」是这个 App 的仪式。
+    两样都在，一眼就知道是什么。
+
     纯几何，不含文字：图标在任何尺寸、任何平台上都一样。
     配色取自 app/src/style.css：朱 #a82a24 · 纸 #fbf6ec
   -->
   <rect width="1024" height="1024" rx="224" fill="#a82a24"/>
 
-  <!-- 卡 -->
-  <rect x="225" y="287" width="574" height="451" rx="51" fill="#fbf6ec"/>
+  <!-- 人：头 -->
+  <circle cx="512" cy="286" r="106" fill="#fbf6ec"/>
+  <!-- 人：肩与身（收窄一点 —— 太宽会读成「头像图标」，不是「一具身体」） -->
+  <path d="M322 812 V640 A190 190 0 0 1 702 640 V812 Z" fill="#fbf6ec"/>
 
-  <!-- 三行：名 / 做什么 / 剂量 -->
-  <rect x="307" y="358" width="369" height="37" rx="18.5" fill="#a82a24"/>
-  <rect x="307" y="461" width="266" height="37" rx="18.5" fill="#a82a24"/>
-  <rect x="307" y="563" width="184" height="37" rx="18.5" fill="#a82a24"/>
-
-  <!-- 印：App 里每天盖的那一颗 -->
-  <rect x="573" y="512" width="205" height="205" rx="41" fill="#a82a24" stroke="#fbf6ec" stroke-width="32"/>
+  <!-- 印：胸口那一颗（与 App 里的印同款：朱底 + 纸色描边） -->
+  <rect x="427" y="560" width="170" height="170" rx="38" fill="#a82a24"
+        stroke="#fbf6ec" stroke-width="26"/>
 </svg>
