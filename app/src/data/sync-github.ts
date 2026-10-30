@@ -51,7 +51,9 @@ export function githubTransport(opts: GithubOptions): SyncTransport {
   if (!owner || !repo) throw new Error("仓库要写成 owner/repo");
 
   const fileOf = (spaceId: string) =>
-    [opts.dir, `${spaceId}.json`].filter(Boolean).join("/");
+    // 文件名带前缀是为了**给人看的**：空间 id 是一串随机字符，
+    // 在仓库的文件列表里根本认不出来（要删、要备份、要看它多大）。
+    [opts.dir, `life-guide-${spaceId}.json`].filter(Boolean).join("/");
   const urlOf = (spaceId: string) => `${API}/repos/${owner}/${repo}/contents/${encodePath(fileOf(spaceId))}`;
 
   const headers = (extra: Record<string, string> = {}) => ({

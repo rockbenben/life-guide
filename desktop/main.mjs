@@ -19,6 +19,7 @@ import { fileURLToPath } from "node:url";
 import { registerAppScheme, serveBundle } from "./lib/protocol.mjs";
 import { installReminderBridge } from "./lib/reminders.mjs";
 import { installUpdateBridge } from "./lib/updater.mjs";
+import { installDavBridge } from "./lib/dav.mjs";
 import { navigationDecision, isTrustedSender } from "./lib/navigation.mjs";
 import { setupTray } from "./lib/tray.mjs";
 import { buildMenu } from "./lib/menu.mjs";
@@ -171,6 +172,17 @@ const updater = installUpdateBridge({
   isTrusted: (event) => isTrustedSender(event, devServer),
 });
 
+/**
+ * WebDAV：渲染层发请求，主进程替它发。
+ *
+ * 这条链存在的原因只有一个：**局域网里自建的 WebDAV 默认不发 CORS 头**，
+ * 渲染层的 `app://` 源直接 fetch 会被浏览器内核拦掉（实测 Electron 45）。
+ * 主进程用 Node 的 http，不受同源策略管。
+ */
+const dav = installDavBridge({
+  isTrusted: (event) => isTrustedSender(event, devServer),
+});
+
 app.whenReady().then(() => {
   serveBundle(bundleDir);
   /**
@@ -222,4 +234,5 @@ app.on("window-all-closed", () => {
 app.on("will-quit", () => {
   reminders.dispose();
   updater.dispose();
+  dav.dispose();
 });

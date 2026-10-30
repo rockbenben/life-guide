@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        允许明文 HTTP：局域网里自建的 WebDAV（NAS / 软路由 / 自建服务）
+        常常只有 http://192.168.x.x，没有证书。Android 9+ 默认禁明文，这里放开。
+        同步的载荷本身是端到端加密的密文；走明文时暴露的是 WebDAV 的账号密码
+        （Basic 认证是 Base64，不是加密）—— 所以局域网里那台服务器最好用独立的小号。
+    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name=".MainActivity"

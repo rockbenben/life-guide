@@ -42,9 +42,10 @@ life-guide/
 │   └── test/                 domain/ · platform/ · data/ 单元测试 · ui/ 组件渲染测试
 ├── desktop/                  桌面端：Electron 壳（跑同一份 app/dist）
 │   ├── main.mjs              生命周期：单实例、窗口、托盘、导航守卫，把几块 lib 接起来
-│   ├── preload.cjs           页面与 Node 之间那条极窄的缝（只暴露提醒与更新）
+│   ├── preload.cjs           页面与 Node 之间那条极窄的缝（只暴露提醒、更新与 WebDAV 请求）
 │   ├── lib/                  protocol / protocol-headers（app:// 与 CSP）· navigation（导航与 IPC 信任）
 │   │                         · reminders（主进程定时器）· updater · tray · menu
+│   │                         · dav / dav-client（局域网 WebDAV：主进程代发）
 │   │                         · reminder-timing / window-state / store（纯逻辑，可单测）
 │   ├── lib/*.test.mjs        纯逻辑的 node --test（npm run test:desktop）
 │   └── build/                打包与托盘用的图标（brand/ 那张标记的 ico/icns/png）
@@ -441,7 +442,7 @@ push tag vX.Y.Z
 | 落点 | 要不要自己部署 | 浏览器能用 | 说明 |
 | --- | --- | --- | --- |
 | **GitHub 私有仓库** | **不要** | 能 | 仓库里的一个文件；账号现成、API 现成，`api.github.com` 发 `access-control-allow-origin: *`（实测） |
-| **网盘 WebDAV** | **不要** | **不能** | 坚果云 / Nextcloud / NAS 都自带；坚果云**不发 CORS 头**（实测），浏览器会拦 → 只给桌面端与手机端 |
+| **网盘 WebDAV** | **不要** | **不能** | 坚果云 / Nextcloud / NAS 都自带，**也能填局域网里自建的那台**（见下面「局域网 WebDAV」）。坚果云与自建的那台都**不发 CORS 头**（实测），浏览器会拦 → 桌面端与 Android 手机能用（走主进程 / 原生 HTTP，绕开 CORS） |
 | 自建中转服务 | 要 | 能 | `sync/` 那个 Worker（Cloudflare Worker + KV），自己跑 |
 
 **落点是可插拔的**（`SyncTransport` 接口）：合并与加密那一层与落点无关 ——
@@ -494,8 +495,46 @@ push tag vX.Y.Z
 **桌面端的 CSP 放了一处**（`desktop/lib/protocol-headers.mjs`）：
 `connect-src` 从 `'self'` 变成 `'self' https:` ——
 同步服务是用户在设置页里填的地址，不可能是固定的。
-不放行 `http:`（局域网里的明文服务连不上，要连自己套 https），
+**仍然不放行 `http:`**：局域网那条路走的不是渲染层（见下面的「局域网 WebDAV」），
+渲染层发出去的请求一律是 https —— 收紧比放开更省事。
 远程脚本仍然不放行（`script-src 'self'` 不变，渲染层只跑自己构建出来的那份代码）。
+
+**局域网里自建的 WebDAV**（2026-10-30 补，作者要的）：
+作者自己搭了一台在局域网里，所以「网盘 WebDAV」那个落点要能填**自定义地址**，
+包括 `http://192.168.x.x:5006/dav/` 这种没有证书的。
+
+**实测出来的关键事实**（Electron 45，`app://` 源 → `http://127.0.0.1`）：
+服务器不给 `Access-Control-Allow-Origin` 就是 `blocked by CORS policy`，
+给了才通。而**自建 WebDAV 默认不发这个头**（nginx 的 dav 模块、Apache mod_dav、
+NAS 自带的那些都不发；坚果云也不发）⇒ **渲染层直接 fetch 一定连不上**。
+（真应用里还有 CSP 先拦一道：`connect-src 'self' https:` 不放行 http://；
+就算服务器是 https 的，CORS 那一关照样拦 —— 所以这条路必须绕开渲染层。）
+
+所以 WebDAV 那条路**不用 fetch**，改走 `app/src/platform/http.ts`：
+
+| 形态 | 走哪条 | 为什么 |
+| --- | --- | --- |
+| 桌面（Electron） | **主进程**（`desktop/lib/dav-client.mjs`，Node 的 http） | 不受同源策略管，`http://192.168.x.x` 直接能用。渲染层 → preload 的 `davRequest` → IPC → 主进程 |
+| 手机（Android） | **原生 HTTP**（CapacitorHttp 插件） | WebView 之外的请求：既不过 CORS，也不受混合内容限制。清单里要 `usesCleartextTraffic="true"`（Android 9+ 默认禁明文） |
+| 浏览器 / PWA | fetch | **走不通**：CORS 与混合内容两道关 |
+| 手机（iOS） | fetch | **走不通 http://**（混合内容）；且 CapacitorHttp 只有 Android 实现（iOS 那侧没有这个插件）→ 退回 fetch，CORS 也拦 |
+
+**主进程那条缝**（`desktop/lib/dav.mjs` + `preload.cjs` 的 `davRequest`）：
+和提醒、更新那两条一样窄 —— 只放 http/https，且只认自己页面发来的 IPC。
+主进程**不解释任何业务**：条件头（`If-Match` / `If-None-Match`）与认证头都是渲染层算好的。
+渲染层那条缝没接上时**明说**（「桌面端那条缝没接上」），不静默退回 fetch ——
+退回去也是被 CORS 拦，只是错误更难懂。
+
+**明文 http 的代价**（写在明处）：同步的**载荷**是端到端加密的密文，
+但 WebDAV 的**账号密码**在 `http://` 下是明文（Basic 认证是 Base64，不是加密）。
+⇒ 局域网那台服务器值得用一个只管一个文件夹的小号。
+自签证书也不给过：主进程直说「证书不被信任」，让用户改用 http:// 或把证书装进系统信任库。
+
+**文件名带前缀**：网盘与 GitHub 里的文件叫 `life-guide-<空间 id>.json` ——
+空间 id 是一串随机字符，人在文件列表里根本认不出来（要删、要备份、要看它多大）。
+
+**还没验的**：Android 上真机跑一次局域网 WebDAV（模拟器上没搭 WebDAV 服务）；
+作者自己那台服务器还没填过真实账号；iOS 那侧仍然是走不通的状态。
 
 **库升到第 3 版时踩的一个坑**：`scripts/acceptance/checks.mjs` 里原来写死
 `indexedDB.open("life-guide", 2)` —— 库一升版就报

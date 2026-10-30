@@ -3,6 +3,10 @@
  *
  * 用假 fetch 测（不联网）：验的是**协议**——请求打对了吗、版本对不上时
  * 会不会退回来让客户端合一次、404 是不是当成"还没有"而不是错。
+ *
+ * **WebDAV 那条走的是平台层**（platform/http.ts）——在浏览器里它落到 fetch，
+ * 所以这里的假 fetch 照样能截住它。桌面端与手机端走的是别的通道，
+ * 那两条路由在 app/test/platform/http.test.ts 里钉着。
  */
 import { afterEach, describe, expect, it } from "vitest";
 
@@ -64,7 +68,7 @@ describe("GitHub 落点", () => {
     const { calls } = useFakeFetch(() => ({ status: 404 }));
     const t = githubTransport({ repo: "o/r", token: "tkn" });
     expect(await t.fetch("space1")).toBeNull();
-    expect(calls[0].url).toContain("/repos/o/r/contents/space1.json");
+    expect(calls[0].url).toContain("/repos/o/r/contents/life-guide-space1.json");
     expect(calls[0].headers.authorization).toBe("Bearer tkn");
   });
 
@@ -87,7 +91,7 @@ describe("GitHub 落点", () => {
     expect(res.ok).toBe(true);
     const body = JSON.parse(calls[0].body!);
     expect(body.sha).toBe("sha-old");
-    expect(calls[0].url).toContain("/repos/o/r/contents/life-guide/space1.json");
+    expect(calls[0].url).toContain("/repos/o/r/contents/life-guide/life-guide-space1.json");
     expect(Buffer.from(body.content, "base64").toString("utf8")).toBe(JSON.stringify(BLOB));
   });
 
@@ -112,7 +116,7 @@ describe("网盘（WebDAV）落点", () => {
     const { calls } = useFakeFetch(() => ({ status: 404 }));
     const t = webdavTransport({ url: "https://dav.example/dav/", user: "u", password: "p" });
     expect(await t.fetch("space1")).toBeNull();
-    expect(calls[0].url).toBe("https://dav.example/dav/space1.json");
+    expect(calls[0].url).toBe("https://dav.example/dav/life-guide-space1.json");
     // Basic 认证：用户名与密码拼 base64
     expect(calls[0].headers.authorization).toBe("Basic " + btoa("u:p"));
   });

@@ -631,7 +631,7 @@ export function Settings({
                   setSyncKind((e.target as HTMLSelectElement).value as SyncKind)
                 }
               >
-                <option value="webdav">网盘 WebDAV（坚果云 / Nextcloud / NAS；桌面与手机能用）</option>
+                <option value="webdav">网盘 WebDAV（坚果云 / Nextcloud / NAS / 局域网自建；桌面与 Android 手机能用）</option>
                 <option value="github">GitHub 私有仓库（不用自己搭服务器，三端都能用）</option>
                 <option value="http">自己搭的中转服务（sync/ 那个 Worker）</option>
               </select>
@@ -691,7 +691,7 @@ export function Settings({
                   <input
                     type="text"
                     value={syncUrl}
-                    placeholder="https://dav.jianguoyun.com/dav/"
+                    placeholder="https://dav.jianguoyun.com/dav/ 或 http://192.168.1.9:5006/dav/"
                     autocomplete="off"
                     spellcheck={false}
                     onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
@@ -718,8 +718,10 @@ export function Settings({
                   />
                 </label>
                 <p class="lg-pool">
-                  网盘这条路在浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）——
-                  桌面端与手机端能用。
+                  坚果云、Nextcloud、NAS 都自带这个；<strong>局域网里自己搭的那台也行</strong>
+                  （填它的地址，比如 http://192.168.1.9:5006/dav/）。
+                  浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）——
+                  桌面端与 Android 手机能直接连，桌面端连明文的 http:// 也没问题。
                 </p>
               </>
             ) : null}

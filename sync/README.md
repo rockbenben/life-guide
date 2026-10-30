@@ -10,7 +10,8 @@
 > **GitHub 私有仓库**（`app/src/data/sync-github.ts`）—— 三端都能用，浏览器里也行。
 >
 > **网盘 WebDAV**（`app/src/data/sync-webdav.ts`）—— 坚果云 / Nextcloud / NAS 都自带，
-> 但浏览器用不了（WebDAV 不发 CORS 头）。
+> **局域网里自己搭的那台也能填**（`http://192.168.x.x:5006/dav/`）；
+> 但浏览器用不了（WebDAV 不发 CORS 头），桌面端与 Android 手机可以。
 >
 > 只有想自己掌控那个服务时才部署下面这个。
 

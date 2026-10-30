@@ -1,9 +1,9 @@
 /**
  * 预加载脚本：在页面与 Node 之间开一条极窄的缝。
  *
- * 只暴露提醒这一件事（页面要的就是「到点弹通知」）——
- * 别的能力主进程自己就能做（站外链接走窗口的 open handler，
- * 导出目录走系统 API），不必在页面里开权限。
+ * 只暴露三件事：提醒（页面要的就是「到点弹通知」）、自动更新、
+ * WebDAV 请求（局域网自建的那台服务器）。别的能力主进程自己就能做
+ * （站外链接走窗口的 open handler，导出目录走系统 API），不必在页面里开权限。
  * contextIsolation 是开的，页面拿不到 require / process。
  *
  * 提醒为什么要走这条缝：主进程才有系统级的定时器与原生通知。
@@ -37,4 +37,13 @@ contextBridge.exposeInMainWorld("lifeGuide", {
   installUpdate: () => ipcRenderer.invoke("life-guide:update-install"),
   /** 状态变了：主进程推过来 */
   onUpdateChanged: (cb) => ipcRenderer.on("life-guide:update-changed", (_e, s) => cb(s)),
+  /**
+   * WebDAV 请求：交给主进程发。
+   *
+   * 为什么不放在渲染层直接 fetch：渲染层是 `app://` 源，跨源请求要过 CORS，
+   * 而自建 WebDAV（nginx dav、mod_dav、NAS 自带的）**默认不发**
+   * `Access-Control-Allow-Origin` —— 实测 Electron 45 直接 "blocked by CORS policy"。
+   * 主进程用 Node 的 http，不受同源策略管，局域网里的 `http://192.168.x.x` 因此能用。
+   */
+  davRequest: (req) => ipcRenderer.invoke("life-guide:dav-request", req),
 });

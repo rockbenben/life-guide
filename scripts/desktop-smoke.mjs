@@ -14,6 +14,7 @@
  */
 import { _electron as electron } from "playwright";
 import fs from "node:fs";
+import http from "node:http";
 import os from "node:os";
 import path from "node:path";
 
@@ -61,9 +62,58 @@ while (Date.now() < deadline) {
 
 const title = await page.title();
 
+/**
+ * **WebDAV 那条缝**：局域网里自建的服务器默认**不发 CORS 头**，
+ * 渲染层自己 fetch 连不上（真应用里 CSP 先拦一道，https:// 的自建服务器则是 CORS 拦）。
+ * 所以 WebDAV 的请求交给主进程发（Node 的 http，不受同源策略管）。
+ *
+ * 这里真的发一次：起一台本机的假 WebDAV（**故意不发 CORS 头**，
+ * 跟真实自建服务器一样），从渲染层里走那条缝 GET 一次、PUT 一次。
+ * 单测只能验主进程那个客户端，**这条缝本身**（preload ↔ IPC ↔ 主进程）
+ * 只有真把应用起起来才验得到。
+ *
+ * **不在这里故意发一次会被拦的直连**：那会在控制台留下 CSP/跨源的报错，
+ * 而「控制台零错误」正是这道闸要守的东西。
+ */
+const davServer = http.createServer((req, res) => {
+  if (req.method === "PUT") {
+    res.writeHead(201, { etag: '"v2"' });
+    res.end();
+    return;
+  }
+  res.writeHead(200, { "content-type": "application/json", etag: '"v1"' });
+  res.end('{"v":1,"iv":"aXY=","ciphertext":"Y2lwaGVy"}');
+});
+await new Promise((r) => davServer.listen(0, "127.0.0.1", r));
+const davUrl = `http://127.0.0.1:${davServer.address().port}/dav/life-guide-space1.json`;
+
+const dav = await page.evaluate(async (target) => {
+  const out = { hasBridge: typeof window.lifeGuide?.davRequest === "function" };
+  try {
+    const r = await window.lifeGuide.davRequest({ url: target });
+    out.get = { status: r.status, body: r.body };
+  } catch (e) {
+    out.get = `threw: ${e.message}`;
+  }
+  try {
+    const r = await window.lifeGuide.davRequest({
+      url: target,
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: '{"v":1}',
+    });
+    out.put = { status: r.status };
+  } catch (e) {
+    out.put = `threw: ${e.message}`;
+  }
+  return out;
+}, davUrl);
+davServer.close();
+
 console.log(`模式：${packaged ? "打包产物" : "源码"}`);
 console.log(`窗口标题：${title}`);
 console.log(`卡片数：${cards}`);
+console.log(`WebDAV：桥=${dav.hasBridge} 经主进程=${JSON.stringify(dav.get)} PUT=${JSON.stringify(dav.put)}`);
 console.log(`控制台错误：${errors.length ? errors.join(" | ") : "无"}`);
 
 await app.evaluate(({ app: electronApp }) => {
@@ -78,6 +128,18 @@ if (title !== "生活指南") {
 }
 if (cards === 0) {
   console.error("窗口起来了但没有卡片 —— 协议或路径有问题");
+  process.exit(1);
+}
+if (!dav.hasBridge) {
+  console.error("渲染层里没有那条 WebDAV 缝 —— preload 没接上");
+  process.exit(1);
+}
+if (typeof dav.get !== "object" || dav.get.status !== 200) {
+  console.error("主进程代发 WebDAV 不通 —— 局域网那台服务器连不上");
+  process.exit(1);
+}
+if (typeof dav.put !== "object" || dav.put.status !== 201) {
+  console.error("主进程代发 WebDAV 的写不通");
   process.exit(1);
 }
 if (errors.length) {
