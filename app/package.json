@@ -1,6 +1,6 @@
 {
   "name": "@life-guide/app",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "PWA：只读 cards.json，不认识 markdown",

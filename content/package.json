@@ -1,6 +1,6 @@
 {
   "name": "@life-guide/content",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "内容管线：快照 → 校验 → 覆盖报告 → 构建 cards.json",

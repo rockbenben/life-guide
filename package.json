@@ -1,6 +1,6 @@
 {
   "name": "life-guide",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "把《生活手册》变成能照着做的卡片：结构化内容层 + 校验器 + PWA",
