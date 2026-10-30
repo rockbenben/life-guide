@@ -1129,14 +1129,15 @@ export async function checkCardCollapse({ browser, baseURL }) {
  * 这条在真浏览器里验的是「组件真的接上了、tick 真的在跑」——
  * 那两件事只有真浏览器里才验得到（组件渲染测试不跑定时器）。
  *
- * **为什么在「今天」页验、而不是「手册」页**：手册先是文章列表，
- * 卡片要点进某一篇才渲染 —— 找卡得先选一篇，而哪一篇有带时长的卡
- * 是内容决定的（会变）。今天页的清单是自己排的，可以直接按卡名找。
- *
- * **用哪两张卡**：写死的两个 id（内容层定的）：
- *   · `pre-sleep-hot-bath` —— 原文给了 600 秒 → 倒计时
+ * **用哪三张卡**：写死的三个 id（内容层定的）：
+ *   · `bath-temperature-duration` —— 原文给了 600 秒 → 倒计时
  *   · `brush-teeth` —— 时长未知 → 正计时
- * 找不到就说明内容变了，这条检查直接说，不装作验过了。
+ *   · `eyelid-clean` —— 原文给了 10 秒 → 用来验「到点」
+ *
+ * **三张都必须挂在「随时」段**：今天页只显示当前时段的卡（早/日/晚各不同），
+ * 而**跑验收的时间不确定** —— 本地是东八区、CI 跑在 UTC，同一段代码在两处
+ * 看到的卡不是同一批（2026-10-30 实测：本地 18 点看到晚间卡，CI 10 点看到
+ * 早晨卡，晚间那张就找不到了）。「随时」的卡在哪个时段都在，才稳。
  */
 export async function checkTimer({ browser, baseURL }) {
   const context = await browser.newContext({ viewport: { width: 1180, height: 900 } });
@@ -1162,7 +1163,7 @@ export async function checkTimer({ browser, baseURL }) {
     //（早/日/晚各不同，跑验收的时间不同看到的也不同）。
     //
     // **三张一起换**：setRoutine 是覆盖式的，中途再换会把前面那张换掉。
-    await setRoutine(page, ["pre-sleep-hot-bath", "brush-teeth", "eyelid-clean"]);
+    await setRoutine(page, ["bath-temperature-duration", "brush-teeth", "eyelid-clean"]);
     await gotoTab(page, "今天");
     await page.waitForTimeout(400);
 
@@ -1176,9 +1177,9 @@ export async function checkTimer({ browser, baseURL }) {
     };
 
     // 1. 倒计时那张
-    const countdown = await cardById("pre-sleep-hot-bath");
+    const countdown = await cardById("bath-temperature-duration");
     if (!countdown) {
-      failures.push("今天页里找不到「睡前泡澡」那张卡 —— 清单没换成功，这条检查说明不了问题");
+      failures.push("今天页里找不到「泡澡水温和时长」那张卡 —— 清单没换成功，这条检查说明不了问题");
     } else {
       const before = await readTick(countdown);
       if (before !== "10:00") {
