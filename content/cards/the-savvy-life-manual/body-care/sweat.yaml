@@ -62,12 +62,19 @@ cards:
         quote: 两种混合着做、坚持 2 周
     review:
       by: AI（作者授权代签）
-      date: 2026-10-29
-      hash: dcb445055ab1d937
+      date: 2026-10-30
+      hash: 4cf51c11ec3af44b
     cautions:
       - level: stop
         text: 如果感觉身体状况变差，请停止运动。
         quote: 如果感觉身体状况变差，请停止运动。
+    # 2026-10-30 补回：2026-10-29 合并时把 exercise-heat-adaptation 并进这张卡，
+    # 它的模式版本（生病时跳过）却没跟着过来 —— 结果「生病」模式在全产品里
+    # 一张卡都没有，选了等于没选。依据是原文那句「如果感觉身体状况变差，请停止运动」，
+    # 按 AGENTS.md §5.1b 的规矩（原文明确给了停止条件才建生病版）补回。
+    variants:
+      sick:
+        skip: true
     formerIds:
       - exercise-heat-adaptation
 
