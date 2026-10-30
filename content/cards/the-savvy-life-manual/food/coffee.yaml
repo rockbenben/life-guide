@@ -124,8 +124,9 @@ cards:
         quote: '喜欢更苦的人，延长最初的蒸制时间，苦味会更容易被抽出来。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: ae19b5a215edb9b7
+      date: 2026-10-31
+      hash: 1e97297bfb5d651d
+    name: 冠军冲法：1:15 分 4 次
 
   - id: coffee-oil
     status: reviewed
@@ -288,5 +289,6 @@ cards:
         quote: '注意别舀太多：一天以 1 大勺为参考。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 3b7d369e8f52be1b
+      date: 2026-10-31
+      hash: 95579e14b302e10e
+    name: 整颗咖啡豆冷藏生奶油

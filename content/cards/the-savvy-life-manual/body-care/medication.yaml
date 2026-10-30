@@ -102,9 +102,10 @@ cards:
         text: '自己判断长期用药，还会耽误本应被发现和治疗的疾病。要注意。'
         quote: '自己判断长期用药，还会耽误本应被发现和治疗的疾病。要注意。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: edbafa10ee916ea5
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 97f6d705ef654604
+    name: 症状不好别自己续药
   - id: read-package-insert
     status: reviewed
     source:
@@ -135,9 +136,10 @@ cards:
         text: '说明书不要扔，要保存到药用完为止。'
         quote: '说明书不要扔，要保存到药用完为止。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: a0856e90400e3333
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 7ba35b91a397cd03
+    name: 吃市售药前先读说明书
   - id: consult-pharmacist
     status: reviewed
     name: "取药与疑问找药剂师"

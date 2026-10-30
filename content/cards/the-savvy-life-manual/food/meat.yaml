@@ -155,7 +155,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 151d7534d292fb22
+      hash: 064fb4f9b9b25c4a
+    name: 绞肉 10 分钟出高汤
 
   - id: lemon-ramen
     status: reviewed

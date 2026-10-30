@@ -301,9 +301,10 @@ cards:
         text: "其他 17.6%"
         quote: "其他 17.6%"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 7057cc6499195a29
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: ab2bf39d21913c26
+    name: 大人的过敏一半是果蔬
 
   - id: non-oral-allergy-routes
     status: reviewed

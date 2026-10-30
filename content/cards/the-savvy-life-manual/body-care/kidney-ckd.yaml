@@ -42,9 +42,10 @@ cards:
           - '健康人靠喝水能把肾功能下降防到什么程度，目前还不清楚'
           - '从长期眼光看，把补水变成习惯是有意义的'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: c4bc07f8436e51b0
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 4a20d000e9260df5
+    name: 口渴就补水，别等
 
   - id: kidney-egfr-trend
     status: reviewed
@@ -159,9 +160,10 @@ cards:
           - '15% 不到'
           - '找家庭医生'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 2aed81c09e3e5481
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 99a2916c803943ee
+    name: 查 eGFR 看肾功能
 
   - id: kidney-doctor-thresholds
     status: reviewed
@@ -223,9 +225,10 @@ cards:
         text: '一旦它坏掉，就需要人工透析'
         quote: '一旦它坏掉，就需要人工透析'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: cca2a428f678cde0
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: a4c3ca82af356591
+    name: 肾功能降了会连累心血管
 
   - id: kidney-dehydration-hypoxia
     status: reviewed
@@ -271,6 +274,7 @@ cards:
         text: '脱水被认为是主因之一'
         quote: '脱水被认为是主因之一'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 481529bf28e480a2
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: a3f27453ad7154dc
+    name: 脱水就是肾脏缺氧

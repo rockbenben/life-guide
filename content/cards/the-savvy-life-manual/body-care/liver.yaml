@@ -47,9 +47,10 @@ cards:
         text: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
         quote: 'ALT 超过 30 的原因不止脂肪肝一种，还可能是病毒性肝炎、酒精性肝炎、自身免疫性肝炎，以及已经进展下去的肝硬化、肝癌。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 8967ca91aeff412e
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 308dc7f9efcd4c02
+    name: ALT 超 30 的多种原因
 
   - id: alt-cell-injury
     status: reviewed
@@ -192,9 +193,10 @@ cards:
         text: '目前没有能改善脂肪肝的药，推荐的是饮食加运动疗法。'
         quote: '目前没有能改善脂肪肝的药，推荐的是饮食加运动疗法。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 91631b540a5330de
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: a29aa9986bc9659f
+    name: 减重 3% 就能改善脂肪肝
 
   - id: alt-care-pathway
     status: reviewed
@@ -227,6 +229,7 @@ cards:
         text: '即使现在 ALT 不超过 30，过去长期超过 30 的人依然要注意。'
         quote: '即使现在 ALT 不超过 30，过去长期超过 30 的人依然要注意。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 75bfbe0f5f8ff8eb
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 2320828e8441ebc5
+    name: ALT 升高该去哪看

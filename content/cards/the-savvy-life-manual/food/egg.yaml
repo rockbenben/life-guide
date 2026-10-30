@@ -420,7 +420,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 30b78604bd8f2497
+      hash: 6b16d5d41ed47f81
+    name: 弱火慢搅的滑嫩炒蛋
 
   - id: creamy-egg-udon
     status: reviewed

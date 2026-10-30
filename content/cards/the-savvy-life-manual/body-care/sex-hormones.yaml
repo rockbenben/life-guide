@@ -39,9 +39,10 @@ cards:
         text: 40 岁以上须与医生商讨、50 岁以上原则上不使用
         quote: 40 岁以上须与医生商讨、50 岁以上原则上不使用
     review:
-      by: benson
-      date: 2026-10-21
-      hash: bdc0c6f6b1675669
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: fb7a72488f480273
+    name: 低剂量避孕药的利与弊
   # 2026-10-29 合并：common-side-effects、clot-risk、cancer-risk、future-pregnancy 并成这张卡。
   # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
   - id: contraceptive-risks
@@ -318,6 +319,7 @@ cards:
         text: 用激素疗法让子宫和卵巢「休息」，能减轻月经对身体造成的负担。
         quote: 用激素疗法让子宫和卵巢「休息」，能减轻月经对身体造成的负担。
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 0dc2c664121202bf
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: a7fc25c1271fe177
+    name: 两种激素一个月涨落一次

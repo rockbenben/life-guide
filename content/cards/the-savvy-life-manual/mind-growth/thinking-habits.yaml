@@ -119,9 +119,10 @@ cards:
           - '为了让人活下来而配备的机制'
           - '只能学会和它相处'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: cd89f70ea5241b43
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 12cc9405657995b8
+    name: 脑习惯不会消失，学会相处
   - id: know-brain-habit
     status: reviewed
     name: "知道脑习惯少被谣言带"

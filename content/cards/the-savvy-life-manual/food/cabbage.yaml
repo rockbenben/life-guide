@@ -75,9 +75,10 @@ cards:
         text: '提醒：做过焦香处理的卷心菜冷藏保存可以抑制臭味生成，但仍建议 2～3 天内吃完。'
         quote: '提醒：做过焦香处理的卷心菜冷藏保存可以抑制臭味生成，但仍建议 2～3 天内吃完。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: fcdeb8a81a5f5e4f
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 675d71f047ec5dcd
+    name: 卷心菜高温短时压臭味
   - id: blanched-sweet-cabbage
     status: reviewed
     source:

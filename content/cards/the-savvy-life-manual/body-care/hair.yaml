@@ -106,9 +106,10 @@ cards:
         text: "最后用冷风定型，让拉直的形状保持得更久。"
         quote: "最后用冷风定型，让拉直的形状保持得更久。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 845982cb685b3798
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 1441059e75778f8f
+    name: 卷发内回转 180 度拉直
   - id: scalp-based-hair-care
     status: draft
     source:

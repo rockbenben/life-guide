@@ -143,9 +143,10 @@ cards:
         text: '不存在一个喝多少就安全的量'
         quote: '不存在一个喝多少就安全的量'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 2c91ab80b1db6772
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: f48bfe4bd7cfed38
+    name: 用纯酒精量算饮酒账
   - id: use-nonalcoholic-drinks
     status: reviewed
     source:

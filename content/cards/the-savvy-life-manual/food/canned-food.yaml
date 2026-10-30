@@ -38,9 +38,10 @@ cards:
         text: '被浓缩过的美味如果直接拿来做菜，反而会让菜变咸发涩。'
         quote: '被浓缩过的美味如果直接拿来做菜，反而会让菜变咸发涩。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 5f966209dd6fe61b
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 0edd289e810fed5c
+    name: 罐头汁稀释后当高汤
 
   - id: opened-can-two-rules
     status: reviewed
@@ -239,4 +240,5 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: f197c5478249ad67
+      hash: ef0a8b6fccaa3c07
+    name: 水果罐头糖浆拌酸奶

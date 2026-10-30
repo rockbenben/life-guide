@@ -27,9 +27,10 @@ cards:
         text: '但这不等于可以放开吃。'
         quote: '但这不等于可以放开吃。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: c19a9f44e5d79827
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: c8d1f9968db1392f
+    name: 胆固醇上限已撤回
   - id: egg-cholesterol-boundary
     status: reviewed
     source:
@@ -59,9 +60,10 @@ cards:
         text: '说明书特别注明，一颗 M 号鸡蛋的胆固醇就有 200 毫克以上，所以数值高的人应当和主治医生商量摄取量。'
         quote: '说明书特别注明，一颗 M 号鸡蛋的胆固醇就有 200 毫克以上，所以数值高的人应当和主治医生商量摄取量。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 4e0abdc51c871643
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: d044ce519e18e1a5
+    name: 胆固醇偏高每天少于 200mg
   - id: blood-lipid-reference-values
     status: reviewed
     source:
@@ -87,9 +89,10 @@ cards:
         text: '超坏胆固醇的数值本身不算高，但患病风险是正常坏胆固醇的 3 倍，而且常规健康诊断并不测它。'
         quote: '超坏胆固醇的数值本身不算高，但患病风险是正常坏胆固醇的 3 倍，而且常规健康诊断并不测它。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: d7d07b37b25bbbbc
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 00de2568526d9d68
+    name: 血脂的三个参考值
   - id: japan-diet-food-pattern
     status: reviewed
     name: "日本式饮食搭配"

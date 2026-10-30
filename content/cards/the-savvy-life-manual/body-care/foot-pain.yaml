@@ -147,9 +147,10 @@ cards:
           - "即使已经出现症状，也不会马上就连到截肢"
           - "生活习惯的改善、投药、运动疗法都能抑制进展，还可以通过导管治疗或搭桥手术来改善血流。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 4cd1d6d76a3528fd
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 08d76638662a78da
+    name: 三分钟自查脚的缺血警讯
 
   - id: abi-screening-and-risk-score
     status: draft
@@ -263,9 +264,10 @@ cards:
         text: "节目请以站立工作为职业的警备会社（保安公司）人员配合，实测了弹性裤袜（弹力袜）的效果"
         quote: "节目请以站立工作为职业的警备会社（保安公司）人员配合，实测了弹性裤袜（弹力袜）的效果"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 20a5a7c4e6ff772d
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: ae5295703f7b15f9
+    name: 弹力袜的四步穿法
 
   - id: compression-stockings-contraindication
     status: reviewed

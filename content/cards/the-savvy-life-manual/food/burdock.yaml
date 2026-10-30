@@ -27,9 +27,10 @@ cards:
         text: '去皮和焯水会让多酚和鲜味一起流失'
         quote: '去皮和焯水会让多酚和鲜味一起流失'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: d4e5baf1d8bdcbfa
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: af7c12b2e30533fa
+    name: 牛蒡冲掉泥就能用
 
   - id: roast-grated-burdock
     status: reviewed

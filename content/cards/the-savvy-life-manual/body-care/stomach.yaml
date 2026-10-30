@@ -57,9 +57,10 @@ cards:
         text: '胃胀的主要原因是胃蠕动较弱，导致食物消化速度变慢。'
         quote: '胃胀的主要原因是胃蠕动较弱，导致食物消化速度变慢。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 24dfb5fcd5bb0179
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 5b75e5bdefcddc55
+    name: 胃胀的三条对策
 
   - id: heartburn-prevention
     status: reviewed
@@ -94,9 +95,10 @@ cards:
         text: '胃灼热主要是由于胃酸反流引起的，以下措施可以帮助预防和缓解：'
         quote: '胃灼热主要是由于胃酸反流引起的，以下措施可以帮助预防和缓解：'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: ac99a1e0fb1ac236
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 38feab20f8bbbe1a
+    name: 防止胃灼热
 
   - id: h-pylori-screening
     status: reviewed
@@ -183,9 +185,10 @@ cards:
         text: '靠饮食调整压不住，需要医生评估是否需要用药。'
         quote: '靠饮食调整压不住，需要医生评估是否需要用药。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 533ee7896f91fbf4
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 020768049a4af260
+    name: 胃痛出现这些信号要去医院
 
   - id: stomach-pain-management
     status: reviewed
@@ -214,9 +217,10 @@ cards:
         text: '如果你有胃部不适，建议咨询医生或药剂师以获得更合适的治疗方案。'
         quote: '如果你有胃部不适，建议咨询医生或药剂师以获得更合适的治疗方案。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 1e655762ec1cabaf
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 0adfd303a6d834cb
+    name: 胃痛的对策
 
   - id: functional-dyspepsia-check
     status: reviewed
@@ -252,6 +256,7 @@ cards:
         text: '如果其中之一间歇性持续一个月以上，就有嫌疑。'
         quote: '如果其中之一间歇性持续一个月以上，就有嫌疑。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 38a361cda39586c6
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 2b0c96de45b63fde
+    name: 对照症状自查消化不良

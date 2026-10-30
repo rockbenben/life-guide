@@ -118,7 +118,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 5a735dfe932e00fa
+      hash: 736a7fd1196c14e6
+    name: 土豆冷藏一晚生抗性淀粉
   - id: mash-potato-for-starch
     status: reviewed
     source:

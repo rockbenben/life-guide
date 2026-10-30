@@ -125,7 +125,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 0b7b4559a0eb2dee
+      hash: abaa682330e4b802
+    name: 饺子先蒸后煎出焦壳
   - id: gyoza-few-pleats
     status: reviewed
     source:
@@ -159,9 +160,10 @@ cards:
         text: '包好的饺子用上面「煎法」一节的煎法去煎，会得到更饱满、更糯糯的饺子。'
         quote: '包好的饺子用上面「煎法」一节的煎法去煎，会得到更饱满、更糯糯的饺子。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 87897740474aa9c9
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: b27c5d6dfe7cc927
+    name: 少褶包法锁住肉汁
   - id: gyoza-cabbage-pork-filling
     status: reviewed
     name: "白菜猪肉馅"

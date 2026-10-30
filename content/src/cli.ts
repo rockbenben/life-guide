@@ -41,6 +41,8 @@ import {
   durationForStep,
   writeStepDuration,
 } from "./step-duration.ts";
+import { CARD_NAMES } from "./card-names.ts";
+import { applyNames, checkNameList } from "./card-name-tool.ts";
 import {
   SIGNING_LIST_FILE,
   buildSigningList,
@@ -1074,6 +1076,65 @@ function cmdStepDuration(): number {
   return 0;
 }
 
+// -------------------------------------------------------------------- 补名
+
+/**
+ * 给缺名的卡补上动作名。
+ *
+ * 名册在 `card-names.ts`（人写的）。默认只列不改 —— 写盘要重签（R12）。
+ * `--apply` 才写。写之前先查名册本身：太长、撞名、id 对不上，都要报出来。
+ */
+function cmdCardNames(): number {
+  const apply = has("apply");
+  const loaded = loadAllCards(CARDS_DIR);
+
+  const cardsById = new Map<string, { file: string; name?: string; anchor: string }>();
+  const missing: { id: string; file: string; anchor: string }[] = [];
+  for (const l of loaded) {
+    for (const c of l.data.cards) {
+      const anchor = (c.source?.anchor ?? "").trim();
+      cardsById.set(c.id, { file: l.file, name: c.name, anchor });
+      if (!c.name && c.status === "reviewed") {
+        missing.push({ id: c.id, file: l.file, anchor });
+      }
+    }
+  }
+
+  const problems = checkNameList(cardsById);
+  if (problems.length) {
+    console.log("\n名册有问题：");
+    for (const p of problems) console.log(`  ${p.id}：${p.problem}`);
+  }
+
+  const toWrite = Object.keys(CARD_NAMES).filter((id) => cardsById.has(id));
+  const notInList = missing.filter((m) => !CARD_NAMES[m.id]);
+
+  console.log(`\n缺名的已签字卡：${missing.length} 张`);
+  console.log(`  名册覆盖：${toWrite.length} 张`);
+  if (notInList.length) {
+    console.log(`  **名册里没有的（要补名才算齐）：${notInList.length} 张**`);
+    for (const m of notInList) console.log(`    ${m.id}  （${m.anchor}）`);
+  }
+
+  if (!apply) {
+    console.log("（只列不改。要写盘加 --apply —— 写完要重签。）");
+    return problems.length ? 1 : 0;
+  }
+
+  let written = 0;
+  const files = new Set<string>();
+  for (const id of toWrite) {
+    const c = cardsById.get(id)!;
+    if (applyNames(c.file, id, CARD_NAMES[id])) {
+      written++;
+      files.add(c.file);
+    }
+  }
+  console.log(`\n已写入 ${written} 个名字，涉及 ${files.size} 个卡文件。`);
+  console.log("改过的卡要重签：npm run content:review <cardId> --by <名字> --resign");
+  return problems.length ? 1 : 0;
+}
+
 // -------------------------------------------------------------------- main
 
 const cmd = process.argv[2];
@@ -1112,6 +1173,9 @@ switch (cmd) {
   case "step-duration":
     code = cmdStepDuration();
     break;
+  case "card-names":
+    code = cmdCardNames();
+    break;
   default:
     console.log(`内容管线 CLI
 
@@ -1127,6 +1191,7 @@ switch (cmd) {
   content approx-check                          # 列出「原文写了约、卡上没标」的剂量行
   content repair-quotes                        # 给 draft 卡补全漏掉的引文
   content step-duration [--apply] [--card <id>]  # 步级时长：列出候选 / 写盘
+  content card-names [--apply]                  # 给缺名的卡补动作名
 `);
     code = cmd ? 2 : 0;
 }

@@ -62,9 +62,10 @@ cards:
         text: 这就是它难被发现的原因。
         quote: '这就是它难被发现的原因。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 514728afd4a87347
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 21277d70e65640ea
+    name: 青光眼拿走的是视野
 
   - id: glaucoma-brain-completion
     status: reviewed
@@ -138,9 +139,10 @@ cards:
         text: 草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。
         quote: '草消失时画面上并没有破个洞，四瓣草仍然被周围的图案填满。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: e652f52ca52deba6
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: b34b7938bbf1f1a6
+    name: 亲手找出自己的盲点
 
   - id: glaucoma-risk-factors
     status: draft
@@ -272,6 +274,7 @@ cards:
         text: 等到自己觉得"看不清"，常常已经过了中期。
         quote: '等到自己觉得"看不清"，常常已经过了中期。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 4af4dd88360f596b
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: d1a2f8fcabab0596
+    name: 青光眼要查哪几项

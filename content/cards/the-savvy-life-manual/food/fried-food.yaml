@@ -83,9 +83,10 @@ cards:
         text: '另外带加湿功能的冰箱可能没有效果，使用前请确认冰箱说明书。'
         quote: '另外带加湿功能的冰箱可能没有效果，使用前请确认冰箱说明书。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 78536f1f3b553682
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: ccd923c6d02fcb77
+    name: 食材过夜风干再下锅
 
   - id: tempura-recipe
     status: reviewed

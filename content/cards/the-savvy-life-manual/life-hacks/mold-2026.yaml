@@ -34,9 +34,10 @@ cards:
         text: '没有专门技术的人自己拆洗，有可能导致空调故障'
         quote: '没有专门技术的人自己拆洗，有可能导致空调故障'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: b9587b3f152b2312
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 6438347b2acb6e68
+    name: 空调内部要请专业业者洗
 
   - id: ac-start-with-ventilation
     status: reviewed
@@ -170,6 +171,7 @@ cards:
         text: '哮喘患者、霉菌过敏者、患有肺部或支气管疾病的人——这三类人身上的病有可能被霉菌加重，需要格外注意。说明书要求：具体请咨询自己的医生。'
         quote: '哮喘患者、霉菌过敏者、患有肺部或支气管疾病的人——这三类人身上的病有可能被霉菌加重，需要格外注意。说明书要求：具体请咨询自己的医生。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: d73043e422c7a009
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: f05bf8b6fc707ab1
+    name: 洗衣槽用含氯剂清洁

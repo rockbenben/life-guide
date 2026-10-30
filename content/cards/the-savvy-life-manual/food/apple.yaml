@@ -146,8 +146,9 @@ cards:
         quote: "提前拌这一步很关键"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 8d9cef6bd110b288
+      date: 2026-10-31
+      hash: b9abff432c1ed0e7
+    name: 盐苹果拌绞肉做肉酱
 
   - id: make-tender-chicken-breast
     status: reviewed
@@ -229,7 +230,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 4220a792611f5d5f
+      hash: 9b7ead6503987258
+    name: 盐苹果揉鸡胸肉不柴
 
   - id: store-whole-apple
     status: reviewed

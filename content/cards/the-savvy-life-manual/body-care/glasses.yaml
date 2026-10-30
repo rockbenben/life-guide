@@ -110,9 +110,10 @@ cards:
           - '装上调节好的测试镜片后再确认。'
           - '平时看近处时间长的人，一定要确认必要的视距，不能只测远处。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: e78789c3169fc6c3
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 1c904ca7f4093446
+    name: 测一次睫状肌负担度
   - id: clean-lenses-with-water
     status: reviewed
     source:
@@ -153,9 +154,10 @@ cards:
           - '镜片表面附着肉眼看不见的细小砂粒和铁粉。'
           - '察觉不到它们、直接把布压上去来回擦，这些颗粒就会被推着划进镜片表面。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: ca1d10485fc5eb8b
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: bf0ceaa3c52484b1
+    name: 镜片先冲水再擦
   - id: seek-eye-care-for-strain
     status: reviewed
     source:

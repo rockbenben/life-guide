@@ -76,9 +76,10 @@ cards:
         text: 浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐：加 1 茶匙，有引出鲜味的效果。
         quote: 浇了牛奶的麦片、味噌汤、生蛋盖饭、冷豆腐：加 1 茶匙，有引出鲜味的效果。
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 7ab25f72d724111f
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 9fe6f67ced08397a
+    name: 每天 1 茶匙欧米伽 3 怎么放
 
   - id: cold-infused-flavor-oil
     status: reviewed

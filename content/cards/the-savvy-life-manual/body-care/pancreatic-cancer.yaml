@@ -388,9 +388,10 @@ cards:
         text: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
         quote: "是否需要检查、多久查一次，请由医生判断，不要照着这张表自我诊断。"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 0a9d7618dfa7858b
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 7a3659ebca29f7c3
+    name: 看胰腺癌该怎么说怎么查
 
   - id: abdominal-ultrasound-safety
     status: reviewed

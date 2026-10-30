@@ -68,7 +68,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 2709d5ab0b81433c
+      hash: 783580d18054e8db
+    name: 咬肌按摩 10 秒
   - id: chin-ball-exhale-press
     status: reviewed
     source:

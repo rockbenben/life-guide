@@ -107,7 +107,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: bf7f2759e7b552c7
+      hash: 773537544f8a10df
+    name: 蒜水按用途调两种浓度
   - id: garlic-water-vegetable-stir-fry
     status: reviewed
     source:

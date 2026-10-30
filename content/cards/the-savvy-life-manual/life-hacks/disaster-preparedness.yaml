@@ -87,9 +87,10 @@ cards:
         text: "用过的便携厕所不要囤积——堆积会成为传染病的源头，尽量频繁处理"
         quote: "用过的便携厕所不要囤积——堆积会成为传染病的源头，尽量频繁处理"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 624168a1cd517078
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 1249c662aa372585
+    name: 便携厕所三步用
 
   - id: disaster-message-record
     status: reviewed
@@ -161,9 +162,10 @@ cards:
         text: "最后按提示选择并播放留言（有多个留言时需逐个选择）"
         quote: "最后按提示选择并播放留言（有多个留言时需逐个选择）"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 52a98c481acb3a07
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 3f90cba3b2c87119
+    name: 拨 171 按 2 收听留言
 
   - id: altruistic-disaster-preparedness
     status: reviewed
@@ -190,9 +192,10 @@ cards:
           - "固定家具"
           - "重要的人可能被家具压住"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 2e00a4c1acc6e6c7
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: af7b8e7ffe5163df
+    name: 把应急食品当礼物送出去
 
   - id: post-earthquake-no-flushing
     status: reviewed
@@ -255,6 +258,7 @@ cards:
         text: "血栓一旦堵住肺，就会引发呼吸困难或猝死"
         quote: "血栓一旦堵住肺，就会引发呼吸困难或猝死"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 077843835d3897bd
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: dcd730d1ce60e683
+    name: 断水时别硬憋也别少吃

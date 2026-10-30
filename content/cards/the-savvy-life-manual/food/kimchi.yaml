@@ -73,9 +73,10 @@ cards:
         text: '试验由乳酸菌专业厂商协助完成。'
         quote: '试验由乳酸菌专业厂商协助完成。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 64bec228a6aa4d0d
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 93ce00d603fca5a6
+    name: 看容器预判泡菜酸度
   - id: kimchi-simple-paste
     status: reviewed
     name: "简易泡菜腌料"

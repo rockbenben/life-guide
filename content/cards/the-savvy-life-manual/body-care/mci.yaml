@@ -157,9 +157,10 @@ cards:
         text: '视 MCI 的原因不同，只改善生活习惯有时难以取得效果。MCI 的人应该在治疗的同时并行去做。'
         quote: '视 MCI 的原因不同，只改善生活习惯有时难以取得效果。MCI 的人应该在治疗的同时并行去做。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 4be69694bce331a0
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: bca479f0b6dbfcfd
+    name: 改善认知的四件事一起做
   - id: daily-supportive-call
     status: reviewed
     source:
@@ -201,9 +202,10 @@ cards:
         text: '电话有改善老年人心理孤立感的效果'
         quote: '电话有改善老年人心理孤立感的效果'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 453a7a91e5796d62
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 78c14333262b922f
+    name: 每天给家人打 1 通电话
   - id: community-support-center
     status: draft
     source:

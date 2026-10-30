@@ -141,9 +141,10 @@ cards:
           - "冷藏过的食材要"
           - "提前吃完，大约两天以内"
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 1295f61a1b6e80cc
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 8a9acbffe1a01a79
+    name: 冷藏一夜，纤维多 1 分
 
   - id: staple-food-score-guide
     status: draft

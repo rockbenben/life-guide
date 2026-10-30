@@ -54,9 +54,10 @@ cards:
         text: '豆渣和玉米淀粉先拌匀'
         quote: '豆渣和玉米淀粉先拌匀'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: cfcee0f4c1b487ec
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 531eb1983ed8ac81
+    name: 豆渣吸水后拌油锁水
 
   - id: okara-vegetable-stew
     status: reviewed

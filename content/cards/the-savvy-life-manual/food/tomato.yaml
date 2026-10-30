@@ -138,7 +138,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: c2528d71465f15fd
+      hash: 4fb211ac1875f745
+    name: 奥田式番茄酱：油番茄配平
   - id: use-tomato-paste
     status: reviewed
     source:

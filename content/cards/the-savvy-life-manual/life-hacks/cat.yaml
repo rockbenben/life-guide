@@ -141,7 +141,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 87489c8a19283ec8
+      hash: e69fcce3822c43dc
+    name: 超慢眨眼四步，一次 3 秒
 
   - id: keep-cat-fully-indoors
     status: reviewed

@@ -146,7 +146,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 3a944d5bf49bf263
+      hash: 0dd857d333c8f2c0
+    name: 微波甘根火腿蛋
 
   - id: fried-spicy-root-chips
     status: reviewed

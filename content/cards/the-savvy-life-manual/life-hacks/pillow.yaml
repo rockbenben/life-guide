@@ -85,9 +85,10 @@ cards:
         text: '身体疼痛的原因并不全在枕头。疼痛强烈等情况，请就近就诊整形外科。'
         quote: '身体疼痛的原因并不全在枕头。疼痛强烈等情况，请就近就诊整形外科。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 92d3d327e9afc61c
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: dee743b90bd90a8d
+    name: 在家量出适合自己的枕头高度
   - id: use-cool-pillow
     status: reviewed
     source:

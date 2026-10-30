@@ -147,7 +147,8 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 90ed9059ef98ceda
+      hash: 4218caaf54798c1d
+    name: 一分钟也能冥想
 
   - id: meditation-as-self-care
     status: reviewed

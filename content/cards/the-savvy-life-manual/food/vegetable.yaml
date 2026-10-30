@@ -97,9 +97,10 @@ cards:
         text: '从较低温度慢慢加温，让生成异硫氰酸酯的黑芥子酶不容易被抑制（失活），苦味就能留住。'
         quote: '从较低温度慢慢加温，让生成异硫氰酸酯的黑芥子酶不容易被抑制（失活），苦味就能留住。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 414cc538918bc1a9
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 9dd5ee5910483199
+    name: 故意留苦：慢慢加温
   - id: diagonal-cut-vegetables
     status: reviewed
     name: "蔬菜斜切留大断面"

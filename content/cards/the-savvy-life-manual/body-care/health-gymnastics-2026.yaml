@@ -211,9 +211,10 @@ cards:
         text: '册子的红字前提：任何一个动作，只要身体出现疼痛就请中止。'
         quote: '册子的红字前提：任何一个动作，只要身体出现疼痛就请中止。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 248989c5d675f632
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 5a7a576aa83c82e9
+    name: 做动作前的三步准备
   - id: one-month-consistency
     status: reviewed
     name: "先坚持满 1 个月"

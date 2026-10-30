@@ -315,9 +315,10 @@ cards:
           - '也别立刻起身'
           - '此时血压处在较低位置，突然改变姿势容易体位性低血压'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: fff24b3c0a804394
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: d095c3dc8bfd574e
+    name: 泡完冲冷水再起身
 
   - id: pre-sleep-hot-bath
     status: reviewed

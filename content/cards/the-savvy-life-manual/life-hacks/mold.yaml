@@ -93,8 +93,9 @@ cards:
         quote: '对于顽固的霉菌，可以重复以上步骤多次。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: fac9268d7addb6ba
+      date: 2026-10-31
+      hash: 83513611b7a0e9a5
+    name: 除霉：酒精喷后压 1 分钟
   - id: mold-furniture-gap
     status: reviewed
     source:
@@ -126,6 +127,7 @@ cards:
         text: '家具背后积的霉会同时成为异味来源，还会沾到衣物上。'
         quote: '家具背后积的霉会同时成为异味来源，还会沾到衣物上。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: c1dbeedf92087fa4
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: ac1521862629152c
+    name: 家具留 4 厘米缝防复发
