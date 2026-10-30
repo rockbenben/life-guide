@@ -121,6 +121,24 @@ describe("网盘（WebDAV）落点", () => {
     expect(calls[0].headers.authorization).toBe("Basic " + btoa("u:p"));
   });
 
+  it("账号密码里有中文也不炸（btoa 只认 Latin1）", async () => {
+    // 自建/NAS 的本地账号密码带中文很常见 ——
+    // btoa 遇到非 Latin1 直接抛 InvalidCharacterError，连传输层都造不出来。
+    const { calls } = useFakeFetch(() => ({ status: 404 }));
+    const t = webdavTransport({
+      url: "https://dav.example/dav",
+      user: "小明",
+      password: "密码123",
+    });
+    await t.fetch("space1");
+    const auth = calls[0].headers.authorization as string;
+    const raw = atob(auth.slice("Basic ".length));
+    const decoded = new TextDecoder().decode(
+      Uint8Array.from(raw, (c) => c.charCodeAt(0)),
+    );
+    expect(decoded).toBe("小明:密码123");
+  });
+
   it("读回来的密文能解，版本号就是 ETag", async () => {
     useFakeFetch(() => ({
       status: 200,

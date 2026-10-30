@@ -56,6 +56,23 @@ import {
 const NOTICE_MS = 6000;
 
 /**
+ * 每个落点一句话：这个位置要什么、能在哪儿用。
+ *
+ * **放在选择器下面，而不是塞进选项名里**：
+ * 选项名长成一句话（「网盘 WebDAV（坚果云 / Nextcloud / NAS / 局域网自建；
+ * 桌面与 Android 手机能用）」）时，下拉框读起来像一堵墙 ——
+ * 拆成「短名字 + 下面一行说明」，选哪个一眼就清楚，不用展开看。
+ */
+const KIND_HINT: Record<SyncKind, string> = {
+  webdav:
+    "坚果云、Nextcloud、NAS 都自带这个；局域网里自己搭的那台也行（填它的地址，比如 http://192.168.1.9:5006/dav/）。桌面端与 Android 手机能用；浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）。",
+  github:
+    "不用自己搭服务器：仓库要私有，Token 只要 repo 权限。数据放在仓库的 life-guide/ 目录里，只有一串看不出内容的密文。三端都能用，浏览器里也行。",
+  http:
+    "部署仓库里带的那个 Worker（sync/README.md），填它的地址就行。适合想自己掌控那个服务的人。",
+};
+
+/**
  * 源码仓库。设置页「关于」里那一条链到这里。
  *
  * 仓库公开之后，这个地址就是陌生人能看到的第一个入口 —— 看说明、提 issue、给星标都从这儿走。
@@ -131,7 +148,6 @@ export function Settings({
   const [syncUser, setSyncUser] = useState("");
   const [syncPassword, setSyncPassword] = useState("");
   const [syncToken, setSyncToken] = useState("");
-  const [syncPath, setSyncPath] = useState("");
   const [syncPass, setSyncPass] = useState("");
   const [syncBusy, setSyncBusy] = useState(false);
   /** 同步的结果（留在这一节里，别一闪而过） */
@@ -178,7 +194,6 @@ export function Settings({
       setSyncUser(cfg.user);
       setSyncPassword(cfg.password);
       setSyncToken(cfg.token);
-      setSyncPath(cfg.path);
       setSyncPass(cfg.passphrase);
       setSyncLast(await lastSyncAt());
     })();
@@ -236,23 +251,47 @@ export function Settings({
   }
 
   /**
-   * 同步一轮。
+   * 现在输入框里的这些（一份完整的配置）。
    *
-   * `save` 为真时先把地址与口令存下来 —— 用户填完就点「保存并同步」，
-   * 不该还要再点一次「保存」。
+   * 每次都用它拼 —— 少一处忘了同步，症状就是「改了没生效」，
+   * 而那种症状最难查（界面上明明填对了）。
    */
-  async function runSync(save: boolean) {
-    const conf: SyncConfig = {
+  function currentConfig(overrides?: Partial<SyncConfig>): SyncConfig {
+    return {
       enabled: syncOn,
       kind: syncKind,
       serverUrl: syncUrl.trim(),
       user: syncUser.trim(),
       password: syncPassword,
       token: syncToken.trim(),
-      path: syncPath.trim(),
       passphrase: syncPass,
+      ...overrides,
     };
-    if (save) await saveSyncConfig(conf);
+  }
+
+  /**
+   * 存下现在的配置。
+   *
+   * **字段失焦即存**（每个输入框的 onBlur）：填完一项走开就存好了，
+   * 不必再找「哪个按钮能存」。
+   *
+   * 之前是「保存并同步」与「立即同步」两个按钮 —— 那个「立即同步」用的是
+   * **没存**的输入框内容：改了地址点它，这一轮确实用新地址同步了，
+   * 存下去的却还是旧地址 → 之后的自动同步又用回旧地址（这种问题最难查）。
+   */
+  async function persistConfig(overrides?: Partial<SyncConfig>): Promise<void> {
+    await saveSyncConfig(currentConfig(overrides));
+  }
+
+  /**
+   * 同步一轮。
+   *
+   * **先存后同步**：存的和用的永远是同一份 —— 不会出现
+   * 「这一轮用的是新地址、存的是旧地址」那种两处不一样的情况。
+   */
+  async function runSync(overrides?: Partial<SyncConfig>) {
+    const conf = currentConfig(overrides);
+    await saveSyncConfig(conf);
     const problem = syncConfigProblem(conf);
     if (problem) {
       setSyncMsg(problem);
@@ -594,15 +633,16 @@ export function Settings({
           打开之后，每台设备填同一个同步口令，
           盖章记录、日常清单、条件、提醒、自己加的习惯就能在设备之间来回走。
         </p>
-        <p>
-          放在哪儿由你选：<strong>网盘</strong>或<strong>GitHub 私有仓库</strong>都不用自己搭服务器
-          （GitHub 那条浏览器里也能用，网盘那条只有桌面端与手机端能用）；
-          也可以指向你自己跑的中转服务。
-        </p>
-        <p>
-          上传的只有加密后的内容：口令只存在这台设备上，
-          服务器拿到的是解不开的密文。
-        </p>
+        <details class="lg-disclose">
+          <summary>这安全吗？服务器上存的是什么？</summary>
+          <p>
+            上传的只有加密后的内容：口令只存在这台设备上，
+            服务器拿到的是解不开的密文。
+          </p>
+          <p>
+            换设备时不用再导文件：在新设备上填同一个地址、同一个口令就行。
+          </p>
+        </details>
 
         <label class="lg-remcheck">
           <input
@@ -611,10 +651,13 @@ export function Settings({
             onChange={async (e) => {
               const on = (e.target as HTMLInputElement).checked;
               setSyncOn(on);
-              await saveSyncConfig({ enabled: on });
-              // 刚打开就同步一次：用户填过地址与口令的话，
-              // 这一下就能看到"另一台设备上的记录出现了"。
-              if (on) void runSync(false);
+              if (on) {
+                // 刚打开就同步一次：用户填过地址与口令的话，
+                // 这一下就能看到"另一台设备上的记录出现了"。
+                await runSync({ enabled: true });
+              } else {
+                await persistConfig({ enabled: false });
+              }
             }}
           />
           <span>开启同步</span>
@@ -627,15 +670,18 @@ export function Settings({
               <select
                 class="lg-syncselect"
                 value={syncKind}
-                onChange={(e) =>
-                  setSyncKind((e.target as HTMLSelectElement).value as SyncKind)
-                }
+                onChange={(e) => {
+                  const kind = (e.target as HTMLSelectElement).value as SyncKind;
+                  setSyncKind(kind);
+                  void persistConfig({ kind });
+                }}
               >
-                <option value="webdav">网盘 WebDAV（坚果云 / Nextcloud / NAS / 局域网自建；桌面与 Android 手机能用）</option>
-                <option value="github">GitHub 私有仓库（不用自己搭服务器，三端都能用）</option>
-                <option value="http">自己搭的中转服务（sync/ 那个 Worker）</option>
+                <option value="webdav">网盘（坚果云 / Nextcloud / NAS / 局域网自建）</option>
+                <option value="github">GitHub 私有仓库</option>
+                <option value="http">自己搭的中转服务</option>
               </select>
             </label>
+            <p class="lg-pool">{KIND_HINT[syncKind]}</p>
 
             {syncKind === "github" ? (
               <>
@@ -650,19 +696,7 @@ export function Settings({
                     autocomplete="off"
                     spellcheck={false}
                     onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
-                  />
-                </label>
-                <label class="lg-synccfg">
-                  <span>
-                    目录<small>（可空 → 放仓库根下）</small>
-                  </span>
-                  <input
-                    type="text"
-                    value={syncPath}
-                    placeholder="life-guide"
-                    autocomplete="off"
-                    spellcheck={false}
-                    onChange={(e) => setSyncPath((e.target as HTMLInputElement).value)}
+                    onBlur={() => void persistConfig()}
                   />
                 </label>
                 <label class="lg-synccfg">
@@ -677,6 +711,7 @@ export function Settings({
                     placeholder="ghp_…"
                     autocomplete="off"
                     onChange={(e) => setSyncToken((e.target as HTMLInputElement).value)}
+                    onBlur={() => void persistConfig()}
                   />
                 </label>
               </>
@@ -691,10 +726,11 @@ export function Settings({
                   <input
                     type="text"
                     value={syncUrl}
-                    placeholder="https://dav.jianguoyun.com/dav/ 或 http://192.168.1.9:5006/dav/"
+                    placeholder="http://192.168.1.9:5006/dav/ 或 https://dav.jianguoyun.com/dav/"
                     autocomplete="off"
                     spellcheck={false}
                     onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
+                    onBlur={() => void persistConfig()}
                   />
                 </label>
                 <label class="lg-synccfg">
@@ -704,6 +740,7 @@ export function Settings({
                     value={syncUser}
                     autocomplete="off"
                     onChange={(e) => setSyncUser((e.target as HTMLInputElement).value)}
+                    onBlur={() => void persistConfig()}
                   />
                 </label>
                 <label class="lg-synccfg">
@@ -715,14 +752,9 @@ export function Settings({
                     value={syncPassword}
                     autocomplete="off"
                     onChange={(e) => setSyncPassword((e.target as HTMLInputElement).value)}
+                    onBlur={() => void persistConfig()}
                   />
                 </label>
-                <p class="lg-pool">
-                  坚果云、Nextcloud、NAS 都自带这个；<strong>局域网里自己搭的那台也行</strong>
-                  （填它的地址，比如 http://192.168.1.9:5006/dav/）。
-                  浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）——
-                  桌面端与 Android 手机能直接连，桌面端连明文的 http:// 也没问题。
-                </p>
               </>
             ) : null}
 
@@ -736,6 +768,7 @@ export function Settings({
                   autocomplete="off"
                   spellcheck={false}
                   onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
+                  onBlur={() => void persistConfig()}
                 />
               </label>
             ) : null}
@@ -750,22 +783,16 @@ export function Settings({
                 placeholder="一句你不会忘的话"
                 autocomplete="off"
                 onChange={(e) => setSyncPass((e.target as HTMLInputElement).value)}
+                onBlur={() => void persistConfig()}
               />
             </label>
             <div class="lg-btn-row" style="margin-top:10px">
               <button
                 class="lg-btn"
                 disabled={syncBusy}
-                onClick={() => void runSync(true)}
+                onClick={() => void runSync()}
               >
-                {syncBusy ? "同步中…" : "保存并同步"}
-              </button>
-              <button
-                class="lg-btn lg-btn-ghost"
-                disabled={syncBusy || !syncOn}
-                onClick={() => void runSync(false)}
-              >
-                立即同步
+                {syncBusy ? "同步中…" : "立即同步"}
               </button>
             </div>
             {syncMsg ? <p class="lg-pool">{syncMsg}</p> : null}

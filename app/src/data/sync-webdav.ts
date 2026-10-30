@@ -36,10 +36,24 @@ export interface WebdavOptions {
   password: string;
 }
 
+/**
+ * Basic 认证的头。
+ *
+ * **要按 UTF-8 编**：btoa 只认 Latin1 —— 账号或密码里有中文/符号时它直接抛
+ * `InvalidCharacterError`，传输层都构造不出来（自建/NAS 的本地账号密码带中文很常见）。
+ * RFC 7617 没规定字符集 nowadays 的事实标准是 UTF-8，服务器多半也这么解。
+ */
+function basicAuth(user: string, password: string): string {
+  const bytes = new TextEncoder().encode(`${user}:${password}`);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return "Basic " + btoa(bin);
+}
+
 export function webdavTransport(opts: WebdavOptions): SyncTransport {
   const base = opts.url.trim().replace(/\/+$/, "");
   if (!base) throw new Error("还没填网盘地址");
-  const auth = "Basic " + btoa(`${opts.user}:${opts.password}`);
+  const auth = basicAuth(opts.user, opts.password);
   /**
    * 文件名：前缀 + 空间 id。
    *

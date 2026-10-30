@@ -1258,6 +1258,24 @@
   color: var(--lg-ink-2);
   letter-spacing: 0.12em;
 }
+/* 设置里的「展开看细节」：默认收起，要问的人点开 */
+.lg-disclose {
+  margin: 8px 0 0;
+}
+.lg-disclose > summary {
+  cursor: pointer;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+}
+.lg-disclose > summary:hover {
+  color: var(--lg-ink-2);
+}
+.lg-disclose > p {
+  margin: 6px 0 0;
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+}
+
 .lg-pool {
   margin: 8px 0 0;
   font-size: var(--lg-t2);

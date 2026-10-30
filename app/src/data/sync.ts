@@ -96,8 +96,6 @@ export interface SyncConfig {
   password: string;
   /** `github`：Personal Access Token */
   token: string;
-  /** `github`：仓库里的目录（可空 → 仓库根下） */
-  path: string;
   /** 同步口令：只存在这台设备，不上传 */
   passphrase: string;
 }
@@ -108,7 +106,6 @@ const KEY_SERVER = "syncServer";
 const KEY_USER = "syncUser";
 const KEY_PASSWORD = "syncPassword";
 const KEY_TOKEN = "syncToken";
-const KEY_PATH = "syncPath";
 const KEY_PASSPHRASE = "syncPassphrase";
 const KEY_LAST_AT = "syncLastAt";
 /** 上次传上去的那份内容的指纹 —— 用来判断"这次要不要真传" */
@@ -130,18 +127,16 @@ function spaceKeyOf(cfg: SyncConfig, spaceId: string): string {
 
 /** 读同步设置。 */
 export async function readSyncConfig(): Promise<SyncConfig> {
-  const [enabled, kind, serverUrl, user, password, token, path, passphrase] =
-    await Promise.all([
-      getSetting<boolean>(KEY_ENABLED, false),
-      getSetting<SyncKind>(KEY_KIND, "webdav"),
-      getSetting<string>(KEY_SERVER, ""),
-      getSetting<string>(KEY_USER, ""),
-      getSetting<string>(KEY_PASSWORD, ""),
-      getSetting<string>(KEY_TOKEN, ""),
-      getSetting<string>(KEY_PATH, ""),
-      getSetting<string>(KEY_PASSPHRASE, ""),
-    ]);
-  return { enabled, kind, serverUrl, user, password, token, path, passphrase };
+  const [enabled, kind, serverUrl, user, password, token, passphrase] = await Promise.all([
+    getSetting<boolean>(KEY_ENABLED, false),
+    getSetting<SyncKind>(KEY_KIND, "webdav"),
+    getSetting<string>(KEY_SERVER, ""),
+    getSetting<string>(KEY_USER, ""),
+    getSetting<string>(KEY_PASSWORD, ""),
+    getSetting<string>(KEY_TOKEN, ""),
+    getSetting<string>(KEY_PASSPHRASE, ""),
+  ]);
+  return { enabled, kind, serverUrl, user, password, token, passphrase };
 }
 
 /** 写同步设置。 */
@@ -152,7 +147,6 @@ export async function saveSyncConfig(cfg: Partial<SyncConfig>): Promise<void> {
   if (cfg.user !== undefined) await setSetting(KEY_USER, cfg.user.trim());
   if (cfg.password !== undefined) await setSetting(KEY_PASSWORD, cfg.password);
   if (cfg.token !== undefined) await setSetting(KEY_TOKEN, cfg.token.trim());
-  if (cfg.path !== undefined) await setSetting(KEY_PATH, cfg.path.trim());
   if (cfg.passphrase !== undefined) await setSetting(KEY_PASSPHRASE, cfg.passphrase);
 }
 
@@ -162,13 +156,31 @@ export async function lastSyncAt(): Promise<number | null> {
   return v ?? null;
 }
 
-/** 现在这份配置能不能同步 —— 不能的话给一句人话。 */
+/**
+ * 现在这份配置能不能同步 —— 不能的话给一句人话。
+ *
+ * **地址的形状也要在这里查**：少了协议头（`192.168.1.9:5006`）在桌面端报的是
+ * 「地址不合法」，在浏览器端报的是「Failed to fetch」→ 都被翻译成
+ * 「地址填对没有、网络通不通」—— 用户看不出是自己少打了 `http://`。
+ * 在这儿拦住，才能说清要改哪。
+ */
 export function syncConfigProblem(cfg: SyncConfig): string | null {
   if (!cfg.enabled) return "同步没开";
   if (!cfg.serverUrl) {
     return cfg.kind === "github" ? "还没填仓库（owner/repo）" : "还没填地址";
   }
-  if (cfg.kind === "github" && !cfg.token) return "还没填 GitHub Token";
+  if (cfg.kind === "github") {
+    if (!/^[\w.-]+\/[\w.-]+$/.test(cfg.serverUrl)) return "仓库要写成 owner/repo";
+    if (!cfg.token) return "还没填 GitHub Token";
+  }
+  if (cfg.kind === "webdav" || cfg.kind === "http") {
+    if (!/^https?:\/\//i.test(cfg.serverUrl)) return "地址要以 http:// 或 https:// 开头";
+    try {
+      new URL(cfg.serverUrl);
+    } catch {
+      return "地址不合法（检查一下有没有少字符或多空格）";
+    }
+  }
   if (cfg.kind === "webdav" && !cfg.user) return "还没填网盘账号";
   if (!cfg.passphrase) return "还没填同步口令";
   if (cfg.passphrase.length < PASS_MIN) return `同步口令至少 ${PASS_MIN} 个字`;
@@ -184,7 +196,12 @@ export function createTransport(cfg: SyncConfig): SyncTransport {
   if (cfg.kind === "github") {
     return githubTransport({
       repo: cfg.serverUrl,
-      dir: cfg.path || undefined,
+      // 固定放在仓库的 life-guide/ 目录里 —— 界面上不再让用户填「目录」那项
+      // （填了也是空的居多，少一个字段少一次犹豫）。
+      //
+      // **必须是固定值**：手动同步与自动同步读的是同一份配置，
+      // 如果这里还看用户填的目录，两边可能写到不同地方（那就永远碰不到同一份）。
+      dir: "life-guide",
       token: cfg.token,
     });
   }
@@ -422,6 +439,13 @@ export interface SyncReport {
   pushed: boolean;
   /** 拉到东西了没有 */
   pulled: boolean;
+  /**
+   * 另一轮同步正在跑（不是失败）。
+   *
+   * 自动同步碰到这个**不该进冷却** —— 它不是"连不上"，
+   * 只是有人正在做同一件事（多半是用户刚点了「立即同步」）。
+   */
+  busy?: boolean;
 }
 
 /**
@@ -457,6 +481,7 @@ export async function syncNow(
     return {
       ok: false,
       message: "正在同步，稍等一下",
+      busy: true,
       added: 0, updated: 0, removed: 0, settingsChanged: 0, pushed: false, pulled: false,
     };
   }
@@ -530,7 +555,15 @@ async function syncOnce(
         added: 0, updated: 0, removed: 0, settingsChanged: 0, pushed: false, pulled: false,
       };
     }
-    await setSetting(KEY_LOCAL_HASH, localFp);
+    /*
+     * 本地变了 → 接着往下走（合并结果就是本地这份，然后推上去）。
+     *
+     * **这里不能先把 KEY_LOCAL_HASH 写掉**：
+     * 那个指纹是"上次同步时本地长什么样"，只在**这一轮真的成了**之后才该更新
+     * （函数尾部统一写）。提前写了，推失败时（断网）指纹却已经记成"新的"——
+     * 下一轮远端回 304，本地指纹 == 记着的那个 → 走「两边都没变」那条路 →
+     * **本地这份改动永远传不上去**，而且界面还显示「没有要传的改动」。
+     */
   } else if (remote) {
     try {
       remotePayload = await decryptPayload(secret.key, remote.blob);

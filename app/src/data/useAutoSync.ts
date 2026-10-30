@@ -65,7 +65,10 @@ export function useAutoSync(onSynced: () => void): void {
         const report = await syncNow(createTransport(cfg), cfg);
         if (!report.ok) {
           // 失败就冷却：别每次切前台都失败一次
-          coolingUntil = Date.now() + COOLDOWN;
+          //
+          // **「正在同步」不算失败** —— 那只是有人（多半是用户刚点了手动同步）
+          // 正在做同一件事。为此进冷却，等于把自动同步停掉 5 分钟，没必要。
+          if (!report.busy) coolingUntil = Date.now() + COOLDOWN;
           return;
         }
         if (report.added || report.updated || report.removed || report.settingsChanged) {

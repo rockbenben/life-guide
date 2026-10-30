@@ -17,6 +17,7 @@ import {
 import {
   applyPayload,
   buildLocalPayload,
+  createTransport,
   networkErrorText,
   readSyncConfig,
   saveSyncConfig,
@@ -85,7 +86,6 @@ function cfg(over: Partial<SyncConfig> = {}): SyncConfig {
     user: "",
     password: "",
     token: "",
-    path: "",
     passphrase: PASS,
     ...over,
   };
@@ -157,6 +157,47 @@ describe("同步设置", () => {
         cfg({ enabled: true, kind: "webdav", serverUrl: "https://dav.example/", user: "" }),
       ),
     ).toContain("网盘账号");
+  });
+
+  it("地址少了协议头 → 说清楚要补什么（不然报错只是「网络通不通」）", () => {
+    // 少了 http:// 时，桌面端报「地址不合法」、浏览器报「Failed to fetch」
+    // → 都被翻译成「地址填对没有、网络通不通」，用户看不出是自己少打了协议。
+    expect(
+      syncConfigProblem(cfg({ enabled: true, serverUrl: "192.168.1.9:5006/dav/" })),
+    ).toContain("http://");
+    expect(
+      syncConfigProblem(cfg({ enabled: true, kind: "webdav", serverUrl: "192.168.1.9:5006/dav/" })),
+    ).toContain("http://");
+    // 协议对了就是对的
+    expect(
+      syncConfigProblem(cfg({ enabled: true, serverUrl: "http://192.168.1.9:5006/dav/" })),
+    ).toBeNull();
+  });
+
+  it("GitHub 仓库没写成 owner/repo → 说清楚格式", () => {
+    expect(
+      syncConfigProblem(cfg({ enabled: true, kind: "github", serverUrl: "rockbenben", token: "t" })),
+    ).toContain("owner/repo");
+  });
+
+  it("GitHub 那份固定写在仓库的 life-guide/ 目录里（界面上不再让用户填目录）", async () => {
+    // 手动同步与自动同步读的是同一份配置 —— 目录要是能改，两边可能写到不同地方，
+    // 那样就永远碰不到同一份数据。
+    const real = globalThis.fetch;
+    const urls: string[] = [];
+    globalThis.fetch = (async (u: unknown) => {
+      urls.push(String(u));
+      return new Response("{}", { status: 404 });
+    }) as unknown as typeof fetch;
+    try {
+      const t = createTransport(
+        cfg({ enabled: true, kind: "github", serverUrl: "o/r", token: "tkn" }),
+      );
+      await t.fetch("space1");
+    } finally {
+      globalThis.fetch = real;
+    }
+    expect(urls[0]).toContain("/repos/o/r/contents/life-guide/");
   });
 
   it("默认是关着的（不上传是默认状态）", async () => {
@@ -420,6 +461,57 @@ describe("一轮同步", () => {
     const again = await syncNow(transport, conf);
     expect(again.ok).toBe(true);
     expect(pushes).toBe(2);
+  });
+
+  it("推失败之后，本地那份改动下一轮还得传（不能被当成「没改动」）", async () => {
+    /*
+     * 这是个会**丢改动**的坑：
+     * 远端回 304（没变）时，代码先记下「本地现在是这个样子」，
+     * 然后才去推。推要是失败（断网），那个指纹却已经记成新的了 ——
+     * 下一轮远端还是 304，本地指纹 == 记着的那个 → 走「两边都没变」那条路
+     * → **这份改动永远传不上去**，界面还显示「没有要传的改动」。
+     */
+    let pushes = 0;
+    let failNext = false;
+    const transport: SyncTransport = {
+      async fetch() {
+        // 一直说「远端没变」
+        return {
+          blob: { v: 1, iv: "", ciphertext: "" },
+          rev: "1",
+          updatedAt: Date.now(),
+          unchanged: true,
+        };
+      },
+      async push() {
+        pushes++;
+        if (failNext) {
+          failNext = false;
+          throw new Error("网络断了");
+        }
+        return { ok: true };
+      },
+    };
+
+    const conf = cfg({ enabled: true, serverUrl: "https://x.dev" });
+
+    // 先改一处，确确实实推上去一次（把状态理顺）
+    await setSetting("cadence", { "card-x": "weekly" });
+    const first = await syncNow(transport, conf);
+    expect(first.ok).toBe(true);
+    expect(pushes).toBe(1);
+
+    // 又改一处，这一轮推失败了
+    await setSetting("cadence", { "card-x": "weekly", "card-2": "monthly" });
+    failNext = true;
+    const failed = await syncNow(transport, conf);
+    expect(failed.ok).toBe(false);
+    expect(pushes).toBe(2);
+
+    // 下一轮：远端还是 304，但**本地那份改动还得传**
+    const third = await syncNow(transport, conf);
+    expect(third.ok).toBe(true);
+    expect(pushes).toBe(3);
   });
 
   it("冲突后重合并要用「已应用的那份」，不能把第一轮从远端收到的记录挤掉", async () => {
