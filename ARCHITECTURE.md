@@ -6,7 +6,7 @@
 blog 仓库（某个 commit）
         │  content import（一次性，手动）
         ▼
-content/source/ + media/   快照（正文 + 图片）  ←  content/cards/*.yaml（卡片，人 + LLM 编写）
+content/source/ + media/   快照（正文 + 图片）  ←  content/cards/the-savvy-life-manual/<分类>/*.yaml（卡片，人 + LLM 编写）
         │  解析 → 校验 → 覆盖报告 → 构建
         ▼
 app/public/cards.json   （只含签字有效的 reviewed 卡）
@@ -34,10 +34,11 @@ life-guide/
 │   ├── source/               blog 正文快照（由 import 生成；只允许勘误修改）
 │   │   ├── SOURCE.lock       commit、日期、每个文件的 sha256
 │   │   ├── ERRATA.md         对快照的修改记录
-│   │   └── the-savvy-life-manual/*.md   113 篇（+ 目录页 README，不算一篇）
+│   │   └── the-savvy-life-manual/<分类>/*.md   113 篇（+ 目录页 README，不算一篇）
 │   ├── media/                快照引用的全部图片，<sha256>.<ext>
 │   │   └── media.lock        原 URL → 文件、sha256、bytes、fetchedAt
 │   ├── cards/                每篇文章一个 yaml（104 个文件，一个文件可含多张卡）
+│   │   └── the-savvy-life-manual/<分类>/*.yaml
 │   ├── busy-budget.yaml
 │   ├── src/
 │   │   ├── source/
@@ -163,7 +164,7 @@ R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`�
 | 手机端 | Capacitor（`mobile/`） | 同一份 `app/dist` 装进原生 WebView，生成 Android / iOS 工程。界面不重写 |
 | 存储 | IndexedDB（idb 薄封装） | 事件日志不适合 localStorage |
 | 测试 | Vitest + Playwright + node:test | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright；主进程 / 导航 / 协议的纯逻辑用 `node --test` |
-| 部署 | 任意静态托管 | App 本身没有后端（静态托管即可）。**多设备同步的服务端是另一件独立的事**（`sync/`，Cloudflare Worker + KV），且只存密文 —— 见 §4.6 |
+| 部署 | 任意静态托管 | App 本身没有后端（静态托管即可）。**多设备同步的服务端是另一件独立的事**（`sync/`，Cloudflare Worker + KV），且只存密文 —— 见 AGENTS.md §4.6 |
 
 不引入：状态管理库、路由库（hash 路由即可）、后端（`sync/` 那个服务是可选的同步落点，`app/` 自己不依赖它 —— 传输层是接口 `SyncTransport`，HTTP 只是其中一个实现）。
 
@@ -176,7 +177,7 @@ R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`�
 **三种形态的关系**：界面只写一遍（`app/src`），构建产物 `app/dist` 三处复用 ——
 浏览器里是 PWA，桌面上是 Electron 壳，手机上是 Capacitor 壳。
 **各自的数据是分开的**（IndexedDB 按 origin / 应用 id 存）。要合并有两条路：
-手动用设置页的导出 / 导入；或者打开**多设备同步**（§4.6）—— 各端把密文放到同一个地方，
+手动用设置页的导出 / 导入；或者打开**多设备同步**（AGENTS.md §4.6）—— 各端把密文放到同一个地方，
 收到之后各自合并。**同步默认是关的**：不开就一个字节都不出去。
 
 桌面壳的发布目标覆盖 Windows / macOS / Linux 各 x64 + arm64，同一份 `app/dist` 在三个系统上跑；
@@ -259,14 +260,14 @@ type DoneEvent = {
   - 抽卡时**引文只能照抄原文**。原文里夹着日文括注（`每天 50 次（「1日50回が目安」）`）就不能跳过它，否则引文不是逐字子串，R1 会拦下。
   - 归一化要剥掉**成对的加粗标记**：源文是 `**每天 50 次**`，解析出的纯文本没有 `**`，而人复制引文时带的正是 `**`。不剥掉的话每条含加粗的引文都误报 R1。
   - `content review` 改卡片时**必须用 yaml 的 Document API**（`parseDocument` + `setIn`），不能用 parse + stringify —— 后者会把文件里的注释全冲掉，而 ignore 清单里「为什么不抽这条」的理由全靠注释记录。
-- **P2**：`app/domain`（先迁移原型的状态逻辑用例）→ `data` → `ui` → `sw` → e2e（含断网后图片可见）。
+- **P2**：`app/src/domain`（先迁移原型的状态逻辑用例）→ `data` → `ui` → `sw` → e2e（含断网后图片可见）。
   - **PWA 的 entry 必须是渲染入口**（`src/index.tsx`），不能指向组件模块（`src/main.tsx`）。指向组件模块时 `App` 是个没人用的 export，被 tree-shake 掉，页面全白且不报错——chunk 里甚至只剩 workbox 和 idb。
   - **分档换动作时，默认的剂量与步骤不能跟着走**：踮脚换成防跌倒之后，「每天 50 次」是踮脚的量，挂在防跌倒上是错的。分档没给剂量就显示空。
   - **`.ics` 必须是定时事件**（`DTSTART:<时间戳>` + `VALARM`），不能用 `VALUE=DATE` 的全天事件：全天事件在系统日历里不会按时响，日历作为备份就落空了。
-- **P3**：`content/extract`；审阅辅助 `content/audit`。
+- **P3**：`content/src/extract`；审阅辅助 `content/src/audit`。
   - 起草流水线只写 `status: draft`，自检不过就不写盘（R1/R2/R3/R4/R8/R9/R10/R14 + schema）。
   - **审阅工具的例外条件已经触发**：原计划是「审阅即 `git diff` + `content review`，不另做工具，
-    除非实测审阅 > 10 分钟 / 篇」。553 张卡远超这个量级，所以做了 `content audit`：
+    除非实测审阅 > 10 分钟 / 篇」。524 张卡远超这个量级，所以做了 `content audit`：
     机械检查（重复、禁忌小节没被引用、文字远长于引文、步数过多）加上语义检查
     （用模型问「卡片文字是不是引文的忠实转述」—— R1/R2 查不出的那一类），
     报告分「意思不对」与「引文没覆盖全」两类，**但它不签字**。
