@@ -1,7 +1,8 @@
 # 发版流水线：tag 是唯一的版本源。
 #
-# 流程：validate（tag⇄版本 + 测试）→ prepare（建草稿）→ build（Windows / macOS / Linux 桌面 + Android）
-#       → publish（校验资产 → SHA256SUMS → 人工审批 → 发布 → 核验）。
+# 流程：validate（tag⇄版本 + 测试 + 发布说明在不在）→ prepare（建草稿，正文取自版本库）
+#       → build（Windows / macOS / Linux 桌面 + Android）
+#       → publish（校验资产 → SHA256SUMS → 发布 → 核验）。
 #
 # 为什么这么排：
 #
@@ -9,8 +10,10 @@
 #     validate 这一步断言 tag 与版本一致，不一致直接失败 —— 免得出现
 #     「tag 是 v0.1.2、包里却写着 0.1.1」这种半年后才发现的怪事。
 #   · **红树不发布**：build 与 publish 都 needs: validate，测试不过就没人发版。
-#   · **先草稿、后审批、再发布**：publish 走 `release` environment（人工审批），
-#     草稿里能改发布说明、改完再放行 —— 半成品不会被人下载到。
+#   · **发布说明在版本库里**（`docs/发布说明/<tag>.md`）：validate 先查它在不在，
+#     prepare 用它当草稿正文。**没有人工审批**（2026-10-30 拆掉）——
+#     审批原来是「人在草稿页上补说明」这件事的副产品；拆掉审批后，说明必须
+#     有个可靠的地方可读，所以它回到版本库里，跟那一版的代码在同一个提交。
 #   · **一个 OS 一个 job**：同一 OS 的 x64 / arm64 必须放在同一次 electron-builder
 #     调用里 —— 分 job 打会各写同名 latest*.yml，谁后跑谁赢。
 #   · **打包一律 --publish never**：发布由唯一的 publish job 做，
@@ -84,6 +87,19 @@ jobs:
       - run: npm test
       - run: npm run test:desktop
 
+      # 发布说明必须在这一版的提交里。
+      #
+      # **为什么在 validate 里查**（而不是等 prepare 用它时才发现）：
+      # 少了说明就停下来，别把 1.6 GB 的产物打出来才发现正文是空的。
+      #
+      # **漏了说明怎么办**：`scripts/release-notes.mjs` 会先看工作区
+      # （这里就是被打 tag 的那个提交），再看默认分支 —— tag 推上去之后才发现
+      # 漏写时，把说明提交到默认分支、重跑这个 job 就行，不必动 tag
+      #（产物是按那个提交打的）。
+      - name: 这一版的发布说明要在
+        shell: bash
+        run: node scripts/release-notes.mjs --check
+
   # 先把草稿建好，后面几个构建 job 往同一个草稿里传产物。
   # 草稿只建一次：几个 job 并行时「按 tag 找」会撞上草稿标签被 GitHub
   # 改成 untagged-xxx 的老问题，所以下面都按 release id 传。
@@ -99,7 +115,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: '${{ env.TAG }}'
-      - name: 建草稿（正文先放占位，这一版特有的说明在放行审批前补）
+      - name: 建草稿（正文取自 docs/发布说明/<tag>.md + 固定告知）
         id: draft
         shell: bash
         run: |
@@ -279,7 +295,20 @@ jobs:
     name: 发布
     needs: [validate, prepare, build-desktop-win, build-desktop-mac, build-desktop-linux, build-android]
     runs-on: ubuntu-latest
-    environment: release # 人工审批闸门：草稿改好了再放行
+    # **不再走 `environment: release`（2026-10-30 拆掉）** ——
+    # 那个 environment 上挂着 required reviewer，publish 会停住等人点「放行」，
+    # 整条流水线就在那儿等着。
+    #
+    # **为什么当初有那道闸门**：它跟「人在草稿页上补发布说明」是一件事 ——
+    # 说明写好、确认过，才放行。闸门拆了，说明改到版本库里
+    # （`docs/发布说明/<tag>.md`），validate 会先查它在不在。
+    #
+    # **那「半成品不会被人下载到」怎么办**：靠机器 —— validate 跑全量测试，
+    # publish 校验 15 个产物与四份更新清单，SHA256SUMS 对得上才发。
+    # 剩下的（这一版说明写得对不对）本来就是人的判断，闸门只是把它挪到了发布之后。
+    #
+    # 以后想再加人工放行：Settings → Environments → release 配回 required reviewers，
+    # 这个 job 不用改。
     permissions:
       contents: write
       id-token: write

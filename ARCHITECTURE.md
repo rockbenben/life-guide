@@ -131,9 +131,11 @@ life-guide/
 │   └── README.md             怎么部署（wrangler 三条命令）
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图
-├── docs/                     使用指南 · 部署 · README 用的截图
+├── docs/                     使用指南 · 部署 · 发布说明/（每版一份，release 的正文来源）
+│                             · README 用的截图
 ├── scripts/                  acceptance/（浏览器级验收）· set-version · release-draft
-│                             · release-assets · check-workflows · check-desktop-metadata
+│                             · release-notes · release-assets · check-workflows
+│                             · check-desktop-metadata
 │                             · decision-gate · desktop-smoke · screenshot 等
 │                             · test/（发版校验脚本的纯逻辑单测）
 ├── .desktop-policy.json      桌面端已登记的取舍（带 reason + revisitWhen）

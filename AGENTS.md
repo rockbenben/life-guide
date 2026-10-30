@@ -61,9 +61,10 @@ life-guide/
 │   └── test/worker.test.ts   协议的单测
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图（别直接改 PNG）
-├── docs/                     使用指南 · 部署 · README 用的截图
+├── docs/                     使用指南 · 部署 · 发布说明/（每版一份，release 的正文来源）
+│                             · README 用的截图
 ├── scripts/                  acceptance/（浏览器级验收，Playwright 驱动本机 Chrome）
-│                             · set-version · release-draft · release-assets
+│                             · set-version · release-draft · release-notes · release-assets
 │                             · check-workflows · check-desktop-metadata
 │                             · decision-gate · desktop-smoke · screenshot 等
 │                             · test/（发版校验脚本的纯逻辑单测）
@@ -282,13 +283,35 @@ content/
 ```
 push tag vX.Y.Z
   └─ validate       tag 与 5 个 package.json 的版本对得上 + 内容校验 + 类型检查 + lint + 单测 + 桌面逻辑测试
-      ├─ prepare     建发布草稿（正文先放占位 + 固定告知；这一版特有的说明在放行前写在草稿页上）→ 拿到 release id
+                    + **这一版的发布说明在不在**（docs/发布说明/<tag>.md）
+      ├─ prepare     建发布草稿（正文取自 docs/发布说明/<tag>.md + 固定告知）→ 拿到 release id
       ├─ build-desktop-win     Windows x64+arm64：NSIS 合一安装包 + 双架构免安装版 + latest.yml
       ├─ build-desktop-mac     macOS x64+arm64：dmg + zip（zip 是更新载体）+ latest-mac.yml
       ├─ build-desktop-linux   Linux x64+arm64：AppImage + deb + rpm + latest-linux*.yml
       └─ build-android         Linux：APK
-          └─ publish   单一草稿 → 校验资产 → SHA256SUMS → 人工审批 → 发布 → 核验
+          └─ publish   单一草稿 → 校验资产 → SHA256SUMS → 发布 → 核验
 ```
+
+- **发布说明在版本库里**（2026-10-30 改）：`docs/发布说明/<tag>.md`，跟那一版的代码
+  在同一个提交里。`validate` 先查它在不在，`prepare` 用它当草稿正文，
+  再由 `scripts/release-notices.mjs` 的 `STANDING_NOTICES` 附上那几条固定告知。
+  - **为什么不再写在草稿页上**：原来 publish 走 `release` environment（人工审批），
+    作者在放行之前到 GitHub 的草稿页上把说明写进去。**正文在草稿页上，不在版本库里**
+    —— 这条路已经翻过车：v0.2.0 发布出去的那一页上写的仍是占位符
+    （`62d66de` 记着这件事，`affa93c` 把那些文件删了）。审批拆掉之后这条路整个没有了，
+    所以说明必须有个可靠的地方可读 —— 回到版本库。
+  - **缺了就报错，不自动生成一段**：这一版的说明是作者写的，给的是**用这个 App 的人**看的；
+    机器能推的「提交里改了什么」是给开发者看的，替不了它。
+    `scripts/release-notes.mjs` 缺文件时报错退出，**正文里再没有占位符**。
+  - **模板由 `set-version.mjs` 生成**：那条命令改版本时顺手放一份模板
+    （`docs/发布说明/vX.Y.Z.md`），模板里那行 `<!-- 待写 -->` 不删就算没写
+    —— 文件非空不等于写过了。
+  - **tag 推出去之后才发现漏写**：把说明提交到默认分支、重跑失败的 job 就行，
+    **不用动 tag**（产物是按那个提交打的）。`release-notes.mjs` 会先看工作区
+    （流水线里就是被打 tag 的那个提交），再看 `origin/main`。
+  - **每次都有的那几条固定告知**（未签名、哪些形态能自动更新、关窗口只是收进托盘）
+    由 `scripts/release-notices.mjs` 提供，**说明文件里不要重复写** ——
+    重复了发布页上会出现两遍。
 
 - **产物不走 artifact 中转（2026-10-28 改）**：每个构建 job 把产物**直接传进
   那个发布草稿**，publish 只读 API。
@@ -322,12 +345,18 @@ push tag vX.Y.Z
   deb / rpm 版仍写「请手动换新包」。
 - **`latest*.yml` 是四份，不是一份**：`latest.yml`（Windows）、`latest-mac.yml`（macOS，含两个架构的 zip）、
   `latest-linux.yml` / `latest-linux-arm64.yml`（Linux 两个架构）。publish 会逐份核对版本与它指向的文件。
-- **审批闸门现在真的生效**：`release` environment 的 Required reviewers
-  **公开仓库在所有现行套餐上都能配**（私有不支持 —— 2026-10-25 实测 422；
-  2026-10-28 仓库转公开后又实测了一次，同样是 422 的那句「billing plan 不支持」——
-  可见当初那条限制确实是套餐而不是仓库设置的问题）。
-  **2026-10-28 转公开后已配好 required reviewers**，publish 会停住等人放行。
-  以后换人或加审阅人：Settings → Environments → release → Required reviewers。
+- **没有人工审批闸门**（2026-10-30 拆掉）：publish job 不再走 `release` environment，
+  那个 environment 上的 Required reviewers 也一并删了 —— 留着它，流水线会**一直停在
+  「Waiting for review」等人点放行**，而这正是作者不要的（发版说好了是自动的）。
+  - **当初为什么有那道闸门**：它跟「人在草稿页上补发布说明」是同一件事 ——
+    说明写好、确认过，才放行。闸门拆了，说明改到版本库里
+    （`docs/发布说明/<tag>.md`），`validate` 先查它在不在，`prepare` 用它当正文。
+  - **「半成品不会被人下载到」靠什么保证**：靠机器 —— `validate` 跑全量测试，
+    `publish` 校验 15 个产物与四份更新清单、`SHA256SUMS` 对得上才发。
+    「这一版说明写得对不对」本来就是人的判断，闸门只是把它挪到了发布之后。
+  - **想再加回来**：Settings → Environments → release 配回 Required reviewers，
+    再在 `release.yml` 的 publish job 上加回 `environment: release`（**两处都要**：
+    光配审阅人但 job 不引用那个 environment，不会有任何效果）。
 
 - **tag 是唯一版本源**：发版提交先改版本再打 tag，`validate` 断言一致，不一致即失败。
   一条命令改到位：`node scripts/set-version.mjs 0.1.1`
@@ -365,9 +394,7 @@ push tag vX.Y.Z
 
 **已知取舍登记在 `.desktop-policy.json`**（desktop-app-standard 的 house style）：
   仓库已转公开（2026-10-28），但还没有 Azure/Apple 凭据 → Windows 未签名、macOS 未签名/未公证、
-  Linux 的 AppImage 自动更新已接上但**还没在一台 Linux 机器上实测过 N→N+1**、
-  **release environment 的 required reviewers 已配好**（公开仓库才支持 —— 私有仓库实测 422；
-  2026-10-28 转公开后配上的，闸门从这一版起真的生效）。
+  Linux 的 AppImage 自动更新已接上但**还没在一台 Linux 机器上实测过 N→N+1**。
   每条都带 reason + revisitWhen；巡检脚本按它把对应的发现算作「已接受的偏离」，
   不计入 P0/P1/P2。**没有登记的旧做法按 house style 算「漂移」** ——
   要报告、要给复查条件，不默认保留。
@@ -1455,16 +1482,19 @@ npm test                      # 全部单元测试
 **怎么发版**（桌面端安装包 + Android APK，tag 驱动，流水线自动跑）：
 
 ```bash
-node scripts/set-version.mjs 0.3.0     # 版本一次改到位（含 Android versionCode）
-git commit -am "chore(release): 0.3.0" && git push origin main
-git tag v0.3.0 && git push origin v0.3.0   # 这一推才触发流水线
+node scripts/set-version.mjs 0.4.0     # 版本一次改到位（含 Android versionCode）+ 放一份发布说明模板
+# 写 docs/发布说明/v0.4.0.md：这一版改了什么（模板里那行 <!-- 待写 --> 删掉）
+git commit -am "chore(release): 0.4.0" && git push origin main
+git tag v0.4.0 && git push origin v0.4.0   # 这一推才触发流水线
 ```
 
-流水线在 `publish` 那一步会停住等人放行（`release` environment）——
-放行之前是草稿，确认发布说明再放。
+**流水线不会停下来等人放行**（2026-10-30 拆掉了 `release` environment 的 required
+reviewers）：tag 推上去 → 校验 → 打包 → 发布，一路走完。
+发布说明来自 `docs/发布说明/<tag>.md`，**要在打 tag 之前写好并提交** ——
+`validate` 会查它；缺了就停下来（不会发出一页占位符）。
 
-**已发布两版**：v0.1.1（2026-10-28，第一版公开分发）与 **v0.2.0（2026-10-29，
-加了多设备同步）**。**v0.3.0 在准备中**（版本号已同步，`versionCode` 300）。
+**已发布三版**：v0.1.1（2026-10-28，第一版公开分发）、v0.2.0（2026-10-29，
+加了多设备同步）与 **v0.3.0（2026-10-30，多设备同步、局域网 WebDAV、卡片合并、标记重画）**。
 再发一版要升版本号并带上新 tag：`set-version.mjs` 会把 5 个 package.json
 与 Android 的 `versionCode` 一起改掉，而 `versionCode` 只增不减 ——
 不涨的话新包装不上。

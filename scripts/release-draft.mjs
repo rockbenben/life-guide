@@ -12,7 +12,10 @@
  * 所以这里全程走 API：自己按 tag 找草稿，没有就用 POST 建一个
  * （tag 存在时 GitHub 会照用），再按 release id 传附件。
  *
- * 发布说明：草稿里先放一句占位，**这一版特有的说明在放行审批前直接写在草稿页上**。
+ * 发布说明：正文来自版本库里的 `docs/发布说明/<tag>.md`（见
+ * `scripts/release-notes.mjs`），**不再由人在草稿页上现写** ——
+ * 审批拆掉之后那条路没有了，而「正文在草稿页上」正是 v0.2.0
+ * 把占位符发出去的原因（62d66de / affa93c）。
  *
  * 用法：REPO=owner/name TAG=v0.1.1 GH_TOKEN=... node scripts/release-draft.mjs dist
  *
@@ -22,7 +25,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { STANDING_NOTICES } from "./release-notices.mjs";
+import { releaseBodyFor } from "./release-notes.mjs";
 
 const repo = process.env.REPO;
 const tag = process.env.TAG;
@@ -30,9 +33,16 @@ const token = process.env.GH_TOKEN;
 const releaseId = process.env.RELEASE_ID;
 const dir = path.resolve(process.argv[2] ?? "dist");
 
-/** 草稿正文里的占位 —— 人放行前把它改成这一版真正的说明。 */
-const PLACEHOLDER =
-  "这一版特有的说明待补 —— 放行审批前请写上这一版改了什么、有什么产物。";
+/**
+ * 发布说明：正文来自 `scripts/release-notes.mjs`（版本库里的
+ * `docs/发布说明/<tag>.md` + 每次都有的那几条固定告知）。
+ *
+ * **没有占位符** —— 缺说明就报错退出，不让占位符走到发布页上。
+ * v0.2.0 已经这么翻车过一次（62d66de / affa93c）。
+ */
+function releaseBody() {
+  return releaseBodyFor(tag);
+}
 
 if (!repo || !tag || !token) {
   console.error("需要 REPO / TAG / GH_TOKEN 三个环境变量");
@@ -51,7 +61,8 @@ const api = (p, init = {}) =>
   });
 
 /**
- * 每次发布都要写清的那几条固定告知 —— 常量在 scripts/release-notices.mjs。
+ * 每次发布都要写清的那几条固定告知 —— 常量在 scripts/release-notices.mjs，
+ * 由 scripts/release-notes.mjs 附在正文后面。
  * 为什么要固定附在正文后面：未签名 → 用户会看到 SmartScreen「未知发布者」；
  * macOS 未公证 → Gatekeeper 拦一下。这些是**一直如此**的事实，不该指望每一版
  * 都有人记得抄一遍 —— 兜底那条只有一行占位，忘了写就等于没告知用户为什么会有
@@ -60,23 +71,6 @@ const api = (p, init = {}) =>
  * 放在单独的文件里，是为了让「改已发布的那一版正文」也能用同一份 ——
  * 两处拼法必须一致，否则改一次就对不齐。
  */
-
-/**
- * 发布说明的正文。
- *
- * **这一版特有的说明直接写在发布草稿上**（放行审批前改好）——
- * 仓库里不再留 `docs/发布说明/<tag>.md` 那样的文件：版本说明的归属地就是发布页本身，
- * 仓库里再存一份只是重复；而且真出过「那份文件是在 tag 推上去之后才提交的，
- * 发布页上只剩一句占位」（v0.2.0）—— 说明写在仓库里，靠的是记得先提交。
- *
- * 下面那几条一直如此的事实（未签名、哪些形态能自动更新）由
- * scripts/release-notices.mjs 的 STANDING_NOTICES 每次附上：那是必须每次都在的，
- * 不能指望人记得抄一遍。
- */
-function releaseBody() {
-  console.log("发布说明：草稿里先放占位，这一版特有的说明在放行审批前补");
-  return `${PLACEHOLDER}\n\n${STANDING_NOTICES}\n`;
-}
 
 // 1. 找草稿
 let release;
