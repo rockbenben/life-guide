@@ -1277,6 +1277,148 @@ export async function checkTimer({ browser, baseURL }) {
 }
 
 /* ------------------------------------------------------------------ */
+/* 7. 分步计时：按步走，归零跳下一步                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 这条盯的是**分步计时**：一张卡的每一步自己带时长时，计时器按步走 ——
+ * 这一步归零就跳下一步，自动接着数。
+ *
+ * **为什么单开一条**：卡级那个计时器是**整张卡的总时长**，
+ * 而「每个动作 30 秒」说的是**每一步**。两者不是一回事：
+ * 血管拉伸那张卡的总时长是 7 分钟（两足各 2 回 + 组间休息），
+ * 每个动作本身只保持 30 秒 —— 只看总数，30 秒一组的节奏就丢了。
+ *
+ * **用哪张卡**：`vascular-stretch`（随时段，任何时段都在）——
+ * 5 个动作各 30 秒，够走完两步。
+ */
+export async function checkStepTimer({ browser, baseURL }) {
+  const context = await browser.newContext({ viewport: { width: 1180, height: 900 } });
+  const page = await context.newPage();
+  const details = [];
+  const failures = [];
+
+  /** 读出分步计时器的读数。 */
+  const readStep = async (card) =>
+    normalize(await card.locator(".lg-steptimer-num").first().innerText());
+
+  try {
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    await seedToday(page);
+    await setRoutine(page, ["vascular-stretch"]);
+    await gotoTab(page, "今天");
+    await page.waitForTimeout(400);
+
+    const card = page.locator('article.lg-card[data-card-unit="vascular-stretch"]').first();
+    if ((await card.count()) === 0) {
+      failures.push("今天页里找不到「做血管拉伸改善硬化」那张卡 —— 清单没换成功，这条检查说明不了问题");
+    } else {
+      await expandCard(card);
+      await page.waitForTimeout(200);
+
+      const timer = card.locator(".lg-steptimer").first();
+      if ((await timer.count()) === 0) {
+        failures.push("卡上没有分步计时器");
+      } else {
+        // 起手：第一步的 30 秒（不是整张卡的 7 分钟）
+        const before = await readStep(card);
+        if (before !== "00:30") {
+          failures.push(`分步计时起手是 ${before}（应是 00:30 —— 这一步 30 秒）`);
+        }
+        // 总步数只数带时长的那几步：5 个动作（休息那一步不参与）
+        const meta = await card.locator(".lg-steptimer-at").first().innerText();
+        if (!/第\s*1\s*\/\s*5\s*步/.test(meta)) {
+          failures.push(`分步计时显示「${meta}」（应是 第 1 / 5 步）`);
+        } else {
+          details.push(`起手 ${before}，${meta}`);
+        }
+
+        // 走一步：30 秒太久，用「看它有没有在倒数」代替 ——
+        // 真等到归零要 30 秒，验收里等不起，但读数在变就说明在跑
+        await card.getByRole("button", { name: "开始计时" }).first().click();
+        await page.waitForTimeout(2200);
+        const running = await readStep(card);
+        if (running === before) {
+          failures.push(`点了开始，两秒后读数还是 ${running} —— 没有在倒数`);
+        } else {
+          details.push(`分步计时在走：${before} → ${running}（两秒）`);
+        }
+
+        // 暂停：读数停住
+        await card.getByRole("button", { name: "暂停计时" }).first().click();
+        const paused = await readStep(card);
+        await page.waitForTimeout(1500);
+        const stillPaused = await readStep(card);
+        if (paused !== stillPaused) {
+          failures.push(`暂停后读数还在走（${paused} → ${stillPaused}）`);
+        } else {
+          details.push(`暂停后读数停住：${stillPaused}`);
+        }
+
+        // 重置：回到第一步的起始值
+        await card.getByRole("button", { name: "重置计时" }).first().click();
+        await page.waitForTimeout(300);
+        const reset = await readStep(card);
+        if (reset !== "00:30") {
+          failures.push(`重置后是 ${reset}（应是 00:30）`);
+        } else {
+          details.push(`重置回到 ${reset}`);
+        }
+      }
+    }
+
+    // 2. 归零自动跳下一步
+    //
+    // 用「足踝交叉」那张：两个 6 秒的步（保持、换边）——
+    // 30 秒的血管拉伸等不起，6 秒等得起。
+    await setRoutine(page, ["knee-ankle-cross"]);
+    await gotoTab(page, "今天");
+    await page.waitForTimeout(400);
+    const cross = page.locator('article.lg-card[data-card-unit="knee-ankle-cross"]').first();
+    if ((await cross.count()) === 0) {
+      failures.push("今天页里找不到「足踝交叉」那张卡 —— 清单没换成功，这条检查说明不了问题");
+    } else {
+      await expandCard(cross);
+      await page.waitForTimeout(200);
+      const timer = cross.locator(".lg-steptimer").first();
+      if ((await timer.count()) === 0) {
+        failures.push("足踝交叉那张卡上没有分步计时器");
+      } else {
+        const startMeta = await cross.locator(".lg-steptimer-at").first().innerText();
+        const startRead = await readStep(cross);
+        await cross.getByRole("button", { name: "开始计时" }).first().click();
+        // 等它走完第一步（6 秒）再等一步的余量
+        await page.waitForTimeout(7000);
+        const afterFirst = await readStep(cross);
+        const afterMeta = await cross.locator(".lg-steptimer-at").first().innerText();
+        if (afterMeta === startMeta) {
+          failures.push(
+            `第一步归零后没有跳下一步（还是「${afterMeta}」，读数 ${startRead} → ${afterFirst}）`,
+          );
+        } else {
+          details.push(`第一步归零自动跳到下一步：${startMeta} → ${afterMeta}（读数 ${startRead} → ${afterFirst}）`);
+        }
+        // 走完最后一步：整组做完了
+        await page.waitForTimeout(7000);
+        const endMeta = await cross.locator(".lg-steptimer-at").first().innerText();
+        if (!/做完了/.test(endMeta)) {
+          failures.push(`最后一步做完后没有说「做完了」（当前：${endMeta}）`);
+        } else {
+          details.push(`整组做完了：${endMeta}`);
+        }
+      }
+    }
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+
+  return { id: "step-timer", title: "分步计时：按步走、读数在走、暂停与重置", details, failures };
+}
+
+/* ------------------------------------------------------------------ */
 /* 6. 导入备份：清单要跟着换                                            */
 /* ------------------------------------------------------------------ */
 

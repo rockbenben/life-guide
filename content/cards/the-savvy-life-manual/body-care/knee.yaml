@@ -103,13 +103,22 @@ cards:
       - id: ankle-hold
         text: '保持 6 秒。'
         quote: '保持 6 秒。'
+        # 保持与换边各 6 秒（2026-10-30 加）；前两步是准备与交叉，没有时长
+        duration:
+          basis: quote
+          sec: 6
+          quote: '保持 6 秒。'
       - id: ankle-switch
         text: '换边，同样 6 秒。超过 6 秒也没关系，但一天至少做 1 次。'
         quote: '换边，同样 6 秒。超过 6 秒也没关系，但一天至少做 1 次。'
+        duration:
+          basis: quote
+          sec: 6
+          quote: '换边，同样 6 秒。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: 9325a17dc8cd05e3
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 04da5a3cea413de0
   # 2026-10-29 合并：knee-weight-reduction、knee-low-load-strength、knee-wedge-insoles 并成这张卡。
   # 旧 id 记在 formerIds 里 —— 用户的盖章记录、日常清单靠它认领回来。
   - id: knee-pain-three-ways

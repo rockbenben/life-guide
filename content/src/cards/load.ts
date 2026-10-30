@@ -68,7 +68,31 @@ export interface Card {
     quote?: string | string[];
     formula?: string;
   } | null;
-  steps: { id: string; text: string; quote: string | string[]; images?: string[] }[];
+  /**
+   * 每一步自己的时长（2026-10-30 加）。
+   *
+   * **为什么要有这一步的时长**：卡级的 duration 是**整张卡的总时长**，
+   * 而「每个动作 30 秒」这种原文说的是**每一步** —— 血管拉伸那张卡
+   * 记的是 420 秒（5 个动作 × 2 回 × 30 秒 + 4 次休息 × 30 秒），
+   * 只看总数的话，30 秒一组的节奏就丢了。
+   *
+   * **跟卡级同一套规矩**：原文给了就 quote（带引文），换算来的写 derived
+   * （带算式），不知道就不写这个字段 —— 逼着填就是编数（D7）。
+   */
+  steps: {
+    id: string;
+    text: string;
+    quote: string | string[];
+    images?: string[];
+    duration?: {
+      basis: "quote" | "derived" | "unknown";
+      sec?: number;
+      quote?: string | string[];
+      formula?: string;
+      /** 原文写的是近似值（「约 30 秒」）—— 屏上要显示「约」 */
+      approximate?: boolean;
+    } | null;
+  }[];
   cautions?: { level: "stop" | "with-doctor" | "info"; text: string; quote: string | string[] }[];
   /** 疾病类卡片的提示分级；practice 卡不用这个字段 */
   notices?: Notice[];

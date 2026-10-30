@@ -223,7 +223,35 @@
               "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
               "text": { "type": "string", "minLength": 1 },
               "quote": { "$ref": "#/definitions/quote" },
-              "images": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+              "images": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+              "duration": {
+                "description": "这一步要做多久。跟卡级的 duration 同一套规矩：原文给了就 quote（带引文），换算来的写 derived（带算式），不知道就不写这个字段。原文写的是近似值（「约 30 秒」）时标 approximate —— 屏上要显示「约」。",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": ["basis"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "basis": { "enum": ["quote", "derived", "unknown"] },
+                      "sec": { "type": "number", "minimum": 0 },
+                      "quote": { "$ref": "#/definitions/quote" },
+                      "formula": { "type": "string", "minLength": 1 },
+                      "approximate": { "type": "boolean" }
+                    },
+                    "allOf": [
+                      {
+                        "if": { "properties": { "basis": { "const": "quote" } } },
+                        "then": { "required": ["sec", "quote"] }
+                      },
+                      {
+                        "if": { "properties": { "basis": { "const": "derived" } } },
+                        "then": { "required": ["sec", "formula"] }
+                      }
+                    ]
+                  },
+                  { "type": "null" }
+                ]
+              }
             }
           }
         },

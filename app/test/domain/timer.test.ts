@@ -12,6 +12,9 @@ import {
   formatDuration,
   formatElapsed,
   remainingSec,
+  stepDisplay,
+  stepFinished,
+  stepTimings,
   timerDisplay,
   timerDoneText,
   timerExhausted,
@@ -20,6 +23,11 @@ import {
   timerPlan,
   timerReset,
   timerStart,
+  timingsDerived,
+  nextStep,
+  stepPause,
+  stepStart,
+  STEP_TIMER_IDLE,
 } from "../../src/domain/timer.ts";
 
 const T0 = 1_700_000_000_000;
@@ -214,5 +222,125 @@ describe("timerExhausted：到点后停着也算走完了", () => {
   it("正计时没有目标，不会走完", () => {
     const s = timerStart(TIMER_IDLE, T0);
     expect(timerExhausted(s, T0 + 999_999, null)).toBe(false);
+  });
+});
+
+describe("stepTimings：每一步自己的时长", () => {
+  const steps = [
+    { text: "压上去", duration: { sec: 30, basis: "quote" } },
+    { text: "换边", duration: { sec: 30, basis: "quote" } },
+    { text: "中间歇一下", duration: { sec: 30, basis: "quote" } },
+  ];
+
+  it("带时长的步骤排成一串", () => {
+    const t = stepTimings(steps);
+    expect(t).toHaveLength(3);
+    expect(t[0]).toEqual({ index: 0, text: "压上去", sec: 30, derived: false });
+  });
+
+  it("没写时长的那一步不参与计时（它不是 0 秒，是不知道）", () => {
+    const t = stepTimings([
+      { text: "有数的", duration: { sec: 30, basis: "quote" } },
+      { text: "没数的" },
+      { text: "也有数的", duration: { sec: 10, basis: "quote" } },
+    ]);
+    expect(t).toHaveLength(2);
+    // 下标是**卡里的**序号，不是排出来的序号 —— 界面上要指得出是哪一步
+    expect(t[1].index).toBe(2);
+  });
+
+  it("0 秒与负数不算时长", () => {
+    expect(stepTimings([{ text: "x", duration: { sec: 0, basis: "quote" } }])).toHaveLength(0);
+    expect(stepTimings([{ text: "x", duration: { sec: -5, basis: "quote" } }])).toHaveLength(0);
+  });
+
+  it("推算来的那步要标出来", () => {
+    const t = stepTimings([
+      { text: "推的", duration: { sec: 30, basis: "derived" } },
+      { text: "原的", duration: { sec: 30, basis: "quote" } },
+    ]);
+    expect(timingsDerived(t)).toBe(true);
+    expect(timingsDerived([t[1]])).toBe(false);
+  });
+});
+
+describe("stepDisplay / stepFinished：这一步的读数", () => {
+  const timing = { index: 0, text: "压上去", sec: 30, derived: false };
+  const running = { at: 0, since: T0, frozen: null, running: true };
+
+  it("倒计时：数着这一步的秒数走", () => {
+    expect(stepDisplay(running, T0, timing)).toBe("00:30");
+    expect(stepDisplay(running, T0 + 10_000, timing)).toBe("00:20");
+  });
+
+  it("归零后停在 00:00", () => {
+    expect(stepDisplay(running, T0 + 30_000, timing)).toBe("00:00");
+  });
+
+  it("到点了没有", () => {
+    expect(stepFinished(running, T0 + 29_000, timing)).toBe(false);
+    expect(stepFinished(running, T0 + 30_000, timing)).toBe(true);
+  });
+
+  it("暂停着不算到点", () => {
+    const paused = { at: 0, since: null, frozen: 0, running: false };
+    expect(stepFinished(paused, T0 + 60_000, timing)).toBe(false);
+  });
+
+  it("没开始时读数是那一步的完整秒数", () => {
+    expect(stepDisplay(STEP_TIMER_IDLE, T0, timing)).toBe("00:30");
+  });
+
+  it("暂停后读数冻住（不再往下掉）", () => {
+    // 只把 running 改 false 的话，读数会接着往下走 —— 暂停等于没暂停
+    const paused = stepPause(running, T0 + 10_000, timing);
+    expect(paused.frozen).toBe(20);
+    expect(paused.running).toBe(false);
+    expect(stepDisplay(paused, T0 + 60_000, timing)).toBe("00:20");
+  });
+});
+
+describe("stepStart：开始或接着跑", () => {
+  const timings = [
+    { index: 0, text: "一", sec: 30, derived: false },
+    { index: 1, text: "二", sec: 30, derived: false },
+  ];
+
+  it("从头开始", () => {
+    const s = stepStart(STEP_TIMER_IDLE, T0, timings);
+    expect(s.at).toBe(0);
+    expect(s.running).toBe(true);
+    expect(s.since).toBe(T0);
+  });
+
+  it("做完了再点开始 → 回到第一步", () => {
+    const s = stepStart({ at: 2, since: null, frozen: null, running: false }, T0, timings);
+    expect(s.at).toBe(0);
+    expect(s.running).toBe(true);
+  });
+});
+
+describe("nextStep：这一步做完就进下一步", () => {
+  const timings = [
+    { index: 0, text: "一", sec: 30, derived: false },
+    { index: 1, text: "二", sec: 30, derived: false },
+  ];
+
+  it("进下一步，那一格的时间不累计，但接着跑", () => {
+    // 一串动作是要连着做的 —— 每步归零就停一下再让人点一下，
+    // 等于把节奏又交回给用户了。
+    const next = nextStep({ at: 0, since: T0, frozen: null, running: true }, timings, T0 + 30_000);
+    expect(next.at).toBe(1);
+    expect(next.since).toBe(T0 + 30_000);
+    expect(next.running).toBe(true);
+  });
+
+  it("最后一步做完 → at 落在步数上（做完了这个状态得有地方放）", () => {
+    // 早先的写法是返回 null，于是 at 永远指着一已经做完的那一步，
+    // 界面显示不出「整组做完了」。
+    const next = nextStep({ at: 1, since: T0, frozen: null, running: true }, timings, T0 + 30_000);
+    expect(next.at).toBe(2);
+    expect(next.running).toBe(false);
+    expect(next.since).toBeNull();
   });
 });

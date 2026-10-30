@@ -91,6 +91,7 @@ life-guide/
 │   │   │   ├── skip.ts        「今天不做」：只跳当天，可撤销，次日自然回来
 │   │   │   ├── lines.ts      收起态三行契约：名取内容层动作名、数字不重复、耗时四态如实
 │   │   │   ├── timer.ts      计时器：形态由时长决定（知道就倒计时 / 不知道就正计时）、读数、到点判定
+│   │   │   │                 ＋ 分步计时：每步一个读数、归零自动跳下一步、暂停冻住
 │   │   │   ├── custom.ts     用户自己加的习惯 → 一张卡
 │   │   │   ├── progress.ts   事件日志 → 累计天数与页边的 14 格印迹
 │   │   │   ├── update.ts     更新状态 → 人话
@@ -106,7 +107,7 @@ life-guide/
 │   │   ├── platform/         notify.ts（三端通知）/ update.ts（桌面更新桥）
 │   │   ├── ui/               Today / TodaySidebar / TodayLog / Card / Manual / Settings /
 │   │   │                     Conditions / DiscoverPanel / SortPanel / SortableRow / Reminder /
-│   │   │                     Timer / HabitForm / Disclaimer（手帖行 + 用法用量表）
+│   │   │                     Timer / StepTimer / HabitForm / Disclaimer（手帖行 + 用法用量表）
 │   │   └── style.css         设计令牌（和紙 / 夜紙）+ 自写的组件层（lg- 前缀）
 │   └── test/
 │       ├── domain/*.test.ts   纯函数

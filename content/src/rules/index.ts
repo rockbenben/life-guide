@@ -91,7 +91,13 @@ function allQuoteFields(card: Card): { path: string; quote: string | string[] }[
   for (const [i, d] of (card.dose ?? []).entries()) {
     out.push({ path: `dose[${i}].quote`, quote: d.quote });
   }
-  for (const s of card.steps) out.push({ path: `steps.${s.id}.quote`, quote: s.quote });
+  for (const s of card.steps) {
+    out.push({ path: `steps.${s.id}.quote`, quote: s.quote });
+    // 步级时长的引文也要逐字核对 —— 它是给用户看的数（R1）。
+    if (s.duration?.quote) {
+      out.push({ path: `steps.${s.id}.duration.quote`, quote: s.duration.quote });
+    }
+  }
   for (const [i, c] of (card.cautions ?? []).entries()) {
     out.push({ path: `cautions[${i}].quote`, quote: c.quote });
   }
@@ -332,16 +338,20 @@ export const r05VariantsValid: Rule = (ctx) => {
 
 export const r06DurationFields: Rule = (ctx) => {
   const out: Finding[] = [];
-  for (const card of ctx.article.cards) {
-    const d = card.duration;
-    if (!d) continue;
+  /** 卡级与步级共用一套判据 —— 步级时长是 2026-10-30 加的，规矩一样。 */
+  const check = (
+    d: Card["duration"] | undefined,
+    path: string,
+    cardId: string,
+  ) => {
+    if (!d) return;
     if (d.basis === "derived" && !d.formula) {
       out.push({
         rule: "R6",
         level: "error",
         file: ctx.file,
-        cardId: card.id,
-        path: "duration.formula",
+        cardId,
+        path: `${path}.formula`,
         message: "basis=derived 必须写 formula（算式）",
       });
     }
@@ -350,10 +360,19 @@ export const r06DurationFields: Rule = (ctx) => {
         rule: "R6",
         level: "error",
         file: ctx.file,
-        cardId: card.id,
-        path: "duration.quote",
+        cardId,
+        path: `${path}.quote`,
         message: "basis=quote 必须写 quote",
       });
+    }
+  };
+  for (const card of ctx.article.cards) {
+    check(card.duration, "duration", card.id);
+    // 每一步自己的时长：原文给了就带引文，换算的带算式。
+    // **没写这个字段不算错** —— 原文没给每步多长时间的卡很多，
+    // 逼着填就成了编数（D7）。
+    for (const s of card.steps) {
+      check(s.duration, `steps.${s.id}.duration`, card.id);
     }
   }
   return out;
@@ -584,6 +603,23 @@ export const r17ApproximateGrounded: Rule = (ctx) => {
         cardId: card.id,
         path: `dose[${i}]`,
         message: `标了 approximate（屏上会显示「约」），但引文里找不到贴着 ${d.value} ${d.unit} 的近似词 —— 标志要有着落`,
+      });
+    }
+    // 步级时长的同一个标志：原文写「休息约 30 秒」而卡上标了 approximate，
+    // 引文里就得真的贴着那个近似词 —— 否则这个标志在说谎。
+    for (const s of card.steps) {
+      const d = s.duration;
+      if (!d?.approximate || d.sec == null) continue;
+      const quotes = quotesOf(d.quote);
+      const ok = quotes.some((t) => approximationAttached(t, d.sec!));
+      if (ok) continue;
+      out.push({
+        rule: "R17",
+        level: "error",
+        file: ctx.file,
+        cardId: card.id,
+        path: `steps.${s.id}.duration`,
+        message: `步级时长标了 approximate（屏上会显示「约」），但引文里找不到贴着 ${d.sec} 秒的近似词 —— 标志要有着落`,
       });
     }
   }

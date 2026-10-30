@@ -44,6 +44,7 @@ import {
   checkOffline,
   checkReminderLifecycle,
   checkSkipToday,
+  checkStepTimer,
   checkTimer,
 } from "./checks.mjs";
 
@@ -154,6 +155,7 @@ async function main() {
     results.push(await checkSkipToday({ browser, baseURL }));
     results.push(await checkCardCollapse({ browser, baseURL }));
     results.push(await checkTimer({ browser, baseURL }));
+    results.push(await checkStepTimer({ browser, baseURL }));
     results.push(await checkNavigation({ browser, baseURL }));
     results.push(await checkImportRefreshesRoutine({ browser, baseURL }));
   } finally {

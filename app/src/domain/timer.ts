@@ -12,9 +12,11 @@
  *   时长未知的卡（14 张）倒计时不出来 —— 那不是没数，是**不知道该数到几**，
  *   正计时才是那里唯一说得通的形态。
  *
- * **推算出来的时长也算「知道」**（45 张 derived）：那个数有算式、界面上标着
- * 「推算」，倒计时照着用，但要在界面上把「推算」这层意思留着 ——
- * 倒计时归零时说的「做完了」是按推算的数算的，别让它冒充原文的数。
+ * **分步计时**（2026-10-30 加）：卡级 duration 是**整张卡的总时长**，
+ * 而「每个动作 30 秒」这种原文说的是**每一步**（血管拉伸那张卡记的是
+ * 420 秒 = 5 个动作 × 2 回 × 30 秒 + 4 次休息 × 30 秒）。只看总数，
+ * 30 秒一组的节奏就丢了。所以每一步可以带自己的时长，计时器按步走：
+ * 这一步归零就跳下一步。
  *
  * 这一层是纯逻辑，不碰平台 API —— 界面怎么摆、到点要不要响是 ui/ 与 platform/ 的事。
  */
@@ -194,4 +196,205 @@ export function timerDisplay(state: TimerState, now: number, targetSec: number |
  */
 export function timerDoneText(derived: boolean): string {
   return derived ? "按推算的时长到了" : "时间到";
+}
+
+/* ------------------------------------------------------------------ 分步 */
+
+/**
+ * 分步计时的一步。
+ *
+ * **为什么每步可以有自己的时长**：原文说的是「每个动作 30 秒」时，
+ * 那个 30 秒是**每一步**的时长，不是整张卡的。卡级 duration 记的是总和
+ * （血管拉伸：420 秒 = 5 个动作 × 2 回 × 30 秒 + 4 次休息 × 30 秒）——
+ * 只看总数，节奏就丢了。
+ *
+ * **没写 duration 的那一步怎么办**：它不是「0 秒」，是**不知道这一步多久**
+ * （D7）。那一步照样显示、照样能走，只是不带读数 —— 界面上它就是一个
+ * 普通的步骤，不假装自己有时长。
+ */
+export interface StepTiming {
+  /** 这一步在卡里的序号（0 起） */
+  index: number;
+  /** 文本（界面上要显示的） */
+  text: string;
+  /** 这一步的时长（秒）；null = 原文没给 */
+  sec: number | null;
+  /** 这个数是推算来的 */
+  derived: boolean;
+}
+
+/**
+ * 把一张卡的步骤排成「分步计时」的一串。
+ *
+ * **只有带时长的步骤才排进来**（`sec != null`）——
+ * 没有时长的那几步不参与计时，它们在界面上还是照常显示的步骤，
+ * 只是没有读数。这样排出来的一串就是「要数的那几步」，
+ * 中间跳过不计时的那几步。
+ */
+export function stepTimings(
+  steps: { text: string; duration?: { sec?: number; basis?: string } | null }[],
+): StepTiming[] {
+  const out: StepTiming[] = [];
+  for (const [index, s] of steps.entries()) {
+    const sec = s.duration?.sec;
+    if (sec == null || !Number.isFinite(sec) || sec <= 0) continue;
+    out.push({
+      index,
+      text: s.text,
+      sec: Math.round(sec),
+      derived: s.duration?.basis === "derived",
+    });
+  }
+  return out;
+}
+
+/** 这一串里有没有推算来的数。 */
+export function timingsDerived(timings: StepTiming[]): boolean {
+  return timings.some((t) => t.derived);
+}
+
+/**
+ * 分步计时的状态：现在在第几步、那步从什么时候开始。
+ *
+ * **与单步计时器的区别**：单步的是「起点 + 累计」，
+ * 分步的是「第几步 + 这一步的起点」—— 每步归零就往前挪一格，
+ * 上一格的时间不再累计（它已经过去了）。
+ *
+ * `at` 等于步数时表示**整组做完了**（没有下一步可去了）。
+ */
+export interface StepTimerState {
+  /** 现在在第几步（`timings` 的下标，不是步骤的下标）；等于步数 = 做完了 */
+  at: number;
+  /** 这一步的起点（毫秒时间戳）；还没开始是 null */
+  since: number | null;
+  /**
+   * 暂停时冻结的剩余秒数。
+   *
+   * **为什么要有它**：暂停只是「别再往下数」，那一步剩下的时间不能继续掉 ——
+   * 光把 `since` 留着的话，读数会接着往下走，暂停等于没暂停。
+   * 跑着的时候它是 null（那时看 `since` 算）。
+   */
+  frozen: number | null;
+  /** 跑着吗 */
+  running: boolean;
+}
+
+/** 分步计时的初始状态。 */
+export const STEP_TIMER_IDLE: StepTimerState = {
+  at: 0,
+  since: null,
+  frozen: null,
+  running: false,
+};
+
+/**
+ * 这一步还剩多少秒（倒计时）；null = 这一步没有目标数（正计时）。
+ */
+export function stepRemaining(
+  state: StepTimerState,
+  now: number,
+  timing: StepTiming | undefined,
+): number | null {
+  if (!timing) return null;
+  if (timing.sec == null) return null;
+  if (!state.running) {
+    // 暂停着：剩下多少就还是多少（没开始过就是全部）
+    if (state.frozen != null) return state.frozen;
+    if (state.since == null) return timing.sec;
+  }
+  const elapsed = state.since == null ? 0 : Math.max(0, now - state.since);
+  return Math.max(0, timing.sec - Math.floor(elapsed / 1000));
+}
+
+/**
+ * 这一步该显示什么。
+ *
+ * **倒计时**：这一步还剩多少秒（归零就是 0）。
+ * **正计时**：这一步已经过了多少秒。
+ */
+export function stepDisplay(
+  state: StepTimerState,
+  now: number,
+  timing: StepTiming | undefined,
+): string {
+  if (!timing) return "";
+  const remaining = stepRemaining(state, now, timing);
+  if (remaining != null) return formatElapsed(remaining);
+  // 正计时：这一步已经过了多少秒
+  const elapsed = state.since == null ? 0 : Math.max(0, now - state.since);
+  return formatElapsed(Math.floor(elapsed / 1000));
+}
+
+/**
+ * 这一步到点了没有（倒计时归零）。
+ *
+ * **只在跑着的时候算**：暂停着停在某个数上，那个数是 0 就是 0，
+ * 但它没在跑，不该这时候报「到点了」。
+ */
+export function stepFinished(
+  state: StepTimerState,
+  now: number,
+  timing: StepTiming | undefined,
+): boolean {
+  if (!timing || timing.sec == null) return false;
+  if (!state.running || state.since == null) return false;
+  return Math.floor((now - state.since) / 1000) >= timing.sec;
+}
+
+/**
+ * 暂停：把剩下多少秒冻住。
+ *
+ * **为什么要冻**：只把 `running` 改 false 的话，读数会接着往下掉 ——
+ * 暂停等于没暂停。
+ */
+export function stepPause(
+  state: StepTimerState,
+  now: number,
+  timing: StepTiming | undefined,
+): StepTimerState {
+  const remaining = stepRemaining(state, now, timing);
+  return {
+    ...state,
+    running: false,
+    since: null,
+    frozen: remaining,
+  };
+}
+
+/**
+ * 开始 / 接着跑：从这一刻起数。
+ */
+export function stepStart(
+  state: StepTimerState,
+  now: number,
+  timings: StepTiming[],
+): StepTimerState {
+  // 已经做完了 → 从头开始；否则接着当前那一步跑
+  const at = state.at >= timings.length ? 0 : state.at;
+  return { at, since: now, frozen: null, running: true };
+}
+
+/**
+ * 这一步做完了 → 进下一步。
+ *
+ * **进下一步时接着跑**（`since` 换成这一刻）：一串动作是要连着做的 ——
+ * 每一步归零就停一下再让人手动点一下，等于把节奏又交回给用户了。
+ *
+ * **每一格的时间不累计**：每一步是各自的一段，把它们加在一起就成了
+ * 「整张卡的总时长」—— 那是卡级 duration 的活，计时器不重复算。
+ *
+ * **最后一步做完就停**：`at` 落在步数上（= 做完了），`since` 清空 ——
+ * 不这样表示的话，「做完了」这个状态就没有地方放（at 永远指着一
+ * 已经做完的那一步，界面显示不出「整组做完了」）。
+ */
+export function nextStep(
+  state: StepTimerState,
+  timings: StepTiming[],
+  now: number,
+): StepTimerState {
+  const next = state.at + 1;
+  if (next >= timings.length) {
+    return { at: timings.length, since: null, frozen: null, running: false };
+  }
+  return { at: next, since: now, frozen: null, running: true };
 }

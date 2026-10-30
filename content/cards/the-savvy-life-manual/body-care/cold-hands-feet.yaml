@@ -61,6 +61,11 @@ cards:
       - id: press-glute-ball
         text: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
         quote: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
+        # 按压那一步 30 秒（2026-10-30 加）；躺下与抬对侧臀那两步是准备，没有时长
+        duration:
+          basis: quote
+          sec: 30
+          quote: "每侧臀部按压 30 秒，每天进行 1 到 2 次。"
     cautions:
       - level: info
         text: "按到痛就减力"
@@ -70,8 +75,8 @@ cards:
         quote: "有骨科疾病或关节出现疼痛症状的人不要做"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 80049ab6c0ea1493
+      date: 2026-10-31
+      hash: f6b022c97a0672b9
     name: 用垒球按臀部暖脚
 
   - id: neck-scarf-warming

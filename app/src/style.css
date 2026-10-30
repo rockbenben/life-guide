@@ -643,6 +643,56 @@
   font-size: var(--lg-t2);
   cursor: pointer;
 }
+/* 分步计时：一步一个读数，归零就跳下一步。
+   读数用等宽 —— 盯着它等的时候，跳动的字会左右晃。 */
+.lg-steptimer {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--lg-rule-soft);
+  border-radius: 10px;
+  background: var(--lg-paper);
+}
+.lg-steptimer-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lg-steptimer-btn {
+  min-height: var(--lg-tap);
+  padding: 4px 12px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 10px;
+  background: var(--lg-sheet);
+  color: var(--lg-ink-2);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+/* 跑着的时候把边框压成主色：一眼看出「现在在计时」。 */
+.lg-steptimer[data-running="true"] .lg-steptimer-btn {
+  border-color: var(--lg-indigo);
+  color: var(--lg-indigo);
+}
+.lg-steptimer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+.lg-steptimer-at {
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+/* 当前那一步的原文：太长了就截断，别把这一行撑开 */
+.lg-steptimer-what {
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .lg-unknown {
   color: var(--lg-warn);
 }
@@ -2209,6 +2259,7 @@
 .lg-art:hover,
 .lg-timer-btn:hover,
 .lg-timer-reset:hover,
+.lg-steptimer-btn:hover,
 .lg-seal:hover {
   border-color: var(--lg-zhu);
   background: color-mix(in srgb, var(--lg-zhu) 9%, var(--lg-sheet));
@@ -2260,6 +2311,7 @@
 .lg-art:active,
 .lg-timer-btn:active,
 .lg-timer-reset:active,
+.lg-steptimer-btn:active,
 .lg-name-btn:active,
 .lg-seal:active {
   transform: translateY(1px);
@@ -2306,6 +2358,7 @@
 .lg-art:focus-visible,
 .lg-timer-btn:focus-visible,
 .lg-timer-reset:focus-visible,
+.lg-steptimer-btn:focus-visible,
 .lg-name-btn:focus-visible,
 .lg-seal:focus-visible,
 .lg-search:focus-visible {

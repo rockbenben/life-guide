@@ -66,6 +66,9 @@ cards:
       formula: "5 个动作 × 2 回 × 30 秒 + 4 次组间休息 × 30 秒 = 420 秒（约 7 分钟）"
 
     steps:
+      # 每一步的时长（2026-10-30 加）：原文的规则是「每次 30 秒」——
+      # 那是**每个动作**的时长，不是整张卡的总时长（总时长在上面的 duration 里）。
+      # 计时器按步走：这一步归零就跳下一步。
       - id: knee-back
         text: "一只脚向前伸出双手扶在膝盖上稳稳地把体重压上去"
         quote:
@@ -74,6 +77,10 @@ cards:
           - "稳稳地把体重压上去"
         images:
           - "https://img.newzone.top/2024-10-14-09-03-58.png?imageMogr2/format/webp"
+        duration:
+          basis: quote
+          sec: 30
+          quote: "共 5 个动作，两足各 2 回、每次 30 秒，动作之间休息约 30 秒，每天早晚各做一轮。"
 
       - id: heel
         text: "正坐双手向前撑地一只脚向身后伸展保持背部挺直、视线朝前，伸展点在脚根"
@@ -84,6 +91,10 @@ cards:
           - "保持背部挺直、视线朝前，伸展点在脚根"
         images:
           - "https://img.newzone.top/2024-10-14-09-05-34.png?imageMogr2/format/webp"
+        duration:
+          basis: quote
+          sec: 30
+          quote: "共 5 个动作，两足各 2 回、每次 30 秒，动作之间休息约 30 秒，每天早晚各做一轮。"
 
       - id: thigh-front
         text: "双腿伸直坐着双手向后撑地一只脚向身后弯曲保持视线朝前"
@@ -94,6 +105,10 @@ cards:
           - "保持视线朝前"
         images:
           - "https://img.newzone.top/2024-10-14-09-06-05.png?imageMogr2/format/webp"
+        duration:
+          basis: quote
+          sec: 30
+          quote: "共 5 个动作，两足各 2 回、每次 30 秒，动作之间休息约 30 秒，每天早晚各做一轮。"
 
       - id: calf
         text: "端坐，一膝立起双手撑住重心稳稳向前压注意脚跟不要离开地面"
@@ -104,6 +119,10 @@ cards:
           - "注意脚跟不要离开地面"
         images:
           - "https://img.newzone.top/2024-10-14-09-06-41.png?imageMogr2/format/webp"
+        duration:
+          basis: quote
+          sec: 30
+          quote: "共 5 个动作，两足各 2 回、每次 30 秒，动作之间休息约 30 秒，每天早晚各做一轮。"
 
       - id: hip
         text: "躺下双手抱住一侧膝盖不要抬头伸展点在臀部"
@@ -114,7 +133,16 @@ cards:
           - "伸展点在臀部"
         images:
           - "https://img.newzone.top/2024-10-14-09-07-01.png?imageMogr2/format/webp"
+        duration:
+          basis: quote
+          sec: 30
+          quote: "共 5 个动作，两足各 2 回、每次 30 秒，动作之间休息约 30 秒，每天早晚各做一轮。"
 
+      # 休息那一步**不计时长**（2026-10-30 定）：原文的规则是
+      # 「动作之间休息约 30 秒」—— 休息是**动作之间**的，不是序列里的第 6 个动作。
+      # 计时器按列表顺序走，把休息放在末尾会把它走成「做完 5 个动作之后歇一次」，
+      # 与原文相反。所以这一步只有文字，没有读数（它不是 0 秒，是不参与计时）。
+      # 卡级 duration 记的 420 秒是**整轮**（含两足各 2 回与 4 次组间休息）。
       - id: rest
         text: "动作之间休息约 30 秒是诀窍所在，不要连着做。"
         quote: "动作之间休息约 30 秒是诀窍所在，不要连着做。"
@@ -137,5 +165,5 @@ cards:
         quote: "除了这套拉伸，每天做 30 分钟有氧运动（如快走）同样能促进血液循环。"
     review:
       by: AI（作者授权代签）
-      date: 2026-10-28
-      hash: 528de10e7e7ba2d6
+      date: 2026-10-31
+      hash: 5334b08469d4b56f

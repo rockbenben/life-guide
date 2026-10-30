@@ -38,6 +38,7 @@ import {
 import { CADENCE_LABELS, CADENCES, type Cadence } from "../domain/cadence.ts";
 import { ReminderRow } from "./Reminder.tsx";
 import { Timer } from "./Timer.tsx";
+import { StepTimer } from "./StepTimer.tsx";
 
 export interface CardProps {
   card: Card;
@@ -527,6 +528,12 @@ export function CardView({
           ) : allSteps.length ? (
             <div class="lg-sec">
               <SectionTitle>怎么做</SectionTitle>
+              {/* 分步计时（2026-10-30 加）：这张卡的步骤各自带时长时，
+                  按步走 —— 这一步归零就跳下一步，自动接着数。
+                  卡级那个「耗时」读数是**整张卡的总时长**，两者不是一回事：
+                  血管拉伸那张卡的总时长是 7 分钟（两足各 2 回 + 组间休息），
+                  而每个动作本身只保持 30 秒。 */}
+              <StepTimer steps={allSteps} title={name} cardId={card.id} />
               <ol class="lg-steps">
                 {shownSteps.map((s, i) => (
                   <StepRow key={s.id ?? i} s={s} n={i + 1} />

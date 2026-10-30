@@ -48,6 +48,25 @@ export interface Step {
   text: string;
   quote?: string | string[];
   images?: string[];
+  /**
+   * 这一步要做多久（2026-10-30 加）。
+   *
+   * **跟卡级的 duration 是两回事**：卡级是**整张卡的总时长**，
+   * 这一级是**这一步**的时长。「每个动作 30 秒」这种原文说的是每一步 ——
+   * 血管拉伸那张卡记的 420 秒是 5 个动作 × 2 回 × 30 秒加休息的总和，
+   * 只看总数，30 秒一组的节奏就丢了。
+   *
+   * 规矩与卡级一致：原文给了就 quote（带引文），换算来的写 derived
+   * （带算式），不知道就不写 —— 逼着填就是编数（D7）。
+   */
+  duration?: {
+    basis: "quote" | "derived" | "unknown";
+    sec?: number;
+    quote?: string | string[];
+    formula?: string;
+    /** 原文写的是近似值（「约 30 秒」）—— 屏上要显示「约」 */
+    approximate?: boolean;
+  } | null;
 }
 
 export interface Variant {

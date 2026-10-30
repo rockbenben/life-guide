@@ -203,6 +203,11 @@ function stripQuotes(card: Card): BuiltCard {
       : card.duration,
     steps: card.steps.map((s) => {
       const { quote: _q, ...rest } = s;
+      // 步级时长的引文同样剥掉（跟卡级 duration 一个规矩）
+      if (rest.duration) {
+        const { quote: _dq, ...duration } = rest.duration;
+        rest.duration = duration;
+      }
       if (card.variants) return rest;
       // 没有模式版本的卡，步骤 id 只是内容层的锚点；App 用下标就能渲染
       const { id: _id, ...noId } = rest;
