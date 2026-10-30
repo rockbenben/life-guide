@@ -61,7 +61,7 @@ describe("similarity", () => {
 describe("auditCardMechanically", () => {
   const source = parseMarkdown(ARTICLE_MD);
 
-  it("干净��卡没有问题", () => {
+  it("干净的卡没有问题", () => {
     const card = cardOf({
       cautions: [{ level: "stop", text: "膝盖或腰部患有疾病的人不要做", quote: "膝盖或腰部患有疾病的人不要做。" }],
     });
