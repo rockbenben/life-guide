@@ -21,6 +21,11 @@
 `marks.html`（A 印在身上 / B 脉搏 / C 卡里的人），**A 已定稿**。
 要换回 B 或 C：改 `mark.svg` 与 `mark-small.svg`，再重跑下面的命令。
 
+**托盘图标**（`desktop/build/tray.png`）单独用小尺寸简版 —— Windows 托盘只有
+16–24px，完整标记在那个尺寸会糊。**2026-10-29 改版时漏了它**
+（桌面端图标换了、托盘还挂着老的「一张卡」），是作者装完发现托盘没变才发现的
+⇒ 下面「重新生成」里那一行别再删。
+
 | 文件 | 是什么 |
 | --- | --- |
 | `mark.svg` | 标记母版（带圆角的方块） |
@@ -49,6 +54,12 @@ node $SKILL/render.mjs brand/og.html app/public/og.png --palette --colors 256
 
 # 桌面端图标：icon.ico / icon.icns / icon.png（electron-builder 直接认 build/）
 node $SKILL/icons.mjs brand/mark.svg desktop/build --preset electron
+
+# 托盘图标：desktop/build/tray.png（256×256，Windows 托盘自己缩到 16–24px）
+# 用**小尺寸简版** mark-small.svg：完整标记在那个尺寸会糊成一团
+# （2026-10-30 在 32px 下并排比过：小版本胸口那颗印是清楚的方块，
+#   完整版本的那圈纸色描边糊掉了，人也散成两截）
+node $SKILL/render.mjs brand/mark-small.svg desktop/build/tray.png --width 256 --transparent
 
 # 手机端：Capacitor 的资源生成器（读 mobile/assets/）
 node $SKILL/render.mjs brand/icon-only.svg mobile/assets/icon-only.png --width 1024
