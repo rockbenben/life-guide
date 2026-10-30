@@ -1,7 +1,7 @@
 /**
  * 手册的「找得到」这一面。
  *
- * 两条都是实测撞出来的：快照根下混着一个 README（目录页，11604 字），
+ * 两条都是实测撞出来的：快照根下混着一个 README（目录页，约 1.9 万字），
  * 而卡片带的 articlePath 比手册的 path 多一层目录前缀。
  */
 import { describe, expect, it } from "vitest";
