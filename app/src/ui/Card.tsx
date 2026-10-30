@@ -37,6 +37,7 @@ import {
 } from "../domain/reminders.ts";
 import { CADENCE_LABELS, CADENCES, type Cadence } from "../domain/cadence.ts";
 import { ReminderRow } from "./Reminder.tsx";
+import { Timer } from "./Timer.tsx";
 
 export interface CardProps {
   card: Card;
@@ -470,6 +471,25 @@ export function CardView({
                 </dd>
               </>
             ) : null}
+            {/* 计时器（作者定的位置：展开态「耗时」这一行旁边）。
+                知道时长 → 倒计时；不知道 → 正计时。
+                忙档只做几步、时长未知，所以忙档下摆的是正计时 ——
+                拿原卡的时长去倒计时，倒的是「原卡」的数，不是「忙档」这一次的。 */}
+            <dt>计时</dt>
+            <dd>
+              <Timer
+                duration={
+                  busySteps?.length
+                    ? null
+                    : {
+                        sec: lines.duration.sec,
+                        derived: lines.duration.state === "derived",
+                      }
+                }
+                title={name}
+                cardId={card.id}
+              />
+            </dd>
             {card.effect ? (
               <>
                 <dt>见效</dt>

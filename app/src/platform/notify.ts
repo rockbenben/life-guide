@@ -327,8 +327,18 @@ export function setWebReminders(
   }
 }
 
-/** 立刻发一条（设置页的「试一下」用）。 */
-export async function showNow(title: string, body: string): Promise<void> {
+/**
+ * 立刻发一条（设置页的「试一下」、计时器到点用）。
+ *
+ * `id` 只有原生端用得上：系统按 id 存通知，**撞了就是后一条把前一条顶掉**
+ * （AGENTS.md §4.2 记过这个坑：早晨一条占了 999，晚间那条就没了）。
+ * 计时器要按卡分开，所以 id 传进来；不传就用默认那个。
+ */
+export async function showNow(
+  title: string,
+  body: string,
+  id: number = 999,
+): Promise<void> {
   const kind = notifyKind();
   if (kind === "desktop") {
     desktopBridge()?.notifyNow?.(title, body);
@@ -344,7 +354,7 @@ export async function showNow(title: string, body: string): Promise<void> {
       await plugin.schedule({
         notifications: [
           {
-            id: 999,
+            id,
             title,
             body,
             schedule: { at: new Date(Date.now() + 1000) },

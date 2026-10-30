@@ -1,5 +1,5 @@
 /**
- * 浏览器级验收（共 9 项）：
+ * 浏览器级验收（共 10 项）：
  *
  *   1. 断网可完整使用一天        → checkOffline
  *   2. .ics 导入后按时提醒        → checkIcs（真机导入没法自动化，只能验文件本身对不对）
@@ -10,6 +10,7 @@
  *   7. 导航去哪一页              → checkNavigation
  *   8. 导入备份后清单跟着换       → checkImportRefreshesRoutine
  *   9. 展开的卡点别处就收起        → checkCardCollapse
+ *  10. 计时器数得对、形态对       → checkTimer
  *
  * 每项检查都用自己的浏览器 context，互不污染（事件日志存在 IndexedDB 里）。
  */
@@ -571,6 +572,55 @@ async function writeEvents(page, events) {
   );
 }
 
+/**
+ * 把「我的日常」换成写死的几张卡。
+ *
+ * **为什么直接写库**：走界面（加自己的习惯 / 放回默认）只能得到
+ * 「默认清单那几张」，而默认清单在今天页看到哪几张**取决于现在几点**
+ * （早/日/晚各不同）—— 跑验收的时间不同，看到的也不同，检查就没法预期。
+ * 直接写 settings 里的 myRoutine 才定得下来。
+ *
+ * **写完要 reload**：App 启动时读一次清单，库里改了它不知道。
+ */
+async function setRoutine(page, ids) {
+  await page.evaluate(
+    (ids) =>
+      new Promise((res, rej) => {
+        const r = indexedDB.open("life-guide");
+        r.onsuccess = () => {
+          const db = r.result;
+          const tx = db.transaction("settings", "readwrite");
+          const store = tx.objectStore("settings");
+          const put = (value) =>
+            new Promise((ok, bad) => {
+              const g = store.get("myRoutine");
+              g.onsuccess = () => {
+                const row = g.result;
+                store.put({
+                  key: "myRoutine",
+                  value,
+                  updatedAt: row?.updatedAt ?? Date.now(),
+                });
+                ok();
+              };
+              g.onerror = () => bad(g.error);
+            });
+          put(ids).then(() => {
+            tx.oncomplete = () => {
+              db.close();
+              res();
+            };
+            tx.onerror = () => rej(tx.error);
+          }, rej);
+        };
+        r.onerror = () => rej(r.error);
+      }),
+    ids,
+  );
+  await page.reload({ waitUntil: "load" });
+  await waitForCards(page);
+}
+
 const CARD_REMINDER_BASES = [
   { id: "morning", cardId: null, label: "早晨", mode: "daily", time: "07:00", slot: "morning", on: true },
   { id: "evening", cardId: null, label: "晚间", mode: "daily", time: "21:00", slot: "evening", on: true },
@@ -1066,6 +1116,163 @@ export async function checkCardCollapse({ browser, baseURL }) {
   }
 
   return { id: "card-collapse", title: "展开的卡：点别处收起，盖印也收起", details, failures };
+}
+
+/* ------------------------------------------------------------------ */
+/* 7. 计时器：数得对、形态对                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 这条盯的是计时器本身：**读数真的在走**，形态也对。
+ *
+ * 单元测试（app/test/domain/timer.test.ts）验的是纯逻辑；
+ * 这条在真浏览器里验的是「组件真的接上了、tick 真的在跑」——
+ * 那两件事只有真浏览器里才验得到（组件渲染测试不跑定时器）。
+ *
+ * **为什么在「今天」页验、而不是「手册」页**：手册先是文章列表，
+ * 卡片要点进某一篇才渲染 —— 找卡得先选一篇，而哪一篇有带时长的卡
+ * 是内容决定的（会变）。今天页的清单是自己排的，可以直接按卡名找。
+ *
+ * **用哪两张卡**：写死的两个 id（内容层定的）：
+ *   · `pre-sleep-hot-bath` —— 原文给了 600 秒 → 倒计时
+ *   · `brush-teeth` —— 时长未知 → 正计时
+ * 找不到就说明内容变了，这条检查直接说，不装作验过了。
+ */
+export async function checkTimer({ browser, baseURL }) {
+  const context = await browser.newContext({ viewport: { width: 1180, height: 900 } });
+  const page = await context.newPage();
+  const details = [];
+  const failures = [];
+
+  /** 读出屏上那个读数（秒数）。 */
+  const readTick = async (card) =>
+    normalize(await card.locator(".lg-timer-num").first().innerText());
+
+  const toSec = (s) => {
+    const p = s.split(":").map(Number);
+    return p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p[0] * 60 + p[1];
+  };
+
+  try {
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    await seedToday(page);
+
+    // 把清单换成写死的那几张：默认清单里哪几张在「现在这个时段」会变
+    //（早/日/晚各不同，跑验收的时间不同看到的也不同）。
+    //
+    // **三张一起换**：setRoutine 是覆盖式的，中途再换会把前面那张换掉。
+    await setRoutine(page, ["pre-sleep-hot-bath", "brush-teeth", "eyelid-clean"]);
+    await gotoTab(page, "今天");
+    await page.waitForTimeout(400);
+
+    /** 按卡 id 找到那张卡（id 是内容层定的，不随文案改名而变）。 */
+    const cardById = async (id) => {
+      const card = page.locator(`article.lg-card[data-card-unit="${id}"]`).first();
+      if ((await card.count()) === 0) return null;
+      await expandCard(card);
+      await page.waitForTimeout(150);
+      return card;
+    };
+
+    // 1. 倒计时那张
+    const countdown = await cardById("pre-sleep-hot-bath");
+    if (!countdown) {
+      failures.push("今天页里找不到「睡前泡澡」那张卡 —— 清单没换成功，这条检查说明不了问题");
+    } else {
+      const before = await readTick(countdown);
+      if (before !== "10:00") {
+        failures.push(`倒计时起手是 ${before}（应是 10:00 —— 原文给的 600 秒）`);
+      }
+      await countdown.getByRole("button", { name: /开始倒计时|暂停计时/ }).first().click();
+      await page.waitForTimeout(2200);
+      const after = await readTick(countdown);
+      const b = toSec(before);
+      const a = toSec(after);
+      if (!(a < b)) {
+        failures.push(`点了开始，两秒后读数还是 ${after}（起手 ${before}）—— 没有在倒数`);
+      } else if (b - a > 5) {
+        failures.push(`两秒掉了 ${b - a} 秒（起手 ${before} → ${after}）—— 掉得太快，读数不对`);
+      } else {
+        details.push(`倒计时在走：${before} → ${after}（两秒）`);
+      }
+
+      // 暂停：读数停住
+      await countdown.getByRole("button", { name: "暂停计时" }).first().click();
+      const paused = await readTick(countdown);
+      await page.waitForTimeout(1500);
+      const stillPaused = await readTick(countdown);
+      if (paused !== stillPaused) {
+        failures.push(`暂停后读数还在走（${paused} → ${stillPaused}）`);
+      } else {
+        details.push(`暂停后读数停住：${stillPaused}`);
+      }
+
+      // 重置：回到起始值
+      await countdown.getByRole("button", { name: "重置计时" }).first().click();
+      await page.waitForTimeout(300);
+      const reset = await readTick(countdown);
+      if (reset !== before) {
+        failures.push(`重置后是 ${reset}（应是起手的 ${before}）`);
+      } else {
+        details.push(`重置回到 ${reset}`);
+      }
+    }
+
+    // 3. 到点：读数停在 00:00，不跳回起始值
+    //
+    // 用「睑缘清洗」那张 —— 原文给的 10 秒，等一会儿就真到点了。
+    const short = page.locator('article.lg-card[data-card-unit="eyelid-clean"]').first();
+    if ((await short.count()) === 0) {
+      details.push("（没找到 10 秒那张卡，跳过「到点」这一段）");
+    } else {
+      await expandCard(short);
+      await page.waitForTimeout(150);
+      await short.getByRole("button", { name: /开始倒计时|暂停计时/ }).first().click();
+      // 10 秒的倒计时：等它真的走到头
+      await page.waitForTimeout(11_500);
+      const atEnd = await readTick(short);
+      if (atEnd !== "00:00") {
+        failures.push(`到点后读数是 ${atEnd}（应是 00:00 —— 不能跳回起始值，那像是重置了）`);
+      } else {
+        details.push("到点后读数停在 00:00");
+      }
+      // 再点一次：应该重新计时（不是立刻又判一次到点）
+      await short.getByRole("button", { name: /开始倒计时|暂停计时/ }).first().click();
+      await page.waitForTimeout(400);
+      const restarted = await readTick(short);
+      if (restarted === "00:00") {
+        failures.push("到点后再点开始，读数还是 00:00 —— 应该重新计时");
+      } else {
+        details.push(`到点后再点开始，重新计时：${restarted}`);
+      }
+    }
+
+    // 2. 正计时那张（时长未知的那张）
+    const countup = await cardById("brush-teeth");
+    if (!countup) {
+      failures.push("今天页里找不到「刷牙」那张卡 —— 清单没换成功，这条检查说明不了问题");
+    } else {
+      const before = await readTick(countup);
+      if (before !== "00:00") {
+        failures.push(`正计时起手是 ${before}（应是 00:00）`);
+      }
+      await countup.getByRole("button", { name: "开始正计时" }).first().click();
+      await page.waitForTimeout(2200);
+      const after = await readTick(countup);
+      if (after === "00:00") {
+        failures.push("正计时点了开始，两秒后还是 00:00 —— 没有在往上数");
+      } else {
+        details.push(`正计时在走：${before} → ${after}（两秒）`);
+      }
+    }
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+
+  return { id: "timer", title: "计时器：形态对、读数在走、暂停与重置", details, failures };
 }
 
 /* ------------------------------------------------------------------ */
