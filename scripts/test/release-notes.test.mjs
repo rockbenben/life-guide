@@ -153,11 +153,15 @@ describe("readNotesAtRef", () => {
   });
 
   it("路径带反斜杠也读得到（git 的对象写法只认正斜杠）", () => {
-    // 复现那个 bug：直接用 path.join 的结果当对象名
-    const backslash = path.join(NOTES_DIR, "v7.7.7.md");
-    expect(backslash).toContain("\\");
-    // 本模块转成正斜杠后就能读到
-    expect(readNotesAtRef("HEAD", backslash, dir)).toContain("这一版只有远端分支上有说明");
+    // 复现那个 bug：把反斜杠路径直接当对象名。
+    //
+    // **这里显式写死反斜杠，不看 path.join 的结果** ——
+    // path.join 在 Windows 上给反斜杠、在 Linux 上给正斜杠，
+    // 断言「结果里有没有反斜杠」就只在 Windows 上成立（2026-10-30 实测：
+    // 本地全绿、CI 红了）。要钉住的是「反斜杠路径也能读到」这件事，
+    // 那在任何平台上都该成立。
+    const withBackslash = "docs\\发布说明\\v7.7.7.md";
+    expect(readNotesAtRef("HEAD", withBackslash, dir)).toContain("这一版只有远端分支上有说明");
   });
 
   it("ref 上没这个文件 → null（不是抛错）", () => {

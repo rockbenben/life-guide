@@ -68,12 +68,15 @@ export function isWritten(text) {
  * 用 `git show` 而不是 GitHub API：路径里有中文，API 那边要自己编码，
  * 而 git 直接按 UTF-8 路径取，省掉一层容易出错的东西。
  *
- * **路径要换成正斜杠**：`path.join` 在 Windows 上给的是反斜杠
- * （`docs\发布说明\v7.7.7.md`），而 git 的对象写法只认正斜杠 ——
- * 写成反斜杠时 `git show` 报「path not found」，静默地读不到。
+ * **路径要换成正斜杠**：git 的对象写法只认正斜杠，而路径可能来自任何地方
+ * —— `path.join` 在 Windows 上给的是反斜杠（`docs\发布说明\v7.7.7.md`），
+ * 写成反斜杠时 `git show` 报「path not found」，**静默地读不到**。
+ *
+ * **两种分隔符都要换**（`/[\\/]/`，不是 `path.sep`）：只按当前平台的分隔符切，
+ * 在 Linux 上收到反斜杠路径就原样放过了 —— 同一份代码在两个平台上行为不一样。
  */
 export function readNotesAtRef(ref, relPath, cwd = root) {
-  const gitPath = relPath.split(path.sep).join("/");
+  const gitPath = relPath.split(/[\\/]/).join("/");
   try {
     return execFileSync("git", ["show", `${ref}:${gitPath}`], {
       cwd,
