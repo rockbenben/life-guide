@@ -321,11 +321,15 @@ push tag vX.Y.Z
     **不用动 tag**（产物是按那个提交打的）。`release-notes.mjs` 会先看工作区
     （流水线里就是被打 tag 的那个提交），再看 `origin/main`。
   - **已经发布出去的那一页，正文事后还能改**（2026-10-31 实测，v0.4.0 走过一遍）：
-    改 `docs/发布说明/<tag>.md` 提交到默认分支，再按 release id PATCH 正文：
+    改 `docs/发布说明/<tag>.md` 提交到默认分支，再按 release id PATCH 正文
+    （`gh api -X PATCH repos/<owner>/<repo>/releases/<id> --input body.json`，
+    `body.json` 里是 `releaseBodyFor(<tag>)` 的输出，含那几条固定告知）。
+
     ```bash
     id=$(gh api repos/<owner>/<repo>/releases/tags/<tag> --jq .id)
-    gh api -X PATCH "repos/<owner>/<repo>/releases/$id" --input body.json   # {"body": releaseBodyFor(<tag>)}
+    gh api -X PATCH "repos/<owner>/<repo>/releases/$id" --input body.json
     ```
+
     **重跑流水线不会把正文改回旧措辞** —— `scripts/release-draft.mjs` 碰到「这版已经发布」
     （不是草稿）直接报错退出（`已经发布了；要再发一版请升版本`），`prepare` 因此就失败了，
     走不到写正文那步；`publish` 那个 PATCH 也只带 `draft=false`，不带正文。
