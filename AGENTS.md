@@ -1071,6 +1071,14 @@ dose:
 | R7 | **忙档预算**：总时长 > 300 秒，或有卡耗时为 `unknown`，且 `busy-budget.yaml` 中没有与当前状态一致的确认记录 | error |
 | R8 | `source.anchor` 在快照中存在 | error |
 | R9 | 源文件中的小节 / 图片既未被引用也不在 `ignore` 中 | `complete`：error；`partial`：小节报 warning，图片只在报告中计数，不逐条报 |
+
+> **R9 的 warning 两种，处理方式不同**（2026-10-31 全清）：
+> ① **真抽漏** → 抽成卡（那次是「醋的用量表」与「土豆泥团子」食谱）。
+> ② **不是漏，是重复** → 写进 `ignore.sections` 并写明理由（那三节是
+> 「原理 + 指向专篇」，专篇已有卡）；**说明性文字**也这样（总览段没有动作）。
+> **R9 的盲区**：它只看「anchor 匹配 **或** 引文落在小节里」——
+> 「内容在专篇里抽过、这篇只是横向速查」这种情况它认不出来（§5.1j）。
+> ⚠️ **R1 只认正文**（frontmatter 里的 `answer` 不算）—— 引 frontmatter 的句子会被判错。
 | R10 | `kind: condition` 的卡含 `slot` / `variants` / 勾选类字段 | error |
 | R12 | `status: reviewed` 但无签字，或签字 `hash` 与当前卡片内容不符 | error（构建时剔除该卡） |
 | R13 | 快照文件 sha256 与 `SOURCE.lock` 不符，且 `ERRATA.md` 无对应记录；快照里有 `SOURCE.lock` 没登记的文件（重新导入留下的旧文章）；或 `media.lock` 里的图片副本缺失 / 字节不符 | error |
