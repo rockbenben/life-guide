@@ -76,9 +76,6 @@ cards:
       - id: reduce-visceral-fat
         text: '减少内脏脂肪的积聚'
         quote: '减少内脏脂肪的积聚'
-      - id: limit-alcohol
-        text: '控制体重、改善代谢状态，并限制酒精摄入'
-        quote: '控制体重、改善代谢状态，并限制酒精摄入'
     notices:
       - level: info
         text: '尿酸排泄减少才是高尿酸血症的主要原因，而其背后则与胰岛素抵抗和乳酸积聚密切相关。'
@@ -94,8 +91,8 @@ cards:
         quote: '在酒精代谢过程中大量产生，会与尿酸竞争排泄路径，进一步加重尿酸潴留。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: 5632253a1f0f79b9
+      date: 2026-10-31
+      hash: 813507840fa5e110
     name: 控体重改善尿酸代谢
 
   - id: drink-coffee

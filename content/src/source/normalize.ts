@@ -242,6 +242,11 @@ export function approximationAttached(
  * 「30 秒」「1 分钟」「1 分半」「0.5 小时」都能换算成同一个秒数。
  * 所以判据是「引文里存在某个数 n，n 按某种单位换算后正好等于 sec」。
  *
+ * **必须连着单位一起看**（2026-10-31 实测踩过）：
+ * 只比裸数字会把「煮 5 分钟」当成「5 秒」—— 卡的 sec 写 5，
+ * 引文里有个裸的 5，就「对得上」了；屏上把泡蒜水的 5 分钟说成 5 秒，错 60 倍。
+ * 所以这里数的是「数字 + 单位」的**完整词组**，裸数字不算数。
+ *
  * 覆盖的单位：
  *   秒（直接相等）、分钟（×60）、小时（×3600）
  *   还有中文口语里的「分半」（90 秒）、「刻钟」（900 秒）—— 前者靠「分半」二字，
@@ -264,17 +269,31 @@ export function secondsGrounded(sec: number, quotes: string | string[]): boolean
     }
     // 「一刻钟」「1 刻钟」= 900 秒
     if (sec === 900 && /刻/.test(s)) return true;
-    for (const n of extractNumbers(s)) {
-      const v = Number(n);
+
+    // **数字 + 单位**的完整词组 —— 裸数字不算（见文件头的说明）
+    for (const m of s.matchAll(/(\d+(?:\.\d+)?)\s*(秒|分钟|分鐘|小时|小時)/g)) {
+      const v = Number(m[1]);
       if (!Number.isFinite(v)) continue;
-      if (v === sec) return true; // 秒
-      if (v * 60 === sec) return true; // 分钟
-      if (v * 3600 === sec) return true; // 小时
-      // 范围「15～17 分钟」：取下限与上限各试一次
-      if (v * 60 >= sec * 0.5 && v * 60 <= sec * 2) {
+      const unit = m[2];
+      const got = unit.includes("秒") ? v : unit.includes("分") ? v * 60 : v * 3600;
+      if (got === sec) return true;
+      // 范围「15～17 分钟」：下限与上限各试一次
+      if (unit.includes("分") && got >= sec * 0.5 && got <= sec * 2) {
         // 只在引文里真的写了范围时才放宽（避免把「20 分钟」放到「19 秒」上）
         if (/[～\-~至到]/.test(s)) return true;
       }
+    }
+
+    // **中文数字 + 单位**：「三分钟」「一个小时」「十分钟」
+    const CN_NUM_MAP: Record<string, number> = {
+      一: 1, 两: 2, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10,
+    };
+    for (const m of s.matchAll(/([一二两三四五六七八九十])\s*(秒|分钟|分鐘|小时|小時|个?小时)/g)) {
+      const v = CN_NUM_MAP[m[1]];
+      if (v == null) continue;
+      const unit = m[2];
+      const got = unit.includes("秒") ? v : unit.includes("分") ? v * 60 : v * 3600;
+      if (got === sec) return true;
     }
   }
   return false;

@@ -52,10 +52,6 @@ cards:
         quote:
           - 三样材料放进碗里。
           - 鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟。
-        duration:
-          basis: quote
-          sec: 60
-          quote: 鸡胸肉、牛奶、盐放入碗中，双手抓揉 1 分钟。
       - id: knead-chicken
         text: '双手抓揉 1 分钟'
         quote: '双手抓揉 1 分钟'
@@ -91,7 +87,7 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: ee10e1227c9f566c
+      hash: 4a8b5c02356fe9b5
     name: 牛奶抓揉鸡胸肉 1 分钟
 
   - id: juicy-fried-chicken

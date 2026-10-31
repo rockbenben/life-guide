@@ -288,6 +288,18 @@ describe("secondsGrounded：这个秒数在引文里有没有着落", () => {
     expect(secondsGrounded(180, "这篇给两件能立刻上手的事")).toBe(false);
   });
 
+  it("中文数字 + 单位也对得上（三分钟 / 一个小时）", () => {
+    expect(secondsGrounded(180, "不用去医院的三分钟自查")).toBe(true);
+    expect(secondsGrounded(3600, "冷藏一个小时后即可食用")).toBe(true);
+  });
+
+  it("**裸数字不算数** —— 「煮 5 分钟」不能当成「5 秒」", () => {
+    // 实测踩过：卡上写 5 秒、引文写「煮 5 分钟」—— 只比裸数字就会「对得上」，
+    // 屏上把 5 分钟说成 5 秒，错 60 倍。单位是数的一部分。
+    expect(secondsGrounded(5, "水烧开后放入蒜片，煮 5 分钟以上即成。")).toBe(false);
+    expect(secondsGrounded(10, "切片后用 90℃ 以上的热水泡 10 分钟")).toBe(false);
+  });
+
   it("引文是多句数组时，任意一句能换算到就算数", () => {
     expect(secondsGrounded(600, ["前面一句没有时间", "泡 10 分钟"])).toBe(true);
   });

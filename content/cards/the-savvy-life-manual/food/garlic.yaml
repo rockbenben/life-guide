@@ -36,8 +36,8 @@ cards:
         quote: '切片后用 90℃ 以上的热水泡 10 分钟'
     duration:
       basis: quote
-      sec: 10
-      quote: '切片后用 90℃ 以上的热水泡 10 分钟'
+      sec: 600
+      quote: 切片后用 90℃ 以上的热水泡 10 分钟
     steps:
       - id: slice-garlic
         text: '问题出在别把蒜磨成蒜泥。切片后用 90℃ 以上的热水泡 10 分钟'
@@ -52,9 +52,9 @@ cards:
         text: '于是切碎（みじん切り）或压泥（すりおろし）这种把细胞破坏得很彻底的刀法，等于亲手把阿利因消灭掉。'
         quote: '于是切碎（みじん切り）或压泥（すりおろし）这种把细胞破坏得很彻底的刀法，等于亲手把阿利因消灭掉。'
     review:
-      by: benson
-      date: 2026-10-21
-      hash: b078f1c09ebaa2e9
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 32f115e09d23a86f
   - id: garlic-water-by-use
     status: reviewed
     source:
@@ -65,7 +65,7 @@ cards:
       quote: '说明书按用途和香气分成两档：做汤用弱香型——沸水 500mL ＋ 蒜片 3g 煮 5 分钟以上；炒菜和做蛋类用中香型——100mL ＋ 9g 蒜片 ＋ 2 撮盐。两者都是当调味料用。'
     duration:
       basis: quote
-      sec: 5
+      sec: 300
       quote:
         - '水烧开后放入蒜片，煮 5 分钟以上即成。'
         - '沸水中加入蒜片和盐 2 撮，煮 5 分钟。'
@@ -107,7 +107,7 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 773537544f8a10df
+      hash: e43090c240083b05
     name: 蒜水按用途调两种浓度
   - id: garlic-water-vegetable-stir-fry
     status: reviewed

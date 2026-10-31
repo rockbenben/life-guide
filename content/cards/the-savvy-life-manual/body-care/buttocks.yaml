@@ -289,13 +289,6 @@ cards:
           basis: quote
           sec: 5
           quote: 仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。
-      - id: abdominal-press-lift
-        text: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
-        quote: "仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。"
-        duration:
-          basis: quote
-          sec: 5
-          quote: 仰卧并抬起膝盖，然后抬起上半身，同时将下背部压向地板，接着稍微抬起臀部，保持 5 秒后恢复。
     cautions:
       - level: stop
         text: "注意：说明书在训练页下方连印了两条同样的警示——有整形外科疾患、或关节／膝盖等部位会痛的人，请不要做这些动作。"
@@ -303,7 +296,7 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 20a48bf50afdacad
+      hash: 20b0c8a814ecf59c
     name: 骨盆前倾练腹肌
 
   - id: wide-step-walking

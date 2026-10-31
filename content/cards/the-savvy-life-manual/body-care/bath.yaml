@@ -128,10 +128,6 @@ cards:
       - id: avoid-42c-10min
         text: '42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大'
         quote: '42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大'
-        duration:
-          basis: quote
-          sec: 600
-          quote: 42℃ 的热水泡 10 分钟，会让体温升得过高、血压波动明显变大
     cautions:
       - level: stop
         text: '很多人泡到头晕才肯出来，其实早已泡过头。'
@@ -139,7 +135,7 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 117de94b019b8329
+      hash: 1ba88f616a3e5d85
     name: 泡澡水温和时长
 
   - id: bath-method-selection

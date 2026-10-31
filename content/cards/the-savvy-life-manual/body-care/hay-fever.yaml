@@ -79,17 +79,14 @@ cards:
       - id: set-february-14-trigger
         text: '看到 2 月 14 日相关的影像就提醒自己，把处方药或市售药的服用变成习惯，在吃巧克力之前完成。'
         quote: '看到 2 月 14 日相关的影像就提醒自己，把处方药或市售药的服用变成习惯，在吃巧克力之前完成。'
-      - id: finish-before-chocolate
-        text: '看到 2 月 14 日相关的影像就提醒自己，把处方药或市售药的服用变成习惯，在吃巧克力之前完成。'
-        quote: '看到 2 月 14 日相关的影像就提醒自己，把处方药或市售药的服用变成习惯，在吃巧克力之前完成。'
     notices:
       - level: with-doctor
         text: '药物本身怎么选、怎么用，仍需咨询药剂师或医生。'
         quote: '药物本身怎么选、怎么用，仍需咨询药剂师或医生。'
     review:
       by: AI（作者授权代签）
-      date: 2026-10-24
-      hash: ba76226c60c5d978
+      date: 2026-10-31
+      hash: 22d6a4244fccc2c6
     name: 2 月 14 日前开始用药
 
   - id: pollen-barrier-mask

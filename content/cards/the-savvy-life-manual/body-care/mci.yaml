@@ -182,8 +182,8 @@ cards:
         quote: '在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%'
     duration:
       basis: quote
-      sec: 10
-      quote: '在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%'
+      sec: 600
+      quote: 在疫情中对老年人每天打 1 次、每次 10 分钟的电话，结果孤独感指标下降约 19%、抑郁症状指标下降 29%
     steps:
       - id: call-family-friends
         text: '周围的人能做的事，是每天给家人和朋友打 1 次电话。'
@@ -204,7 +204,7 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: 78c14333262b922f
+      hash: c3643a616082eda1
     name: 每天给家人打 1 通电话
   - id: community-support-center
     status: draft

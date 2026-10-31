@@ -196,9 +196,6 @@ cards:
       - id: avoid-intense-sweating-at-first
         text: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
         quote: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
-      - id: increase-sweat-gradually
-        text: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
-        quote: 没有出汗习惯的人，一开始就要避免剧烈出汗，而是一点点把汗量加上去。
       - id: rinse-or-dry-skin
         text: 出汗之后应尽快用淋浴冲洗，或用毛巾擦干。
         quote: 出汗之后应尽快用淋浴冲洗，或用毛巾擦干。
@@ -210,8 +207,8 @@ cards:
         quote: 在进行暑热适应训练时，除了补水，别忘了同步补充盐分。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-29
-      hash: f153a4e19b8d1799
+      date: 2026-10-31
+      hash: 4b718368b7f4c43f
     name: 出汗的三个注意点
     dose: []
     cautions:

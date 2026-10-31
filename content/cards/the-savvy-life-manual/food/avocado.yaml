@@ -346,9 +346,9 @@ cards:
         what: '油用量'
         quote: '大勺 1'
     duration:
-      basis: quote
-      sec: 180
-      quote: '中火煎约 3 分钟'
+      basis: derived
+      sec: 540
+      formula: 中火煎约 3 分钟 + 盖盖小火再煎 5～6 分钟 ≈ 9 分钟 = 540 秒（取再煎 5 分钟的下限）
     steps:
       - id: mash-avocado
         text: '牛油果去皮去核，用叉子压碎，加入葛粉拌匀备用。'
@@ -381,7 +381,7 @@ cards:
     review:
       by: AI（作者授权代签）
       date: 2026-10-31
-      hash: a5f7457721f1eb53
+      hash: f6cf080e482afabf
     name: 做牛油果汉堡饼
 
   - id: avocado-meat-roll
