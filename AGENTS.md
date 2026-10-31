@@ -320,6 +320,16 @@ push tag vX.Y.Z
   - **tag 推出去之后才发现漏写**：把说明提交到默认分支、重跑失败的 job 就行，
     **不用动 tag**（产物是按那个提交打的）。`release-notes.mjs` 会先看工作区
     （流水线里就是被打 tag 的那个提交），再看 `origin/main`。
+  - **已经发布出去的那一页，正文事后还能改**（2026-10-31 实测，v0.4.0 走过一遍）：
+    改 `docs/发布说明/<tag>.md` 提交到默认分支，再按 release id PATCH 正文：
+    ```bash
+    id=$(gh api repos/<owner>/<repo>/releases/tags/<tag> --jq .id)
+    gh api -X PATCH "repos/<owner>/<repo>/releases/$id" --input body.json   # {"body": releaseBodyFor(<tag>)}
+    ```
+    **重跑流水线不会把正文改回旧措辞** —— `scripts/release-draft.mjs` 碰到「这版已经发布」
+    （不是草稿）直接报错退出（`已经发布了；要再发一版请升版本`），`prepare` 因此就失败了，
+    走不到写正文那步；`publish` 那个 PATCH 也只带 `draft=false`，不带正文。
+    所以这种情况**同样不用动 tag**：tag 里留的是打产物那时的措辞，发布页上是改好后的措辞。
   - **每次都有的那几条固定告知**（未签名、哪些形态能自动更新、关窗口只是收进托盘）
     由 `scripts/release-notices.mjs` 提供，**说明文件里不要重复写** ——
     重复了发布页上会出现两遍。
