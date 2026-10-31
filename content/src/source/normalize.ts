@@ -120,9 +120,24 @@ export function extractNumbers(text: string): Set<string> {
   for (const m of s.replace(/(\d),(\d{3})(?!\d)/g, "$1$2").matchAll(/\d+(?:\.\d+)?/g)) found.add(m[0]);
 
   // 中文数字：十 / 十五 / 二十 / 二十五 …
-  // 简化：只处理「十」开头的成数，以及 〇零一二两三四五六七八九 单独成字。
+  //
+  // **只在量词上下文里才算数**（2026-10-31 实测踩过）：
+  // 「足三里」「三阴交」「四指」「两侧」「一转」里的中文数字是**词的一部分**，
+  // 不是数。全表有 646 处这种写法 —— 之前没出事，是因为大多数卡的 text 与引文
+  // 用词相同，两边都抓到「三」就抵消了；**只有 text 改写而引文没改时才暴露**
+  // （新卡里把「去皮去芽后」写成「去皮、去芽后」，R2 就报了「1 不在引文里」）。
+  //
+  // 算数的条件：**后面跟量词/单位**，或**前面是阿拉伯数字**。
+  const CN_UNITS =
+    /^(?:小|大|半)?[个次秒钟分天回遍片颗口杯勺碗份步组轮年月周层根条块把枚株朵本支瓶袋罐盆盘锅串排撮包张升毫厘]/;
   for (const m of s.matchAll(/[〇零一二两三四五六七八九十]+/g)) {
     const token = m[0];
+    const after = s.slice(m.index! + token.length);
+    const before = s.slice(Math.max(0, m.index! - 1), m.index!);
+    // 量词上下文：后跟量词，或前是数字（「第 3 个」「15 分钟」那种）
+    const hasUnitAfter = CN_UNITS.test(after);
+    const hasDigitBefore = /[0-9]/.test(before);
+    if (!hasUnitAfter && !hasDigitBefore) continue;
     if (token === "十") {
       found.add("10");
       continue;

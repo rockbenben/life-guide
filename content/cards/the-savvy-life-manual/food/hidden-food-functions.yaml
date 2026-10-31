@@ -2,7 +2,13 @@ article: the-savvy-life-manual/food/hidden-food-functions.md
 kind: practice
 coverage: partial
 ignore:
-  sections: []
+  sections:
+    - anchor: 杏鲍菇：整根烤才有汁
+      reason: 这一节讲的是原理（海藻糖保水、切片会从断面蒸发）并明确指向专篇「杏鲍菇怎么切？四种 5mm 刀法，黄油煎 4 分钟」；完整做法已由专篇的 whole-eringii-roast / french-eringii-meat-roll 等卡承担，本篇是横向速查。
+    - anchor: 土豆：擦泥才能激活黏性
+      reason: 这一节讲的是原理（淀粉黏度对比、细胞壁要破坏）并明确指向专篇「土豆：冷一晚出抗性淀粉，磨泥出黏性」；完整做法已由专篇的 make-resistant-starch-potato 等卡承担，本篇是横向速查。
+    - anchor: 大蒜：泡热水才出得来鲜味
+      reason: 这一节讲的是原理（alliin 与酶变成 alicin）并明确指向专篇「大蒜别磨蒜泥？切片泡 90℃ 热水 10 分钟」；完整做法已由专篇的 garlic-slice-hot-water 等卡承担，本篇是横向速查。
   images: []
 cards:
   - id: four-ingredient-activation-switches
@@ -39,3 +45,124 @@ cards:
       by: AI（作者授权代签）
       date: 2026-10-31
       hash: afea4136eec93710
+  - id: vinegar-drops-by-dish
+    status: reviewed
+    name: 醋按菜量滴：0.5%～1%
+    source:
+      anchor: 醋：几滴就够的用量表
+    slot: anytime
+    remind:
+      text: 醋按菜品总量的 0.5%～1% 用，从 3～4 滴起步再加；加完要充分搅拌。
+      quote:
+        - 用量目标是菜品总量的 0.5%～1%。放多了会发酸，所以请从 3～4 滴开始加，再逐步调整。
+        - 用量只是大致标准，食材不同需要微调。加醋后要充分搅拌，让醋均匀分布到整道菜里；混不匀的话，效果几乎感知不到。
+    effect:
+      text: 醋的隐藏功能是味道觉醒力——几滴就能把整道菜的味道托起来：味道变清爽、素材的味道被引出、用水果做的饮品的清爽感提升。
+      quote: 醋的隐藏功能是味道觉醒力——几滴就能把整道菜的味道托起来：味道变清爽、素材的味道被引出、用水果做的饮品的清爽感提升。
+    dose:
+      - value: 0.5
+        valueMax: 1
+        unit: "%"
+        what: 醋占菜品总量的比例
+        quote: 用量目标是菜品总量的 0.5%～1%。放多了会发酸，所以请从 3～4 滴开始加，再逐步调整。
+      - value: 3
+        valueMax: 4
+        unit: 滴
+        what: 起步用量
+        quote: 放多了会发酸，所以请从 3～4 滴开始加，再逐步调整。
+      - value: 1
+        unit: 周
+        what: 冷藏后用完的期限
+        quote: 冷藏保存，1 周左右用完；一旦变质就停用。
+    steps:
+      - id: start-with-three-drops
+        text: 从 3～4 滴开始加，再逐步调整（放多了会发酸）。
+        quote: 用量目标是菜品总量的 0.5%～1%。放多了会发酸，所以请从 3～4 滴开始加，再逐步调整。
+      - id: stir-well
+        text: 加醋后要充分搅拌，让醋均匀分布到整道菜里；混不匀的话，效果几乎感知不到。
+        quote: 用量只是大致标准，食材不同需要微调。加醋后要充分搅拌，让醋均匀分布到整道菜里；混不匀的话，效果几乎感知不到。
+      - id: store-properly
+        text: 容器避免金属和木器，选玻璃、塑料或陶器；冷藏保存，1 周左右用完；一旦变质就停用。
+        quote: 秘醋的存放：容器避免金属和木器，选玻璃、塑料或陶器；冷藏保存，1 周左右用完；一旦变质就停用。
+    cautions:
+      - level: info
+        text: 用量只是大致标准，食材不同需要微调。
+        quote: 用量只是大致标准，食材不同需要微调。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: f036ec8b1b7ff126
+  - id: mashed-potato-dough-knots
+    status: reviewed
+    name: 土豆泥团子：微波 4+3 分钟
+    source:
+      anchor: 食谱
+    slot: anytime
+    remind:
+      text: 土豆去皮去芽擦泥拌油，微波 4 分钟后拌匀再加热 3 分钟，搓成棒晾凉切块炸 3～4 分钟。
+      quote:
+        - 耐热碗中放入去皮去芽后擦泥的土豆和油，轻轻拌匀，不盖保鲜膜用 500W 微波加热 4 分钟。
+        - 取出用刮刀随意拌匀，再加热 3 分钟，然后聚拢揉成团。
+        - 炸土豆团子：把团子用保鲜膜搓成棒后切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
+    dose:
+      - value: 250
+        unit: g
+        what: 擦成泥的土豆用量
+        quote: |-
+          擦成泥的土豆（3 个小土豆左右的量）
+          250g
+      - value: 1
+        unit: 大勺
+        what: 油用量
+        quote: |-
+          油
+          大勺 1
+      - value: 15
+        unit: 等份
+        what: 团子切分的份数
+        quote: 把团子用保鲜膜搓成棒后切成 15 等份
+      - value: 180
+        unit: ℃
+        what: 炸制油温
+        quote: 180℃ 炸 3～4 分钟
+    steps:
+      - id: grate-and-mix
+        text: 土豆要去皮、去芽后再擦泥；和油一起放进耐热碗轻轻拌匀，不盖保鲜膜。
+        quote: 耐热碗中放入去皮去芽后擦泥的土豆和油，轻轻拌匀，不盖保鲜膜用 500W 微波加热 4 分钟。
+      - id: microwave-first
+        text: 500W 微波加热 4 分钟。
+        quote: 耐热碗中放入去皮去芽后擦泥的土豆和油，轻轻拌匀，不盖保鲜膜用 500W 微波加热 4 分钟。
+        duration:
+          basis: quote
+          sec: 240
+          quote: 耐热碗中放入去皮去芽后擦泥的土豆和油，轻轻拌匀，不盖保鲜膜用 500W 微波加热 4 分钟。
+      - id: stir-and-heat-again
+        text: 取出用刮刀随意拌匀，再加热 3 分钟，然后聚拢揉成团。
+        quote: 取出用刮刀随意拌匀，再加热 3 分钟，然后聚拢揉成团。
+        duration:
+          basis: quote
+          sec: 180
+          quote: 取出用刮刀随意拌匀，再加热 3 分钟，然后聚拢揉成团。
+      - id: shape-and-cool
+        text: 用保鲜膜搓成棒状，晾到不烫手（很烫，小心烫伤）。
+        quote: 用保鲜膜搓成棒状，晾到不烫手。（很烫，小心烫伤！）
+      - id: fry-the-knots
+        text: 切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
+        quote: 炸土豆团子：把团子用保鲜膜搓成棒后切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
+        duration:
+          basis: quote
+          sec: 210
+          quote: 炸土豆团子：把团子用保鲜膜搓成棒后切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
+    cautions:
+      - level: info
+        text: 擦好的土豆接触空气会氧化变色，在意颜色的话动作要快；晾凉后尽早揪成小块，放久会粘手。
+        quote: |-
+          擦好的土豆接触空气会氧化变色，在意颜色的话动作要快。
+          晾凉后尽早揪成小块，放久会粘手。
+      - level: with-doctor
+        text: 用细孔擦泥器口感更细腻，注意别伤到手。
+        quote: 用细孔擦泥器口感更细腻，注意别伤到手。
+    review:
+      by: AI（作者授权代签）
+      date: 2026-10-31
+      hash: 6d38559da7360ae8

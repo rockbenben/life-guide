@@ -164,6 +164,27 @@ const baseCard: Card = {
   steps: [{ id: "prep", text: "将脚尖踮起，身体挺直", quote: "将脚尖踮起，身体挺直" }],
 };
 
+describe("中文数字：只在量词上下文里才算数", () => {
+  it("词里的中文数字不算数（足三里 / 三阴交 / 四指 / 两侧）", () => {
+    // 实测踩过：全表 646 处这种写法。之前没出事是因为大多数卡的 text 与引文
+    // 用词相同，两边都抓到就抵消了；只有 text 改写而引文没改时才暴露。
+    expect(extractNumbers("疲劳按足三里、三阴交")).not.toContain("3");
+    expect(extractNumbers("在脊椎两侧两指处")).not.toContain("2");
+    expect(extractNumbers("往外约一拇指的凹陷")).not.toContain("1");
+  });
+
+  it("量词用法算数字（3 次 / 一小撮 / 15 分钟 / 十分钟）", () => {
+    expect(extractNumbers("每天 3 次")).toContain("3");
+    expect(extractNumbers("砂糖 一小撮")).toContain("1");
+    expect(extractNumbers("15 分钟")).toContain("15");
+    expect(extractNumbers("十分钟")).toContain("10");
+  });
+
+  it("阿拉伯数字不受影响", () => {
+    expect(extractNumbers("水 1L 相当于 1mL")).toContain("1");
+  });
+});
+
 describe("R1 引文逐字", () => {
   it("引文被改写则报错", () => {
     const card = { ...baseCard, remind: { text: "每天 50 次", quote: "以每天 50 次为标准" } };

@@ -114,6 +114,7 @@ cards:
           - 漂洗一开始
           - 暂停
           - 直接倒进洗衣槽
+          - 水 1L 相当于 1mL
           - 约为
           - 放入洗衣皂量的那一半
       - id: finish-rinse-spin-dry
