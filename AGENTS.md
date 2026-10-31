@@ -1013,6 +1013,11 @@ dose:
 - `yaml` 的 `Document.get("x")` 拿的是**值**；`node.get("x")` 才是节点。
   用 `before.quote` 会拿到函数，`quote` 直接丢（结构不合法，签不了字）。
 
+**工具化了**：`npm run content:audit-content` 把上面这些检查固化成命令
+（`content/src/content-audit.ts`）—— 只报不改，改是人的活。
+**它自己的两个坑也写在那个文件的注释里**：指纹要比对内容层自己的加载结果
+（不是 YAML 原始对象），以及 `yaml` 的 `Document.get` 拿值、`node.get` 拿节点。
+
 ### 5.2 校验规则
 
 所有 `quote` 字段类型为 `string | string[]`。
@@ -1496,6 +1501,7 @@ npm run content:signing-list                                  # 生成待签字�
 npm run content:slot-check                                   # 逐篇检查时段标注
 npm run content:approx-check                                 # 列出「原文写了约、卡上没标」的剂量行（带原文证据）
 npm run content:step-duration [--apply] [--overwrite] [--card <id>]  # 步级时长：列候选 / 写盘（写完要重签）
+npm run content:audit-content                                    # 全面审计：校验器看不见的那几类错（只报不改）
 npm run content:card-names [--apply]                  # 给缺名的卡补动作名（写完要重签）
 npm run content:draft -- --all [--concurrency 8]              # LLM 起草（只写 draft）
 npm run content:audit [--article <文章>] [--no-llm]          # 审阅辅助：挑出该人看的卡

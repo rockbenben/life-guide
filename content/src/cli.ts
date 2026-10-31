@@ -43,6 +43,7 @@ import {
 } from "./step-duration.ts";
 import { CARD_NAMES } from "./card-names.ts";
 import { applyNames, checkNameList } from "./card-name-tool.ts";
+import { auditContent } from "./content-audit.ts";
 import {
   SIGNING_LIST_FILE,
   buildSigningList,
@@ -1135,6 +1136,31 @@ function cmdCardNames(): number {
   return problems.length ? 1 : 0;
 }
 
+// -------------------------------------------------------------------- 全面审计
+
+/**
+ * 内容层全面审计：校验器看不见的那几类错。
+ *
+ * 只报不改 —— 改是人的活（改完要重签）。
+ */
+function cmdAuditContent(): number {
+  const r = auditContent();
+  console.log(`\n内容审计：${r.total} 张卡（已签字 ${r.reviewed} · 草稿 ${r.draft}）`);
+  console.log(`  有动作名：${r.named} / ${r.reviewed}`);
+  console.log(`  步骤 ${r.steps} 个，带步级时长 ${r.stepsWithDuration} 个（${((r.stepsWithDuration / r.steps) * 100).toFixed(1)}%）`);
+  if (!r.findings.length) {
+    console.log("\n没有发现问题。");
+    return 0;
+  }
+  console.log("");
+  for (const f of r.findings) {
+    console.log(`❌ ${f.kind}（${f.detail}）—— ${f.ids.length} 处`);
+    for (const id of f.ids.slice(0, 12)) console.log(`   · ${id}`);
+    if (f.ids.length > 12) console.log(`   …… 还有 ${f.ids.length - 12} 处`);
+  }
+  return 1;
+}
+
 // -------------------------------------------------------------------- main
 
 const cmd = process.argv[2];
@@ -1176,6 +1202,9 @@ switch (cmd) {
   case "card-names":
     code = cmdCardNames();
     break;
+  case "audit-content":
+    code = cmdAuditContent();
+    break;
   default:
     console.log(`内容管线 CLI
 
@@ -1192,6 +1221,7 @@ switch (cmd) {
   content repair-quotes                        # 给 draft 卡补全漏掉的引文
   content step-duration [--apply] [--card <id>]  # 步级时长：列出候选 / 写盘
   content card-names [--apply]                  # 给缺名的卡补动作名
+  content audit-content                         # 全面审计：校验器看不见的那几类错
 `);
     code = cmd ? 2 : 0;
 }
