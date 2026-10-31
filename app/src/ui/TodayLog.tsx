@@ -3,6 +3,11 @@
  *
  * 与页边分开是因为它要的东西完全不同：页边要「时段与条件」，
  * 清单要「事件日志、提醒、模式与人群标签」。
+ *
+ * **清单长了要能收起来**（2026-10-31 加）：默认清单扩到 40 张之后，
+ * 这一段随时会有 30 多张 —— 全铺开就是一屏目录，正是这个项目要否定的用法。
+ * 所以先铺前 `LOG_CHUNK` 张，其余收在一行「还有 N 件」里。
+ * 折叠与卡内步骤的折叠同一形态（`lg-more` 那颗键）。
  */
 import { useState } from "preact/hooks";
 
@@ -14,6 +19,9 @@ import type { Card, Mode } from "../domain/routine.ts";
 import { describeReminder, type Reminder } from "../domain/reminders.ts";
 import type { Cadence } from "../domain/cadence.ts";
 import type { HabitFormState } from "./TodaySidebar.tsx";
+
+/** 默认铺几张；其余收在「还有 N 件」里。 */
+export const LOG_CHUNK = 12;
 
 export interface TodayLogProps {
   /** 这一段该做的卡（次序即显示次序） */
@@ -42,6 +50,9 @@ export interface TodayLogProps {
   onTakeOut: (card: Card, keepReminder?: boolean) => void;
   cadenceOf: (cardId: string) => Cadence;
   onCadenceChange: (cardId: string, cadence: Cadence) => void;
+  /** 清单是收着还是展着（由父组件管 —— 页边那行也要知道） */
+  allOpen?: boolean;
+  onAllOpenChange?: (open: boolean) => void;
 }
 
 /** 移出前的确认：有提醒时让用户选「一起删」还是「只移卡」。 */
@@ -119,10 +130,24 @@ export function TodayLog({
   onTakeOut,
   cadenceOf,
   onCadenceChange,
+  allOpen: allOpenProp,
+  onAllOpenChange,
 }: TodayLogProps) {
+  // 清单长了先铺前几张，其余收起来（默认清单 40 张后随时那一档有 30 多张）。
+  // 状态由父组件管（页边那行「先铺 N 张」也要知道现在收着还是展着）。
+  const [localOpen, setLocalOpen] = useState(false);
+  const allOpen = allOpenProp ?? localOpen;
+  const setAllOpen = (open: boolean) => {
+    setLocalOpen(open);
+    onAllOpenChange?.(open);
+  };
+  const longList = cards.length > LOG_CHUNK;
+  const shown = longList && !allOpen ? cards.slice(0, LOG_CHUNK) : cards;
+  const hidden = cards.length - shown.length;
+
   return (
     <div class="lg-log">
-      {cards.map((c) => {
+      {shown.map((c) => {
         const done = events.some(
           (e) => e.cardId === c.id && e.date === today && e.periodDone !== false,
         );
@@ -204,6 +229,17 @@ export function TodayLog({
           </div>
         );
       })}
+      {longList ? (
+        <button
+          class="lg-more"
+          aria-expanded={allOpen}
+          onClick={() => setAllOpen(!allOpen)}
+        >
+          {allOpen
+            ? `只看前 ${LOG_CHUNK} 件`
+            : `还有 ${hidden} 件，全展开`}
+        </button>
+      ) : null}
     </div>
   );
 }

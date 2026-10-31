@@ -21,7 +21,7 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 
 import { CardView } from "./Card.tsx";
 import { TodaySidebar, type HabitFormState } from "./TodaySidebar.tsx";
-import { TodayLog } from "./TodayLog.tsx";
+import { TodayLog, LOG_CHUNK } from "./TodayLog.tsx";
 import { DiscoverPanel } from "./DiscoverPanel.tsx";
 import { Disclaimer } from "./Disclaimer.tsx";
 import { useConditions } from "./Conditions.tsx";
@@ -181,6 +181,8 @@ export function Today({
   const [now, setNow] = useState(() => new Date());
   // null = 跟着钟点走（默认）；手动切过时固定下来，重新打开 App 又回到自动
   const [slotPick, setSlotPick] = useState<Slot | null>(null);
+  // 清单收着还是展着（默认清单 40 张后这一段有 30 多张，要能收起来）
+  const [logOpen, setLogOpen] = useState(false);
 
   useEffect(() => {
     void (async () => {
@@ -513,6 +515,8 @@ export function Today({
         onAddHabit={(n, t, s) => void addHabit(n, t, s)}
         onEditHabit={(n, t, s) => void editHabit(n, t, s)}
         mineCount={mine.length}
+        logOpen={logOpen}
+        logShown={Math.min(mine.length, LOG_CHUNK)}
         doneToday={doneToday}
         activeDays={activeDays}
         dots={dots}
@@ -682,6 +686,8 @@ export function Today({
             onTakeOut={(c, keepReminder) => void takeOut(c, keepReminder)}
             cadenceOf={routine.cadenceOf}
             onCadenceChange={(id, cadence) => void routine.setCadence(id, cadence)}
+            allOpen={logOpen}
+            onAllOpenChange={setLogOpen}
           />
         )}
 

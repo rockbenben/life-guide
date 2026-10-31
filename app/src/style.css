@@ -338,6 +338,11 @@
   font-size: var(--lg-t2);
   color: var(--lg-ink-3);
 }
+/* 「这一段 34 个动作（先铺 15 张）」里的那半句 —— 跟在数字后面，不另起一行 */
+.lg-overview .lg-stat .lg-stat-note {
+  flex: none;
+  margin: 0 0 0 4px;
+}
 /* 断签不清零：14 格印迹，做过的天留色；撤销的周期完成不算这一天 */
 .lg-dots {
   display: inline-flex;

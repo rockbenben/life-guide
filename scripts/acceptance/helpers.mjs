@@ -91,6 +91,27 @@ export async function waitForCards(page, timeout = 20000) {
 }
 
 /**
+ * 把今天页的清单展开（默认清单 40 张后，那一屏有 30 多张，
+ * 前 12 张铺着、其余收在「还有 N 件，全展开」里）。
+ *
+ * **验收要点的卡可能在收起来的那部分里**（实测踩过：挑到「每周 60 分钟
+ * 稍快走」那张，它在折叠之外，点不到，脚本就超时了）。
+ * 所以点某张特定的卡之前先展开。
+ *
+ * 已经有折叠键时点开它；没有就说明清单不长，不用管。
+ */
+export async function expandLog(page) {
+  const more = page.locator(".lg-log .lg-more");
+  if ((await more.count()) === 0) return false;
+  const text = (await more.first().innerText()) ?? "";
+  // 已经展开了（键上写的是「只看前 N 件」），不用再点
+  if (/只看前/.test(text)) return true;
+  await more.first().click();
+  await page.waitForTimeout(150);
+  return true;
+}
+
+/**
  * 让「今天」有内容可验。
  *
  * 首启已经有动作了：App 第一次打开会自己放几张起步的（早 / 日 / 晚 / 随时各最多 3 张）。

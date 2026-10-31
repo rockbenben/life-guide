@@ -26,6 +26,7 @@ import {
   gotoTab,
   readCacheEntries,
   readRecordCount,
+  expandLog,
   seedToday,
   settleImages,
   waitForCards,
@@ -776,6 +777,9 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
       if (await page.locator(".lg-perioddone").count()) fail("周期撤销后「本周期已完成」还在");
 
       // 再盖一次：新盖章要写入 periodDone: true；再撤销仍不能删历史
+      // 默认清单 40 张后，这一屏有 30 多张、前 12 张才铺着 ——
+      // 那张周卡可能在收起来的那部分里，点不到（实测踩过）。
+      await expandLog(page);
       const weekCard = page
         .locator("article.lg-card")
         .filter({ hasText: weekly.name ?? weekly.id })

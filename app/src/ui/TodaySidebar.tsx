@@ -60,6 +60,10 @@ export interface TodaySidebarProps {
   loading?: boolean;
   /** 当前清单里被模式（生病等）标记为不做的卡数 */
   skippedCount?: number;
+  /** 清单是收着还是展着（收着时补一句「先铺 N 张」） */
+  logOpen?: boolean;
+  /** 收着时铺了几张 */
+  logShown?: number;
 }
 
 export function TodaySidebar({
@@ -87,6 +91,8 @@ export function TodaySidebar({
   dots,
   loading,
   skippedCount = 0,
+  logOpen = true,
+  logShown,
 }: TodaySidebarProps) {
   const restoreIds = routine.restoreIds;
   const dayDate = new Date(`${today}T00:00:00`);
@@ -123,6 +129,10 @@ export function TodaySidebar({
         <div class="lg-overview">
           <span class="lg-stat">
             这一段 <b class="tabular">{mineCount}</b> 个动作
+            {/* 收着的时候说清先铺了几张 —— 不然「34 个动作」看着像 34 件事都要做 */}
+            {!logOpen && logShown != null && logShown < mineCount ? (
+              <span class="lg-stat-note">（先铺 {logShown} 张）</span>
+            ) : null}
           </span>
           <span class="lg-stat">
             今天已盖 <b class="tabular">{doneToday}</b> 印

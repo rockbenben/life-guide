@@ -71,6 +71,9 @@ export interface ManualProps {
   onRetry?: () => void;
 }
 
+/** 「常用」先摆几个；其余收在一行「还有 N 个」里。 */
+const COMMON_CHUNK = 12;
+
 export function Manual({
   articles,
   index,
@@ -122,6 +125,10 @@ export function Manual({
       .map((id) => byId.get(id))
       .filter((c): c is Card => Boolean(c));
   }, [defaultRoutine, cards]);
+  // 「常用」长到 40 个时要收起来（2026-10-31 加）：全铺开是 13 行，
+  // 把这一页的搜索框都挤到下面去了 —— 而这一页的主事是找文章。
+  const [commonOpen, setCommonOpen] = useState(false);
+  const shownCommon = commonOpen ? common : common.slice(0, COMMON_CHUNK);
   const found = useMemo(
     () =>
       filterByCategory(
@@ -285,6 +292,10 @@ export function Manual({
          *
          * 摆一排小片而不是一整块列表 —— 这一页的主事是「找文章」，
          * 这一排只是让人一眼看到那些天天做的事，点一下就加进日常。
+         *
+         * **清单长到 40 张时要收起来**（2026-10-31 加）：全铺开是 13 行，
+         * 把这一页的搜索框都挤到下面去了 —— 而这一页的主事是找文章。
+         * 先铺前 COMMON_CHUNK 个，其余收在一行里。
          */
         <div class="lg-common">
           <p class="lg-commonhint">
@@ -292,7 +303,7 @@ export function Manual({
             <span>：每天固定做的几件事，点一下加进日常。</span>
           </p>
           <div class="lg-commontags" role="group" aria-label="常用的动作">
-            {common.map((c) => {
+            {shownCommon.map((c) => {
               const name = shownNames.get(c.id) ?? cardName(c);
               const inRoutine = routineIds?.includes(c.id) ?? false;
               return (
@@ -308,6 +319,17 @@ export function Manual({
               );
             })}
           </div>
+          {common.length > COMMON_CHUNK ? (
+            <button
+              class="lg-more"
+              aria-expanded={commonOpen}
+              onClick={() => setCommonOpen(!commonOpen)}
+            >
+              {commonOpen
+                ? `只看前 ${COMMON_CHUNK} 个`
+                : `还有 ${common.length - COMMON_CHUNK} 个常用动作，全展开`}
+            </button>
+          ) : null}
         </div>
       ) : null}
 
