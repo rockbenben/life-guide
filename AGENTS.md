@@ -1018,6 +1018,31 @@ dose:
 **它自己的两个坑也写在那个文件的注释里**：指纹要比对内容层自己的加载结果
 （不是 YAML 原始对象），以及 `yaml` 的 `Document.get` 拿值、`node.get` 拿节点。
 
+**分步计时器的实测结论**（2026-10-31 逐张打开看过）：
+
+| 卡 | 计时器显示 | 判断 |
+| --- | --- | --- |
+| `vascular-stretch` | 00:30 · 第 1/5 步 | ✓ 正常（5 个动作各 30 秒） |
+| `bath-temperature-duration` | 10:00 · 第 1/1 步 | ✓ 警示步已不带时长 |
+| `anterior-abdominal-core` | 00:05 · 第 1/1 步 | ✓ 重复步已删 |
+| `miso-basque-cheesecake` | 00:00 · 第 1/2 步 | 冷藏 5 小时 → 超上限走正计时 → **要摆「等约 5 小时」**，否则 00:00 看着像坏了 |
+| `milk-boil-ripening` | 10:00 · 第 1/2 步 | ✓ 煮 10 分钟 → 冷藏 20 分钟（串行对） |
+| `avocado-hamburger-patty` | 03:00 · 第 1/2 步 | ✓ 煎 3 分钟 → 再煎 5～6 分钟 |
+
+**两条界面上的规矩**（都是实测逼出来的）：
+
+1. **正计时的那一步要说清「要等多久」**（`stepTimerLabel`）——
+   正计时的读数只显示「已经过了多久」，起手永远是 `00:00`。
+   不说清楚，读者看到 00:00 会以为计时器坏了。
+
+2. **整小时不写「0 分」**（`formatDuration`）——「等约 5 小时 0 分」看着像算错了。
+
+**还没解决的（设计层，不是 bug）**：计时器假设带时长的步是**串行**的。
+但有些步骤是**并行**的（先冷藏 20 分钟，冷藏的时候可以干别的；再煎 10 分钟）——
+现在串起来数，总时长会比实际久。要改得引入「并行步」的概念（schema 加字段 + 计时器改逻辑），
+不是加一行就能解决的。**实测里这类卡有 3～4 张**（`make-tender-chicken-breast`、
+`miso-basque-cheesecake`、`milk-boil-ripening`、`make-resistant-starch-potato`）。
+
 ### 5.2 校验规则
 
 所有 `quote` 字段类型为 `string | string[]`。
@@ -1516,6 +1541,7 @@ npm run content:slot-check                                   # 逐篇检查时�
 npm run content:approx-check                                 # 列出「原文写了约、卡上没标」的剂量行（带原文证据）
 npm run content:step-duration [--apply] [--overwrite] [--card <id>]  # 步级时长：列候选 / 写盘（写完要重签）
 npm run content:audit-content                                    # 全面审计：校验器看不见的那几类错（只报不改）
+npm run probe:step-timer                                         # 实测：逐张打开带步级时长的卡，看计时器实际显示什么
 npm run content:card-names [--apply]                  # 给缺名的卡补动作名（写完要重签）
 npm run content:draft -- --all [--concurrency 8]              # LLM 起草（只写 draft）
 npm run content:audit [--article <文章>] [--no-llm]          # 审阅辅助：挑出该人看的卡

@@ -77,7 +77,9 @@ export function formatDuration(sec: number): string {
   const rest = s % 60;
   if (m < 60) return rest ? `${m} 分 ${rest} 秒` : `${m} 分钟`;
   const h = Math.floor(m / 60);
-  return `${h} 小时 ${m % 60} 分`;
+  const restMin = m % 60;
+  // 整小时不写「0 分」（实测踩过：「等约 5 小时 0 分」看着像算错了）
+  return restMin ? `${h} 小时 ${restMin} 分` : `${h} 小时`;
 }
 
 /**
@@ -258,6 +260,24 @@ export function stepTimings(
 export function stepTimerKind(timing: StepTiming | undefined): TimerKind {
   if (!timing || timing.sec == null) return "countup";
   return timing.sec <= TIMER_MAX_SEC ? "countdown" : "countup";
+}
+
+/**
+ * 这一步的形态说明（界面上给 title / 提示用的那句）。
+ *
+ * **为什么正计时也要说一句**：正计时的读数只显示「已经过了多久」，
+ * 走的是 `formatElapsed(elapsed)` —— 一开始就是 `00:00`。
+ * 对「冷藏 5 小时」这种**等待**类的步，用户看到 `00:00` 完全不知道
+ * 那要等 5 小时。所以正计时得把**要等多久**说出来（实测踩过：
+ * 巴斯克味噌芝士蛋糕那一步起手是 00:00，像坏了）。
+ *
+ * 倒计时那句话跟卡级同款（`timerPlan` 的 label）：「倒计时 10 分钟」。
+ */
+export function stepTimerLabel(timing: StepTiming | undefined): string {
+  if (!timing || timing.sec == null) return "正计时";
+  if (stepTimerKind(timing) === "countdown") return `倒计时 ${formatDuration(timing.sec)}`;
+  // 正计时但时长是知道的 —— 那就说是「等多久」
+  return `等约 ${formatDuration(timing.sec)}`;
 }
 
 /** 这一串里有没有推算来的数。 */

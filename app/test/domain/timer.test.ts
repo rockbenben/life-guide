@@ -17,6 +17,7 @@ import {
   stepRemaining,
   stepTimings,
   stepTimerKind,
+  stepTimerLabel,
   timerDisplay,
   timerDoneText,
   timerExhausted,
@@ -80,8 +81,10 @@ describe("formatDuration", () => {
   });
 
   it("满一小时说小时（不说「60 分钟」—— 那是换算，不是读数）", () => {
-    expect(formatDuration(3600)).toBe("1 小时 0 分");
+    // 整小时不写「0 分」（实测踩过：「等约 5 小时 0 分」看着像算错了）
+    expect(formatDuration(3600)).toBe("1 小时");
     expect(formatDuration(3660)).toBe("1 小时 1 分");
+    expect(formatDuration(18000)).toBe("5 小时");
   });
 });
 
@@ -224,6 +227,33 @@ describe("timerExhausted：到点后停着也算走完了", () => {
   it("正计时没有目标，不会走完", () => {
     const s = timerStart(TIMER_IDLE, T0);
     expect(timerExhausted(s, T0 + 999_999, null)).toBe(false);
+  });
+});
+
+describe("stepTimerKind / stepTimerLabel：这一步的形态与说明", () => {
+  const timing = (sec: number) => ({ index: 0, text: "x", sec, derived: false });
+
+  it("一小时以内倒计时", () => {
+    expect(stepTimerKind(timing(30))).toBe("countdown");
+    expect(stepTimerKind(timing(3600))).toBe("countdown");
+    expect(stepTimerLabel(timing(30))).toBe("倒计时 30 秒");
+  });
+
+  it("超过一小时走正计时 —— 那是「等待」，不是「做一件事要多久」", () => {
+    expect(stepTimerKind(timing(18000))).toBe("countup");
+  });
+
+  it("**正计时也要说清要等多久**", () => {
+    // 实测踩过：正计时的读数只显示「已经过了多久」，起手是 00:00，
+    // 看着像坏了 —— 「等约 5 小时」得摆出来。
+    expect(stepTimerLabel(timing(18000))).toBe("等约 5 小时");
+  });
+
+  it("整小时不写「0 分」", () => {
+    // 7200 秒 = 2 小时，超了一小时上限 → 正计时 → 「等约 2 小时」
+    expect(stepTimerLabel(timing(7200))).toBe("等约 2 小时");
+    // 正好一小时仍走倒计时
+    expect(stepTimerLabel(timing(3600))).toBe("倒计时 1 小时");
   });
 });
 

@@ -20,6 +20,7 @@
     "content:approx-check": "node content/src/cli.ts approx-check",
     "content:step-duration": "node content/src/cli.ts step-duration",
     "content:audit-content": "node content/src/cli.ts audit-content",
+    "probe:step-timer": "node scripts/acceptance/probe-step-timer.mjs",
     "content:audit": "node content/src/cli.ts audit",
     "content:repair-quotes": "node content/src/cli.ts repair-quotes",
     "content:draft": "node content/src/cli.ts draft",

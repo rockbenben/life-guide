@@ -698,6 +698,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* 正计时那一步的「等约 X」：它的读数只显示「已经过了多久」，
+   起手 00:00 看着像坏了 —— 得说清那要等多久（实测踩过）。 */
+.lg-steptimer-wait {
+  font-size: var(--lg-t2);
+  color: var(--lg-ink-3);
+  font-variant-numeric: tabular-nums;
+}
 .lg-unknown {
   color: var(--lg-warn);
 }

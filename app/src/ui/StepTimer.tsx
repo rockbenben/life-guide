@@ -24,6 +24,8 @@ import {
   stepFinished,
   stepPause,
   stepStart,
+  stepTimerKind,
+  stepTimerLabel,
   stepTimings,
   timingsDerived,
   type StepTimerState,
@@ -123,14 +125,19 @@ export function StepTimer({ steps, title, cardId, now }: StepTimerProps) {
   const running = state.running;
   // 做完了：at 落在步数上（nextStep 把 at 推到 timings.length）
   const done = !running && state.at >= timings.length;
+  // 形态说明：正计时的那一步要说清「要等多久」——
+  // 它的读数只显示「已经过了多久」，起手 00:00 看着像坏了（实测踩过）。
+  const kind = stepTimerKind(current);
+  const label = stepTimerLabel(current);
 
   return (
-    <div class="lg-steptimer" data-running={running ? "true" : "false"}>
+    <div class="lg-steptimer" data-running={running ? "true" : "false"} data-kind={kind}>
       <div class="lg-steptimer-head">
         <button
           class="lg-steptimer-btn"
           onClick={toggle}
           aria-label={running ? "暂停计时" : "开始计时"}
+          title={label}
         >
           <span class="lg-steptimer-num tabular">{done ? "完成" : shown}</span>
         </button>
@@ -140,6 +147,10 @@ export function StepTimer({ steps, title, cardId, now }: StepTimerProps) {
           </span>
           {current ? (
             <span class="lg-steptimer-what">{current.text}</span>
+          ) : null}
+          {/* 正计时的那一步把「要等多久」摆出来 —— 读数只有「已经过了多久」 */}
+          {kind === "countup" && current?.sec != null ? (
+            <span class="lg-steptimer-wait">{label}</span>
           ) : null}
         </div>
         {/* 重置键：跑着、暂停着（frozen 里有数）、或做完了，都该能重置 */}
