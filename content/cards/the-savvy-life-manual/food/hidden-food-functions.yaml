@@ -150,8 +150,9 @@ cards:
         text: 切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
         quote: 炸土豆团子：把团子用保鲜膜搓成棒后切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
         duration:
-          basis: quote
+          basis: derived
           sec: 210
+          formula: "(3 + 4) ÷ 2 × 60 = 210 秒"
           quote: 炸土豆团子：把团子用保鲜膜搓成棒后切成 15 等份，180℃ 炸 3～4 分钟；趁热撒青椒粉和盐食用。
     cautions:
       - level: info
@@ -164,5 +165,5 @@ cards:
         quote: 用细孔擦泥器口感更细腻，注意别伤到手。
     review:
       by: AI（作者授权代签）
-      date: 2026-10-31
-      hash: 6d38559da7360ae8
+      date: 2026-11-09
+      hash: 64454946549d1b14

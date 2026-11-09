@@ -31,6 +31,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Validate content before publishing
+        run: npm run content:check
+
       - name: Build
         # OG_IMAGE_URL 是社交预览那张图的**绝对地址**（og:image 只认绝对 URL）。
         # 仓库变量里已经设成自定义域名那个地址（仓库 → Settings → Variables）；

@@ -8,8 +8,8 @@
  *   1. 空白与全半角标点的统一——这些不影响语义。
  *   2. 数字写法的统一（中文数字 / 全角数字 / 范围号）——R2 要拿数字集合做比较。
  *
- * 明确不做：单位换算（1 小时 ≠ 60 分钟）、同义改写、近似词。
- * 「做不了就改用 derived」是 R2 的出路，不要在归一化里放宽。
+ * 通用归一化保留数字与单位的原文写法。
+ * 时长专用的 secondsGrounded 单独进行明确时间单位的换算。
  *
  * 近似词是另一回事：归一化不碰它，但要知道原文有没有写「约」——
  * 那是 R17 的判据，见本文件末尾的 approximationAttached。
@@ -250,65 +250,88 @@ export function approximationAttached(
   return false;
 }
 
+/** 时长数量只接受完整数字，避免从「十三」中截出「三」。 */
+function durationNumber(token: string): number | null {
+  if (token === "半") return 0.5;
+  if (/^\d+(?:\.\d+)?$/.test(token)) return Number(token);
+  if (token.length === 1 && token in CN_DIGITS) return CN_DIGITS[token];
+  const tens = /^([一二两三四五六七八九])?十([一二三四五六七八九])?$/.exec(token);
+  if (!tens) return null;
+  return (tens[1] ? CN_DIGITS[tens[1]] : 1) * 10 + (tens[2] ? CN_DIGITS[tens[2]] : 0);
+}
+
+const DURATION_NUMBER = String.raw`(?:\d+(?:\.\d+)?|[〇零一二两三四五六七八九十百千]+|半)`;
+const DURATION_UNIT = "(?:分半|小时|小時|分钟|分鐘|秒钟|秒鐘|秒|刻钟|刻鐘)";
+const DURATION_TERM = `${DURATION_NUMBER}\\s*(?:个\\s*)?(?:半\\s*)?${DURATION_UNIT}(?:\\s*半)?`;
+const DURATION_FACTORS: Record<string, number> = {
+  小时: 3600, 小時: 3600, 分钟: 60, 分鐘: 60, 分半: 60,
+  秒钟: 1, 秒鐘: 1, 秒: 1, 刻钟: 900, 刻鐘: 900,
+};
+
+/** 连写的「1 小时 30 分钟」是一个时长，各段必须按单位从大到小排列。 */
+function compoundDuration(raw: string): { sec: number; factor: number; terms: number } | null {
+  const pattern = new RegExp(
+    `(${DURATION_NUMBER})\\s*(?:个\\s*)?(半\\s*)?(${DURATION_UNIT})(\\s*半)?`, "g",
+  );
+  let sec = 0;
+  let end = 0;
+  let factor = Infinity;
+  let firstFactor = 0;
+  let terms = 0;
+  for (const match of raw.matchAll(pattern)) {
+    if (raw.slice(end, match.index).trim()) return null;
+    const value = durationNumber(match[1]);
+    const unitFactor = DURATION_FACTORS[match[3]];
+    if (value === null || unitFactor >= factor) return null;
+    const hasHalf = Boolean(match[2] || match[4] || match[3] === "分半");
+    if (hasHalf && (value % 1 !== 0 || (match[2] && match[4]))) return null;
+    sec += (value + (hasHalf ? 0.5 : 0)) * unitFactor;
+    factor = unitFactor;
+    firstFactor ||= factor;
+    terms++;
+    end = match.index + match[0].length;
+  }
+  if (!terms || raw.slice(end).trim()) return null;
+  return { sec, factor: firstFactor, terms };
+}
+
 /**
- * 这个秒数在引文里有没有着落（R2 用）。
- *
- * 为什么不能直接拿 sec 去比引文里的数：卡上统一用秒，原文的单位不统一 ——
- * 「30 秒」「1 分钟」「1 分半」「0.5 小时」都能换算成同一个秒数。
- * 所以判据是「引文里存在某个数 n，n 按某种单位换算后正好等于 sec」。
- *
- * **必须连着单位一起看**（2026-10-31 实测踩过）：
- * 只比裸数字会把「煮 5 分钟」当成「5 秒」—— 卡的 sec 写 5，
- * 引文里有个裸的 5，就「对得上」了；屏上把泡蒜水的 5 分钟说成 5 秒，错 60 倍。
- * 所以这里数的是「数字 + 单位」的**完整词组**，裸数字不算数。
- *
- * 覆盖的单位：
- *   秒（直接相等）、分钟（×60）、小时（×3600）
- *   还有中文口语里的「分半」（90 秒）、「刻钟」（900 秒）—— 前者靠「分半」二字，
- *   后者靠「刻」。
- *
- * 为什么要这条：完全不看就是另一个极端 —— 把「保持 10 秒」抄成「保持 100 秒」
- * 没人拦，屏上直接把 10 倍的量说成定值（D7）。
+ * quote 时长只匹配完整时间短语的精确换算或明确的范围端点。
+ * 区间中点、多段求和等推算须使用 derived，不在这里引入数值容差。
+ * 数组引文逐句检查，避免跨句拼成一个原文没有的复合时长。
  */
 export function secondsGrounded(sec: number, quotes: string | string[]): boolean {
+  if (!Number.isFinite(sec) || sec < 0) return false;
   const list = Array.isArray(quotes) ? quotes : [quotes];
-  for (const q of list) {
-    const s = toHalfWidth(q);
-    // 「1 分半」「一分半」= 90 秒
-    if (/\d\s*分半|分半/.test(s)) {
-      const half = [...s.matchAll(/(\d+)\s*分半/g)];
-      for (const m of half) {
-        if (Number(m[1]) * 60 + 30 === sec) return true;
+  const compound = `${DURATION_TERM}(?:\\s*${DURATION_TERM})*`;
+  const range = "[~至到-]";
+  const pattern = new RegExp(
+    `(?:${DURATION_NUMBER}\\s*${range}\\s*)?${compound}(?:\\s*${range}\\s*${compound})?`, "g",
+  );
+  for (const quote of list) {
+    const text = normalizeQuote(quote);
+    for (const match of text.matchAll(pattern)) {
+      // 不从小数、负数、中文大数或其他数字的中间开始匹配。
+      const before = text.slice(0, match.index).trimEnd();
+      if (/[A-Za-z\d.〇零一二两三四五六七八九十百千点+\-−~]/.test(before.at(-1) ?? "")) continue;
+      // 拒绝从连续范围的中间起步，保留「泡到 10 分钟」中的动词用法。
+      if (new RegExp(`${DURATION_NUMBER}\\s*[至到]\\s*$`).test(before)) continue;
+      const bounds = match[0].split(new RegExp(`\\s*${range}\\s*`));
+      const upper = compoundDuration(bounds.at(-1)!);
+      if (!upper) continue;
+      if (bounds.length === 1) {
+        if (upper.sec === sec) return true;
+        continue;
       }
-      if (sec === 90) return true;
-    }
-    // 「一刻钟」「1 刻钟」= 900 秒
-    if (sec === 900 && /刻/.test(s)) return true;
-
-    // **数字 + 单位**的完整词组 —— 裸数字不算（见文件头的说明）
-    for (const m of s.matchAll(/(\d+(?:\.\d+)?)\s*(秒|分钟|分鐘|小时|小時)/g)) {
-      const v = Number(m[1]);
-      if (!Number.isFinite(v)) continue;
-      const unit = m[2];
-      const got = unit.includes("秒") ? v : unit.includes("分") ? v * 60 : v * 3600;
-      if (got === sec) return true;
-      // 范围「15～17 分钟」：下限与上限各试一次
-      if (unit.includes("分") && got >= sec * 0.5 && got <= sec * 2) {
-        // 只在引文里真的写了范围时才放宽（避免把「20 分钟」放到「19 秒」上）
-        if (/[～\-~至到]/.test(s)) return true;
+      let lower = compoundDuration(bounds[0]);
+      // 「8～10 分钟」的下限继承该短语中明确的分钟单位。
+      if (!lower && upper.terms === 1) {
+        const n = durationNumber(bounds[0]);
+        if (n !== null) lower = { sec: n * upper.factor, factor: upper.factor, terms: 1 };
       }
-    }
-
-    // **中文数字 + 单位**：「三分钟」「一个小时」「十分钟」
-    const CN_NUM_MAP: Record<string, number> = {
-      一: 1, 两: 2, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10,
-    };
-    for (const m of s.matchAll(/([一二两三四五六七八九十])\s*(秒|分钟|分鐘|小时|小時|个?小时)/g)) {
-      const v = CN_NUM_MAP[m[1]];
-      if (v == null) continue;
-      const unit = m[2];
-      const got = unit.includes("秒") ? v : unit.includes("分") ? v * 60 : v * 3600;
-      if (got === sec) return true;
+      if (lower && lower.sec <= upper.sec && (sec === lower.sec || sec === upper.sec)) {
+        return true;
+      }
     }
   }
   return false;

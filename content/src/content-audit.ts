@@ -21,6 +21,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
 
+import { secondsGrounded } from "./source/normalize.ts";
 import { fingerprint } from "./cards/fingerprint.ts";
 import { loadAllCards } from "./cards/load.ts";
 
@@ -76,21 +77,9 @@ function durationMismatch(
       if (!inFormula.includes(d.sec)) bad.push(c.id);
       continue;
     }
+    if (d.basis !== "quote") continue;
     const quotes = Array.isArray(d.quote) ? d.quote : d.quote ? [d.quote] : [];
-    const blob = quotes.join(" ");
-    // 「数字 + 单位」与「数字～数字 + 单位」（范围取下限：1～2 分钟 → 60 与 120 都算）
-    const hits: { v: number; sec: number }[] = [];
-    for (const m of blob.matchAll(/(\d+(?:\.\d+)?)\s*(?:[～\-~至到]\s*(\d+(?:\.\d+)?)\s*)?(秒|分钟|分鐘|小时|小時)/g)) {
-      const unit = m[3];
-      const mul = unit.includes("秒") ? 1 : unit.includes("分") ? 60 : 3600;
-      hits.push({ v: Number(m[1]), sec: Number(m[1]) * mul });
-      if (m[2] != null) hits.push({ v: Number(m[2]), sec: Number(m[2]) * mul });
-    }
-    if (!hits.length) continue;
-    if (hits.some((h) => h.sec === d.sec)) continue;
-    // **范围取下限**：引文写「1～2 分钟」、卡上取 60 秒（下限）——
-    // 60 就是那个范围的下限，正经做法（AGENTS.md §5.1h：宁可早提醒）。
-    if (hits.some((h) => d.sec! >= h.sec && d.sec! <= h.sec * 1.05)) continue;
+    if (secondsGrounded(d.sec, quotes)) continue;
     bad.push(c.id);
   }
   return { kind: "卡级时长与引文对不上", detail: "引文里的时长换算后不等于卡上的秒数", ids: bad };

@@ -201,8 +201,7 @@ export const r02NumbersInQuote: Rule = (ctx) => {
     // 但完全不查就是另一个极端：把「保持 10 秒」抄成「保持 100 秒」没人拦，
     // 屏上就直接把 10 倍的量说成定值（D7）。
     //
-    // 判据：引文里存在某个数 n，使 n 秒 / n 分钟 / n 小时 换算后等于 sec。
-    // 换算关系都试一遍，覆盖「30 秒」「1 分钟」「1 分半」「0.5 小时」。
+    // 匹配完整的时长短语及其单位。范围只认可明确端点，中点须声明推算。
     const durCheck = (
       d:
         | { basis: string; sec?: number; quote?: string | string[]; formula?: string }
@@ -238,7 +237,7 @@ export const r02NumbersInQuote: Rule = (ctx) => {
         file: ctx.file,
         cardId,
         path: `${path}.sec`,
-        message: `时长 ${d.sec} 秒在引文里找不到对应的数（引文里要有 ${d.sec} 秒，或能换算到它的分钟/小时数）—— 具体内容不许改`,
+        message: `时长 ${d.sec} 秒不等于引文中完整时长或明确范围端点的换算值；区间选值或求和须标为 derived 并给出算式`,
       });
     };
     durCheck(card.duration, "duration", card.id);
