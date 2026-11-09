@@ -61,6 +61,19 @@ function utcStamp(d: Date): string {
   );
 }
 
+/** 浮动本地时间使重复规则与星期保持同一口径。DTSTAMP 仍使用 UTC。 */
+function localStamp(d: Date): string {
+  return (
+    d.getFullYear() +
+    pad(d.getMonth() + 1) +
+    pad(d.getDate()) +
+    "T" +
+    pad(d.getHours()) +
+    pad(d.getMinutes()) +
+    pad(d.getSeconds())
+  );
+}
+
 /** 折行：ICS 每行不超过 75 字节，超出用 CRLF + 空格续行 */
 function fold(line: string): string {
   const bytes = new TextEncoder().encode(line);
@@ -89,8 +102,7 @@ export function buildIcs(opts: IcsOptions): string {
 
   // 提醒必须是**定时**事件：全天事件（VALUE=DATE）在系统日历里不会按时响，
   // P2 的退出条件「.ics 导入后按时提醒」就落空了。
-  // 时间用本地时刻写、再折算成 UTC 时间戳 —— 日历按本地时区显示，
-  // 换算错了就会出现「早 7 点提醒其实是凌晨 5 点」。
+  // 开始、结束和排除日期都写浮动本地时间，重复规则也按当地星期展开。
   // 分钟也要带上：用户把提醒设成 07:30，日历那条就该是 07:30 ——
   // 丢掉分钟会差出几十分钟（闹钟还提前 10 分钟响，差得更远）。
   const today = new Date(now);
@@ -196,18 +208,19 @@ export function buildIcs(opts: IcsOptions): string {
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     fold(`X-WR-CALNAME:${name}`),
-    fold(`X-WR-TIMEZONE:Asia/Shanghai`),
   ];
 
   for (const e of events) {
+    const end = new Date(e.start);
+    end.setMinutes(end.getMinutes() + 30);
     lines.push(
       "BEGIN:VEVENT",
       fold(`UID:${e.uid}`),
       "DTSTAMP:" + utcStamp(new Date(now)),
-      "DTSTART:" + utcStamp(e.start),
-      "DTEND:" + utcStamp(new Date(e.start.getTime() + 30 * 60000)),
+      "DTSTART:" + localStamp(e.start),
+      "DTEND:" + localStamp(end),
       ...(e.rrule ? [`RRULE:${e.rrule}`] : []),
-      ...(e.exdate ? [`EXDATE:${utcStamp(e.exdate)}`] : []),
+      ...(e.exdate ? [`EXDATE:${localStamp(e.exdate)}`] : []),
       fold(`SUMMARY:${e.summary}`),
       fold(`DESCRIPTION:${e.desc}`),
       fold(`URL:${e.url}`),

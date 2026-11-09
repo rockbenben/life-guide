@@ -32,7 +32,7 @@ describe("buildIcs", () => {
   it("是定时事件，不是全天事件", () => {
     expect(ics).not.toContain("VALUE=DATE");
     // DTSTART 必须带时分秒，全天事件会退化成纯日期
-    expect(ics.match(/DTSTART:\d{8}T\d{6}Z/g)).toHaveLength(2);
+    expect(ics.match(/DTSTART:\d{8}T\d{6}\r\n/g)).toHaveLength(2);
   });
 
   it("带 VALARM，提前 10 分钟提醒", () => {
@@ -53,39 +53,22 @@ describe("buildIcs", () => {
       name: "生活指南",
       now: localNow.toISOString(),
     });
-    const stamp = (hour: number) => {
-      const d = new Date(
-        localNow.getFullYear(),
-        localNow.getMonth(),
-        localNow.getDate(),
-        hour,
-        0,
-        0,
-      );
-      return d.toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
-    };
-    expect(withDate).toContain(`DTSTART:${stamp(7)}`);
-    expect(withDate).toContain(`DTSTART:${stamp(21)}`);
+    expect(withDate).toContain("DTSTART:20261020T070000");
+    expect(withDate).toContain("DTSTART:20261020T210000");
   });
 
   it("用户设的分钟要带上（07:30 的提醒不能导成 07:00）", () => {
     const withMin = buildIcs({
       urlBase: "https://life.newzone.top/",
       name: "生活指南",
+      now: new Date(2026, 9, 20, 12).toISOString(),
       morningHour: 7,
       morningMinute: 30,
       eveningHour: 21,
       eveningMinute: 5,
     });
-    // 期望值按**本地时间**算：.ics 用本地时刻写、再折算成 UTC 时间戳，
-    // 写死一个 UTC 字符串的话换个时区就红（这个测试在 UTC 的 CI 上也过）。
-    const localStamp = (hour: number, minute: number) => {
-      const d = new Date();
-      d.setHours(hour, minute, 0, 0);
-      return d.toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
-    };
-    expect(withMin).toContain(`DTSTART:${localStamp(7, 30)}`);
-    expect(withMin).toContain(`DTSTART:${localStamp(21, 5)}`);
+    expect(withMin).toContain("DTSTART:20261020T073000");
+    expect(withMin).toContain("DTSTART:20261020T210500");
   });
 
   it("绑在卡上的提醒也写进日历，并且按它的重复规则", () => {

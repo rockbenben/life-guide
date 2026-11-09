@@ -32,12 +32,11 @@ export function normalizeSpecs(list) {
  * 待响里最早的那一个。
  *
  * @param {Array<{at: string}>} specs
- * @param {number} now 毫秒
  */
-export function nextSpec(specs, now = Date.now()) {
+export function nextSpec(specs) {
   return (
     specs
-      .filter((s) => Date.parse(s.at) > now)
+      .filter((s) => Number.isFinite(Date.parse(s.at)))
       .sort((a, b) => Date.parse(a.at) - Date.parse(b.at))[0] ?? null
   );
 }
@@ -49,10 +48,12 @@ export function nextSpec(specs, now = Date.now()) {
  *
  * @returns {{spec: object|null, index: number}} 新的一条与它在列表里的位置
  */
-export function advance(specs, spec) {
+export function advance(specs, spec, now = -Infinity) {
   const i = specs.indexOf(spec);
   if (i < 0) return { spec: null, index: -1 };
-  const after = Array.isArray(spec.after) ? spec.after : [];
+  const after = Array.isArray(spec.after)
+    ? spec.after.filter((at) => Date.parse(at) > now)
+    : [];
   if (after.length) {
     return { spec: { ...spec, at: after[0], after: after.slice(1) }, index: i };
   }

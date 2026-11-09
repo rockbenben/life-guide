@@ -30,15 +30,14 @@ test("坏排程丢掉，好的留下", () => {
   );
 });
 
-test("下一次是待响里最早的那一个（过点的不要）", () => {
-  const now = Date.parse("2026-10-21T09:00:00Z");
+test("下一次是队列里最早的那一个，到期项等待立即处理", () => {
   const specs = [
     { id: "late", at: "2026-10-22T07:00:00Z" },
     { id: "soon", at: "2026-10-21T21:00:00Z" },
     { id: "past", at: "2026-10-21T07:00:00Z" },
   ];
-  assert.equal(nextSpec(specs, now).id, "soon");
-  assert.equal(nextSpec([], now), null);
+  assert.equal(nextSpec(specs).id, "past");
+  assert.equal(nextSpec([]), null);
 });
 
 test("响过之后挪到备用队列的下一个", () => {

@@ -229,51 +229,72 @@ export async function schedule(
   if (kind === "native") {
     const plugin = localPlugin();
     if (!plugin) return;
-    try {
-      const pending = await plugin.getPending();
-      for (const n of pending.notifications) {
-        await plugin.cancel({ notifications: [{ id: n.id }] });
-      }
-      /**
-       * 通知权限：没允许就不排。
-       *
-       * 插件的 `schedule()` 自己会弹系统的通知授权页 —— App 一启动就排程，
-       * 用户还没看见界面就被那张系统对话框盖住（实测：新装第一次打开就是它，
-       * 底下的应用界面根本没机会被看清）。跟精确闹钟是同一类问题：
-       * 授权页只能由用户自己点的入口去跳。
-       *
-       * 用户在设置页点「允许通知」之后会立刻重排一次，那时才排。
-       */
-      const perm = await plugin.checkPermissions();
-      if (normalizePermission(perm.display) !== "granted") return;
-      /**
-       * 要不要精确闹钟，由**用户有没有允许**决定，不由插件替我们决定。
-       *
-       * 插件的默认是 `isExactNotification: true`，而它在 Android 12+ 遇到没授权时
-       * 会自己去打开系统的「闹钟和提醒」授权页 —— App 一启动就把用户从自己的界面里
-       * 拽走，抢屏（实测：新装第一次打开就是那张系统页）。
-       *
-       * 没允许就按不精确排程：提醒**照样会响**，只是可能晚几分钟
-       * （AGENTS.md §4.2 记过这个降级）。想准点响的，设置页里有那颗
-       * 「去允许精确提醒」——那是用户自己点的，那才该跳系统页。
-       */
-      const exact = (await exactAlarmStatus()).granted;
-      const notifications = specs.flatMap((s, i) => nativeNotifications(s, i));
-      if (notifications.length) {
-        await plugin.schedule({
-          notifications: notifications.map((n) => ({
-            ...n,
-            isExactNotification: exact,
-          })),
-        });
-      }
-    } catch {
-      // 排不上就算了：界面上已经说了这个平台怎么响，不该在这里崩
-    }
+    const request = ++nativeRequest;
+    const snapshot = structuredClone(specs);
+    const job = nativeQueue.then(async () => {
+      if (request !== nativeRequest) return;
+      await replaceNativeReminders(plugin, snapshot, request);
+    });
+    nativeQueue = job.catch(() => {});
+    await job;
     return;
   }
   if (kind === "web") {
     setWebReminders(specs, onDue);
+  }
+}
+
+// 原生通知的取消和提交串行执行，等待中的请求只应用最后一份配置。
+let nativeQueue: Promise<void> = Promise.resolve();
+let nativeRequest = 0;
+
+async function replaceNativeReminders(
+  plugin: NonNullable<CapacitorPlugins["LocalNotifications"]>,
+  specs: ReminderSpec[],
+  request: number,
+): Promise<void> {
+  try {
+    const pending = await plugin.getPending();
+    if (request !== nativeRequest) return;
+    for (const n of pending.notifications) {
+      await plugin.cancel({ notifications: [{ id: n.id }] });
+    }
+    /**
+     * 通知权限：没允许就不排。
+     *
+     * 插件的 `schedule()` 自己会弹系统的通知授权页 —— App 一启动就排程，
+     * 用户还没看见界面就被那张系统对话框盖住（实测：新装第一次打开就是它，
+     * 底下的应用界面根本没机会被看清）。跟精确闹钟是同一类问题：
+     * 授权页只能由用户自己点的入口去跳。
+     *
+     * 用户在设置页点「允许通知」之后会立刻重排一次，那时才排。
+     */
+    const perm = await plugin.checkPermissions();
+    if (normalizePermission(perm.display) !== "granted") return;
+    /**
+     * 要不要精确闹钟，由**用户有没有允许**决定，不由插件替我们决定。
+     *
+     * 插件的默认是 `isExactNotification: true`，而它在 Android 12+ 遇到没授权时
+     * 会自己去打开系统的「闹钟和提醒」授权页 —— App 一启动就把用户从自己的界面里
+     * 拽走，抢屏（实测：新装第一次打开就是那张系统页）。
+     *
+     * 没允许就按不精确排程：提醒**照样会响**，只是可能晚几分钟
+     * （AGENTS.md §4.2 记过这个降级）。想准点响的，设置页里有那颗
+     * 「去允许精确提醒」——那是用户自己点的，那才该跳系统页。
+     */
+    const exact = (await exactAlarmStatus()).granted;
+    if (request !== nativeRequest) return;
+    const notifications = specs.flatMap((s, i) => nativeNotifications(s, i));
+    if (notifications.length) {
+      await plugin.schedule({
+        notifications: notifications.map((n) => ({
+          ...n,
+          isExactNotification: exact,
+        })),
+      });
+    }
+  } catch {
+    // 排不上就算了：界面上已经说了这个平台怎么响，不该在这里崩
   }
 }
 

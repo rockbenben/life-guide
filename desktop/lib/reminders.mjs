@@ -60,20 +60,26 @@ export function installReminderBridge({ onDue, isTrusted = () => false }) {
         arm();
         return;
       }
-      fire(next);
+      fireDue();
     }, delayUntil(next.at));
   }
 
-  function fire(spec) {
-    showNotification(spec.title, spec.body);
-    // 这一条的下一次：先用自己的备用队列挪一位，再问渲染层要一份新的
-    const { spec: next, index } = advance(specs, spec);
-    if (index >= 0) {
-      if (next) specs[index] = next;
-      else specs.splice(index, 1);
+  function fireDue() {
+    const now = Date.now();
+    const due = specs.filter((spec) => Date.parse(spec.at) <= now);
+    // 先推进整批队列，避免第一条响完后同刻的其他提醒被过滤。
+    for (const spec of due) {
+      const { spec: next, index } = advance(specs, spec, now);
+      if (index >= 0) {
+        if (next) specs[index] = next;
+        else specs.splice(index, 1);
+      }
     }
     arm();
-    onDue(spec.id);
+    for (const spec of due) {
+      showNotification(spec.title, spec.body);
+      onDue(spec.id);
+    }
   }
 
   const onSet = (e, list) => {

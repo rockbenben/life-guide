@@ -10,26 +10,11 @@
  * 界面那层（app/src/ui/Settings.tsx）只负责触发下载。
  */
 
-/** 20261019T230000Z → Date（UTC） */
-export function parseUtcStamp(stamp) {
-  const m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/.exec(stamp);
+/** 20261019T230000 → Date（本地） */
+export function parseLocalStamp(stamp) {
+  const m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/.exec(stamp);
   if (!m) return null;
-  return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]));
-}
-
-/** Date → 20261019T230000Z */
-export function utcStamp(d) {
-  const p = (n) => String(n).padStart(2, "0");
-  return (
-    d.getUTCFullYear() +
-    p(d.getUTCMonth() + 1) +
-    p(d.getUTCDate()) +
-    "T" +
-    p(d.getUTCHours()) +
-    p(d.getUTCMinutes()) +
-    p(d.getUTCSeconds()) +
-    "Z"
-  );
+  return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
 }
 
 /** 拆出 VEVENT 块（先展开折行）。 */
@@ -123,21 +108,21 @@ export function validateIcs(text) {
 
     const dtstart = get("DTSTART");
     const dtend = get("DTEND");
-    if (!dtstart || !/^\d{8}T\d{6}Z$/.test(dtstart)) {
+    if (!dtstart || !/^\d{8}T\d{6}$/.test(dtstart)) {
       failures.push(
-        `DTSTART 不是 UTC 定时时间戳（期望 20261019T070000Z 这种形式），实际：${dtstart ?? "（缺失）"}`,
+        `DTSTART 不是本地定时时间戳（期望 20261019T070000 这种形式），实际：${dtstart ?? "（缺失）"}`,
       );
       continue;
     }
-    const start = parseUtcStamp(dtstart);
+    const start = parseLocalStamp(dtstart);
     if (!start) {
       failures.push(`DTSTART 解析不了：${dtstart}`);
       continue;
     }
-    if (!dtend || !/^\d{8}T\d{6}Z$/.test(dtend)) {
-      failures.push(`DTEND 不是 UTC 定时时间戳，实际：${dtend ?? "（缺失）"}`);
+    if (!dtend || !/^\d{8}T\d{6}$/.test(dtend)) {
+      failures.push(`DTEND 不是本地定时时间戳，实际：${dtend ?? "（缺失）"}`);
     } else {
-      const end = parseUtcStamp(dtend);
+      const end = parseLocalStamp(dtend);
       const mins = (end - start) / 60000;
       if (!(mins > 0 && mins <= 1440)) {
         failures.push(`DTEND − DTSTART = ${mins} 分钟，不像一个定时事件`);
