@@ -249,7 +249,11 @@ jobs:
     needs: [validate, prepare]
     runs-on: ubuntu-latest
     env:
-      ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/life-guide-release.jks
+      # runner 上下文只在 step 级可用，写进 job 级 env 会让 GitHub 拒绝整个
+      # workflow（2026-11-09 实测：Unrecognized named-value: 'runner'）。
+      # 用 job 级可用的 github.workspace；keystore 只在本 job 期间存在，
+      # 末尾的「清理临时签名文件」step 会删掉它。
+      ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/life-guide-release.jks
       ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
       ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}

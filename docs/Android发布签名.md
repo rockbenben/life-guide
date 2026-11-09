@@ -15,7 +15,7 @@
 | `ANDROID_KEY_PASSWORD` | 该密钥的密码 |
 
 缺少任一项时，Android 发布 job 在构建前失败，不使用临时密钥或 debug 签名兜底。
-流水线仅在 runner 的临时目录解码 keystore，job 结束时删除，上传的附件只有 APK。
+流水线只在构建期间解码 keystore，job 结束时会删掉，上传的附件只有 APK。
 作者应另行备份 keystore、别名和密码；后续版本继续使用这份密钥。
 
 ## 本地构建
