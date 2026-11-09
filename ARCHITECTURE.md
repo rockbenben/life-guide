@@ -127,12 +127,13 @@ life-guide/
 │   ├── capacitor.config.ts
 │   ├── android/ · ios/       原生工程（cap add 生成）
 │   └── assets/               图标与启动图的源
-├── sync/                     同步服务（Cloudflare Worker + KV）：只存密文
+├── sync/                     同步服务（Cloudflare Worker + SQLite Durable Object）：只存密文
+│   ├── src/space.ts          每空间的 SQLite Durable Object，原子比较版本并写密文
 │   ├── src/worker.ts         取一份 / 写一份密文 + 版本号（纯逻辑，可单测）
 │   ├── src/index.ts          Worker 入口（把 env 递进去）
-│   ├── wrangler.toml         部署配置（KV 绑定 + 允许的来源）
+│   ├── wrangler.toml         部署配置（Durable Object 绑定 + 允许的来源）
 │   ├── test/worker.test.ts   协议的单测
-│   └── README.md             怎么部署（wrangler 三条命令）
+│   └── README.md             部署与本地并发验收
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图
 ├── docs/                     使用指南 · 部署 · 发布说明/（每版一份，release 的正文来源）
@@ -170,7 +171,7 @@ R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`�
 | 手机端 | Capacitor（`mobile/`） | 同一份 `app/dist` 装进原生 WebView，生成 Android / iOS 工程。界面不重写 |
 | 存储 | IndexedDB（idb 薄封装） | 事件日志不适合 localStorage |
 | 测试 | Vitest + Playwright + node:test | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright；主进程 / 导航 / 协议的纯逻辑用 `node --test` |
-| 部署 | 任意静态托管 | App 本身没有后端（静态托管即可）。**多设备同步的服务端是另一件独立的事**（`sync/`，Cloudflare Worker + KV），且只存密文 —— 见 AGENTS.md §4.6 |
+| 部署 | 任意静态托管 | App 本身没有后端（静态托管即可）。**多设备同步的服务端是另一件独立的事**（`sync/`，Cloudflare Worker + SQLite Durable Object），且只存密文 —— 见 AGENTS.md §4.6 |
 
 不引入：状态管理库、路由库（hash 路由即可）、后端（`sync/` 那个服务是可选的同步落点，`app/` 自己不依赖它 —— 传输层是接口 `SyncTransport`，HTTP 只是其中一个实现）。
 
@@ -224,6 +225,7 @@ type CardsBundle = {
 };
 
 type DoneEvent = {
+  eventId: string;
   date: string;
   cardId: string;
   variant: Variant;
@@ -251,7 +253,9 @@ type DoneEvent = {
 ## 5. 版本与兼容
 
 - `cards.schema.json` 带版本；破坏性变更走 ADR，升主版本。
-- 备份文件带 `schemaVersion`；`backup.ts` 负责迁移。
+- 当前用户数据使用独立数据库 `life-guide-v2`，事件以随机 UUID `eventId` 为主键，`ts` 只表示发生时间。备份版本为 7，同步载荷版本为 2，各端使用同一格式。
+- 恢复备份先验证整份输入，再在一个跨表事务中替换用户数据。设备身份和同步凭据由本机保存。
+- 删除与墓碑同事务提交。同步在网络请求结束后，用一个写事务重读、合并并提交当前本地数据；冲突耗尽返回失败，成功时间保持原值。
 - 卡片 `id` 与步骤 `id` 发布后不改名；确需改名时写 `formerIds`，事件日志靠它关联。
   **2026-10-29 已实现**：`formerIds` 在 schema 里（`schema/cards.schema.json`），
   构建时带进 `cards.json`，App 侧 `app/src/domain/former.ts`（纯函数）解链、

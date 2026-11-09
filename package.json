@@ -41,14 +41,38 @@
     "lint:fix": "markdownlint --fix \"**/*.md\""
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "5.20261109.1",
     "@types/node": "^26.6.5",
     "fake-indexeddb": "^6.2.6",
-    "markdownlint-cli": "^0.47.0",
+    "ical.js": "2.2.1",
+    "markdownlint-cli": "^0.50.0",
     "playwright": "^1.64.1",
     "prettier": "^3.9.10",
-    "sharp": "^0.32.6",
+    "sharp": "^0.35.5",
     "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "vitest": "^5.1.0",
+    "wrangler": "4.158.0"
+  },
+  "overrides": {
+    "@capacitor/core": "8.5.3",
+    "@electron/universal": {
+      "minimatch@>=7 <11": "11.0.5"
+    },
+    "app-builder-lib": {
+      "minimatch@>=7 <11": "11.0.5"
+    },
+    "markdownlint-cli": {
+      "minimatch@>=7 <11": "11.0.5"
+    },
+    "micromark-extension-math": {
+      "katex": "0.18.2"
+    },
+    "workbox-build": {
+      "glob@>=9 <14.0.2": "14.0.4"
+    },
+    "xcode": {
+      "uuid": "11.1.1"
+    }
   },
   "engines": {
     "node": ">=26.0.0"

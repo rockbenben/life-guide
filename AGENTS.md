@@ -54,10 +54,11 @@ life-guide/
 │   ├── capacitor.config.ts
 │   ├── android/ · ios/       原生工程（cap add 生成）
 │   ├── assets/               图标与启动图的源（Capacitor 资源生成器读这里）
-├── sync/                     同步服务（Cloudflare Worker + KV）：只存密文，见 §4.6
-│   ├── src/worker.ts         取一份 / 写一份密文 + 版本号（纯逻辑，可单测）
+├── sync/                     同步服务（Cloudflare Worker + SQLite Durable Object）：只存密文，见 §4.6
+│   ├── src/worker.ts         HTTP 协议、输入校验与状态码
+│   ├── src/space.ts          每空间的 SQLite Durable Object，原子比较版本并写密文
 │   ├── src/index.ts          Worker 入口（把 env 递进去）
-│   ├── wrangler.toml         部署配置（KV 绑定 + 允许的来源）
+│   ├── wrangler.toml         部署配置（Durable Object 绑定 + 允许的来源）
 │   └── test/worker.test.ts   协议的单测
 ├── brand/                    品牌资产：标记母版（SVG）· 社交预览 · 启动画面
 │   └── README.md             改设计改这里，重跑渲染命令出图（别直接改 PNG）
@@ -77,7 +78,7 @@ life-guide/
 - **规则不是每条一个文件**：`content/src/rules/index.ts` 一个文件装 R1–R6、R8–R10、R14、R16、R17；R7、R12 在 `content/src/budget.ts` / `review.ts`；R13 在 `content/src/source/errata.ts`；R15 在 `content/src/default-routine.ts`；R11 是 UI 规则，由 `app/test/ui/card.test.tsx` 守住。
 - **没做的**：设备端验收（**Android 模拟器上已真机验过：装 APK、卡上设提醒、到点系统通知真弹**；还差 iOS 与实体手机、两个日历 App 的实际导入）、**卡片的签字**（33 张 draft 卡等人审）、14 天决策门。
 - **多设备同步（§4.6）已铺好**：合并规则、加密、客户端、设置页的开关都在，
-  服务端那一半在 `sync/`（Worker + KV）。**默认关着** —— 不开就一个字节都不出去。
+  服务端那一半在 `sync/`（Worker + SQLite Durable Object）。**默认关着** —— 不开就一个字节都不出去。
   还没做的是真机实测（两台设备来回改同一份数据）与服务端部署。
 - **等作者补的**（管道已铺好，只差内容层点一下）：**无**。
   原先是 **39 张卡 · 56 行剂量**的引文写的是「约 / 大约 / 左右」，卡上没标 `approximate`，屏上把近似说成了定值（其中一张是服药周期）；
@@ -180,6 +181,10 @@ content/
   某一时段的卡全跳过时，该时段的整段事件也会带 `EXDATE`。网页端「设了卡片提醒但关掉页面」时，
   这是可靠的落地方式。
 - 打开时落到对应时段：链接里带了 `?slot=` 就落那一段，没带就按当前时间自动落。
+- **2026-11-09 提醒修复**：桌面一次发送整批到期提醒，再推进各自的备用队列；
+  手机端把取消与提交串行执行，等待中的配置只应用最后一份；
+  ICS 的 DTSTART / DTEND / EXDATE 使用浮动本地时间，周规则与当地星期一致，DTSTAMP 仍为 UTC。
+  `scripts/test/ics-recurrence.test.mjs` 使用开发依赖 `ical.js` 独立展开重复日期，覆盖连续三周、排除一次及夏令时切换。
 - 主屏上时段是可以手动切的（默认跟着钟点走）—— 否则晚上就看不到早上该做的事。
 - Web Push 仍不作为前提：本地通知不要后端，本地就够了。
 - **手机的「每隔 N 天」靠一次性通知排**：系统的重复规则只有「每天」「每周某天」，
@@ -277,6 +282,8 @@ content/
 > 为什么不用「PR approvals」：这是个人项目，GitHub 不允许自己批准自己的 PR。签字 + 内容指纹在单人和多人下都成立，而且与忙档预算（§5.3）是同一套机制。
 
 ### 4.4 历史记录 → 第一天就记事件，不做打卡
+
+- **2026-11-09 数据写入调整**：用户数据使用独立数据库 `life-guide-v2`，事件身份为 UUID `eventId`，发生时间仍是 `ts`。备份版本为 7，同步载荷版本为 2。恢复先验证整份数据再跨表事务提交；删除与墓碑同事务写入；同步在网络返回后重读当前本地数据并原子合并。各端使用统一的新格式。
 
 - 从 P2 起写事件日志 `{ date, cardId, variant, ts, periodDone?, periodCadence? }`（IndexedDB），
   支持 JSON 导出 / 导入。`periodDone: true` 表示这次盖章算周期完成，`false` 表示用户撤销过；
@@ -442,7 +449,37 @@ push tag vX.Y.Z
 | Linux 的 deb / rpm 要 homepage 与作者邮箱 | 2026-10-28：第一轮发版 Windows / macOS / Android 都打好了，Linux 报 `Please specify project homepage`，整条流水线停在那儿 | `desktop/package.json` 写明 `homepage` 与 `repository`；`scripts/check-desktop-metadata.mjs` 在 CI 打包前查一遍（CI 只在 Windows 上打包，本来查不出来） |
 | `cp` 一次接多个通配符 | 有一个通配符没匹配到文件时，bash 把它当字面量传下去，cp 报 `No such file or directory`，整步崩 —— Linux **没有** `.blockmap`（那是 NSIS 与 macOS 才有的增量下载用） | 逐个文件拷，没匹配到的跳过；产物齐不齐由 publish 的资产校验管（它数着 15 个） |
 
+**2026-11-09 发布与依赖维护**：Android job 已改为固定 keystore 的 release 签名，
+缺少四项 secrets 立即失败，APK 上传前核验签名；本地 Gradle 缺配置拒绝构建已验证。
+密钥配置见 [Android 发布签名](docs/Android发布签名.md)。仓库尚未配置正式密钥，
+签名 APK 的两次构建与设备覆盖安装尚未验收，不能将此阶段标为全部通过。
+
+依赖升级包括 Sharp 0.35、Capacitor assets 4、CLI 8.6、Vitest 5.1、markdownlint-cli 0.50，
+并更新允许范围内的间接依赖。npm 官方审计由 31 项降为 19 项，high/critical 均为 0；
+剩余 14 moderate、5 low 涉及 PWA 构建、桌面打包、Markdown lint 与图标生成依赖链。
+未使用 `audit fix --force`：其建议包含将四个直接工具包降到旧主版本。
+验收：838 项单测、41 项桌面逻辑测试、类型检查、lint、工作流语法、生产构建、
+11 项浏览器验收及 Windows 解包构建通过。WebDAV 地址填写 HTTP 时新增账号密码明文提示，
+切换 HTTPS 后消失，已用浏览器验证。
+
+**同日剩余告警逐项复核**：作者暂缓需要正式密钥和真机的 Android 验收，
+依赖维护独立继续。19 项告警涉及 5 个底层公告；通过定向覆盖修复 UUID、Minimatch、
+KaTeX 和 Glob，降为 4 项 low，moderate/high/critical 均为 0。
+剩余均沿 `deepmerge → node-resolve → workbox-build → vite-plugin-pwa` 传导；
+安装源码中 deepmerge 只复制模块内置默认值，无修复版，保留告警等上游修复。
+未使用强制降级；旧版 ASAR/glob 所需的无关匹配接口保持原依赖范围。
+core 另约束为原生 SDK 对应的 8.5.3，防止 peer 去重顺带引入未验收的 SDK 组合。
+19 项逐条结论、接口验收和回滚方向见
+[依赖安全复核](docs/依赖安全复核-2026-11-09.md)。
+最终锁文件干净安装后：844 项单测、41 项桌面逻辑测试、11 项浏览器验收、
+生产构建、Windows 解包构建与 Capacitor 同步均通过；内容、类型、lint、工作流检查通过。
+
 ### 4.6 多设备 → 共用同一份数据（默认仍然不上传）
+
+**2026-11-09 自建服务调整**：每个空间路由到独立的 `SyncSpace`，
+SQLite 同步事务内完成版本比较和密文写入。首次创建携带 `baseRev: null`；
+并发更新的输家收到 `409` 与赢家快照，客户端合并后重试。
+本地 workerd 验收覆盖并发、实例重建与事务回滚。
 
 **为什么加这个**：换设备要靠「导出 / 导入」手动搬，攒了几百天的记录搬一次就够烦的；
 手机与桌面各记一半更糟（两边的「已做 N 天」谁也不全）。
@@ -467,7 +504,7 @@ push tag vX.Y.Z
 
 - **空间 id 由口令派生**：同一个口令在任何设备上都算出同一个 id ——
   换设备只要填同一个口令，不用再抄一串编号。
-- **服务端只拿到密文**：它没有口令 → 没有密钥 → 拿到 KV 里的东西也解不开。
+- **服务端只拿到密文**：它没有口令 → 没有密钥 → 拿到存储里的东西也解不开。
 - **口令只存在本机**（IndexedDB，跟用户自己的记录放在一起），不上传。
 
 **合并规则在 `app/src/domain/sync.ts`（纯函数，单测守着）**：
@@ -499,7 +536,7 @@ push tag vX.Y.Z
 | --- | --- | --- | --- |
 | **GitHub 私有仓库** | **不要** | 能 | 仓库里的一个文件；账号现成、API 现成，`api.github.com` 发 `access-control-allow-origin: *`（实测） |
 | **网盘 WebDAV** | **不要** | **不能** | 坚果云 / Nextcloud / NAS 都自带，**也能填局域网里自建的那台**（见下面「局域网 WebDAV」）。坚果云与自建的那台都**不发 CORS 头**（实测），浏览器会拦 → 桌面端与 Android 手机能用（走主进程 / 原生 HTTP，绕开 CORS） |
-| 自建中转服务 | 要 | 能 | `sync/` 那个 Worker（Cloudflare Worker + KV），自己跑 |
+| 自建中转服务 | 要 | 能 | `sync/` 那个 Worker（Cloudflare Worker + SQLite Durable Object），自己跑 |
 
 **落点是可插拔的**（`SyncTransport` 接口）：合并与加密那一层与落点无关 ——
 换落点不用改它们。各家给"版本"的方式不一样（GitHub 给 blob 的 sha、网盘给 ETag、
@@ -521,9 +558,18 @@ push tag vX.Y.Z
 | **只在真变了才传**（算载荷指纹，比上次传上去的） | 网盘按流量算钱；每次开 App 都重传几百 KB 是白花。**远端那份没了时一定要传** —— 否则本地这份永远上不去 |
 | **自动同步有最小间隔**（5 分钟）+ **失败冷却**（5 分钟） | 「切回前台」一分钟能发生十几次；网盘有流量限制、浏览器有请求配额 |
 | **同一时刻只跑一轮**（数据层一把锁） | 自动同步在后台跑、用户同时点了「立即同步」时，两个一起推正是把对方那份盖掉的时候 |
-| **WebDAV 的条件头分三档** | 强 ETag → `If-Match`；**弱 ETag（`W/"…"`）不能当 If-Match**（弱比较永远不匹配 → 一直 412）→ 退到 `If-Unmodified-Since` + `Last-Modified`；连时间戳都没有 → 不带条件（最后一次写赢） |
+| **WebDAV 的条件写入** | 已有文件必须提供强 ETag，以 `If-Match` 更新；首次创建始终 `If-None-Match: *`。弱 ETag、无 ETag、无效 ETag 明确报错，不再降级到秒级时间戳或无条件覆盖（2026-11-09 修复） |
 | **第一次写用 `If-None-Match: *`** | 别把别人刚写的那份盖掉 |
 | **每次拉取先问一句「还是那一版吗」**（`If-None-Match` → 304，不发 body） | **下载流量是按月算的**：载荷 ~160 KB，5 分钟一次全量拉 = 1.4 GB/月，坚果云免费版的下载额度只有 1 GB/月 —— 光是"问一句"就够一个月了。改成条件请求后，没变的那次只花几百字节 |
+
+**2026-11-09 WebDAV 专项复核**：弱 ETag/无标识的写入降级已移除；
+同一传输实例内 304 保留完整密文并再次解密合并，不再假定缓存已落入本地。
+PUT 前清除读取缓存，确保断线或缺少新 ETag 时下一轮重读；空 200 明确报错。
+Android 原生响应头统一小写，避免漏读 ETag。
+实际桌面 HTTP 请求与两套隔离数据库验过并发创建、同版本竞争、设置与删除收敛、
+GET/PUT 断线及写入后响应丢失、连续冲突和解密失败后的 304。
+859 项单测、41 项桌面测试、11 项浏览器验收及构建、类型、内容检查通过。
+真实网盘和手机验收仍未完成；详见 [WebDAV 同步复核](docs/WebDAV同步复核-2026-11-09.md)。
 
 **设置页那块（2026-10-30 简化，作者定的第二档）**：
 原来三段说明 + 三个落点的长选项名 + 两个按钮（保存并同步 / 立即同步），
@@ -1128,6 +1174,16 @@ R13 管的是仓库级完整性 —— 快照文件对不对得上 `SOURCE.lock`
 同一个问题只报一次。
 
 已删除旧规则「图片必须在 anchor 段落范围内」：位置不代表归属，会误报。
+
+**2026-11-09 时长校验收紧**：卡级和步级的 quote 时长按完整时间短语与明确单位换算；
+范围只匹配原文端点，区间选值须写 derived 与算式。复合时长按完整短语检查，
+数组引文逐句检查。卡级内容审计复用同一个匹配函数。
+全量 526 张卡发现 1 条来源标注错误：
+`mashed-potato-dough-knots / steps.fry-the-knots.duration` 将「3～4 分钟」的中点
+210 秒标成 quote。该值在区间内，但来源标注缺少推算说明。
+作者于 2026-11-09 确认保留 210 秒，改为 derived，补入
+`(3 + 4) ÷ 2 × 60 = 210 秒`，并授权以「AI（作者授权代签）」重签该卡。
+签字指纹为 `64454946549d1b14`；全量内容校验恢复为 0 error、0 warning。
 
 R1 与 R2 的分工：R1 保证**引文**没被改写（改通顺后的句子不是原文子串，会被 R1 拦下）；
 R2 保证**卡片自己的文字**没有偏离引文——这才是 LLM 起草最容易失真的地方：引文抄对了，`text` 里却写成了另一个数。

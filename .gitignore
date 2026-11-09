@@ -62,3 +62,10 @@ design-preview/
 
 # 本机审查报告，不含产品内容
 .desktop-app-standard-review-*.json
+
+# 本地 Workers 构建与测试状态
+.wrangler/
+
+# Android 发布签名由作者保管
+*.jks
+*.keystore

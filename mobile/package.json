@@ -10,7 +10,8 @@
     "add:ios": "cap add ios",
     "open:android": "cap open android",
     "open:ios": "cap open ios",
-    "build:android": "cd android && gradlew assembleDebug"
+    "build:android": "cd android && gradlew assembleDebug",
+    "build:android:release": "cd android && gradlew assembleRelease"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.3",
@@ -19,7 +20,7 @@
     "@capacitor/local-notifications": "^8.3.1"
   },
   "devDependencies": {
-    "@capacitor/assets": "^3.0.5",
-    "@capacitor/cli": "^8.5.3"
+    "@capacitor/assets": "^4.0.0",
+    "@capacitor/cli": "^8.6.0"
   }
 }

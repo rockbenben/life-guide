@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+def signingValues = [
+    'ANDROID_KEYSTORE_PATH',
+    'ANDROID_KEYSTORE_PASSWORD',
+    'ANDROID_KEY_ALIAS',
+    'ANDROID_KEY_PASSWORD'
+].collectEntries { name -> [(name): System.getenv(name)] }
+
 android {
     namespace "top.newzone.lifeguide"
     compileSdk rootProject.ext.compileSdkVersion
@@ -16,12 +23,36 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            storeFile signingValues.ANDROID_KEYSTORE_PATH ? file(signingValues.ANDROID_KEYSTORE_PATH) : null
+            storePassword signingValues.ANDROID_KEYSTORE_PASSWORD
+            keyAlias signingValues.ANDROID_KEY_ALIAS
+            keyPassword signingValues.ANDROID_KEY_PASSWORD
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+def checkReleaseSigning = tasks.register('checkReleaseSigning') {
+    doLast {
+        def missing = signingValues.findAll { name, value -> !value }.keySet()
+        if (!missing.isEmpty()) {
+            throw new GradleException("Release signing requires: ${missing.join(', ')}")
+        }
+        if (!file(signingValues.ANDROID_KEYSTORE_PATH).isFile()) {
+            throw new GradleException('Release keystore file does not exist')
+        }
+    }
+}
+tasks.matching { it.name == 'preReleaseBuild' }.configureEach {
+    dependsOn checkReleaseSigning
 }
 
 repositories {
