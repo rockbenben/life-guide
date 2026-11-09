@@ -37,7 +37,7 @@ async function setRoutine(ids) {
   await page.evaluate(
     (ids) =>
       new Promise((res, rej) => {
-        const r = indexedDB.open("life-guide");
+        const r = indexedDB.open("life-guide-v2");
         r.onsuccess = () => {
           const db = r.result;
           const tx = db.transaction("settings", "readwrite");

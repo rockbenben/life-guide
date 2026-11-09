@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 
 import {
   allCustomHabits,
+  nowTick,
   deleteCustomHabit,
   getSetting,
   putCustomHabit,
@@ -251,7 +252,7 @@ export function useRoutine({
       slot: patch.slot ?? prev.slot,
       // 改动要刷新时刻：多设备合并时"谁新谁赢"看的就是它。
       // 不刷新的话，这次改名会输给另一台设备上那份旧的。
-      updatedAt: Date.now(),
+      updatedAt: nowTick(),
     };
     await putCustomHabit(habit);
     setHabits((h) => h.map((c) => (c.id === id ? habitToCard(habit) : c)));

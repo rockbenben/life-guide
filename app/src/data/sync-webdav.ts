@@ -19,9 +19,8 @@
  *
  * **它怎么当"同一位置"**：网盘里的一个文件，文件名是 `life-guide-` + 空间 id（口令派生）。
  *
- * **代价**：网盘的 API 有频率限制；账号密码（坚果云给的是"应用密码"）
- * 要存在本机；有些服务器不给 ETag —— 那就没有版本号，冲突判不出来
- * （写的时候按"最后写的那份为准"处理）。
+ * **要求**：服务器提供强 ETag 并原子执行 If-Match / If-None-Match。
+ * 不使用秒级时间戳或无条件覆盖作为降级。
  */
 import { httpRequest } from "../platform/http.ts";
 import type { EncryptedBlob } from "./sync-crypto.ts";
@@ -63,15 +62,8 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
   const urlOf = (spaceId: string) =>
     `${base}/${encodeURIComponent(`life-guide-${spaceId}`)}.json`;
 
-  /**
-   * 每个空间"上次读到的是哪一版"的情况。
-   *
-   * **为什么要记**：WebDAV 的条件头有三档，得知道远端给的是哪一种才能写对 ——
-   * 强 ETag 用 `If-Match`；只有弱 ETag（`W/"…"`）时它不能用（弱比较永远不匹配，
-   * 会一直 412），退到 `If-Unmodified-Since` + `Last-Modified`；
-   * 连时间戳都没有就只写不判（最后一次写赢）。
-   */
-  const seen = new Map<string, { etag: string; strong: boolean; lastModified?: string }>();
+  // 304 只省下载：仍返回完整密文供调用方解密与合并，不假定本地已应用。
+  const seen = new Map<string, RemoteRecord>();
 
   /**
    * 发一次请求；连不上的时候说人话。
@@ -84,7 +76,11 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
     method?: string;
     headers?: Record<string, string>;
     body?: string;
-  }): Promise<{ status: number; headers: Record<string, string>; body: string }> {
+  }): Promise<{
+    status: number;
+    headers: Record<string, string>;
+    body: string;
+  }> {
     try {
       return await httpRequest(req);
     } catch (err) {
@@ -102,7 +98,7 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
       };
       // 问一句「还是那一版吗」——没变就只回 304，body 都不发。
       // 这一句是省下载流量的关键：每次同步都拉全量，一天几十次就是几十 MB。
-      if (known?.strong && known.etag) headers["if-none-match"] = known.etag;
+      if (known) headers["if-none-match"] = known.rev;
 
       const res = await send({ url: urlOf(spaceId), headers });
       // 404 = 网盘里还没有这一份（第一次同步，不是错）
@@ -112,31 +108,31 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
       }
       // 304 = 没变（条件头对上了）
       if (res.status === 304) {
-        return {
-          blob: { v: 1, iv: "", ciphertext: "" },
-          rev: known?.etag ?? "",
-          updatedAt: Date.now(),
-          unchanged: true,
-        };
+        if (!known)
+          throw new Error("网盘返回了无法使用的 304 响应，请重新同步");
+        return structuredClone(known);
       }
       if (res.status < 200 || res.status >= 300) {
         throw new Error(`网盘取不到数据（HTTP ${res.status}）`);
       }
       const text = res.body;
-      if (!text.trim()) return null;
+      if (!text.trim())
+        throw new Error("网盘文件为空，未覆盖任何数据，请检查远端文件");
 
       const etag = res.headers["etag"] ?? "";
-      const lastModified = res.headers["last-modified"] ?? undefined;
-      // 弱 ETag 不能当 If-Match 用（弱比较永远不匹配 → 一直冲突）
-      const strong = Boolean(etag) && !etag.startsWith("W/");
-      seen.set(spaceId, { etag, strong, lastModified });
-
-      return {
+      const strong = /^"[\x21\x23-\x7e\x80-\xff]*"$/.test(etag);
+      if (!strong)
+        throw new Error(
+          "网盘未提供强 ETag，无法安全处理多端同步；请使用支持强 ETag 和条件写入的 WebDAV 服务",
+        );
+      const record: RemoteRecord = {
         blob: JSON.parse(text) as EncryptedBlob,
-        // 强 ETag 才当版本号；弱的那个另作打算
-        rev: strong ? etag : "",
+        // 原样退回强 ETag，供 If-Match 原子比较。
+        rev: etag,
         updatedAt: Date.now(),
       };
+      seen.set(spaceId, structuredClone(record));
+      return record;
     },
 
     async push(spaceId, blob, baseRev) {
@@ -144,18 +140,18 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
         authorization: auth,
         "content-type": "application/json",
       };
-      const m = seen.get(spaceId);
-      if (baseRev) {
+      if (baseRev !== null) {
+        if (!/^"[\x21\x23-\x7e\x80-\xff]*"$/.test(baseRev))
+          throw new Error("缺少有效的强 ETag，拒绝覆盖网盘数据");
         // 强 ETag：只在远端还是这一版时才改
         headers["if-match"] = baseRev;
-      } else if (m?.lastModified) {
-        // 只有弱 ETag：退到时间戳（服务器给了 Last-Modified 才行）
-        headers["if-unmodified-since"] = m.lastModified;
-      } else if (!m) {
+      } else {
         // 从来没见过这个文件：只在它不存在时创建（别把别人的盖掉）
         headers["if-none-match"] = "*";
       }
 
+      // 也覆盖“服务端已写入、响应却断线”的情况：重试必须先重新读取。
+      seen.delete(spaceId);
       const res = await send({
         url: urlOf(spaceId),
         method: "PUT",
@@ -163,15 +159,6 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
         body: JSON.stringify(blob),
       });
       if (res.status >= 200 && res.status < 300) {
-        // 记下这一版 —— 不记的话，下一次推送还会拿着旧 ETag，
-        // 白白撞一次 412（再 GET 一次、再合一次）。
-        const etag = res.headers["etag"] ?? m?.etag ?? "";
-        const strong = Boolean(etag) && !etag.startsWith("W/");
-        seen.set(spaceId, {
-          etag,
-          strong,
-          lastModified: res.headers["last-modified"] ?? m?.lastModified,
-        });
         return { ok: true };
       }
       // 412 = 远端已经变了（条件头没对上）

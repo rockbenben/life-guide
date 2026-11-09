@@ -65,7 +65,7 @@ const NOTICE_MS = 6000;
  */
 const KIND_HINT: Record<SyncKind, string> = {
   webdav:
-    "坚果云、Nextcloud、NAS 都自带这个；局域网里自己搭的那台也行（填它的地址，比如 http://192.168.1.9:5006/dav/）。桌面端与 Android 手机能用；浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）。",
+    "坚果云、Nextcloud、NAS 都自带这个；局域网里自己搭的那台也行（填它的地址，比如 https://dav.example.com/dav/）。桌面端与 Android 手机能用；浏览器里走不通（WebDAV 不给 CORS 头，浏览器会拦）。",
   github:
     "不用自己搭服务器：仓库要私有，Token 只要 repo 权限。数据放在仓库的 life-guide/ 目录里，只有一串看不出内容的密文。三端都能用，浏览器里也行。",
   http:
@@ -301,6 +301,9 @@ export function Settings({
     try {
       const report = await syncNow(createTransport(conf), conf);
       setSyncMsg(report.message);
+      if (!report.ok && (report.added || report.updated || report.removed || report.settingsChanged)) {
+        onDataImported?.();
+      }
       if (report.ok) {
         setSyncLast(Date.now());
         // 远端带来的记录、清单、提醒要重新读一遍，界面才不是旧的
@@ -726,13 +729,16 @@ export function Settings({
                   <input
                     type="text"
                     value={syncUrl}
-                    placeholder="http://192.168.1.9:5006/dav/ 或 https://dav.jianguoyun.com/dav/"
+                    placeholder="https://dav.jianguoyun.com/dav/ 或自己的 HTTPS 地址"
                     autocomplete="off"
                     spellcheck={false}
                     onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
                     onBlur={() => void persistConfig()}
                   />
                 </label>
+                {/^http:\/\//i.test(syncUrl.trim()) ? (
+                  <p class="lg-pool">HTTP 会明文传输网盘账号和密码，局域网内其他设备也可能截获。可以为此服务配置 HTTPS。</p>
+                ) : null}
                 <label class="lg-synccfg">
                   <span>账号</span>
                   <input

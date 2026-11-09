@@ -2,7 +2,7 @@
  * 同步服务：只当"密文的存放处"。
  *
  * **它读不到内容**。App 推上来的是 AES-GCM 密文，
- * 服务端没有口令，也就没有密钥 —— 拿到 KV 里的东西也解不开。
+ * 服务端没有口令，也就没有密钥 —— 拿到存储里的东西也解不开。
  *
  * ## 协议
  *
@@ -23,21 +23,34 @@
  * 责任最清楚。
  */
 
-/** 存放密文的地方（Cloudflare KV；测试里用 Map 顶）。 */
-export interface KvStore {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string): Promise<void>;
+/** 一个空间只对应一个 Durable Object，条件写入由对象内部原子完成。 */
+export interface SpaceStore {
+  read(): Promise<StoredBlob | null>;
+  write(input: BlobWrite): Promise<WriteResult>;
 }
 
+export interface SpaceNamespace {
+  getByName(spaceId: string): SpaceStore;
+}
+
+export interface BlobWrite {
+  iv: string;
+  ciphertext: string;
+  baseRev: number | null;
+}
+
+export type WriteResult =
+  { ok: true; rev: number } | { ok: false; current: StoredBlob | null };
+
 /** 存着的一条记录。 */
-export interface StoredBlob {
+export type StoredBlob = {
   iv: string;
   ciphertext: string;
   /** 第几版（每次写入 +1） */
   rev: number;
   /** 写入时刻（毫秒） */
   updatedAt: number;
-}
+};
 
 /** 允许哪些来源（浏览器会带 Origin 头）。空数组 = 全放行。 */
 export interface WorkerOptions {
@@ -52,21 +65,31 @@ const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
  *
  * **这不是身份验证**：非浏览器的客户端（curl、脚本）照样能直接调。
  * 它挡的是"任意网页顺手往这个服务写东西"—— 写的是密文，
- * 但那也会占 KV 的写入配额。
+ * 但那也会占服务端的写入配额。
  */
-function corsHeaders(origin: string | null, allowed: string[]): Record<string, string> {
+function corsHeaders(
+  origin: string | null,
+  allowed: string[],
+): Record<string, string> {
   const ok = !allowed.length || (origin !== null && allowed.includes(origin));
   return {
     ...(ok && origin ? { "access-control-allow-origin": origin } : {}),
     "access-control-allow-methods": "GET, PUT, OPTIONS",
-    "access-control-allow-headers": "content-type",
+    "access-control-allow-headers": "content-type, if-none-match",
     "access-control-max-age": "86400",
-    "vary": "origin",
+    vary: "origin",
   };
 }
 
-function json(data: unknown, status: number, headers: Record<string, string>): Response {
-  return new Response(JSON.stringify(data), { status, headers: { ...headers, ...JSON_HEADERS } });
+function json(
+  data: unknown,
+  status: number,
+  headers: Record<string, string>,
+): Response {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...headers, ...JSON_HEADERS, "cache-control": "no-store" },
+  });
 }
 
 /** 从地址里取出空间 id：`/blob/abc` → `abc`。 */
@@ -78,77 +101,91 @@ export function spaceIdFromPath(pathname: string): string | null {
 /**
  * 处理一次请求。
  *
- * 逻辑与平台无关（只用 Request / Response / KvStore），
+ * 逻辑与平台无关（只用 Request / Response / SpaceNamespace），
  * 所以能直接单测 —— 真的部署时才碰到 Cloudflare 的运行时。
  */
 export async function handleRequest(
   request: Request,
-  kv: KvStore,
+  spaces: SpaceNamespace,
   options: WorkerOptions = {},
 ): Promise<Response> {
   const allowed = options.allowedOrigins ?? [];
   const origin = request.headers.get("origin");
   const cors = corsHeaders(origin, allowed);
 
-  // 预检请求
-  if (request.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: cors });
-  }
-
-  const spaceId = spaceIdFromPath(new URL(request.url).pathname);
-  if (!spaceId) {
-    return json({ error: "地址不对" }, 404, cors);
-  }
-
-  if (request.method === "GET") {
-    const raw = await kv.get(spaceId);
-    if (!raw) return json({ error: "还没有这一份" }, 404, cors);
-    const record = JSON.parse(raw) as StoredBlob;
-    /*
-     * 条件请求：客户端问「还是那一版吗」。
-     * 没变就回 304，**body 都不发** —— 省的是下载流量
-     * （客户端每隔几分钟就问一次，全量回一次是白花流量）。
-     */
-    const asked = request.headers.get("if-none-match");
-    if (asked && asked === String(record.rev)) {
-      return new Response(null, { status: 304, headers: cors });
-    }
-    return json(record, 200, cors);
-  }
-
-  if (request.method === "PUT") {
-    let body: { iv?: unknown; ciphertext?: unknown; baseRev?: unknown };
-    try {
-      body = (await request.json()) as typeof body;
-    } catch {
-      return json({ error: "请求体不是 JSON" }, 400, cors);
-    }
-    if (typeof body.iv !== "string" || typeof body.ciphertext !== "string") {
-      return json({ error: "缺 iv 或 ciphertext" }, 400, cors);
+  try {
+    // 预检请求
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: { ...cors, "cache-control": "no-store" },
+      });
     }
 
-    const raw = await kv.get(spaceId);
-    const current = raw ? (JSON.parse(raw) as StoredBlob) : null;
-
-    /**
-     * 版本对不上 → 有人刚写过。
-     *
-     * 退回去当前那份：客户端拿它合一次再推。
-     * 不这么做的话，后推的那份会把对方刚同步的数据整块盖掉。
-     */
-    if (current && typeof body.baseRev === "number" && body.baseRev !== current.rev) {
-      return json(current, 409, cors);
+    const spaceId = spaceIdFromPath(new URL(request.url).pathname);
+    if (!spaceId) {
+      return json({ error: "地址不对" }, 404, cors);
     }
 
-    const next: StoredBlob = {
-      iv: body.iv,
-      ciphertext: body.ciphertext,
-      rev: (current?.rev ?? 0) + 1,
-      updatedAt: Date.now(),
-    };
-    await kv.put(spaceId, JSON.stringify(next));
-    return json({ ok: true, rev: next.rev }, 200, cors);
-  }
+    if (request.method === "GET") {
+      const record = await spaces.getByName(spaceId).read();
+      if (!record) return json({ error: "还没有这一份" }, 404, cors);
+      /*
+       * 条件请求：客户端问「还是那一版吗」。
+       * 没变就回 304，**body 都不发** —— 省的是下载流量
+       * （客户端每隔几分钟就问一次，全量回一次是白花流量）。
+       */
+      const asked = request.headers.get("if-none-match");
+      if (asked && asked === String(record.rev)) {
+        return new Response(null, {
+          status: 304,
+          headers: { ...cors, "cache-control": "no-store" },
+        });
+      }
+      return json(record, 200, cors);
+    }
 
-  return json({ error: "方法不对" }, 405, cors);
+    if (request.method === "PUT") {
+      let body: { iv?: unknown; ciphertext?: unknown; baseRev?: unknown };
+      try {
+        body = (await request.json()) as typeof body;
+      } catch {
+        return json({ error: "请求体不是 JSON" }, 400, cors);
+      }
+      if (
+        !body ||
+        typeof body !== "object" ||
+        Array.isArray(body) ||
+        typeof body.iv !== "string" ||
+        typeof body.ciphertext !== "string"
+      ) {
+        return json({ error: "缺 iv 或 ciphertext" }, 400, cors);
+      }
+
+      if (
+        body.baseRev !== null &&
+        (typeof body.baseRev !== "number" ||
+          !Number.isSafeInteger(body.baseRev) ||
+          body.baseRev < 1)
+      ) {
+        return json({ error: "baseRev 必须是 null 或正整数版本号" }, 400, cors);
+      }
+
+      const result = await spaces.getByName(spaceId).write({
+        iv: body.iv,
+        ciphertext: body.ciphertext,
+        baseRev: body.baseRev,
+      });
+      if (!result.ok) {
+        if (!result.current)
+          return json({ error: "还没有这一份，请重新同步" }, 404, cors);
+        return json(result.current, 409, cors);
+      }
+      return json({ ok: true, rev: result.rev }, 200, cors);
+    }
+
+    return json({ error: "方法不对" }, 405, cors);
+  } catch {
+    return json({ error: "同步存储暂时不可用，请稍后重试" }, 503, cors);
+  }
 }

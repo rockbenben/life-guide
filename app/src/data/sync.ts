@@ -8,7 +8,7 @@
  * ## 一轮同步做四件事
  *
  * 1. 把本地数据打包成一份载荷（buildLocalPayload）；
- * 2. 拉远端那份，解密（拉不到就当远端是空的）；
+ * 2. 拉远端那份并解密（只有 404 表示不存在；网络失败停止本轮）；
  * 3. 两份合并（domain/sync.ts），结果写回本地（applyPayload）；
  * 4. 合并结果加密后推上去。
  *
@@ -23,35 +23,14 @@
  * 客户端拿着它再合一次再推（最多两次）。
  */
 import {
-  absorbTick,
-  addEvent,
-  allCustomHabits,
-  allEvents,
-  allSettings,
-  allTombstones,
-  deleteCustomHabit,
-  getCustomHabit,
-  getDeviceId,
-  getEvent,
-  getSetting,
-  getSettingMeta,
-  putCustomHabit,
-  putTombstone,
-  putEvents,
-  removeEvent,
-  saveClock,
-  setSetting,
-  setSettingAt,
+  getDeviceId, getSetting, saveClock, setSetting,
+  readSyncPayload, commitSyncPayload,
 } from "./db.ts";
+import { validatePayload } from "./validate.ts";
 import {
-  mergePayloads,
+  stableStringify,
   payloadVersionIssue,
-  SYNCED_SETTING_KEYS,
-  SYNC_PAYLOAD_VERSION,
-  type SyncCustom,
-  type SyncEvent,
   type SyncPayload,
-  type SyncSetting,
 } from "../domain/sync.ts";
 import {
   decryptPayload,
@@ -264,161 +243,13 @@ export interface SyncTransport {
  * 同步口令、服务器地址这些东西**不能**跟着走。
  */
 export async function buildLocalPayload(deviceId: string): Promise<SyncPayload> {
-  const [events, settings, custom, tombstones] = await Promise.all([
-    allEvents(),
-    allSettings(),
-    allCustomHabits(),
-    allTombstones(),
-  ]);
-
-  const syncedSettings: SyncSetting[] = [];
-  for (const s of settings) {
-    if (!(SYNCED_SETTING_KEYS as readonly string[]).includes(s.key)) continue;
-    /*
-     * 老版本的设置行没有时间戳（updatedAt 是后来才加的）。
-     *
-     * 没有时间戳 = "不知道多旧" —— 拿 0 去比，**远端会一直赢**，
-     * 升级后第一次同步，本地的清单就被远端那份盖掉了。
-     * 所以这里**补一个当前时间**（本地优先）：用户自己的设备上的东西，
-     * 至少不比别人那份旧。补一次就固定了（之后每次同步都读同一个值）。
-     */
-    let updatedAt = s.updatedAt ?? 0;
-    if (!s.updatedAt) {
-      updatedAt = Date.now();
-      await setSettingAt(s.key, s.value, updatedAt);
-    }
-    syncedSettings.push({ key: s.key, value: s.value, updatedAt });
-  }
-
-  const syncedEvents: SyncEvent[] = events.map((e) => ({
-    date: e.date,
-    cardId: e.cardId,
-    variant: e.variant,
-    ts: e.ts,
-    ...(e.periodDone !== undefined ? { periodDone: e.periodDone } : {}),
-    ...(e.periodCadence !== undefined ? { periodCadence: e.periodCadence } : {}),
-    // 旧日志没有 updatedAt：用它自己的创建时刻当"最后改动时刻"
-    updatedAt: e.updatedAt ?? e.ts,
-  }));
-
-  const syncedCustom: SyncCustom[] = custom.map((c) => ({
-    id: c.id,
-    name: c.name,
-    text: c.text,
-    slot: c.slot,
-    createdAt: c.createdAt,
-    updatedAt: c.updatedAt ?? 0,
-  }));
-
-  return {
-    v: SYNC_PAYLOAD_VERSION,
-    deviceId,
-    updatedAt: Date.now(),
-    events: syncedEvents,
-    tombstones: tombstones.map((t) => ({
-      kind: t.kind,
-      id: t.id,
-      updatedAt: t.updatedAt,
-    })),
-    settings: syncedSettings,
-    custom: syncedCustom,
-  };
+  return readSyncPayload(deviceId);
 }
 
-/**
- * 把一份载荷写回本地。
- *
- * 返回**实际写进去的载荷**（可能与传进来的略有出入）：
- * 记录的身份（ts）撞了会被挪，挪了就得告诉调用方 ——
- * 不然下一次同步会把挪过的那条当成另一条，界面上就出现两条一样的记录。
- */
-/**
- * 载荷里最大的时间戳。
- *
- * 收到远端的数据时用它**并进本机时钟**（见 domain/clock.ts）：
- * 于是"我看见过的东西"之后，本机的改动一定排在它后面 ——
- * 对方时钟快 / 未来时间戳，不再会把本机的正常改动吃掉。
- */
-function maxTimestampOf(payload: SyncPayload): number {
-  let max = 0;
-  for (const e of payload.events ?? []) max = Math.max(max, e.updatedAt ?? 0);
-  for (const s of payload.settings ?? []) max = Math.max(max, s.updatedAt ?? 0);
-  for (const c of payload.custom ?? []) max = Math.max(max, c.updatedAt ?? 0);
-  for (const t of payload.tombstones ?? []) max = Math.max(max, t.updatedAt ?? 0);
-  return max;
-}
-
+/** 单事务重读、合并、提交；调用者获得实际提交的载荷。 */
 export async function applyPayload(payload: SyncPayload): Promise<SyncPayload> {
-  // 先把远端的时间并进本机时钟，再写 —— 写出来的每一笔都排在它后面
-  absorbTick(maxTimestampOf(payload));
-  /* 记录：一次事务写完（几千条逐条写 = 几千个事务，手机上要等好几秒） */
-  const usedTs = await putEvents(
-    payload.events.map((e) => ({
-      date: e.date,
-      cardId: e.cardId,
-      variant: e.variant,
-      ts: e.ts,
-      ...(e.periodDone !== undefined ? { periodDone: e.periodDone } : {}),
-      ...(e.periodCadence !== undefined ? { periodCadence: e.periodCadence } : {}),
-      updatedAt: e.updatedAt,
-    })),
-  );
-  // ts 可能被挪过（同一毫秒里两条撞了）—— 挪完的才是真正的身份
-  const events: SyncEvent[] = payload.events.map((e, i) => ({
-    ...e,
-    ts: usedTs[i] ?? e.ts,
-  }));
-
-  /* 设置：只写白名单里的；写的时候保留原来的时刻 */
-  const settings: SyncSetting[] = [];
-  for (const s of payload.settings) {
-    if (!(SYNCED_SETTING_KEYS as readonly string[]).includes(s.key)) continue;
-    const local = await getSettingMeta<unknown>(s.key);
-    // 远端这份不比本地旧才写（合并已经选出了赢家，这里只是兜底）
-    if ((local.updatedAt ?? 0) > s.updatedAt) continue;
-    await setSettingAt(s.key, s.value, s.updatedAt);
-    settings.push(s);
-  }
-
-  /* 习惯 */
-  const custom: SyncCustom[] = [];
-  for (const c of payload.custom) {
-    await putCustomHabit({
-      id: c.id,
-      name: c.name,
-      text: c.text,
-      slot: c.slot,
-      createdAt: c.createdAt,
-      updatedAt: c.updatedAt,
-    });
-    custom.push(c);
-  }
-
-  /* 删除标记：先写墓碑，再删掉被它盖住的东西 */
-  for (const t of payload.tombstones) {
-    await putTombstone({ kind: t.kind, id: t.id, updatedAt: t.updatedAt });
-    if (t.kind === "event") {
-      const ts = Number(t.id);
-      if (!Number.isFinite(ts)) continue;
-      const e = await getEvent(ts);
-      // 记录比墓碑新 → 不删（合并时已经判过了，这里只是兜底）
-      if (e && (e.updatedAt ?? e.ts) <= t.updatedAt) {
-        await removeEvent(ts, { tombstone: false });
-      }
-    } else {
-      const h = await getCustomHabit(t.id);
-      if (h && (h.updatedAt ?? 0) <= t.updatedAt) {
-        await deleteCustomHabit(t.id, { tombstone: false });
-      }
-    }
-  }
-
-  return {
-    ...payload,
-    events,
-    settings,
-    custom,
-  };
+  validatePayload(payload);
+  return (await commitSyncPayload(payload)).payload;
 }
 
 /* ------------------------------------------------------------ 一轮同步 */
@@ -503,8 +334,15 @@ export async function syncNow(
  * 每次读本地都会变成现在 —— 算进去的话指纹每次都不同，这个判断就废了。
  */
 async function payloadFingerprint(payload: SyncPayload): Promise<string> {
-  const stable = { ...payload, updatedAt: 0 };
-  const bytes = new TextEncoder().encode(JSON.stringify(stable));
+  const stable = {
+    ...payload, deviceId: "", updatedAt: 0,
+    events: [...payload.events].sort((a, b) => a.eventId.localeCompare(b.eventId)),
+    custom: [...payload.custom].sort((a, b) => a.id.localeCompare(b.id)),
+    settings: [...payload.settings].sort((a, b) => a.key.localeCompare(b.key)),
+    tombstones: [...payload.tombstones].sort((a, b) =>
+      `${a.kind}:${a.id}`.localeCompare(`${b.kind}:${b.id}`)),
+  };
+  const bytes = new TextEncoder().encode(stableStringify(stable));
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -521,7 +359,7 @@ async function syncOnce(
 
   const secret = await deriveSecret(conf.passphrase);
   const deviceId = await getDeviceId();
-  let local = await buildLocalPayload(deviceId);
+  const local = await buildLocalPayload(deviceId);
 
   let remote: RemoteRecord | null = null;
   try {
@@ -567,6 +405,7 @@ async function syncOnce(
   } else if (remote) {
     try {
       remotePayload = await decryptPayload(secret.key, remote.blob);
+      validatePayload(remotePayload);
     } catch (err) {
       return {
         ok: false,
@@ -580,11 +419,9 @@ async function syncOnce(
     }
   }
 
-  let merged = remotePayload
-    ? mergePayloads(local, remotePayload, deviceId)
-    : { payload: local, stats: { eventsAdded: 0, eventsUpdated: 0, eventsRemoved: 0, settingsChanged: 0, customAdded: 0, customUpdated: 0, customRemoved: 0 } };
-
-  let applied = await applyPayload(merged.payload);
+  let merged = await commitSyncPayload(remotePayload ?? local, deviceId);
+  let applied = merged.payload;
+  const totalStats = { ...merged.stats };
   let baseRev = remote?.rev ?? null;
 
   /*
@@ -596,9 +433,10 @@ async function syncOnce(
    *
    * 远端那份没了（404）时**一定要传** —— 否则本地这份就永远上不去了。
    */
-  const fingerprint = await payloadFingerprint(applied);
+  let fingerprint = await payloadFingerprint(applied);
   const lastPushed = await getSetting<string>(KEY_PUSHED_HASH, "");
-  const needPush = !(remote && fingerprint === lastPushed);
+  const remoteFingerprint = remotePayload ? await payloadFingerprint(remotePayload) : lastPushed;
+  const needPush = !remote || fingerprint !== remoteFingerprint;
 
   /*
    * 「这次换了个位置」的提醒。
@@ -624,10 +462,10 @@ async function syncOnce(
       return {
         ok: false,
         message: `写不上去：${networkErrorText(err)}`,
-        added: merged.stats.eventsAdded,
-        updated: merged.stats.eventsUpdated,
-        removed: merged.stats.eventsRemoved,
-        settingsChanged: merged.stats.settingsChanged,
+        added: totalStats.eventsAdded + totalStats.customAdded,
+        updated: totalStats.eventsUpdated + totalStats.customUpdated,
+        removed: totalStats.eventsRemoved + totalStats.customRemoved,
+        settingsChanged: totalStats.settingsChanged,
         pushed: false,
         pulled: Boolean(remote),
       };
@@ -643,25 +481,38 @@ async function syncOnce(
     // 第一轮从远端收到的那批记录会被挤掉（本地还在、推上去的那份没了）。
     try {
       const theirPayload = await decryptPayload(secret.key, res.conflict.blob);
+      validatePayload(theirPayload);
       const issue = payloadVersionIssue(theirPayload);
       if (issue) {
         return { ok: false, message: issue, added: 0, updated: 0, removed: 0, settingsChanged: 0, pushed: false, pulled: true };
       }
-      merged = mergePayloads(applied, theirPayload, deviceId);
-      applied = await applyPayload(merged.payload);
+      merged = await commitSyncPayload(theirPayload, deviceId);
+      for (const key of Object.keys(totalStats) as (keyof typeof totalStats)[]) totalStats[key] += merged.stats[key];
+      applied = merged.payload;
+      fingerprint = await payloadFingerprint(applied);
       baseRev = res.conflict.rev;
     } catch (err) {
       return {
         ok: false,
         message: err instanceof Error ? err.message : String(err),
-        added: merged.stats.eventsAdded,
-        updated: merged.stats.eventsUpdated,
-        removed: merged.stats.eventsRemoved,
-        settingsChanged: merged.stats.settingsChanged,
+        added: totalStats.eventsAdded + totalStats.customAdded,
+        updated: totalStats.eventsUpdated + totalStats.customUpdated,
+        removed: totalStats.eventsRemoved + totalStats.customRemoved,
+        settingsChanged: totalStats.settingsChanged,
         pushed: false,
         pulled: true,
       };
     }
+  }
+
+  if (needPush && !pushed) {
+    return {
+      ok: false, message: "同步冲突仍未解决，请稍后重试",
+      added: totalStats.eventsAdded + totalStats.customAdded,
+      updated: totalStats.eventsUpdated + totalStats.customUpdated,
+      removed: totalStats.eventsRemoved + totalStats.customRemoved,
+      settingsChanged: totalStats.settingsChanged, pushed: false, pulled: Boolean(remote),
+    };
   }
 
   await setSetting(KEY_LAST_AT, Date.now());
@@ -670,14 +521,14 @@ async function syncOnce(
   // 记下"这次传上去的是哪一份" —— 下次好判断还需不需要传
   if (pushed) await setSetting(KEY_PUSHED_HASH, fingerprint);
   // 记下本地那份的指纹 —— 下次远端说"没变"时，靠它判断本地要不要传
-  await setSetting(KEY_LOCAL_HASH, await payloadFingerprint(local));
+  await setSetting(KEY_LOCAL_HASH, await payloadFingerprint(applied));
   // 记下"上次同步用的是哪个位置" —— 下次能看出"这次换了个地方"
   await setSetting(KEY_LAST_SPACE, spaceKeyOf(conf, secret.spaceId));
 
-  const s = merged.stats;
-  const changed = s.eventsAdded + s.eventsUpdated + s.eventsRemoved + s.settingsChanged;
+  const s = totalStats;
+  const changed = Object.values(s).reduce((sum, value) => sum + value, 0);
   const base = changed
-    ? `同步完成：新收 ${s.eventsAdded} 条，改了 ${s.eventsUpdated} 条，删了 ${s.eventsRemoved} 条，设置改了 ${s.settingsChanged} 项。`
+    ? `同步完成：新收 ${s.eventsAdded + s.customAdded} 条，改了 ${s.eventsUpdated + s.customUpdated} 条，删了 ${s.eventsRemoved + s.customRemoved} 条，设置改了 ${s.settingsChanged} 项。`
     : pushed
       ? "同步完成：两台设备的数据已经一样。"
       : "同步完成：没有要传的改动。";
@@ -686,9 +537,9 @@ async function syncOnce(
     message: switchedPlace
       ? `${base} ⚠️ 这是一个新的位置（上次同步用的是另一个）—— 如果口令或地址填错了，两台设备就碰不到同一份数据。`
       : base,
-    added: s.eventsAdded,
-    updated: s.eventsUpdated,
-    removed: s.eventsRemoved,
+    added: s.eventsAdded + s.customAdded,
+    updated: s.eventsUpdated + s.customUpdated,
+    removed: s.eventsRemoved + s.customRemoved,
     settingsChanged: s.settingsChanged,
     pushed,
     pulled: Boolean(remote),

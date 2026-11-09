@@ -252,7 +252,7 @@ describe("一轮同步", () => {
           date: "2026-10-28",
           cardId: "card-x",
           variant: "normal",
-          ts: 500,
+          eventId: "event-500", ts: 500,
           updatedAt: theirUpdatedAt,
         },
       ],
@@ -310,7 +310,7 @@ describe("一轮同步", () => {
           date: "2026-10-28",
           cardId: "card-y",
           variant: "normal",
-          ts: 600,
+          eventId: "event-600", ts: 600,
           updatedAt: Date.now() + 1000,
         },
       ],
@@ -344,14 +344,14 @@ describe("一轮同步", () => {
       v: SYNC_PAYLOAD_VERSION,
       deviceId: "dev-a",
       updatedAt: 1,
-      events: [{ date: "2026-10-29", cardId: "card-z", variant: "normal", ts: 900, updatedAt: 1 }],
+      events: [{ date: "2026-10-29", cardId: "card-z", variant: "normal", eventId: "event-900", ts: 900, updatedAt: 1 }],
       tombstones: [],
       settings: [],
       custom: [],
     });
-    expect(await getEvent(900)).toBeTruthy();
-    await removeEvent(900);
-    expect(await getEvent(900)).toBeUndefined();
+    expect(await getEvent("event-900")).toBeTruthy();
+    await removeEvent("event-900");
+    expect(await getEvent("event-900")).toBeUndefined();
     expect(await allTombstones()).toHaveLength(1);
 
     await syncNow(memoryTransport(store), cfg({ enabled: true, serverUrl: "https://x.dev" }));
@@ -359,7 +359,7 @@ describe("一轮同步", () => {
     const pushed = await decryptPayload(key, store.get(spaceId)!.blob);
     // 被删掉的那条不在里面了（别的记录还在 —— 那是别的测试留下的）
     expect(pushed.events.map((e) => e.ts)).not.toContain(900);
-    expect(pushed.tombstones.some((t) => t.id === "900")).toBe(true);
+    expect(pushed.tombstones.some((t) => t.id === "event-900")).toBe(true);
   });
 
   it("远端没变（304）→ 只花一次「问一句」的流量，不拉全量", async () => {
@@ -522,7 +522,7 @@ describe("一轮同步", () => {
       deviceId: "dev-b",
       updatedAt: 10,
       events: [
-        { date: "2026-10-29", cardId: "from-remote-A", variant: "normal", ts: 111, updatedAt: 10 },
+        { date: "2026-10-29", cardId: "from-remote-A", variant: "normal", eventId: "event-111", ts: 111, updatedAt: 10 },
       ],
       tombstones: [],
       settings: [],
@@ -533,7 +533,7 @@ describe("一轮同步", () => {
       deviceId: "dev-c",
       updatedAt: 20,
       events: [
-        { date: "2026-10-29", cardId: "from-remote-C", variant: "normal", ts: 222, updatedAt: 20 },
+        { date: "2026-10-29", cardId: "from-remote-C", variant: "normal", eventId: "event-222", ts: 222, updatedAt: 20 },
       ],
       tombstones: [],
       settings: [],
@@ -550,6 +550,7 @@ describe("一轮同步", () => {
       },
       async push(_id, blob) {
         pushed.push(JSON.parse(JSON.stringify(await decryptPayload(key, blob))));
+        if (pushed.length === 2) return { ok: true };
         // 第一次推就撞上：对方刚写的是另一份（只有 C，没有 A）
         return {
           ok: false,
@@ -571,28 +572,11 @@ describe("一轮同步", () => {
     expect(ids).toContain("from-remote-C");
   });
 
-  it("老版本的设置行没有时间戳 → 补一个（本地优先，不然远端会一直赢）", async () => {
-    // 造一行没有 updatedAt 的设置（升级前的老数据）
-    await new Promise<void>((resolve, reject) => {
-      const req = indexedDB.open("life-guide");
-      req.onsuccess = () => {
-        const db = req.result;
-        const tx = db.transaction("settings", "readwrite");
-        tx.objectStore("settings").put({ key: "myRoutine", value: ["旧的"] });
-        tx.oncomplete = () => {
-          db.close();
-          resolve();
-        };
-        tx.onerror = () => reject(tx.error);
-      };
-      req.onerror = () => reject(req.error);
-    });
-
+  it("设置快照保留已提交的修改时间", async () => {
+    await setSetting("myRoutine", ["当前清单"]);
+    const meta = await getSettingMeta("myRoutine");
     const payload = await buildLocalPayload("dev-a");
-    const routine = payload.settings.find((s) => s.key === "myRoutine");
-    expect(routine?.value).toEqual(["旧的"]);
-    // 不是 0（0 会被远端一直压着）
-    expect(routine!.updatedAt).toBeGreaterThan(0);
+    expect(payload.settings.find((s) => s.key === "myRoutine")?.updatedAt).toBe(meta.updatedAt);
   });
 
   it("口令填错 → 落到一个空位置 → 提醒一句（否则两台设备永远碰不到同一份）", async () => {
@@ -661,7 +645,7 @@ describe("一轮同步", () => {
     // 设备 A 刚盖了一个章；设备 B 刚把清单换了次序。两边几乎同时同步。
     const a = payloadOf("dev-a", {
       events: [
-        { date: "2026-10-29", cardId: "stamped", variant: "normal", ts: 501, updatedAt: 100 },
+        { date: "2026-10-29", cardId: "stamped", variant: "normal", eventId: "event-501", ts: 501, updatedAt: 100 },
       ],
       settings: [{ key: "myRoutine", value: ["a", "b"], updatedAt: 100 }],
     });
@@ -695,23 +679,23 @@ describe("applyPayload", () => {
       v: SYNC_PAYLOAD_VERSION,
       deviceId: "dev-b",
       updatedAt: 10,
-      events: [{ date: "2026-10-29", cardId: "card-q", variant: "normal", ts: 700, updatedAt: 10 }],
+      events: [{ date: "2026-10-29", cardId: "card-q", variant: "normal", eventId: "event-700", ts: 700, updatedAt: 10 }],
       tombstones: [],
       settings: [],
       custom: [],
     });
-    expect(await getEvent(700)).toBeTruthy();
+    expect(await getEvent("event-700")).toBeTruthy();
 
     await applyPayload({
       v: SYNC_PAYLOAD_VERSION,
       deviceId: "dev-b",
       updatedAt: 20,
       events: [],
-      tombstones: [{ kind: "event", id: "700", updatedAt: 20 }],
+      tombstones: [{ kind: "event", id: "event-700", updatedAt: 20 }],
       settings: [],
       custom: [],
     });
-    expect(await getEvent(700)).toBeUndefined();
+    expect(await getEvent("event-700")).toBeUndefined();
   });
 
   it("记录比墓碑新 → 记录留着", async () => {
@@ -719,12 +703,12 @@ describe("applyPayload", () => {
       v: SYNC_PAYLOAD_VERSION,
       deviceId: "dev-b",
       updatedAt: 30,
-      events: [{ date: "2026-10-29", cardId: "card-r", variant: "normal", ts: 701, updatedAt: 30 }],
-      tombstones: [{ kind: "event", id: "701", updatedAt: 20 }],
+      events: [{ date: "2026-10-29", cardId: "card-r", variant: "normal", eventId: "event-701", ts: 701, updatedAt: 30 }],
+      tombstones: [{ kind: "event", id: "event-701", updatedAt: 20 }],
       settings: [],
       custom: [],
     });
-    expect(await getEvent(701)).toBeTruthy();
+    expect(await getEvent("event-701")).toBeTruthy();
   });
 
   it("习惯删掉了（墓碑）→ 本地的也删掉", async () => {

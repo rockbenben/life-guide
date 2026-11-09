@@ -2,10 +2,14 @@ name = "life-guide-sync"
 main = "src/index.ts"
 compatibility_date = "2026-10-01"
 
-# 存的是密文：服务端没有口令，也就没有密钥。
-[[kv_namespaces]]
-binding = "SYNC_KV"
-id = "<用 wrangler kv namespace create SYNC_KV 建出来的那串 id>"
+# 每个空间拥有独立的 SQLite Durable Object，存储密文及版本。
+[[durable_objects.bindings]]
+name = "SYNC_SPACES"
+class_name = "SyncSpace"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SyncSpace"]
 
 # 允许哪些来源来读写（逗号分隔）。
 # 不配 = 全放行。建议配上自己的地址：

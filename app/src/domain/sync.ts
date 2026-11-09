@@ -17,7 +17,7 @@
  *
  * | 数据 | 身份 | 冲突怎么办 |
  * | --- | --- | --- |
- * | 盖章记录（events） | `ts`（本地写入时保证唯一） | 同一条取 `updatedAt` 新的 |
+ * | 盖章记录（events） | `eventId` | 同一条取 `updatedAt` 新的 |
  * | 自定义习惯（custom） | `id` | 同一条取 `updatedAt` 新的 |
  * | 设置（settings） | 键名 | 整项取 `updatedAt` 新的（清单是有序的，合并顺序反而更乱） |
  * | 删除（tombstones） | `kind:id` | 取 `updatedAt` 新的 |
@@ -31,8 +31,8 @@
  */
 import type { HabitSlot } from "./custom.ts";
 
-/** 同步载荷的版本。改了形状就 +1，旧版本按 v1 兼容读。 */
-export const SYNC_PAYLOAD_VERSION = 1;
+/** 同步载荷的版本。只接受当前载荷版本。 */
+export const SYNC_PAYLOAD_VERSION = 2;
 
 /**
  * 跟着同步走的设置项。
@@ -51,17 +51,13 @@ export const SYNCED_SETTING_KEYS = [
 
 /** 一条盖章记录（同步时的形状）。 */
 export interface SyncEvent {
+  eventId: string;
   /** 逻辑日期 YYYY-MM-DD */
   date: string;
   cardId: string;
   /** 当时用的模式 */
   variant: string;
-  /**
-   * 事件身份。本地写入时保证唯一（同一毫秒里盖两张卡也不会撞）。
-   *
-   * 用 ts 当身份而不是另发一个 id：撤销周期完成是**改同一条**
-   * （periodDone 从 true 变 false），身份不变才能把改动传出去。
-   */
+  /** 事件发生时间，用于排序。身份使用 eventId。 */
   ts: number;
   /** 周期卡：true = 算完成，false = 用户撤销过 */
   periodDone?: boolean;
@@ -161,8 +157,8 @@ export function pickNewer<T extends { updatedAt: number }>(
 }
 
 /** 事件的同步身份。 */
-export function eventKey(e: { ts: number }): string {
-  return `event:${e.ts}`;
+export function eventKey(e: { eventId: string }): string {
+  return `event:${e.eventId}`;
 }
 
 /** 习惯的同步身份。 */
@@ -344,6 +340,6 @@ export function payloadVersionIssue(
   supported: number = SYNC_PAYLOAD_VERSION,
 ): string | null {
   if (typeof remote?.v !== "number") return "对方发来的数据没有版本号";
-  if (remote.v > supported) return `对方的数据版本是 ${remote.v}，这台设备只认到 ${supported}`;
+  if (remote.v !== supported) return `对方的数据版本是 ${remote.v}，这台设备只认到 ${supported}`;
   return null;
 }

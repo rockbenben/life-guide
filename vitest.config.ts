@@ -9,7 +9,7 @@ export default defineConfig({
       "content/test/**/*.test.ts",
       "app/test/**/*.test.ts",
       "app/test/**/*.test.tsx",
-      // 同步服务（Worker）：纯逻辑，跟平台无关
+      // 同步服务：Wrangler 本地 workerd + SQLite Durable Object 验收
       "sync/test/**/*.test.ts",
       // 发版校验脚本的纯逻辑（scripts/release-assets.mjs）——
       // 它是发版的闸门，得有测试守着。

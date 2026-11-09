@@ -63,6 +63,9 @@ export function useAutoSync(onSynced: () => void): void {
         // 没开、没配好 —— 不是错误，是「这台设备没打算同步」
         if (syncConfigProblem(cfg)) return;
         const report = await syncNow(createTransport(cfg), cfg);
+        if (report.added || report.updated || report.removed || report.settingsChanged) {
+          cb.current();
+        }
         if (!report.ok) {
           // 失败就冷却：别每次切前台都失败一次
           //
@@ -70,9 +73,6 @@ export function useAutoSync(onSynced: () => void): void {
           // 正在做同一件事。为此进冷却，等于把自动同步停掉 5 分钟，没必要。
           if (!report.busy) coolingUntil = Date.now() + COOLDOWN;
           return;
-        }
-        if (report.added || report.updated || report.removed || report.settingsChanged) {
-          cb.current();
         }
       } catch {
         coolingUntil = Date.now() + COOLDOWN;

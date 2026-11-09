@@ -168,30 +168,15 @@ describe("网盘（WebDAV）落点", () => {
     expect(calls[0].headers["if-match"]).toBeUndefined();
   });
 
-  it("弱 ETag 不能当 If-Match 用 —— 改用 Last-Modified", async () => {
-    // 弱 ETag 用强比较永远不匹配 → 一直 412 → 每次同步都"冲突"。
-    const { calls } = useFakeFetch(() => ({
-      status: 200,
-      body: JSON.stringify(BLOB),
-      headers: {
-        "content-type": "application/json",
-        etag: 'W/"weak-1"',
-        "last-modified": "Wed, 29 Oct 2026 12:00:00 GMT",
-      },
-    }));
-    const t = webdavTransport({ url: "https://dav.example/dav", user: "u", password: "p" });
-    const rec = await t.fetch("space1");
-    // 弱 ETag 当不了版本号
-    expect(rec?.rev).toBe("");
-
-    await t.push("space1", BLOB, rec!.rev);
-    expect(calls[1].headers["if-match"]).toBeUndefined();
-    expect(calls[1].headers["if-unmodified-since"]).toBe(
-      "Wed, 29 Oct 2026 12:00:00 GMT",
-    );
+  it("弱 ETag 即使附带 Last-Modified 也拒绝同步", async () => {
+    const { calls } = useFakeFetch(() => ({ status: 200, body: JSON.stringify(BLOB), headers: {
+      etag: 'W/"weak-1"', "last-modified": "Wed, 29 Oct 2026 12:00:00 GMT",
+    } }));
+    await expect(webdavTransport({ url: "https://dav.example/dav", user: "u", password: "p" }).fetch("space1")).rejects.toThrow(/强 ETag/);
+    expect(calls).toHaveLength(1);
   });
 
-  it("推成功之后记下新的一版（下次推送不会再白撞一次 412）", async () => {
+  it("PUT 使用本次载荷对应的 baseRev，不从缓存猜测写入版本", async () => {
     const { calls } = useFakeFetch(() => ({
       status: 200,
       body: JSON.stringify(BLOB),
@@ -205,25 +190,15 @@ describe("网盘（WebDAV）落点", () => {
     await t.push("space1", BLOB, rec!.rev);
     expect(calls[1].headers["if-match"]).toBe('"v1"');
 
-    // 第二次推（没有重新 fetch）：该用"刚才写完的那一版"，而不是旧的那版
+    // 第二次推仍须原样带调用方指定的版本；是否过期由服务器原子判断
     await t.push("space1", BLOB, rec!.rev);
     expect(calls[2].headers["if-match"]).toBe('"v1"');
     expect(calls[2].headers["if-none-match"]).toBeUndefined();
   });
 
-  it("既没有 ETag 也没有 Last-Modified → 不带条件头（最后一次写赢）", async () => {
-    const { calls } = useFakeFetch(() => ({
-      status: 200,
-      body: JSON.stringify(BLOB),
-      headers: { "content-type": "application/json" },
-    }));
-    const t = webdavTransport({ url: "https://dav.example/dav", user: "u", password: "p" });
-    const rec = await t.fetch("space1");
-    expect(rec?.rev).toBe("");
-    await t.push("space1", BLOB, rec!.rev);
-    expect(calls[1].headers["if-match"]).toBeUndefined();
-    expect(calls[1].headers["if-unmodified-since"]).toBeUndefined();
-    expect(calls[1].headers["if-none-match"]).toBeUndefined();
+  it("没有 ETag 时拒绝同步，不退到无条件覆盖", async () => {
+    useFakeFetch(() => ({status: 200, body: JSON.stringify(BLOB)}));
+    await expect(webdavTransport({ url: "https://dav.example/dav", user: "u", password: "p" }).fetch("space1")).rejects.toThrow(/强 ETag/);
   });
 
   it("远端已经变了（412）→ 退回来当前那份", async () => {

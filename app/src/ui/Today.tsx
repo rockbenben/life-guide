@@ -151,7 +151,7 @@ export function Today({
   hasSegments,
   refreshKey = 0,
 }: TodayProps) {
-  const cond = useConditions();
+  const cond = useConditions(refreshKey);
   const { mode, tags, onTag, ageKnown, onSkipAgePrompt } = cond;
   const [events, setEvents] = useState<DoneEvent[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -337,7 +337,7 @@ export function Today({
       : periodEvents.length > 0;
     if (alreadyDone) {
       if (!periodic) {
-        for (const e of periodEvents) await removeEvent(e.ts);
+        for (const e of periodEvents) await removeEvent(e.eventId);
       } else {
         // 只降级真正的完成标记；旧日志没有标记时，把最近一天降级，
         // 更早的每日记录原样留在历史里。

@@ -18,6 +18,7 @@ function ev(ts: number, over: Partial<SyncEvent> = {}): SyncEvent {
     date: "2026-10-29",
     cardId: "card-a",
     variant: "normal",
+    eventId: `event-${ts}`,
     ts,
     updatedAt: ts,
     ...over,
@@ -112,7 +113,7 @@ describe("mergePayloads", () => {
     const remote = payload({
       deviceId: "dev-b",
       events: [],
-      tombstones: [{ kind: "event", id: "1", updatedAt: 200 }],
+      tombstones: [{ kind: "event", id: "event-1", updatedAt: 200 }],
     });
     const { payload: merged, stats } = mergePayloads(local, remote);
     expect(merged.events).toHaveLength(0);
@@ -122,7 +123,7 @@ describe("mergePayloads", () => {
   it("删除标记比记录旧 → 记录留着（后写的记录不该被旧删除抹掉）", () => {
     const local = payload({
       events: [ev(1, { updatedAt: 300 })],
-      tombstones: [{ kind: "event", id: "1", updatedAt: 100 }],
+      tombstones: [{ kind: "event", id: "event-1", updatedAt: 100 }],
     });
     const remote = payload({ deviceId: "dev-b" });
     expect(mergePayloads(local, remote).payload.events).toHaveLength(1);
@@ -178,9 +179,9 @@ describe("payloadVersionIssue", () => {
     expect(payloadVersionIssue(remote)).toContain("只认到");
   });
 
-  it("版本一样或更旧 → 没有问题", () => {
+  it("只接受当前版本", () => {
     expect(payloadVersionIssue(payload())).toBeNull();
-    expect(payloadVersionIssue(payload({ v: 1 }))).toBeNull();
+    expect(payloadVersionIssue(payload({ v: 1 }))).toBeTruthy();
   });
 
   it("没有版本号 → 如实说出来", () => {

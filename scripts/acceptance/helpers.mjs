@@ -265,7 +265,7 @@ export async function waitForStoredReminder(page, time, { timeout = 10000 } = {}
   for (;;) {
     const hit = await page.evaluate(async (t) => {
       const db = await new Promise((resolve, reject) => {
-        const req = indexedDB.open("life-guide");
+        const req = indexedDB.open("life-guide-v2");
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
       });

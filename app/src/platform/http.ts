@@ -85,7 +85,7 @@ async function nativeRequest(req: HttpRequest): Promise<HttpResponse> {
   const raw = res?.data;
   return {
     status: res?.status ?? 0,
-    headers: res?.headers ?? {},
+    headers: Object.fromEntries(Object.entries(res?.headers ?? {}).map(([key, value]) => [key.toLowerCase(), value])),
     // 原生那边一般回字符串；万一回的是对象（JSON 被解过）就再序列化回去
     body: typeof raw === "string" ? raw : raw === undefined ? "" : JSON.stringify(raw),
   };

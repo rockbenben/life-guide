@@ -15,6 +15,14 @@
 import { openDB, type DBSchema, type IDBPDatabase } from "idb";
 
 import type { CustomHabit } from "../domain/custom.ts";
+import {
+  mergePayloads,
+  SYNC_PAYLOAD_VERSION,
+  SYNCED_SETTING_KEYS,
+  stableStringify,
+  type SyncPayload,
+  type MergeResult,
+} from "../domain/sync.ts";
 import { TickClock } from "../domain/clock.ts";
 
 export type { CustomHabit };
@@ -59,6 +67,7 @@ export async function saveClock(): Promise<void> {
 }
 
 export interface DoneEvent {
+  eventId: string;
   date: string;
   cardId: string;
   variant: string;
@@ -86,7 +95,7 @@ export interface Tombstone {
   /** `${kind}:${id}` */
   key: string;
   kind: "event" | "custom";
-  /** 事件的 ts（字符串）或习惯的 id */
+  /** 事件的 eventId 或习惯的 id */
   id: string;
   updatedAt: number;
 }
@@ -114,7 +123,7 @@ export interface SettingRow {
 
 interface LifeDB extends DBSchema {
   events: {
-    key: number;
+    key: string;
     value: DoneEvent;
     indexes: { "by-card": string; "by-date": string };
   };
@@ -138,80 +147,37 @@ let dbPromise: Promise<IDBPDatabase<LifeDB>> | null = null;
 
 function db(): Promise<IDBPDatabase<LifeDB>> {
   if (!dbPromise) {
-    dbPromise = openDB<LifeDB>("life-guide", 3, {
-      upgrade(d, oldVersion) {
-        // 按版本分批建表：v1 的表在 v2 里已经存在了，
-        // 不看版本就建会抛 "Object store already exists"（升级直接失败）。
-        if (oldVersion < 1) {
-          const e = d.createObjectStore("events", { keyPath: "ts", autoIncrement: true });
-          e.createIndex("by-card", "cardId");
-          e.createIndex("by-date", "date");
-          d.createObjectStore("settings", { keyPath: "key" });
-        }
-        if (oldVersion < 2) {
-          d.createObjectStore("custom", { keyPath: "id" });
-        }
-        if (oldVersion < 3) {
-          d.createObjectStore("tombstones", { keyPath: "key" });
-        }
+    dbPromise = openDB<LifeDB>("life-guide-v2", 1, {
+      upgrade(d) {
+        const e = d.createObjectStore("events", { keyPath: "eventId" });
+        e.createIndex("by-card", "cardId");
+        e.createIndex("by-date", "date");
+        d.createObjectStore("settings", { keyPath: "key" });
+        d.createObjectStore("custom", { keyPath: "id" });
+        d.createObjectStore("tombstones", { keyPath: "key" });
       },
     });
   }
   return dbPromise;
 }
 
-/**
- * 事件写入：ts 是它的身份，同一毫秒里盖两张卡也不会互相顶掉。
- *
- * **为什么会撞**：ts = Date.now()，而 events 表的主键就是 ts。
- * 同一毫秒里写两条 → 后一条把前一条盖掉（用户会发现少了一条记录）。
- * 撞上了就把 ts 往后挪，直到空着为止。
- *
- * **但"撤销"不能挪**：撤销是改同一条记录（periodDone 从 true 变 false），
- * 挪了 ts 就变成"多了一条新的"，原来那条还在 —— 界面会显示"已完成"。
- * 所以：同一条（ts、卡、日期都一样）当成更新，别的才挪。
- *
- * 返回**实际用掉的 ts** —— 挪过的话调用方得知道（同步时身份要跟着改）。
- */
-export async function addEvent(e: DoneEvent): Promise<number> {
-  const d = await db();
-  const existing = await d.get("events", e.ts);
-  const sameEvent = existing && existing.cardId === e.cardId && existing.date === e.date;
-  let ts = e.ts;
-  if (!sameEvent) {
-    while (await d.get("events", ts)) ts += 1;
-  }
-  await d.put("events", { ...e, ts, updatedAt: e.updatedAt ?? nowTick() });
-  return ts;
+/** 创建事件时分配独立身份，发生时间只用于排序与日期计算。 */
+export async function addEvent(
+  e: Omit<DoneEvent, "eventId"> & { eventId?: string },
+): Promise<string> {
+  const eventId = e.eventId ?? crypto.randomUUID();
+  await (
+    await db()
+  ).add("events", { ...e, eventId, updatedAt: e.updatedAt ?? nowTick() });
+  return eventId;
 }
 
-/**
- * 一次事务写完一批事件。
- *
- * **为什么不能一条一条写**：同步时要把合并后的全部事件落回本地 ——
- * 一年下来几千条记录，逐条 `put` 就是几千个事务（手机上更慢），
- * 每次同步白等好几秒，还把磁盘写得一团乱。
- * 一个 readwrite 事务里全写完，快一个量级。
- */
-export async function putEvents(events: DoneEvent[]): Promise<number[]> {
-  if (!events.length) return [];
-  const d = await db();
-  const tx = d.transaction("events", "readwrite");
-  const store = tx.objectStore("events");
-  const used: number[] = [];
-  for (const e of events) {
-    const existing = await store.get(e.ts);
-    const sameEvent = existing && existing.cardId === e.cardId && existing.date === e.date;
-    let ts = e.ts;
-    if (!sameEvent) {
-      // ts 撞了（同一毫秒里写了两条）→ 往后挪，直到空着
-      while (await store.get(ts)) ts += 1;
-    }
-    await store.put({ ...e, ts, updatedAt: e.updatedAt ?? nowTick() });
-    used.push(ts);
-  }
+/** 批量写入同一事务，事件身份保持不变。 */
+export async function putEvents(events: DoneEvent[]): Promise<string[]> {
+  const tx = (await db()).transaction("events", "readwrite");
+  for (const e of events) await tx.store.put(e);
   await tx.done;
-  return used;
+  return events.map((e) => e.eventId);
 }
 
 /**
@@ -225,8 +191,10 @@ export async function updateEvent(e: DoneEvent): Promise<void> {
 }
 
 /** 取一条记录。 */
-export async function getEvent(ts: number): Promise<DoneEvent | undefined> {
-  return (await db()).get("events", ts);
+export async function getEvent(
+  eventId: string,
+): Promise<DoneEvent | undefined> {
+  return (await db()).get("events", eventId);
 }
 
 /**
@@ -234,11 +202,14 @@ export async function getEvent(ts: number): Promise<DoneEvent | undefined> {
  *
  * **不刷新 updatedAt**：这是机械迁移，不是用户改了什么 ——
  * 刷新了会让这条记录在下一次同步里"看起来刚被改过"，压过别的设备上的同一份。
- * 也不动 ts：那是记录的身份（次序、周期判定都靠它）。
+ * eventId 与发生时间保持不变。
  */
-export async function migrateEventCardId(ts: number, cardId: string): Promise<void> {
+export async function migrateEventCardId(
+  eventId: string,
+  cardId: string,
+): Promise<void> {
   const d = await db();
-  const e = await d.get("events", ts);
+  const e = await d.get("events", eventId);
   if (!e || e.cardId === cardId) return;
   await d.put("events", { ...e, cardId });
 }
@@ -246,15 +217,18 @@ export async function migrateEventCardId(ts: number, cardId: string): Promise<vo
 /**
  * 删一条记录。
  *
- * 默认留下墓碑（不然对面的设备会把它带回来）。
- * 同步时把墓碑一起搬过来 —— 那时**不用再留一个**（墓碑已经在手里了）。
+ * 删除与墓碑在同一事务提交，避免另一台设备把记录带回来。
  */
-export async function removeEvent(ts: number, opts?: { tombstone?: boolean }): Promise<void> {
-  const d = await db();
-  await d.delete("events", ts);
-  if (opts?.tombstone !== false) {
-    await putTombstone({ kind: "event", id: String(ts), updatedAt: nowTick() });
-  }
+export async function removeEvent(eventId: string): Promise<void> {
+  const tx = (await db()).transaction(["events", "tombstones"], "readwrite");
+  await tx.objectStore("tombstones").put({
+    key: `event:${eventId}`,
+    kind: "event",
+    id: eventId,
+    updatedAt: nowTick(),
+  });
+  await tx.objectStore("events").delete(eventId);
+  await tx.done;
 }
 
 export async function allEvents(): Promise<DoneEvent[]> {
@@ -279,7 +253,9 @@ export async function getSetting<T>(key: string, fallback: T): Promise<T> {
  *
  * 合并时要用：同一个键两边都有时，谁写的晚谁说了算。
  */
-export async function getSettingMeta<T>(key: string): Promise<{ value: T; updatedAt: number }> {
+export async function getSettingMeta<T>(
+  key: string,
+): Promise<{ value: T; updatedAt: number }> {
   const row = await (await db()).get("settings", key);
   return { value: row?.value as T, updatedAt: row?.updatedAt ?? 0 };
 }
@@ -309,13 +285,63 @@ export async function setSettingAt(
 }
 
 export async function clearEvents(): Promise<void> {
-  const d = await db();
-  await d.clear("events");
-  // 清记录的同时清掉与记录相关的墓碑：
-  // 墓碑是"这条被删了"，记录都没了还留着墓碑是自相矛盾。
-  const all = await d.getAll("tombstones");
-  for (const t of all) {
-    if (t.kind === "event") await d.delete("tombstones", t.key);
+  const tx = (await db()).transaction(["events", "tombstones"], "readwrite");
+  for (const e of await tx.objectStore("events").getAll()) {
+    await tx.objectStore("tombstones").put({
+      key: `event:${e.eventId}`,
+      kind: "event",
+      id: e.eventId,
+      updatedAt: nowTick(),
+    });
+  }
+  await tx.objectStore("events").clear();
+  await tx.done;
+}
+
+/** 整份恢复只替换备份拥有的数据，设备身份和凭据留在本机。 */
+export async function replaceUserData(data: {
+  events: DoneEvent[];
+  custom: CustomHabit[];
+  tombstones: Tombstone[];
+  settings: Record<string, unknown>;
+}): Promise<void> {
+  const tx = (await db()).transaction(
+    ["events", "custom", "tombstones", "settings"],
+    "readwrite",
+  );
+  try {
+    for (const row of [...data.events, ...data.custom, ...data.tombstones]) {
+      absorbTick(row.updatedAt ?? 0);
+    }
+    await tx.objectStore("events").clear();
+    await tx.objectStore("custom").clear();
+    await tx.objectStore("tombstones").clear();
+    for (const e of data.events)
+      await tx
+        .objectStore("events")
+        .add({ ...e, updatedAt: e.updatedAt ?? nowTick() });
+    for (const h of data.custom)
+      await tx
+        .objectStore("custom")
+        .add({ ...h, updatedAt: h.updatedAt ?? nowTick() });
+    for (const t of data.tombstones) await tx.objectStore("tombstones").add(t);
+    for (const [key, value] of Object.entries(data.settings)) {
+      await tx
+        .objectStore("settings")
+        .put({ key, value, updatedAt: nowTick() });
+    }
+    await tx
+      .objectStore("settings")
+      .put({ key: "syncClock", value: clock.value, updatedAt: clock.value });
+    await tx.done;
+  } catch (error) {
+    try {
+      tx.abort();
+    } catch {
+      /* 事务可能已经因请求失败而中止。 */
+    }
+    await tx.done.catch(() => {});
+    throw error;
   }
 }
 
@@ -335,7 +361,9 @@ export async function allCustomHabits(): Promise<CustomHabit[]> {
  * 没给才盖上当前时刻。
  */
 export async function putCustomHabit(habit: CustomHabit): Promise<void> {
-  await (await db()).put("custom", {
+  await (
+    await db()
+  ).put("custom", {
     ...habit,
     updatedAt: habit.updatedAt ?? nowTick(),
   });
@@ -347,19 +375,22 @@ export async function putCustomHabit(habit: CustomHabit): Promise<void> {
  * 默认留下墓碑（不然对面的设备会把它带回来）；同步时墓碑已经在手里了，
  * 那时不用再留一个。
  */
-export async function deleteCustomHabit(
-  id: string,
-  opts?: { tombstone?: boolean },
-): Promise<void> {
-  const d = await db();
-  await d.delete("custom", id);
-  if (opts?.tombstone !== false) {
-    await putTombstone({ kind: "custom", id, updatedAt: nowTick() });
-  }
+export async function deleteCustomHabit(id: string): Promise<void> {
+  const tx = (await db()).transaction(["custom", "tombstones"], "readwrite");
+  await tx.objectStore("tombstones").put({
+    key: `custom:${id}`,
+    kind: "custom",
+    id,
+    updatedAt: nowTick(),
+  });
+  await tx.objectStore("custom").delete(id);
+  await tx.done;
 }
 
 /** 取一条习惯。 */
-export async function getCustomHabit(id: string): Promise<CustomHabit | undefined> {
+export async function getCustomHabit(
+  id: string,
+): Promise<CustomHabit | undefined> {
   return (await db()).get("custom", id);
 }
 
@@ -376,7 +407,11 @@ export async function clearCustomHabits(): Promise<void> {
 /* ------------------------------------------------------------ 删除标记 */
 
 /** 记一个墓碑。 */
-export async function putTombstone(t: { kind: "event" | "custom"; id: string; updatedAt: number }): Promise<void> {
+export async function putTombstone(t: {
+  kind: "event" | "custom";
+  id: string;
+  updatedAt: number;
+}): Promise<void> {
   await (await db()).put("tombstones", { ...t, key: `${t.kind}:${t.id}` });
 }
 
@@ -405,4 +440,132 @@ export async function getDeviceId(): Promise<string> {
   const id = `dev-${Date.now().toString(36)}-${rand}`;
   await setSetting("deviceId", id);
   return id;
+}
+
+function payloadFromRows(
+  deviceId: string,
+  events: DoneEvent[],
+  settings: SettingRow[],
+  custom: CustomHabit[],
+  tombstones: Tombstone[],
+): SyncPayload {
+  return {
+    v: SYNC_PAYLOAD_VERSION,
+    deviceId,
+    updatedAt: Date.now(),
+    events: events.map((e) => ({ ...e, updatedAt: e.updatedAt ?? e.ts })),
+    settings: settings
+      .filter((s) => (SYNCED_SETTING_KEYS as readonly string[]).includes(s.key))
+      .map((s) => ({ ...s, updatedAt: s.updatedAt ?? 0 })),
+    custom: custom.map((h) => ({ ...h, updatedAt: h.updatedAt ?? 0 })),
+    tombstones: tombstones.map(({ kind, id, updatedAt }) => ({
+      kind,
+      id,
+      updatedAt,
+    })),
+  };
+}
+
+/** 四张表来自同一个已提交时刻。 */
+export async function readUserData() {
+  const tx = (await db()).transaction(
+    ["events", "settings", "custom", "tombstones"],
+    "readonly",
+  );
+  const [events, settings, custom, tombstones] = await Promise.all([
+    tx.objectStore("events").getAll(),
+    tx.objectStore("settings").getAll(),
+    tx.objectStore("custom").getAll(),
+    tx.objectStore("tombstones").getAll(),
+  ]);
+  await tx.done;
+  return { events, settings, custom, tombstones };
+}
+
+export async function readSyncPayload(deviceId: string): Promise<SyncPayload> {
+  const rows = await readUserData();
+  return payloadFromRows(
+    deviceId,
+    rows.events,
+    rows.settings,
+    rows.custom,
+    rows.tombstones,
+  );
+}
+
+/** 网络等待期间的本地更改在事务开始后重新参与合并。 */
+export async function commitSyncPayload(
+  remote: SyncPayload,
+  deviceId = remote.deviceId,
+): Promise<MergeResult> {
+  const tx = (await db()).transaction(
+    ["events", "settings", "custom", "tombstones"],
+    "readwrite",
+  );
+  try {
+    const [events, settings, custom, tombstones] = await Promise.all([
+      tx.objectStore("events").getAll(),
+      tx.objectStore("settings").getAll(),
+      tx.objectStore("custom").getAll(),
+      tx.objectStore("tombstones").getAll(),
+    ]);
+    const local = payloadFromRows(
+      deviceId,
+      events,
+      settings,
+      custom,
+      tombstones,
+    );
+    const merged = mergePayloads(local, remote);
+    for (const row of [
+      ...merged.payload.events,
+      ...merged.payload.settings,
+      ...merged.payload.custom,
+      ...merged.payload.tombstones,
+    ])
+      absorbTick(row.updatedAt);
+    const nextEvents = new Map(
+      merged.payload.events.map((e) => [e.eventId, e]),
+    );
+    for (const e of events)
+      if (!nextEvents.has(e.eventId))
+        await tx.objectStore("events").delete(e.eventId);
+    const oldEvents = new Map(events.map((e) => [e.eventId, e]));
+    for (const e of nextEvents.values()) {
+      if (stableStringify(e) !== stableStringify(oldEvents.get(e.eventId)))
+        await tx.objectStore("events").put(e);
+    }
+    const nextCustom = new Map(merged.payload.custom.map((h) => [h.id, h]));
+    for (const h of custom)
+      if (!nextCustom.has(h.id)) await tx.objectStore("custom").delete(h.id);
+    const oldCustom = new Map(custom.map((h) => [h.id, h]));
+    for (const h of nextCustom.values()) {
+      if (stableStringify(h) !== stableStringify(oldCustom.get(h.id)))
+        await tx.objectStore("custom").put(h);
+    }
+    const oldSettings = new Map(settings.map((s) => [s.key, s]));
+    for (const s of merged.payload.settings) {
+      if (stableStringify(s) !== stableStringify(oldSettings.get(s.key)))
+        await tx.objectStore("settings").put(s);
+    }
+    const oldTombs = new Map(tombstones.map((t) => [t.key, t]));
+    for (const t of merged.payload.tombstones) {
+      const row = { ...t, key: `${t.kind}:${t.id}` };
+      if (stableStringify(row) !== stableStringify(oldTombs.get(row.key)))
+        await tx.objectStore("tombstones").put(row);
+    }
+    await tx
+      .objectStore("settings")
+      .put({ key: "syncClock", value: clock.value, updatedAt: clock.value });
+    await tx.done;
+    return merged;
+  } catch (error) {
+    try {
+      tx.abort();
+    } catch {
+      /* 请求失败可能已经中止事务。 */
+    }
+    await tx.done.catch(() => {});
+    throw error;
+  }
 }

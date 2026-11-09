@@ -143,3 +143,9 @@ describe("平台层的 HTTP 路由", () => {
     expect(res.body).toBe("");
   });
 });
+
+it('Android 响应头大小写不能使强 ETag 丢失', async () => {
+  g.Capacitor = { isNativePlatform: () => true, nativePromise: async () => ({status: 200, headers: {ETag: '"v1"'}, data: '{}'}) };
+  const response = await httpRequest({url: 'https://dav.example/file'});
+  expect(response.headers.etag).toBe('"v1"');
+});

@@ -67,7 +67,7 @@ export async function migrateUserData(cards: FormerCard[]): Promise<MigrationRes
   for (const e of await allEvents()) {
     const next = resolveFormerId(map, e.cardId);
     if (next !== e.cardId) {
-      await migrateEventCardId(e.ts, next);
+      await migrateEventCardId(e.eventId, next);
       result.events++;
     }
   }

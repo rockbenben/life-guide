@@ -283,7 +283,7 @@ export async function checkIcs({ browser, baseURL }) {
 /* ------------------------------------------------------------------ */
 
 function eventKey(e) {
-  return JSON.stringify([e.date, e.cardId, e.variant, e.ts]);
+  return JSON.stringify([e.eventId, e.date, e.cardId, e.variant, e.ts]);
 }
 
 function sortedEvents(events) {
@@ -389,7 +389,7 @@ export async function checkEventsRoundTrip({ browser, baseURL }) {
       }
     }
     if (a.length === b.length && a.every((x, i) => x === b[i])) {
-      details.push(`逐条比对：${a.length} 条记录（date/cardId/variant/ts）完全一致`);
+      details.push(`逐条比对：${a.length} 条记录（eventId/date/cardId/variant/ts）完全一致`);
     }
   } catch (err) {
     failures.push(String(err?.message ?? err));
@@ -501,7 +501,7 @@ async function writeSettings(page, entries) {
   await page.evaluate(
     (entries) =>
       new Promise((res, rej) => {
-        const r = indexedDB.open("life-guide");
+        const r = indexedDB.open("life-guide-v2");
         r.onsuccess = () => {
           const tx = r.result.transaction("settings", "readwrite");
           const store = tx.objectStore("settings");
@@ -519,7 +519,7 @@ async function readSettings(page, keys) {
   return await page.evaluate(
     (keys) =>
       new Promise((res, rej) => {
-        const r = indexedDB.open("life-guide");
+        const r = indexedDB.open("life-guide-v2");
         r.onsuccess = () => {
           const store = r.result.transaction("settings", "readonly").objectStore("settings");
           const out = {};
@@ -543,7 +543,7 @@ async function readEvents(page) {
   return await page.evaluate(
     () =>
       new Promise((res, rej) => {
-        const r = indexedDB.open("life-guide");
+        const r = indexedDB.open("life-guide-v2");
         r.onsuccess = () => {
           const req = r.result.transaction("events", "readonly").objectStore("events").getAll();
           req.onsuccess = () => res(req.result);
@@ -558,7 +558,7 @@ async function writeEvents(page, events) {
   await page.evaluate(
     (events) =>
       new Promise((res, rej) => {
-        const r = indexedDB.open("life-guide");
+        const r = indexedDB.open("life-guide-v2");
         r.onsuccess = () => {
           const tx = r.result.transaction("events", "readwrite");
           const store = tx.objectStore("events");
@@ -587,7 +587,7 @@ async function setRoutine(page, ids) {
   await page.evaluate(
     (ids) =>
       new Promise((res, rej) => {
-        const r = indexedDB.open("life-guide");
+        const r = indexedDB.open("life-guide-v2");
         r.onsuccess = () => {
           const db = r.result;
           const tx = db.transaction("settings", "readwrite");
@@ -748,6 +748,7 @@ export async function checkReminderLifecycle({ browser, baseURL }) {
         date,
         cardId: weekly.id,
         variant: "normal",
+        eventId: crypto.randomUUID(),
         ts: Date.now() + i,
       }));
       await seed([...defaults, weekly.id], CARD_REMINDER_BASES);
@@ -1445,7 +1446,7 @@ export async function checkImportRefreshesRoutine({ browser, baseURL }) {
       // **不写版本号**：App 把库升到第 3 版之后，写死 2 会直接报
       // "The requested version (2) is less than the existing version (3)"。
       // 不带版本打开 = 打开当前那一版（App 已经建好库了）。
-      const req = indexedDB.open("life-guide");
+      const req = indexedDB.open("life-guide-v2");
       const db = await new Promise((res, rej) => {
         req.onsuccess = () => res(req.result);
         req.onerror = () => rej(req.error);
@@ -1469,10 +1470,11 @@ export async function checkImportRefreshesRoutine({ browser, baseURL }) {
     // 习惯的时段写 anytime：「随时」的那几张每个时段都在，
     // 检查不该依赖「现在几点」—— 否则中午跑和早上跑结果不一样。
     const backup = {
-      schemaVersion: 2,
+      schemaVersion: 7,
+      reminders: [], tombstones: [],
       exportedAt: new Date().toISOString(),
       events: [],
-      settings: { tags: [], mode: "normal", myRoutine: ["morning-light", "my-imported-habit"] },
+      settings: { tags: [], mode: "normal", myRoutine: ["morning-light", "my-imported-habit"], cadence: {}, skipToday: {} },
       custom: [
         {
           id: "my-imported-habit",

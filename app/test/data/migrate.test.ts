@@ -15,8 +15,8 @@ const CARDS = [{ id: "merged", formerIds: ["old-a", "old-b"] }];
 
 describe("旧 id 迁移", () => {
   it("盖章记录认领回新卡（历史不断）", async () => {
-    await addEvent({ date: "2026-10-29", cardId: "old-a", variant: "normal", ts: 1001 });
-    await addEvent({ date: "2026-10-28", cardId: "old-b", variant: "normal", ts: 1002 });
+    await addEvent({ date: "2026-10-29", cardId: "old-a", variant: "normal", eventId: "event-1001", ts: 1001 });
+    await addEvent({ date: "2026-10-28", cardId: "old-b", variant: "normal", eventId: "event-1002", ts: 1002 });
 
     const moved = await migrateUserData(CARDS);
     expect(moved.events).toBe(2);
@@ -55,7 +55,7 @@ describe("旧 id 迁移", () => {
       date: "2026-10-29",
       cardId: "old-a",
       variant: "normal",
-      ts: 2001,
+      eventId: "event-2001", ts: 2001,
       updatedAt: 12345,
     });
     await migrateUserData(CARDS);
