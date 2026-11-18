@@ -57,6 +57,7 @@ for (const s of shots) {
   // README 里那张图要的是**用户已经用了一阵子**的样子，不是第一次打开的样子。
   const skip = page.locator(".lg-ageask-skip");
   if (await skip.count()) {
+    if (!(await skip.first().isVisible())) await page.locator(".lg-ageask summary").click();
     await skip.first().click();
     await page.waitForTimeout(400);
   }

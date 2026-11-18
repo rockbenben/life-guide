@@ -14,7 +14,7 @@
  *
  * **它自己的两个坑**（2026-10-31 实测）：
  *   · 指纹要比对**内容层自己的加载结果**（`loadAllCards`），不是 YAML 原始对象 ——
- *     直接拿 YAML 对象算 `fingerprint()` 会全表失配（491 张全「失效」），看着像大事
+ *     直接拿 YAML 对象算 `fingerprint()` 会全表失配（493 张全「失效」），看着像大事
  *   · `yaml` 的 `Document.get("x")` 拿的是**值**，`node.get("x")` 才是节点
  */
 import fs from "node:fs";

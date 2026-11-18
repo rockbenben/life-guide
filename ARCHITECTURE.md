@@ -64,9 +64,11 @@ life-guide/
 │   │   ├── extract/          P3：LLM 起草（只产出 draft）—— llm.ts / prompt.ts / parse.ts / draft.ts
 │   │   ├── audit/            审阅辅助：机械检查 + 语义检查 + 报告/状态
 │   │   └── cli.ts            import | check | build | review | draft | audit | signing-list |
-│   │                         slot-check | approx-check | step-duration | repair-quotes
-│   └── test/                 rules · build · errata · extract · audit · default-routine ·
-│                             signing-list · step-duration · repair-quotes · media-optimize 的单元测试
+│   │                         slot-check | approx-check | step-duration | card-names |
+│   │                         audit-content | repair-quotes
+│   └── test/                 rules · build · errata · extract · audit · content-audit ·
+│                             default-routine · card-names · signing-list · step-duration ·
+│                             duration-grounding · repair-quotes · media-optimize 的单元测试
 ├── app/                      PWA
 │   ├── index.html            入口 HTML，指向 /src/index.tsx
 │   ├── vite.config.ts
@@ -109,7 +111,7 @@ life-guide/
 │   │   ├── platform/         notify.ts（三端通知）/ update.ts（桌面更新桥）
 │   │   ├── ui/               Today / TodaySidebar / TodayLog / Card / Manual / Settings /
 │   │   │                     Conditions / DiscoverPanel / SortPanel / SortableRow / Reminder /
-│   │   │                     Timer / StepTimer / HabitForm / Disclaimer（手帖行 + 用法用量表）
+│   │   │                     Timer / StepTimer / HabitForm / Disclaimer / UiIcon（手帖行 + 用法用量表）
 │   │   └── style.css         设计令牌（和紙 / 夜紙）+ 自写的组件层（lg- 前缀）
 │   └── test/
 │       ├── domain/*.test.ts   纯函数
@@ -167,7 +169,7 @@ R11、R13、R15、R16、R17 都已实现：R11 在 `app/test/ui/card.test.tsx`�
 | UI | Preact + Vite | 交互只有列表 / 展开 / 勾选 |
 | 样式 | Tailwind CSS v4 + daisyUI 5（只用它的主题令牌机制）+ 自写组件层 | 组件与主题都是**构建期**产物（daisyUI 是纯 CSS 插件，不注 JS、不装 Provider）—— 产物里没有运行时，PWA / Electron / Capacitor 三处跑同一份 CSS。界面不再用 daisyUI 的组件类：形状语言是「一页手帖」（细横线分栏 + 用法用量表），而那套组件给的是「一叠带阴影的圆角卡 + 粉色提示块」。响应式靠断点，桌面与手机不是两套界面 |
 | PWA | vite-plugin-pwa（Workbox） | 浏览器形态：可装可离线 |
-| 桌面端 | Electron（`desktop/`） | 自定义 `app://` 协议伺服 `app/dist`。**不能用 `file://`** —— 渲染层要 `fetch("cards.json")`，file:// 下会被拦；协议注册成 standard + secure 之后 origin 稳定，IndexedDB 里的记录才留得住。构建目标为 Windows / macOS / Linux 各 x64 + arm64；渲染层带 CSP、导航守卫与 IPC sender 校验。**Windows 安装版与 Linux 的 AppImage 版接自动更新**（macOS 没签名接不了；Linux 的 deb / rpm 装的没有 AppImage 那个文件，硬跑会把应用装到别处，所以那两种仍手动换包）。主进程只管生命周期；协议 / 提醒 / 菜单 / 导航 / IPC 信任在 `desktop/lib/` 各一块 |
+| 桌面端 | Electron（`desktop/`） | 自定义 `app://` 协议伺服 `app/dist`。**不能用 `file://`** —— 渲染层要 `fetch("cards.json")`，file:// 下会被拦；协议注册成 standard + secure 之后 origin 稳定，IndexedDB 里的记录才留得住。构建目标为 Windows / macOS / Linux 各 x64 + arm64；渲染层带 CSP、导航守卫、IPC sender 校验与默认拒绝的网页权限；打包时翻转 electronFuses（runAsNode / NODE_OPTIONS 关、只从 app.asar 加载）。**Windows 安装版与 Linux 的 AppImage 版接自动更新**（macOS 没签名接不了；Linux 的 deb / rpm 装的没有 AppImage 那个文件，硬跑会把应用装到别处，所以那两种仍手动换包）。主进程只管生命周期；协议 / 提醒 / 菜单 / 导航 / IPC 信任在 `desktop/lib/` 各一块 |
 | 手机端 | Capacitor（`mobile/`） | 同一份 `app/dist` 装进原生 WebView，生成 Android / iOS 工程。界面不重写 |
 | 存储 | IndexedDB（idb 薄封装） | 事件日志不适合 localStorage |
 | 测试 | Vitest + Playwright + node:test | 组件渲染用 `preact-render-to-string`，不需要浏览器与 DOM 环境；浏览器级验收与桌面端真启动用 Playwright；主进程 / 导航 / 协议的纯逻辑用 `node --test` |
@@ -277,7 +279,7 @@ type DoneEvent = {
 - **P3**：`content/src/extract`；审阅辅助 `content/src/audit`。
   - 起草流水线只写 `status: draft`，自检不过就不写盘（R1/R2/R3/R4/R8/R9/R10/R14 + schema）。
   - **审阅工具的例外条件已经触发**：原计划是「审阅即 `git diff` + `content review`，不另做工具，
-    除非实测审阅 > 10 分钟 / 篇」。524 张卡远超这个量级，所以做了 `content audit`：
+    除非实测审阅 > 10 分钟 / 篇」。526 张卡远超这个量级，所以做了 `content audit`：
     机械检查（重复、禁忌小节没被引用、文字远长于引文、步数过多）加上语义检查
     （用模型问「卡片文字是不是引文的忠实转述」—— R1/R2 查不出的那一类），
     报告分「意思不对」与「引文没覆盖全」两类，**但它不签字**。
