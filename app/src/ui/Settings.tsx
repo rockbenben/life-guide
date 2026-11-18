@@ -318,15 +318,31 @@ export function Settings({
 
   return (
     <main class="lg-shell lg-settings">
-      <div class="lg-topbar">
-        <h1 class="lg-h1">设置</h1>
-        <span class="lg-dateline">
-          {syncOn ? "同步已开 · 只上传密文" : "只在本机，不上传"}
-        </span>
-      </div>
+      <div class="lg-settings-menu">
+        <div class="lg-topbar">
+          <h1 class="lg-h1">设置</h1>
+          <span class="lg-dateline">
+            {syncOn ? "同步已开 · 只上传密文" : "只在本机，不上传"}
+          </span>
+        </div>
 
+        <nav class="lg-settings-index" aria-label="常用设置">
+          {[
+            ["conditions", "条件"], ["reminders", "提醒"],
+            ["backup", "备份与恢复"], ["sync", "多设备同步"],
+          ].map(([id, label]) => (
+            <button key={id} type="button" onClick={() => {
+              const heading = document.getElementById("settings-" + id);
+              heading?.focus({ preventScroll: true });
+              heading?.scrollIntoView({ block: "start" });
+            }}>{label}</button>
+          ))}
+        </nav>
+
+      </div>
+      <div class="lg-settings-body">
       <section class="lg-set">
-        <h2>条件</h2>
+        <h2 id="settings-conditions" tabIndex={-1}>条件</h2>
         <p>
           决定今天出现哪些动作、哪些卡按你的情况换一版。
           今天页顶部的「条件」改的是同一份。
@@ -341,7 +357,7 @@ export function Settings({
       </section>
 
       <section class="lg-set">
-        <h2>提醒</h2>
+        <h2 id="settings-reminders" tabIndex={-1}>提醒</h2>
         <p>
           到点 App 自己响，响的时候告诉你这一段该做哪几件。
           某张卡要单独提醒，把它放进日常，展开后点「设提醒」。
@@ -528,7 +544,7 @@ export function Settings({
       </section>
 
       <section class="lg-set">
-        <h2>数据</h2>
+        <h2 id="settings-backup" tabIndex={-1}>数据</h2>
         <p>
           记录存在这台设备上。没开同步的话，什么都不会上传。
           没装到主屏幕的话（尤其是 iOS），系统可能回收本地数据，所以定期导出一份。
@@ -630,7 +646,7 @@ export function Settings({
         换设备时不用再导文件：在新设备上填同一个地址、同一个口令就行。
       */}
       <section class="lg-set">
-        <h2>多设备同步</h2>
+        <h2 id="settings-sync" tabIndex={-1}>多设备同步</h2>
         <p>
           默认关着 —— 关着的时候记录只在这台设备上，什么都不上传。
           打开之后，每台设备填同一个同步口令，
@@ -825,7 +841,7 @@ export function Settings({
         <section class="lg-set">
           <h2>更新</h2>
           <p>
-            有新版本会写在这里。安装包一百多兆，不自动下载 —— 你点了才下，
+            有新版本会写在这里。双架构合一的安装包两百多兆，不自动下载 —— 你点了才下，
             下完重启装上。
           </p>
           <p class="lg-pool">{update ? describeUpdate(update) : "正在查…"}</p>
@@ -881,6 +897,8 @@ export function Settings({
         </p>
         <Disclaimer />
       </section>
+
+      </div>
 
       {/* 提示条：导出、导入、清空、改提醒都往这里报（浮在页底，不绑在某一段里）。
           成功与失败分开：失败那条不能带「✓」。 */}

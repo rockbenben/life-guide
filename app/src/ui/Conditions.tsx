@@ -14,6 +14,7 @@
  *   · 有几张卡按人群换动作（segments）时，那一句得摆出来 ——
  *     这一句原来错挂在 variants 上，于是 7 张分档卡在界上一句也没提。
  */
+import type { ComponentChildren } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 import type { Mode, ModeCounts, ModeVariants } from "../domain/routine.ts";
@@ -184,7 +185,8 @@ export function ConditionBar({
   coverage,
   coverageScope,
   hasSegments,
-}: ConditionProps & { open: boolean; onToggle: () => void }) {
+  children,
+}: ConditionProps & { open: boolean; onToggle: () => void; children?: ComponentChildren }) {
   return (
     <div class="lg-condrow">
       <button
@@ -195,6 +197,7 @@ export function ConditionBar({
       >
         条件 <b>{describeConditions(mode, tags, MODE_LABELS)}</b>
       </button>
+      {children}
       {/* 面板与那一行平级：展开时独占一行，不被挤在右半边 */}
       {open ? (
         <div class="lg-condpanel">

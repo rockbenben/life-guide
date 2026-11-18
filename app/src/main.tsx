@@ -1,3 +1,4 @@
+import { UiIcon } from "./ui/UiIcon.tsx";
 import { lazy, Suspense } from "preact/compat";
 import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { registerSW } from "virtual:pwa-register";
@@ -325,6 +326,7 @@ export function App() {
             换页不靠原生菜单：菜单藏得深、还容易被当成「另一个东西」，
             从手册回主页必须有一眼能看见、点得到的那条路。 */}
         <nav class="lg-nav" data-tab={tab} aria-label="主导航">
+          <span class="lg-brand"><img src="favicon.svg" width="28" height="28" alt="" />生活指南</span>
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -342,7 +344,7 @@ export function App() {
                 goTab(t.id);
               }}
             >
-              {t.label}
+              <UiIcon name={t.id} />{t.label}
             </button>
           ))}
         </nav>

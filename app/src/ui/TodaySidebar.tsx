@@ -6,6 +6,7 @@
  *
  * DOM 结构照旧 —— 样式与验收脚本都指着这些类名。
  */
+import { useState } from "preact/hooks";
 import { ConditionBar } from "./Conditions.tsx";
 import { HabitForm } from "./HabitForm.tsx";
 import { SLOT_LABELS, SWITCHABLE_SLOTS, type Slot } from "../domain/day.ts";
@@ -94,19 +95,20 @@ export function TodaySidebar({
   logOpen = true,
   logShown,
 }: TodaySidebarProps) {
+  const [manageOpen, setManageOpen] = useState(false);
   const restoreIds = routine.restoreIds;
   const dayDate = new Date(`${today}T00:00:00`);
   return (
     <div class="lg-aside">
-      <div class="lg-topbar">
-        <h1 class="lg-h1">今天</h1>
-        <span class="lg-dateline">
-          {dayDate.toLocaleDateString("zh-CN", { month: "long", day: "numeric" })}{" "}
-          {dayDate.toLocaleDateString("zh-CN", { weekday: "long" })}
-          {" · "}
-          {SLOT_LABELS[slot]}
-        </span>
-      </div>
+      <header class="lg-day-cover" data-slot={slot}>
+        <div class="lg-day-title">
+          <h1 class="lg-h1">今天</h1>
+          <span>{dayDate.toLocaleDateString("zh-CN", { weekday: "long" })}</span>
+        </div>
+        <time class="lg-day-date tabular" dateTime={today}>
+          {dayDate.toLocaleDateString("zh-CN", { month: "long", day: "numeric" })}
+        </time>
+      </header>
 
       <div class="lg-slots" role="group" aria-label="时段">
         {SWITCHABLE_SLOTS.map((s) => (
@@ -166,13 +168,21 @@ export function TodaySidebar({
         coverage={coverage}
         coverageScope="current"
         hasSegments={hasSegments}
-      />
+      >
+        {!sorting && (
+          <button class="lg-cond lg-manage-toggle"
+            aria-controls="routine-tools" aria-expanded={manageOpen}
+            onClick={() => setManageOpen(!manageOpen)}>
+            管理日常
+          </button>
+        )}
+      </ConditionBar>
 
       {/* 挑（筛选）与排序是用户的两种自由：挑在卡片上，排序在这里。
           「放回默认」把日常恢复成 App 给的初始清单，改乱了能一键回来。
           「加自己的习惯」给的是手册里没有的那部分。 */}
       {!sorting ? (
-        <div class="lg-setuprow">
+        <div class="lg-setuprow" id="routine-tools" data-open={manageOpen}>
           <button
             class="lg-btn lg-btn-ghost lg-sortbtn"
             disabled={routine.ids.length <= 1}

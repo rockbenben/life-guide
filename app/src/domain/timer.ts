@@ -300,7 +300,7 @@ export interface StepTimerState {
   /** 这一步的起点（毫秒时间戳）；还没开始是 null */
   since: number | null;
   /**
-   * 暂停时冻结的剩余秒数。
+   * 暂停时冻结的秒数：倒计时记剩余，正计时记已过。
    *
    * **为什么要有它**：暂停只是「别再往下数」，那一步剩下的时间不能继续掉 ——
    * 光把 `since` 留着的话，读数会接着往下走，暂停等于没暂停。
@@ -355,6 +355,7 @@ export function stepDisplay(
   const remaining = stepRemaining(state, now, timing);
   if (remaining != null) return formatElapsed(remaining);
   // 正计时：这一步已经过了多少秒
+  if (!state.running && state.frozen != null) return formatElapsed(state.frozen);
   const elapsed = state.since == null ? 0 : Math.max(0, now - state.since);
   return formatElapsed(Math.floor(elapsed / 1000));
 }
@@ -388,12 +389,14 @@ export function stepPause(
   now: number,
   timing: StepTiming | undefined,
 ): StepTimerState {
+  if (!state.running) return state;
   const remaining = stepRemaining(state, now, timing);
+  const elapsed = state.since == null ? 0 : Math.max(0, now - state.since);
   return {
     ...state,
     running: false,
     since: null,
-    frozen: remaining,
+    frozen: remaining ?? Math.floor(elapsed / 1000),
   };
 }
 
@@ -407,7 +410,14 @@ export function stepStart(
 ): StepTimerState {
   // 已经做完了 → 从头开始；否则接着当前那一步跑
   const at = state.at >= timings.length ? 0 : state.at;
-  return { at, since: now, frozen: null, running: true };
+  const timing = timings[at];
+  let elapsed = 0;
+  if (at === state.at && state.frozen != null) {
+    elapsed = stepTimerKind(timing) === "countdown"
+      ? (timing.sec ?? 0) - state.frozen
+      : state.frozen;
+  }
+  return { at, since: now - elapsed * 1000, frozen: null, running: true };
 }
 
 /**
@@ -427,8 +437,8 @@ export function nextStep(
   state: StepTimerState,
   timings: StepTiming[],
   now: number,
+  next = state.at + 1,
 ): StepTimerState {
-  const next = state.at + 1;
   if (next >= timings.length) {
     return { at: timings.length, since: null, frozen: null, running: false };
   }

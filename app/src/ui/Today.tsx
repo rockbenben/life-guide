@@ -3,8 +3,8 @@
  *
  * 这一屏只回答一个问题：现在做什么。
  * 所以它列的不是「手册里所有能做的动作」，而是**你自己挑进日常的那几张** ——
- * 实测过：全量 491 张卡里 89 张是疾病知识、402 张可做，其中 387 张是「随时」或没标时段；
- * 按「所有 practice 卡都进今天」排，早/日间/晚各约 392 / 390 / 394 张，仍是几十屏。
+ * 实测过：全量 493 张卡里 89 张是疾病知识、404 张可做，其中 389 张标「随时」；
+ * 按「所有 practice 卡都进今天」排，早/日间/晚各约 394 / 392 / 396 张，仍是几十屏。
  * 那不是清单，是目录，而「需要翻」正是这个项目要否定的用法。
  *
  * 其余动作走发现层：每天给三张 + 手册里每篇标出「哪几个动作能照着做」。
@@ -15,7 +15,6 @@
  * 「我的日常」与用户自己加的习惯在 data/useRoutine.ts —— 清单只有那一份，
  * 今天页显示它、提醒的「建议」也按它算。
  */
-import type { ComponentChildren } from "preact";
 import { lazy, Suspense } from "preact/compat";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 
@@ -72,73 +71,10 @@ export interface TodayProps {
 const DOT_DAYS = 14;
 /** 那条提示自己待多久（毫秒）。屏幕上的每一句话都得有个期限。 */
 const FLASH_MS = 6000;
-/** 又窄又矮的屏幕：首启两块说明收成一行，否则第一张卡进不了首屏。 */
-const FOLD_ONBOARDING = "(max-width: 380px) and (max-height: 640px)";
-
 // 拖拽排序只在「调顺序」时用：dnd-kit 不该跟着首屏一起下载。
 const SortPanel = lazy(() =>
   import("./SortPanel.tsx").then((m) => ({ default: m.SortPanel })),
 );
-
-function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(() =>
-    typeof window !== "undefined" && typeof window.matchMedia === "function"
-      ? window.matchMedia(query).matches
-      : false,
-  );
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-      return;
-    }
-    const mq = window.matchMedia(query);
-    const sync = () => setMatches(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, [query]);
-  return matches;
-}
-
-/** 首启说明在小屏收成一行；宽屏保持原样，summary 由 CSS 隐藏。 */
-function OnboardingFold({
-  class: className,
-  open,
-  onToggle,
-  summary,
-  fold,
-  children,
-}: {
-  class: string;
-  open: boolean;
-  onToggle: (open: boolean) => void;
-  summary: string;
-  fold: boolean;
-  children: ComponentChildren;
-}) {
-  const ref = useRef<HTMLDetailsElement>(null);
-  return (
-    <details
-      ref={ref}
-      class={className}
-      open={open}
-      onToggle={(e) => {
-        const next = (e.currentTarget as HTMLDetailsElement).open;
-        onToggle(next);
-        if (next && fold) {
-          // 展开后整块送到顶部，否则第二排选项会被底部导航盖住。
-          requestAnimationFrame(() => {
-            if (ref.current?.open) {
-              ref.current.scrollIntoView({ block: "start" });
-            }
-          });
-        }
-      }}
-    >
-      <summary class="lg-fold-sum">{summary}</summary>
-      <div class="lg-fold-body">{children}</div>
-    </details>
-  );
-}
 
 export function Today({
   cards,
@@ -168,9 +104,6 @@ export function Today({
   const pickDay = useRef("");
   const [flash, setFlash] = useState("");
   const [sorting, setSorting] = useState(false);
-  const foldOnboarding = useMediaQuery(FOLD_ONBOARDING);
-  const [ageOpen, setAgeOpen] = useState(false);
-  const [introOpen, setIntroOpen] = useState(false);
   /**
    * 自定义习惯的表单：null = 不开；new = 新加一条；edit = 改某一条。
    *
@@ -524,16 +457,17 @@ export function Today({
       />
 
       <main class="lg-main">
+        <header class="lg-list-head">
+          <h2>{sorting ? "整理日常" : SLOT_LABELS[slot] + "清单"}</h2>
+          {!sorting && !loading && routine.ready && mine.length > 0 ? (
+            <span>点卡名看做法 · 做完盖印</span>
+          ) : null}
+        </header>
         {/* 年龄档只影响少数分档卡，但默认成人不等于用户选过。
             先问一次（可跳过），否则 70+ 用户会在不知情时拿到成人动作。 */}
         {!loading && routine.ready && ageKnown === false ? (
-          <OnboardingFold
-            class="lg-firstrun lg-ageask"
-            open={!foldOnboarding || ageOpen}
-            onToggle={setAgeOpen}
-            summary="先选年龄段（默认成年人）"
-            fold={foldOnboarding}
-          >
+          <details class="lg-firstrun lg-ageask">
+            <summary class="lg-fold-sum">选择年龄段（当前按成年人显示）</summary>
             <p>
               <b class="lg-nb">先选年龄段。</b>
               手册里有几个动作会按年龄换一套。选一个；以后可在
@@ -553,18 +487,13 @@ export function Today({
             <button class="lg-linkbtn lg-ageask-skip" onClick={onSkipAgePrompt}>
               先按成年人显示
             </button>
-          </OnboardingFold>
+          </details>
         ) : null}
         {/* 首启说明：清单是 App 替你放的，得说清能怎么改。
             放在主栏而不是侧栏 —— 侧栏只有 232px 宽，两段话会被压成八行。 */}
         {routine.firstRun ? (
-          <OnboardingFold
-            class="lg-firstrun"
-            open={!foldOnboarding || introOpen}
-            onToggle={setIntroOpen}
-            summary="第一次用？看怎么改"
-            fold={foldOnboarding}
-          >
+          <details class="lg-firstrun">
+            <summary class="lg-fold-sum">第一次用？看怎么盖印、改日常</summary>
             <p>
               这几张是按手册里<span class="lg-nb">「每天固定做的几件事」</span>替你放的。
               做完点右边的方格<span class="lg-nb">盖个印</span>；不想做的，展开卡片点
@@ -576,7 +505,7 @@ export function Today({
               <span class="lg-nb">「设提醒」</span>；早晚两条整段提醒在设置里 ——
               先允许通知，它才会响。
             </p>
-          </OnboardingFold>
+          </details>
         ) : null}
         {/* 今天不做放在清单上方：跳过一张后它就在眼前，撤销不用翻到页尾。
             只在今天页显示；调顺序时让位给清单本身。 */}
@@ -601,8 +530,6 @@ export function Today({
             </div>
           </div>
         ) : null}
-        {/* 展开卡里的小节标题是 h3；这里补一个给读屏的 h2，别让 h1 直接跳到 h3。 */}
-        <h2 class="lg-sr-only">今天的动作</h2>
         {loading || !routine.ready ? (
           // 清单还没从库里读回来时也走这里：空着不等于「被清空了」
           <p class="lg-do">加载中…</p>

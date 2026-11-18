@@ -91,6 +91,15 @@ describe("模式版本", () => {
     expect(html).not.toContain("用棉片轻擦眼睑");
   });
 
+  it("忙档步骤先筛选再折叠，唯一适用的步骤不会被藏起来", () => {
+    const steps = Array.from({ length: 8 }, (_, i) => ({ id: String(i), text: `动作 ${i + 1}` }));
+    const card = makeCard({ steps, variants: { busy: { include: ["7"] } } });
+    const html = viewMode(card, "busy", true);
+    expect(html).toContain("动作 8");
+    expect(html).toContain("共 1 步");
+    expect(html).not.toContain("全展开");
+  });
+
   it("生病跳过的卡标今天不做，且不能盖章", () => {
     const card = makeCard({ variants: { sick: { skip: true } } });
     const html = viewMode(card, "sick", false);
@@ -135,8 +144,8 @@ describe("频率", () => {
 describe("展开态标题层级", () => {
   it("小节标题是 h3，不从 h2 直接跳到 h4", () => {
     const html = view(makeCard(), true);
-    expect(html).toContain("<h3>怎么做</h3>");
-    expect(html).not.toContain("<h4>怎么做</h4>");
+    expect(html).toMatch(/<h3[^>]*>怎么做/);
+    expect(html).not.toMatch(/<h4[^>]*>怎么做/);
   });
 });
 
@@ -223,6 +232,7 @@ describe("R11：stop 级禁忌在收起态可见", () => {
   it("分档换动作时，收起态显示换后的那个动作，不显示被换掉的 remind", () => {
     const card = makeCard({
       remind: { text: "踮起脚尖再快速落下，每天 50 次", quote: "踮起脚尖再快速落下，每天 50 次" },
+      dose: [{ value: 50, unit: "次", what: "踮脚次数", quote: "每天 50 次" }],
       segments: [
         {
           id: "bone-senior",
@@ -238,6 +248,10 @@ describe("R11：stop 级禁忌在收起态可见", () => {
     // 默认动作的剂量不许挂到换后的动作上
     expect(html).toContain("每侧 10 次");
     expect(html).not.toContain("50 次");
+    const expandedHtml = view(card, true, ["age:senior"]);
+    expect(expandedHtml).toContain("每侧 10 次");
+    expect(expandedHtml).not.toContain("踮脚次数");
+    expect(expandedHtml).not.toContain("每天 50 次");
   });
 
   it("长卡默认只展开前 6 步，并说清还剩几步", () => {

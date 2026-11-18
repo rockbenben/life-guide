@@ -1,5 +1,5 @@
 /**
- * 浏览器级验收（共 10 项）：
+ * 浏览器级验收（共 11 项）：
  *
  *   1. 断网可完整使用一天        → checkOffline
  *   2. .ics 导入后按时提醒        → checkIcs（真机导入没法自动化，只能验文件本身对不对）
@@ -7,10 +7,11 @@
  *   4. 卡片上设的提醒存得住       → checkCardReminder
  *   5. 移出/放回默认/周期撤销/批量撤销 → checkReminderLifecycle
  *   6. 今天不做只跳过当天，可撤销，移出日常才是永久 → checkSkipToday
- *   7. 导航去哪一页              → checkNavigation
- *   8. 导入备份后清单跟着换       → checkImportRefreshesRoutine
- *   9. 展开的卡点别处就收起        → checkCardCollapse
- *  10. 计时器数得对、形态对       → checkTimer
+ *   7. 展开的卡点别处就收起        → checkCardCollapse
+ *   8. 计时器数得对、形态对       → checkTimer
+ *   9. 分步计时按步走、归零跳步、暂停/重做/补做 → checkStepTimer
+ *  10. 导航去哪一页              → checkNavigation
+ *  11. 导入备份后清单跟着换       → checkImportRefreshesRoutine
  *
  * 每项检查都用自己的浏览器 context，互不污染（事件日志存在 IndexedDB 里）。
  */
@@ -443,6 +444,7 @@ export async function checkCardReminder({ browser, baseURL }) {
     await page.reload({ waitUntil: "load" });
     await waitForCards(page);
     const again = page.getByRole("article").first();
+    await again.waitFor({ timeout: 10000 });
     await expandCard(again);
     const row2 = await again.innerText();
     if (!/08:30/.test(row2)) {
@@ -1377,6 +1379,7 @@ export async function checkStepTimer({ browser, baseURL }) {
     //
     // 用「足踝交叉」那张：两个 6 秒的步（保持、换边）——
     // 30 秒的血管拉伸等不起，6 秒等得起。
+    await page.setViewportSize({ width: 390, height: 844 });
     await setRoutine(page, ["knee-ankle-cross"]);
     await gotoTab(page, "今天");
     await page.waitForTimeout(400);
@@ -1404,6 +1407,33 @@ export async function checkStepTimer({ browser, baseURL }) {
         } else {
           details.push(`第一步归零自动跳到下一步：${startMeta} → ${afterMeta}（读数 ${startRead} → ${afterFirst}）`);
         }
+        const currentStep = cross.locator('.lg-steps li[aria-current="step"]');
+        const marks = cross.locator(".lg-step-completed");
+        const progress = timer.locator(".lg-steptimer-progress");
+        const progressBar = timer.getByRole("progressbar", { name: "计时步骤完成进度" });
+        const checkProgress = async (expected) => {
+          const label = await progress.innerText();
+          if (label !== `已完成 ${expected}/2 步`) failures.push(`完成进度显示不对：${label}（应完成 ${expected} 步）`);
+          const { value, max } = await progressBar.evaluate((bar) => ({ value: bar.value, max: bar.max }));
+          if (value !== expected || max !== 2) failures.push(`进度条显示 ${value}/${max}（应为 ${expected}/2）`);
+        };
+        const firstStepMark = cross.locator(".lg-steps li").filter({ hasText: "保持 6 秒" })
+          .filter({ hasNotText: "换边" }).locator(".lg-step-completed");
+        if ((await marks.count()) !== 1 || (await firstStepMark.count()) !== 1) {
+          failures.push("第一步自然到点后，完成标记没有落在那一步");
+        }
+        await checkProgress(1);
+        if ((await currentStep.count()) !== 1 || !(await currentStep.innerText()).startsWith("换边")) {
+          failures.push("跳到下一步后，步骤列表没有高亮「换边」");
+        } else {
+          const stepBox = await currentStep.boundingBox();
+          const timerBox = await timer.boundingBox();
+          if (!stepBox || !timerBox || stepBox.y < timerBox.y + timerBox.height || stepBox.y >= 760) {
+            failures.push("手机上没有把当前步骤滚到计时器下方");
+          } else {
+            details.push("手机上自动高亮「换边」并滚到计时器下方");
+          }
+        }
         // 走完最后一步：整组做完了
         await page.waitForTimeout(7000);
         const endMeta = await cross.locator(".lg-steptimer-at").first().innerText();
@@ -1412,6 +1442,100 @@ export async function checkStepTimer({ browser, baseURL }) {
         } else {
           details.push(`整组做完了：${endMeta}`);
         }
+        if (await currentStep.count()) failures.push("整组做完后仍有步骤高亮");
+        if ((await marks.count()) !== 2) failures.push("两个步骤都自然到点后，完成标记数量不对");
+        await checkProgress(2);
+        const makeup = timer.getByRole("button", { name: /补做未完成/ });
+        if (await makeup.count()) failures.push("全部完成后仍有补做按钮");
+
+        const previous = timer.getByRole("button", { name: "上一步", exact: true });
+        const next = timer.getByRole("button", { name: "下一步", exact: true });
+        const redo = timer.getByRole("button", { name: "重做这一步", exact: true });
+        await redo.click();
+        await currentStep.filter({ hasText: "换边" }).waitFor({ timeout: 5000 });
+        if ((await marks.count()) !== 1 || (await firstStepMark.count()) !== 1) {
+          failures.push("重做最后一步应只清除最后一步的完成标记");
+        }
+        await checkProgress(1);
+        if (!(await next.isDisabled()) || (await readStep(cross)) !== startRead) {
+          failures.push("重做最后一步后，读数或「下一步」的边界不对");
+        }
+        await previous.click();
+        await currentStep.filter({ hasText: "保持 6 秒" }).waitFor({ timeout: 5000 });
+        if (!(await previous.isDisabled()) || (await timer.getAttribute("data-running")) !== "false") {
+          failures.push("回到第一步后没有保持暂停，或仍可以再往前");
+        }
+        await redo.click();
+        await firstStepMark.waitFor({ state: "detached", timeout: 5000 });
+        await timer.getByRole("button", { name: "开始计时" }).click();
+        await next.click();
+        await currentStep.filter({ hasText: "换边" }).waitFor({ timeout: 5000 });
+        if ((await timer.getAttribute("data-running")) !== "true") {
+          failures.push("计时中手动切换后没有继续计时");
+        }
+        if (await marks.count()) failures.push("手动跳过计时步骤后出现了完成标记");
+        await checkProgress(0);
+        details.push("手机上手动上一步、下一步和重做均同步高亮");
+
+        await timer.getByRole("button", { name: "暂停计时", exact: true }).click();
+        const pick = cross.getByRole("button", { name: /保持 6 秒.*选此步/ });
+        await pick.click();
+        const picked = currentStep.filter({ hasText: "保持 6 秒" });
+        await picked.waitFor({ timeout: 5000 });
+        const pickedBox = await picked.boundingBox();
+        const dockBox = await timer.boundingBox();
+        if ((await timer.getAttribute("data-running")) !== "false" || (await readStep(cross)) !== startRead) {
+          failures.push("暂停时点选步骤后，读数或暂停状态不对");
+        }
+        if (!pickedBox || !dockBox || pickedBox.y < dockBox.y + dockBox.height || pickedBox.y >= 760) {
+          failures.push("手机上点选步骤后没有滚到计时器下方");
+        }
+        details.push("手机上从列表点选步骤后同步高亮、滚动，并保持暂停");
+
+        await timer.getByRole("button", { name: "开始计时", exact: true }).click();
+        await next.click();
+        await makeup.waitFor({ timeout: 10000 });
+        if (!(await makeup.innerText()).includes("还剩 1 步")) {
+          failures.push("补做按钮没有显示正确的剩余步数");
+        }
+        await makeup.click();
+        await picked.waitFor({ timeout: 5000 });
+        await checkProgress(1);
+        if ((await timer.getAttribute("data-running")) !== "false" || (await readStep(cross)) !== startRead) {
+          failures.push("补做应定位第一项未完成步骤并等待手动开始");
+        }
+        details.push("部分完成时显示剩余步数，补做定位第一项未完成并等待开始");
+
+        const completedChoice = cross.getByRole("button", { name: /换边.*已完成/ });
+        if (!(await completedChoice.isDisabled()) || !(await next.isDisabled())) {
+          failures.push("补做时仍可切到已完成的步骤");
+        }
+        await timer.getByRole("button", { name: "开始计时", exact: true }).click();
+        await timer.getByText("这一组做完了").waitFor({ timeout: 9000 });
+        await checkProgress(2);
+        if ((await timer.getAttribute("data-running")) !== "false" || await makeup.count()) {
+          failures.push("最后一项补完后应结束计时并隐藏补做按钮");
+        }
+        details.push("补做跳过已完成步骤，最后一项补完即结束");
+
+        await timer.getByRole("button", { name: "重置计时", exact: true }).click();
+        await timer.getByRole("button", { name: "开始计时", exact: true }).click();
+        await next.click();
+        await makeup.click({ timeout: 10000 });
+        await picked.waitFor({ timeout: 5000 });
+        await timer.getByRole("button", { name: "开始计时", exact: true }).click();
+        await timer.getByRole("button", { name: "退出补做", exact: true }).click();
+        await checkProgress(1);
+        if ((await timer.getAttribute("data-running")) !== "false" || (await marks.count()) !== 1) {
+          failures.push("退出补做后应暂停并保留完成标记");
+        }
+        await completedChoice.click();
+        await currentStep.filter({ hasText: "换边" }).waitFor({ timeout: 5000 });
+        await checkProgress(1);
+        if ((await timer.getAttribute("data-running")) !== "false") {
+          failures.push("退出后点选已完成步骤应保持暂停");
+        }
+        details.push("退出补做会暂停、保留进度，并恢复已完成步骤的点选");
       }
     }
   } catch (err) {

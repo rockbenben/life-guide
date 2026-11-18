@@ -375,6 +375,18 @@ describe("stepStart：开始或接着跑", () => {
     expect(s.at).toBe(0);
     expect(s.running).toBe(true);
   });
+
+  it.each([
+    { sec: 30, pausedText: "00:20", resumedText: "00:18" },
+    { sec: 18000, pausedText: "00:10", resumedText: "00:12" },
+  ])("恢复时接着暂停前的读数（步骤时长 $sec 秒）", ({ sec, pausedText, resumedText }) => {
+    const timing = { ...timings[0], sec };
+    const running = stepStart(STEP_TIMER_IDLE, T0, [timing]);
+    const paused = stepPause(running, T0 + 10_000, timing);
+    expect(stepDisplay(paused, T0 + 60_000, timing)).toBe(pausedText);
+    const resumed = stepStart(paused, T0 + 60_000, [timing]);
+    expect(stepDisplay(resumed, T0 + 62_000, timing)).toBe(resumedText);
+  });
 });
 
 describe("nextStep：这一步做完就进下一步", () => {

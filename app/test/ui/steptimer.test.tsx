@@ -66,6 +66,12 @@ describe("分步计时器在卡上", () => {
     expect(html).not.toContain("lg-steptimer");
   });
 
+  it("列表只给带时长的步骤提供点选入口", () => {
+    const html = view(makeCard({ steps: TIMED_STEPS }), true);
+    expect(html.match(/class="lg-step-select"/g)).toHaveLength(2);
+    expect(html).toContain("<p>动作之间休息</p>");
+  });
+
   it("收起态不摆（计时是「做这一件时」才用得上的）", () => {
     const html = view(makeCard({ steps: TIMED_STEPS }), false);
     expect(html).not.toContain("lg-steptimer");
@@ -78,6 +84,7 @@ describe("计时器自己", () => {
     expect(html).toContain("00:30");
     // 共几步：只数带时长的那几步
     expect(html).toContain("第 1 / 2 步");
+    expect(html).toContain("已完成 0/2 步");
   });
 
   it("显示当前那一步的原文（用户看得见现在该做哪一步）", () => {

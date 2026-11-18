@@ -107,10 +107,10 @@
 
 /* ---------------------------------------------------------------- 设计令牌 */
 :root {
-  --lg-paper: #fbf6ec; /* 页面底 */
-  --lg-sheet: #fffcf6; /* 栏面 */
-  --lg-rule: #e3d9c6; /* 细横线 */
-  --lg-rule-soft: #efe7d8;
+  --lg-paper: #f5f4ee; /* 页面底 */
+  --lg-sheet: #fffefa; /* 栏面 */
+  --lg-rule: #d3d7ce; /* 细横线 */
+  --lg-rule-soft: #e2e5dd;
   --lg-ink: #241f1a;
   --lg-ink-2: #5b5347; /* 次级文字 */
   --lg-ink-3: #756b5d; /* 11px 小字专用；#8a8073 在纸上只有 3.60，不到 4.5 */
@@ -133,17 +133,20 @@
   --lg-t6: 30px;
 
   --lg-measure: 34em; /* 汉字一行 34 字是读得下去的上限 */
+  --lg-binding: #244c49;
+  --lg-on-binding: #f6fbf3;
   --lg-tap: 44px; /* 触控下限 */
   --lg-col: 660px; /* 正文栏 */
-  --lg-rail: 232px; /* 页边 */
+  --lg-rail: 248px; /* 页边 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --lg-paper: #191512;
-    --lg-sheet: #221d18;
-    --lg-rule: #3a322a;
-    --lg-rule-soft: #2c2620;
+    --lg-binding: #254743;
+    --lg-paper: #191b19;
+    --lg-sheet: #222521;
+    --lg-rule: #454940;
+    --lg-rule-soft: #32372f;
     --lg-ink: #ede5da;
     --lg-ink-2: #b8ac9c;
     --lg-ink-3: #978b7b;
@@ -273,8 +276,8 @@
   border-right: 0;
 }
 .lg-slot[aria-pressed="true"] {
-  background: var(--lg-ink);
-  color: var(--lg-paper);
+  background: var(--lg-binding);
+  color: var(--lg-on-binding);
 }
 .lg-slot small {
   font-size: var(--lg-t1);
@@ -580,14 +583,6 @@
   padding: 4px 16px 16px;
   margin: 0 0 14px;
 }
-.lg-guide-h {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 14px 0 8px;
-  border-bottom: 1px solid var(--lg-rule);
-}
 .lg-kv {
   margin: 0;
   display: grid;
@@ -662,6 +657,21 @@
   align-items: center;
   gap: 10px;
 }
+.lg-steptimer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.lg-steptimer-actions .lg-btn {
+  flex: 1 0 auto;
+  padding-inline: 8px;
+  font-size: var(--lg-t2);
+  white-space: nowrap;
+}
+.lg-steptimer-actions .lg-steptimer-makeup {
+  flex-basis: 100%;
+}
 .lg-steptimer-btn {
   min-height: var(--lg-tap);
   padding: 4px 12px;
@@ -685,10 +695,40 @@
   min-width: 0;
   flex: 1;
 }
-.lg-steptimer-at {
+.lg-steptimer-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+.lg-steptimer-at, .lg-steptimer-progress {
   font-size: var(--lg-t2);
   color: var(--lg-ink-3);
   font-variant-numeric: tabular-nums;
+}
+.lg-steptimer-progress {
+  color: var(--lg-moss);
+  white-space: nowrap;
+}
+.lg-steptimer-progress-bar {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin-top: 2px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 2px;
+  background: var(--lg-rule);
+  accent-color: var(--lg-moss);
+}
+.lg-steptimer-progress-bar::-webkit-progress-bar {
+  background: var(--lg-rule);
+}
+.lg-steptimer-progress-bar::-webkit-progress-value {
+  background: var(--lg-moss);
+}
+.lg-steptimer-progress-bar::-moz-progress-bar {
+  background: var(--lg-moss);
 }
 /* 当前那一步的原文：太长了就截断，别把这一行撑开 */
 .lg-steptimer-what {
@@ -708,18 +748,41 @@
 .lg-unknown {
   color: var(--lg-warn);
 }
+.lg-dose-section {
+  padding: 10px 12px 12px;
+  border-left: 3px solid var(--lg-binding);
+  border-radius: 4px;
+  background: var(--lg-paper);
+}
 .lg-dl {
   display: grid;
-  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.lg-dl > span {
-  display: block;
+.lg-dose-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  margin: 0;
+  color: var(--lg-ink-2);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
-.lg-dl b {
+.lg-dose-item .lg-note-inline {
+  flex-basis: 100%;
+}
+.lg-dose-item + .lg-dose-item {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--lg-rule);
+}
+.lg-dose-item b,
+.lg-dose-section > p {
   color: var(--lg-ink);
+  font-size: var(--lg-t4);
   font-weight: 650;
-  margin-right: 5px;
-  white-space: nowrap;
 }
 .lg-linkbtn {
   display: inline-flex;
@@ -773,6 +836,17 @@
   color: var(--lg-ink-2);
   letter-spacing: 0.12em;
 }
+.lg-step-section h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  scroll-margin-top: 80px;
+}
+.lg-step-section h3 span {
+  font-weight: 400;
+  letter-spacing: normal;
+}
 .lg-steps {
   margin: 0;
   padding: 0;
@@ -781,8 +855,8 @@
 }
 .lg-steps li {
   position: relative;
-  padding: 10px 0 10px 30px;
-  border-top: 1px solid var(--lg-rule-soft);
+  padding: 12px 0 12px 38px;
+  border-top: 1px solid var(--lg-rule);
   counter-increment: lg-st;
 }
 .lg-steps li:first-child {
@@ -792,16 +866,85 @@
   content: counter(lg-st);
   position: absolute;
   left: 0;
-  top: 11px;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 5px;
+  background: var(--lg-binding);
+  color: var(--lg-on-binding);
   font-size: var(--lg-t2);
-  color: var(--lg-ink-3);
   font-variant-numeric: tabular-nums;
+  font-weight: 650;
 }
 .lg-steps p {
   margin: 0;
   font-size: var(--lg-t3);
   line-height: 1.7;
 }
+.lg-step-select {
+  width: 100%;
+  min-height: var(--lg-tap);
+  display: grid;
+  gap: 2px;
+  padding: 0 8px 0 0;
+  text-align: left;
+  line-height: 1.7;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.lg-step-select-label {
+  color: var(--lg-indigo);
+  font-size: var(--lg-t2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lg-step-select-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+.lg-step-completed {
+  color: var(--lg-moss);
+  font-size: var(--lg-t2);
+  font-weight: 600;
+}
+.lg-steps li[aria-current="step"] .lg-step-select-label {
+  color: var(--lg-moss);
+  text-decoration: none;
+}
+.lg-step-select:hover .lg-step-select-label {
+  color: var(--lg-ink);
+}
+.lg-step-select:active {
+  transform: translateY(1px);
+}
+.lg-step-select:disabled {
+  cursor: default;
+  transform: none;
+}
+.lg-step-select:focus-visible {
+  outline: 2px solid var(--lg-indigo);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.lg-step-timer-dock {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 2;
+}
+@media (min-width: 1000px) {
+  .lg-step-timer-dock { top: 66px; }
+}
+.lg-steps li[aria-current="step"] {
+  outline: 2px solid var(--lg-moss);
+  outline-offset: -2px;
+  border-radius: 6px;
+  background: var(--lg-paper);
+}
+.lg-steps li[aria-current="step"]::before { left: 4px; }
 .lg-steps img {
   display: block;
   margin-top: 8px;
@@ -818,10 +961,6 @@
 }
 /* 首启说明：清单是 App 替你放的，得说清能怎么改 */
 .lg-firstrun {
-  margin: 10px 0 0;
-  padding: 8px 10px;
-  border-left: 2px solid var(--lg-indigo);
-  background: var(--lg-paper);
   color: var(--lg-ink-2);
   font-size: var(--lg-t2);
   line-height: 1.6;
@@ -833,68 +972,42 @@
   margin-top: 4px;
 }
 .lg-fold-sum {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: var(--lg-tap);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--lg-t2);
+  font-weight: 550;
+  color: var(--lg-ink-2);
 }
-.lg-ageask {
-  margin: 12px 0 0;
-  border-left-color: var(--lg-indigo);
+.lg-fold-sum::-webkit-details-marker { display: none; }
+.lg-fold-sum::after, .lg-name::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
 }
-.lg-ageask .lg-cats {
-  margin-top: 8px;
+details[open] > .lg-fold-sum::after,
+.lg-name-btn[aria-expanded="true"] .lg-name::after {
+  transform: rotate(225deg);
 }
-.lg-ageask-skip {
-  margin-top: 4px;
+.lg-firstrun {
+  margin: 0;
+  padding: 0 12px;
+  border: 0;
+  border-bottom: 1px solid var(--lg-rule-soft);
+  background: transparent;
 }
-/* 小屏首启：年龄块和说明叠在一起会把第一张卡顶出首屏。
-   年龄块还在时先不显示说明，选完或跳过以后它自然回来。 */
+.lg-firstrun[open] { padding-bottom: 10px; }
+.lg-ageask .lg-cats { margin-top: 8px; }
 @media (max-width: 420px) {
-  /* 390 是最常见机型（iPhone 12 以后基本都是），原来这道闸只挡到 380px，
-     于是 390 下年龄块与首启说明同屏，第一张卡被顶出首屏。 */
-  .lg-ageask + .lg-firstrun {
-    display: none;
-  }
-}
-/* 又窄又矮时，两块说明各收成一行；点开才铺原文。
-   否则年龄块、说明、底部导航叠在一起，第一张卡仍然进不了首屏。 */
-@media (max-width: 380px) and (max-height: 640px) {
-  .lg-fold-sum {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    min-height: var(--lg-tap);
-    list-style: none;
-    white-space: nowrap;
-    font-weight: 500;
-    cursor: pointer;
-  }
-  .lg-fold-sum::-webkit-details-marker {
-    display: none;
-  }
-  .lg-fold-sum:hover {
-    color: var(--lg-zhu);
-  }
-  .lg-fold-sum::after {
-    color: var(--lg-zhu);
-    font-size: var(--lg-t2);
-    font-weight: 400;
-  }
-  .lg-ageask > .lg-fold-sum::after {
-    content: "选择";
-  }
-  .lg-ageask[open] > .lg-fold-sum::after {
-    content: "收起";
-  }
-  .lg-firstrun:not(.lg-ageask) > .lg-fold-sum::after {
-    content: "展开";
-  }
-  .lg-firstrun:not(.lg-ageask)[open] > .lg-fold-sum::after {
-    content: "收起";
-  }
-  .lg-setuprow .lg-sortbtn {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+  .lg-ageask + .lg-firstrun { display: none; }
 }
 /* 短标签不许被拆到两行（「调顺序」断成「调 / 顺序」很难看） */
 .lg-nb {
@@ -1463,21 +1576,15 @@
 }
 .lg-searchwrap {
   position: relative;
+  margin: 12px 0 0;
 }
 
 /* 手册页顶部的「常用」入口：一排小片，点一下加进日常 */
 .lg-common {
-  margin: 0 0 14px;
+  margin: 10px 0 0;
+  border-bottom: 1px solid var(--lg-rule);
 }
-.lg-commonhint {
-  margin: 0 0 6px;
-  font-size: var(--lg-t2);
-  color: var(--lg-ink-2);
-}
-.lg-commonhint strong {
-  color: var(--lg-ink);
-  font-weight: 650;
-}
+.lg-common .lg-commontags { padding-bottom: 12px; }
 .lg-commontags {
   display: flex;
   flex-wrap: wrap;
@@ -1566,9 +1673,9 @@
 
 .lg-search {
   width: 100%;
-  min-height: var(--lg-tap);
-  margin: 12px 0 0;
-  padding: 0 14px;
+  min-height: 50px;
+  margin: 0;
+  padding: 0 var(--lg-tap);
   font: inherit;
   font-size: var(--lg-t3);
   color: var(--lg-ink);
@@ -1966,6 +2073,10 @@
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
 }
 .lg-nav button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
   min-height: var(--lg-tap);
   white-space: nowrap;
   padding: 0 18px;
@@ -1992,7 +2103,7 @@
   .lg-shell[data-desk="1"] {
     display: grid;
     grid-template-columns: var(--lg-rail) minmax(0, var(--lg-col));
-    gap: 0 48px;
+    gap: 0 32px;
     align-items: start;
     justify-content: center;
   }
@@ -2002,28 +2113,8 @@
        否则滚下去以后「今天」标题和日期被压在标签条底下看不见。 */
     top: 72px;
   }
-  .lg-aside .lg-topbar {
-    position: static;
-    padding: 30px 0 12px;
-    background: none;
-    display: block;
-  }
-  .lg-aside .lg-dateline {
-    display: block;
-    margin-top: 6px;
-  }
   .lg-h1 {
     font-size: var(--lg-t6);
-  }
-  .lg-slots {
-    flex-direction: column;
-  }
-  .lg-slot {
-    border-right: 0;
-    border-bottom: 1px solid var(--lg-rule);
-  }
-  .lg-slot:last-child {
-    border-bottom: 0;
   }
   /* 页边只有 232px：记数竖着排，一行一件事，比挤成两列好读 */
   .lg-overview {
@@ -2076,7 +2167,7 @@
     margin: 0 32px 20px;
     padding: 8px 0;
     border: none;
-    border-bottom: 1px solid var(--lg-rule-soft);
+    border-bottom: 1px solid var(--lg-rule);
     border-radius: 0;
     background: var(--lg-paper);
     box-shadow: none;
@@ -2091,15 +2182,10 @@
     max-width: 1010px;
     margin: 0 auto;
     /* 页面头部要有呼吸位：导航是这一页的页眉，贴着窗口上沿看着像被切掉 */
-    padding-top: 24px;
+    padding-top: 8px;
   }
   .lg-shell {
     padding-top: 0;
-  }
-  /* 设置页是一列要读的文字：收窄到正文栏的宽度，别让面板横跨整页
-     而段落只有一半宽（右边空出四五百像素，看着像没排完）。 */
-  .lg-shell.lg-settings {
-    max-width: calc(var(--lg-col) + 64px);
   }
 }
 
@@ -2253,6 +2339,184 @@
   }
 }
 
+/* 日期做成手册的封签。圆盘与地平线随所选时段变化。 */
+.lg-day-cover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 5px 16px 5px 5px;
+  background: var(--lg-binding);
+  color: var(--lg-on-binding);
+}
+.lg-day-cover::before, .lg-day-cover::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.lg-day-cover::before {
+  width: 54px;
+  height: 54px;
+  right: 23px;
+  bottom: 5px;
+  border-radius: 50%;
+  background: #d9cc91;
+}
+.lg-day-cover[data-slot="daytime"]::before { bottom: 26px; }
+.lg-day-cover[data-slot="evening"]::before {
+  background: transparent;
+  box-shadow: inset -10px -5px 0 #d8e3cb;
+  bottom: 24px;
+}
+.lg-day-cover::after {
+  right: -20px;
+  bottom: -28px;
+  width: 145px;
+  height: 52px;
+  border-top: 1px solid #b1c7b6;
+  border-radius: 60% 40% 0 0;
+  background: var(--lg-binding);
+  transform: rotate(-7deg);
+}
+.lg-day-title { display: flex; gap: 10px; align-items: baseline; }
+.lg-day-title .lg-h1 { font-size: var(--lg-t4); }
+.lg-day-title span { font-size: var(--lg-t2); }
+.lg-day-date {
+  font: 600 clamp(27px, 4vw, 34px)/1.25 Georgia, "Songti SC", SimSun, serif;
+  letter-spacing: -.03em;
+}
+.lg-slots { margin-top: 8px; }
+.lg-brand { display: none; }
+.lg-ui-icon { flex: none; }
+.lg-main {
+  padding: 0 clamp(12px, 2vw, 24px) 16px;
+  border: 1px solid var(--lg-rule);
+  border-top: 3px solid var(--lg-binding);
+  border-radius: 4px;
+  background: var(--lg-sheet);
+}
+.lg-list-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 12px;
+  padding: 16px 0 10px;
+}
+.lg-list-head h2 {
+  margin: 0;
+  font-size: var(--lg-t5);
+  line-height: 1.4;
+  font-weight: 650;
+}
+.lg-list-head > span { color: var(--lg-ink-2); font-size: var(--lg-t2); }
+.lg-name::after { margin: 0 0 4px 9px; color: var(--lg-ink-3); }
+.lg-name-btn { min-height: var(--lg-tap); }
+.lg-searchwrap > .lg-ui-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: var(--lg-ink-2);
+  pointer-events: none;
+}
+.lg-settings-index { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.lg-settings-index button {
+  min-height: var(--lg-tap);
+  color: var(--lg-indigo);
+  font-size: var(--lg-t2);
+  cursor: pointer;
+}
+.lg-settings-index button:hover { text-decoration: underline; }
+.lg-set > h2 { scroll-margin-top: 125px; font-size: var(--lg-t4); }
+@media (min-width: 1000px) {
+  .lg-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: calc(var(--lg-rail) + 28px);
+    font-weight: 650;
+    font-size: var(--lg-t4);
+  }
+  .lg-day-cover { min-height: 132px; align-content: space-between; }
+}
+@media (max-width: 999px) {
+  .lg-aside { padding-top: max(12px, env(safe-area-inset-top)); }
+  .lg-day-cover { display: flex; align-items: baseline; gap: 18px; padding: 14px 16px; }
+  .lg-day-cover::before { width: 30px; height: 30px; right: 16px; }
+  .lg-day-cover[data-slot="daytime"]::before,
+  .lg-day-cover[data-slot="evening"]::before { bottom: 20px; }
+  .lg-day-cover::after { width: 74px; bottom: -38px; }
+  .lg-overview { margin-top: 8px; padding-top: 0; border: 0; }
+  .lg-main { margin-top: 12px; }
+  .lg-set > h2 { scroll-margin-top: 70px; }
+}
+@media (max-width: 560px) {
+  .lg-shell { padding-inline: 12px; }
+  .lg-row, .lg-card[data-readonly="true"] .lg-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+  }
+  .lg-when {
+    grid-column: 1;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+  }
+  .lg-name-btn { grid-column: 1; }
+  .lg-seal { grid-column: 2; grid-row: 1 / span 2; align-self: start; margin: 0; }
+  .lg-nav button { padding-inline: 13px; }
+}
+.lg-manage-toggle { display: none; }
+.lg-common-key { margin: 0 0 8px; color: var(--lg-ink-2); font-size: var(--lg-t2); }
+.lg-commontag[aria-pressed="true"]::before { content: "✓ "; }
+.lg-settings-body { min-width: 0; }
+@media (max-width: 999px) {
+  .lg-manage-toggle { display: inline-flex; align-items: center; margin-left: 8px; }
+  .lg-setuprow[data-open="false"] { display: none; }
+  .lg-slot { flex-direction: row; gap: 5px; }
+}
+@media (min-width: 1000px) {
+  .lg-library-layout, .lg-shell.lg-settings {
+    display: grid;
+    grid-template-columns: var(--lg-rail) minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+  }
+  .lg-library-layout { margin-top: 20px; }
+  .lg-library-index .lg-cats, .lg-settings-index { display: grid; margin: 0; gap: 3px; }
+  .lg-library-index .lg-cat, .lg-settings-index button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--lg-tap);
+    border: 0;
+    border-radius: 5px;
+    padding: 0 14px;
+    text-align: left;
+  }
+  .lg-library-index .lg-cat:not([aria-pressed="true"]) { background: transparent; }
+  .lg-library-index .lg-cat:hover, .lg-settings-index button:hover { background: var(--lg-sheet); }
+  .lg-library-index .lg-cat[aria-pressed="true"] { background: var(--lg-binding); color: var(--lg-on-binding); }
+  .lg-library-layout .lg-arts, .lg-settings-body {
+    margin: 0;
+    padding: 8px 20px;
+    border: 1px solid var(--lg-rule);
+    border-top: 3px solid var(--lg-binding);
+    border-radius: 4px;
+    background: var(--lg-sheet);
+  }
+  .lg-library-layout .lg-arts { column-gap: 20px; }
+  .lg-library-layout .lg-art { border-top: 0; }
+  .lg-settings-menu { position: sticky; top: 78px; }
+  .lg-settings-menu .lg-topbar { display: grid; position: static; margin-bottom: 10px; padding-top: 0; }
+  .lg-settings-body .lg-set:first-child { margin: 0; border: 0; }
+  .lg-settings-body .lg-set > h2 { scroll-margin-top: 80px; }
+}
 /* ---------------------------------------------------------------- 交互态成套性
  * 每一类可点控件都必须齐六态：静止 / hover / 按下 / 键盘焦点 / 「开着」/ 禁用。
  * 缺哪一态，app/test/ui/states.test.ts 就红 —— 否则会像 batch2 量到那样：
@@ -2275,6 +2539,10 @@
 .lg-seal:hover {
   border-color: var(--lg-zhu);
   background: color-mix(in srgb, var(--lg-zhu) 9%, var(--lg-sheet));
+}
+.lg-slot[aria-pressed="true"]:hover {
+  background: var(--lg-binding);
+  color: var(--lg-on-binding);
 }
 /* 主键是深底浅字：hover 若只把底铺成浅粉，字就留在浅底上（实测 1.1:1）。
    主键 hover 改成朱底浅字（浅色 6.45:1、深色 7.04:1）；ghost 与危险键仍是浅底深字。 */
@@ -2379,28 +2647,68 @@
 }
 /* 键盘通路：展开态顶部的跳转键，让人不用 Tab 过 15 个同名按钮。
    它是一件工具，不是卡的内容 —— 右对齐的一行小字，别做成又一颗虚线大钮。 */
-.lg-jump {
+.lg-guide-nav {
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  border-bottom: 1px solid var(--lg-rule-soft);
+}
+.lg-jump {
   min-height: var(--lg-tap);
-  margin: 4px 0 0;
-  padding: 0 2px;
+  padding: 0;
   border: 0;
   background: none;
-  color: var(--lg-ink-3);
+  color: var(--lg-indigo);
   font-size: var(--lg-t2);
   text-decoration: underline;
-  text-decoration-style: dotted;
   text-underline-offset: 3px;
   cursor: pointer;
 }
-/* 截断兜底：被截掉的那半句要在展开态读得到 */
-.lg-fullremind {
-  display: block;
-  margin: 6px 0 0;
-  font-size: var(--lg-t2);
+.lg-guide .lg-sec > h3 {
+  color: var(--lg-ink);
+  font-size: var(--lg-t3);
+  letter-spacing: normal;
+}
+.lg-guide .lg-step-section > h3 {
+  font-size: var(--lg-t4);
+}
+.lg-step-section h3 span {
   color: var(--lg-ink-2);
+  font-size: var(--lg-t2);
+}
+.lg-safety-section {
+  padding: 10px 12px;
+  border: 1px solid var(--lg-rule);
+  border-radius: 6px;
+}
+.lg-safety-section:has([data-level="stop"]) {
+  background: var(--lg-alert-soft);
+  border-color: var(--lg-alert);
+}
+.lg-safety-section .lg-caut li + li {
+  border-color: var(--lg-rule);
+}
+.lg-guide-timing, .lg-guide-details {
+  margin-top: 14px;
+}
+.lg-guide-details {
+  border-top: 1px solid var(--lg-rule);
+}
+.lg-fullremind {
+  margin: 0;
+  color: var(--lg-ink-2);
+}
+@media (max-width: 560px) {
+  .lg-guide {
+    padding-inline: 11px;
+  }
+  .lg-steps p, .lg-step-select, .lg-guide .lg-caut {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+  .lg-steps .lg-imgs {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .lg-icon {
   flex: none;
