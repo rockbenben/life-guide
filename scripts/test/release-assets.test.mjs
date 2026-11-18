@@ -53,8 +53,8 @@ describe("expectedCarriers", () => {
 
 describe("verifyAssets", () => {
   const okAssets = [
-    ...MANIFESTS.map((m) => ({ name: m, digest: "sha256:aa" })),
-    ...expectedFiles(V).map((f) => ({ name: f, digest: "sha256:bb" })),
+    ...MANIFESTS.map((m) => ({ name: m, digest: "sha256:" + "a".repeat(64) })),
+    ...expectedFiles(V).map((f) => ({ name: f, digest: "sha256:" + "b".repeat(64) })),
   ];
   const okManifests = Object.fromEntries(
     MANIFESTS.map((m) => [
@@ -73,6 +73,18 @@ describe("verifyAssets", () => {
         carriers: expectedCarriers(V),
       }),
     ).toEqual([]);
+  });
+
+  it("整份清单缺失也必须失败", () => {
+    const manifests = {...okManifests};
+    delete manifests["latest-mac.yml"];
+    const problems = verifyAssets({assets: okAssets.filter(a => a.name !== "latest-mac.yml"), manifests, version: V, required: expectedFiles(V), carriers: expectedCarriers(V)});
+    expect(problems).toContain("缺少更新清单 latest-mac.yml");
+  });
+
+  it("部分资产没有服务端摘要时失败", () => {
+    const assets = okAssets.map((asset, index) => index === 0 ? {...asset, digest: null} : asset);
+    expect(verifyAssets({assets, manifests: okManifests, version: V, required: expectedFiles(V), carriers: expectedCarriers(V)}).some(p => p.includes("SHA256"))).toBe(true);
   });
 
   it("少一个产物就报出来", () => {
@@ -129,14 +141,15 @@ describe("verifyAssets", () => {
 describe("buildChecksums", () => {
   it("格式与 sha256sum 一致（两格空格，按文件名排序）", () => {
     const out = buildChecksums([
-      { name: "b.txt", digest: "sha256:bb" },
-      { name: "a.txt", digest: "sha256:aa" },
+      { name: "b.txt", digest: "sha256:" + "b".repeat(64) },
+      { name: "a.txt", digest: "sha256:" + "a".repeat(64) },
     ]);
-    expect(out).toBe("aa  a.txt\nbb  b.txt\n");
+    expect(out).toBe("a".repeat(64) + "  a.txt\n" + "b".repeat(64) + "  b.txt\n");
   });
 
-  it("没有 digest 的资产不写进去（宁可少一行，不要写错）", () => {
-    const out = buildChecksums([{ name: "a.txt" }, { name: "b.txt", digest: "sha256:bb" }]);
-    expect(out).toBe("bb  b.txt\n");
+  it("缺摘要时失败，重跑的校验和文件不会列入自身", () => {
+    expect(() => buildChecksums([{name: "a.zip"}])).toThrow();
+    expect(buildChecksums([{name: "a.zip", digest: "sha256:" + "a".repeat(64)}, {name: "SHA256SUMS"}]))
+      .toBe("a".repeat(64) + "  a.zip\n");
   });
 });

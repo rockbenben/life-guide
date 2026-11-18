@@ -1,33 +1,10 @@
-# 发版流水线：tag 是唯一的版本源。
+# 发版：tag 是唯一版本源。
 #
-# 流程：validate（tag⇄版本 + 测试 + 发布说明在不在）→ prepare（建草稿，正文取自版本库）
-#       → build（Windows / macOS / Linux 桌面 + Android）
-#       → publish（校验资产 → SHA256SUMS → 发布 → 核验）。
-#
-# 为什么这么排：
-#
-#   · **tag 是唯一版本源**。发版提交先把各 package.json 的版本改成 x.y.z，再打 tag；
-#     validate 这一步断言 tag 与版本一致，不一致直接失败 —— 免得出现
-#     「tag 是 v0.1.2、包里却写着 0.1.1」这种半年后才发现的怪事。
-#   · **红树不发布**：build 与 publish 都 needs: validate，测试不过就没人发版。
-#   · **发布说明在版本库里**（`docs/发布说明/<tag>.md`）：validate 先查它在不在，
-#     prepare 用它当草稿正文。**没有人工审批**（2026-10-30 拆掉）——
-#     审批原来是「人在草稿页上补说明」这件事的副产品；拆掉审批后，说明必须
-#     有个可靠的地方可读，所以它回到版本库里，跟那一版的代码在同一个提交。
-#   · **一个 OS 一个 job**：同一 OS 的 x64 / arm64 必须放在同一次 electron-builder
-#     调用里 —— 分 job 打会各写同名 latest*.yml，谁后跑谁赢。
-#   · **打包一律 --publish never**：发布由唯一的 publish job 做，
-#     否则每个 job 各自抢着发，会发出半成品。
-#   · **产物不走 artifact 中转**（2026-10-28 改）：Actions 的 artifact 存储是
-#     **账户级共享**的配额（GitHub Free 500 MB，与 Packages 共用），而这一版要发的
-#     产物约 1.6 GB —— 走 artifact 中转必然撑爆配额（实测账户已用 11.5 GB，
-#     连 157 MB 都传不上去）。所以每个构建 job 直接把产物传到这个 release 草稿上，
-#     publish 只读 API。**release 资产不占 artifact 配额**，这是绕开它的正路。
-#     校验和也不再靠把 1.6 GB 下一遍 —— GitHub 的资产 API 每个资产都带
-#     `digest`（sha256:…），服务端算的，跟用户下载下来算的同一个值。
-#
-# 只维护在默认分支。tag 触发时跑的是**被打 tag 那个提交里的这份文件**，
-# 所以修了工作流要用包含修复的提交重新打 tag。
+# 产物直接上传到公开 Release，不走 Actions artifact 中转（artifact 存储是账户级
+# 配额，release 资产不占）。prepare 先创建公开 Release（make_latest=false），
+# 各平台构建 job 按 release id 上传；全部资产与四份 updater feed 校验通过后，
+# publish 才补 SHA256SUMS、做 attestation 并切换 latest。上传期间用户可见该版本，
+# latest 仍停在上一完整版本。
 name: release
 
 on:
@@ -79,8 +56,9 @@ jobs:
           node-version: ${{ env.NODE }}
           cache: npm
       - run: npm ci
+      - run: node scripts/check-desktop-metadata.mjs
       # Electron ≥ 42 不再靠 postinstall 下载二进制了，得显式装
-      - run: npx install-electron
+      - run: node node_modules/electron/install.js
       - run: npm run content:check
       - run: npm run typecheck
       - run: npm run lint
@@ -100,23 +78,21 @@ jobs:
         shell: bash
         run: node scripts/release-notes.mjs --check
 
-  # 先把草稿建好，后面几个构建 job 往同一个草稿里传产物。
-  # 草稿只建一次：几个 job 并行时「按 tag 找」会撞上草稿标签被 GitHub
-  # 改成 untagged-xxx 的老问题，所以下面都按 release id 传。
+  # 先创建公开 Release，后续构建通过同一个 release id 上传产物。
   prepare:
-    name: 建发布草稿
+    name: 创建公开 Release
     needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: write
     outputs:
-      release_id: ${{ steps.draft.outputs.release_id }}
+      release_id: ${{ steps.release.outputs.release_id }}
     steps:
       - uses: actions/checkout@v7
         with:
           ref: '${{ env.TAG }}'
-      - name: 建草稿（正文取自 docs/发布说明/<tag>.md + 固定告知）
-        id: draft
+      - name: 创建公开 Release（正文来自版本库）
+        id: release
         shell: bash
         run: |
           mkdir -p dist
@@ -143,7 +119,7 @@ jobs:
           node-version: ${{ env.NODE }}
           cache: npm
       - run: npm ci
-      - run: npx install-electron
+      - run: node node_modules/electron/install.js
       - run: npm run app:build
       - name: 打包（NSIS 双架构安装包 + 双架构免安装版）
         # 产物名在 desktop/package.json 里定死了（ASCII）：
@@ -156,7 +132,7 @@ jobs:
           mkdir -p dist
           cp desktop/release/*.exe desktop/release/*.blockmap desktop/release/latest.yml dist/
           ls -l dist
-      - name: 传到发布草稿
+      - name: 上传 Release 资产
         shell: bash
         run: node scripts/release-draft.mjs dist
         env:
@@ -180,7 +156,7 @@ jobs:
           node-version: ${{ env.NODE }}
           cache: npm
       - run: npm ci
-      - run: npx install-electron
+      - run: node node_modules/electron/install.js
       - run: npm run app:build
       - name: 打包（dmg + zip；zip 是更新载体）
         # 还没有 Developer ID：显式关闭证书自动发现，产出未签名包。
@@ -194,7 +170,7 @@ jobs:
           mkdir -p dist
           cp desktop/release/*.dmg desktop/release/*.zip desktop/release/*.blockmap desktop/release/latest-mac.yml dist/
           ls -l dist
-      - name: 传到发布草稿
+      - name: 上传 Release 资产
         shell: bash
         run: node scripts/release-draft.mjs dist
         env:
@@ -219,7 +195,7 @@ jobs:
           node-version: ${{ env.NODE }}
           cache: npm
       - run: npm ci
-      - run: npx install-electron
+      - run: node node_modules/electron/install.js
       - run: npm run app:build
       - name: 打包（AppImage 更新载体 + deb / rpm）
         # 没有原生模块，x64 runner 可以交叉打 arm64。
@@ -236,7 +212,7 @@ jobs:
             [ -e "$f" ] && cp "$f" dist/
           done
           ls -l dist
-      - name: 传到发布草稿
+      - name: 上传 Release 资产
         shell: bash
         run: node scripts/release-draft.mjs dist
         env:
@@ -310,7 +286,7 @@ jobs:
           # GitHub 的附件名只吃 ASCII
           cp mobile/android/app/build/outputs/apk/release/app-release.apk "dist/LifeGuide-${TAG#v}.apk"
           ls -l dist
-      - name: 传到发布草稿
+      - name: 上传 Release 资产
         shell: bash
         run: node scripts/release-draft.mjs dist
         env:
@@ -326,20 +302,8 @@ jobs:
     name: 发布
     needs: [validate, prepare, build-desktop-win, build-desktop-mac, build-desktop-linux, build-android]
     runs-on: ubuntu-latest
-    # **不再走 `environment: release`（2026-10-30 拆掉）** ——
-    # 那个 environment 上挂着 required reviewer，publish 会停住等人点「放行」，
-    # 整条流水线就在那儿等着。
-    #
-    # **为什么当初有那道闸门**：它跟「人在草稿页上补发布说明」是一件事 ——
-    # 说明写好、确认过，才放行。闸门拆了，说明改到版本库里
-    # （`docs/发布说明/<tag>.md`），validate 会先查它在不在。
-    #
-    # **那「半成品不会被人下载到」怎么办**：靠机器 —— validate 跑全量测试，
-    # publish 校验 15 个产物与四份更新清单，SHA256SUMS 对得上才发。
-    # 剩下的（这一版说明写得对不对）本来就是人的判断，闸门只是把它挪到了发布之后。
-    #
-    # 以后想再加人工放行：Settings → Environments → release 配回 required reviewers，
-    # 这个 job 不用改。
+    # Release 已公开，构建期间各平台逐步补齐。全部资产和清单验证后上传
+    # SHA256SUMS 作为完成标记，再设置 latest，供更新器与中央 winget 巡检读取。
     permissions:
       contents: write
       id-token: write
@@ -351,7 +315,7 @@ jobs:
       VERSION: ${{ needs.validate.outputs.version }}
       RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
     steps:
-      # 建草稿与传附件要跑仓库里的脚本（scripts/release-draft.mjs）
+      # 历史脚本名 release-draft.mjs 保留；当前实现直接公开并上传。
       - uses: actions/checkout@v7
         with:
           ref: '${{ env.TAG }}'
@@ -386,13 +350,12 @@ jobs:
         with:
           subject-checksums: checksums/SHA256SUMS
 
-      - name: 发布并设为 latest
+      - name: 全部产物核验后设为 latest
         shell: bash
         run: |
-          # 用 release id，不按 tag 找：
-          # 草稿的标签名在 GitHub 侧会变成 "untagged-xxx"，按 tag 找会落空。
+          # Keep latest on the previous complete version until all platforms pass.
           [ -n "$RELEASE_ID" ] || { echo "::error::没有拿到 release id"; exit 1; }
-          gh api -X PATCH "repos/$REPO/releases/$RELEASE_ID" -F draft=false -f make_latest=true >/dev/null
+          gh api -X PATCH "repos/$REPO/releases/$RELEASE_ID" -f make_latest=true >/dev/null
 
       - name: 发布后核验（像用户那样去取）
         shell: bash

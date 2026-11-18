@@ -1,5 +1,5 @@
 /**
- * 校验发版草稿里的资产，并生成 SHA256SUMS。
+ * 校验公开 Release 的全部产物和更新清单，并生成 SHA256SUMS。
  *
  * **为什么不用 artifact 中转**：
  * Actions 的 artifact 存储有配额 —— GitHub Free 只有 500 MB（与 Packages 共用），
@@ -7,7 +7,8 @@
  * 账户里其它私有仓的产物已堆到 11.5 GB，连 CI 那 157 MB 都传不上去 ——
  * 「Artifact storage quota has been hit」直接让两个 job 判红。
  * 这一版要发的产物约 1.6 GB，走 artifact 中转要多传一遍再下回来。
- * 所以构建 job 直接把产物传到这个 release 草稿上，publish 只读 API。
+ * 所以 prepare 创建公开 Release，各构建 job 按 release id 直接把产物传上去，
+ * publish 只读 API；latest 等全部资产核验通过后才切换。
  *
  * **为什么校验和不用再下一遍文件**：
  * GitHub 的 release 资产 API 每个资产都带 `digest`（sha256:…），
@@ -102,8 +103,8 @@ export function verifyAssets({ assets, manifests, version, required, carriers })
   for (const f of required) {
     if (!names.has(f)) problems.push(`缺少 ${f}`);
   }
-  for (const m of Object.keys(manifests)) {
-    if (!names.has(m)) {
+  for (const m of Object.keys(carriers)) {
+    if (!names.has(m) || !manifests[m]) {
       problems.push(`缺少更新清单 ${m}`);
       continue;
     }
@@ -118,13 +119,21 @@ export function verifyAssets({ assets, manifests, version, required, carriers })
       if (!parsed.urls.includes(c)) problems.push(`${m} 没指向 ${c}`);
     }
   }
+  for (const asset of assets) {
+    if (asset.name !== "SHA256SUMS" && !/^sha256:[0-9a-f]{64}$/i.test(asset.digest ?? "")) {
+      problems.push(`${asset.name} 缺少有效的 SHA256 摘要`);
+    }
+  }
   return problems;
 }
 
 /** SHA256SUMS：格式与 `sha256sum` 一致（两格空格），按文件名排序。 */
 export function buildChecksums(assets) {
-  const rows = assets
-    .filter((a) => a.digest && a.digest.startsWith("sha256:"))
+  const payloads = assets.filter(asset => asset.name !== "SHA256SUMS");
+  for (const asset of payloads) {
+    if (!/^sha256:[0-9a-f]{64}$/i.test(asset.digest ?? "")) throw new Error(`${asset.name} 缺少有效的 SHA256 摘要`);
+  }
+  const rows = payloads
     .map((a) => ({ hash: a.digest.slice("sha256:".length), name: a.name }))
     .sort((x, y) => (x.name < y.name ? -1 : x.name > y.name ? 1 : 0));
   if (!rows.length) return "";
@@ -153,7 +162,7 @@ async function main() {
     .then((r) => (Array.isArray(r) ? r : []));
 
   if (!assets.length) {
-    console.error("这个 release 草稿上一个资产都没有 —— 构建 job 传失败了吧？");
+    console.error("这个 Release 上一个资产都没有，构建 job 未上传产物");
     process.exit(1);
   }
 
