@@ -96,6 +96,10 @@ jobs:
 
       - run: npm ci
 
+      # Electron ≥ 42 不再靠 postinstall 下载运行时；打包与启动前得显式装。
+      # release.yml 里每个构建 job 也有一模一样的一步。
+      - run: node node_modules/electron/install.js
+
       - name: Build web assets
         run: npm run app:build
 

@@ -51,7 +51,8 @@ await page.waitForTimeout(1500);
  */
 await page.evaluate(async () => {
   await new Promise((res) => {
-    const req = indexedDB.deleteDatabase("life-guide");
+    // 库名跟着 data/db.ts 走；v0.5 起是 life-guide-v2（删错名字等于没清，首启数会沿用旧清单）
+    const req = indexedDB.deleteDatabase("life-guide-v2");
     req.onsuccess = req.onerror = req.onblocked = () => res();
   });
 });

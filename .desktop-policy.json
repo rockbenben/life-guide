@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "status": "house-style-default",
-  "verifiedOn": "2026-10-28",
+  "verifiedOn": "2026-11-18",
   "framework": "electron",
   "channel": "stable",
   "platforms": [
@@ -30,7 +30,8 @@
     "linux": "无 OS 签名；SHA256SUMS（Linux 上生成，LF）+ provenance attestation（仓库已公开，attestation 自动生效）"
   },
   "versionSource": "git tag vX.Y.Z；release.yml 的 validate job 断言 tag 与 5 个 package.json 的版本一致",
-  "release": "单一草稿 → 校验四份 updater feed 与全部资产 → LF SHA256SUMS → attestation → PATCH draft=false make_latest=true → API 断言 releases/latest 指向本 tag。**没有人工审批**（2026-10-30 拆掉 release environment 的 required reviewers）；发布说明在版本库的 docs/发布说明/<tag>.md，validate 先查它在不在",
+  "release": "prepare 创建公开 Release（make_latest=false，正文取自版本库）→ 各平台构建 job 按 release id 直接上传产物（上传期间用户可见该版本，latest 保持上一完整版本）→ 单一 publish 校验 15 个产物与四份 updater feed、用资产 API 的服务端 sha256 生成 LF SHA256SUMS、attestation → make_latest=true → 按用户路径核验下载。**没有人工审批**（2026-10-30 拆掉 release environment 的 required reviewers）；发布说明在版本库的 docs/发布说明/<tag>.md，validate 先查它在不在。同一 tag 的公开 Release 已存在时 prepare 拒绝覆盖（修复走新版本）",
+  "hardening": "electronFuses：runAsNode / NODE_OPTIONS 关闭，onlyLoadAppFromAsar 打开，file:// 额外特权关闭；--inspect 保留（CI 的打包产物冒烟靠 Playwright 连主进程 inspector，关掉就无法验证「打包后真的能起来」）。权限处理器默认拒绝网页权限（摄像头/麦克风/定位/网页通知）；提醒走主进程原生通知，不受影响",
   "actionPins": "major tags（@v7）；不钉完整 SHA；不装 Dependabot",
   "immutableReleases": "不开 —— 发布链已跑通三版（v0.1.1 / v0.2.0 / v0.3.0），资产也都在草稿阶段传完；但**开启后已发布的 release 不能再改正文**（2026-10-28 改 v0.1.1 的发布说明就改过 —— 那种事后更正走不通）。等发布说明稳定成「写一次就不用改」再开",
   "deviations": [

@@ -6,11 +6,16 @@
  * 2026-10-28 实测：desktop/package.json 少一个 homepage，
  * Linux 打包直接报 "Please specify project homepage" —— 整条发版流水线停在那儿。
  *
- * electron-builder 要的：
+ * 这里钉住的是 electron-builder 认、但本地 CI 不一定跑到的那几项：
  *   · homepage —— deb/rpm 的项目网址。它会回退到 package.json 的 repository，
  *     但那是「解析出来才知道」的隐式行为，显式写 homepage 更省事。
  *   · 作者邮箱 —— 没有它，deb 的 maintainer 字段填不出来。
  *     `build.linux.maintainer` 已经写了的话就不用管作者字段。
+ *   · NSIS 安装/卸载向导只用英文（house style）：installerLanguages 只留 en_US、
+ *     关掉语言选择器；中文 Windows 上实际跑向导仍要人验收。
+ *   · asar 与 electronFuses —— 发布包只从 app.asar 加载代码，并关掉
+ *     runAsNode / NODE_OPTIONS / file:// 额外特权；这几项只影响打包产物，
+ *     开发时完全看不出来，所以必须在打包前查。
  *
  * 用法：node scripts/check-desktop-metadata.mjs
  */
@@ -31,6 +36,30 @@ if (!pkg.build?.linux?.maintainer && !(pkg.author?.name && pkg.author?.email)) {
   problems.push("作者邮箱（build.linux.maintainer 或 author.email 至少要有一个）");
 }
 
+if (JSON.stringify(pkg.build?.nsis?.installerLanguages) !== JSON.stringify(["en_US"]) || pkg.build?.nsis?.displayLanguageSelector !== false) {
+  problems.push("NSIS installerLanguages 必须为 en_US，displayLanguageSelector 必须为 false");
+}
+
+// 打包完整性与调试入口：fuses 只在打包时翻转，开发时看不出来；
+// 删掉不会报错，但发布出去的包会重新允许 ELECTRON_RUN_AS_NODE / NODE_OPTIONS /
+// --inspect，并把应用代码的查找顺序放回 app.asar → app。这里把决策钉在配置里。
+// 注：enableNodeCliInspectArguments 故意不关 —— CI 的打包产物冒烟由 Playwright
+// 带 --inspect=0 起应用并连主进程 inspector；关了 fuse 这一关就假红。
+const expectedFuses = {
+  runAsNode: false,
+  enableNodeOptionsEnvironmentVariable: false,
+  onlyLoadAppFromAsar: true,
+  grantFileProtocolExtraPrivileges: false,
+};
+if (pkg.build?.asar === false) {
+  problems.push("asar 必须开着（onlyLoadAppFromAsar fuse 依赖 app.asar）");
+}
+for (const [key, value] of Object.entries(expectedFuses)) {
+  if (pkg.build?.electronFuses?.[key] !== value) {
+    problems.push("electronFuses." + key + " 必须是 " + value);
+  }
+}
+
 if (problems.length) {
   console.error("desktop/package.json 少了打包需要的元数据：");
   for (const p of problems) console.error(`  ✗ ${p}`);
@@ -38,4 +67,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log("✓ 桌面端打包元数据齐全（homepage、作者邮箱）");
+console.log("✓ 桌面端打包元数据齐全（homepage、作者邮箱、NSIS 英文界面、asar 与 fuses）");

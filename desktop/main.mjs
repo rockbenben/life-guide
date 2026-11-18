@@ -9,9 +9,10 @@
  * 拆开的几块在 lib/ 下：协议、提醒、托盘、菜单、纯逻辑（提醒时刻 / 窗口状态 / 存储）。
  *
  * 安全口径：渲染层不开 nodeIntegration、contextIsolation 打开、
- * sandbox 打开 —— 页面里跑的是我们自己构建的静态资源，没有理由给更高权限。
+ * sandbox 打开；网页权限默认全拒（只需要 app:// 里的静态资源）；
+ * 打包时用 fuses 关掉 runAsNode / NODE_OPTIONS，并只从 app.asar 加载代码。
  */
-import { app, BrowserWindow, Menu, shell } from "electron";
+import { app, BrowserWindow, Menu, session, shell } from "electron";
 import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -185,6 +186,21 @@ const dav = installDavBridge({
 
 app.whenReady().then(() => {
   serveBundle(bundleDir);
+
+  /**
+   * 网页权限一律拒绝：这个窗口只跑我们自己构建的页面（app://），
+   * 不需要摄像头 / 麦克风 / 定位 / 网页通知这些能力。
+   *
+   * 提醒走的是主进程的原生通知（preload 里那条缝），不经过网页的
+   * Notification 权限，所以拒绝不会让「该响的提醒」不响。
+   *
+   * 不注册处理器时 Electron 的默认行为是**全部放行** —— 哪天页面里
+   * 混进一段第三方脚本（或 CSP 被放宽），它就能直接伸手要设备权限。
+   */
+  const ses = session.defaultSession;
+  ses.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
+  ses.setPermissionCheckHandler(() => false);
+
   /**
    * 菜单：Windows / Linux 上没有菜单栏（换页靠窗口里那排导航），
    * macOS 上留最小的一组。buildMenu 在该没有的平台返回 null，

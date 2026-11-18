@@ -17,11 +17,11 @@
     "build": "electron-builder --publish never"
   },
   "dependencies": {
-    "electron-updater": "^6.8.11"
+    "electron-updater": "^6.8.12"
   },
   "devDependencies": {
-    "electron": "45.1.0",
-    "electron-builder": "^26.18.0"
+    "electron": "45.3.4",
+    "electron-builder": "^26.18.1"
   },
   "build": {
     "appId": "top.045.life-guide",
@@ -45,6 +45,13 @@
       "build/tray.png",
       "package.json"
     ],
+    "asar": true,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false
+    },
     "extraResources": [
       {
         "from": "../app/dist",
@@ -87,7 +94,11 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "shortcutName": "生活指南",
-      "artifactName": "LifeGuide-Setup-${version}.${ext}"
+      "artifactName": "LifeGuide-Setup-${version}.${ext}",
+      "installerLanguages": [
+        "en_US"
+      ],
+      "displayLanguageSelector": false
     },
     "portable": {
       "buildUniversalInstaller": false,
