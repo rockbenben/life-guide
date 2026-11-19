@@ -112,7 +112,14 @@ jobs:
       - name: Package desktop app
         # electron-builder 要**写死**的 electron 版本（package.json 里已经是写死的），
         # 版本写范围它会直接报错 —— 这条坑当初就踩过。
-        run: npm run build --workspace @life-guide/desktop -- --dir
+        #
+        # **直接调 electron-builder，不写 `npm run … -- --dir`**：Windows runner 的
+        # 默认 shell 是 pwsh，而 PowerShell 7.3+ 把 `--` 当「参数到此为止」的记号
+        # **自己吃掉** —— `--dir` 于是变成 npm 的参数，脚本收到的只有
+        # `electron-builder --publish never`，每次都打完整安装包（多几分钟、多两百多兆），
+        # 而这里要的是「只打 dir，快」。2026-11-19 本机 pwsh 7.6 实测：进程命令行里
+        # `--` 不见了、产物里有 nsis.7z。`npx` 这条不经过 shell 的参数记号，稳。
+        run: npx electron-builder --projectDir desktop --dir --publish never
 
       - name: "Smoke: the packaged app really starts"
         # 打包成功 ≠ 起得来：主进程加载失败时 Electron 只弹一个错误框，

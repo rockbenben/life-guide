@@ -3,7 +3,7 @@
 # 产物直接上传到公开 Release，不走 Actions artifact 中转（artifact 存储是账户级
 # 配额，release 资产不占）。prepare 先创建公开 Release（make_latest=false），
 # 各平台构建 job 按 release id 上传；全部资产与四份 updater feed 校验通过后，
-# publish 才补 SHA256SUMS、做 attestation 并切换 latest。上传期间用户可见该版本，
+# publish 才补 SHA256SUMS、做 attestation，最后由独立队列切换 latest。上传期间用户可见该版本，
 # latest 仍停在上一完整版本。
 name: release
 
@@ -303,7 +303,7 @@ jobs:
     needs: [validate, prepare, build-desktop-win, build-desktop-mac, build-desktop-linux, build-android]
     runs-on: ubuntu-latest
     # Release 已公开，构建期间各平台逐步补齐。全部资产和清单验证后上传
-    # SHA256SUMS 作为完成标记，再设置 latest，供更新器与中央 winget 巡检读取。
+    # SHA256SUMS 作为完成标记，再由 promote-latest 处理 latest。
     permissions:
       contents: write
       id-token: write
@@ -350,14 +350,33 @@ jobs:
         with:
           subject-checksums: checksums/SHA256SUMS
 
-      - name: 全部产物核验后设为 latest
-        shell: bash
-        run: |
-          # Keep latest on the previous complete version until all platforms pass.
-          [ -n "$RELEASE_ID" ] || { echo "::error::没有拿到 release id"; exit 1; }
-          gh api -X PATCH "repos/$REPO/releases/$RELEASE_ID" -f make_latest=true >/dev/null
+  promote-latest:
+    name: 切换 latest
+    needs: [validate, prepare, publish]
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release-latest
+      queue: max
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      VERSION: ${{ needs.validate.outputs.version }}
+      RELEASE_ID: ${{ needs.prepare.outputs.release_id }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: '${{ env.TAG }}'
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE }}
+      - name: 核对版本并切换 latest
+        id: latest
+        run: node scripts/release-latest.mjs
 
       - name: 发布后核验（像用户那样去取）
+        if: steps.latest.outputs.selected == 'true'
         shell: bash
         run: |
           # API 是准的；下载重定向会慢几分钟
