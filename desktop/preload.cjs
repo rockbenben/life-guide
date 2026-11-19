@@ -35,8 +35,15 @@ contextBridge.exposeInMainWorld("lifeGuide", {
   checkForUpdate: () => ipcRenderer.invoke("life-guide:update-check"),
   downloadUpdate: () => ipcRenderer.invoke("life-guide:update-download"),
   installUpdate: () => ipcRenderer.invoke("life-guide:update-install"),
-  /** 状态变了：主进程推过来 */
-  onUpdateChanged: (cb) => ipcRenderer.on("life-guide:update-changed", (_e, s) => cb(s)),
+  /** 状态变了：主进程推过来，调用返回的函数即可退订。 */
+  onUpdateChanged: (cb) => {
+    const channel = "life-guide:update-changed";
+    const listener = (_event, status) => cb(status);
+    ipcRenderer.on(channel, listener);
+    return () => {
+      ipcRenderer.removeListener(channel, listener);
+    };
+  },
   /**
    * WebDAV 请求：交给主进程发。
    *
