@@ -461,7 +461,7 @@ describe("卡上的提醒那一行", () => {
         expanded={expanded}
         onExpand={() => {}}
         reminders={reminders}
-        onRemindersChange={() => {}}
+        onRemindersChange={async () => {}}
       />,
     );
   }

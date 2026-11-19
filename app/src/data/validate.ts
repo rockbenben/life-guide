@@ -6,7 +6,7 @@ import {
   SYNCED_SETTING_KEYS,
   type SyncPayload,
 } from "../domain/sync.ts";
-import { sanitizeReminders } from "../domain/reminders.ts";
+import { parseTime } from "../domain/reminders.ts";
 
 type Row = Record<string, unknown>;
 const oneOf = (value: unknown, choices: readonly string[]) =>
@@ -96,19 +96,19 @@ function reminders(v: unknown): boolean {
       !oneOf(r.mode, ["daily", "weekly", "interval", "once"])
     )
       return false;
-    if (sanitizeReminders([r]).length !== 1) return false;
+    if (typeof r.time !== "string" || !parseTime(r.time)) return false;
+    // 每周没有选中任何一天时不会排程，但提醒仍可编辑、备份和同步。
     if (
       r.mode === "weekly" &&
       (!Array.isArray(r.days) ||
-        !r.days.length ||
         !r.days.every((d) => Number.isInteger(d) && d >= 0 && d <= 6))
     )
       return false;
-    if ((r.mode === "once" || r.mode === "interval") && !date(r.date))
+    if ((r.mode === "once" || r.mode === "interval") && r.date !== "" && !date(r.date))
       return false;
     return (
       r.mode !== "interval" ||
-      (Number.isInteger(r.everyDays) && Number(r.everyDays) >= 1)
+      (typeof r.everyDays === "number" && Number.isFinite(r.everyDays) && r.everyDays >= 1)
     );
   });
 }

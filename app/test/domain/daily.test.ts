@@ -467,11 +467,11 @@ describe("页边那一排印迹", () => {
       { date: dayOf(noon(0)), cardId: "a", variant: "normal", ts: noon(0) },
       { date: dayOf(noon(2)), cardId: "a", variant: "normal", ts: noon(2) },
     ];
-    const dots = recentActivity(events, 5, noon(0), dayOf);
+    const dots = recentActivity(events, 5, dayOf(noon(0)));
     expect(dots).toEqual([false, false, true, false, true]);
   });
 
   it("没有任何记录时是全空，而不是报错", () => {
-    expect(recentActivity([], 3, noon(0), dayOf)).toEqual([false, false, false]);
+    expect(recentActivity([], 3, dayOf(noon(0)))).toEqual([false, false, false]);
   });
 });

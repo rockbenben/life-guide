@@ -58,6 +58,10 @@ function desktopBridge(): DesktopBridge | undefined {
 }
 
 /** Capacitor 的插件注册表（插件装进原生工程后才有）。 */
+interface NativeNotificationList {
+  notifications: { id: number; extra?: { lifeGuideReminder?: string } }[];
+}
+
 interface CapacitorPlugins {
   LocalNotifications?: {
     checkPermissions(): Promise<{ display: string }>;
@@ -69,6 +73,7 @@ interface CapacitorPlugins {
     schedule(opts: {
       notifications: {
         id: number;
+        extra?: { lifeGuideReminder: string };
         title: string;
         body: string;
         schedule: {
@@ -87,7 +92,8 @@ interface CapacitorPlugins {
       }[];
     }): Promise<void>;
     cancel(opts: { notifications: { id: number }[] }): Promise<void>;
-    getPending(): Promise<{ notifications: { id: number }[] }>;
+    getPending(): Promise<NativeNotificationList>;
+    getAll?(options: { state: "SCHEDULED" }): Promise<NativeNotificationList>;
   };
 }
 
@@ -212,7 +218,7 @@ export async function requestPermission(): Promise<NotifyStatus> {
 export async function schedule(
   specs: ReminderSpec[],
   onDue?: (id: string) => void,
-): Promise<void> {
+): Promise<boolean | undefined> {
   const kind = notifyKind();
   if (kind === "desktop") {
     desktopBridge()?.setReminders?.(
@@ -224,41 +230,50 @@ export async function schedule(
         after: s.after,
       })),
     );
-    return;
+    return true;
   }
   if (kind === "native") {
     const plugin = localPlugin();
-    if (!plugin) return;
+    if (!plugin) return false;
     const request = ++nativeRequest;
     const snapshot = structuredClone(specs);
     const job = nativeQueue.then(async () => {
       if (request !== nativeRequest) return;
-      await replaceNativeReminders(plugin, snapshot, request);
+      return replaceNativeReminders(plugin, snapshot, request);
     });
-    nativeQueue = job.catch(() => {});
-    await job;
-    return;
+    nativeQueue = job.then(() => {}, () => {});
+    return job;
   }
   if (kind === "web") {
     setWebReminders(specs, onDue);
   }
+  return true;
 }
 
 // 原生通知的取消和提交串行执行，等待中的请求只应用最后一份配置。
 let nativeQueue: Promise<void> = Promise.resolve();
 let nativeRequest = 0;
+const NATIVE_REMINDER_START = 1_000_000;
+
+// 兼容旧版的提醒编号，同时避开计时器与测试通知。
+function isReminderId(id: number): boolean {
+  return id >= NATIVE_REMINDER_START ||
+    (id >= 100 && id % 100 < SKIPPED_CHAIN_DAILY && (id < 0x7000 || id > 0x7fff));
+}
+
+function scheduledNativeReminders(plugin: NonNullable<CapacitorPlugins["LocalNotifications"]>) {
+  // Android 的旧查询也会返回已送达、后来被取消的记录。
+  return plugin.getAll?.({ state: "SCHEDULED" }) ?? plugin.getPending();
+}
 
 async function replaceNativeReminders(
   plugin: NonNullable<CapacitorPlugins["LocalNotifications"]>,
   specs: ReminderSpec[],
   request: number,
-): Promise<void> {
+): Promise<boolean | undefined> {
   try {
-    const pending = await plugin.getPending();
+    const { notifications: pending } = await scheduledNativeReminders(plugin);
     if (request !== nativeRequest) return;
-    for (const n of pending.notifications) {
-      await plugin.cancel({ notifications: [{ id: n.id }] });
-    }
     /**
      * 通知权限：没允许就不排。
      *
@@ -269,8 +284,9 @@ async function replaceNativeReminders(
      *
      * 用户在设置页点「允许通知」之后会立刻重排一次，那时才排。
      */
-    const perm = await plugin.checkPermissions();
-    if (normalizePermission(perm.display) !== "granted") return;
+    if (specs.length && normalizePermission((await plugin.checkPermissions()).display) !== "granted") {
+      return true;
+    }
     /**
      * 要不要精确闹钟，由**用户有没有允许**决定，不由插件替我们决定。
      *
@@ -282,19 +298,43 @@ async function replaceNativeReminders(
      * （AGENTS.md §4.2 记过这个降级）。想准点响的，设置页里有那颗
      * 「去允许精确提醒」——那是用户自己点的，那才该跳系统页。
      */
-    const exact = (await exactAlarmStatus()).granted;
+    const exact = specs.length > 0 && (await exactAlarmStatus()).granted;
     if (request !== nativeRequest) return;
-    const notifications = specs.flatMap((s, i) => nativeNotifications(s, i));
-    if (notifications.length) {
-      await plugin.schedule({
-        notifications: notifications.map((n) => ({
-          ...n,
-          isExactNotification: exact,
-        })),
-      });
+    const existing = new Map(pending.map((n) => [n.extra?.lifeGuideReminder, n.id]));
+    const stored = plugin.getAll ? (await plugin.getPending()).notifications : pending;
+    if (request !== nativeRequest) return;
+    const used = new Set(stored.map((n) => n.id));
+    const keep = new Set<number>();
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let nextId = NATIVE_REMINDER_START;
+    const additions = specs.flatMap((spec) => nativeNotifications(spec, 0).flatMap((n) => {
+      const key = JSON.stringify([spec.id, n, exact, timeZone]);
+      const id = existing.get(key);
+      if (id !== undefined) {
+        keep.add(id);
+        return [];
+      }
+      while (used.has(nextId)) nextId++;
+      return [{ ...n, id: nextId++, extra: { lifeGuideReminder: key }, isExactNotification: exact }];
+    }));
+
+    if (additions.length) {
+      try {
+        // 新排程用空闲编号。插件即使只提交了一部分，也能撤回本次新增。
+        await plugin.schedule({ notifications: additions });
+        const { notifications: installed } = await scheduledNativeReminders(plugin);
+        const installedIds = new Set(installed.map(({ id }) => id));
+        if (additions.some(({ id }) => !installedIds.has(id))) throw new Error("系统未接收完整排程");
+      } catch {
+        await plugin.cancel({ notifications: additions.map(({ id }) => ({ id })) });
+        return false;
+      }
     }
+    const obsolete = pending.filter(({ id }) => isReminderId(id) && !keep.has(id));
+    if (obsolete.length) await plugin.cancel({ notifications: obsolete.map(({ id }) => ({ id })) });
+    return true;
   } catch {
-    // 排不上就算了：界面上已经说了这个平台怎么响，不该在这里崩
+    return false;
   }
 }
 

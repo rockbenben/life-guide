@@ -20,7 +20,10 @@ import {
   createTransport,
   networkErrorText,
   readSyncConfig,
-  saveSyncConfig,
+  readSyncPreferences,
+  activeSyncConfig,
+  changeHttpAddress,
+  saveSyncPreferences,
   syncConfigProblem,
   syncNow,
   type RemoteRecord,
@@ -85,7 +88,7 @@ function cfg(over: Partial<SyncConfig> = {}): SyncConfig {
     serverUrl: "",
     user: "",
     password: "",
-    token: "",
+    token: "fixture-write-token",
     passphrase: PASS,
     ...over,
   };
@@ -133,6 +136,25 @@ describe("加密", () => {
 });
 
 describe("同步设置", () => {
+  it("中转服务要求单独的写入令牌，切换来源清除它", async () => {
+    const saved = await readSyncPreferences();
+    const preferences = {
+      ...saved, kind: "http" as const, enabled: true, passphrase: PASS,
+      destinations: {
+        ...saved.destinations,
+        http: { serverUrl: "https://relay.invalid", token: "relay-fixture" },
+      },
+    };
+    expect(syncConfigProblem(activeSyncConfig(preferences))).toBeNull();
+    const changed = changeHttpAddress(preferences.destinations.http, "https://other.invalid");
+    const config = activeSyncConfig({
+      ...preferences, destinations: { ...preferences.destinations, http: changed },
+    });
+    expect(config.token).toBe("");
+    expect(syncConfigProblem(config)).toContain("写入令牌");
+    expect(syncConfigProblem({ ...config, token: "fixture", serverUrl: "http://other.invalid" }))
+      .toContain("HTTPS");
+  });
   it("没开 / 没地址 / 没口令 / 口令太短，各有各的说法", async () => {
     expect(syncConfigProblem(cfg({ enabled: false }))).toBe("同步没开");
     expect(syncConfigProblem(cfg({ enabled: true, serverUrl: "" }))).toContain("还没填");
@@ -168,9 +190,15 @@ describe("同步设置", () => {
     expect(
       syncConfigProblem(cfg({ enabled: true, kind: "webdav", serverUrl: "192.168.1.9:5006/dav/" })),
     ).toContain("http://");
-    // 协议对了就是对的
+    // WebDAV 仍支持局域网 HTTP，Worker 允许在本机 HTTP 上开发测试。
     expect(
-      syncConfigProblem(cfg({ enabled: true, serverUrl: "http://192.168.1.9:5006/dav/" })),
+      syncConfigProblem(cfg({
+        enabled: true, kind: "webdav", user: "fixture-user",
+        serverUrl: "http://192.168.1.9:5006/dav/",
+      })),
+    ).toBeNull();
+    expect(
+      syncConfigProblem(cfg({ enabled: true, serverUrl: "http://127.0.0.1:5006" })),
     ).toBeNull();
   });
 
@@ -362,41 +390,62 @@ describe("一轮同步", () => {
     expect(pushed.tombstones.some((t) => t.id === "event-900")).toBe(true);
   });
 
-  it("远端没变（304）→ 只花一次「问一句」的流量，不拉全量", async () => {
-    const store = new Map<string, RemoteRecord>();
-    let pushes = 0;
-    let fetches = 0;
-    const transport: SyncTransport = {
-      async fetch(id) {
-        fetches++;
-        // 远端说"还是那一版吗" → 没变
-        return {
-          blob: { v: 1, iv: "", ciphertext: "" },
-          rev: "1",
-          updatedAt: Date.now(),
-          unchanged: true,
-        };
-      },
-      async push(id, blob) {
-        pushes++;
-        store.set(id, { blob, rev: "2", updatedAt: Date.now() });
-        return { ok: true };
-      },
+  it.each(["http", "webdav", "github"] as const)("已合并的远端快照在下一轮使用条件读取（%s）", async (kind) => {
+    const conf = cfg({
+      enabled: true, kind, serverUrl: kind === "github" ? "fixture/app" : "https://fixture.invalid",
+      user: kind === "webdav" ? "fixture-user" : "",
+    });
+    const { key } = await deriveSecret(PASS);
+    const encrypted = await encryptPayload(key, await buildLocalPayload("fixture"));
+    const etag = kind === "github" ? '"metadata-etag"' : '"webdav-etag"';
+    const requests: RequestInit[] = [];
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async (_input, request) => {
+      requests.push(request ?? {});
+      const expected = kind === "http" ? "1" : etag;
+      if (new Headers(request?.headers).get("if-none-match") === expected) {
+        return new Response(null, { status: 304 });
+      }
+      if (kind === "github") {
+        const content = Buffer.from(JSON.stringify(encrypted)).toString("base64");
+        return Response.json({ sha: "file-sha", content }, { headers: { etag } });
+      }
+      return Response.json(kind === "http" ? { ...encrypted, rev: 1 } : encrypted, { headers: { etag } });
     };
+    try {
+      const first = createTransport(conf);
+      expect(await syncNow(first, conf)).toMatchObject({ ok: true, pushed: false });
+      expect(createTransport({ ...conf })).toBe(first);
+      expect(await syncNow(createTransport({ ...conf }), conf)).toMatchObject({ ok: true, pushed: false });
+      expect(requests).toHaveLength(2);
+      expect(new Headers(requests[0].headers).has("if-none-match")).toBe(false);
+      expect(new Headers(requests[1].headers).get("if-none-match")).toBe(kind === "http" ? "1" : etag);
 
-    const conf = cfg({ enabled: true, serverUrl: "https://x.dev" });
-    const first = await syncNow(transport, conf);
-    expect(first.ok).toBe(true);
-    // 本地没改 → 什么都不用做（连 PUT 都省了）
-    expect(pushes).toBe(0);
-    expect(first.message).toContain("没有要传的改动");
+      const changed = { ...conf, ...(kind === "webdav" ? { user: "other-user" } : { token: "other-token" }) };
+      expect(createTransport(changed)).not.toBe(first);
+      expect(await syncNow(createTransport(changed), changed)).toMatchObject({ ok: true, pushed: false });
+      expect(new Headers(requests[2].headers).has("if-none-match")).toBe(false);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
 
-    // 本地改了 → 只推本地那份（远端没变，合起来就是本地这份）
-    await setSetting("cadence", { "card-x": "weekly" });
-    const second = await syncNow(transport, conf);
-    expect(second.ok).toBe(true);
-    expect(pushes).toBe(1);
-    expect(fetches).toBe(2);
+  it("解密失败的远端版本不会成为条件读取缓存", async () => {
+    const conf = cfg({ enabled: true, serverUrl: "https://invalid-ciphertext.invalid" });
+    const transport = createTransport(conf);
+    const conditions: (string | null)[] = [];
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async (_input, init) => {
+      conditions.push(new Headers(init?.headers).get("if-none-match"));
+      return Response.json({ rev: 1, iv: "", ciphertext: "" });
+    };
+    try {
+      expect(await syncNow(transport, conf)).toMatchObject({ ok: false });
+      expect(await syncNow(createTransport(conf), conf)).toMatchObject({ ok: false });
+      expect(conditions).toEqual([null, null]);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
   });
 
   it("本地没改就不重传（网盘按流量算钱，没必要每次开 App 都传一遍）", async () => {
@@ -463,55 +512,31 @@ describe("一轮同步", () => {
     expect(pushes).toBe(2);
   });
 
-  it("推失败之后，本地那份改动下一轮还得传（不能被当成「没改动」）", async () => {
-    /*
-     * 这是个会**丢改动**的坑：
-     * 远端回 304（没变）时，代码先记下「本地现在是这个样子」，
-     * 然后才去推。推要是失败（断网），那个指纹却已经记成新的了 ——
-     * 下一轮远端还是 304，本地指纹 == 记着的那个 → 走「两边都没变」那条路
-     * → **这份改动永远传不上去**，界面还显示「没有要传的改动」。
-     */
+  it("条件读取后推送失败，下一轮仍会传本地改动", async () => {
+    const conf = cfg({ enabled: true, serverUrl: "https://x.dev" });
+    const { key } = await deriveSecret(PASS);
+    await setSetting("cadence", { "card-x": "weekly" });
+    const initial: RemoteRecord = {
+      blob: await encryptPayload(key, await buildLocalPayload("fixture")), rev: "1", updatedAt: 1,
+    };
+    const conditions: (string | undefined)[] = [];
     let pushes = 0;
-    let failNext = false;
     const transport: SyncTransport = {
-      async fetch() {
-        // 一直说「远端没变」
-        return {
-          blob: { v: 1, iv: "", ciphertext: "" },
-          rev: "1",
-          updatedAt: Date.now(),
-          unchanged: true,
-        };
+      async fetch(_id, known) {
+        conditions.push(known?.rev);
+        return known ?? initial;
       },
       async push() {
-        pushes++;
-        if (failNext) {
-          failNext = false;
-          throw new Error("网络断了");
-        }
+        if (++pushes === 1) throw new Error("网络断了");
         return { ok: true };
       },
     };
-
-    const conf = cfg({ enabled: true, serverUrl: "https://x.dev" });
-
-    // 先改一处，确确实实推上去一次（把状态理顺）
-    await setSetting("cadence", { "card-x": "weekly" });
-    const first = await syncNow(transport, conf);
-    expect(first.ok).toBe(true);
-    expect(pushes).toBe(1);
-
-    // 又改一处，这一轮推失败了
+    expect(await syncNow(transport, conf)).toMatchObject({ ok: true, pushed: false });
     await setSetting("cadence", { "card-x": "weekly", "card-2": "monthly" });
-    failNext = true;
-    const failed = await syncNow(transport, conf);
-    expect(failed.ok).toBe(false);
+    expect(await syncNow(transport, conf)).toMatchObject({ ok: false, pushed: false });
+    expect(await syncNow(transport, conf)).toMatchObject({ ok: true, pushed: true });
     expect(pushes).toBe(2);
-
-    // 下一轮：远端还是 304，但**本地那份改动还得传**
-    const third = await syncNow(transport, conf);
-    expect(third.ok).toBe(true);
-    expect(pushes).toBe(3);
+    expect(conditions).toEqual([undefined, "1", undefined]);
   });
 
   it("冲突后重合并要用「已应用的那份」，不能把第一轮从远端收到的记录挤掉", async () => {
@@ -661,15 +686,33 @@ describe("一轮同步", () => {
     expect(merged.payload.settings.find((s) => s.key === "myRoutine")?.value).toEqual(["b", "a"]);
   });
 
-  it("同步设置存进去再读出来是一样的", async () => {    await saveSyncConfig({
+  it("同步设置存进去再读出来是一样的", async () => {
+    const preferences = await readSyncPreferences();
+    await saveSyncPreferences({
+      ...preferences,
       enabled: true,
-      serverUrl: "https://sync.example.dev/",
+      kind: "http",
       passphrase: PASS,
+      destinations: { ...preferences.destinations, http: { serverUrl: "https://sync.example.dev/" } },
     });
     const cfg = await readSyncConfig();
     expect(cfg.enabled).toBe(true);
     expect(cfg.serverUrl).toBe("https://sync.example.dev/");
     expect(cfg.passphrase).toBe(PASS);
+  });
+
+  it("旧 WebDAV 地址与上次成功落点不同时，后台没有可使用的旧凭据", async () => {
+    await setSetting("syncPreferences", undefined);
+    await setSetting("syncEnabled", true);
+    await setSetting("syncKind", "webdav");
+    await setSetting("syncServer", "https://relay.example.test");
+    await setSetting("syncUser", "test-user");
+    await setSetting("syncPassword", "test-password");
+    await setSetting("syncPassphrase", PASS);
+    await setSetting("syncLastSpace", "webdav|https://dav.example.test|test-space");
+    const conf = await readSyncConfig();
+    expect(conf).toMatchObject({ kind: "webdav", user: "", password: "" });
+    expect(syncConfigProblem(conf)).toBe("还没填网盘账号");
   });
 });
 

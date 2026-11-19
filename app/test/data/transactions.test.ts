@@ -1,5 +1,5 @@
 import "fake-indexeddb/auto";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { openDB } from "idb";
 import {
   addEvent,
@@ -12,14 +12,15 @@ import {
   updateEvent,
   getEvent,
   putCustomHabit,
+  putEvents,
   getCustomHabit,
   deleteCustomHabit,
   nowTick,
 } from "../../src/data/db.ts";
-import { buildBackup, restoreBackup } from "../../src/data/backup.ts";
+import { buildBackup, parseBackup, restoreBackup } from "../../src/data/backup.ts";
 import { mergePayloads, emptyPayload } from "../../src/domain/sync.ts";
 import {
-  buildLocalPayload,
+  applyPayload, buildLocalPayload,
   syncNow,
   type SyncConfig,
   type SyncTransport,
@@ -38,7 +39,7 @@ const config: SyncConfig = {
   passphrase: "transaction-test-only",
   user: "",
   password: "",
-  token: "",
+  token: "fixture-write-token",
 };
 
 beforeEach(async () => {
@@ -48,6 +49,9 @@ beforeEach(async () => {
     tombstones: [],
     settings: {},
   });
+  const d = await openDB("life-guide-v2");
+  await d.clear("tombstones");
+  d.close();
 });
 
 describe("同步提交", () => {
@@ -151,12 +155,11 @@ describe("同步提交", () => {
     await syncNow(transport, config);
     await clearEvents();
     await syncNow(transport, config);
-    await replaceUserData({
-      events: deviceB,
-      custom: [],
-      tombstones: [],
-      settings: {},
-    });
+    // 换到仍持有旧记录的设备，保留旧时间戳且没有本机删除标记。
+    const d = await openDB("life-guide-v2");
+    await d.clear("tombstones");
+    d.close();
+    await putEvents(deviceB);
     expect((await syncNow(transport, config)).ok).toBe(true);
     expect(await allEvents()).toEqual([]);
     expect((await syncNow(transport, config)).ok).toBe(true);
@@ -303,6 +306,36 @@ describe("事件身份和事务", () => {
     expect(await allTombstones()).toMatchObject([{ id, kind: "event" }]);
   });
 
+  it("清空历史已同步后，恢复的记录能通过下一轮加密同步", async () => {
+    const event = { date: "2026-11-09", cardId: "a", ts: 123, variant: "normal" };
+    const eventId = await addEvent(event);
+    const backup = parseBackup(JSON.stringify(await buildBackup()));
+    await clearEvents();
+    const deleted = await buildLocalPayload("other-device");
+    const { key } = await deriveSecret(config.passphrase);
+    let remote = await encryptPayload(key, deleted);
+    const transport: SyncTransport = {
+      async fetch() { return { blob: remote, rev: "1", updatedAt: 1 }; },
+      async push(_space, blob) { remote = blob; return { ok: true }; },
+    };
+    await restoreBackup(backup);
+    expect(await syncNow(transport, config)).toMatchObject({ ok: true, pushed: true });
+    expect(await getEvent(eventId)).toMatchObject({ ...event, eventId });
+    expect((await decryptPayload(key, remote)).events).toMatchObject([{ ...event, eventId }]);
+  });
+
+  it("最后一个星期被取消后，备份与同步仍能接收这条提醒", async () => {
+    const reminder = { id: "morning", cardId: null, label: "早晨", time: "07:00", on: true, mode: "weekly", days: [] };
+    await setSetting("reminders", [reminder]);
+    const backup = parseBackup(JSON.stringify(await buildBackup()));
+    expect(backup.reminders).toMatchObject([reminder]);
+    await expect(applyPayload(await buildLocalPayload("other-device"))).resolves.toMatchObject({
+      settings: expect.arrayContaining([
+        expect.objectContaining({ key: "reminders", value: [reminder] }),
+      ]),
+    });
+  });
+
   it("默认提醒和用户主动清空的提醒分别往返", async () => {
     const d = await openDB("life-guide-v2");
     await d.delete("settings", "reminders");
@@ -313,5 +346,16 @@ describe("事件身份和事务", () => {
     await restoreBackup(await buildBackup());
     expect(await getSetting("reminders", undefined)).toEqual([]);
     d.close();
+  });
+
+  it("本机提醒载荷坏掉时不会上传，修复后可重试", async () => {
+    await setSetting("reminders", [null]);
+    const push = vi.fn<SyncTransport["push"]>(async () => ({ ok: true }));
+    const transport: SyncTransport = { async fetch() { return null; }, push };
+    expect(await syncNow(transport, config)).toMatchObject({ ok: false, pushed: false });
+    expect(push).not.toHaveBeenCalled();
+    await setSetting("reminders", []);
+    expect(await syncNow(transport, config)).toMatchObject({ ok: true, pushed: true });
+    expect(push).toHaveBeenCalledTimes(1);
   });
 });

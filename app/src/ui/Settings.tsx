@@ -12,22 +12,25 @@ import {
   parseBackup,
   restoreBackup,
 } from "../data/backup.ts";
-import { allEvents, clearEvents, getSetting, setSetting } from "../data/db.ts";
+import { allEvents, clearEvents, getSetting } from "../data/db.ts";
 import {
   createTransport,
   lastSyncAt,
-  readSyncConfig,
-  saveSyncConfig,
+  activeSyncConfig,
+  changeHttpAddress,
+  changeWebDavAddress,
+  readSyncPreferences,
+  saveSyncPreferences,
   syncConfigProblem,
   syncNow,
-  type SyncConfig,
+  type SyncPreferences,
   type SyncKind,
 } from "../data/sync.ts";
 import type { Card, ModeCounts } from "../domain/routine.ts";
 import { variantAvailability } from "../domain/routine.ts";
 import {
   describeReminder,
-  normalizeReminders,
+  type ChangeReminders,
   parseTime,
   type Reminder,
 } from "../domain/reminders.ts";
@@ -111,6 +114,7 @@ export function Settings({
   reminders,
   onRemindersChange,
   onRefreshSchedule,
+  scheduleFailed,
   refreshKey = 0,
   onDataImported,
   skipped,
@@ -120,13 +124,14 @@ export function Settings({
   /** 提醒：整段那两条 + 绑在卡上的那些 */
   reminders?: Reminder[];
   /** 提醒改了 —— App 要重排一次，否则新时刻不生效 */
-  onRemindersChange?: (reminders: Reminder[]) => void;
+  onRemindersChange?: ChangeReminders;
   /** 重排提醒（改了精确闹钟授权之后要立刻重排：已排的那几条还是「不精确」的） */
   onRefreshSchedule?: () => void;
+  scheduleFailed?: boolean;
   /** 数据在别处被换掉（导入备份）时，让这里再读一次 */
   refreshKey?: number;
   /** 导入成功：告诉 App 重新读清单与条件（不然界面还摆着导入前的旧值） */
-  onDataImported?: () => void;
+  onDataImported?: () => Promise<void>;
   /** 今天不做的卡：导出日历时给当天那次加 EXDATE */
   skipped?: Record<string, string>;
   /** 日常清单：某一段全跳过时，整段日历事件也排除当天 */
@@ -142,13 +147,9 @@ export function Settings({
   const [count, setCount] = useState(0);
   const [notice, setNotice] = useState<Notice | null>(null);
   /* --- 多设备同步 --- */
-  const [syncOn, setSyncOn] = useState(false);
-  const [syncKind, setSyncKind] = useState<SyncKind>("webdav");
-  const [syncUrl, setSyncUrl] = useState("");
-  const [syncUser, setSyncUser] = useState("");
-  const [syncPassword, setSyncPassword] = useState("");
-  const [syncToken, setSyncToken] = useState("");
-  const [syncPass, setSyncPass] = useState("");
+  const [syncPreferences, setSyncPreferences] = useState<SyncPreferences | null>(null);
+  const syncOn = syncPreferences?.enabled ?? false;
+  const syncKind = syncPreferences?.kind ?? "webdav";
   const [syncBusy, setSyncBusy] = useState(false);
   /** 同步的结果（留在这一节里，别一闪而过） */
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
@@ -187,14 +188,7 @@ export function Settings({
     void exactAlarmStatus().then(setExact);
     // 同步的设置也读回来 —— 这一页可能是开同步之后第一次进来
     void (async () => {
-      const cfg = await readSyncConfig();
-      setSyncOn(cfg.enabled);
-      setSyncKind(cfg.kind);
-      setSyncUrl(cfg.serverUrl);
-      setSyncUser(cfg.user);
-      setSyncPassword(cfg.password);
-      setSyncToken(cfg.token);
-      setSyncPass(cfg.passphrase);
+      setSyncPreferences(await readSyncPreferences());
       setSyncLast(await lastSyncAt());
     })();
     setInstalled(
@@ -222,15 +216,31 @@ export function Settings({
    */
   useEffect(() => {
     if (!updaterOn) return;
-    void updateStatus().then(setUpdate);
-    onUpdateChanged(setUpdate);
+    let active = true;
+    const unsubscribe = onUpdateChanged(setUpdate);
+    void updateStatus().then((status) => {
+      if (active) setUpdate(status);
+    });
+    return () => {
+      active = false;
+      unsubscribe?.();
+    };
   }, [updaterOn]);
 
-  async function saveReminders(next: Reminder[]) {
-    const clean = normalizeReminders(next);
-    await setSetting("reminders", clean);
-    onRemindersChange?.(clean);
-    showNotice("提醒已保存。");
+  async function saveReminder(id: string, change: Partial<Reminder> | null) {
+    let changed = false;
+    try {
+      await onRemindersChange?.((current) => {
+        if (!current.some((reminder) => reminder.id === id)) return current;
+        changed = true;
+        return change
+          ? current.map((reminder) => reminder.id === id ? { ...reminder, ...change } : reminder)
+          : current.filter((reminder) => reminder.id !== id);
+      });
+      if (changed) showNotice("提醒已保存。");
+    } catch {
+      showNotice("提醒保存失败，请重试。", "error");
+    }
   }
 
   async function askPermission() {
@@ -250,37 +260,18 @@ export function Settings({
     if (s.permission === "granted") onRefreshSchedule?.();
   }
 
-  /**
-   * 现在输入框里的这些（一份完整的配置）。
-   *
-   * 每次都用它拼 —— 少一处忘了同步，症状就是「改了没生效」，
-   * 而那种症状最难查（界面上明明填对了）。
-   */
-  function currentConfig(overrides?: Partial<SyncConfig>): SyncConfig {
-    return {
-      enabled: syncOn,
-      kind: syncKind,
-      serverUrl: syncUrl.trim(),
-      user: syncUser.trim(),
-      password: syncPassword,
-      token: syncToken.trim(),
-      passphrase: syncPass,
-      ...overrides,
-    };
+  function editDestination<K extends SyncKind>(
+    kind: K,
+    destination: SyncPreferences["destinations"][K],
+  ) {
+    setSyncPreferences((previous) => previous && ({
+      ...previous,
+      destinations: { ...previous.destinations, [kind]: destination },
+    }));
   }
 
-  /**
-   * 存下现在的配置。
-   *
-   * **字段失焦即存**（每个输入框的 onBlur）：填完一项走开就存好了，
-   * 不必再找「哪个按钮能存」。
-   *
-   * 之前是「保存并同步」与「立即同步」两个按钮 —— 那个「立即同步」用的是
-   * **没存**的输入框内容：改了地址点它，这一轮确实用新地址同步了，
-   * 存下去的却还是旧地址 → 之后的自动同步又用回旧地址（这种问题最难查）。
-   */
-  async function persistConfig(overrides?: Partial<SyncConfig>): Promise<void> {
-    await saveSyncConfig(currentConfig(overrides));
+  function persistConfig() {
+    if (syncPreferences) void saveSyncPreferences(syncPreferences);
   }
 
   /**
@@ -289,9 +280,9 @@ export function Settings({
    * **先存后同步**：存的和用的永远是同一份 —— 不会出现
    * 「这一轮用的是新地址、存的是旧地址」那种两处不一样的情况。
    */
-  async function runSync(overrides?: Partial<SyncConfig>) {
-    const conf = currentConfig(overrides);
-    await saveSyncConfig(conf);
+  async function runSync(preferences: SyncPreferences) {
+    await saveSyncPreferences(preferences);
+    const conf = activeSyncConfig(preferences);
     const problem = syncConfigProblem(conf);
     if (problem) {
       setSyncMsg(problem);
@@ -302,12 +293,12 @@ export function Settings({
       const report = await syncNow(createTransport(conf), conf);
       setSyncMsg(report.message);
       if (!report.ok && (report.added || report.updated || report.removed || report.settingsChanged)) {
-        onDataImported?.();
+        await onDataImported?.();
       }
       if (report.ok) {
         setSyncLast(Date.now());
         // 远端带来的记录、清单、提醒要重新读一遍，界面才不是旧的
-        onDataImported?.();
+        await onDataImported?.();
       }
     } catch (err) {
       setSyncMsg(`同步失败：${err instanceof Error ? err.message : String(err)}`);
@@ -363,6 +354,12 @@ export function Settings({
           某张卡要单独提醒，把它放进日常，展开后点「设提醒」。
         </p>
         {notify?.note ? <p class="lg-pool">{notify.note}</p> : null}
+        {scheduleFailed ? (
+          <div>
+            <p role="status">提醒设置已保存，系统未能完成排程。</p>
+            <button class="lg-btn" onClick={onRefreshSchedule}>重试排程</button>
+          </div>
+        ) : null}
 
         {slotReminders.length ? (
           <>
@@ -375,13 +372,7 @@ export function Settings({
                       <input
                         type="checkbox"
                         checked={r.on}
-                        onChange={(e) =>
-                          void saveReminders(
-                            reminderList.map((x) =>
-                              x.id === r.id ? { ...x, on: (e.target as HTMLInputElement).checked } : x,
-                            ),
-                          )
-                        }
+                        onChange={(e) => void saveReminder(r.id, { on: e.currentTarget.checked })}
                       />
                       <span>{r.label}</span>
                     </label>
@@ -396,16 +387,14 @@ export function Settings({
                         // 时刻不合法时 normalizeReminders 会把整条丢掉 —— 那用户只是
                         // 清了一下时间框，早晨提醒就整条没了（界面上还没有加回来的入口）。
                         if (!parseTime(v)) return;
-                        void saveReminders(
-                          reminderList.map((x) => (x.id === r.id ? { ...x, time: v } : x)),
-                        );
+                        void saveReminder(r.id, { time: v });
                       }}
                     />
                   </div>
                   <ReminderModePicker
                     reminder={r}
                     onChange={(mode, extra) =>
-                      void saveReminders(reminderList.map((x) => (x.id === r.id ? { ...x, ...extra, mode } : x)))
+                      void saveReminder(r.id, { ...extra, mode })
                     }
                   />
                 </div>
@@ -431,9 +420,7 @@ export function Settings({
                   </span>
                   <button
                     class="lg-linkbtn"
-                    onClick={() =>
-                      void saveReminders(reminderList.filter((x) => x.id !== r.id))
-                    }
+                    onClick={() => void saveReminder(r.id, null)}
                   >
                     删掉
                   </button>
@@ -585,12 +572,12 @@ export function Settings({
                 );
                 if (!ok) return;
                 const n = await restoreBackup(backup);
-                showNotice(`已导入 ${n} 条记录`);
-                setCount(n);
                 // 清单与条件住在 App 层（不随页签重挂载）——
                 // 不叫它们重读，界面还摆着导入前的旧清单，
                 // 用户改一下就把刚导入的那份盖掉了。
-                onDataImported?.();
+                await onDataImported?.();
+                setCount(n);
+                showNotice(`已导入 ${n} 条记录`);
               } catch (err) {
                 showNotice(
                   `导入失败：${err instanceof Error ? err.message : String(err)}`,
@@ -667,22 +654,25 @@ export function Settings({
           <input
             type="checkbox"
             checked={syncOn}
+            disabled={!syncPreferences}
             onChange={async (e) => {
+              if (!syncPreferences) return;
               const on = (e.target as HTMLInputElement).checked;
-              setSyncOn(on);
+              const next = { ...syncPreferences, enabled: on };
+              setSyncPreferences(next);
               if (on) {
                 // 刚打开就同步一次：用户填过地址与口令的话，
                 // 这一下就能看到"另一台设备上的记录出现了"。
-                await runSync({ enabled: true });
+                await runSync(next);
               } else {
-                await persistConfig({ enabled: false });
+                await saveSyncPreferences(next);
               }
             }}
           />
           <span>开启同步</span>
         </label>
 
-        {syncOn ? (
+        {syncPreferences?.enabled ? (
           <>
             <label class="lg-synccfg">
               <span>放在哪儿</span>
@@ -691,8 +681,10 @@ export function Settings({
                 value={syncKind}
                 onChange={(e) => {
                   const kind = (e.target as HTMLSelectElement).value as SyncKind;
-                  setSyncKind(kind);
-                  void persistConfig({ kind });
+                  const next = { ...syncPreferences, kind };
+                  setSyncPreferences(next);
+                  setSyncMsg(null);
+                  void saveSyncPreferences(next);
                 }}
               >
                 <option value="webdav">网盘（坚果云 / Nextcloud / NAS / 局域网自建）</option>
@@ -710,12 +702,14 @@ export function Settings({
                   </span>
                   <input
                     type="text"
-                    value={syncUrl}
+                    value={syncPreferences.destinations.github.serverUrl}
                     placeholder="owner/repo"
                     autocomplete="off"
                     spellcheck={false}
-                    onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
-                    onBlur={() => void persistConfig()}
+                    onInput={(e) => editDestination("github", {
+                      ...syncPreferences.destinations.github, serverUrl: e.currentTarget.value,
+                    })}
+                    onBlur={persistConfig}
                   />
                 </label>
                 <label class="lg-synccfg">
@@ -726,11 +720,13 @@ export function Settings({
                   </span>
                   <input
                     type="password"
-                    value={syncToken}
+                    value={syncPreferences.destinations.github.token}
                     placeholder="ghp_…"
                     autocomplete="off"
-                    onChange={(e) => setSyncToken((e.target as HTMLInputElement).value)}
-                    onBlur={() => void persistConfig()}
+                    onInput={(e) => editDestination("github", {
+                      ...syncPreferences.destinations.github, token: e.currentTarget.value,
+                    })}
+                    onBlur={persistConfig}
                   />
                 </label>
               </>
@@ -744,25 +740,29 @@ export function Settings({
                   </span>
                   <input
                     type="text"
-                    value={syncUrl}
+                    value={syncPreferences.destinations.webdav.serverUrl}
                     placeholder="https://dav.jianguoyun.com/dav/ 或自己的 HTTPS 地址"
                     autocomplete="off"
                     spellcheck={false}
-                    onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
-                    onBlur={() => void persistConfig()}
+                    onInput={(e) => editDestination("webdav", changeWebDavAddress(
+                      syncPreferences.destinations.webdav, e.currentTarget.value,
+                    ))}
+                    onBlur={persistConfig}
                   />
                 </label>
-                {/^http:\/\//i.test(syncUrl.trim()) ? (
+                {/^http:\/\//i.test(syncPreferences.destinations.webdav.serverUrl.trim()) ? (
                   <p class="lg-pool">HTTP 会明文传输网盘账号和密码，局域网内其他设备也可能截获。可以为此服务配置 HTTPS。</p>
                 ) : null}
                 <label class="lg-synccfg">
                   <span>账号</span>
                   <input
                     type="text"
-                    value={syncUser}
+                    value={syncPreferences.destinations.webdav.user}
                     autocomplete="off"
-                    onChange={(e) => setSyncUser((e.target as HTMLInputElement).value)}
-                    onBlur={() => void persistConfig()}
+                    onInput={(e) => editDestination("webdav", {
+                      ...syncPreferences.destinations.webdav, user: e.currentTarget.value,
+                    })}
+                    onBlur={persistConfig}
                   />
                 </label>
                 <label class="lg-synccfg">
@@ -771,28 +771,46 @@ export function Settings({
                   </span>
                   <input
                     type="password"
-                    value={syncPassword}
+                    value={syncPreferences.destinations.webdav.password}
                     autocomplete="off"
-                    onChange={(e) => setSyncPassword((e.target as HTMLInputElement).value)}
-                    onBlur={() => void persistConfig()}
+                    onInput={(e) => editDestination("webdav", {
+                      ...syncPreferences.destinations.webdav, password: e.currentTarget.value,
+                    })}
+                    onBlur={persistConfig}
                   />
                 </label>
               </>
             ) : null}
 
             {syncKind === "http" ? (
-              <label class="lg-synccfg">
-                <span>同步服务地址</span>
-                <input
-                  type="text"
-                  value={syncUrl}
-                  placeholder="https://life-guide-sync.xxx.workers.dev"
-                  autocomplete="off"
-                  spellcheck={false}
-                  onChange={(e) => setSyncUrl((e.target as HTMLInputElement).value)}
-                  onBlur={() => void persistConfig()}
-                />
-              </label>
+              <>
+                <label class="lg-synccfg">
+                  <span>同步服务地址</span>
+                  <input
+                    type="text"
+                    value={syncPreferences.destinations.http.serverUrl}
+                    placeholder="https://life-guide-sync.xxx.workers.dev"
+                    autocomplete="off"
+                    spellcheck={false}
+                    onInput={(e) => editDestination("http", changeHttpAddress(
+                      syncPreferences.destinations.http, e.currentTarget.value,
+                    ))}
+                    onBlur={persistConfig}
+                  />
+                </label>
+                <label class="lg-synccfg">
+                  <span>写入令牌<small>（同步服务的 SYNC_WRITE_TOKEN）</small></span>
+                  <input
+                    type="password"
+                    value={syncPreferences.destinations.http.token ?? ""}
+                    autocomplete="off"
+                    onInput={(e) => editDestination("http", {
+                      ...syncPreferences.destinations.http, token: e.currentTarget.value,
+                    })}
+                    onBlur={persistConfig}
+                  />
+                </label>
+              </>
             ) : null}
 
             <label class="lg-synccfg">
@@ -801,18 +819,18 @@ export function Settings({
               </span>
               <input
                 type="password"
-                value={syncPass}
+                value={syncPreferences.passphrase}
                 placeholder="一句你不会忘的话"
                 autocomplete="off"
-                onChange={(e) => setSyncPass((e.target as HTMLInputElement).value)}
-                onBlur={() => void persistConfig()}
+                onInput={(e) => setSyncPreferences({ ...syncPreferences, passphrase: e.currentTarget.value })}
+                onBlur={persistConfig}
               />
             </label>
             <div class="lg-btn-row" style="margin-top:10px">
               <button
                 class="lg-btn"
                 disabled={syncBusy}
-                onClick={() => void runSync()}
+                onClick={() => void runSync(syncPreferences)}
               >
                 {syncBusy ? "同步中…" : "立即同步"}
               </button>

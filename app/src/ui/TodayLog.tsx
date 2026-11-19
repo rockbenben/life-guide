@@ -16,7 +16,7 @@ import { isCustomCard, type HabitSlot } from "../domain/custom.ts";
 import { daysDone } from "../domain/progress.ts";
 import type { DoneEvent } from "../data/db.ts";
 import type { Card, Mode } from "../domain/routine.ts";
-import { describeReminder, type Reminder } from "../domain/reminders.ts";
+import { describeReminder, type ChangeReminders, type Reminder } from "../domain/reminders.ts";
 import type { Cadence } from "../domain/cadence.ts";
 import type { HabitFormState } from "./TodaySidebar.tsx";
 
@@ -38,7 +38,7 @@ export interface TodayLogProps {
   dayOfMonth: number;
 
   reminders?: Reminder[];
-  onRemindersChange?: (reminders: Reminder[]) => void;
+  onRemindersChange?: ChangeReminders;
   onOpenArticle?: (path: string) => void;
 
   /** 自定义习惯：页脚那两颗键（改 / 删掉） */

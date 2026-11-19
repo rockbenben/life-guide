@@ -23,12 +23,13 @@
  * 客户端拿着它再合一次再推（最多两次）。
  */
 import {
-  getDeviceId, getSetting, saveClock, setSetting,
+  allSettings, getDeviceId, getSetting, saveClock, setSetting,
   readSyncPayload, commitSyncPayload,
 } from "./db.ts";
 import { validatePayload } from "./validate.ts";
 import {
   stableStringify,
+  emptyPayload,
   payloadVersionIssue,
   type SyncPayload,
 } from "../domain/sync.ts";
@@ -73,24 +74,32 @@ export interface SyncConfig {
   user: string;
   /** `webdav`：应用密码 */
   password: string;
-  /** `github`：Personal Access Token */
+  /** GitHub 的访问令牌，或中转服务的写入令牌。 */
   token: string;
   /** 同步口令：只存在这台设备，不上传 */
   passphrase: string;
 }
 
-const KEY_ENABLED = "syncEnabled";
-const KEY_KIND = "syncKind";
-const KEY_SERVER = "syncServer";
-const KEY_USER = "syncUser";
-const KEY_PASSWORD = "syncPassword";
-const KEY_TOKEN = "syncToken";
-const KEY_PASSPHRASE = "syncPassphrase";
+export interface SyncPreferences {
+  enabled: boolean;
+  kind: SyncKind;
+  passphrase: string;
+  destinations: {
+    webdav: Pick<SyncConfig, "serverUrl" | "user" | "password">;
+    github: Pick<SyncConfig, "serverUrl" | "token">;
+    // 旧设置只有地址。令牌由用户在这台设备填写。
+    http: Pick<SyncConfig, "serverUrl"> & { token?: string };
+  };
+}
+
+const emptyDestinations: SyncPreferences["destinations"] = {
+  webdav: { serverUrl: "", user: "", password: "" },
+  github: { serverUrl: "", token: "" },
+  http: { serverUrl: "" },
+};
+
+const KEY_PREFERENCES = "syncPreferences";
 const KEY_LAST_AT = "syncLastAt";
-/** 上次传上去的那份内容的指纹 —— 用来判断"这次要不要真传" */
-const KEY_PUSHED_HASH = "syncPushedHash";
-/** 上次同步时本地那份的指纹 —— 用来判断"本地变了吗" */
-const KEY_LOCAL_HASH = "syncLocalHash";
 /** 上次同步用的是哪个位置（落点 + 地址 + 空间 id） */
 const KEY_LAST_SPACE = "syncLastSpace";
 
@@ -104,29 +113,84 @@ function spaceKeyOf(cfg: SyncConfig, spaceId: string): string {
   return `${cfg.kind}|${cfg.serverUrl}|${spaceId}`;
 }
 
-/** 读同步设置。 */
-export async function readSyncConfig(): Promise<SyncConfig> {
-  const [enabled, kind, serverUrl, user, password, token, passphrase] = await Promise.all([
-    getSetting<boolean>(KEY_ENABLED, false),
-    getSetting<SyncKind>(KEY_KIND, "webdav"),
-    getSetting<string>(KEY_SERVER, ""),
-    getSetting<string>(KEY_USER, ""),
-    getSetting<string>(KEY_PASSWORD, ""),
-    getSetting<string>(KEY_TOKEN, ""),
-    getSetting<string>(KEY_PASSPHRASE, ""),
-  ]);
-  return { enabled, kind, serverUrl, user, password, token, passphrase };
+export async function readSyncPreferences(): Promise<SyncPreferences> {
+  const saved = new Map((await allSettings()).map(({ key, value }) => [key, value]));
+  const current = saved.get(KEY_PREFERENCES) as SyncPreferences | undefined;
+  if (current) return current;
+
+  // 旧格式只存一个地址，只能迁移当时选中的落点。
+  const string = (key: string) => String(saved.get(key) ?? "");
+  const storedKind = saved.get("syncKind");
+  const kind = storedKind === "github" || storedKind === "http" ? storedKind : "webdav";
+  const serverUrl = string("syncServer");
+  const destinations = { ...emptyDestinations };
+  if (kind === "webdav") {
+    // 旧地址可能来自中转服务。只迁移有成功同步记录的 WebDAV 地址所对应的凭据。
+    const lastSpace = string(KEY_LAST_SPACE);
+    const knownAddress = lastSpace.slice(0, lastSpace.lastIndexOf("|"));
+    destinations.webdav = knownAddress === `webdav|${serverUrl}`
+      ? { serverUrl, user: string("syncUser"), password: string("syncPassword") }
+      : { ...emptyDestinations.webdav, serverUrl };
+  } else if (kind === "github") {
+    destinations.github = { serverUrl, token: string("syncToken") };
+  } else {
+    destinations.http = { serverUrl };
+  }
+  return {
+    enabled: saved.get("syncEnabled") === true,
+    kind,
+    passphrase: string("syncPassphrase"),
+    destinations,
+  };
 }
 
-/** 写同步设置。 */
-export async function saveSyncConfig(cfg: Partial<SyncConfig>): Promise<void> {
-  if (cfg.enabled !== undefined) await setSetting(KEY_ENABLED, cfg.enabled);
-  if (cfg.kind !== undefined) await setSetting(KEY_KIND, cfg.kind);
-  if (cfg.serverUrl !== undefined) await setSetting(KEY_SERVER, cfg.serverUrl.trim());
-  if (cfg.user !== undefined) await setSetting(KEY_USER, cfg.user.trim());
-  if (cfg.password !== undefined) await setSetting(KEY_PASSWORD, cfg.password);
-  if (cfg.token !== undefined) await setSetting(KEY_TOKEN, cfg.token.trim());
-  if (cfg.passphrase !== undefined) await setSetting(KEY_PASSPHRASE, cfg.passphrase);
+/** 一次写入完整配置，后台只能读到已提交的组合。 */
+export function saveSyncPreferences(preferences: SyncPreferences): Promise<void> {
+  forgetOtherTransport(activeSyncConfig(preferences));
+  return setSetting(KEY_PREFERENCES, preferences);
+}
+
+export function activeSyncConfig({ enabled, kind, passphrase, destinations }: SyncPreferences): SyncConfig {
+  return {
+    enabled, kind, passphrase,
+    user: "", password: "",
+    ...destinations[kind],
+    serverUrl: destinations[kind].serverUrl.trim(),
+    ...(kind === "webdav" ? { user: destinations.webdav.user.trim() } : {}),
+    token: kind === "webdav" ? "" : (destinations[kind].token ?? "").trim(),
+  };
+}
+
+export async function readSyncConfig(): Promise<SyncConfig> {
+  const config = activeSyncConfig(await readSyncPreferences());
+  forgetOtherTransport(config);
+  return config;
+}
+
+/** WebDAV 凭据只用于输入凭据时选定的服务器来源。 */
+export function changeWebDavAddress(
+  current: SyncPreferences["destinations"]["webdav"],
+  serverUrl: string,
+): SyncPreferences["destinations"]["webdav"] {
+  if (sameOrigin(current.serverUrl, serverUrl)) return { ...current, serverUrl };
+  return { serverUrl, user: "", password: "" };
+}
+
+export function changeHttpAddress(
+  current: SyncPreferences["destinations"]["http"],
+  serverUrl: string,
+): SyncPreferences["destinations"]["http"] {
+  return { serverUrl, token: sameOrigin(current.serverUrl, serverUrl) ? current.token : "" };
+}
+
+function sameOrigin(before: string, after: string): boolean {
+  if (before === after) return true;
+  try {
+    return new URL(before).origin === new URL(after).origin;
+  } catch {
+    // 输入中的地址可能还不完整。
+  }
+  return false;
 }
 
 /** 上次同步是什么时候（界面显示用）。 */
@@ -155,7 +219,11 @@ export function syncConfigProblem(cfg: SyncConfig): string | null {
   if (cfg.kind === "webdav" || cfg.kind === "http") {
     if (!/^https?:\/\//i.test(cfg.serverUrl)) return "地址要以 http:// 或 https:// 开头";
     try {
-      new URL(cfg.serverUrl);
+      const url = new URL(cfg.serverUrl);
+      if (cfg.kind === "http" && url.protocol !== "https:" &&
+          !["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)) {
+        return "中转服务请使用 HTTPS 地址";
+      }
     } catch {
       return "地址不合法（检查一下有没有少字符或多空格）";
     }
@@ -163,15 +231,34 @@ export function syncConfigProblem(cfg: SyncConfig): string | null {
   if (cfg.kind === "webdav" && !cfg.user) return "还没填网盘账号";
   if (!cfg.passphrase) return "还没填同步口令";
   if (cfg.passphrase.length < PASS_MIN) return `同步口令至少 ${PASS_MIN} 个字`;
+  if (cfg.kind === "http" && !cfg.token) return "还没填同步服务的写入令牌";
   return null;
 }
 
 /**
- * 按落点造一个传输层。
+ * 手动与自动同步共用当前配置的传输层。配置变化后从完整读取开始。
  *
  * 合并与加密那一层与落点无关 —— 换落点不用改它们。
  */
 export function createTransport(cfg: SyncConfig): SyncTransport {
+  forgetOtherTransport(cfg);
+  if (!configuredTransport) {
+    configuredTransport = { config: { ...cfg }, transport: buildTransport(cfg) };
+  }
+  return configuredTransport.transport;
+}
+
+let configuredTransport: { config: SyncConfig; transport: SyncTransport } | undefined;
+
+function forgetOtherTransport(next: SyncConfig): void {
+  const cached = configuredTransport?.config;
+  if (!next.enabled || (cached && Object.keys(next).some((key) =>
+    next[key as keyof SyncConfig] !== cached[key as keyof SyncConfig]))) {
+    configuredTransport = undefined;
+  }
+}
+
+function buildTransport(cfg: SyncConfig): SyncTransport {
   if (cfg.kind === "github") {
     return githubTransport({
       repo: cfg.serverUrl,
@@ -191,7 +278,7 @@ export function createTransport(cfg: SyncConfig): SyncTransport {
       password: cfg.password,
     });
   }
-  return httpTransport(cfg.serverUrl);
+  return httpTransport(cfg.serverUrl, cfg.token);
 }
 
 /* ------------------------------------------------------------ 传输层 */
@@ -207,14 +294,8 @@ export interface RemoteRecord {
   /** 版本标识：用来发现「别人刚写过」 */
   rev: string;
   updatedAt: number;
-  /**
-   * 远端**没变**（服务端回了 304，body 都没发）。
-   *
-   * 这一条是省流量的关键：每次同步本来都要把整份载荷拉下来，
-   * 一天几十次就是几十 MB 下载 —— 网盘的下载流量是按月算的。
-   * 带上 `If-None-Match` 问一句「还是那一版吗」，没变就只花几百字节。
-   */
-  unchanged?: boolean;
+  /** GitHub 的条件读取标识独立于文件 SHA。 */
+  etag?: string;
 }
 
 /**
@@ -224,8 +305,8 @@ export interface RemoteRecord {
  * （自己搭的服务 / 网盘 / GitHub 仓库 / 局域网）不用改合并与加密那一层。
  */
 export interface SyncTransport {
-  /** 取远端那份；远端还没有就是 null */
-  fetch(spaceId: string): Promise<RemoteRecord | null>;
+  /** 304 时交回已验证的完整密文；远端还没有就是 null。 */
+  fetch(spaceId: string, known?: RemoteRecord): Promise<RemoteRecord | null>;
   /** 推上去。baseRev 是「我读到的版本」；对不上就报冲突。 */
   push(
     spaceId: string,
@@ -303,6 +384,7 @@ export function networkErrorText(err: unknown): string {
  * 用户同时点了「立即同步」时不该两个一起推 —— 那正是把对方那份盖掉的时候。
  */
 let syncing = false;
+const verifiedRemote = new WeakMap<SyncTransport, { spaceId: string; record: RemoteRecord }>();
 
 export async function syncNow(
   transport: SyncTransport,
@@ -359,11 +441,11 @@ async function syncOnce(
 
   const secret = await deriveSecret(conf.passphrase);
   const deviceId = await getDeviceId();
-  const local = await buildLocalPayload(deviceId);
 
   let remote: RemoteRecord | null = null;
   try {
-    remote = await transport.fetch(secret.spaceId);
+    const cached = verifiedRemote.get(transport);
+    remote = await transport.fetch(secret.spaceId, cached?.spaceId === secret.spaceId ? cached.record : undefined);
   } catch (err) {
     return {
       ok: false,
@@ -373,36 +455,7 @@ async function syncOnce(
   }
 
   let remotePayload: SyncPayload | null = null;
-  if (remote && remote.unchanged) {
-    /*
-     * 远端没变（服务端回了 304，body 都没发）—— 省下的是**下载流量**，
-     * 网盘的下载额度是按月算的，不省就是白花。
-     *
-     * 远端还是上次那份 → 本地已经含了它 → 合并结果就是本地这份。
-     * 于是只剩一个问题：**本地变了吗？**
-     */
-    const localFp = await payloadFingerprint(local);
-    const lastLocal = await getSetting<string>(KEY_LOCAL_HASH, "");
-    if (localFp === lastLocal) {
-      // 两边都没变 → 什么都不用做（连 PUT 都省了）
-      await setSetting(KEY_LAST_AT, Date.now());
-      await saveClock();
-      return {
-        ok: true,
-        message: "同步完成：没有要传的改动。",
-        added: 0, updated: 0, removed: 0, settingsChanged: 0, pushed: false, pulled: false,
-      };
-    }
-    /*
-     * 本地变了 → 接着往下走（合并结果就是本地这份，然后推上去）。
-     *
-     * **这里不能先把 KEY_LOCAL_HASH 写掉**：
-     * 那个指纹是"上次同步时本地长什么样"，只在**这一轮真的成了**之后才该更新
-     * （函数尾部统一写）。提前写了，推失败时（断网）指纹却已经记成"新的"——
-     * 下一轮远端回 304，本地指纹 == 记着的那个 → 走「两边都没变」那条路 →
-     * **本地这份改动永远传不上去**，而且界面还显示「没有要传的改动」。
-     */
-  } else if (remote) {
+  if (remote) {
     try {
       remotePayload = await decryptPayload(secret.key, remote.blob);
       validatePayload(remotePayload);
@@ -419,7 +472,9 @@ async function syncOnce(
     }
   }
 
-  let merged = await commitSyncPayload(remotePayload ?? local, deviceId);
+  let merged = await commitSyncPayload(remotePayload ?? emptyPayload(deviceId), deviceId);
+  if (remote) verifiedRemote.set(transport, { spaceId: secret.spaceId, record: remote });
+  else verifiedRemote.delete(transport);
   let applied = merged.payload;
   const totalStats = { ...merged.stats };
   let baseRev = remote?.rev ?? null;
@@ -427,16 +482,13 @@ async function syncOnce(
   /*
    * 这次要不要真传一份上去？
    *
-   * 远端那份还在、而合出来的结果与**上次传上去的**一模一样 → 不用传。
+   * 合出来的结果与本轮确认的远端一模一样 → 不用传。
    * 理由：网盘按流量算钱，每次开 App 都重传几百 KB 是白花；
    * 而且"没改动"时多一次 PUT 就多一次被别人撞上的机会。
    *
    * 远端那份没了（404）时**一定要传** —— 否则本地这份就永远上不去了。
    */
-  let fingerprint = await payloadFingerprint(applied);
-  const lastPushed = await getSetting<string>(KEY_PUSHED_HASH, "");
-  const remoteFingerprint = remotePayload ? await payloadFingerprint(remotePayload) : lastPushed;
-  const needPush = !remote || fingerprint !== remoteFingerprint;
+  const needPush = !remotePayload || await payloadFingerprint(applied) !== await payloadFingerprint(remotePayload);
 
   /*
    * 「这次换了个位置」的提醒。
@@ -454,9 +506,13 @@ async function syncOnce(
   /* 推：别人刚写过就退回来一份，合完再推 */
   let pushed = false;
   for (let attempt = 0; attempt < 2 && needPush; attempt++) {
-    const blob = await encryptPayload(secret.key, applied);
     let res: { ok: true } | { ok: false; conflict: RemoteRecord };
     try {
+      // 本地旧数据也可能不合规，不能让其他设备收到一份无法读取的快照。
+      validatePayload(applied);
+      const blob = await encryptPayload(secret.key, applied);
+      // 写入响应不保证带能用于下次 GET 的版本，失败也可能发生在服务端提交之后。
+      verifiedRemote.delete(transport);
       res = await transport.push(secret.spaceId, blob, baseRev);
     } catch (err) {
       return {
@@ -489,7 +545,6 @@ async function syncOnce(
       merged = await commitSyncPayload(theirPayload, deviceId);
       for (const key of Object.keys(totalStats) as (keyof typeof totalStats)[]) totalStats[key] += merged.stats[key];
       applied = merged.payload;
-      fingerprint = await payloadFingerprint(applied);
       baseRev = res.conflict.rev;
     } catch (err) {
       return {
@@ -518,10 +573,6 @@ async function syncOnce(
   await setSetting(KEY_LAST_AT, Date.now());
   // 时钟存下来：下次启动接着用（单调性跨重启也成立）
   await saveClock();
-  // 记下"这次传上去的是哪一份" —— 下次好判断还需不需要传
-  if (pushed) await setSetting(KEY_PUSHED_HASH, fingerprint);
-  // 记下本地那份的指纹 —— 下次远端说"没变"时，靠它判断本地要不要传
-  await setSetting(KEY_LOCAL_HASH, await payloadFingerprint(applied));
   // 记下"上次同步用的是哪个位置" —— 下次能看出"这次换了个地方"
   await setSetting(KEY_LAST_SPACE, spaceKeyOf(conf, secret.spaceId));
 

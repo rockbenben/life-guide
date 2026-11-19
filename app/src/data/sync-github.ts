@@ -63,47 +63,43 @@ export function githubTransport(opts: GithubOptions): SyncTransport {
     ...extra,
   });
 
-  /** 每个空间上次看到的 blob sha（用来问「还是那一版吗」）。 */
-  const shas = new Map<string, string>();
+  async function fetchRecord(spaceId: string, known?: RemoteRecord): Promise<RemoteRecord | null> {
+    const url = `${urlOf(spaceId)}${opts.branch ? `?ref=${encodeURIComponent(opts.branch)}` : ""}`;
+    const reqHeaders = headers({
+      accept: "application/vnd.github.object+json",
+      ...(known?.etag ? { "if-none-match": known.etag } : {}),
+    });
+    const res = await fetch(url, { headers: reqHeaders });
+    if (res.status === 404) {
+      return null;
+    }
+    if (res.status === 304) {
+      if (!known?.etag) throw new Error("GitHub 返回了无法使用的 304 响应");
+      return known;
+    }
+    if (!res.ok) throw new Error(`GitHub 取不到数据（HTTP ${res.status}）`);
+    const data = (await res.json()) as { content?: string; sha?: string; encoding?: string };
+    if (!data.sha) throw new Error("GitHub 返回的同步文件缺少版本标识");
 
-  const transport: SyncTransport = {
-    async fetch(spaceId: string): Promise<RemoteRecord | null> {
-      const url = `${urlOf(spaceId)}${opts.branch ? `?ref=${encodeURIComponent(opts.branch)}` : ""}`;
-      const known = shas.get(spaceId);
-      const reqHeaders: Record<string, string> = headers();
-      // 问一句「还是那一版吗」——没变就只回 304，不发 body（省流量）
-      if (known) reqHeaders["if-none-match"] = known;
-      const res = await fetch(url, { headers: reqHeaders });
-      // 404 = 仓库里还没有这一份（第一次同步，不是错）
-      if (res.status === 404) {
-        shas.delete(spaceId);
-        return null;
-      }
-      // 304 = 没变
-      if (res.status === 304) {
-        return {
-          blob: { v: 1, iv: "", ciphertext: "" },
-          rev: known ?? "",
-          updatedAt: Date.now(),
-          unchanged: true,
-        };
-      }
-      if (!res.ok) throw new Error(`GitHub 取不到数据（HTTP ${res.status}）`);
-      const data = (await res.json()) as {
-        content?: string;
-        sha?: string;
-        encoding?: string;
-      };
-      if (!data.content) return null;
-      if (data.sha) shas.set(spaceId, data.sha);
-      const blob = JSON.parse(decodeBase64(data.content)) as EncryptedBlob;
-      return {
-        blob,
-        // blob 的 sha 就是这一版的标识 —— 推的时候原样退回去，GitHub 自己判对不对
-        rev: data.sha ?? "",
-        updatedAt: Date.now(),
-      };
-    },
+    let json: string;
+    if (data.content) {
+      json = decodeBase64(data.content);
+    } else if (data.encoding === "none") {
+      // 按内容哈希读取，分支在两次 GET 之间变化也不会读串版本。
+      const raw = await fetch(`${API}/repos/${owner}/${repo}/git/blobs/${encodeURIComponent(data.sha)}`, {
+        headers: headers({ accept: "application/vnd.github.raw+json" }),
+      });
+      if (!raw.ok) throw new Error(`GitHub 取不到同步文件内容（HTTP ${raw.status}）`);
+      json = await raw.text();
+    } else {
+      throw new Error("GitHub 返回的同步文件缺少内容");
+    }
+    const blob = JSON.parse(json) as EncryptedBlob;
+    return { blob, rev: data.sha, etag: res.headers.get("etag") ?? undefined, updatedAt: Date.now() };
+  }
+
+  return {
+    fetch: fetchRecord,
 
     async push(spaceId, blob, baseRev) {
       const body: Record<string, unknown> = {
@@ -123,7 +119,7 @@ export function githubTransport(opts: GithubOptions): SyncTransport {
 
       // 409/422 = sha 对不上（别人刚写过）或文件已经存在
       if (res.status === 409 || res.status === 422) {
-        const current = await transport.fetch(spaceId);
+        const current = await fetchRecord(spaceId);
         if (current) return { ok: false, conflict: current };
         // 文件被删了 → 当作没有冲突，重来一次（不带 sha）
         const retry = await fetch(urlOf(spaceId), {
@@ -141,6 +137,4 @@ export function githubTransport(opts: GithubOptions): SyncTransport {
       throw new Error(`GitHub 写不进去（HTTP ${res.status}）`);
     },
   };
-
-  return transport;
 }

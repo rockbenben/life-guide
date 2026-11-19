@@ -103,7 +103,7 @@ describe("累计天数", () => {
     expect(totalActiveDays(events)).toBe(1);
     const slots = slotsWithRecords(events, slotOf);
     expect(slots.size).toBe(1);
-    const dots = recentActivity(events, 2, new Date(2026, 9, 24, 12).getTime(), dayOf);
+    const dots = recentActivity(events, 2, "2026-10-24");
     expect(dots).toEqual([true, false]); // 10-23 有记录；10-24 被撤销
   });
 });

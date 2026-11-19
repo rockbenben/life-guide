@@ -44,8 +44,8 @@ export interface ReminderEditorProps {
   };
   /** 设备的通知权限：没允许时保存了也不会响，得在设置的那一刻就说 */
   notifyPermission?: NotifyPermission | null;
-  onSave: (reminder: Reminder) => void;
-  onDelete: () => void;
+  onSave: (reminder: Reminder) => void | Promise<void>;
+  onDelete: () => void | Promise<void>;
   onClose: () => void;
 }
 
@@ -87,6 +87,8 @@ export function ReminderEditor({
   );
   const [everyDays, setEveryDays] = useState(reminder?.everyDays ?? defaults.everyDays ?? 2);
   const [date, setDate] = useState(reminder?.date ?? defaults.date ?? tomorrow());
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   /** 正在编辑的这条 —— 存盘与「下次提醒」读的是同一份，不会各说各话 */
   const draft: Reminder = {
@@ -105,8 +107,16 @@ export function ReminderEditor({
   };
   const nextText = nextOccurrenceText(draft);
 
-  function save() {
-    onSave(draft);
+  async function commit(change: () => void | Promise<void>) {
+    setSaving(true);
+    setSaveError(false);
+    try {
+      await change();
+    } catch {
+      setSaveError(true);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -211,18 +221,19 @@ export function ReminderEditor({
       )}
 
       <div class="lg-btn-row">
-        <button class="lg-btn" onClick={save}>
+        <button class="lg-btn" disabled={saving} onClick={() => void commit(() => onSave(draft))}>
           保存
         </button>
         {reminder ? (
-          <button class="lg-btn lg-btn-ghost" onClick={onDelete}>
+          <button class="lg-btn lg-btn-ghost" disabled={saving} onClick={() => void commit(onDelete)}>
             删掉
           </button>
         ) : null}
-        <button class="lg-btn lg-btn-ghost" onClick={onClose}>
+        <button class="lg-btn lg-btn-ghost" disabled={saving} onClick={onClose}>
           取消
         </button>
       </div>
+      {saveError ? <p class="lg-hint" role="alert">提醒保存失败，请重试。</p> : null}
       {unsavedHint ? <p class="lg-hint">{unsavedHint}</p> : null}
     </div>
   );
@@ -250,8 +261,8 @@ export function ReminderRow({
     everyDays?: number;
     date?: string;
   };
-  onSave: (reminder: Reminder) => void;
-  onDelete: () => void;
+  onSave: (reminder: Reminder) => Promise<void>;
+  onDelete: () => Promise<void>;
 }) {
   const [editing, setEditing] = useState(false);
   const [permission, setPermission] = useState<NotifyPermission | null>(null);
@@ -274,12 +285,12 @@ export function ReminderRow({
         reminder={reminder}
         defaults={defaults}
         notifyPermission={permission}
-        onSave={(r) => {
-          onSave(r);
+        onSave={async (r) => {
+          await onSave(r);
           setEditing(false);
         }}
-        onDelete={() => {
-          onDelete();
+        onDelete={async () => {
+          await onDelete();
           setEditing(false);
         }}
         onClose={() => setEditing(false)}

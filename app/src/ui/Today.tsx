@@ -30,7 +30,7 @@ import { doneInPeriod, periodDoneText, periodKeyOf } from "../domain/cadence.ts"
 import { addEvent, allEvents, removeEvent, updateEvent, type DoneEvent } from "../data/db.ts";
 import type { Card, ModeCounts, ModeVariants } from "../domain/routine.ts";
 import { skipped } from "../domain/routine.ts";
-import type { Reminder } from "../domain/reminders.ts";
+import type { ChangeReminders, Reminder } from "../domain/reminders.ts";
 import { cardName, displayNames } from "../domain/lines.ts";
 import {
   dailyCandidates,
@@ -54,7 +54,7 @@ export interface TodayProps {
   routine: RoutineStore;
   /** 提醒（App 级设置；绑在卡上的那一条也在里面） */
   reminders?: Reminder[];
-  onRemindersChange?: (reminders: Reminder[]) => void;
+  onRemindersChange?: ChangeReminders;
   /** 跳到某篇文章（卡片展开态里的「出自」） */
   onOpenArticle?: (path: string) => void;
   /** 每个模式各自有没有卡带版本 */
@@ -250,7 +250,7 @@ export function Today({
   // 撤销过的周期完成仍留在历史里，但今天这一格不该再算盖过印
   const doneToday = events.filter((e) => e.date === today && e.periodDone !== false).length;
   const activeDays = totalActiveDays(events);
-  const dots = recentActivity(events, DOT_DAYS, now.getTime(), dayOf);
+  const dots = recentActivity(events, DOT_DAYS, today);
 
   async function toggle(card: Card) {
     const cadence = routine.cadenceOf(card.id);
@@ -326,8 +326,8 @@ export function Today({
   /** 从日常移出一张卡；默认连同它的提醒一起删，避免「卡没了提醒还在」。 */
   async function takeOut(card: Card, keepReminder = false) {
     if (!keepReminder && reminders && onRemindersChange) {
-      const next = reminders.filter((x) => x.cardId !== card.id);
-      if (next.length !== reminders.length) onRemindersChange(next);
+      await onRemindersChange((current) => current.some((r) => r.cardId === card.id)
+        ? current.filter((r) => r.cardId !== card.id) : current);
     }
     await routine.takeOut(card.id);
     setFlash(
@@ -375,8 +375,8 @@ export function Today({
    */
   async function removeHabit(card: Card) {
     if (reminders && onRemindersChange) {
-      const next = reminders.filter((x) => x.cardId !== card.id);
-      if (next.length !== reminders.length) onRemindersChange(next);
+      await onRemindersChange((current) => current.some((r) => r.cardId === card.id)
+        ? current.filter((r) => r.cardId !== card.id) : current);
     }
     await routine.removeHabit(card.id);
     setHabitForm(null);
@@ -414,7 +414,7 @@ export function Today({
     await routine.restoreDefault();
     if (droppedReminders.length && reminders && onRemindersChange) {
       const gone = new Set(droppedReminders.map((r) => r.id));
-      onRemindersChange(reminders.filter((r) => !gone.has(r.id)));
+      await onRemindersChange((current) => current.filter((r) => !gone.has(r.id)));
     }
     let text =
       dropped > 0

@@ -13,13 +13,16 @@ import {
   getSetting,
   migrateEventCardId,
   setSetting,
+  updateSetting,
 } from "./db.ts";
 import {
+  buildFormerMap,
   migrateIdMap,
   migrateIds,
   resolveFormerId,
   type FormerCard,
 } from "../domain/former.ts";
+import { cardReminderId, sanitizeReminders, type Reminder } from "../domain/reminders.ts";
 
 export interface MigrationResult {
   /** 认领回来的盖章记录条数 */
@@ -30,6 +33,7 @@ export interface MigrationResult {
   cadence: number;
   /** 「今天不做」改掉的项数 */
   skipToday: number;
+  reminders: number;
 }
 
 /** 两个表一样吗（键与值都逐个比）。 */
@@ -40,6 +44,30 @@ function sameRecord(a: Record<string, string>, b: Record<string, string>): boole
   return ka.every((k) => a[k] === b[k]);
 }
 
+export function migrateReminderIds(
+  reminders: Reminder[],
+  map: Map<string, string>,
+): { reminders: Reminder[]; moved: number } {
+  const occupied = new Set(reminders
+    .filter(({ cardId }) => cardId && resolveFormerId(map, cardId) === cardId)
+    .map(({ cardId }) => cardId));
+  const next: Reminder[] = [];
+  let moved = 0;
+  for (const reminder of reminders) {
+    const cardId = reminder.cardId && resolveFormerId(map, reminder.cardId);
+    if (!cardId || cardId === reminder.cardId) {
+      next.push(reminder);
+      continue;
+    }
+    moved++;
+    // 保留新卡上已有的设置。多条旧提醒合并时保留列表中第一条。
+    if (occupied.has(cardId)) continue;
+    occupied.add(cardId);
+    next.push({ ...reminder, cardId, id: cardReminderId(cardId) });
+  }
+  return { reminders: moved ? next : reminders, moved };
+}
+
 /**
  * 把用户数据里的旧卡 id 换成新 id。
  *
@@ -47,7 +75,7 @@ function sameRecord(a: Record<string, string>, b: Record<string, string>): boole
  * 记录有几千条时那是一次全表扫描。要跑就在卡片加载完之后跑一次。
  */
 export async function migrateUserData(cards: FormerCard[]): Promise<MigrationResult> {
-  const result: MigrationResult = { events: 0, routine: 0, cadence: 0, skipToday: 0 };
+  const result: MigrationResult = { events: 0, routine: 0, cadence: 0, skipToday: 0, reminders: 0 };
 
   /*
    * 没有任何卡带 formerIds → 不用扫。
@@ -55,12 +83,7 @@ export async function migrateUserData(cards: FormerCard[]): Promise<MigrationRes
    * 扫一次是**全表读**（几千条记录）。每次启动都扫一遍是白花 ——
    * 绝大多数时候根本没有卡被合并过。
    */
-  const map = new Map<string, string>();
-  for (const c of cards) {
-    for (const old of c.formerIds ?? []) {
-      if (old !== c.id) map.set(old, c.id);
-    }
-  }
+  const map = buildFormerMap(cards);
   if (!map.size) return result;
 
   /* 盖章记录：卡 id 换了，记录认领回去 */
@@ -98,6 +121,14 @@ export async function migrateUserData(cards: FormerCard[]): Promise<MigrationRes
     await setSetting("skipToday", nextSkip);
     result.skipToday = Object.keys(skipToday).filter((k) => resolveFormerId(map, k) !== k).length;
   }
+
+  await updateSetting("reminders", (saved) => {
+    if (!Array.isArray(saved)) return;
+    const valid = sanitizeReminders(saved);
+    const migrated = migrateReminderIds(valid, map);
+    result.reminders = migrated.moved;
+    if (migrated.moved || valid.length !== saved.length) return migrated.reminders;
+  });
 
   return result;
 }

@@ -62,9 +62,6 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
   const urlOf = (spaceId: string) =>
     `${base}/${encodeURIComponent(`life-guide-${spaceId}`)}.json`;
 
-  // 304 只省下载：仍返回完整密文供调用方解密与合并，不假定本地已应用。
-  const seen = new Map<string, RemoteRecord>();
-
   /**
    * 发一次请求；连不上的时候说人话。
    *
@@ -90,8 +87,7 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
   }
 
   const transport: SyncTransport = {
-    async fetch(spaceId: string): Promise<RemoteRecord | null> {
-      const known = seen.get(spaceId);
+    async fetch(spaceId, known): Promise<RemoteRecord | null> {
       const headers: Record<string, string> = {
         authorization: auth,
         accept: "application/json",
@@ -103,14 +99,13 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
       const res = await send({ url: urlOf(spaceId), headers });
       // 404 = 网盘里还没有这一份（第一次同步，不是错）
       if (res.status === 404) {
-        seen.delete(spaceId);
         return null;
       }
       // 304 = 没变（条件头对上了）
       if (res.status === 304) {
         if (!known)
           throw new Error("网盘返回了无法使用的 304 响应，请重新同步");
-        return structuredClone(known);
+        return known;
       }
       if (res.status < 200 || res.status >= 300) {
         throw new Error(`网盘取不到数据（HTTP ${res.status}）`);
@@ -131,7 +126,6 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
         rev: etag,
         updatedAt: Date.now(),
       };
-      seen.set(spaceId, structuredClone(record));
       return record;
     },
 
@@ -150,8 +144,6 @@ export function webdavTransport(opts: WebdavOptions): SyncTransport {
         headers["if-none-match"] = "*";
       }
 
-      // 也覆盖“服务端已写入、响应却断线”的情况：重试必须先重新读取。
-      seen.delete(spaceId);
       const res = await send({
         url: urlOf(spaceId),
         method: "PUT",

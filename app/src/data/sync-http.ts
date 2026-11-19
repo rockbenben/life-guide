@@ -33,48 +33,41 @@ export function normalizeServerUrl(url: string): string {
 }
 
 /** 建一个走 HTTP 的传输层。 */
-export function httpTransport(serverUrl: string): SyncTransport {
+export function httpTransport(serverUrl: string, writeToken: string): SyncTransport {
   const base = normalizeServerUrl(serverUrl);
   const url = (spaceId: string) => `${base}/blob/${encodeURIComponent(spaceId)}`;
-  /** 每个空间上次看到的版本（用来问「还是那一版吗」）。 */
-  const revs = new Map<string, string>();
-
   return {
-    async fetch(spaceId: string): Promise<RemoteRecord | null> {
+    async fetch(spaceId, known): Promise<RemoteRecord | null> {
       // 问一句「还是那一版吗」——没变就只回 304，不发 body（省流量）
-      const known = revs.get(spaceId);
       const res = await fetch(url(spaceId), {
         method: "GET",
         headers: {
           accept: "application/json",
-          ...(known ? { "if-none-match": known } : {}),
+          ...(known ? { "if-none-match": known.rev } : {}),
         },
         cache: "no-store",
       });
       // 远端还没有这一份 —— 不是错，是"第一次同步"
       if (res.status === 404) {
-        revs.delete(spaceId);
         return null;
       }
       // 304 = 没变
       if (res.status === 304) {
-        return {
-          blob: { v: 1, iv: "", ciphertext: "" },
-          rev: known ?? "",
-          updatedAt: Date.now(),
-          unchanged: true,
-        };
+        if (!known) throw new Error("同步服务返回了无法使用的 304 响应");
+        return known;
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const rec = toRecord((await res.json()) as WireRecord);
-      revs.set(spaceId, rec.rev);
-      return rec;
+      return toRecord((await res.json()) as WireRecord);
     },
 
     async push(spaceId, blob: EncryptedBlob, baseRev: string | null) {
       const res = await fetch(url(spaceId), {
         method: "PUT",
-        headers: { "content-type": "application/json" },
+        headers: {
+          authorization: `Bearer ${writeToken}`,
+          "content-type": "application/json",
+        },
+        redirect: "error",
         body: JSON.stringify({
           iv: blob.iv,
           ciphertext: blob.ciphertext,
@@ -85,6 +78,8 @@ export function httpTransport(serverUrl: string): SyncTransport {
         const data = (await res.json()) as WireRecord;
         return { ok: false, conflict: toRecord(data) };
       }
+      if (res.status === 401) throw new Error("请检查同步服务的写入令牌");
+      if (res.status === 413) throw new Error("同步请求超过 4 MiB");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return { ok: true };
     },

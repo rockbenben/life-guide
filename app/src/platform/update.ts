@@ -14,7 +14,7 @@ interface DesktopUpdateBridge {
   checkForUpdate?: () => Promise<UpdateStatus>;
   downloadUpdate?: () => Promise<UpdateStatus>;
   installUpdate?: () => Promise<UpdateStatus>;
-  onUpdateChanged?: (cb: (s: UpdateStatus) => void) => void;
+  onUpdateChanged?: (cb: (s: UpdateStatus) => void) => () => void;
 }
 
 function bridge(): DesktopUpdateBridge | undefined {
@@ -86,6 +86,6 @@ export async function installUpdate(): Promise<UpdateStatus> {
 }
 
 /** 状态变了就通知一下（主进程推过来的）。 */
-export function onUpdateChanged(cb: (s: UpdateStatus) => void): void {
-  bridge()?.onUpdateChanged?.(cb);
+export function onUpdateChanged(cb: (s: UpdateStatus) => void): (() => void) | undefined {
+  return bridge()?.onUpdateChanged?.(cb);
 }

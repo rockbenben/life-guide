@@ -30,7 +30,7 @@ import { tagText } from "../domain/conditions.ts";
 import { NOTICE_LABELS, isConditionCard, plainText, sortNotices, urgentNotices } from "../domain/notices.ts";
 import { cardName } from "../domain/lines.ts";
 import { isCustomCard } from "../domain/custom.ts";
-import type { Reminder } from "../domain/reminders.ts";
+import type { ChangeReminders, Reminder } from "../domain/reminders.ts";
 import {
   cardReminderId,
   defaultReminderFor,
@@ -55,7 +55,7 @@ export interface CardProps {
   readOnly?: boolean;
   /** 这张卡的提醒（App 级的设置；绑在卡上的那一条） */
   reminders?: Reminder[];
-  onRemindersChange?: (reminders: Reminder[]) => void;
+  onRemindersChange?: ChangeReminders;
   /**
    * 屏上显示的名字。
    *
@@ -618,13 +618,13 @@ export function CardView({
                       ...reminderDefaults,
                     }}
                     onSave={(r) =>
-                      onRemindersChange([
-                        ...reminders.filter((x) => x.cardId !== card.id),
+                      onRemindersChange((current) => [
+                        ...current.filter((x) => x.cardId !== card.id),
                         r,
                       ])
                     }
                     onDelete={() =>
-                      onRemindersChange(reminders.filter((x) => x.cardId !== card.id))
+                      onRemindersChange((current) => current.filter((x) => x.cardId !== card.id))
                     }
                   />
                 </dd>

@@ -24,6 +24,8 @@ import { cardName, displayNames } from "./lines.ts";
 
 export type ReminderMode = "daily" | "weekly" | "interval" | "once";
 
+export type ChangeReminders = (update: (current: Reminder[]) => Reminder[]) => Promise<void>;
+
 export interface Reminder {
   id: string;
   /** 绑在哪张卡上；null = 整段的通用提醒 */
@@ -188,6 +190,7 @@ export function nextOccurrence(reminder: Reminder, from: Date): Date | null {
   }
 
   // interval：锚点日期 + 每隔 N 天
+  if (reminder.date === "") return null;
   const step = Math.max(1, Math.round(reminder.everyDays ?? 1));
   const anchor = reminder.date ? new Date(`${reminder.date}T00:00:00`) : new Date(from.getTime());
   if (Number.isNaN(anchor.getTime())) return null;
@@ -336,7 +339,7 @@ export function sanitizeReminders(saved: unknown): Reminder[] {
     if (!r || typeof r !== "object") continue;
     const raw = r as Partial<Reminder>;
     if (typeof raw.id !== "string" || !raw.id) continue;
-    if (!parseTime(String(raw.time ?? ""))) continue;
+    if (typeof raw.time !== "string" || !parseTime(raw.time)) continue;
     const mode: ReminderMode =
       raw.mode === "weekly" || raw.mode === "interval" || raw.mode === "once"
         ? raw.mode
@@ -350,7 +353,7 @@ export function sanitizeReminders(saved: unknown): Reminder[] {
       label: KNOWN_LABELS[raw.id] ??
         (typeof raw.label === "string" && raw.label ? raw.label : raw.id),
       mode,
-      time: String(raw.time),
+      time: raw.time,
       slot: typeof raw.slot === "string" ? raw.slot : undefined,
       days: Array.isArray(raw.days)
         ? raw.days.filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)

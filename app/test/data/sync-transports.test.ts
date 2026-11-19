@@ -40,7 +40,7 @@ function fakeFetch(
     calls.push(call);
     const res = handler(call);
     // 204/205 不能带 body —— Response 构造器会直接抛
-    const nullBody = res.status === 204 || res.status === 205;
+    const nullBody = res.status === 204 || res.status === 205 || res.status === 304;
     return new Response(nullBody ? null : (res.body ?? ""), {
       status: res.status,
       headers: res.headers ?? { "content-type": "application/json" },
@@ -108,6 +108,49 @@ describe("GitHub 落点", () => {
     expect(res.ok).toBe(false);
     if (res.ok) return;
     expect(res.conflict.rev).toBe("theirs");
+  });
+
+  it("大文件先按 SHA 读原始内容，再用该 SHA 条件写入，冲突后重新读取", async () => {
+    const large = { ...BLOB, ciphertext: Buffer.alloc(850_000).toString("base64") };
+    let revision = "first";
+    const { calls } = useFakeFetch((call) => {
+      if (call.url.includes("/git/blobs/")) return { status: 200, body: JSON.stringify(large) };
+      if (call.method === "PUT" && revision === "first") {
+        revision = "second";
+        return { status: 409 };
+      }
+      if (call.method === "PUT") return { status: 200, body: "{}" };
+      return {
+        status: 200,
+        body: JSON.stringify({ sha: revision, content: "", encoding: "none" }),
+        headers: { etag: `"${revision}-etag"` },
+      };
+    });
+    const transport = githubTransport({ repo: "o/r", token: "tkn", branch: "sync/main" });
+    const initial = await transport.fetch("space");
+    expect(initial).toMatchObject({ blob: large, rev: "first" });
+    const rejected = await transport.push("space", BLOB, initial!.rev);
+    expect(rejected).toMatchObject({ ok: false, conflict: { blob: large, rev: "second" } });
+    if (rejected.ok) throw new Error("应返回冲突");
+    expect(await transport.push("space", BLOB, rejected.conflict.rev)).toEqual({ ok: true });
+    expect(calls[0]).toMatchObject({ headers: { accept: "application/vnd.github.object+json" } });
+    expect(calls[0].url).toContain("?ref=sync%2Fmain");
+    expect(calls[1]).toMatchObject({
+      url: "https://api.github.com/repos/o/r/git/blobs/first",
+      headers: { accept: "application/vnd.github.raw+json" },
+    });
+    expect(calls[3].headers["if-none-match"]).toBeUndefined();
+    expect(calls[4].url.endsWith("/git/blobs/second")).toBe(true);
+    expect(calls.filter((c) => c.method === "PUT").map((c) => JSON.parse(c.body!).sha))
+      .toEqual(["first", "second"]);
+  });
+
+  it("大文件内容读取失败时报告错误，不进入首次创建", async () => {
+    useFakeFetch(({ url }) => url.includes("/git/blobs/")
+      ? { status: 404 }
+      : { status: 200, body: JSON.stringify({ sha: "known", content: "", encoding: "none" }) });
+    const transport = githubTransport({ repo: "o/r", token: "tkn" });
+    await expect(transport.fetch("space")).rejects.toThrow("HTTP 404");
   });
 });
 

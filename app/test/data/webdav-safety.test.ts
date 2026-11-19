@@ -47,9 +47,9 @@ describe("WebDAV 条件读取与重试回归", () => {
     );
     const t = webdavTransport(options);
     const first = await t.fetch("space");
-    const cached = await t.fetch("space");
+    const cached = await t.fetch("space", first!);
     expect(cached?.blob).toEqual(first?.blob);
-    expect(cached?.unchanged).not.toBe(true);
+    expect(cached?.rev).toBe(first?.rev);
   });
   it("PUT 成功但没有新 ETag 时，下次重新取完整文件而非沿用旧缓存", async () => {
     const requests: RequestInit[] = [];

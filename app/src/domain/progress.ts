@@ -55,23 +55,22 @@ export function slotsWithRecords(
  *
  * 页边那一排印迹用。它不是连续天数，也不参与任何判定 ——
  * 存在的意义恰恰是让人看见「断过，但没清零」。
- * dayOf 由调用方传入，避免这里自己再定一套日界线。
+ * today 是今天页已算好的逻辑日。用 UTC 递推日期字符串，避免一天的长度受时区切换影响。
  */
 export function recentActivity(
   events: DoneEvent[],
   days: number,
-  now: number,
-  dayOf: (ts: number) => string,
+  today: string,
 ): boolean[] {
   const done = new Set(
     events.filter((e) => e.periodDone !== false).map((e) => e.date),
   );
   const out: boolean[] = [];
-  for (let i = days - 1; i >= 0; i--) {
-    // 取当天正午：凌晨那几小时属于「昨天」，用 00:00 减一天会算错格
-    const noon = new Date(new Date(now).setHours(12, 0, 0, 0));
-    noon.setDate(noon.getDate() - i);
-    out.push(done.has(dayOf(noon.getTime())));
+  const day = new Date(`${today}T00:00:00Z`);
+  day.setUTCDate(day.getUTCDate() - days + 1);
+  for (let index = 0; index < days; index++) {
+    out.push(done.has(day.toISOString().slice(0, 10)));
+    day.setUTCDate(day.getUTCDate() + 1);
   }
   return out;
 }

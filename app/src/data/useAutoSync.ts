@@ -36,15 +36,19 @@ let lastRun = 0;
 /** 失败之后的冷却到什么时候。 */
 let coolingUntil = 0;
 
-export function useAutoSync(onSynced: () => void): void {
+export function useAutoSync(ready: boolean, callbacks: {
+  prepare: () => Promise<boolean>;
+  onSynced: () => void;
+}): void {
   /**
    * 回调放进 ref：外面每次渲染都会传一个新的函数进来，
    * effect 不该因为它重跑（重跑 = 多同步一次）。
    */
-  const cb = useRef(onSynced);
-  cb.current = onSynced;
+  const cb = useRef(callbacks);
+  cb.current = callbacks;
 
   useEffect(() => {
+    if (!ready) return;
     let running = false;
 
     async function run(): Promise<void> {
@@ -52,19 +56,22 @@ export function useAutoSync(onSynced: () => void): void {
       const now = Date.now();
       if (now < coolingUntil) return;
       if (now - lastRun < MIN_INTERVAL) return;
-      // 上一次**成功**的同步（跨会话也算：手动同步过一次就别再自动来一遍）
-      const lastAt = await lastSyncAt();
-      if (lastAt && now - lastAt < MIN_INTERVAL) return;
-
       running = true;
-      lastRun = now;
       try {
+        // 上一次**成功**的同步（跨会话也算：手动同步过一次就别再自动来一遍）
+        const lastAt = await lastSyncAt();
+        if (lastAt && now - lastAt < MIN_INTERVAL) return;
+        lastRun = now;
         const cfg = await readSyncConfig();
         // 没开、没配好 —— 不是错误，是「这台设备没打算同步」
         if (syncConfigProblem(cfg)) return;
+        if (!(await cb.current.prepare())) {
+          coolingUntil = Date.now() + COOLDOWN;
+          return;
+        }
         const report = await syncNow(createTransport(cfg), cfg);
         if (report.added || report.updated || report.removed || report.settingsChanged) {
-          cb.current();
+          cb.current.onSynced();
         }
         if (!report.ok) {
           // 失败就冷却：别每次切前台都失败一次
@@ -113,5 +120,5 @@ export function useAutoSync(onSynced: () => void): void {
       clearInterval(timer);
       document.removeEventListener("visibilitychange", onVisible);
     };
-  }, []);
+  }, [ready]);
 }

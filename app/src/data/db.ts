@@ -270,6 +270,31 @@ export async function setSetting(key: string, value: unknown): Promise<void> {
   await (await db()).put("settings", { key, value, updatedAt: nowTick() });
 }
 
+/** 在同一事务中读取并更新设置。返回 undefined 表示无需写入。 */
+export async function updateSetting(
+  key: string,
+  update: (value: unknown) => unknown,
+): Promise<void> {
+  const tx = (await db()).transaction("settings", "readwrite");
+  try {
+    const row = await tx.store.get(key);
+    const value = update(row?.value);
+    if (value !== undefined) {
+      absorbTick(row?.updatedAt ?? 0);
+      await tx.store.put({ key, value, updatedAt: nowTick() });
+    }
+    await tx.done;
+  } catch (error) {
+    try {
+      tx.abort();
+    } catch {
+      /* 事务可能已中止。 */
+    }
+    await tx.done.catch(() => {});
+    throw error;
+  }
+}
+
 /**
  * 按**指定的时刻**写一项设置。
  *
@@ -310,21 +335,36 @@ export async function replaceUserData(data: {
     "readwrite",
   );
   try {
-    for (const row of [...data.events, ...data.custom, ...data.tombstones]) {
+    const settings = tx.objectStore("settings");
+    const tombstones = tx.objectStore("tombstones");
+    const [savedClock, localTombstones] = await Promise.all([
+      settings.get("syncClock"),
+      tombstones.getAll(),
+    ]);
+    absorbTick(Number(savedClock?.value ?? 0));
+    // 恢复是一次新修改。保留已知删除标记，并让恢复的记录排在它们之后。
+    const deleted = new Map(localTombstones.map((t) => [t.key, t]));
+    for (const item of data.tombstones) {
+      const key = `${item.kind}:${item.id}`;
+      const previous = deleted.get(key);
+      if (!previous || previous.updatedAt < item.updatedAt) {
+        deleted.set(key, { ...item, key });
+      }
+    }
+    for (const row of [...data.events, ...data.custom, ...deleted.values()]) {
       absorbTick(row.updatedAt ?? 0);
     }
     await tx.objectStore("events").clear();
     await tx.objectStore("custom").clear();
-    await tx.objectStore("tombstones").clear();
     for (const e of data.events)
       await tx
         .objectStore("events")
-        .add({ ...e, updatedAt: e.updatedAt ?? nowTick() });
+        .add({ ...e, updatedAt: nowTick() });
     for (const h of data.custom)
       await tx
         .objectStore("custom")
-        .add({ ...h, updatedAt: h.updatedAt ?? nowTick() });
-    for (const t of data.tombstones) await tx.objectStore("tombstones").add(t);
+        .add({ ...h, updatedAt: nowTick() });
+    for (const t of deleted.values()) await tombstones.put(t);
     for (const [key, value] of Object.entries(data.settings)) {
       await tx
         .objectStore("settings")

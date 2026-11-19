@@ -4,18 +4,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks"
 import { registerSW } from "virtual:pwa-register";
 
 import { Today } from "./ui/Today.tsx";
+import { buildFormerMap } from "./domain/former.ts";
 import type { Card } from "./domain/routine.ts";
 import { variantAvailability } from "./domain/routine.ts";
 import type { ManualArticle, ManualIndexEntry } from "./domain/manual.ts";
-import { getSetting, setSetting, initClock } from "./data/db.ts";
+import { getSetting, updateSetting, initClock } from "./data/db.ts";
 import { useRoutine } from "./data/useRoutine.ts";
 import { useAutoSync } from "./data/useAutoSync.ts";
-import { migrateUserData } from "./data/migrate.ts";
+import { migrateReminderIds, migrateUserData } from "./data/migrate.ts";
 import {
   DEFAULT_REMINDERS,
   buildSpecs,
   normalizeReminders,
   sanitizeReminders,
+  type ChangeReminders,
   type Reminder,
 } from "./domain/reminders.ts";
 import { onReminderDue, schedule } from "./platform/notify.ts";
@@ -93,6 +95,7 @@ export function App() {
    * 浏览器到点、桌面主进程到点问回来，都会拧一下这个。
    */
   const [tick, setTick] = useState(0);
+  const [scheduleFailed, setScheduleFailed] = useState(false);
   const [articles, setArticles] = useState<ManualArticle[]>([]);
   /** 手册目录（cards.json 自带）：先画列表，全文按需再取 */
   const [manualIndex, setManualIndex] = useState<ManualIndexEntry[]>([]);
@@ -136,7 +139,30 @@ export function App() {
    * 收到远端的数据就把 dataEpoch 拧一下 ——
    * 清单、条件、提醒、盖章记录都要重新读一遍，界面才跟库里一致。
    */
-  useAutoSync(() => setDataEpoch((e) => e + 1));
+  const migrationPending = useRef(false);
+  const tryMigrate = useCallback(async (loaded: Card[]) => {
+    try {
+      const moved = await migrateUserData(loaded);
+      migrationPending.current = false;
+      return Object.values(moved).some(Boolean);
+    } catch (error) {
+      migrationPending.current = true;
+      console.warn("旧卡数据迁移失败", error);
+      return false;
+    }
+  }, []);
+  const refreshUserData = useCallback(async () => {
+    await tryMigrate(cards);
+    setReminders(sanitizeReminders(await getSetting("reminders", undefined)));
+    setDataEpoch((e) => e + 1);
+  }, [cards, tryMigrate]);
+  useAutoSync(!loading && !error, {
+    prepare: async () => {
+      if (migrationPending.current) await refreshUserData();
+      return !migrationPending.current;
+    },
+    onSynced: () => void refreshUserData().catch(console.warn),
+  });
 
   /**
    * 内容层的卡 + 用户自己的习惯。
@@ -161,6 +187,8 @@ export function App() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const bundle = await res.json();
         const loaded: Card[] = bundle.cards ?? [];
+        const moved = await tryMigrate(loaded);
+        setReminders(sanitizeReminders(await getSetting("reminders", undefined)));
         setCards(loaded);
         setManualIndex(bundle.articles ?? []);
         setDefaultRoutine(bundle.defaultRoutine ?? []);
@@ -170,12 +198,7 @@ export function App() {
          * 不做这一步，用户攒下的记录会指向已经不存在的卡 ——
          * 「已做 38 天」会变成「已做 0 天」（AGENTS.md §5）。
          */
-        void (async () => {
-          const moved = await migrateUserData(loaded);
-          if (moved.events || moved.routine || moved.cadence || moved.skipToday) {
-            setDataEpoch((e) => e + 1);
-          }
-        })();
+        if (moved) setDataEpoch((e) => e + 1);
       } catch (e) {
         setError(
           `读不到 cards.json（${e instanceof Error ? e.message : String(e)}）。`,
@@ -186,7 +209,7 @@ export function App() {
         registerServiceWorker();
       }
     })();
-  }, [reloadKey]);
+  }, [reloadKey, tryMigrate]);
 
   /**
    * 手册全文：**打开文章或搜正文时才取**。
@@ -234,18 +257,6 @@ export function App() {
     }
   }, [tab, loading, manualIndex.length, manualState, ensureManual]);
 
-  // 提醒的设置（清单那边在 useRoutine 里管，不在这里再存一份）
-  // dataEpoch 变了也要重读：导入备份会换掉提醒，不重读的话界面还摆着旧的，
-  // 用户改任意一条就把刚导入的那份挤掉了。
-  useEffect(() => {
-    void (async () => {
-      // 没存过（undefined）与「自己清空了」（[]）要分得开：
-      // 前者给默认的两条，后者就是空的，别把用户删掉的塞回去
-      const rem = await getSetting<Reminder[] | undefined>("reminders", undefined);
-      setReminders(sanitizeReminders(rem));
-    })();
-  }, [dataEpoch]);
-
   // 桌面端：主进程到点了会问渲染层要下一次 —— 拧一下重排
   useEffect(() => {
     onReminderDue(() => setTick((t) => t + 1));
@@ -255,15 +266,25 @@ export function App() {
   useEffect(() => {
     if (!allCards.length) return;
     const specs = buildSpecs(allCards, routine.ids, reminders, new Date(), routine.skipped);
-    void schedule(specs, () => setTick((t) => t + 1));
+    let current = true;
+    void schedule(specs, () => setTick((t) => t + 1)).then((scheduled) => {
+      if (current && scheduled !== undefined) setScheduleFailed(!scheduled);
+    });
+    return () => { current = false; };
   }, [allCards, routine.ids, routine.skipped, reminders, tick]);
 
   /** 改了提醒：存起来 + 立刻重排 */
-  async function changeReminders(next: Reminder[]) {
-    const clean = normalizeReminders(next);
-    setReminders(clean);
-    await setSetting("reminders", clean);
-  }
+  const changeReminders: ChangeReminders = async (update) => {
+    const former = buildFormerMap(cards);
+    let next: Reminder[] = [];
+    await updateSetting("reminders", (saved) => {
+      const { reminders: current, moved } = migrateReminderIds(sanitizeReminders(saved), former);
+      const changed = update(current);
+      next = changed === current ? current : normalizeReminders(changed);
+      if (changed !== current || moved) return next;
+    });
+    setReminders(next);
+  };
 
   /** 换页：地址栏也跟着变（网页的前进后退因此能换页，链接也能直接进某一页） */
   function goTab(next: Tab) {
@@ -421,8 +442,9 @@ export function App() {
               reminders={reminders}
               onRemindersChange={changeReminders}
               onRefreshSchedule={() => setTick((t) => t + 1)}
+              scheduleFailed={scheduleFailed}
               refreshKey={dataEpoch}
-              onDataImported={() => setDataEpoch((e) => e + 1)}
+              onDataImported={refreshUserData}
               skipped={routine.skipped}
               routine={routine.ids}
             />
