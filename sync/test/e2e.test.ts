@@ -19,7 +19,7 @@ import {
   SYNC_PAYLOAD_VERSION,
   type SyncPayload,
 } from "../../app/src/domain/sync.ts";
-import { testServer } from "./server.ts";
+import { testServer, WRITE_TOKEN } from "./server.ts";
 
 const server = testServer();
 let base = "";
@@ -42,12 +42,21 @@ function payload(over: Partial<SyncPayload>): SyncPayload {
 }
 
 describe("端到端", () => {
+  it("App 的 HTTP 传输只在写入时使用部署令牌", async () => {
+    const { key, spaceId } = await deriveSecret(PASS + "write authorization");
+    const blob = await encryptPayload(key, payload({}));
+    const rejected = httpTransport(base, "wrong-fixture");
+    await expect(rejected.push(spaceId, blob, null)).rejects.toThrow("写入令牌");
+    expect(await rejected.fetch(spaceId)).toBeNull();
+    expect(await httpTransport(base, WRITE_TOKEN).push(spaceId, blob, null)).toEqual({ ok: true });
+    expect(await rejected.fetch(spaceId)).toMatchObject({ blob, rev: "1" });
+  });
   it.each(["同时首次创建", "同版本并发更新"])(
     "%s 冲突后合并重试，两台设备都读到全部记录",
     async (scenario) => {
       const { key, spaceId } = await deriveSecret(PASS + scenario);
-      const a = httpTransport(base);
-      const b = httpTransport(base);
+      const a = httpTransport(base, WRITE_TOKEN);
+      const b = httpTransport(base, WRITE_TOKEN);
       if (scenario === "同版本并发更新") {
         expect(
           (await a.push(spaceId, await encryptPayload(key, payload({})), null))
@@ -96,7 +105,7 @@ describe("端到端", () => {
           )
         ).ok,
       ).toBe(true);
-      for (const transport of [httpTransport(base), httpTransport(base)]) {
+      for (const transport of [httpTransport(base, WRITE_TOKEN), httpTransport(base, WRITE_TOKEN)]) {
         const current = await transport.fetch(spaceId);
         expect(current?.rev).toBe(scenario === "同时首次创建" ? "2" : "3");
         const final = await decryptPayload(key, current!.blob);
@@ -109,7 +118,7 @@ describe("端到端", () => {
     const { key, spaceId } = await deriveSecret(
       PASS + expect.getState().currentTestName,
     );
-    const transport = httpTransport(base);
+    const transport = httpTransport(base, WRITE_TOKEN);
 
     // A 设备先写：一条记录 + 一个清单
     const a = payload({
@@ -184,7 +193,7 @@ describe("端到端", () => {
     const { key, spaceId } = await deriveSecret(
       PASS + expect.getState().currentTestName,
     );
-    const transport = httpTransport(base);
+    const transport = httpTransport(base, WRITE_TOKEN);
 
     // 先有一份
     await transport.push(
@@ -265,7 +274,7 @@ describe("端到端", () => {
     const { key, spaceId } = await deriveSecret(
       PASS + expect.getState().currentTestName,
     );
-    const transport = httpTransport(base);
+    const transport = httpTransport(base, WRITE_TOKEN);
     await transport.push(spaceId, await encryptPayload(key, payload({})), null);
 
     const other = await deriveSecret("另一句口令-2026");
@@ -279,7 +288,7 @@ describe("端到端", () => {
     const { key, spaceId } = await deriveSecret(
       PASS + expect.getState().currentTestName,
     );
-    const transport = httpTransport(base);
+    const transport = httpTransport(base, WRITE_TOKEN);
     await transport.push(
       spaceId,
       await encryptPayload(

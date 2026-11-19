@@ -20,6 +20,7 @@ App 那一侧在 `app/src/data/sync*.ts`；这一侧只有两个动作：按空�
 ```
 GET  /blob/{spaceId}              → { iv, ciphertext, rev, updatedAt }，没有就 404
 PUT  /blob/{spaceId}  {iv, ciphertext, baseRev}
+     Authorization: Bearer <SYNC_WRITE_TOKEN>
      → 200 { ok: true, rev }；版本对不上就 409 + 当前那份（客户端合完再推）
 ```
 
@@ -32,6 +33,7 @@ PUT  /blob/{spaceId}  {iv, ciphertext, baseRev}
 npm ci
 npx wrangler login
 npx wrangler deploy --config sync/wrangler.toml
+npx wrangler secret put SYNC_WRITE_TOKEN --config sync/wrangler.toml
 ```
 
 配置中的 `SYNC_SPACES` 绑定指向 `SyncSpace`。
@@ -39,8 +41,13 @@ npx wrangler deploy --config sync/wrangler.toml
 请求使用空间 id 调用 `getByName()`，每个空间拥有独立的持久化快照。
 
 部署完会得到一个地址（`https://life-guide-sync.<子域>.workers.dev`）。
-把它填进 App 的「设置 → 多设备同步 → 同步地址」，
-再在每台设备上填**同一个同步口令**，就成了。
+为每个部署生成独立的随机写入令牌，例如使用 `openssl rand -hex 32`，并在上面的命令提示中输入。
+在每台设备的「设置 → 多设备同步 → 自己搭的中转服务」填写 HTTPS 地址、写入令牌和同一个同步口令。
+写入令牌授权该部署上的写入，请只发给信任的设备。同步口令用于端到端加密，仍保存在各设备上。
+
+升级现有 Worker 后须设置 secret，并给客户端补填写入令牌。
+缺少 secret 时 PUT 返回 503，凭据缺失或错误时返回 401。
+GET 仍可按空间 ID 读取密文。Worker 按实际读取的字节限制 PUT 请求体为 4 MiB，超出返回 413。
 
 ## 允许哪些来源
 
@@ -51,7 +58,7 @@ ALLOWED_ORIGINS = "https://life.newzone.top,http://localhost:5173"
 ```
 
 不配就是全放行。浏览器来源通过 CORS 控制，脚本或 curl 仍可直接访问服务。
-预检允许 `content-type` 与 `if-none-match`，客户端可以条件读取已见过的版本。
+预检允许 `authorization`、`content-type` 和 `if-none-match`，客户端可以条件读取已验证并合并的版本。
 
 ## 版本与原子写入
 

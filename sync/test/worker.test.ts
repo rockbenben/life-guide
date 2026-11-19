@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { spaceIdFromPath, type StoredBlob } from "../src/worker.ts";
-import { testServer } from "./server.ts";
+import { handleRequest, MAX_WRITE_BYTES, spaceIdFromPath, type StoredBlob } from "../src/worker.ts";
+import { testServer, WRITE_TOKEN } from "./server.ts";
 
 const server = testServer();
 let space: string;
@@ -10,10 +10,14 @@ beforeEach(() => {
 
 const get = (headers: Record<string, string> = {}) =>
   server.fetch(`/blob/${space}`, { headers });
+const writeHeaders = {
+  authorization: `Bearer ${WRITE_TOKEN}`,
+  "content-type": "application/json",
+};
 const put = (body: unknown) =>
   server.fetch(`/blob/${space}`, {
     method: "PUT",
-    headers: { "content-type": "application/json" },
+    headers: writeHeaders,
     body: JSON.stringify(body),
   });
 const blob = async (response: Awaited<ReturnType<typeof get>>) =>
@@ -29,6 +33,53 @@ describe("空间 id", () => {
 });
 
 describe("实际 Worker 与 Durable Object", () => {
+  it("没有令牌或令牌错误时拒绝写入，已有密文仍可读取", async () => {
+    await put({ iv: "original", ciphertext: "original", baseRev: null });
+    for (const authorization of ["", "Bearer wrong-fixture"]) {
+      const response = await server.fetch(`/blob/${space}`, {
+        method: "PUT", headers: { authorization }, body: "无需解析的无效 JSON",
+      });
+      expect(response.status).toBe(401);
+      expect(response.headers.get("www-authenticate")).toBe("Bearer");
+    }
+    expect(await blob(await get())).toMatchObject({ rev: 1, ciphertext: "original" });
+  });
+
+  it("未配置 Worker 写入令牌时关闭 PUT", async () => {
+    const response = await handleRequest(new Request(`https://fixture.invalid/blob/${space}`, {
+      method: "PUT", headers: writeHeaders, body: "{}",
+    }), { getByName: () => { throw new Error("拒绝前不应访问存储"); } });
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({ error: "同步服务未配置写入令牌" });
+  });
+
+  it("限制请求的实际字节数，包括没有 Content-Length 的分块传输", async () => {
+    const body = { iv: "iv", ciphertext: "", baseRev: null };
+    const valid = { ...body, ciphertext: "a".repeat(MAX_WRITE_BYTES - JSON.stringify(body).length) };
+    expect((await put(valid)).status).toBe(200);
+    const oversized = { ...body, baseRev: 1, ciphertext: "界".repeat(Math.ceil(MAX_WRITE_BYTES / 3)) };
+    expect((await put(oversized)).status).toBe(413);
+    const bytes = new TextEncoder().encode(JSON.stringify(oversized));
+    let offset = 0;
+    const request = {
+      method: "PUT",
+      headers: writeHeaders,
+      body: new ReadableStream<Uint8Array>({
+        pull(controller) {
+          if (offset >= bytes.length) controller.close();
+          else {
+            controller.enqueue(bytes.subarray(offset, offset + 65536));
+            offset += 65536;
+          }
+        },
+      }),
+      duplex: "half" as const,
+    };
+    const { url } = await server.listen();
+    expect((await fetch(new URL(`/blob/${space}`, url), request)).status).toBe(413);
+    expect((await blob(await get())).rev).toBe(1);
+  });
+
   it("未创建时读取为 404", async () => {
     expect((await get()).status).toBe(404);
   });
@@ -98,6 +149,7 @@ describe("实际 Worker 与 Durable Object", () => {
       (
         await server.fetch(`/blob/${space}`, {
           method: "PUT",
+          headers: writeHeaders,
           body: "bad json",
         })
       ).status,
@@ -118,6 +170,7 @@ describe("实际 Worker 与 Durable Object", () => {
     expect(response.headers.get("access-control-allow-headers")).toContain(
       "if-none-match",
     );
+    expect(response.headers.get("access-control-allow-headers")).toContain("authorization");
     expect(response.headers.get("access-control-allow-origin")).toBe(
       headers.origin,
     );
@@ -176,6 +229,7 @@ describe("实际 Worker 与 Durable Object", () => {
       (
         await server.fetch(`/blob/${crypto.randomUUID()}`, {
           method: "PUT",
+          headers: writeHeaders,
           body: JSON.stringify({ iv: "b", ciphertext: "b", baseRev: null }),
         })
       ).status,

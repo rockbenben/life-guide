@@ -23,6 +23,8 @@
  * 责任最清楚。
  */
 
+import type { SubtleCrypto as WorkerSubtleCrypto } from "@cloudflare/workers-types";
+
 /** 一个空间只对应一个 Durable Object，条件写入由对象内部原子完成。 */
 export interface SpaceStore {
   read(): Promise<StoredBlob | null>;
@@ -56,9 +58,48 @@ export type StoredBlob = {
 export interface WorkerOptions {
   /** 允许的来源；空 = 不限 */
   allowedOrigins?: string[];
+  writeToken?: string;
 }
 
 const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
+// 给 SQLite 的单行上限留余量，也限制解析 JSON 前需要缓冲的字节。
+export const MAX_WRITE_BYTES = 4 * 1024 * 1024;
+class WriteTooLarge extends Error {}
+
+async function writeAuthorized(header: string | null, token: string): Promise<boolean> {
+  const supplied = /^Bearer (\S+)$/i.exec(header ?? "")?.[1];
+  if (!supplied) return false;
+  const encoder = new TextEncoder();
+  const subtle = crypto.subtle as SubtleCrypto & Pick<WorkerSubtleCrypto, "timingSafeEqual">;
+  const [expected, actual] = await Promise.all(
+    [token, supplied].map((value) => subtle.digest("SHA-256", encoder.encode(value))),
+  );
+  return subtle.timingSafeEqual(expected, actual);
+}
+
+async function readWriteBody(request: Request): Promise<unknown> {
+  if (Number(request.headers.get("content-length")) > MAX_WRITE_BYTES) throw new WriteTooLarge();
+  const reader = request.body?.getReader();
+  if (!reader) throw new SyntaxError("缺少请求体");
+  const decoder = new TextDecoder("utf-8", { fatal: true });
+  let bytes = 0;
+  let text = "";
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > MAX_WRITE_BYTES) {
+        void reader.cancel().catch(() => {});
+        throw new WriteTooLarge();
+      }
+      text += decoder.decode(value, { stream: true });
+    }
+    return JSON.parse(text + decoder.decode());
+  } finally {
+    reader.releaseLock();
+  }
+}
 
 /**
  * 跨域头：App 的页面在别处（life.newzone.top / 镜像站 / 本机开发）。
@@ -75,7 +116,7 @@ function corsHeaders(
   return {
     ...(ok && origin ? { "access-control-allow-origin": origin } : {}),
     "access-control-allow-methods": "GET, PUT, OPTIONS",
-    "access-control-allow-headers": "content-type, if-none-match",
+    "access-control-allow-headers": "authorization, content-type, if-none-match",
     "access-control-max-age": "86400",
     vary: "origin",
   };
@@ -101,8 +142,7 @@ export function spaceIdFromPath(pathname: string): string | null {
 /**
  * 处理一次请求。
  *
- * 逻辑与平台无关（只用 Request / Response / SpaceNamespace），
- * 所以能直接单测 —— 真的部署时才碰到 Cloudflare 的运行时。
+ * 存储通过 SpaceNamespace 注入，令牌比较使用 Workers 的 Web Crypto 扩展。
  */
 export async function handleRequest(
   request: Request,
@@ -146,10 +186,19 @@ export async function handleRequest(
     }
 
     if (request.method === "PUT") {
+      if (!options.writeToken) return json({ error: "同步服务未配置写入令牌" }, 503, cors);
+      if (!(await writeAuthorized(request.headers.get("authorization"), options.writeToken))) {
+        return json({ error: "同步服务写入令牌无效" }, 401, {
+          ...cors, "www-authenticate": "Bearer",
+        });
+      }
       let body: { iv?: unknown; ciphertext?: unknown; baseRev?: unknown };
       try {
-        body = (await request.json()) as typeof body;
-      } catch {
+        body = (await readWriteBody(request)) as typeof body;
+      } catch (error) {
+        if (error instanceof WriteTooLarge) {
+          return json({ error: "同步请求超过 4 MiB" }, 413, cors);
+        }
         return json({ error: "请求体不是 JSON" }, 400, cors);
       }
       if (

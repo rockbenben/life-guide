@@ -8,6 +8,7 @@ export interface Env {
   SYNC_SPACES: DurableObjectNamespace<SyncSpace>;
   /** 逗号分隔的浏览器来源白名单，空值表示不限。 */
   ALLOWED_ORIGINS?: string;
+  SYNC_WRITE_TOKEN?: string;
 }
 
 export default {
@@ -16,6 +17,9 @@ export default {
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
-    return handleRequest(request, env.SYNC_SPACES, { allowedOrigins: allowed });
+    return handleRequest(request, env.SYNC_SPACES, {
+      allowedOrigins: allowed,
+      writeToken: env.SYNC_WRITE_TOKEN?.trim(),
+    });
   },
 };
