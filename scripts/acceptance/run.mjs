@@ -35,16 +35,26 @@ import { fileURLToPath } from "node:url";
 import { startServer } from "./server.mjs";
 import { launchBrowser } from "./helpers.mjs";
 import {
+  checkActivityDayBoundary,
   checkCardCollapse,
   checkCardReminder,
+  checkDesktopUpdateSubscription,
   checkEventsRoundTrip,
+  checkHttpSyncCache,
   checkIcs,
   checkImportRefreshesRoutine,
   checkNavigation,
+  checkNativeReminderRetry,
   checkOffline,
   checkReminderLifecycle,
+  checkReminderEditDuringImport,
+  checkReminderImportDuringSyncConflict,
   checkSkipToday,
+  checkStartupWithBadReminder,
+  checkStartupSyncWaitsForReminders,
+  checkStartupSyncRecovery,
   checkStepTimer,
+  checkSyncDestinations,
   checkTimer,
 } from "./checks.mjs";
 
@@ -150,7 +160,12 @@ async function main() {
     results.push(await checkOffline({ browser, baseURL }));
     results.push(await checkIcs({ browser, baseURL }));
     results.push(await checkEventsRoundTrip({ browser, baseURL }));
+    results.push(await checkActivityDayBoundary({ browser, baseURL }));
     results.push(await checkCardReminder({ browser, baseURL }));
+    results.push(await checkSyncDestinations({ browser, baseURL }));
+    results.push(await checkHttpSyncCache({ browser, baseURL }));
+    results.push(await checkNativeReminderRetry({ browser, baseURL }));
+    results.push(await checkDesktopUpdateSubscription({ browser, baseURL }));
     results.push(await checkReminderLifecycle({ browser, baseURL }));
     results.push(await checkSkipToday({ browser, baseURL }));
     results.push(await checkCardCollapse({ browser, baseURL }));
@@ -158,6 +173,12 @@ async function main() {
     results.push(await checkStepTimer({ browser, baseURL }));
     results.push(await checkNavigation({ browser, baseURL }));
     results.push(await checkImportRefreshesRoutine({ browser, baseURL }));
+    results.push(await checkStartupWithBadReminder({ browser, baseURL }));
+    results.push(await checkStartupSyncWaitsForReminders({ browser, baseURL }));
+    results.push(await checkStartupSyncRecovery({ browser, baseURL }));
+    results.push(await checkStartupSyncRecovery({ browser, baseURL, migrationAbort: true }));
+    results.push(await checkReminderEditDuringImport({ browser, baseURL }));
+    results.push(await checkReminderImportDuringSyncConflict({ browser, baseURL }));
   } finally {
     await browser.close();
     await server?.close();

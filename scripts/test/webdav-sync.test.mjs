@@ -189,23 +189,34 @@ describe("实际 HTTP WebDAV、加密与两端数据库", () => {
       );
     },
   );
-  it("解密失败后的 304 不能误报成功或覆盖远端", async () => {
+  it("解密失败不缓存坏版本，远端修复后能重新使用 304", async () => {
     const a = await client();
     await add(a);
     expect((await a.run()).ok).toBe(true);
+    expect((await a.run()).ok).toBe(true);
     const priorAt = await a.db.getSetting("syncLastAt", null);
+    const known = `"${rev}"`;
     const data = await remote();
+    const validSnapshot = snapshot;
     const wrong = await deriveSecret("different-key-only-for-test");
     snapshot = JSON.stringify(await encryptPayload(wrong.key, data));
     rev++;
     const beforeWrites = requests.filter((x) => x.method === "PUT").length;
     expect((await a.run()).ok).toBe(false);
+    expect(requests.at(-1).headers["if-none-match"]).toBe(known);
     expect((await a.run()).ok).toBe(false);
-    expect(requests.at(-1).headers["if-none-match"]).toBe('"' + rev + '"');
+    expect(requests.at(-1).headers["if-none-match"]).toBe(known);
     expect(requests.filter((x) => x.method === "PUT")).toHaveLength(
       beforeWrites,
     );
     expect(await a.db.getSetting("syncLastAt", null)).toBe(priorAt);
+
+    snapshot = validSnapshot;
+    rev++;
+    expect((await a.run()).ok).toBe(true);
+    expect((await a.run()).ok).toBe(true);
+    expect(requests.at(-1).headers["if-none-match"]).toBe(`"${rev}"`);
+    expect(requests.filter((x) => x.method === "PUT")).toHaveLength(beforeWrites);
   });
   it("连续两次冲突明确失败，保留本地合并结果，下轮可恢复", async () => {
     const a = await client(),

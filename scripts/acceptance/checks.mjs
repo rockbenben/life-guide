@@ -19,6 +19,8 @@ import { readFile, writeFile, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
+import { decryptPayload, deriveSecret, encryptPayload } from "../../app/src/data/sync-crypto.ts";
+import { validatePayload } from "../../app/src/data/validate.ts";
 import { validateIcs } from "./ics-rules.mjs";
 import {
   countLoadedImages,
@@ -294,6 +296,7 @@ function sortedEvents(events) {
 export async function checkEventsRoundTrip({ browser, baseURL }) {
   const context = await browser.newContext({ acceptDownloads: true });
   const page = await context.newPage();
+  page.setDefaultTimeout(10000);
   const details = [];
   const failures = [];
 
@@ -320,6 +323,21 @@ export async function checkEventsRoundTrip({ browser, baseURL }) {
     await gotoTab(page, "设置");
     await page.getByText(/当前记录/).first().waitFor({ timeout: 10000 });
 
+    const morning = page.locator(".lg-remblock").filter({
+      has: page.getByRole("radiogroup", { name: "早晨提醒方式" }),
+    });
+    await morning.getByRole("radio", { name: "每周" }).click();
+    const selectedDays = morning.getByRole("button", { pressed: true });
+    await selectedDays.first().waitFor();
+    const dayLabels = await selectedDays.evaluateAll((buttons) =>
+      buttons.map((button) => button.getAttribute("aria-label")),
+    );
+    for (const name of dayLabels) {
+      await morning.getByRole("button", { name, pressed: true }).click();
+      await morning.getByRole("button", { name, pressed: false }).waitFor();
+    }
+    await morning.getByText(/排不出下一次/).waitFor();
+
     const before = await readRecordCount(page);
     if (before !== n) {
       failures.push(`勾选后「当前记录」是 ${before} 条，期望 ${n} 条`);
@@ -333,6 +351,10 @@ export async function checkEventsRoundTrip({ browser, baseURL }) {
     const file1 = await dl1.path();
     if (!file1) throw new Error("点「导出数据」没有产生下载文件");
     const backup1 = JSON.parse(await readFile(file1, "utf8"));
+    const reminder = backup1.reminders?.find((item) => item.id === "morning");
+    if (reminder?.mode !== "weekly" || reminder.days?.length !== 0) {
+      failures.push("备份未保留取消所有星期后的早晨提醒");
+    }
     if (!Array.isArray(backup1.events)) {
       failures.push("导出的 JSON 里没有 events 数组");
     }
@@ -374,6 +396,12 @@ export async function checkEventsRoundTrip({ browser, baseURL }) {
     const file2 = await dl2.path();
     if (!file2) throw new Error("第二次点「导出数据」没有产生下载文件");
     const backup2 = JSON.parse(await readFile(file2, "utf8"));
+    const restored = backup2.reminders?.find((item) => item.id === "morning");
+    if (restored?.mode !== "weekly" || restored.days?.length !== 0) {
+      failures.push("恢复后早晨提醒的星期选择发生变化");
+    } else {
+      details.push("取消最后一个星期后，提醒仍能导出并恢复。");
+    }
 
     const a = sortedEvents(backup1.events);
     const b = sortedEvents(backup2.events);
@@ -401,6 +429,90 @@ export async function checkEventsRoundTrip({ browser, baseURL }) {
   return { id: "events", title: "导出 → 清空 → 导入后事件日志逐条一致", details, failures };
 }
 
+export async function checkActivityDayBoundary({ browser, baseURL }) {
+  const context = await browser.newContext({ timezoneId: "Asia/Shanghai" });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const failures = [];
+  const details = [];
+  try {
+    await page.clock.install({ time: new Date("2026-11-19T03:59:00+08:00") });
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    await seedToday(page);
+    await page.locator('.lg-day-date[datetime="2026-11-18"]').waitFor();
+    await page.getByRole("button", { name: /盖上今天这一格|标记完成/ }).first().click();
+    const dots = page.locator(".lg-overview .lg-dot");
+    await dots.last().waitFor();
+    const tail = () => dots.evaluateAll((nodes) =>
+      nodes.slice(-2).map((node) => node.hasAttribute("data-on")));
+    const before = await tail();
+    if (before[0] || !before[1]) throw new Error(`03:59 盖章后最后一格应点亮，实际为 ${before}`);
+
+    await page.clock.fastForward(60_000);
+    await page.locator('.lg-day-date[datetime="2026-11-19"]').waitFor();
+    const after = await tail();
+    if (!after[0] || after[1]) throw new Error(`04:00 翻日后点亮的格应左移，实际为 ${after}`);
+    details.push("03:59 盖章点亮最后一格，跨过 04:00 后日期和印迹一起翻日。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "activity-day-boundary", title: "活动图跟随 04:00 日界线", details, failures };
+}
+
+export async function checkDesktopUpdateSubscription({ browser, baseURL }) {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const failures = [];
+  const details = [];
+  try {
+    await page.addInitScript(() => {
+      const listeners = new Set();
+      window.testDesktopUpdates = {
+        count: () => listeners.size,
+        push: (status) => {
+          for (const listener of listeners) listener(status);
+        },
+      };
+      window.lifeGuide = {
+        isDesktop: true,
+        updateStatus: async () => ({ state: "idle" }),
+        onUpdateChanged: (listener) => {
+          listeners.add(listener);
+          return () => { listeners.delete(listener); };
+        },
+      };
+    });
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    const waitForListenerCount = (count) => page.waitForFunction(
+      (expected) => window.testDesktopUpdates.count() === expected,
+      count, { timeout: 5000 },
+    );
+    for (let index = 0; index < 3; index++) {
+      await gotoTab(page, "设置");
+      await page.getByText("还没检查过更新", { exact: true }).waitFor();
+      await waitForListenerCount(1);
+      await page.evaluate((version) => {
+        window.testDesktopUpdates.push({ state: "available", version });
+      }, `9.8.${index}`);
+      await page.getByRole("button", { name: "下载更新" }).waitFor();
+      await gotoTab(page, "今天");
+      await page.getByRole("heading", { name: "今天", exact: true }).waitFor();
+      await waitForListenerCount(0);
+    }
+    details.push("反复打开设置，每次只有一个更新监听器，能收到状态推送，离开后监听器为零。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "desktop-update-subscription", title: "桌面设置页退出时释放更新订阅", details, failures };
+}
+
 /* ------------------------------------------------------------------ */
 /* 4. 卡片上设的提醒：存得住、看得见、删得掉                            */
 /* ------------------------------------------------------------------ */
@@ -424,6 +536,7 @@ export async function checkCardReminder({ browser, baseURL }) {
     await card.getByLabel("提醒时刻").fill("08:30");
     await card.getByRole("button", { name: "保存" }).click();
 
+    await card.locator(".lg-remval").filter({ hasText: "08:30" }).waitFor();
     const row = await card.innerText();
     if (!/每周/.test(row) || !/08:30/.test(row)) {
       failures.push(`保存之后卡上那一行没显示时间（当前文字：${row.slice(0, 400)}）`);
@@ -493,6 +606,179 @@ export async function checkCardReminder({ browser, baseURL }) {
   }
 
   return { id: "card-reminder", title: "卡片上设的提醒存得住、也删得掉", details, failures };
+}
+
+export async function checkSyncDestinations({ browser, baseURL }) {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const details = [];
+  const failures = [];
+  const dav = "https://dav.example.test/dav/";
+  const relay = "https://sync.example.test";
+
+  try {
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    await writeSettings(page, {
+      syncEnabled: true,
+      syncKind: "webdav",
+      syncServer: dav,
+      syncUser: "test-user",
+      syncPassword: "test-password",
+      syncLastSpace: `webdav|${dav}|test-space`,
+      syncLastAt: Date.now(),
+    });
+    await gotoTab(page, "设置");
+    const select = page.locator(".lg-syncselect");
+    const davAddress = page.getByLabel(/网盘地址/);
+    const password = page.getByLabel(/^应用密码/);
+    await davAddress.waitFor();
+
+    await select.selectOption("http");
+    const relayAddress = page.getByLabel("同步服务地址");
+    if (await relayAddress.inputValue() !== "") throw new Error("中转服务继承了网盘地址");
+    await relayAddress.fill(relay);
+    await relayAddress.press("Tab");
+    await select.selectOption("webdav");
+    if (await davAddress.inputValue() !== dav || await password.inputValue() !== "test-password") {
+      throw new Error("切回网盘时没有恢复该落点自己的地址和凭据");
+    }
+
+    await davAddress.fill("https://other.example.test/dav/");
+    await davAddress.press("Tab");
+    if (await password.inputValue() !== "") throw new Error("更换网盘来源后仍保留旧密码");
+    const { syncPreferences } = await readSettings(page, ["syncPreferences"]);
+    if (
+      syncPreferences?.kind !== "webdav" ||
+      syncPreferences.destinations.http.serverUrl !== relay ||
+      syncPreferences.destinations.webdav.serverUrl !== "https://other.example.test/dav/" ||
+      syncPreferences.destinations.webdav.user !== "" ||
+      syncPreferences.destinations.webdav.password !== ""
+    ) {
+      throw new Error("后台读取的配置没有按落点隔离地址和凭据");
+    }
+    details.push("旧设置可读，切换落点后独立保存，更换网盘来源会清掉账号和密码。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "sync-destinations", title: "同步落点各自保存，WebDAV 凭据绑定来源", details, failures };
+}
+
+export async function checkHttpSyncCache({ browser, baseURL }) {
+  const context = await browser.newContext({ serviceWorkers: "block" });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const failures = [];
+  const details = [];
+  const relay = new URL("/fixture-sync", baseURL).href;
+  const token = "browser-fixture-write-token";
+  const requests = [];
+  let snapshot = null;
+  try {
+    await page.route(`${relay}/blob/**`, async (route) => {
+      const request = route.request();
+      const method = request.method();
+      const headers = request.headers();
+      requests.push({ method, auth: headers.authorization, condition: headers["if-none-match"] });
+      if (method === "PUT") {
+        if (headers.authorization !== `Bearer ${token}`) {
+          return route.fulfill({ status: 401 });
+        }
+        snapshot = { ...request.postDataJSON(), rev: 1, updatedAt: Date.now() };
+        return route.fulfill({ json: { ok: true, rev: 1 } });
+      }
+      if (!snapshot) return route.fulfill({ status: 404 });
+      if (headers["if-none-match"] === "1") return route.fulfill({ status: 304 });
+      return route.fulfill({ json: snapshot });
+    });
+    await page.clock.install();
+    await page.goto(baseURL + "/", { waitUntil: "load" });
+    await waitForCards(page);
+    await page.locator(".lg-overview").first().waitFor();
+    await gotoTab(page, "设置");
+    await page.getByRole("checkbox", { name: "开启同步" }).check();
+    await page.locator(".lg-syncselect").selectOption("http");
+    const server = page.getByLabel("同步服务地址");
+    await server.fill(relay);
+    await page.getByLabel(/^写入令牌/).fill(token);
+    await page.getByLabel(/^同步口令/).fill("仅供浏览器验收的同步口令");
+    const sync = page.getByRole("button", { name: "立即同步" });
+    await sync.click();
+    await page.getByText("同步完成：两台设备的数据已经一样。", { exact: true }).waitFor();
+    await sync.click();
+    await page.getByText("同步完成：没有要传的改动。", { exact: true }).waitFor();
+
+    const automatic = page.waitForResponse((response) =>
+      response.url().startsWith(`${relay}/blob/`) && response.status() === 304);
+    await page.clock.fastForward(6 * 60 * 1000);
+    await automatic;
+    if (requests.length !== 4 || requests.map(({ method }) => method).join(",") !== "GET,PUT,GET,GET" ||
+        requests[1].auth !== `Bearer ${token}` ||
+        requests.some(({ method, auth }) => method === "GET" && auth) ||
+        requests[2].condition !== undefined || requests[3].condition !== "1") {
+      throw new Error("令牌没有仅在 PUT 中发送，或自动同步未复用手动同步验证的版本");
+    }
+    details.push("在设置中填写中转服务令牌，手动同步完成写入，后续自动同步只取 304。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "http-sync-cache", title: "中转服务写入授权与手动、自动同步缓存", details, failures };
+}
+
+export async function checkNativeReminderRetry({ browser, baseURL }) {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const failures = [];
+  const details = [];
+  try {
+    await page.addInitScript(() => {
+      const pending = new Map([[100, { id: 100, title: "已有提醒" }]]);
+      window.testReminderPlugin = { pending, reject: true };
+      // 保持故障直到点下重试，避免首屏异步加载清单引发的重排提前恢复。
+      window.addEventListener("click", (event) => {
+        if (event.target.closest("button")?.textContent.trim() === "重试排程") {
+          window.testReminderPlugin.reject = false;
+        }
+      }, true);
+      window.Capacitor = {
+        isNativePlatform: () => true,
+        Plugins: {
+          LocalNotifications: {
+            checkPermissions: async () => ({ display: "granted" }),
+            getPending: async () => ({ notifications: [...pending.values()] }),
+            schedule: async ({ notifications }) => {
+              if (window.testReminderPlugin.reject) throw new Error("系统暂时不可用");
+              for (const notification of notifications) pending.set(notification.id, notification);
+            },
+            cancel: async ({ notifications }) => {
+              for (const { id } of notifications) pending.delete(id);
+            },
+          },
+        },
+      };
+    });
+    await page.goto(baseURL + "/#settings", { waitUntil: "load" });
+    const message = page.getByText("提醒设置已保存，系统未能完成排程。");
+    await message.waitFor();
+    const before = await page.evaluate(() => [...window.testReminderPlugin.pending.keys()]);
+    if (before.length !== 1 || before[0] !== 100) throw new Error("提交失败后原系统提醒未保留");
+    await page.getByRole("button", { name: "重试排程" }).click();
+    await message.waitFor({ state: "hidden" });
+    const after = await page.evaluate(() => [...window.testReminderPlugin.pending.keys()]);
+    if (!after.length || after.includes(100)) throw new Error("重试后未用新排程替换旧提醒");
+    details.push("通过模拟原生桥验证提交失败保留旧提醒，设置页重试成功后才替换。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "native-reminder-retry", title: "手机提醒排程失败后可重试", details, failures };
 }
 
 /* ------------------------------------------------------------------ */
@@ -1558,6 +1844,360 @@ export async function checkStepTimer({ browser, baseURL }) {
  * 界面还摆着导入前的那份；用户改一下（加一条自己的习惯、移出一张、调顺序），
  * 就用旧清单把刚导入的那份盖掉了，导入等于没做。
  */
+export async function checkStartupSyncWaitsForReminders({ browser, baseURL }) {
+  const context = await browser.newContext({ serviceWorkers: "block" });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const details = [];
+  const failures = [];
+  const passphrase = "browser-startup-fixture";
+  const relay = new URL("/fixture-startup-sync", baseURL).href;
+  const { promise: cardsReady, resolve: releaseCards } = Promise.withResolvers();
+  const { promise: cardsRequested, resolve: markCardsRequested } = Promise.withResolvers();
+  try {
+    await seedStartupSync(page, baseURL, relay, passphrase);
+    await page.route("**/cards.json", async (route) => {
+      markCardsRequested();
+      await cardsReady;
+      await route.continue();
+    });
+    let startedEarly = false;
+    let cardsReleased = false;
+    await page.route(`${relay}/blob/**`, async (route) => {
+      if (!cardsReleased) startedEarly = true;
+      if (route.request().method() === "GET") return route.fulfill({ status: 404 });
+      return route.fulfill({ json: { ok: true, rev: 1 } });
+    });
+    const outgoing = page.waitForRequest((r) => r.method() === "PUT" && r.url().startsWith(relay));
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await cardsRequested;
+    await Promise.race([outgoing, page.waitForTimeout(1500)]);
+    cardsReleased = true;
+    releaseCards();
+
+    await checkMigratedUpload(await outgoing, passphrase);
+    if (startedEarly) throw new Error("首次自动同步抢在首屏准备完成前执行");
+    details.push("拦住卡片加载时没有同步请求。放行后解密首次真实 PUT，载荷只有已迁移的有效提醒。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    releaseCards();
+    await context.close();
+  }
+  return { id: "startup-sync-reminders", title: "首屏提醒准备完成后才自动同步", details, failures };
+}
+
+async function seedStartupSync(page, baseURL, relay, passphrase) {
+  await page.goto(baseURL + "/");
+  await page.locator(".lg-overview").first().waitFor();
+  await writeSettings(page, {
+    reminders: [null, {
+      id: "card:fatigue-zusanli", cardId: "fatigue-zusanli", label: "旧卡提醒",
+      mode: "daily", time: "09:00", on: true,
+    }],
+    syncPreferences: {
+      enabled: true, kind: "http", passphrase,
+      destinations: { http: { serverUrl: relay, token: "browser-startup-token" } },
+    },
+  });
+}
+
+async function uploadedReminders(request, passphrase) {
+  const { iv, ciphertext } = request.postDataJSON();
+  const { key } = await deriveSecret(passphrase);
+  const payload = await decryptPayload(key, { v: 1, iv, ciphertext });
+  validatePayload(payload);
+  return payload.settings.find((row) => row.key === "reminders")?.value;
+}
+
+async function checkMigratedUpload(request, passphrase) {
+  const reminders = await uploadedReminders(request, passphrase);
+  if (reminders?.length !== 1 ||
+      reminders[0]?.cardId !== "acupressure-by-symptom" || reminders[0]?.time !== "09:00") {
+    throw new Error("首次上传未清理坏条目或迁移旧卡提醒");
+  }
+}
+
+export async function checkStartupSyncRecovery({ browser, baseURL, migrationAbort = false }) {
+  const context = await browser.newContext({ serviceWorkers: "block" });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const details = [];
+  const failures = [];
+  const passphrase = "browser-startup-recovery-fixture";
+  const relay = new URL("/fixture-startup-recovery", baseURL).href;
+  const methods = [];
+  const { promise: syncStarted, resolve: markSyncStarted } = Promise.withResolvers();
+  try {
+    await seedStartupSync(page, baseURL, relay, passphrase);
+    await page.route(`${relay}/blob/**`, (route) => {
+      methods.push(route.request().method());
+      markSyncStarted();
+      if (route.request().method() === "GET") return route.fulfill({ status: 404 });
+      return route.fulfill({ json: { ok: true, rev: 1 } });
+    });
+    let contentAvailable = false;
+    if (migrationAbort) {
+      await page.clock.install();
+      await page.addInitScript(() => {
+        window.reminderMigrationAborts = 0;
+        window.rejectReminderMigration = true;
+        const get = IDBObjectStore.prototype.get;
+        IDBObjectStore.prototype.get = function (key) {
+          const request = get.call(this, key);
+          if (window.rejectReminderMigration && this.name === "settings" &&
+              key === "reminders" && this.transaction.mode === "readwrite") {
+            window.reminderMigrationAborts++;
+            this.transaction.abort();
+          }
+          return request;
+        };
+      });
+    } else {
+      await page.route("**/cards.json", (route) =>
+        contentAvailable ? route.continue() : route.fulfill({ status: 503 }),
+      );
+    }
+    await page.reload();
+    if (migrationAbort) {
+      await page.locator(".lg-overview").first().waitFor();
+      // 旧实现会先发 GET。也让它走到定时重试，验证在原页面上确实无法恢复。
+      await Promise.race([
+        page.waitForFunction(() => window.reminderMigrationAborts >= 2),
+        syncStarted,
+      ]);
+    } else {
+      await page.getByText("内容没加载出来。", { exact: true }).waitFor();
+    }
+    // 留出同步 effect 和这轮失败处理的执行时间。
+    await page.waitForTimeout(350);
+    const startedEarly = methods.length > 0;
+    const outgoing = page.waitForResponse((response) => response.request().method() === "PUT" &&
+      response.url().startsWith(relay));
+    if (migrationAbort) {
+      await page.evaluate(() => { window.rejectReminderMigration = false; });
+      await page.clock.fastForward(6 * 60 * 1000);
+    } else {
+      contentAvailable = true;
+      await page.getByRole("button", { name: "重试", exact: true }).click();
+    }
+    await checkMigratedUpload((await outgoing).request(), passphrase);
+    if (startedEarly || methods.join() !== "GET,PUT") {
+      throw new Error("启动失败期间应暂停同步，恢复后应完成一轮读取和写入");
+    }
+    details.push(migrationAbort
+      ? "启动迁移和首轮自动同步准备均中止，解除故障后定时重试完成迁移并上传，无需重载。"
+      : "卡片返回 503 时同步暂停，点击重试后自动同步上传已清理和迁移的提醒。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return migrationAbort
+    ? { id: "migration-timer-recovery", title: "迁移事务中止后定时同步恢复", details, failures }
+    : { id: "startup-503-retry", title: "首屏 503 后点击重试可恢复自动同步", details, failures };
+}
+
+export async function checkStartupWithBadReminder({ browser, baseURL }) {
+  const context = await browser.newContext({ serviceWorkers: "block" });
+  const page = await context.newPage();
+  const details = [];
+  const failures = [];
+  try {
+    await page.goto(baseURL + "/");
+    await waitForCards(page);
+    await page.evaluate(async () => {
+      const db = await new Promise((resolve, reject) => {
+        const request = indexedDB.open("life-guide-v2");
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+      try {
+        await new Promise((resolve, reject) => {
+          const tx = db.transaction("settings", "readwrite");
+          tx.oncomplete = resolve;
+          tx.onabort = () => reject(tx.error);
+          tx.objectStore("settings").put({
+            key: "reminders", updatedAt: Date.now(),
+            value: [null, {
+              id: "card:fatigue-zusanli", cardId: "fatigue-zusanli", label: "旧卡提醒",
+              mode: "daily", time: "09:00", on: true,
+            }],
+          });
+        });
+      } finally {
+        db.close();
+      }
+    });
+    await page.reload();
+    await page.locator(".lg-overview").first().waitFor({ timeout: 10000 });
+    const { reminders } = await readSettings(page, ["reminders"]);
+    if (reminders?.length !== 1 || reminders[0]?.id !== "card:acupressure-by-symptom" ||
+        reminders[0]?.cardId !== "acupressure-by-symptom" || reminders[0]?.time !== "09:00") {
+      throw new Error("坏条目没有清理，或正常提醒在启动时未迁移到合并卡");
+    }
+    details.push("写入含空条目的提醒列表后重载，今天页正常打开，正常提醒保留原时刻并认领到合并卡。");
+
+    await page.addInitScript(() => {
+      const get = IDBObjectStore.prototype.get;
+      IDBObjectStore.prototype.get = function (key) {
+        const request = get.call(this, key);
+        if (this.name === "settings" && key === "reminders" && this.transaction.mode === "readwrite") {
+          window.reminderMigrationAborted = true;
+          this.transaction.abort();
+        }
+        return request;
+      };
+    });
+    await page.reload();
+    await page.waitForFunction(() => window.reminderMigrationAborted, undefined, { timeout: 10000 });
+    await page.locator(".lg-overview").first().waitFor({ timeout: 10000 });
+    details.push("提醒迁移事务中止后，今天页仍然可用。");
+  } catch (err) {
+    const startupError = await page.getByText(/读不到 cards\.json/).first().textContent({ timeout: 500 }).catch(() => "");
+    failures.push(startupError || String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "startup-bad-reminder", title: "坏提醒条目不阻断首屏和旧卡提醒迁移", details, failures };
+}
+
+async function importReminderBackup(page) {
+  const backup = {
+    schemaVersion: 7, exportedAt: new Date().toISOString(), events: [], tombstones: [], custom: [],
+    settings: { tags: [], mode: "normal", myRoutine: ["morning-light"], cadence: {}, skipToday: {} },
+    reminders: [
+      { id: "morning", cardId: null, label: "早晨", mode: "daily", time: "09:15", on: false, slot: "morning" },
+      { id: "card:fatigue-zusanli", cardId: "fatigue-zusanli", label: "备份专有提醒", mode: "daily", time: "09:00", on: true },
+    ],
+  };
+  page.once("dialog", (dialog) => dialog.accept());
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "reminder-backup.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(backup)),
+  });
+}
+
+function assertEditedBackupReminders(reminders) {
+  if (reminders?.length !== 2 || !reminders.some((r) => r.id === "morning" && r.time === "08:53" && !r.on) ||
+      !reminders.some((r) => r.cardId === "acupressure-by-symptom" && r.time === "09:00")) {
+    throw new Error("导入或同步后丢失了提醒编辑、备份的关闭状态或备份独有提醒");
+  }
+}
+
+export async function checkReminderEditDuringImport({ browser, baseURL }) {
+  const context = await browser.newContext({ serviceWorkers: "block" });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const details = [];
+  const failures = [];
+  try {
+    await page.goto(baseURL + "/");
+    await page.locator(".lg-overview").first().waitFor();
+    await gotoTab(page, "设置");
+    const morning = page.getByLabel("早晨提醒时刻");
+    await morning.waitFor();
+    // 暂停导入提交后的事件读取，让旧提醒控件仍在页面上。
+    await page.evaluate(() => {
+      const getAll = IDBObjectStore.prototype.getAll;
+      IDBObjectStore.prototype.getAll = function (...args) {
+        const request = getAll.apply(this, args);
+        if (this.name === "events" && this.transaction.mode === "readonly") {
+          IDBObjectStore.prototype.getAll = getAll;
+          request.addEventListener("success", (event) => {
+            event.stopImmediatePropagation();
+            window.resumeReminderMigration = () => request.dispatchEvent(new Event("success"));
+          }, { once: true });
+        }
+        return request;
+      };
+    });
+    await importReminderBackup(page);
+    await page.waitForFunction(() => Boolean(window.resumeReminderMigration));
+    const success = page.getByText("已导入 0 条记录", { exact: true }).first();
+    const reportedEarly = await success.isVisible();
+    if (await morning.inputValue() !== "07:00") throw new Error("没有命中导入后仍显示旧时刻的窗口");
+    await morning.fill("08:53");
+    await page.getByText("提醒已保存。", { exact: true }).first().waitFor();
+    const saved = await readSettings(page, ["reminders"]);
+    if (!saved.reminders?.some((r) => r.label === "备份专有提醒")) {
+      throw new Error("旧界面的保存覆盖了刚导入的提醒");
+    }
+    await page.evaluate(() => window.resumeReminderMigration());
+    await success.waitFor();
+    const { reminders } = await readSettings(page, ["reminders"]);
+    assertEditedBackupReminders(reminders);
+    if (reportedEarly) throw new Error("迁移刷新完成前已提示导入成功");
+    details.push("导入提交后、刷新完成前修改旧界面，保留这次编辑和备份独有提醒，刷新后才提示导入成功。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    await context.close();
+  }
+  return { id: "reminder-edit-during-import", title: "备份导入期间保存提醒不覆盖新列表", details, failures };
+}
+
+export async function checkReminderImportDuringSyncConflict({ browser, baseURL }) {
+  const context = await browser.newContext({ serviceWorkers: "block" });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  const details = [];
+  const failures = [];
+  const relay = new URL("/fixture-import-conflict", baseURL).href;
+  const passphrase = "browser-import-conflict-fixture";
+  const { promise: imported, resolve: releaseConflict } = Promise.withResolvers();
+  try {
+    const { key } = await deriveSecret(passphrase);
+    const past = Date.now() - 60000;
+    const blob = await encryptPayload(key, {
+      v: 2, deviceId: "fixture-other-device", updatedAt: past, events: [], custom: [], tombstones: [],
+      settings: [{ key: "reminders", updatedAt: past, value: [
+        { id: "morning", cardId: null, label: "早晨", mode: "daily", time: "06:00", on: true, slot: "morning" },
+      ] }],
+    });
+    const baseVersions = [];
+    await page.route(`${relay}/blob/**`, async (route) => {
+      const request = route.request();
+      if (request.method() === "GET") return route.fulfill({ json: { ...blob, rev: 1, updatedAt: past } });
+      baseVersions.push(request.postDataJSON().baseRev);
+      if (baseVersions.length === 1) {
+        await imported;
+        return route.fulfill({ status: 409, json: { ...blob, rev: 2, updatedAt: past } });
+      }
+      return route.fulfill({ json: { ok: true, rev: 3 } });
+    });
+    await page.goto(baseURL + "/");
+    await page.locator(".lg-overview").first().waitFor();
+    await gotoTab(page, "设置");
+    await page.getByRole("checkbox", { name: "开启同步" }).check();
+    await page.locator(".lg-syncselect").selectOption("http");
+    await page.getByLabel("同步服务地址").fill(relay);
+    await page.getByLabel(/^写入令牌/).fill("browser-import-conflict-token");
+    await page.getByLabel(/^同步口令/).fill(passphrase);
+    const firstPut = page.waitForRequest((r) => r.method() === "PUT" && r.url().startsWith(relay));
+    await page.getByRole("button", { name: "立即同步" }).click();
+    await firstPut;
+
+    await importReminderBackup(page);
+    await page.getByText("已导入 0 条记录", { exact: true }).first().waitFor();
+    await page.getByLabel("早晨提醒时刻").fill("08:53");
+    await page.getByText("提醒已保存。", { exact: true }).first().waitFor();
+    const retry = page.waitForResponse((response) => response.request().method() === "PUT" &&
+      response.url().startsWith(relay) && response.ok());
+    releaseConflict();
+    assertEditedBackupReminders(await uploadedReminders((await retry).request(), passphrase));
+    await page.getByText(/^同步完成/).first().waitFor();
+    assertEditedBackupReminders((await readSettings(page, ["reminders"])).reminders);
+    if (baseVersions.join() !== "1,2") throw new Error("409 重试未使用冲突返回的新版本");
+    details.push("暂停首次 PUT，导入并编辑后让它返回 409。第二次 PUT 和 IndexedDB 均保留备份和编辑结果。");
+  } catch (err) {
+    failures.push(String(err?.message ?? err));
+  } finally {
+    releaseConflict();
+    await context.close();
+  }
+  return { id: "reminder-import-sync-409", title: "导入和编辑期间收到 409 后保留提醒", details, failures };
+}
+
 export async function checkImportRefreshesRoutine({ browser, baseURL }) {
   const context = await browser.newContext({ viewport: { width: 1180, height: 900 } });
   const page = await context.newPage();
@@ -1595,7 +2235,11 @@ export async function checkImportRefreshesRoutine({ browser, baseURL }) {
     // 检查不该依赖「现在几点」—— 否则中午跑和早上跑结果不一样。
     const backup = {
       schemaVersion: 7,
-      reminders: [], tombstones: [],
+      reminders: [{
+        id: "card:fatigue-zusanli", cardId: "fatigue-zusanli", label: "旧卡提醒",
+        mode: "daily", time: "09:00", on: true,
+      }],
+      tombstones: [],
       exportedAt: new Date().toISOString(),
       events: [],
       settings: { tags: [], mode: "normal", myRoutine: ["morning-light", "my-imported-habit"], cadence: {}, skipToday: {} },
@@ -1647,6 +2291,13 @@ export async function checkImportRefreshesRoutine({ browser, baseURL }) {
     }
     if (before <= 1) {
       details.push(`（导入前清单是 ${before} 张，本来就少，说明不了问题）`);
+    }
+    const { reminders } = await readSettings(page, ["reminders"]);
+    if (reminders?.[0]?.id !== "card:acupressure-by-symptom" ||
+        reminders[0].cardId !== "acupressure-by-symptom" || reminders[0].time !== "09:00") {
+      failures.push("导入旧卡提醒后没有迁移到合并后的卡");
+    } else {
+      details.push("备份里的旧卡提醒已认领到合并后的卡，保留原时刻。");
     }
   } catch (err) {
     failures.push(String(err?.message ?? err));
