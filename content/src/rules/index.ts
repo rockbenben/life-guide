@@ -12,6 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { ArticleCards, Card } from "../cards/load.ts";
+import { quoteFieldsOf, quotesOf } from "../cards/quotes.ts";
 import type { SourceIndex } from "../source/parse.ts";
 import { hasBandEvidence, SLOT_LABELS } from "../slot.ts";
 import {
@@ -46,85 +47,12 @@ export interface RuleContext {
 
 export type Rule = (ctx: RuleContext) => Finding[];
 
-function quotesOf(q: string | string[] | undefined): string[] {
-  if (!q) return [];
-  return Array.isArray(q) ? q : [q];
-}
-
-/** 卡片里所有带引文的自由文本字段。R2 逐个检查数字一致性。 */
-function textFieldsOf(card: Card): { path: string; text: string; quote: string | string[] }[] {
-  const out: { path: string; text: string; quote: string | string[] }[] = [];
-  out.push({ path: "remind.text", text: card.remind.text, quote: card.remind.quote });
-  if (card.effect) out.push({ path: "effect.text", text: card.effect.text, quote: card.effect.quote });
-  for (const [i, d] of (card.dose ?? []).entries()) {
-    out.push({ path: `dose[${i}].what`, text: d.what, quote: d.quote });
-  }
-  for (const s of card.steps) out.push({ path: `steps.${s.id}.text`, text: s.text, quote: s.quote });
-  for (const [i, c] of (card.cautions ?? []).entries()) {
-    out.push({ path: `cautions[${i}].text`, text: c.text, quote: c.quote });
-  }
-  for (const [i, n] of (card.notices ?? []).entries()) {
-    out.push({ path: `notices[${i}].text`, text: n.text, quote: n.quote });
-  }
-  // 三档变体（忙 / 出差 / 生病）都要查：只查一个的话，
-  // 另一个变体里的引文与数字就没人管了（起草自检是三个都查的）。
-  for (const [mode, v] of Object.entries(card.variants ?? {})) {
-    if (v?.replace) {
-      out.push({ path: `variants.${mode}.replace.text`, text: v.replace.text, quote: v.replace.quote });
-    }
-  }
-  // 分档（segments）里的文字同样要能被校验：它也是会显示给用户的自由文本
-  for (const seg of card.segments ?? []) {
-    if (seg.action) out.push({ path: `segments.${seg.id}.action.text`, text: seg.action.text, quote: seg.action.quote });
-    if (seg.dose) out.push({ path: `segments.${seg.id}.dose.text`, text: seg.dose.text, quote: seg.dose.quote });
-    for (const [i, av] of (seg.avoid ?? []).entries()) {
-      out.push({ path: `segments.${seg.id}.avoid[${i}].text`, text: av.text, quote: av.quote });
-    }
-  }
-  return out;
-}
-
-/** 卡片里所有带引文的字段（R1 逐个检查逐字性）。 */
-function allQuoteFields(card: Card): { path: string; quote: string | string[] }[] {
-  const out: { path: string; quote: string | string[] }[] = [];
-  out.push({ path: "remind.quote", quote: card.remind.quote });
-  if (card.effect) out.push({ path: "effect.quote", quote: card.effect.quote });
-  for (const [i, d] of (card.dose ?? []).entries()) {
-    out.push({ path: `dose[${i}].quote`, quote: d.quote });
-  }
-  for (const s of card.steps) {
-    out.push({ path: `steps.${s.id}.quote`, quote: s.quote });
-    // 步级时长的引文也要逐字核对 —— 它是给用户看的数（R1）。
-    if (s.duration?.quote) {
-      out.push({ path: `steps.${s.id}.duration.quote`, quote: s.duration.quote });
-    }
-  }
-  for (const [i, c] of (card.cautions ?? []).entries()) {
-    out.push({ path: `cautions[${i}].quote`, quote: c.quote });
-  }
-  for (const [i, n] of (card.notices ?? []).entries()) {
-    out.push({ path: `notices[${i}].quote`, quote: n.quote });
-  }
-  if (card.duration?.quote) out.push({ path: "duration.quote", quote: card.duration.quote });
-  for (const [mode, v] of Object.entries(card.variants ?? {})) {
-    if (v?.replace) out.push({ path: `variants.${mode}.replace.quote`, quote: v.replace.quote });
-  }
-  for (const seg of card.segments ?? []) {
-    if (seg.action) out.push({ path: `segments.${seg.id}.action.quote`, quote: seg.action.quote });
-    if (seg.dose) out.push({ path: `segments.${seg.id}.dose.quote`, quote: seg.dose.quote });
-    for (const [i, av] of (seg.avoid ?? []).entries()) {
-      out.push({ path: `segments.${seg.id}.avoid[${i}].quote`, quote: av.quote });
-    }
-  }
-  return out;
-}
-
 // ---------------------------------------------------------------- R1
 
 export const r01QuoteVerbatim: Rule = (ctx) => {
   const out: Finding[] = [];
   for (const card of ctx.article.cards) {
-    for (const f of allQuoteFields(card)) {
+    for (const f of quoteFieldsOf(card)) {
       for (const q of quotesOf(f.quote)) {
         if (!isVerbatimSubstring(q, ctx.source.text)) {
           out.push({
@@ -147,15 +75,16 @@ export const r01QuoteVerbatim: Rule = (ctx) => {
 export const r02NumbersInQuote: Rule = (ctx) => {
   const out: Finding[] = [];
   for (const card of ctx.article.cards) {
-    for (const f of textFieldsOf(card)) {
-      const { missing } = numbersCovered(f.text, f.quote);
+    for (const f of quoteFieldsOf(card)) {
+      if (!f.text) continue;
+      const { missing } = numbersCovered(f.text.value, f.quote);
       if (missing.length) {
         out.push({
           rule: "R2",
           level: "error",
           file: ctx.file,
           cardId: card.id,
-          path: f.path,
+          path: f.text.path,
           message: `文字里的数字 ${missing.join("、")} 没有出现在它自己的引文里；做不到就改用 derived`,
         });
       }
@@ -462,7 +391,7 @@ export const r09Coverage: Rule = (ctx) => {
   // 只看 source.anchor 会把「引文其实来自别的小节」误判成抽漏。
   const allQuotes: string[] = [];
   for (const card of ctx.article.cards) {
-    for (const f of allQuoteFields(card)) allQuotes.push(...quotesOf(f.quote));
+    for (const f of quoteFieldsOf(card)) allQuotes.push(...quotesOf(f.quote));
     for (const u of card.images ?? []) referencedImages.add(u);
     for (const step of card.steps) for (const u of step.images ?? []) referencedImages.add(u);
   }

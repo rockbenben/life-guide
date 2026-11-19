@@ -8,7 +8,8 @@ import type { ArticleCards } from "../cards/load.ts";
 import type { SourceIndex } from "../source/parse.ts";
 import type { LlmClient } from "../extract/llm.ts";
 
-import type { ArticleAudit, AuditResult, Issue } from "./index.ts";
+import type { ArticleAudit, AuditResult, CardAudit } from "./index.ts";
+import { reviewFingerprint } from "../cards/fingerprint.ts";
 import { auditCardMechanically } from "./mechanical.ts";
 import { auditArticleSemantics } from "./semantic.ts";
 import { AUDIT_VERSION } from "./state.ts";
@@ -42,10 +43,13 @@ export async function runAudit(opts: AuditOptions): Promise<AuditResult> {
   // 机械检查先把每篇的卡摊开：这一步不调模型，全同步，很快。
   const prepared = opts.articles.map((article) => {
     const source = opts.sources.get(article.article);
-    const cards: { cardId: string; article: string; issues: Issue[] }[] = [];
+    const cards: CardAudit[] = [];
     for (const card of article.cards) {
       const issues = source ? auditCardMechanically(card, article, source) : [];
-      cards.push({ cardId: card.id, article: article.article, issues });
+      cards.push({
+        cardId: card.id, article: article.article, issues,
+        fingerprint: reviewFingerprint(article, card),
+      });
     }
     return { article, source, cards };
   });
@@ -73,7 +77,7 @@ export async function runAudit(opts: AuditOptions): Promise<AuditResult> {
         return {
           article: item.article.article,
           version: AUDIT_VERSION,
-          cards: item.cards.map((c) => ({ cardId: c.cardId, article: c.article, issues: c.issues })),
+          cards: item.cards,
         };
       });
     return { articles, stats };
@@ -129,7 +133,7 @@ export async function runAudit(opts: AuditOptions): Promise<AuditResult> {
     audits.push({
       article: item.article.article,
       version: AUDIT_VERSION,
-      cards: item.cards.map((c) => ({ cardId: c.cardId, article: c.article, issues: c.issues })),
+      cards: item.cards,
     });
   }
 

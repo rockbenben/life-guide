@@ -8,12 +8,12 @@
  * 语义一致，但**故意在这里重写一遍**，而不是 import：
  *   · 起草是写盘前的闸门，权威校验仍然是 `content check`；
  *   · 规则文件在 P3 里正在被改，起草流水线不能被它的内部结构绑住。
- * 复用的是更底层的归一化原语（content/src/source/normalize.ts）：
- * 引文逐字比对、数字覆盖、模糊词。
+ * 引文字段遍历与归一化原语共用，各阶段各自决定诊断级别。
  */
-import { isMap, isScalar, isSeq, parseDocument, type YAMLMap, type YAMLSeq } from "yaml";
+import { isScalar, isSeq, parseDocument } from "yaml";
 
-import { makeValidator, type ArticleCards, type Card } from "../cards/load.ts";
+import { validateArticle, type ArticleCards } from "../cards/load.ts";
+import { quoteFieldsOf, quotesOf } from "../cards/quotes.ts";
 import { KNOWN_TAGS } from "../rules/index.ts";
 import type { SourceIndex } from "../source/parse.ts";
 import { findVagueTerms, isVerbatimSubstring, numbersCovered } from "../source/normalize.ts";
@@ -39,72 +39,6 @@ export interface DraftParseResult {
   yaml: string;
   data: ArticleCards | null;
   findings: DraftFinding[];
-}
-
-function quoteList(q: string | string[] | undefined): string[] {
-  if (!q) return [];
-  return Array.isArray(q) ? q : [q];
-}
-
-/** 卡片里所有带引文的字段（R1 逐个查逐字性）。 */
-function quoteFieldsOf(card: Card): { path: string; quote: string | string[] }[] {
-  const out: { path: string; quote: string | string[] }[] = [];
-  out.push({ path: "remind.quote", quote: card.remind.quote });
-  if (card.effect) out.push({ path: "effect.quote", quote: card.effect.quote });
-  for (const [i, d] of (card.dose ?? []).entries()) {
-    out.push({ path: `dose[${i}].quote`, quote: d.quote });
-  }
-  for (const s of card.steps) out.push({ path: `steps.${s.id}.quote`, quote: s.quote });
-  for (const [i, c] of (card.cautions ?? []).entries()) {
-    out.push({ path: `cautions[${i}].quote`, quote: c.quote });
-  }
-  for (const [i, n] of (card.notices ?? []).entries()) {
-    out.push({ path: `notices[${i}].quote`, quote: n.quote });
-  }
-  if (card.duration?.quote) out.push({ path: "duration.quote", quote: card.duration.quote });
-  for (const [name, v] of Object.entries(card.variants ?? {})) {
-    if (v?.replace) out.push({ path: `variants.${name}.replace.quote`, quote: v.replace.quote });
-  }
-  for (const seg of card.segments ?? []) {
-    if (seg.action) out.push({ path: `segments.${seg.id}.action.quote`, quote: seg.action.quote });
-    if (seg.dose) out.push({ path: `segments.${seg.id}.dose.quote`, quote: seg.dose.quote });
-    for (const [i, av] of (seg.avoid ?? []).entries()) {
-      out.push({ path: `segments.${seg.id}.avoid[${i}].quote`, quote: av.quote });
-    }
-  }
-  return out;
-}
-
-/** 卡片里所有带引文的自由文本字段（R2 逐个查数字一致性）。 */
-function textFieldsOf(card: Card): { path: string; text: string; quote: string | string[] }[] {
-  const out: { path: string; text: string; quote: string | string[] }[] = [];
-  out.push({ path: "remind.text", text: card.remind.text, quote: card.remind.quote });
-  if (card.effect) out.push({ path: "effect.text", text: card.effect.text, quote: card.effect.quote });
-  for (const [i, d] of (card.dose ?? []).entries()) {
-    out.push({ path: `dose[${i}].what`, text: d.what, quote: d.quote });
-  }
-  for (const s of card.steps) out.push({ path: `steps.${s.id}.text`, text: s.text, quote: s.quote });
-  for (const [i, c] of (card.cautions ?? []).entries()) {
-    out.push({ path: `cautions[${i}].text`, text: c.text, quote: c.quote });
-  }
-  for (const [i, n] of (card.notices ?? []).entries()) {
-    out.push({ path: `notices[${i}].text`, text: n.text, quote: n.quote });
-  }
-  for (const [name, v] of Object.entries(card.variants ?? {})) {
-    if (v?.replace) {
-      out.push({ path: `variants.${name}.replace.text`, text: v.replace.text, quote: v.replace.quote });
-    }
-  }
-  for (const seg of card.segments ?? []) {
-    if (seg.action) {
-      out.push({ path: `segments.${seg.id}.action.text`, text: seg.action.text, quote: seg.action.quote });
-    }
-    if (seg.dose) out.push({ path: `segments.${seg.id}.dose.text`, text: seg.dose.text, quote: seg.dose.quote });
-    for (const [i, av] of (seg.avoid ?? []).entries()) {
-      out.push({ path: `segments.${seg.id}.avoid[${i}].text`, text: av.text, quote: av.quote });
-    }
-  }
-  return out;
 }
 
 /**
@@ -164,60 +98,6 @@ function enforceDraft(doc: ReturnType<typeof parseDocument>): DraftFinding[] {
   return findings;
 }
 
-/**
- * 一张卡里所有引文在文档里的路径（用来改写它们）。
- *
- * 索引式（dose[0].quote）而不是 id 式：yaml 文档的 setIn 要的是位置。
- */
-function quotePathsOfCard(cardNode: unknown): (string | number)[][] {
-  const paths: (string | number)[][] = [];
-  if (!isMap(cardNode)) return paths;
-  const card = cardNode as YAMLMap;
-  const seqOf = (key: string): YAMLSeq | null => {
-    const v = card.get(key, true);
-    return isSeq(v) ? (v as YAMLSeq) : null;
-  };
-
-  for (const key of ["remind", "effect", "duration"]) {
-    if (card.has(key)) paths.push([key, "quote"]);
-  }
-  const dose = seqOf("dose");
-  if (dose) for (const [i] of dose.items.entries()) paths.push(["dose", i, "quote"]);
-  const steps = seqOf("steps");
-  if (steps) for (const [i, s] of steps.items.entries()) if (isMap(s)) paths.push(["steps", i, "quote"]);
-  const cautions = seqOf("cautions");
-  if (cautions) for (const [i] of cautions.items.entries()) paths.push(["cautions", i, "quote"]);
-  const notices = seqOf("notices");
-  if (notices) for (const [i] of notices.items.entries()) paths.push(["notices", i, "quote"]);
-
-  const variants = card.get("variants", true);
-  if (isMap(variants)) {
-    for (const name of ["busy", "travel", "sick"]) {
-      const v = (variants as YAMLMap).get(name, true);
-      if (isMap(v) && (v as YAMLMap).has("replace")) {
-        paths.push(["variants", name, "replace", "quote"]);
-      }
-    }
-  }
-
-  const segments = seqOf("segments");
-  if (segments) {
-    for (const [i, s] of segments.items.entries()) {
-      if (!isMap(s)) continue;
-      const seg = s as YAMLMap;
-      if (seg.has("action")) paths.push(["segments", i, "action", "quote"]);
-      if (seg.has("dose")) paths.push(["segments", i, "dose", "quote"]);
-      const avoid = seg.get("avoid", true);
-      if (isSeq(avoid)) {
-        for (const [j] of (avoid as YAMLSeq).items.entries()) {
-          paths.push(["segments", i, "avoid", j, "quote"]);
-        }
-      }
-    }
-  }
-  return paths;
-}
-
 /** 末尾的省略号：全角「…」与半角「...」都算。 */
 const TRAILING_ELLIPSIS = /(?:…|\.{3})+$/;
 
@@ -235,15 +115,13 @@ const TRAILING_ELLIPSIS = /(?:…|\.{3})+$/;
  */
 function repairEllipsisQuotes(
   doc: ReturnType<typeof parseDocument>,
+  data: ArticleCards,
   source: SourceIndex,
 ): DraftFinding[] {
   const findings: DraftFinding[] = [];
-  const cards = doc.get("cards", true);
-  if (!isSeq(cards)) return findings;
 
-  for (const [ci, cardNode] of (cards as YAMLSeq).items.entries()) {
-    for (const rel of quotePathsOfCard(cardNode)) {
-      // quotePathsOfCard 给的是卡内相对路径，文档里还要带上 cards[i]
+  for (const [ci, card] of data.cards.entries()) {
+    for (const { yamlPath: rel } of quoteFieldsOf(card)) {
       const p = ["cards", ci, ...rel];
       const node = doc.getIn(p, true);
       // getIn 取到的是 yaml 的标量节点，取它的 value 才是字符串
@@ -272,7 +150,7 @@ function repairEllipsisQuotes(
         continue;
       }
       if (isSeq(node)) {
-        const seq = node as YAMLSeq;
+        const seq = node;
         for (const [qi, item] of seq.items.entries()) {
           if (!isScalar(item) || typeof item.value !== "string") continue;
           const fixed = repair(item.value);
@@ -296,7 +174,7 @@ function checkR1(data: ArticleCards, source: SourceIndex): DraftFinding[] {
   const out: DraftFinding[] = [];
   for (const card of data.cards) {
     for (const f of quoteFieldsOf(card)) {
-      for (const q of quoteList(f.quote)) {
+      for (const q of quotesOf(f.quote)) {
         if (!isVerbatimSubstring(q, source.text)) {
           out.push({
             rule: "R1",
@@ -315,14 +193,15 @@ function checkR1(data: ArticleCards, source: SourceIndex): DraftFinding[] {
 function checkR2(data: ArticleCards): DraftFinding[] {
   const out: DraftFinding[] = [];
   for (const card of data.cards) {
-    for (const f of textFieldsOf(card)) {
-      const { missing } = numbersCovered(f.text, f.quote);
+    for (const f of quoteFieldsOf(card)) {
+      if (!f.text) continue;
+      const { missing } = numbersCovered(f.text.value, f.quote);
       if (missing.length) {
         out.push({
           rule: "R2",
           level: "error",
           cardId: card.id,
-          path: f.path,
+          path: f.text.path,
           message: `文字里的数字 ${missing.join("、")} 没有出现在它自己的引文里；做不到就改用 derived`,
         });
       }
@@ -421,7 +300,7 @@ function checkR9(data: ArticleCards, source: SourceIndex): DraftFinding[] {
   const referencedImages = new Set<string>();
   const allQuotes: string[] = [];
   for (const card of data.cards) {
-    for (const f of quoteFieldsOf(card)) allQuotes.push(...quoteList(f.quote));
+    for (const f of quoteFieldsOf(card)) allQuotes.push(...quotesOf(f.quote));
     for (const u of card.images ?? []) referencedImages.add(u);
     for (const step of card.steps) for (const u of step.images ?? []) referencedImages.add(u);
   }
@@ -546,17 +425,17 @@ export function parseDraft(raw: string, ctx: DraftParseContext): DraftParseResul
   }
 
   findings.push(...enforceDraft(doc));
-  // 先修机械错（末尾多出的省略号），再校验：不然这些稿子会被 R1 整篇拦掉
-  findings.push(...repairEllipsisQuotes(doc, ctx.source));
-
-  const data = doc.toJS() as ArticleCards;
-  const yaml = doc.toString({ lineWidth: 0 });
-
-  const { valid, errors } = makeValidator()(data);
+  let data = doc.toJS() as ArticleCards;
+  const { valid, errors } = validateArticle(data);
   if (!valid) {
     for (const e of errors) findings.push({ rule: "SCHEMA", level: "error", message: e });
-    return { ok: false, yaml, data, findings };
+    return { ok: false, yaml: doc.toString({ lineWidth: 0 }), data, findings };
   }
+  // 结构合法后再定位引文，R1 检查修掉末尾省略号的文本。
+  const repairs = repairEllipsisQuotes(doc, data, ctx.source);
+  findings.push(...repairs);
+  if (repairs.length) data = doc.toJS() as ArticleCards;
+  const yaml = doc.toString({ lineWidth: 0 });
 
   findings.push(...checkR1(data, ctx.source));
   findings.push(...checkR2(data));

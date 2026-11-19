@@ -7,6 +7,7 @@
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
+import type { ValidateFunction } from "ajv";
 
 import { parse as parseYaml } from "yaml";
 
@@ -132,32 +133,23 @@ export function loadSchema(): object {
   return JSON.parse(fs.readFileSync(schemaPath(), "utf8"));
 }
 
-export function makeValidator(): (data: unknown) => { valid: boolean; errors: string[] } {
-  const ajv = new Ajv({ allErrors: true, strict: false });
-  addFormats(ajv);
-  const validate = ajv.compile(loadSchema());
-  return (data: unknown) => {
-    const valid = validate(data) as boolean;
-    const errs = (validate.errors ?? []) as {
-      instancePath?: string;
-      message?: string;
-      params?: Record<string, unknown>;
-    }[];
-    return {
-      valid,
-      errors: valid
-        ? []
-        : errs.map((e) => {
-            // 「must NOT have additional properties」不说是哪个字段，人没法排查。
-            // ajv 把它放在 params.additionalProperty 里，这里补出来。
-            const extra =
-              e.params && typeof e.params.additionalProperty === "string"
-                ? `（多了字段：${e.params.additionalProperty}）`
-                : "";
-            return `${e.instancePath || "/"} ${e.message ?? ""}${extra}`.trim();
-          }),
-    };
-  };
+let validateSchema: ValidateFunction | undefined;
+
+export function validateArticle(data: unknown): { valid: boolean; errors: string[] } {
+  if (!validateSchema) {
+    const ajv = new Ajv({ allErrors: true, strict: false });
+    addFormats(ajv);
+    validateSchema = ajv.compile(loadSchema());
+  }
+  if (validateSchema(data)) return { valid: true, errors: [] };
+  // Ajv 每次调用都会覆盖 errors，在下一次验证前把诊断转成独立的字符串数组。
+  const errors = (validateSchema.errors ?? []).map((error) => {
+    const extra = typeof error.params.additionalProperty === "string"
+      ? `（多了字段：${error.params.additionalProperty}）`
+      : "";
+    return `${error.instancePath || "/"} ${error.message ?? ""}${extra}`.trim();
+  });
+  return { valid: false, errors };
 }
 
 export function loadArticleFile(file: string): LoadedArticle {
@@ -174,8 +166,8 @@ export function loadArticleFile(file: string): LoadedArticle {
       schemaErrors: [`yaml 解析失败：${e instanceof Error ? e.message : String(e)}`],
     };
   }
-  const { valid, errors } = makeValidator()(data);
-  return { file, data, schemaErrors: valid ? [] : errors };
+  const { errors } = validateArticle(data);
+  return { file, data, schemaErrors: errors };
 }
 
 /** 递归读取 cards/ 下的所有 yaml（按相对路径排序，保证输出稳定）。 */
@@ -194,4 +186,19 @@ export function loadAllCards(cardsDir: string): LoadedArticle[] {
   walk(cardsDir);
   files.sort();
   return files.map((f) => loadArticleFile(f));
+}
+
+export function duplicateCardIds(articles: LoadedArticle[]): Map<string, string[]> {
+  const locations = new Map<string, string[]>();
+  for (const { file, data } of articles) {
+    if (!Array.isArray(data?.cards)) continue;
+    for (const [index, card] of data.cards.entries()) {
+      if (typeof card?.id !== "string") continue;
+      const location = `${file}#cards[${index}]`;
+      const existing = locations.get(card.id);
+      if (existing) existing.push(location);
+      else locations.set(card.id, [location]);
+    }
+  }
+  return new Map([...locations].filter(([, locations]) => locations.length > 1));
 }

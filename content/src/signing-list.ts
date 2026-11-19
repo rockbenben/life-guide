@@ -12,12 +12,14 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { LoadedArticle } from "./cards/load.ts";
+import { reviewFingerprint } from "./cards/fingerprint.ts";
 
 /** 清单文件放哪（相对 content/）。 */
 export const SIGNING_LIST_FILE = "signing-list.md";
 
 export interface SigningEntry {
   cardId: string;
+  fingerprint: string;
   article: string;
   articleTitle: string;
   /** 这一篇是不是疾病类（疾病类内容单独看） */
@@ -70,12 +72,12 @@ export function articleTitleOf(contentDir: string, article: string): string {
 /**
  * 整理清单。
  *
- * 只收「机器没挑出毛病」的卡（okIds）—— 意思不对的、引文没覆盖全的、
+ * 只收「机器没挑出毛病」且指纹一致的卡 —— 意思不对的、引文没覆盖全的、
  * 重复的都不该签，混进来等于让人白看。
  */
 export function buildSigningList(
   loaded: LoadedArticle[],
-  okIds: Set<string>,
+  okFingerprints: Set<string>,
   contentDir: string,
 ): { entries: SigningEntry[]; articles: number } {
   const entries: SigningEntry[] = [];
@@ -83,11 +85,13 @@ export function buildSigningList(
   for (const l of loaded) {
     const article = l.data.article;
     for (const card of l.data.cards) {
-      if (!okIds.has(card.id)) continue;
       if (card.status === "reviewed") continue; // 已经签过的不进清单
+      const fingerprint = reviewFingerprint(l.data, card);
+      if (!okFingerprints.has(fingerprint)) continue;
       seenArticles.add(article);
       entries.push({
         cardId: card.id,
+        fingerprint,
         article,
         articleTitle: articleTitleOf(contentDir, article),
         condition: l.data.kind === "condition",
@@ -160,7 +164,7 @@ export function renderSigningList(entries: SigningEntry[]): string {
       // 名字另起过就把两样都摆出来：签字的人要看的是屏上那个名字对不对
       const named = e.name && e.name !== e.anchor ? ` · 屏上叫「${e.name}」` : "";
       lines.push(
-        `- [ ] \`${e.cardId}\` · ${e.slot}${named} · 原文《${e.anchor}》`,
+        `- [ ] \`${e.cardId}\` <!-- review:${e.fingerprint} --> · ${e.slot}${named} · 原文《${e.anchor}》`,
       );
       lines.push(`  做什么：${clip(e.action, 60)}`);
       e.steps.forEach((s, i) => lines.push(`  ${i + 1}. ${clip(s, 70)}`));
@@ -175,13 +179,13 @@ export function renderSigningList(entries: SigningEntry[]): string {
 /**
  * 读清单里勾上的卡。
  *
- * 只认 `- [x] <id>` 这一种形状 —— 别的行（说明、标题）一律忽略。
+ * 旧清单仍能认出勾选项，但签字前会拒绝缺少指纹的条目。
  */
-export function parseTickedIds(text: string): string[] {
-  const out: string[] = [];
+export function parseTickedCards(text: string): Map<string, string | undefined> {
+  const out = new Map<string, string | undefined>();
   for (const line of String(text ?? "").split(/\r?\n/)) {
-    const m = /^\s*-\s*\[x\]\s+`?([A-Za-z0-9._-]+)`?/.exec(line);
-    if (m) out.push(m[1]);
+    const m = /^\s*-\s*\[x\]\s+`?([A-Za-z0-9._-]+)`?(?:\s+<!-- review:([0-9a-f]{16}) -->)?/.exec(line);
+    if (m) out.set(m[1], m[2]);
   }
   return out;
 }
@@ -189,5 +193,5 @@ export function parseTickedIds(text: string): string[] {
 /** 清单里勾了几个、共几个（用于报进度）。 */
 export function countTicked(text: string): { ticked: number; total: number } {
   const total = (String(text ?? "").match(/^\s*-\s*\[[ x]\]/gm) ?? []).length;
-  return { ticked: parseTickedIds(text).length, total };
+  return { ticked: parseTickedCards(text).size, total };
 }

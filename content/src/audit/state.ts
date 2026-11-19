@@ -12,6 +12,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { ArticleAudit } from "./index.ts";
+import type { ArticleCards } from "../cards/load.ts";
+import { reviewFingerprint } from "../cards/fingerprint.ts";
 
 export const AUDIT_STATE_FILE = "audit-state.json";
 
@@ -21,7 +23,15 @@ export const AUDIT_STATE_FILE = "audit-state.json";
  * 续跑时只跳过**当前版本**审过的篇：旧版本审出来的结论是按老标准判的，
  * 标准一换就得重来。
  */
-export const AUDIT_VERSION = 2;
+export const AUDIT_VERSION = 3;
+
+export function auditMatches(previous: ArticleAudit | undefined, article: ArticleCards): boolean {
+  if (previous?.version !== AUDIT_VERSION || previous.cards.length !== article.cards.length) {
+    return false;
+  }
+  const hashes = new Map(previous.cards.map((card) => [card.cardId, card.fingerprint]));
+  return article.cards.every((card) => hashes.get(card.id) === reviewFingerprint(article, card));
+}
 
 export interface AuditState {
   /** 已审过的篇及其结论 */

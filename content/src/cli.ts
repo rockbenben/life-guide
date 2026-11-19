@@ -20,8 +20,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { parse as parseYaml, parseDocument } from "yaml";
 
-import { loadAllCards, type ArticleCards, type Card } from "./cards/load.ts";
-import { fingerprint } from "./cards/fingerprint.ts";
+import { duplicateCardIds, loadAllCards, type ArticleCards, type Card } from "./cards/load.ts";
+import { fingerprint, reviewFingerprint } from "./cards/fingerprint.ts";
 import { checkBusyBudget, checkReviewSignature, type BusyBudget } from "./budget.ts";
 import { ALL_RULES, type Finding } from "./rules/index.ts";
 import { runImport } from "./source/import.ts";
@@ -47,14 +47,13 @@ import { auditContent } from "./content-audit.ts";
 import {
   SIGNING_LIST_FILE,
   buildSigningList,
-  parseTickedIds,
+  parseTickedCards,
   renderSigningList,
 } from "./signing-list.ts";
 import { mergeAudits, renderReport, summarize } from "./audit/report.ts";
-import { readAuditState, writeAuditState, AUDIT_VERSION } from "./audit/state.ts";
+import { auditMatches, readAuditState, writeAuditState } from "./audit/state.ts";
 import { enrichIssues } from "./audit/enrich.ts";
 import { judgeCard, SLOT_LABELS, type Slot } from "./slot.ts";
-import type { ArticleAudit } from "./audit/index.ts";
 
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const CONTENT = path.join(ROOT, "content");
@@ -169,6 +168,7 @@ function cmdCheck(): number {
   findings.push(...checkSnapshotIntegrity({ contentDir: CONTENT }));
 
   const loaded = loadAllCards(CARDS_DIR);
+  findings.push(...duplicateIdFindings(loaded));
   const all = loaded.map((l) => l.data);
 
   // R15 默认清单：App 首启要放的那几张，都得在、都得已签字
@@ -278,10 +278,25 @@ function fmtFinding(f: Finding): string {
   return `${mark} [${f.rule}] ${where}  ${f.message}`;
 }
 
+function duplicateIdFindings(loaded: ReturnType<typeof loadAllCards>): Finding[] {
+  return Array.from(duplicateCardIds(loaded), ([cardId, locations]) => ({
+    rule: "CARD_ID",
+    level: "error",
+    file: path.relative(ROOT, locations[0]),
+    cardId,
+    message: `卡片 ID 重复：${locations.map((file) => path.relative(ROOT, file)).join("、")}`,
+  }));
+}
+
 // ------------------------------------------------------------------- build
 
 async function cmdBuild(): Promise<number> {
   const loaded = loadAllCards(CARDS_DIR);
+  const duplicates = duplicateIdFindings(loaded);
+  if (duplicates.length) {
+    for (const finding of duplicates) console.error(fmtFinding(finding));
+    return 1;
+  }
   // 有文件读不出来（yaml 坏掉 / 结构不合法）：**别写产物** ——
   // 写出来的 cards.json 少了那篇的卡，而上一版的产物还躺在盘上看着像新的。
   const broken = loaded.filter((l) => l.schemaErrors.length);
@@ -363,29 +378,35 @@ function cmdReview(): number {
     console.error("      任何一条都可以加 --dry-run：只说要签哪几张，不写盘");
     return 2;
   }
-  // 清单：勾上的 `- [x] <id>` 行就是要签的那些
-  let wanted: string[] | null = null;
+  let wanted: Map<string, string | undefined> | null = null;
   if (listFile) {
     const p = path.isAbsolute(listFile) ? listFile : path.join(ROOT, listFile);
     if (!fs.existsSync(p)) {
       console.error(`找不到清单文件：${listFile}`);
       return 2;
     }
-    wanted = parseTickedIds(fs.readFileSync(p, "utf8"));
-    if (!wanted.length) {
+    wanted = parseTickedCards(fs.readFileSync(p, "utf8"));
+    if (!wanted.size) {
       console.error("清单里没有勾上的卡（把 `- [ ]` 改成 `- [x]` 再来）");
       return 1;
     }
   }
   const loaded = loadAllCards(CARDS_DIR);
+  if (wanted) {
+    const hashes = new Map(loaded.flatMap(({ data }) =>
+      data.cards.map((card) => [card.id, reviewFingerprint(data, card)] as const),
+    ));
+    const stale = [...wanted].filter(([id, hash]) => !hash || hashes.get(id) !== hash);
+    if (stale.length) {
+      console.error(`清单缺少有效指纹或卡片已变更：${stale.map(([id]) => id).join("、")}。请重跑审阅并生成清单后再勾选。`);
+      return 1;
+    }
+  }
   let signed = 0;
   let skipped = 0;
 
   /** 同一个 id 出现在几张卡上：签它等于签了不止一张。 */
-  const idCount = new Map<string, number>();
-  for (const l of loaded) {
-    for (const c of l.data.cards) idCount.set(c.id, (idCount.get(c.id) ?? 0) + 1);
-  }
+  const duplicates = duplicateCardIds(loaded);
 
   for (const l of loaded) {
     // 结构不合法的文件不能签：签了以后 content build 会在剥引文时崩，
@@ -393,7 +414,7 @@ function cmdReview(): number {
     if (l.schemaErrors.length) {
       for (const c of l.data.cards) {
         if (!all && !wanted && c.id !== cardId) continue;
-        if (wanted && !wanted.includes(c.id)) continue;
+        if (wanted && !wanted.has(c.id)) continue;
         console.error(
           `跳过 ${c.id}：${l.file} 的结构不合法（${l.schemaErrors[0]}）—— 先把结构改对再签`,
         );
@@ -404,11 +425,12 @@ function cmdReview(): number {
     for (let idx = 0; idx < l.data.cards.length; idx++) {
       const card = l.data.cards[idx];
       if (!all && !wanted && card.id !== cardId) continue;
-      if (wanted && !wanted.includes(card.id)) continue;
+      if (wanted && !wanted.has(card.id)) continue;
       // 同一个 id 有好几张卡：别把它们一起签了（签字是「这张卡被人看过」的保证）
-      if ((idCount.get(card.id) ?? 0) > 1) {
+      const locations = duplicates.get(card.id);
+      if (locations) {
         console.error(
-          `跳过 ${card.id}：这个 id 有 ${idCount.get(card.id)} 张卡，签字会一起签掉 —— 先把 id 改开`,
+          `跳过 ${card.id}：这个 id 有 ${locations.length} 张卡，签字会一起签掉 —— 先把 id 改开`,
         );
         skipped++;
         continue;
@@ -469,17 +491,20 @@ function cmdReview(): number {
 function cmdSigningList(): number {
   const loaded = loadAllCards(CARDS_DIR);
   const state = readAuditState(CONTENT);
-  const okIds = new Set<string>();
-  for (const [, a] of state) {
-    for (const c of a.cards) {
-      if (!c.issues?.length) okIds.add(c.cardId);
+  const okFingerprints = new Set<string>();
+  for (const { data } of loaded) {
+    const audited = state.get(data.article);
+    const draft = { ...data, cards: data.cards.filter((card) => card.status !== "reviewed") };
+    if (!audited || !auditMatches(audited, draft)) continue;
+    for (const c of audited.cards) {
+      if (!c.issues.length && c.fingerprint) okFingerprints.add(c.fingerprint);
     }
   }
-  if (!okIds.size) {
+  if (!okFingerprints.size) {
     console.error("审阅状态里没有「没发现问题」的卡 —— 先跑一次 content audit");
     return 1;
   }
-  const { entries, articles } = buildSigningList(loaded, okIds, CONTENT);
+  const { entries, articles } = buildSigningList(loaded, okFingerprints, CONTENT);
   const out = path.join(CONTENT, SIGNING_LIST_FILE);
   fs.writeFileSync(out, renderSigningList(entries), "utf8");
   console.log(
@@ -687,17 +712,8 @@ async function cmdAudit(): Promise<number> {
   const resume = has("resume");
   const previous = readAuditState(CONTENT);
   if (resume && previous.size) {
-    // 语义检查失败的篇不算「审过」：凭据过期时它们是空跑，得重来。
-    // 工具版本对不上的也要重审：老版本是按老标准判的。
-    const failed = (a: ArticleAudit) =>
-      a.cards.some((c) => c.cardId === "(语义检查失败)");
     const before = articles.length;
-    articles = articles.filter((a) => {
-      const done = previous.get(a.article);
-      if (!done) return true;
-      if (failed(done)) return true;
-      return done.version !== AUDIT_VERSION;
-    });
+    articles = articles.filter((a) => !auditMatches(previous.get(a.article), a));
     console.log(`  续跑：跳过已审的 ${before - articles.length} 篇`);
     if (!articles.length) {
       console.log("  没有待审的篇。");

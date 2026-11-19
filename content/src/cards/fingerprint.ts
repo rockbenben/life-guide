@@ -6,7 +6,7 @@
  */
 import { createHash } from "node:crypto";
 
-import type { Card } from "./load.ts";
+import type { ArticleCards, Card } from "./load.ts";
 
 /** 稳定序列化：键按字典序，值递归规范化。 */
 function stable(value: unknown): unknown {
@@ -23,6 +23,14 @@ function stable(value: unknown): unknown {
 export function fingerprint(card: Card): string {
   return createHash("sha256")
     .update(JSON.stringify(stable(card)))
+    .digest("hex")
+    .slice(0, 16);
+}
+
+/** 审计和勾选清单还要绑定卡片所在的文章与分类。 */
+export function reviewFingerprint(article: ArticleCards, card: Card): string {
+  return createHash("sha256")
+    .update(JSON.stringify([article.article, article.kind, fingerprint(card)]))
     .digest("hex")
     .slice(0, 16);
 }

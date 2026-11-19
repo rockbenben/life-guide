@@ -33,6 +33,7 @@ export interface Issue {
 export interface CardAudit {
   cardId: string;
   article: string;
+  fingerprint?: string;
   /** 该卡的问题；空数组 = 没发现问题 */
   issues: Issue[];
 }

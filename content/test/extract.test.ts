@@ -17,6 +17,7 @@ import { draftArticle, listArticles, resolveArticle, targetFor } from "../src/ex
 import { extractText, type LlmClient, type LlmRequest } from "../src/extract/llm.ts";
 import { parseDraft } from "../src/extract/parse.ts";
 import { parseMarkdown } from "../src/source/parse.ts";
+import { r01QuoteVerbatim } from "../src/rules/index.ts";
 
 const ARTICLE_MD = `---
 title: 测试文章
@@ -129,6 +130,30 @@ describe("parseDraft", () => {
     expect(r1.length).toBe(1);
     expect(r1[0].level).toBe("error");
     expect(r1[0].path).toBe("steps.prepare.quote");
+  });
+
+  it("步级时长引文在起草与正式校验中使用相同位置，也能修复末尾省略号", () => {
+    const { sourceDir, root, rel } = fixture();
+    const source = parseMarkdown(ARTICLE_MD + "\n动作后等 30 秒。\n");
+    const withDuration = (quote: string) => GOOD_YAML.replace(
+      '        quote: "将脚尖踮起，身体挺直"',
+      `        quote: "将脚尖踮起，身体挺直"\n        duration:\n          basis: quote\n          sec: 30\n          quote: ${JSON.stringify(quote)}`,
+    );
+    const file = path.join(sourceDir, rel);
+    const invalid = parseDraft(withDuration("动作后等 99 秒。"), { source, file });
+    expect(invalid.ok).toBe(false);
+    const check = (data: NonNullable<typeof invalid.data>) =>
+      r01QuoteVerbatim({ article: data, source, all: [data], contentDir: root, file });
+    expect(invalid.findings).toContainEqual(expect.objectContaining({
+      rule: "R1", level: "error", path: "steps.prepare.duration.quote",
+    }));
+    expect(check(invalid.data!)).toContainEqual(expect.objectContaining({
+      rule: "R1", level: "error", path: "steps.prepare.duration.quote",
+    }));
+    const repaired = parseDraft(withDuration("动作后等 30 秒。…"), { source, file });
+    expect(repaired.ok).toBe(true);
+    expect(repaired.data?.cards[0].steps[0].duration?.quote).toBe("动作后等 30 秒。");
+    expect(check(repaired.data!)).toEqual([]);
   });
 
   it("文字里的数字不在引文里 → 拒绝（R2）", () => {
